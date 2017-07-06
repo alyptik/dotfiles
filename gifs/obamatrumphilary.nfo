@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<movie>
+  <plot />
+  <outline />
+  <lockdata>false</lockdata>
+  <dateadded>2017-02-08 20:53:55</dateadded>
+  <title>obamatrumphilary</title>
+  <runtime>0</runtime>
+  <art>
+    <poster>/run/media/alyptik/microSDXC/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/z:/store/config/gifs/obamatrumphilary.gif</poster>
+  </art>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <codec>h264</codec>
+        <micodec>h264</micodec>
+        <bitrate>1331691</bitrate>
+        <width>560</width>
+        <height>374</height>
+        <aspect>1.5:1</aspect>
+        <aspectratio>1.5:1</aspectratio>
+        <framerate>23</framerate>
+        <language>und</language>
+        <scantype>progressive</scantype>
+        <default>True</default>
+        <forced>False</forced>
+        <duration>0</duration>
+        <durationinseconds>30</durationinseconds>
+      </video>
+    </streamdetails>
+  </fileinfo>
+</movie>

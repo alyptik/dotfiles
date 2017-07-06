@@ -1,0 +1,77 @@
+diff --git a/.config/git/post-commit.hook b/.config/git/post-commit.hook
+index 6f0effa..edba714 100755
+--- a/.config/git/post-commit.hook
++++ b/.config/git/post-commit.hook
+@@ -1,7 +1,8 @@
+-#!/bin/sh
++#!/bin/bash
+ # fixup .SRCINFO stage
+ for path in $(git diff --name-only HEAD~1 HEAD); do
+-	if [[ "${path}" =~ .*/PKGBUILD$ && -f "${path}" ]]; then
+-		git add ${path%PKGBUILD}.SRCINFO
++	if [[ "${path}" =~ ^(.*/|)PKGBUILD$ && -f "${path}" ]]; then
++		[[ -z "${path%PKGBUILD}" ]] && tmp='.' || tmp="${path%PKGBUILD}"
++		git add "${tmp}.SRCINFO"
+ 	fi
+ done
+diff --git a/.config/git/pre-commit.hook b/.config/git/pre-commit.hook
+index ba75d78..d0be24a 100755
+--- a/.config/git/pre-commit.hook
++++ b/.config/git/pre-commit.hook
+@@ -1,11 +1,12 @@
+-#!/bin/sh
++#!/bin/bash
+ # update .SRCINFO
+ for path in $(git diff --name-only --cached); do
+-	if [[ "${path}" =~ .*/PKGBUILD$ && -f "${path}" ]]; then
+-		echo -e "\033[1;32m==>\033[0m\033[1m Generating and adding .SRCINFO for ${path%/PKGBUILD}\033[0m"
+-		pushd ${path%PKGBUILD} >/dev/null
++	if [[ "${path}" =~ ^(.*/|)PKGBUILD$ && -f "${path}" ]]; then
++		[[ -z "${path%PKGBUILD}" ]] && tmp='.' || tmp="${path%PKGBUILD}"
++		printf "\033[1;32m%s\033[0m\033[1m%s\033[0m" "==>" " Generating and adding .SRCINFO for $tmp"
++		pushd "$tmp" >/dev/null
+ 		makepkg --printsrcinfo > .SRCINFO
+ 		popd >/dev/null
+-		git add ${path%PKGBUILD}/.SRCINFO
++		git add "$tmp"/.SRCINFO
+ 	fi
+ done
+diff --git a/.config/git/prepare-commit-msg.hook b/.config/git/prepare-commit-msg.hook
+index bffbc3d..28ad6f7 100755
+--- a/.config/git/prepare-commit-msg.hook
++++ b/.config/git/prepare-commit-msg.hook
+@@ -1,11 +1,11 @@
+ #!/bin/bash
+ 
+-old_commit_msg="$(cat ${1})"
++old_commit_msg="$(cat "${1}")"
+ echo -n "" > "${1}"
+ 
+ # new PKGBUILDS
+ for path in $(git diff --name-only --cached --diff-filter=A); do
+-	if [[ "${path}" =~ .*/PKGBUILD$ ]]; then
++	if [[ "${path}" =~ ^(.*/|)PKGBUILD$ ]]; then
+ 		source "${path}"
+ 		if [[ -n "${epoch}" ]]; then
+ 			prefix="${epoch}:"
+@@ -16,7 +16,7 @@ done
+ 
+ # updated PKGBUILDS
+ for path in $(git diff --name-only --cached --diff-filter=M); do
+-	if [[ "${path}" =~ .*/PKGBUILD$ ]]; then
++	if [[ "${path}" =~ ^(.*/|)PKGBUILD$ ]]; then
+ 		source "${path}"
+ 		if [[ -n "${epoch}" ]]; then
+ 			prefix="${epoch}:"
+@@ -29,8 +29,9 @@ done
+ 
+ # deleted PKGBUILD
+ for path in $(git diff --name-only --cached --diff-filter=D); do
+-	if [[ "${path}" =~ .*/PKGBUILD$ ]]; then
+-		echo "rmpkg: ${path%/PKGBUILD}" >> "${1}"
++	if [[ "${path}" =~ ^(.*/|)PKGBUILD$ ]]; then
++		[[ -z "${path%PKGBUILD}" ]] && tmp='.' || tmp="${path%PKGBUILD}"
++		echo "rmpkg: ${tmp}" >> "${1}"
+ 	fi
+ done
+ 

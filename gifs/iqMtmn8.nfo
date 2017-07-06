@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<movie>
+  <plot />
+  <outline />
+  <lockdata>false</lockdata>
+  <dateadded>2017-03-16 09:25:15</dateadded>
+  <title>iqMtmn8</title>
+  <runtime>0</runtime>
+  <art>
+    <poster>/run/media/alyptik/microSDXC/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/z:/store/config/gifs/iqMtmn8-poster.jpg</poster>
+  </art>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <codec>h264</codec>
+        <micodec>h264</micodec>
+        <bitrate>473125</bitrate>
+        <width>550</width>
+        <height>310</height>
+        <aspect>16:9</aspect>
+        <aspectratio>16:9</aspectratio>
+        <framerate>25</framerate>
+        <language>und</language>
+        <scantype>progressive</scantype>
+        <default>True</default>
+        <forced>False</forced>
+        <duration>0</duration>
+        <durationinseconds>4</durationinseconds>
+      </video>
+    </streamdetails>
+  </fileinfo>
+</movie>

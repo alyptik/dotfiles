@@ -1,0 +1,62 @@
+diff --git a/config.example b/config.example
+index 942e1d3..98fdc4d 100644
+--- a/config.example
++++ b/config.example
+@@ -2,7 +2,9 @@
+ # Config file for jellyshot
+ 
+ 
+-SERVER=server.domain
++SERVER='server.domain'
+ SERVER_PATH=''
++# Becomes: https://server.doman/tmp/<name>
++SUFFIX='tmp'
+ # SSH user
+-USER=user
++USER='user'
+diff --git a/jellyshot b/jellyshot
+index 68219a1..cee169b 100755
+--- a/jellyshot
++++ b/jellyshot
+@@ -1,7 +1,11 @@
+ #!/bin/bash
+ 
++# Let trap catch non-zero exit status
++set -E -o pipefail
++
+ # Traps for cleanup
+ trap '{ [[ -f "$file" ]] && rm -v "$file"; }' EXIT
++trap '{ [[ -f "$file" ]] && rm -v "$file"; exit 1; }' ERR
+ trap '{ [[ -f "$file" ]] && rm -v "$file"; trap - INT; kill -INT $$; }' INT
+ 
+ function rand_element () {
+@@ -41,18 +45,24 @@ if type optipng &>/dev/null; then
+   optipng "$file" &>/dev/null
+ fi
+ 
+-if [[ -z $SERVER_PATH ]]; then
++# Add single / prefix if SUFFIX is set
++case "$SUFFIX" in
++  (/*) SUFFIX="/${SUFFIX//\/}" ;;
++  (?*) SUFFIX="/${SUFFIX%/*}" ;;
++esac
++
++if [[ -z "$SERVER_PATH" ]]; then
+   scp "$file" "$SERVER:/home/$USER/public_html/dump/"
+-  url="https://$SERVER/~$USER/dump/$name"
++  url="https://$SERVER$SUFFIX/~$USER/dump/$name"
+ else
+   scp "$file" "$SERVER:$SERVER_PATH/"
+-  url="https://$SERVER/$name"
++  url="https://$SERVER$SUFFIX/$name"
+ fi
+ 
+ if type xclip &>/dev/null; then
+-  printf "$(tput setaf 10)%s$(tput sgr0)\n" "$url" && printf "$url" | xclip -i -selection clipboard
++  printf "$(tput setaf 10)%s$(tput sgr0)\n" "$url" && printf "$url" | xclip -i -selection clipboard
+ elif type xsel &>/dev/null; then
+-  printf "$(tput setaf 10)%s$(tput sgr0)\n" "$url" && printf "$url" | xsel -ib
++  printf "$(tput setaf 10)%s$(tput sgr0)\n" "$url" && printf "$url" | xsel -ib
+ else
+   printf "%s\n" "$url"
+ fi
