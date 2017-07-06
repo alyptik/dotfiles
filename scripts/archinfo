@@ -1,0 +1,227 @@
+#!/usr/bin/env bash
+
+#### COLOR SETTINGS ####
+BLACK=$(tput setaf 0 && tput bold)
+RED=$(tput setaf 1 && tput bold)
+GREEN=$(tput setaf 2 && tput bold)
+YELLOW=$(tput setaf 3 && tput bold)
+BLUE=$(tput setaf 4 && tput bold)
+MAGENTA=$(tput setaf 5 && tput bold)
+CYAN=$(tput setaf 6 && tput bold)
+WHITE=$(tput setaf 7 && tput bold)
+BLACKbg=$(tput setab 0 && tput bold)
+REDbg=$(tput setab 1 && tput bold)
+GREENbg=$(tput setab 2 && tput bold)
+YELLOWbg=$(tput setab 3 && tput bold)
+BLUEbg=$(tput setab 4 && tput dim)
+MAGENTAbg=$(tput setab 5 && tput bold)
+CYANbg=$(tput setab 6 && tput bold)
+WHITEbg=$(tput setab 7 && tput bold)
+STAND=$(tput sgr0)
+
+version="v1.1"
+unixtime=$(date --date="$version" +"%s")
+time=$(date +"%T")
+
+
+#### script info
+function scriptinfo(){
+echo -e $MAGENTA"
+                 ###########################################
+		 #           Archinux Utils script 	   #
+		 #           Written by: cirrus            #
+		 #      Mail: cirrus@archlinux.info        #
+		 #        Date created: 13 Feb 2016	   #
+		 #        Your version:$GREEN $version $MAGENTA              #
+		 #   Web: http://cirrusminor.info          #
+		 ###########################################"$STAND
+}
+
+#### Show logo
+function showlogo(){
+echo $YELLOW""
+cat <<"EOT"
+[H[2J
+        [1;36m.[1;37m
+       [1;36m/#\[1;37m                     _     [1;36m _ _                  [1;37m
+      [1;36m/###\[1;37m      __ _ _ __ ___| |__  [1;36m| (_)_ __  _   ___  __[1;37m
+     [1;36m/#####\[1;37m    / _` | '__/ __| '_ \ [1;36m| | | '_ \| | | \ \/ /[1;37m
+    [1;36m/##.-.##\[1;37m  | (_| | | | (__| | | |[1;36m| | | | | | |_| |>  < [1;37m
+   [1;36m/##(   )##\[1;37m  \__,_|_|  \___|_| |_|[1;36m|_|_|_| |_|\__,_/_/\_\[1;37m
+  [1;36m/#.--   --.#\[1;37m                      [1;36m                      [1;37m
+ [1;36m/'           '\[0m  [1;37m
+                   [1;36m                              [1;36m
+EOT
+}
+clear && showlogo && sleep 2 && clear;
+#
+function infoutils(){
+TITLE="System Information for $HOSTNAME"
+CURRENT_TIME=$(date +"%c")
+TIME_STAMP="Updated on $CURRENT_TIME by $USER"
+DEFAULT_ROUTE=$(ip route show default | awk '/default/ {print $3}')
+IFACE=$(ip route show | awk '(NR == 2) {print $3}')
+MYIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' )
+PUBLIC_IP=$(wget -q -O - http://icanhazip.com/ | tail)
+ETH=$(ifconfig | awk '/enp/ { print $1": " $5 }')
+WLAN=$(ifconfig | awk '/wlan/ { print $1": " $5 }')
+KERNEL=$(uname -srv)
+DISTRO=$(cat /etc/os-release | head -n 1)
+UPTIME=$(uptime | awk '{print $2" "$3}' | tr "," " ")
+MEMORYmem=$(free -mt | awk '/Mem/{print "Total: " $2 "Mb\tUsed: " $3 "Mb\tFree: " $4 "Mb"}')
+MEMORYswap=$(free -mt | awk '/Swap/{print "Total: " $2 "Mb\tUsed: " $3 "Mb\tFree: " $4 "Mb"}')
+PACMAN=$(checkupdates | wc -l)
+AUR=$(cower -u | wc -l)
+FLASH_VERSION=`strings /usr/lib/mozilla/plugins/libflashplayer.so | awk /^FlashPlayer_/ | sed 's/FlashPlayer_//g;s/_FlashPlayer//g;s/_/./g'`
+LASTLOG=$(last $me --time-format iso -2 | awk 'NR==2 { print $2,$3,$4 }' )
+CPU_MODEL=`cat /proc/cpuinfo | grep 'model name' | cut -d: -f2 | awk 'NR==1'`
+CPU_CORES=`lscpu | grep 'CPU(s)' | cut -d: -f2 | awk 'NR==1' | tr -d " "`
+MHZ=`lscpu | grep 'CPU max MHz:' | cut -d: -f2 | awk 'NR==1' | tr -d " " `
+CPU_ARCHI=`lscpu | grep 'Architecture' | cut -d: -f2 | awk 'NR==1' | tr -d " "`
+CPUCODE=`lscpu | grep 'Byte Order:' | cut -d: -f2 | awk 'NR==1' | tr -d " "  `
+HOSTNAME=`hostname`
+PACKAGES=$(pacman -Q|wc -l)
+GPU=$(lspci | grep -i vga | cut -c35-75)
+AUDIO=$(lspci | grep -i 'Audio device' | sed -n '2p' | cut -c8-     )
+LASTUP=$(tac /var/log/pacman.log | grep upgraded | head -n 1 | cut -c 2-17)
+TMUXLS=$(tmux list-sessions | wc -l)
+NIC=$(lspci | grep -i 'Ethernet' | sed -n '1p' | cut -c29-  )
+ANALYZE=$(systemd-analyze)
+
+
+
+echo ""
+#### Internet Check
+function conninfo(){
+  wget -qO- --tries=5 --timeout=5 http://google.com > /dev/null
+  if [[ "$?" -eq 0 ]]
+  then
+echo -e "
++----- Connection Info -----+
+| Interface: $YELLOW$IFACE$STAND         |
++---------------------------+
+| Public IP: $BLUE$PUBLIC_IP$STAND   |
++---------------------------+
+| My LAN Ip: $RED$MYIP$STAND    |
++---------------------------+
+| Gateway: $GREEN$DEFAULT_ROUTE$STAND      |
++---------------------------+"
+sleep 3;
+  else
+	echo -e "$MAGENTA --- Connection Info ---$STAND "
+	echo -e $RED"No internet connection detected."$STAND && clear
+    	sleep 3;
+  fi
+}
+conninfo
+echo ""
+echo "$TITLE"
+echo ""
+echo "$TIME_STAMP"
+echo ""
+echo "+----------------+"
+echo "|     Kernel     |" $RED$KERNEL$STAND
+echo "+----------------+"
+echo "|     Distro     |" $YELLOW$DISTRO$STAND
+echo "+----------------+"
+echo "|     Uptime     |" $GREEN$UPTIME$STAND
+echo "+----------------+"
+echo "|     Memory     |" $BLUE$MEMORYmem$STAND
+echo "+----------------+"
+echo "|      Swap      |" $CYAN$MEMORYswap$STAND
+echo "+----------------+"
+echo "|    Pacman      |" $YELLOW$PACMAN$STAND
+echo "+----------------+"
+echo "|     AUR        |" $CYAN$AUR$STAND
+echo "+----------------+"
+echo "|    Packages    |" $GREEN$PACKAGES$STAND
+echo "+----------------+"
+echo "|  Last Login    |" $MAGENTA$LASTLOG$STAND
+echo "+----------------+"
+echo "|    CPU Model   |" $BLUE$CPU_MODEL$STAND
+echo "+----------------+"
+echo "|    CPU Cores   |" $CYAN$CPU_CORES$STAND
+echo "+----------------+"
+echo "|  CPU Max MHz   |" $GREEN$MHZ$STAND
+echo "+----------------+"
+echo "|CPU Architecture|" $BLUE$CPU_ARCHI$STAND
+echo "+----------------+"
+echo "|  CPU Codename  |" $RED$CPUCODE$STAND  
+echo "+----------------+"
+echo "|   Hostname     |" $YELLOW$HOSTNAME$STAND
+echo "+----------------+"
+echo "|  Flash Version |" $BLUE$FLASH_VERSION$STAND 
+echo "+----------------+"
+echo "|     GPU        |" $MAGENTA$GPU$STAND
+echo "+----------------+"
+echo "|     AUDIO      |" $RED$AUDIO$STAND
+echo "+----------------+"
+echo "|  Last Updated  |" $GREEN$LASTUP$STAND
+echo "+----------------+"
+echo "| Tmux Sessions  |" $CYAN$TMUXLS$STAND
+echo "+----------------+"
+echo "|     NIC        |" $RED$NIC$STAND
+echo "+----------------+"
+echo "|    Start Up    |" $RED$ANALYZE$STAND
+echo "+----------------+"
+
+}
+
+#### Cirrusinfo CHANGELOG
+function utilschangelog(){
+checknet=`ping -q -w 1 -c 1 google.com 2>&1 > /dev/null && echo Internet OK.`
+if [[ "$checknet" == "Internet OK." ]];
+then
+changelog=$(curl --silent --user-agent "TheLinuxTerminal - Archinfo" -q http://cirrus.openshells.org/archinfo)
+last_version=$(curl --silent --user-agent "TheLinuxTerminal - Archinfo" -q http://cirrus.openshells.org/archinfo)
+if [[ $last_version > $unixtime ]];
+then
+	clear && echo && echo $GREEN"Checking For Update:$RED New version available!" $STAND
+	echo && echo $YELLOW"Changelog:$MAGENTA
+$changelog" $STAND
+	echo && echo $WHITEbg$BLACK"Get the latest version from http://cirrus.openshells.org/archinfo" $STAND
+	echo -en $GREEN"Press y to open website or n to go to Main Menu." $STAND
+	read option
+	case $option in
+     		 y) gnome-open http://cirrus.openshells.org/archinfo && clear ;;
+     		 n) clear ;;
+     		 *) echo " \"$option\" Is Not A Valid Option"; sleep 1; utilschangelog ;;
+    	esac
+else
+   	clear && echo && echo $GREEN"Checking for update:$YELLOW You already have the latest version!" $STAND
+    	sleep 2 && clear
+fi
+else
+	echo && echo $STAND"No Internet connection." && echo
+	exit 0
+fi
+}
+
+#### Exit Cirrusinfo
+function exitutils () {
+  echo -e $WHITE"Bye bye! Time:$RED $(date +"%T") $STAND"
+  exit 0
+}
+
+#### Infinite Loop To Show Menu Until Exit
+while :
+do
+scriptinfo
+echo $WHITE"                 +-----------------------------------------+";
+echo $WHITE"                 | 1.  Run Archinux Utils                  |";
+echo $WHITE"                 | 2.  Utils Updates (+changelog)          |";
+echo $WHITE"                 | 3.  EXIT                                |";
+echo $WHITE"                 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+";
+echo $STAND""
+echo -en $MAGENTA"Choose An Option: "$STAND
+read menuoption
+case $menuoption in
+1) infoutils ;;
+2) utilschangelog ;;
+3) exitutils ;;
+*) echo $RED" \"$menuoption\" Is not a valid option!"; echo $STAND""; sleep 1; clear ;;
+esac
+done
+
+#End
+

@@ -1,0 +1,501 @@
+#!/usr/bin/bc -l
+
+### Output-Formatting.BC - Formatted output
+
+ # Functions in this library with a name containing "print" return a result
+ # equivalent to what has been output, meaning that to use them properly,
+ # they must be assigned to a dummy variable to prevent bc from inadvertently
+ # printing out the return value!
+
+ # An example usage might be q=printfrac(0,5,0.25)+newline()
+ #  q here is a dummy variable, printfrac will print 0.25 as a fraction and
+ #  the newline function prints a carriage return. Net result should be:
+ #   1/4
+
+ # Literally and figuratively adding the newline() and printspc/tabs()
+ # (q.v.) is recommended, as these neaten the output.
+
+## Bases < 36
+
+# Set this to non-zero to make output non-standard lowercase
+output_lcase_=0
+
+# Workhorse functions for the below
+define letteru__(a) { # expects an integer 0 <= a <= 35
+  auto oib,oob;
+  oib=ibase;oob=obase;ibase=A;obase=F+1
+  if(a< 0)print "_";
+  if(0<=a&&a<16)print a;obase=A
+  if(a==16)print "G";if(a==17)print "H";if(a==18)print "I";if(a==19)print "J"
+  if(a==20)print "K";if(a==21)print "L";if(a==22)print "M";if(a==23)print "N"
+  if(a==24)print "O";if(a==25)print "P";if(a==26)print "Q";if(a==27)print "R"
+  if(a==28)print "S";if(a==29)print "T";if(a==30)print "U";if(a==31)print "V"
+  if(a==32)print "W";if(a==33)print "X";if(a==34)print "Y";if(a==35)print "Z"
+  if(a>=36)print " ",a
+  ibase=oib;obase=oob;return a
+}
+
+define letterl__(a) { # expects an integer 0 <= a <= 35
+  auto oib,oob;
+  oib=ibase;oob=obase;ibase=obase=A
+  if(a< 0)print "_";
+  if(0<=a&&a<=9)print a;
+  if(a==10)print "a";if(a==11)print "b"
+  if(a==12)print "c";if(a==13)print "d";if(a==14)print "e";if(a==15)print "f"
+  if(a==16)print "g";if(a==17)print "h";if(a==18)print "i";if(a==19)print "j"
+  if(a==20)print "k";if(a==21)print "l";if(a==22)print "m";if(a==23)print "n"
+  if(a==24)print "o";if(a==25)print "p";if(a==26)print "q";if(a==27)print "r"
+  if(a==28)print "s";if(a==29)print "t";if(a==30)print "u";if(a==31)print "v"
+  if(a==32)print "w";if(a==33)print "x";if(a==34)print "y";if(a==35)print "z"
+  if(a>=36)print " ",a
+  ibase=oib;obase=oob;return a
+}
+
+define letter_(mode,a) { # expects an integer 0 <= a <= 35
+  auto t;
+  t=a
+  if(mode){if(a==0){print "_";return 0};a+=9}
+  if(output_lcase_){a=letterl__(a)}else{a=letteru__(a)}
+  return t
+}
+
+# By default bc will use decimal groups for 'digits' when outputting
+# numbers with ibase set above 16. When ibase <= 16 letters are used as
+# digits. This function outputs using letters right up to base 36 which uses
+# Z as the base-1 digit. Uses obase, so no base need be specified.
+
+# TO DO: allow setting of a sub-base for bases over the new maximum
+#        rather than defaulting to bc's own decimal mode
+
+define printbase(x) {
+  auto os,sign,i,ni,f,g,a[],ai,q;
+  if(2^4-6*(!!output_lcase_)>=obase){print x;return x}
+  if(obase>6^2){print x;return x}
+  os=scale;scale=0
+  sign=1;if(x<0){sign=-1;x=-x}
+  f=x-(i=x/1)
+  ai=0;ni=i
+  while(i){i=ni;ni=i/obase;a[++ai]=i-ni*obase}
+  if(sign<0)print"-"
+  if(ai){for(--ai;ai;ai--)q=letter_(0,a[ai])}else{print 0}
+  if(os==0||f==0){scale=os;return sign*x}
+  print"."
+  g=A^scale(x)
+  for(i=1;i<g;i*=obase){f*=obase;f-=letter_(0,f/1)}
+  scale=os;return sign*x
+}
+
+# To do: marry these with the trunc function?
+
+# Print numbers in 'special' format where digits are _ and A onwards
+define printbase_letters(x) {
+  auto os,sign,i,ni,f,g,a[],ai,q;
+  if(obase> 3^3){return q=printbase(x)}
+  os=scale;scale=0
+  sign=1;if(x<0){sign=-1;x=-x}
+  f=x-(i=x/1)
+  ai=0;ni=i
+  while(i){i=ni;ni=i/obase;a[++ai]=i-ni*obase}
+  if(sign<0)print"-"
+  if(ai){for(--ai;ai;ai--)q=letter_(1,a[ai])}else{q=letter_(1,0)}
+  if(os==0||f==0){scale=os;return sign*x}
+  print"."
+  g=A^scale(x)
+  for(i=1;i<g;i*=obase){f*=obase;f-=letter_(1,f/1)}
+  scale=os;return sign*x
+}
+
+## Bijective base output
+
+define printbijective(bbase,x) {
+  auto os,sign,i,f,g,a[],ai,q;
+  if(bbase<1)bbase=obase
+  if(bbase>5*7){
+    print "printbijective: bbase too large, using "
+    if(obase>5*7){print "decimal\n";bbase=A}else{print "obase\n";bbase=obase}
+  }
+  os=scale;scale=0
+  sign=1;if(x<0){sign=-1;x=-x}
+  bbase/=1
+  f=x-(i=x/1)
+  ai=0;while(i)i=(i-(a[++ai]=((i-1)%bbase)+1))/bbase
+  if(sign<0)print"-";g=0
+  if(ai){for(.=.;ai;ai--)q=letter_(0,a[ai])}else{print".";g=1}
+  if(os==0||f==0){scale=os;return sign*x}
+  # Fractional part - not really valid for bijectional so made something up
+  # New terminology .{3}2A2 = 0.000302 {3} representing the shift-right of 3 places
+  if(!g)print ".";if(bbase==1){print "{}";scale=os;return sign*x}
+  g=f;for(i=-1;g<=1;i++)g*=bbase
+  if(i){print "{";i=printbijective(bbase,i);print "}"}
+  g=A^scale(x)-1
+  for(i=1;i<g;i*=ibase)f*=bbase
+  f=printbijective(bbase,f)
+  scale=os;return sign*x
+}
+
+# Print numbers in 'special' format where digits are _ and A onwards
+define printbijective_letters(bbase,x) {
+  auto os,sign,i,f,g,a[],ai,q;
+  if(bbase<1)bbase=obase
+  if(bbase>2*D){
+    print "printbijective_letters: bbase too large, using "
+    if(obase>2*D){print "hexavigintimal\n";bbase=2*D}else{print "obase\n";bbase=obase}
+  }
+  os=scale;scale=0
+  sign=1;if(x<0){sign=-1;x=-x}
+  f=x-(i=x/1)
+  ai=0;while(i)i=(i-(a[++ai]=((i-1)%bbase)+1))/bbase
+  if(sign<0)print"-";g=0
+  if(ai){for(.=.;ai;ai--)q=letter_(1,a[ai])}else{print ".";g=1}
+  if(os==0||f==0){scale=os;return sign*x}
+  # Fractional part - not really valid for bijectional so made something up
+  # New terminology .{C}BJB = .___C_B {C} representing the shift-right of 3 places
+  if(!g)print ".";if(bbase==1){print "{}";scale=os;return sign*x}
+  g=f;for(i=-1;g<=1;i++)g*=bbase
+  if(i){print "{";i=printbijective_letters(bbase,i);print "}"}
+  g=A^scale(x)-1
+  for(i=1;i<g;i*=ibase)f*=bbase
+  f=printbijective_letters(bbase,f)
+  scale=os;return sign*x
+}
+
+## Negative base output. Workhorse for universal printsbase() function
+
+define printnegabase_(base,x) {
+  auto os,i,b2,d,a[],shft
+  if(x==0){.=letter_(!!printsbase_letters_,0);return 0}
+  os=scale;scale=0;base/=1
+  if(base>1)base=-base
+  if(base>-2)base=-obase
+  if(base<-6*6){}
+  b2=base*base;bijective=!!bijective
+  i=x/1;shft=0;if(x!=i)shft=1
+  if(shft){
+    d=scale(x);if(bijective)d=os
+    d=A^d
+    shft=-1
+    for(i=1;i<=d;i*=b2).=shft++
+    shft+=shft
+    x*=i/b2
+  }
+  for(i=1;x;i++){
+    d=((x-bijective)%base)+bijective;if(d<bijective)d-=base;a[i]=d/1
+    if(shft)if(!--shft)a[++i]=-1
+    x=(x-d)/base
+  }
+  if(shft){
+    if(!bijective){
+      while(shft--)a[i++]=0
+    } else {
+      a[i++]=-1-shft
+    }
+    a[i++]=-1
+  }
+  for(--i;i;i--)if((d=a[i])<-1) {
+    print "{";.=printnegabase_(base,-1-d);print "}"
+  } else if(d==-1){
+   print "."
+  } else {
+   .=letter_(!!printsbase_letters_,a[i])
+  }
+  scale=os;return 0
+}
+
+## Universal output
+
+# Uses global variable 'bijective' and internal setting 'printsbase_letters_' 
+# to choose from the above print{base|bijective}[_letters] functions, allowing
+# the same function template to be used for all cases
+
+bijective=0 # intended for global use like 'scale'
+printsbase_letters_=0 # internal
+
+define printsbase(base,x) {
+  auto os,oob;
+  os=scale;scale=0
+   base/=1
+   if(0<=base&&base<2)base=obase
+   if(base==-1)base=-obase
+  scale=os
+  if(base<0){return x+printnegabase_(base,x)}
+  if(bijective){
+    if(printsbase_letters_){
+      return printbijective_letters(base,x);
+    } else {
+      return printbijective(base,x);
+    }
+  }
+  oob=obase;obase=base
+  if(printsbase_letters_){
+    x=printbase_letters(x)
+  } else {
+    x=printbase(x)
+  }
+  obase=oob;return x
+}
+
+define printsobase(x) {
+  if(bijective){
+    if(printsbase_letters_){
+      return printbijective_letters(obase,x);
+    } else {
+      return printbijective(obase,x);
+    }
+  }
+  if(printsbase_letters_){
+    return printbase_letters(x);
+  } else {
+    return printbase(x);
+  }
+}
+
+## Factorial base
+
+pfactb_zero_=0 # set to 1 to show useless 1! places
+define printfactorialbase(x) {
+  auto os,f,t,x[],f[],xi,fi,b,bf,max
+  if(x<0){print "-";x=-x}
+  os=scale;scale=0
+  x-=(f=x-x/1)
+  max=f*A^(os-1)
+  bf=1;xi=fi=0
+  #for(b=1;x        ;b++){x[xi++]=x-(t=x/b)*b ;x=t }
+  x+=(bijective=!!bijective)
+  for(b=1;x        ;b++){x[xi++]=x-(t=(x-bijective)/b)*b ;x=t }
+  if(f)if(bijective){
+    print "printfactorialbase: warning - fp bijective mode undefined\n";
+    f=0
+  }else{
+    scale=os;f+=A^-os;scale=0
+  }
+  for(b=1;f&&bf<max;b++){t=(f*=b)/1;f-=t;f[fi++]=t;bf*=b}
+  .=--xi;.=--fi
+  for(xi=xi;xi>=(!pfactb_zero_||bijective);xi--)print " ",x[xi]
+  if(fi<0){scale=os;return 0}
+  for(fi=fi;fi>=0&&!f[fi];fi--){};.=fi++
+  print "."
+  for(xi=!pfactb_zero_;xi<fi;xi++){if(xi!=!pfactb_zero_)print " ";print f[xi]}
+  scale=os;return 0;
+}
+
+#scale=100;a=sqrt(2)-1;max=10^(scale-1);bf=1;for(b=1;bf<max&&a;b++){a*=b;a-=(n=int(a))
+#;print n,",";bf*=b};-1
+
+## Fractions
+
+# Prints a and b as a fraction in smallest terms
+# ** This function requires gcd() and int() from funcs.bc
+define printsft(a,b) { #smallest fractional terms
+  auto c,d,e
+  c=gcd(a,b);
+  d=int(a/c);
+  e=int(b/c);
+  print a,"/",b," = ",d,"/",e;
+  return(d/e)
+}
+
+# Prints x as the most accurate fraction possible under the restraint of
+# a maximum denominator. Can choose improper fraction style if required.
+# Will always choose a/b style for fractions less than one.
+# e.g. q=printfrac(0, 9, 1.75) will print 1+3/4 (one plus three quarters)
+#      q=printfrac(1, 9, 1.75) will print 7/4 (seven quarters)
+# output can be copy/pasted back into bc as valid syntax, hence using "+"
+# (or "-" in the case of negative fractions) to separate whole part from
+# fractional part in proper fractions.
+#
+# cf.bc contains a better/faster version of this function but with
+# only the "improper" parameter
+#
+define printfrac(improper, maxdenom, x) {
+  auto os,oib,best,sign,fx,f,sd,d,eps;
+  eps=A^(3-scale);if(eps>1)eps=1
+  improper=!!improper
+  sign=1;if(x<0){sign=-1;x=-x}
+  if(x<1)improper=1
+  if(maxdenom<0)maxdenom=-maxdenom
+  if(maxdenom<5)maxdenom=5
+  if(maxdenom<obase)maxdenom=obase-1
+  os=scale;scale=0
+  oib=ibase;ibase=A
+  fx=x-x/1;best=1
+  for(d=1;d<=maxdenom;d++){
+    f=fx*d;f-=f/1;if(2*f>1)f=1-f
+    if(f<best){
+      best=f;sd=d
+      if(best<eps)break
+    }
+  }
+  if(sign<0){print "-"}else{print " "}
+  if(improper){
+    x=(x*sd+.5)/1
+    print x
+    if(sd>1)print"/",sd
+    ibase=oib;scale=os;return x/sd
+  } else {
+    x/=1
+    fx=(fx*sd+.5)/1
+    if(sd==1){x+=fx;fx=0}
+    print x
+    if(fx>0){
+      if(sign<0){print "-"}else{print "+"}
+      print fx,"/",sd
+    }
+    ibase=oib;scale=os;return sign*(x+fx/sd)
+  }
+}
+  
+# Time/Degrees output
+# e.g. q=printdms(54.671) prints 54:40:15.600
+define printdms(x){
+  auto os,ox,h,m;
+  os=scale;scale=0;ox=x
+  h=x/1;x-=h;x*=F*4
+  m=x/1;x-=m;x*=F*4
+  print h,":",m,":",x
+  scale=os;return ox
+}
+
+## Other formatting
+
+# Truncate trailing zeroes or nines (in base ten at least) from a scaled number
+
+#  This function is to counter bc's habit of multiple repeated zeroes or
+#  base-minus-ones to the far right after the 'basimal' point, especially
+#  when the 'scale' was set too high for the calculation which created x
+
+# example code:
+# scale=10;x=1/4;x;trunc(x);x-=10^-scale;x;trunc(x)
+# .2500000000
+# .25
+# .2499999999
+# .25
+
+define trunc(x) {
+  auto os,ts,s,d,tx;
+  os=scale
+  d=length(x)-scale(x)
+  if(d<5||d>scale)d=5
+  ts=scale-d
+  if(scale>=d+d){
+    scale=ts
+    s=1;if(x<0)s=-1
+    x+=s*A^-scale
+    .=scale--;x/=1
+  }
+  for(scale=0;scale<=ts;scale++)if(x==(tx=x/1)){x=tx;break}
+  scale=os;return(x)
+}
+
+# Print an integer in a field width
+define intprint(w, n){ # w is field width
+ auto os,m,i;
+ os=scale;scale=0;n/=1
+ m=n;w+=(m!=0);if(m<0){m=-m;.=w--}
+ for(.=.;m>0;w--){m/=obase}
+ for(i=1;i<w;i++)print " "
+ scale=os;return(n)
+}
+
+# workhorse function for the below
+define comma_(x,gp) {
+  t=x%gp
+  if(x>=gp){
+    t+=comma_(x/gp,gp);print ","
+    for(gp/=obase;gp>=obase;gp/=obase)if(t<gp)print 0
+  }
+  print t;return 0
+}
+
+# Print a number with comma dividers using given spacing
+#  e.g. commaprint(1222333, 3) prints 1,222,333
+define commaprint(x,g){
+  auto os,sign;
+  if(g<1)g=1
+  sign=1;if(x<0){sign=-1;x=-x}
+  os=scale;scale=0
+  if(sign<0)print "-"
+  x+=comma_(x,obase^(g/1))
+  scale=os;return sign*x
+}
+
+# C-like printf %f function
+#  format is to be given as two numbers
+# prints a number in a set field width with a specified precision
+# Special features:
+#  negative    width     specifies left alignment within the field
+#  non-integer precision specifies leading zeroes where field is right aligned
+#  zero        precision specifies integer formatting only. No decimal point
+#  0.0         precision combines  the above two features (zero filled integer)
+
+define printff(width, precision, n) {
+  auto os, align, leadz, signn, intn, fracn, i;
+  if(obase>6^2){print "[obase>max]";return n}
+  os=scale;scale=0
+   leadz=0
+   if(scale(precision)>0){precision/=1;leadz=1}
+   if(precision<0)precision=-precision
+   align=1 #right
+   width/=1
+   if(width<0){width=-width;align=-1} #left
+   signn=1
+   if(n<0){n=-n;signn=-1;.=width--}
+   i=intn=n/1;fracn=n-intn
+   .=width--
+   for(.=.;i/=obase;width--){}
+   if(precision)width-=precision+1
+   
+   if( leadz&&signn==-1)print "-"
+   if(align== 1)for(i=0;i<width;i++)if(leadz){print "0"}else{print " "}
+   if(!leadz&&signn==-1)print "-"
+   i=printbase(intn) # bijective unsupported
+   if(precision>0){
+     print "."
+     fracn*=obase^precision
+     i=printff(precision, 0.0, fracn/1)
+   }
+   if(align==-1)for(i=0;i<width;i++)print " "
+  scale=os
+  return n
+}
+
+# C-like printf %e function
+#  format is to be given as two numbers
+# prints a number in a set field width with a specified precision
+# Special features as for printff above, plus:
+#  negative precision specifies grouped engineering notation
+
+define printfe(width, precision, n) {
+  auto os,oib,op,on,explen,engstep,exp,align,signn,i;
+  if(obase>6^2){print "[obase>max]";return n}
+  op=precision
+  on=n
+  os=scale;scale=0
+   oib=ibase;ibase=A
+    explen=9/(obase-0.72)+2
+    engstep=sqrt(135/obase)/1
+   ibase=oib
+   signn=1
+   if(n<0){signn=-1;n=-n}
+   align=1
+   if(width<0){align=-1;width=-width}
+   if(precision<0){precision=-precision}else{engstep=1}
+   exp=0
+   if(n)while(n/1<1){n*=obase;.=exp--}
+   precision+=precision
+   precision+=engstep-1
+   while(n/1>=obase){scale=precision;n/=obase;scale=0;.=exp++}
+   for(.=.;exp%engstep;exp--)n*=obase
+   width-=explen+2
+   if(width<0)width=0
+   i=printff(align*width, op, signn*n)
+   print "e"
+   if(exp>=0)print "+"
+   i=printff(explen, 0.0, exp)
+  scale=os
+  return n
+}
+
+# Print the specified whitespace characters
+define printspc(n)  { if(n>0)for(i=0;i< n;i++)print " "  }
+define printtabs(n) { if(n>0)for(i=0;i< n;i++)print "\t" }
+define newline() { print "\n" }

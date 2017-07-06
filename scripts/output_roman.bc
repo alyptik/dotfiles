@@ -1,0 +1,50 @@
+#!/usr/bin/bc -l output_formatting.bc
+
+### Output-Roman.BC - Print numbers with extended Roman-style numerals
+
+# Set this to non-zero to make output non-standard lowercase
+output_lcase_=0
+
+define printroman(n) {
+  auto os,t[],ti,i,d,f,x;
+  if(n==0){if(output_lcase_){print"n"}else{print "N"};return 0}
+  os=scale;scale=0
+  f=n-(x=n/1);
+  for(ti=0;x>=4000;ti++){t[ti]=x%1000;x/=1000}
+  t[ti]=x
+  for(.=.;ti>=0;ti--){
+    x=t[ti]
+    if(x){if(ti<5){for(i=0;i<ti;i++)print"("}else{print"("}}
+    d=(x/1000)%10
+    for(i=d;i;i--)if(output_lcase_){print"m"}else{print"M"}
+    d=(x/100)%10
+    if(d==4)if(output_lcase_){print"cd"}else{print"CD"}
+    if(d==9)if(output_lcase_){print"cm"}else{print"CM"}
+    if(4<d&&d<9)if(output_lcase_){print"d"}else{print "D"}
+    if((i=d%5)<4)for(.=.;i;i--)if(output_lcase_){print"c"}else{print"C"}
+    d=(x/10)%10
+    if(d==4)if(output_lcase_){print"xl"}else{print"XL"}
+    if(d==9)if(output_lcase_){print"xc"}else{print"XC"}
+    if(4<d&&d<9)if(output_lcase_){print"l"}else{print "L"}
+    if((i=d%5)<4)for(.=.;i;i--)if(output_lcase_){print"x"}else{print"X"}
+    d=x%10
+    if(d==4)if(output_lcase_){print"iv"}else{print"IV"}
+    if(d==9)if(output_lcase_){print"ix"}else{print"IX"}
+    if(4<d&&d<9)if(output_lcase_){print"v"}else{print "V"}
+    if((i=d%5)<4)for(.=.;i;i--)if(output_lcase_){print"i"}else{print"I"}
+    if(x){if(ti<5){for(i=0;i<ti;i++)print")"}else{print")[";ti=printroman(ti);print"];"}}
+  }
+  if(!f){scale=os;return n}
+  if(x)print " "
+  x=A^(os/2-1)
+  scale=os;f+=A^-os;scale=0
+  while(x&&f){
+    f*=C;d=f/1;f-=d
+    if(d>=6){if(output_lcase_){print"s"}else{print"S"};d-=6}
+    if(d==1)print".";if(d==2)print":"
+    if(d==3)print":.";if(d==4)print"::"
+    if(d==5)print"::.";
+    x/=C;if(x&&f)print"/"
+  }
+  scale=os;return n
+}

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+killall dzen2
+i3-msg restart
+sleep 2
+tail -Fs 10 "${HOME}/.weechat/pipe" | \
+	dzen2 -sa c -w 2175 -dock -fn "xft:FuraCode Nerd Font-Light:pixelsize=22" & \
+	disown

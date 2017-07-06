@@ -1,0 +1,198 @@
+#!/usr/bin/bc -l logic.bc
+
+### Logic-Striping.BC -  Do striped bitwise functions with GNU bc
+
+  ## To be used with Logic.BC
+
+## Basic Striping
+
+# workhorse function for striped_and() and striped_or()
+#  Matching bit positions in x and y are inherited by the result
+#  Mismatched bits are arbitrated by their bit position and the b parameter
+#   When the b parameter is 0, even bit positions
+#    (LSB being 0 and thus even) are set to 0, odd positions are set to 1
+#    This is a Striped AND;
+#     The degenerate case for a single bit is equivalent to AND
+#   When the b parameter is 1, even bit positions
+#    (LSB being 0 and thus even) are set to 1, odd positions are set to 0
+#    This is a Striped OR;
+#     The degenerate case for a single bit is equivalent to OR
+define stripe_(b,x,y){
+ auto z,t,os,hx,hy;
+ os=scale;scale=0
+ x/=1;y/=1;b=!!b
+ if((x<0&&y>=0)||(y<0&&x>=0)){
+   print "striped_"
+   if(b){print "or"}else{print "and"}
+   print ": sign mismatch\n"
+   # Any return value here would be related to a
+   # divergent sum with 'impossible' value -1/3
+   scale=os;return 0;
+ }
+ if(x<0){scale=os;return -1-stripe_(!b,-1-x,-1-y)}# not(stripe_(!b,not(x),not(y)))
+ z=0;t=1;while(x||y){
+  hx=x/2;hy=y/2
+  if((x-hx-hx!=b&&y-hy-hy!=b)!=b)z+=t
+  t+=t;b=!b;x=hx;y=hy
+ }
+ scale=os;return (z)
+}
+
+# Perform a bitwise logical STRIPED-AND of x and y
+define striped_and(x,y) { return stripe_(0,x,y) }
+
+# Perform a bitwise logical STRIPED-OR of x and y
+define striped_or(x,y)  { return stripe_(1,x,y) }
+
+# Generalisation of the stripe functions
+#   genstripe(0,2,x,y) == and(x,y)
+#   genstripe(0,3,x,y) ==  or(x,y)
+#   genstripe(0,5,x,y) == striped_or(x,y)
+#   genstripe(0,6,x,y) == striped_and(x,y)
+#  Override and Repeat parameters should be of binary form
+#   "1 followed by bit pattern"
+#   e.g. repeat of binary 110 = decimal 6 implies pattern of
+#    ...101010101010 which is the bit pattern for striped_and
+#   Some patterns are equivalent e.g. 110 and 11010
+#  Override parameter is used override the repeat pattern
+#   on the lower order bits
+define genstripe(override,repeat,x,y){
+ auto o,r,b,z,t,os,h,hx,hy;
+ os=scale;scale=0
+ x/=1;y/=1;override/=1;repeat/=1
+
+ if(override<0)override=-override
+ if(override<2)override+=2
+ if(repeat  <0)repeat  =-repeat
+ if(repeat  <2)repeat  +=2
+
+ # work out whether the and() or or() functions - which support
+ #   parameters of opposing sign - are more appropriate
+ #r=repeat;r+=r%2;z=0;for(r/=2;r>1;r/=2)if(z=r%2)break;
+ r=repeat;h=r/2;r+=(t=r-h-h)
+ z=0;for(r=h;r>1;r=h){h=r/2;if(z=r-h-h)break;}
+   # single equals is not an error in the above line!
+ if(!z){
+   scale=os
+   if(t)return or(x,y)
+   return and(x,y)
+ }
+
+ if((x<0&&y>=0)||(y<0&&x>=0)){
+   print "genstripe: sign mismatch\n"
+   # Any return value here would be related to
+   # a divergent sum with 'impossible' non-integral value
+   scale=os;return 0;
+ }
+ if(x<0){
+   z=6;while(z<repeat  )z+=z;repeat  =z-1-repeat
+   z=6;while(z<override)z+=z;override=z-1-override
+   scale=os
+   return -1-genstripe(override,repeat,-1-x,-1-y)
+   # not(genstripe(inv@(override),inv@(repeat),not(x),not(y)))
+ }
+ o=override;r=repeat
+ z=0;t=1;while(x||y){
+  h=r/2;b=r-h-h;r=h;if(r==1)r=repeat
+  if(o){h=o/2;b=o-h-h;o=h}
+  hx=x/2;hy=y/2
+  if((x-hx-hx!=b&&y-hy-hy!=b)!=b)z+=t
+  t+=t;b=!b;x=hx;y=hy
+ }
+ scale=os;return (z)
+}  
+
+## 'Multiplication'
+
+# NB: none of these are equivalent to nim multiplication
+
+# Perform STRIPED-OR 'multiplication' of x and y
+define striped_orm(x,y){
+  auto os,s,z,h;
+  os=scale;scale=0
+  x/=1;y/=1;s=1;if(x<0){x=-x;s=-s};if(y<0){y=-y;s=-s}
+  z=0;while(y){h=y/2;if(y-h-h)z=stripe_(1,z,x);x+=x;y=h}
+  scale=os;return s*z
+}
+
+# Perform STRIPED-AND 'multiplication' of x and y
+define striped_andm(x,y){
+  auto os,s,z,h;
+  os=scale;scale=0
+  x/=1;y/=1;s=1;if(x<0){x=-x;s=-s};if(y<0){y=-y;s=-s}
+  z=0;while(y){h=y/2;if(y-h-h)z=stripe_(0,z,x);x+=x;y=h}
+  scale=os;return s*z
+}
+
+# Perform generalised stripe 'multiplication' of x and y
+define genstripem(override,repeat,x,y){
+  auto os,s,z,h;
+  os=scale;scale=0
+  x/=1;y/=1;s=1;if(x<0){x=-x;s=-s};if(y<0){y=-y;s=-s}
+  z=0;while(y){h=y/2;if(y-h-h)z=genstripe(override,repeat,z,x);x+=x;y=h}
+  scale=os;return s*z
+}
+
+## Floating point
+
+# Perform STRIPED-OR on binary floating point representations of x and y
+define striped_orf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t
+  z=stripe_(1,x,y)
+  if(is_any_sfpr3_(x,y,z)){print "striped_orf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+# Perform STRIPED-AND on binary floating point representations of x and y
+define striped_andf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t
+  z=stripe_(0,x,y)
+  if(is_any_sfpr3_(x,y,z)){print "striped_andf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+# Perform generalised stripe on binary floating point representations of x and y
+define genstripef(o,r,x,y) {
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t
+  z=genstripe(o,r,x,y)
+  if(is_any_sfpr3_(x,y,z)){print "genstripef";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+## Floating point + 'Multiplication'
+
+# Perform STRIPED-OR-M on binary floating point representations of x and y
+define striped_ormf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t;t*=t
+  z=striped_orm(x,y)
+  if(is_any_sfpr3_(x,y,z)){print "striped_ormf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+# Perform STRIPED-AND-M on binary floating point representations of x and y
+define striped_andmf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t;t*=t
+  z=striped_andm(x,y)
+  if(is_any_sfpr3_(x,y,z)){print "striped_andmf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+# Perform generalised stripe on binary floating point representations of x and y
+define genstripemf(o,r,x,y) {
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t;t*=t
+  z=genstripem(o,r,x,y)
+  if(is_any_sfpr3_(x,y,z)){print "genstripemf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}

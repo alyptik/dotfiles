@@ -1,0 +1,10 @@
+## http://wiki.archlinux.org/index.php/Microsoft_Surface_Pro_3
+
+git clone git://git.marvell.com/mwifiex-firmware.git /opt/mwifiex-firmware/
+ln -s /opt/mwifiex-firmware/mrvl /lib/firmware/mrvl
+
+cat >/etc/sysctl.d/99-sysctl.conf <<EOF
+vm.swappiness=80
+vm.vfs_cache_pressure=50
+EOF
+

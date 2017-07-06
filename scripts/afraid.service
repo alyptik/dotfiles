@@ -1,0 +1,7 @@
+[Unit]
+Description = "Refresh afraid.org entries"
+
+[Service]
+ExecStart = /usr/bin/curl --max-time 30 --silent --noproxy --interface eth0 "http://sync.afraid.org/u/MlM4amtTZnAyUEkyMXhpT2NmcWpWRGE2OjE2MTA3Nzkw/"
+#curl -k https://freedns.afraid.org/dynamic/update.php?MlM4amtTZnAyUEkyMXhpT2NmcWpWRGE2OjE2MTA3Nzkw
+Type = oneshot

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -m
+
+if [ -z "$*" ]; then exit; fi
+printf "%s" "running: mutt -a \"$1\" -- alyptik@kindle.com &"
+echo | mutt -a "$1" -- alyptik@kindle.com & printf "\t[%s]\n" "$!"
+shift
+"$0" "$@"

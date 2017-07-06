@@ -1,0 +1,184 @@
+diff --git a/.zshrc b/.zshrc
+index 23545ba..6fb9d45 100644
+--- a/.zshrc
++++ b/.zshrc
+@@ -177,177 +177,9 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
+ zstyle :omz:plugins:ssh-agent identities identity id_rsa id_ecdsa
+ 
+ ## Start gpg/ssh agent (keychain)
+-{ eval $(keychain --eval --agents ssh,gpg identity); } 2>&1 9>&1
+-#{ eval $(keychain --eval --agents gpg); } 2>&1 9>&1
+-
+-## Envoy commands as alternate ssh/gpg-agent manager
+-#[[ ${EUID} -eq 1000 ]] && { envoy -t ssh-agent -a identity id_rsa id_ecdsa; source <(envoy -p); }
+-#[[ ${EUID} -eq 1000 ]] && { envoy -t gpg-agent; source <(envoy -p); }
+-
+-## Zshmarks bookmark file
+-BOOKMARKS_FILE="/store/config/.bookmarks"
+-
+-zle -N znt-history-widget
+-bindkey "^R" znt-history-widget
+-zle -N znt-cd-widget
+-bindkey "^T" znt-cd-widget
+-zle -N znt-kill-widget
+-bindkey "^Y" znt-kill-widget
+-source /usr/share/zsh/scripts/antigen/antigen.zsh
+-zstyle ':completion:*' rehash true
+-# History stuff
+-zmodload zsh/datetime
+-#HISTSIZE=10000
+-#SAVEHIST=10000
+-HISTSIZE=500000
+-SAVEHIST=1000000
+-# report about cpu-/system-/user-time of command if running longer than 5 seconds
+-REPORTTIME=5
+-zstyle ':history-search-multi-word' page-size 5
+-
+-## Bash style
+-#autoload select-word-style
+-#select-word-style shell
+-
+-HISTFILE=${HOME}/.zsh_history # ensure history file visibility
+-HH_CONFIG=hicolor # get more colors
+-# History search
+-autoload -Uz up-line-or-beginning-search
+-autoload -Uz down-line-or-beginning-search
+-zle -N up-line-or-beginning-search
+-zle -N down-line-or-beginning-search
+-
+-## Key bindings
+-## if this is  an interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
+-#[[ $- =~ ".*i.*" ]] && bindkey -s "\C-r" "\eqhh\n"
+-#bindkey -s "\C-r" "\eqhh\n"
+-# bind UP and DOWN arrow keys
+-zmodload zsh/terminfo
+-# bind UP and DOWN arrow keys (compatibility fallback
+-# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
+-bindkey "$terminfo[kcuu1]" history-substring-search-up
+-bindkey "$terminfo[kcud1]" history-substring-search-down
+-bindkey '\eOA' up-line-or-beginning-search
+-bindkey '\e[A' up-line-or-beginning-search
+-bindkey '\eOB' down-line-or-beginning-search
+-bindkey '\e[B' down-line-or-beginning-search
+-#bindkey  "\e[A"    history-search-backward
+-#bindkey  "\e[B"    history-search-forward
+-bindkey -e '^[[A' up-line-or-beginning-search
+-bindkey -e '^[[B' down-line-or-beginning-search
+-bindkey -v '^[[A' up-line-or-beginning-search
+-bindkey -v '^[[B' down-line-or-beginning-search
+-#bindkey -e '^[[A' history-substring-search-up
+-#bindkey -e '^[[B' history-substring-search-down
+-#bindkey -v '^[[A' history-substring-search-up
+-#bindkey -v '^[[B' history-substring-search-down
+-## bind P and N for EMACS mode
+-bindkey -M emacs '^P' history-substring-search-up
+-bindkey -M emacs '^N' history-substring-search-down
+-## bind k and j for VI mode
+-bindkey -M vicmd 'k' history-substring-search-up
+-bindkey -M vicmd 'j' history-substring-search-down
+-bindkey "\eOd" emacs-backward-word
+-bindkey "\eOD" emacs-backward-word
+-bindkey "\e\e[D" emacs-backward-word
+-bindkey "\eOc" emacs-forward-word
+-bindkey "\eOC" emacs-forward-word
+-bindkey "\e\e[C" emacs-forward-word
+-bindkey "\e[7~" beginning-of-line
+-bindkey "\e[8~" end-of-line
++bindkey "\e[1;5D" backward-word
++bindkey "\e[1;5C" forward-word
+ bindkey "\e[3~" delete-char
+-## for inside tmux
+-bindkey "\e[1~" beginning-of-line
+-bindkey "\e\e[A" beginning-of-line
+-bindkey "\e[4~" end-of-line
+-bindkey "\e\e[B" end-of-line
+-bindkey "^i" expand-or-complete-prefix
+-bindkey "\e\e\e\e" expand-or-complete-prefix
+-bindkey "\ep" expand-or-complete-prefix
+-bindkey "^u" kill-whole-line
+-
+-## Figure out the character’s code (take a look at unicode.org/charts/
+-## for example) and press ‘ctrl-x i’, followed by the character’s code
+-## and press ‘ctrl-x i’ once more.
+-## Usage example: ‘ctrl-x i 00A7 ctrl-x i’ will give you an ‘§’.
+-autoload insert-unicode-char
+-zle -N insert-unicode-char
+-bindkey "^Xi" insert-unicode-char
+-bindkey "\eu" insert-unicode-char
+-
+-# Change cursor color orange in vi mode
+-zle-keymap-select () {
+-  if [ $KEYMAP = vicmd ]; then
+-    if [[ $TMUX = '' ]]; then
+-    #echo -ne "\033]12;#586e75\007"
+-      echo -ne "\033]12;Red\007"
+-    else
+-    #printf '\033Ptmux;\033\033]12;#586e75\007\033\\'
+-      printf '\033Ptmux;\033\033]12;Red\007\033\\'
+-    fi
+-  else
+-    if [[ $TMUX = '' ]]; then
+-      echo -ne "\033]12;#b58900\007"
+-    else
+-      printf '\033Ptmux;\033\033]12;#b58900\007\033\\'
+-    fi
+-  fi
+-}
+-zle-line-init () {
+-#  zle -K viins
+-#  zle -K emacs
+-  echo -ne "\033]12;#b58900\007"
+-#  echo -ne "\033]12;#586e75\007"
+-}
+-# zle-keymap-select () {
+-#  if [ $KEYMAP = vicmd ]; then
+-#    echo -ne "\033]12;Red\007"
+-#  else
+-##    echo -ne "\033]12;Grey\007"
+-#  fi
+-#}
+-#zle -N zle-keymap-select
+-# zle-line-init () {
+-#  zle -K viins
+-#  echo -ne "\033]12;Grey\007"
+-# }
+-zle -N zle-keymap-select
+-zle -N zle-line-init
+-# toggle-keymap() { (( $(unsetopt | egrep -q "^emacs.*$")$? )) && { setopt noemacs; bindkey -v; } || { setopt emacs; bindkey -e; }; }
+-zle-toggle-keymap() { setopt | grep -q "vi" && { setopt emacs; bindkey -e; } || { setopt vi; bindkey -v; }; }
+-# toggle-keymap() { (( `unsetopt | egrep -q "^emacs.*$"`$? )) && set -o vi || set -o emacs; }
+-zle-toggle-keymap-context() {
+-  #[[ "$KEYMAP" =~ ^vi(ins|cmd|$)$ ]] && {
+-  [[ "$KEYMAP" == *vi* ]] && {
+-	local kmap='emacs'; local nokopt='-v'; local kopt='-e'; } || {
+-	local kmap='vi'; local nokopt='-e'; local kopt='-v'; }
+-  #(( `unsetopt | egrep -q "^${kmap}.*" --`$? )) && { setopt "no${kmap}"; bindkey "${nokopt}"; } || { setopt "${kmap}"; bindkey "${kopt}"; }
+-  setopt "no${kmap}"; bindkey "${nokopt}"; set -o "$kmap"
+-  # This anonymous nested function allows WIDGET
+-  # to be used as a local variable.  The -h
+-  # removes the special status of the variable.
+-  () { local -h WIDGET; }
+-  #if [[ "${1}" =~ ^vi(ins|cmd)$ ]]; then
+-    #kmap="emacs"
+-    #(( `unsetopt | egrep -q ^emacs`$? )) && { setopt noemacs; bindkey -v; } || { setopt emacs; bindkey -e; }
+-  #else
+-    #kmap="vi"
+-    #(( `unsetopt | egrep -q ^vi`$? )) && { setopt novi; bindkey -e; } || { setopt vi; bindkey -v; }
+-  #fi
+-
+-  #[[ "$KEYMAP" =~ ^vi(ins|cmd|$)$ ]] && {
+-   	#(( `unsetopt | egrep -q ^vi`$? )) && { setopt novi; bindkey -e; } || { setopt vi; bindkey -v; }
+-}
+-zle-emacs-keymap() { setopt emacs; bindkey -e; }
+-zle-vi-keymap() { setopt vi; bindkey -v; }
+-zle -N zle-toggle-keymap
+-zle -N zle-toggle-keymap-context
+-zle -N zle-emacs-keymap
+-zle -N zle-vi-keymap
+-## Set emacs as default
+-bindkey -e
+-## Set vi as default
+-#bindkey -v
+ 
+ ## Keymaps
+ bindkey -v "\ek" zle-toggle-keymap

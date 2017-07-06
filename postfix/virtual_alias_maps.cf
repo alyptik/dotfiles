@@ -1,0 +1,8 @@
+user = postfix_user
+password = Rapture1123!
+hosts = localhost
+dbname = postfix_db
+table = alias
+select_field = goto
+where_field = address
+#query = SELECT CONCAT(SUBSTRING_INDEX(email,'@',-1),'/',SUBSTRING_INDEX(email,'@',1),'/') FROM users WHERE email='%s'

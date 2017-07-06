@@ -1,0 +1,2154 @@
+Path: senator-bedfellow.mit.edu!bloom-beacon.mit.edu!news.kodak.com!news-nysernet-16.sprintlink.net!news-east1.sprintlink.net!-program!news-peer1.sprintlink.net!news-backup-west.sprintlink.net!news.sprintlink.net!news.eskimo.com!scs
+From: scs@eskimo.com (Steve Summit)
+Newsgroups: comp.lang.c,comp.lang.c.moderated,alt.comp.lang.learn.c-c++,comp.answers,alt.answers,news.answers
+Subject: comp.lang.c Changes to Answers to Frequently Asked Questions (FAQ)
+Followup-To: poster
+Date: 1 Mar 1999 18:54:42 GMT
+Organization: better late than never
+Lines: 2131
+Approved: news-answers-request@MIT.Edu
+Message-ID: <1999Mar01.1047.scs.0006@eskimo.com>
+Reply-To: scs@eskimo.com
+NNTP-Posting-Host: eskimo.com
+X-Archive-name: C-faq/diff
+X-URL: http://www.eskimo.com/~scs/C-faq/top.html
+X-PGP-Signature: Version: 2.6.2
+	iQCSAwUBNtrhad6sm4I1rmP1AQGwKgPmOpt99HTtWp9fU2cwb/icG762Nm/6h6P3
+	2doEHyZ/Vm8Na0CPxB4qUkhDgScKQ5YOprF18hfbBMKSbMBnulXQRyr+qXQiw7PI
+	s3+QDLi1FEWj8Kbuea/24YivE1eD+hF7Du7ofslSx9N7oily4Nsoe9sZF+IH5p/Q
+	8RMSMRk=
+	=cIsT
+Originator: scs@eskimo.com
+Xref: senator-bedfellow.mit.edu comp.lang.c:347258 comp.lang.c.moderated:11623 alt.comp.lang.learn.c-c++:12872 comp.answers:35268 alt.answers:40291 news.answers:152571
+
+Archive-name: C-faq/diff
+Comp-lang-c-archive-name: C-FAQ-list.diff
+URL: http://www.eskimo.com/~scs/C-faq/top.html
+
+This article is a repost of the differences between the previous
+version of the comp.lang.c FAQ list (version 3.4, last modified
+September 5, 1996, last posted January 1, 1999) and the current
+one (version 3.4, first posted February 7, 1999).  These diffs
+have been heavily edited, for readability's sake, and are not
+suitable as input to a patch program.
+
+I must beg a number of peoples' pardons by confessing that, once
+again, I have not managed to acknowledge all of the suggestions
+in the current pile.  Apologies to those of you who have still
+not heard from me or seen your suggestion used here, even after
+many months.
+
+Note also that, as of this writing, these changes have *not*
+yet been incorporated into the HTML version of the FAQ list at
+http://www.eskimo.com/~scs/C-faq/top.html .
+
+(For those not familiar with "diff" notation, in the lines that
+follow, a '<' character indicates old, changed, or deleted text,
+and a '>' character indicates new text.)
+
+First, the new entries:
+
+==========
+> 3.3b:	Here's a slick expression:
+>
+>		a ^= b ^= a ^= b
+>
+>	It swaps a and b without using a temporary.
+>
+> A:	Not portably, it doesn't.  It attempts to modify the variable a
+>	twice between sequence points, so its behavior is undefined.
+>
+>	For example, it has been reported that when given the code
+>
+>		int a = 123, b = 7654;
+>		a ^= b ^= a ^= b;
+>
+>	the SCO Optimizing C compiler (icc) sets b to 123 and a to 0.
+>
+>	See also questions 3.1, 3.8, 10.3, and 20.15c.
+==========
+> 7.3b:	I just tried the code
+>
+>		char *p;
+>		strcpy(p, "abc");
+>
+>	and it worked.  How?  Why didn't it crash?
+>
+> A:	You got lucky, I guess.  The memory pointed to by the
+>	unitialized pointer p happened to be writable by you,
+>	and apparently was not already in use for anything vital.
+==========
+> 7.3c:	How much memory does a pointer variable allocate?
+>
+> A:	That's a pretty misleading question.  When you declare
+>	a pointer variable, as in
+>
+>		char *p;
+>
+>	you (or, more properly, the compiler) have allocated only enough
+>	memory to hold the pointer itself; that is, in this case you
+>	have allocated sizeof(char *) bytes of memory.  But you have
+>	not yet allocated *any* memory for the pointer to point to.
+>	See also questions 7.1 and 7.2.
+==========
+> 11.12a: What's the correct declaration of main()?
+>
+> A:	Either int main(), int main(void), or int main(int argc,
+>	char *argv[]) (with alternate spellings of argc and *argv[]
+>	obviously allowed).  See also questions 11.12b to 11.15 below.
+>
+>	References: ISO Sec. 5.1.2.2.1, Sec. G.5.1; H&S Sec. 20.1 p.
+>	416; CT&P Sec. 3.10 pp. 50-51.
+==========
+> 12.9b:  What printf format should I use for a typedef like size_t
+>	when I don't know whether it's long or some other type?
+>
+> A:	Use a cast to convert the value to a known, conservatively-
+>	sized type, then use the printf format matching that type.
+>	For example, to print the size of a type, you might use
+>
+>		printf("%lu", (unsigned long)sizeof(thetype));
+==========
+> 12.36b: How can I arrange to have output go two places at once,
+>	e.g. to the screen and to a file?
+>
+> A:	You can't do this directly, but you could write your
+>	own printf variant which printed everything twice.
+>	See question 15.5.
+==========
+> 13.14b: Does C have any Year 2000 problems?
+>
+> A:	No, although poorly-written C programs do.
+>
+>	The tm_year field of struct tm holds the value of the year minus
+>	1900; this field will therefore contain the value 100 for the
+>	year 2000.  Code that uses tm_year correctly (by adding or
+>	subtracting 1900 when converting to or from human-readable
+>	4-digit year representations) will have no problems at the turn
+>	of the millennium.  Any code that uses tm_year incorrectly,
+>	however, such as by using it directly as a human-readable
+>	2-digit year, or setting it from a 4-digit year with code like
+>
+>		tm.tm_year = yyyy % 100;	/* WRONG */
+>
+>	or printing it as an allegedly human-readable 4-digit year with
+>	code like
+>
+>		printf("19%d", tm.tm_year);	/* WRONG */
+>
+>	will have grave y2k problems indeed.  See also question 20.32.
+>
+>	References: K&R2 Sec. B10 p. 255; ISO Sec. 7.12.1; H&S Sec. 18.4
+>	p. 401.
+==========
+> 18.13b: Is there an on-line C reference manual?
+>
+> A:	Two possibilities are
+>	http://www.cs.man.ac.uk/standard_c/_index.html and
+>	http://www.dinkumware.com/htm_cl/index.html .
+==========
+> 18.15d: I need code for performing multiple precision arithmetic.
+>
+> A:	Some popular packages are the "quad" functions within the BSD
+>	Unix libc sources (ftp.uu.net, /systems/unix/bsd-sources/..../
+>	/src/lib/libc/quad/*), the GNU MP library, the MIRACL package
+>	(see http://indigo.ie/~mscott/ ), and the old Unix libmp.a.
+>	See also questions 14.12 and 18.16.
+>
+>	References: Schumacher, ed., _Software Solutions in C_ Sec. 17
+>	pp. 343-454.
+==========
+> 19.16b: How do I copy files?
+>
+> A:	Either use system() to invoke your operating system's copy
+>	utility (see question 19.27), or open the source and destination
+>	files (using fopen() or some lower-level file-opening system call),
+>	read characters or blocks of characters from the source file,
+>	and write them to the destination file.
+>
+>	References: K&R Sec. 1, Sec. 7.
+==========
+> 19.40c: I'm trying to compile this program, but the compiler is
+>	complaining that "union REGS" is undefined, and the linker
+>	is complaining that int86() is undefined.
+>
+> A:	Those have to do with MS-DOS interrupt programming.  They don't
+>	exist on other systems.
+==========
+> 20.15b: People claim that optimizing compilers are good and that we no
+>	longer have to write things in assembler for speed, but my
+>	compiler can't even replace i/=2 with a shift.
+>
+> A:	Was i signed or unsigned?  If it was signed, a shift is not
+>	equivalent (hint: think about the result if i is negative and
+>	odd), so the compiler was correct not to use it.
+==========
+> 20.15c: How can I swap two values without using a temporary?
+>
+> A:	The standard hoary old assembly language programmer's trick is:
+>
+>		a ^= b;
+>		b ^= a;
+>		a ^= b;
+>
+>	But this sort of code has little place in modern, HLL
+>	programming.  Temporary variables are essentially free,
+>	and the idiomatic code using three assignments, namely
+>
+>		int t = a;
+>		a = b;
+>		b = t;
+>
+>	is not only clearer to the human reader, it is more likely to be
+>	recognized by the compiler and turned into the most-efficient
+>	code (e.g. using a swap instruction, if available).  The latter
+>	code is obviously also amenable to use with pointers and
+>	floating-point values, unlike the XOR trick.  See also questions
+>	3.3b and 10.3.
+==========
+> 20.20b: Is C a great language, or what?  Where else could you write
+>	something like a+++++b ?
+>
+> A:	Well, you can't meaningfully write it in C, either.
+>	The rule for lexical analysis is that at each point during a
+>	straightforward left-to-right scan, the longest possible token
+>	is determined, without regard to whether the resulting sequence
+>	of tokens makes sense.  The fragment in the question is
+>	therefore interpreted as
+>
+>		a ++ ++ + b
+>
+>	and cannot be parsed as a valid expression.
+>
+>	References: K&R1 Sec. A2 p. 179; K&R2 Sec. A2.1 p. 192; ISO
+>	Sec. 6.1; H&S Sec. 2.3 pp. 19-20.
+==========
+> 20.24b: What is assert() and when would I use it?
+>
+> A:	It is a macro, defined in <assert.h>, for testing "assertions".
+>	An assertion essentially documents an assumption being made by
+>	the programmer, an assumption which, if violated, would indicate
+>	a serious programming error.  For example, a function which was
+>	supposed to be called with a non-null pointer could write
+>
+>		assert(p != NULL);
+>
+>	A failed assertion terminates the program.  Assertions should
+>	*not* be used to catch expected errors, such as malloc() or
+>	fopen() failures.
+>
+>	References: K&R2 Sec. B6 pp. 253-4; ISO Sec. 7.2; H&S Sec. 19.1
+>	p. 406.
+==========
+> 20.39b: What do "lvalue" and "rvalue" mean?
+>
+> A:	Simply speaking, an "lvalue" is an expression that could appear
+>	on the left-hand sign of an assignment; you can also think of it
+>	as denoting an object that has a location.  (But see question
+>	6.7 concerning arrays.)  An "rvalue" is any expression that has
+>	a value (and that can therefore appear on the right-hand sign of
+>	an assignment).
+==========
+
+
+Next, the significant changes:
+
+==========
+< 1.4:	What should the 64-bit type on new, 64-bit machines be?
+<
+< A:	Some vendors of C products for 64-bit machines support 64-bit
+<	long ints.  Others fear that too much existing code is written
+<	to assume that ints and longs are the same size, or that one or
+<	the other of them is exactly 32 bits, and introduce a new,
+<	nonstandard, 64-bit long long (or __longlong) type instead.
+<
+<	Programmers interested in writing portable code should therefore
+<	insulate their 64-bit type needs behind appropriate typedefs.
+<	Vendors who feel compelled to introduce a new, longer integral
+<	type should advertise it as being "at least 64 bits" (which is
+<	truly new, a type traditional C does not have), and not "exactly
+<	64 bits."
+<
+<	References: ANSI Sec. F.5.6; ISO Sec. G.5.6.
+---
+> 1.4:	What should the 64-bit type on a machine that can support it?
+>
+> A:	The forthcoming revision to the C Standard (C9X) specifies type
+>	long long as effectively being at least 64 bits, and this type
+>	has been implemented by a number of compilers for some time.
+>	(Others have implemented extensions such as __longlong.)
+>	On the other hand, there's no theoretical reason why a compiler
+>	couldn't implement type short int as 16, int as 32, and long int
+>	as 64 bits, and some compilers do indeed choose this
+>	arrangement.
+>
+>	See also question 18.15d.
+>
+>	References: C9X Sec. 5.2.4.2.1, Sec. 6.1.2.5.
+==========
+  A:	This technique is popular, although Dennis Ritchie has called it
+	"unwarranted chumminess with the C implementation."  An official
+	interpretation has deemed that it is not strictly conforming
+<	with the C Standard.  (A thorough treatment of the arguments
+<	surrounding the legality of the technique is beyond the scope of
+<	this list.)  It does seem to be portable to all known
+---
+>	with the C Standard, although it does seem to work under all
+	known implementations.
+==========
+>	C9X will introduce the concept of a "flexible array member",
+>	which will allow the size of an array to be omitted if it is
+>	the last member in a structure, thus providing a well-defined
+>	solution.
+>
+>	References: Rationale Sec. 3.5.4.2; C9X Sec. 6.5.2.1.
+==========
+< A:	C has no way of generating anonymous structure values.  You will
+---
+> A:	As of this writing, C has no way of generating anonymous
+>	structure values.  You will have to use a temporary structure
+	variable or a little structure-building function.
+==========
+<	building function.  (gcc provides structure constants as an
+<	extension, and the mechanism will probably be added to a future
+<	revision of the C Standard.)  See also question 4.10.
+---
+>	The C9X Standard will introduce "compound literals"; one form of
+>	compound literal will allow structure constants.  For example,
+>	to pass a constant coordinate pair to a plotpoint() function
+>	which expects a struct point, you will be able to call
+>
+>		plotpoint((struct point){1, 2});
+>
+>	Combined with "designated initializers" (another C9X feature),
+>	it will also be possible to specify member values by name:
+>
+>		plotpoint((struct point){.x=1, .y=2});
+>
+>	See also question 4.10.
+>
+>	References: C9X Sec. 6.3.2.5, Sec. 6.5.8.
+==========
+< A:	ANSI Standard C allows an initializer for the first-named member
+<	of a union.  There is no standard way of initializing any other
+<	member (nor, under a pre-ANSI compiler, is there generally any
+<	way of initializing a union at all).
+---
+> A:	The current C Standard allows an initializer for the first-named
+>	member of a union.  C9X will introduce "designated initializers"
+>	which can be used to initialize any member.
+==========
+3.5:	But what about the && and || operators?
+	I see code like "while((c = getchar()) != EOF && c != '\n')" ...
+
+< A:	There is a special exception for those operators (as well as the
+<	?: and comma operators): left-to-right evaluation is guaranteed
+<	(as is an intermediate sequence point, see question 3.8).  Any
+<	book on C should make this clear.
+---
+> A:	There is a special "short-circuiting" exception for those
+>	operators.  The right-hand side is not evaluated if the left-
+>	hand side determines the outcome (i.e. is true for || or false
+>	for &&).  Therefore, left-to-right evaluation is guaranteed, as
+>	it also is for the comma operator.  Furthermore, all of these
+>	operators (along with ?:) introduce an extra internal sequence
+>	point (see question 3.8).
+==========
+  4.8:	I have a function which accepts, and is supposed to initialize,
+	a pointer:
+
+<		void f(ip)
+<		int *ip;
+---
+>		void f(int *ip)
+		{
+==========
+<	also question 15.3.)  It is safest to properly cast all null
+<	pointer constants in function calls: to guard against varargs
+<	functions or those without prototypes, to allow interim use of
+<	non-ANSI compilers, and to demonstrate that you know what you
+<	are doing.  (Incidentally, it's also a simpler rule to
+<	remember.)
+---
+>	also question 15.3.)  It is probably safest to properly cast
+>	all null pointer constants in function calls, to guard against
+>	varargs functions or those without prototypes.
+==========
+< A:	Follow these two simple rules:
+---
+> A:	Here are two simple rules you can follow:
+==========
+	The rest of the discussion has to do with other people's
+	misunderstandings, with the internal representation of null
+<	pointers (which you shouldn't need to know), and with ANSI C
+<	refinements.  Understand questions 5.1, 5.2, and 5.4, and
+---
+>	pointers (which you shouldn't need to know), and with the
+>	complexities of function prototypes.  (Taking those complexities
+>	into account, we find that rule 2 is conservative, of course;
+>	but it doesn't hurt.)  Understand questions 5.1, 5.2, and 5.4,
+==========
+<		f(a)
+<		char a[];
+---
+>		void f(char a[])
+		{ ... }
+==========
+<		f(a)
+<		char *a;
+---
+>		void f(char *a)
+==========
+< A:	You can't, in C.  Array dimensions must be compile-time
+<	constants.  (gcc provides parameterized arrays as an extension.)
+<	You'll have to use malloc(), and remember to call free() before
+---
+> A:	Until recently, you couldn't.  Array dimensions in C
+>	traditionally had to be compile-time constants.  C9X will
+>	introduce variable-length arrays (VLA's) which will solve this
+>	problem; local arrays may have sizes set by variables or other
+>	expressions, perhaps involving function parameters.  (gcc has
+>	provided parameterized arrays as an extension for some time.)
+>	If you can't use C9X or gcc, you'll have to use malloc(), and
+==========
+< A:	It is usually best to allocate an array of pointers, and then
+---
+> A:	The traditional solution is to allocate an array of pointers,
+	and then initialize each pointer to a dynamically-allocated
+	"row."  Here is a two-dimensional example:
+==========
+<		int **array1 = (int **)malloc(nrows * sizeof(int *));
+		for(i = 0; i < nrows; i++)
+<			array1[i] = (int *)malloc(ncolumns * sizeof(int));
+---
+>		int **array1 = malloc(nrows * sizeof(int *));
+		for(i = 0; i < nrows; i++)
+>			array1[i] = malloc(ncolumns * sizeof(int));
+==========
+<		int **array2 = (int **)malloc(nrows * sizeof(int *));
+<		array2[0] = (int *)malloc(nrows * ncolumns * sizeof(int));
+---
+>		int **array2 = malloc(nrows * sizeof(int *));
+>		array2[0] = malloc(nrows * ncolumns * sizeof(int));
+==========
+	In either case, the elements of the dynamic array can be
+	accessed with normal-looking array subscripts: arrayx[i][j] (for
+<	0 <= i < NROWS and 0 <= j < NCOLUMNS).
+---
+>	0 <= i < nrows and 0 <= j < ncolumns).
+==========
+<		int *array3 = (int *)malloc(nrows * ncolumns * sizeof(int));
+---
+>		int *array3 = malloc(nrows * ncolumns * sizeof(int));
+==========
+<	Finally, you could use pointers to arrays:
+---
+>	Yet another option is to use pointers to arrays:
+==========
+		int (*array4)[NCOLUMNS] =
+<			(int (*)[NCOLUMNS])malloc(nrows * sizeof(*array4));
+---
+>		int (*array4)[NCOLUMNS] = malloc(nrows * sizeof(*array4));
+==========
+>	Finally, in C9X you can use a variable-length array.
+==========
+>	References: C9X Sec. 6.5.5.2.
+==========
+<		f(int a[][NCOLUMNS])
+---
+>		void f(int a[][NCOLUMNS])
+==========
+<		f(int (*ap)[NCOLUMNS])  /* ap is a pointer to an array */
+---
+>		void f(int (*ap)[NCOLUMNS])	/* ap is a pointer to an array */
+==========
+< A:	It's not easy.  One way is to pass in a pointer to the [0][0]
+---
+> A:	It's not always easy.  One way is to pass in a pointer to the
+	[0][0] element, along with the two dimensions, and simulate
+	array subscripting "by hand":
+==========
+<		f2(aryp, nrows, ncolumns)
+<		int *aryp;
+<		int nrows, ncolumns;
+---
+>		void f2(int *aryp, int nrows, int ncolumns)
+==========
+<	gcc allows local arrays to be declared having sizes which are
+<	specified by a function's arguments, but this is a nonstandard
+<	extension.
+---
+>	C9X will allow variable-length arrays, and once compilers which
+>	accept C9X's extensions become widespread, this will probably
+>	become the preferred solution.  (gcc has supported variable-
+>	sized arrays for some time.)
+==========
+<			free(listp);
+---
+>			free((void *)listp);
+==========
+< A:	There's no standard way, although it is a common need.  If the
+<	compiler documentation is unhelpful, the most expedient way is
+---
+> A:	There's no standard way, although it is a common need.  gcc
+>	provides a -dM option which works with -E, and other compilers
+>	may provide something similar.  If the compiler documentation
+==========
+>	C9X will introduce formal support for function-like macros with
+>	variable-length argument lists.  The notation ... will appear at
+>	the end of the macro "prototype" (just as it does for varargs
+>	functions), and the pseudomacro __VA_ARGS__ in the macro
+>	definition will be replaced by the variable arguments during
+>	invocation.
+==========
+>	References: C9X Sec. 6.8.3, Sec. 6.8.3.1.
+==========
+	More recently, the Standard has been adopted as an international
+	standard, ISO/IEC 9899:1990, and this ISO Standard replaces the
+	earlier X3.159 even within the United States (where it is known
+<	as ANSI/ISO 9899-1990 [1992]).  Its sections are numbered
+<	differently (briefly, ISO sections 5 through 7 correspond
+<	roughly to the old ANSI sections 2 through 4).  As an ISO
+---
+>	as ANSI/ISO 9899-1990 [1992]).  As an ISO Standard, it is
+	subject to ongoing revision through the release of Technical
+	Corrigenda and Normative Addenda.
+==========
+<	In 1994, Technical Corrigendum 1 amended the Standard in about
+<	40 places, most of them minor corrections or clarifications.
+<	More recently, Normative Addendum 1 added about 50 pages of new
+<	material, mostly specifying new library functions for
+<	internationalization.  The production of Technical Corrigenda is
+<	an ongoing process, and a second one is expected in late 1995.
+<	In addition, both ANSI and ISO require periodic review of their
+<	standards.  This process began in 1995, and will likely result
+<	in a completely revised standard (nicknamed "C9X" on the
+<	assumption of completion by 1999).
+---
+>	In 1994, Technical Corrigendum 1 (TC1) amended the Standard
+>	in about 40 places, most of them minor corrections or
+>	clarifications, and Normative Addendum 1 (NA1) added about 50
+>	pages of new material, mostly specifying new library functions
+>	for internationalization.  In 1995, TC2 added a few more minor
+>	corrections.
+>
+>	As of this writing, a complete revision of the Standard is in
+>	its final stages.  The new Standard is nicknamed "C9X" on the
+>	assumption that it will be finished by the end of 1999.  (Many
+>	of this article's answers have been updated to reflect new C9X
+>	features.)
+==========
+	including several of those covered here.  (The Rationale was
+	"not part of ANSI Standard X3.159-1989, but... included for
+<	information only," and is not included with the ISO Standard.)
+---
+>	information only," and is not included with the ISO Standard.
+>	A new one is being prepared for C9X.)
+==========
+< A:	Doing so is perfectly legal, as long as you're careful (see
+<	especially question 11.3).  Note however that old-style syntax
+---
+> A:	Doing so is legal, but requires a certain amount of care (see
+>	especially question 11.3).  Modern practice, however, is to
+>	use the prototyped form in both declarations and definitions.
+>	(The old-style syntax is marked as obsolescent, so official
+	support for it may be removed some day.)
+==========
+<		extern f(struct x *p);
+---
+>		extern int f(struct x *p);
+==========
+  11.9:	What's the difference between "const char *p" and
+	"char * const p"?
+
+< A:	"char const *p" declares a pointer to a constant character (you
+---
+> A:	"const char *p" (which can also be written "char const *p")
+	declares a pointer to a constant character (you can't change
+	the character); "char * const p" declares a constant pointer
+	to a (variable) character (i.e. you can't change the pointer).
+==========
+>	It has been reported that programs using void main() and
+>	compiled using BC++ 4.5 can crash.  Some compilers (including
+>	DEC C V4.1 and gcc with certain warnings enabled) will complain
+>	about void main().
+==========
+	the systems which have them.  The limitation is only that
+	identifiers be *significant* in the first six characters, not
+	that they be restricted to six characters in length.  This
+<	limitation is annoying, but certainly not unbearable, and is
+<	marked in the Standard as "obsolescent," i.e. a future revision
+<	will likely relax it.
+<
+<	This concession to current, restrictive linkers really had to be
+<	made, no matter how vehemently some people oppose it.  (The
+<	Rationale notes that its retention was "most painful.")  If you
+<	disagree, or have thought of a trick by which a compiler
+<	burdened with a restrictive linker could present the C
+<	programmer with the appearance of more significance in external
+<	identifiers, read the excellently-worded section 3.1.2 in the
+<	X3.159 Rationale (see question 11.1), which discusses several
+<	such schemes and explains why they could not be mandated.
+---
+>	limitation is marked in the Standard as "obsolescent", and will
+>	be removed in C9X.
+==========
+<	Finally, are you sure you really need to convert lots of old
+<	code to ANSI C?  The old-style function syntax is still
+<	acceptable (except for variadic functions; see section 15), and
+<	a hasty conversion can easily introduce bugs.  (See question
+<	11.3.)
+==========
+< A:	There are not (yet) any good answers to either of these
+<	excellent questions, and this represents perhaps the biggest
+<	deficiency in the traditional stdio library.
+==========
+<	12.10).  Several stdio's (including GNU and 4.4bsd) provide the
+<	obvious snprintf() function, which can be used like this:
+---
+>	The "obvious" solution to the overflow problem is a length-
+>	limited version of sprintf(), namely snprintf().  It would be
+	used like this:
+==========
+<	and we can hope that a future revision of the ANSI/ISO C
+<	Standard will include this function.
+---
+>	snprintf() has been available in several stdio libraries
+>	(including GNU and 4.4bsd) for several years.  It will be
+>	standardized in C9X.
+==========
+>	When the C9X snprintf() arrives, it will also be possible to use
+>	it to predict the size required for an arbitrary sprintf() call.
+>	C9X snprintf() will return the number of characters it would
+>	have placed in the buffer, not just how many it did place.
+>	Furthermore, it may be called with a buffer size of 0 and a
+>	null pointer as the destination buffer.  Therefore, the call
+>
+>		nch = snprintf(NULL, 0, fmtstring, /* other arguments */ );
+>
+>	will compute the number of characters required for the fully-
+>	formatted string.
+>
+>	References: C9X Sec. 7.13.6.6.
+==========
+A:	ftell() and fseek() use type long int to represent offsets
+<	(positions) in a file, and are therefore limited to offsets of
+---
+>	(positions) in a file, and may therefore be limited to offsets
+	of about 2 billion (2**31-1).  The newer fgetpos() and fsetpos()
+==========
+>	fgetpos() and fsetpos() also record the state associated with
+>	multibyte streams.
+==========
+>	It is barely possible to save away information about a stream
+>	before calling freopen(), such that the original stream can
+>	later be restored, but the methods involve system-specific calls
+>	such as dup(), or copying or inspecting the contents of a FILE
+>	structure, which is exceedingly nonportable and unreliable.
+==========
+<		main()
+---
+>		int main()
+==========
+< A:	Here is one method, by Box and Muller, and recommended by Knuth:
+---
+> A:	Here is one method, recommended by Knuth and due originally to
+>	Marsaglia:
+==========
+<	References: Knuth Sec. 3.4.1 p. 117; Box and Muller, "A Note on
+<	the Generation of Random Normal Deviates";
+---
+>	References: Knuth Sec. 3.4.1 p. 117; Marsaglia and Bray,
+>	"A Convenient Method for Generating Normal Variables";
+==========
+>	C9X will provide isnan(), fpclassify(), and several other
+>	classification routines.
+==========
+>	References: C9X Sec. 7.7.3.
+==========
+  A:	It is straightforward to define a simple structure and some
+<	arithmetic functions to manipulate them.  See also questions
+---
+>	arithmetic functions to manipulate them.  C9X will support
+>	complex as a standard type.  See also questions 2.7, 2.10, and
+==========
+>	References: C9X Sec. 6.1.2.5, Sec. 7.8.
+==========
+< A:	Unfortunately, vscanf and the like are not standard.  You're on
+<	your own.
+---
+> A:	C9X will support vscanf(), vfscanf(), and vsscanf().
+>	(Until then, you may be on your own.)
+==========
+>	References: C9X Secs. 7.3.6.12-14.
+==========
+>	Tom Torfs has a nice tutorial at
+>	http://members.xoom.com/tomtorfs/cintro.html .
+==========
+>	Many comp.lang.c regulars recommend _C: A Modern Approach_,
+>	by K.N. King.
+==========
+>	Scott McMahon has a nice set of reviews at
+>	http://www.skwc.com/essent/cyberreviews.html .
+==========
+  A:	Once upon a time, Unix had a fairly nice little set of device-
+<	independent plot routines described in plot(3) and plot(5), but
+<	they've largely fallen into disuse.
+---
+>	independent plot functions described in plot(3) and plot(5).
+>	The GNU libplot package maintains the same spirit and supports
+>	many modern plot devices;
+>	see http://www.gnu.org/software/plotutils/plotutils.html .
+==========
+	solution is simply to rewrite the file.  (Instead of deleting
+	records, you might consider simply marking them as deleted, to
+<	avoid rewriting.)  See also questions 12.30 and 19.13.
+---
+>	avoid rewriting.)  Another possibility, of course, is to use a
+>	database instead of a flat file.  See also questions 12.30 and
+==========
+	to allocate huge amounts of it contiguously.  (The C Standard
+<	does not guarantee that single objects can be 32K or larger.)
+---
+>	does not guarantee that single objects can be 32K or larger,
+>	or 64K for C9X.)
+==========
+	and W. R. Stevens's _UNIX Network Programming_.  (There is also
+<	plenty of information out on the net itself.)
+---
+>	plenty of information out on the net itself, including the
+>	"Unix Socket FAQ" at http://kipper.york.ac.uk/~vic/sock-faq/ .)
+==========
+<		dayofweek(y, m, d)	/* 0 = Sunday */
+<		int y, m, d;		/* 1 <= m <= 12, y > 1752 or so */
+---
+>		int dayofweek(int y, int m, int d)	/* 0 = Sunday */
+==========
+< A:	The contest schedule is tied to the dates of the USENIX
+<	conferences at which the winners are announced.  At the time of
+<	this writing, it is expected that the yearly contest will open
+<	in October.  To obtain a current copy of the rules and
+<	guidelines, send e-mail with the Subject: line "send rules" to:
+<
+<		{apple,pyramid,sun,uunet}!hoptoad!judges  or
+<		judges@toad.com
+<
+<	(Note that these are *not* the addresses for submitting
+<	entries.)
+---
+> A:	The contest is in a state of flux; see
+>	http://www.ioccc.org/index.html for current details.
+==========
+<	Contest winners should be announced at the USENIX conference in
+<	January, and are posted to the net sometime thereafter.  Winning
+---
+>	Contest winners are usually announced at a Usenix conference,
+	and are posted to the net sometime thereafter.  Winning entries
+	from previous years (back to 1984) are archived at ftp.uu.net
+==========
+<	see also http://reality.sgi.com/csp/ioccc/ .
+--
+>	see also http://www.ioccc.org/index.html .
+==========
+<	As a last resort, previous winners may be obtained by sending e-
+<	mail to the above address, using the Subject: "send YEAR
+<	winners", where YEAR is a single four-digit year, a year range,
+<	or "all".
+		int dayofweek(int y, int m, int d)	/* 0 = Sunday */
+==========
+
+
+Finally, the not-so-significant changes:
+
+==========
+< [Last modified September 5, 1996 by scs.]
+---
+> [Last modified February 7, 1999 by scs.]
+==========
+< This article is Copyright 1990-1996 by Steve Summit.  Content from the
+---
+> This article is Copyright 1990-1999 by Steve Summit.  Content from the
+==========
+  Besides listing frequently-asked questions, this article also summarizes
+  frequently-posted answers.  Even if you know all the answers, it's worth
+  skimming through this list once in a while, so that when you see one of
+  its questions unwittingly posted, you won't have to waste time
+> answering.
+---
+> answering.  (However, this is a large and heavy document, so don't
+> assume that everyone on the newsgroup has managed to read all of it in
+> detail, and please don't roll it up and thwack people over the head with
+> it just because they missed their answer in it.)
+==========
+< This article was last modified on September 5, 1996, and its travels
+< may have taken it far from its original home on Usenet.  It may now
+---
+> This article was last modified on February 6, 1999, and its travels may
+> have taken it far from its original home on Usenet.  It may, however,
+  be out-of-date, particularly if you are looking at a printed copy
+==========
+  retrieved from a tertiary archive site or CD-ROM.  You should be able to
+< obtain the most up-to-date copy by anonymous ftp from sites ftp.eskimo.com,
+< rtfm.mit.edu, or ftp.uu.net (see questions 18.16 and 20.40), or by
+< sending the e-mail message "help" to mail-server@rtfm.mit.edu .
+---
+> be able to obtain the most up-to-date copy on the web at
+> http://www.eskimo.com/~scs/C-faq/top.html or http://www.faqs.org/faqs/ ,
+> or from one of the ftp sites mentioned in question 20.40.
+==========
+  of differences with respect to the previous version.  A hypertext
+< version is available on the world-wide web (WWW); see URL
+< http://www.eskimo.com/~scs/C-faq/top.html .  Finally, for those who
+---
+> is available on the web at the aforementioned URL.  Finally, for those
+==========
+< 1.7:	What's the best way to declare and define global variables?
+---
+> 1.7:	What's the best way to declare and define global variables
+>	and functions?
+==========
+	    cdecl can also explain complicated declarations, help with
+	    casts, and indicate which set of parentheses the arguments
+	    go in (for complicated function definitions, like the one
+<	    above).  Versions of cdecl are in volume 14 of
+<	    comp.sources.unix (see question 18.16) and K&R2.
+---
+>	    above).  See question 18.1.
+==========
+> 1.25b: What's the right declaration for main()?
+>	Is void main() correct?
+>
+> A:	See questions 11.12a to 11.15.  (But no, it's not correct.)
+==========
+< 1.30:	What can I safely assume about the initial values of variables
+---
+> 1.30:	What am I allowed to assume about the initial values
+	of variables which are not explicitly initialized?
+==========
+  1.31:	This code, straight out of a book, isn't compiling:
+
+<		f()
+---
+>		int f()
+		{
+			char a[] = "Hello, world!";
+==========
+  A:	Perhaps you have a pre-ANSI compiler, which doesn't allow
+	initialization of "automatic aggregates" (i.e. non-static local
+<	arrays, structures, and unions).  As a workaround, you can make
+<	the array global or static (if you won't need a fresh copy
+<	during any subsequent calls), or replace it with a pointer (if
+<	the array won't be written to).  (You can always initialize
+<	local char * variables to point to string literals, but see
+<	question 1.32 below.)  If neither of these conditions hold,
+<	you'll have to initialize the array by hand with strcpy() when
+---
+>	arrays, structures, and unions).  (As a workaround, and
+>	depending on how the variable a is used, you may be able to make
+>	it global or static, or replace it with a pointer, or initialize
+>	it by hand with strcpy() when f() is called.)  See also
+>	question 11.29.
+==========
+< 1.31a: What's wrong with this initialization?
+---
+> 1.31b: What's wrong with this initialization?
+==========
+< A:	Is it in the declaration of a static or non-local variable?
+<	Function calls are not allowed in initializers for such
+<	variables.
+---
+> A:	Is the declaration of a static or non-local variable?  Function
+>	calls are allowed only in initializers for automatic variables
+>	(that is, for local, non-static variables).
+==========
+  A:	The first form declares a "structure tag"; the second declares a
+	"typedef".  The main difference is that you subsequently refer
+<	to the first type as "struct x1" and the second as "x2".  That
+---
+>	to the first type as "struct x1" and the second simply as "x2".
+==========
+  2.7:	I heard that structures could be assigned to variables and
+	passed to and from functions, but K&R1 says not.
+
+< A:	What K&R1 said was that the restrictions on structure operations
+---
+> A:	What K&R1 said (though this was quite some time ago by now) was
+	that the restrictions on structure operations would be lifted
+==========
+<	Ritchie's compiler even as K&R1 was being published.  Although a
+<	few early C compilers lacked these operations, all modern
+---
+>	compiler even as K&R1 was being published.  A few ancient C
+>	compilers may have lacked these operations, but all modern
+	compilers support them, and they are part of the ANSI C
+==========
+	(Note that when a structure is assigned, passed, or returned,
+<	the copying is done monolithically; anything pointed to by any
+---
+>	the copying is done monolithically; the data pointed to by any
+	pointer fields is *not* copied.)
+==========
+< 2.8:	Why can't you compare structures?
+<
+< A:	There is no single, good way for a compiler to implement
+---
+> 2.8:	Is there a way to compare structures automatically?
+>
+> A:	No.  There is no single, good way for a compiler to implement
+==========
+<	structure comparison which is consistent with C's low-level
+---
+>	implicit structure comparison (i.e. to support the == operator
+>	for structures) which is consistent with C's low-level flavor.
+==========
+< 2.9:	How are structure passing and returning implemented?
+<
+< A:	When structures are passed as arguments to functions, the entire
+<	structure is typically pushed on the stack, using as many words
+<	as are required.  (Programmers often choose to use pointers to
+<	structures instead, precisely to avoid this overhead.)  Some
+<	compilers merely pass a pointer to the structure, though they
+<	may have to make a local copy to preserve pass-by-value
+<	semantics.
+<
+<	Structures are often returned from functions in a location
+<	pointed to by an extra, compiler-supplied "hidden" argument to
+<	the function.  Some older compilers used a special, static
+<	location for structure returns, although this made structure-
+<	valued functions non-reentrant, which ANSI C disallows.
+<
+<	References: ANSI Sec. 2.2.3; ISO Sec. 5.2.3.
+==========
+<	(Under pre-ANSI C, a (char *) cast on the first argument is
+<	required.  What's important is that fwrite() receive a byte
+<	pointer, not a structure pointer.)
+==========
+	Even when the structure is not part of an array, the end padding
+	remains, so that sizeof can always return a consistent size.
+>	See also question 2.12 above.
+==========
+	intervening comment.)  Since structure-valued functions are
+<	usually implemented by adding a hidden return pointer (see
+<	question 2.9), the generated code for main() tries to accept
+---
+>	usually implemented by adding a hidden return pointer, the
+	generated code for main() tries to accept three arguments,
+==========
+< A:	At the present time, there is little difference.  Although many
+<	people might have wished otherwise, the C Standard says that
+---
+> A:	At the present time, there is little difference.  The C Standard
+	says that enumerations may be freely intermixed with other
+==========
+<	without errors.  (If such intermixing were disallowed without
+---
+>	integral types, without errors.  (If, on the other hand, such
+	intermixing were disallowed without explicit casts, judicious
+==========
+<	constant to a string.  (If all you're worried about is
+<	debugging, a good debugger should automatically print
+---
+>	constant to a string.  (For debugging purposes, a good debugger
+	should automatically print enumeration constants symbolically.)
+==========
+A:	The subexpression i++ causes a side effect -- it modifies i's
+	value -- which leads to undefined behavior since i is also
+<	referenced elsewhere in the same expression.
+---
+>	referenced elsewhere in the same expression, and there's no way
+>	to determine whether the reference (in a[i] on the left-hand
+>	side) should be to the old or the new value.
+==========
+  3.3:	I've experimented with the code
+		int i = 3;
+		i = i++;
+<	on several compilers.  Some gave i the value 3, some gave 4, but
+<	one gave 7.  I know the behavior is undefined, but how could it
+<	give 7?
+---
+>	on several compilers.  Some gave i the value 3, and some gave 4.
+>	Which compiler is correct?
+==========
+< A:	Undefined behavior means *anything* can happen.  See questions
+---
+> A:	There is no correct answer; the expression is undefined.  See
+>	questions 3.1, 3.8, 3.9, and 11.33.
+==========
+< A:	A sequence point is the point (at the end of a full expression,
+---
+> A:	A sequence point is a point in time (at the end of the
+>	evaluation of a full expression, or at the ||, &&, ?:, or comma
+==========
+	A similar problem can arise when two integers are divided, with
+<	the result assigned to a floating-point variable.
+---
+>	the result assigned to a floating-point variable; the solution
+>	is similar, too.
+==========
+< A:	Unary operators like *, ++, and -- all associate (group) from
+<	right to left.  Therefore, *p++ increments p (and returns the
+<	value pointed to by p before the increment).  To increment the
+---
+> A:	Postfix ++ essentially has higher precedence than the prefix
+>	unary operators.  Therefore, *p++ is equivalent to *(p++); it
+>	increments p, and returns the value which p pointed to before p
+>	was incremented.  To increment the value pointed to by p, use
+==========
+<	assigned to, or incremented with ++.  (It is an anomaly in pcc-
+<	derived compilers, and an extension in gcc, that expressions
+<	such as the above are ever accepted.)  Say what you mean: use
+---
+>	assigned to, or incremented with ++.  (It is either an accident
+>	or a delibrate but nonstandard extension if a particular
+>	compiler accepts expressions such as the above.)  Say what you
+==========
+< 4.9:	Can I use a void ** pointer to pass a generic pointer to a
+<	function by reference?
+---
+> 4.9:	Can I use a void ** pointer as a parameter so that a function
+>	can accept a generic pointer by reference?
+==========
+	and from void *'s; these conversions cannot be performed (the
+	correct underlying pointer type is not known) if an attempt is
+<	made to indirect upon a void ** value which points at something
+<	other than a void *.
+---
+>	made to indirect upon a void ** value which points at a pointer
+>	type other than void *.
+==========
+	You can simulate pass by reference yourself, by defining
+	functions which accept pointers and then using the & operator
+	when calling, and the compiler will essentially simulate it for
+	you when you pass an array to a function (by passing a pointer
+<	instead, see question 6.4 et al.), but C has nothing truly
+---
+>	instead, see question 6.4 et al.).  However, C has nothing truly
+	equivalent to formal pass by reference or C++ reference
+==========
+<	parameters.  (However, function-like preprocessor macros do
+---
+>	parameters.  (On the other hand, function-like preprocessor
+>	macros can provide a form of "pass by name".)
+==========
+	It can also be argued that functions are always called via
+	pointers, and that "real" function names always decay implicitly
+	into pointers (in expressions, as they do in initializations;
+<	see question 1.34).  This reasoning, made widespread through pcc
+<	and adopted in the ANSI standard, means that
+---
+>	see question 1.34).  This reasoning (which is in fact used in
+	the ANSI standard) means that
+==========
+<	function pointed to.)  An explicit * is still allowed (and
+<	recommended, if portability to older compilers is important).
+---
+>	function pointed to.)  An explicit * is still allowed.
+==========
+< A:	When C requires the Boolean value of an expression (in the if,
+<	while, for, and do statements, and with the &&, ||, !, and ?:
+<	operators), a false value is inferred when the expression
+---
+> A:	When C requires the Boolean value of an expression, a false
+	value is inferred when the expression compares equal to zero,
+==========
+A:	As a matter of style, many programmers prefer not to have
+	unadorned 0's scattered through their programs.  Therefore, the
+<	preprocessor macro NULL is #defined (by <stdio.h> or <stddef.h>)
+---
+>	preprocessor macro NULL is #defined (by <stdio.h> and several
+>	other headers) with the value 0,
+==========
+< A:	The same as on any other machine: as 0 (or ((void *)0)).
+---
+> A:	The same as on any other machine: as 0 (or some version of 0;
+>	see question 5.4).
+==========
+< A:	Not in general.  The problem is that there are machines which
+---
+> A:	Not in general.  The complication is that there are machines
+	which use different internal representations for pointers to
+	different types of data.
+==========
+<	not buy much.  It is not needed in assignments and comparisons;
+<	see question 5.2.  It does not even save keystrokes.  Its use
+<	may suggest to the reader that the program's author is shaky on
+<	the subject of null pointers, requiring that the #definition of
+<	the macro, its invocations, and *all* other pointer usages be
+<	checked.  See also questions 9.1 and 10.2.
+---
+>	not buy much.  It is not needed in assignments or comparisons;
+>	see question 5.2.  (It does not even save keystrokes.)  See also
+	questions 9.1 and 10.2.
+==========
+<	4.	The NULL macro, which is #defined to be "0" or
+<		"((void *)0)" (see question 5.4).  Finally, as red
+---
+>	4.	The NULL macro, which is #defined to be 0 (see question
+		5.4).  Finally, as red herrings, we have...
+==========
+< A:	C programmers traditionally like to know more than they need to
+---
+> A:	C programmers traditionally like to know more than they might
+	need to about the underlying machine implementation.  The fact
+==========
+	One good way to wade out of the confusion is to imagine that C
+	used a keyword (perhaps "nil", like Pascal) as a null pointer
+	constant.  The compiler could either turn "nil" into the
+<	correct type of null pointer when it could determine the type
+---
+>	appropriate type of null pointer when it could unambiguously
+>	determine that type from the source code, or complain when it
+	could not.
+==========
+  5.20:	What does a run-time "null pointer assignment" error mean?  How
+<	do I track it down?
+---
+>	can I track it down?
+==========
+< A:	This message, which typically occurs with MS-DOS compilers (see,
+<	therefore, section 19) means that you've written, via a null
+---
+> A:	This message, which typically occurs with MS-DOS compilers, means
+	that you've written, via a null (perhaps because uninitialized)
+	pointer, to an invalid location
+==========
+<	A debugger may let you set a data breakpoint or watchpoint or
+<	something on location 0.  Alternatively, you could write a bit
+---
+>	A debugger may let you set a data watchpoint on location 0.
+	Alternatively, you could write a bit of code to stash away a
+==========
+< A:	The declaration extern char *a simply does not match the actual
+---
+> A:	In one source file you defind an array of characters and in the
+>	other you declared a pointer to characters.  The declaration
+	extern char *a simply does not match the actual definition.
+==========
+  A:	Much of the confusion surrounding arrays and pointers in C can
+	be traced to a misunderstanding of this statement.  Saying that
+	arrays and pointers are "equivalent" means neither that they are
+<	identical nor even interchangeable.
+---
+>	identical nor even interchangeable.  What it means is that array
+>	and pointer arithmetic is defined such that a pointer can be
+>	conveniently used to access an array or to simulate an array.
+==========
+<	"Equivalence" refers to the following key definition:
+---
+>	Specifically, the cornerstone of the equivalence is this key
+	definition:
+==========
+>	That is, whenever an array appears in an expression,
+>	the compiler implicitly generates a pointer to the array's
+>	first element, just as if the programmer had written &a[0].
+==========
+<	See also question 6.8.
+---
+>	See also questions 6.8 and 6.14.
+==========
+	Since arrays decay immediately into pointers, an array is never
+	actually passed to a function.  Allowing pointer parameters to
+	be declared as arrays is a simply a way of making it look as
+<	though the array was being passed -- a programmer may wish to
+<	emphasize that a parameter is traditionally treated as if it
+<	were an array, or that an array (strictly speaking, the address)
+<	is traditionally passed.  As a convenience, therefore, any
+---
+>	though an array was being passed, perhaps because the parameter
+>	will be used within the function as if it were an array.
+>	Specifically, any parameter declarations which "look like"
+	arrays, e.g.
+==========
+	declarations, nowhere else.  If the conversion bothers you,
+<	avoid it; many people have concluded that the confusion it
+---
+>	avoid it; many programmers have concluded that the confusion it
+	causes outweighs the small advantage of having the declaration
+==========
+	(and if the call to malloc() succeeds), you can reference
+<	dynarray[i] (for i from 0 to 9) just as if dynarray were a
+<	conventional, statically-allocated array (int a[10]).
+---
+>	dynarray[i] (for i from 0 to 9) almost as if dynarray were a
+>	conventional, statically-allocated array (int a[10]).  The only
+>	difference is that sizeof will not give the size of the "array".
+==========
+  A:	Although this technique is attractive (and was used in old
+<	editions of the book _Numerical Recipes in C_), it does not
+<	conform to the C standards.  Pointer arithmetic is defined only
+---
+>	editions of the book _Numerical Recipes in C_), it is not
+>	strictly conforming to the C Standard.  Pointer arithmetic is
+==========
+	pointer to a pointer.  Pointers to arrays can be confusing, and
+<	must be treated carefully; see also question 6.13.  (The
+<	confusion is heightened by the existence of incorrect compilers,
+<	including some old versions of pcc and pcc-derived lints, which
+<	improperly accept assignments of multi-dimensional arrays to
+<	multi-level pointers.)
+---
+>	must be treated carefully; see also question 6.13.
+==========
+	pointer declaration is explicit.  Since the called function does
+	not allocate space for the array, it does not need to know the
+	overall size, so the number of rows, NROWS, can be omitted.  The
+<	"shape" of the array is still important, so the column dimension
+---
+>	width of the array is still important, so the column dimension
+	NCOLUMNS (and, for three- or more dimensional arrays, the
+	intervening ones) must be retained.
+==========
+	If a function is already declared as accepting a pointer to a
+<	pointer, it is probably meaningless to pass a two-dimensional
+---
+>	pointer, it is almost certainly meaningless to pass a two-
+	dimensional array directly to it.
+==========
+<		f1(int a[][NCOLUMNS], int nrows, int ncolumns);
+---
+>		void f1a(int a[][NCOLUMNS], int nrows, int ncolumns);
+>		void f1b(int (*a)[NCOLUMNS], int nrows, int ncolumns);
+==========
+<		f2(int *aryp, int nrows, int ncolumns);
+---
+>		void f2(int *aryp, int nrows, int ncolumns);
+==========
+<		f3(int **pp, int nrows, int ncolumns);
+---
+>		void f3(int **pp, int nrows, int ncolumns);
+==========
+<	where f1() accepts a conventional two-dimensional array, f2()
+---
+>	where f1a() and f1b() accept conventional two-dimensional
+>	arrays, f2() accepts a "flattened" two-dimensional array, and
+==========
+<		f1(array, NROWS, NCOLUMNS);
+<		f1(array4, nrows, NCOLUMNS);
+---
+>		f1a(array, NROWS, NCOLUMNS);
+>		f1b(array, NROWS, NCOLUMNS);
+>		f1a(array4, nrows, NCOLUMNS);
+>		f1b(array4, nrows, NCOLUMNS);
+==========
+<	The following two calls would probably work on most systems, but
+---
+>	The following calls would probably work on most systems, but
+==========
+<		f1((int (*)[NCOLUMNS])(*array2), nrows, ncolumns);
+<		f1((int (*)[NCOLUMNS])array3, nrows, ncolumns);
+---
+>		f1a((int (*)[NCOLUMNS])(*array2), nrows, ncolumns);
+>		f1a((int (*)[NCOLUMNS])(*array2), nrows, ncolumns);
+>		f1b((int (*)[NCOLUMNS])array3, nrows, ncolumns);
+>		f1b((int (*)[NCOLUMNS])array3, nrows, ncolumns);
+==========
+	Since strcat() returns the value of its first argument (s1, in
+<	this case), the variable s3 is superfluous.
+---
+>	this case), the variable s3 is superfluous; after the call to
+>	strcat(), s1 contains the result.
+==========
+	an implementor than the invocations used by the caller.  In
+	particular, many functions which accept pointers (e.g. to
+<	structures or strings) are usually called with the address of
+---
+>	structures or strings) are usually called with a pointer to some
+==========
+<	some object (a structure, or an array -- see questions 6.3 and
+<	6.4).  Other common examples are time() (see question 13.12)
+---
+>	object (a structure, or an array -- see questions 6.3 and 6.4)
+>	which the caller has allocated.  Other common examples are
+	time() (see question 13.12) and stat().
+==========
+< 7.5:	I have a function that is supposed to return a string, but when
+---
+> 7.5a:	I have a function that is supposed to return a string, but when
+	it returns to its caller, the returned string is garbage.
+==========
+< A:	Make sure that the pointed-to memory is properly allocated.  The
+<	returned pointer should be to a statically-allocated buffer, or
+<	to a buffer passed in by the caller, or to memory obtained with
+<	malloc(), but *not* to a local (automatic) array.  In other
+<	words, never do something like
+---
+> A:	Make sure that the pointed-to memory is properly allocated.
+>	For example, make sure you have *not* done something like
+==========
+>	See also questions 7.5b, 12.21, and 20.1.
+==========
+> 7.5b:	So what's the right way to return a string or other aggregate?
+>
+> A:	The returned pointer should be to a statically-allocated buffer,
+>	or to a buffer passed in by the caller, or to memory obtained
+>	with malloc(), but *not* to a local (automatic) array.
+>
+>	See also question 20.1.
+==========
+	Under ANSI/ISO Standard C, these casts are no longer necessary,
+	and in fact modern practice discourages them, since they can
+	camouflage important warnings which would otherwise be generated
+	if malloc() happened not to be declared correctly; see question
+<	7.6 above.
+---
+>	7.6 above.  (However, the casts are typically seen in C code
+>	which for one reason or another is intended to be compatible
+>	with C++, where explicit casts from void * are required.)
+==========
+  A:	Notice that 300 x 300 is 90,000, which will not fit in a 16-bit
+<	int, even before you multiply it by sizeof(double) (see question
+<	1.1).  If you need to allocate this much memory, you'll have to
+---
+>	int, even before you multiply it by sizeof(double).  If you need
+	to allocate this much memory, you'll have to be careful.
+==========
+	question 3.14).  Otherwise, you'll have to break your data
+<	structure up into smaller chunks, or use a 32-bit machine, or
+---
+>	smaller chunks, or use a 32-bit machine or compiler, or use some
+==========
+<	use some nonstandard memory allocation routines.  See also
+---
+>	nonstandard memory allocation functions.  See also question
+==========
+A:	Under the segmented architecture of PC compatibles, it can be
+<	difficult to use more than 640K with any degree of transparency.
+---
+>	difficult to use more than 640K with any degree of transparency,
+>	especially under MS-DOS.
+==========
+  7.19:	My program is crashing, apparently somewhere down inside malloc,
+<	but I can't see anything wrong with it.
+---
+>	but I can't see anything wrong with it.  Is there a bug in
+>	malloc()?
+==========
+<	problems may involve using pointers to freed storage, freeing
+---
+>	problems may involve using pointers to memory that has been
+>	freed, freeing pointers twice, freeing pointers not obtained
+==========
+< 7.22:	When I call malloc() to allocate memory for a local pointer, do
+<	I have to explicitly free() it?
+---
+> 7.22:	When I call malloc() to allocate memory for a pointer which is
+>	local to a function, do I have to explicitly free() it?
+==========
+  7.24:	Must I free allocated memory before the program exits?
+
+  A:	You shouldn't have to.  A real operating system definitively
+<	reclaims all memory when a program exits.  Nevertheless, some
+---
+>	reclaims all memory and other resources when a program exits.
+==========
+  7.25:	I have a program which mallocs and later frees a lot of memory,
+<	but memory usage (as reported by ps) doesn't seem to go back
+---
+>	but I can see from the operating system that memory usage
+>	doesn't actually go back down.
+==========
+  A:	Most implementations of malloc/free do not return freed memory
+<	to the operating system (if there is one), but merely make it
+---
+>	to the operating system, but merely make it available for future
+	malloc() calls within the same program.
+==========
+  A:	The malloc/free implementation remembers the size of each block
+<	allocated and returned, so it is not necessary to remind it of
+---
+>	as it is allocated, so it is not necessary to remind it of the
+	size when freeing.
+==========
+< A:	Not portably.
+---
+> A:	Unfortunately, there is no standard or portable way.
+==========
+<	need a conversion routine: if you have the character, you have
+---
+>	need a conversion function: if you have the character, you have
+==========
+  A:	Perhaps surprisingly, character constants in C are of type int,
+<	so sizeof('a') is sizeof(int) (though it's different in C++).
+---
+>	so sizeof('a') is sizeof(int) (though this is another area
+>	where C++ differs).  See also question 7.8.
+==========
+< Section 9. Boolean Expressions
+---
+> Section 9. Boolean Expressions and Variables
+==========
+	would work as expected (as long as TRUE is 1), but it is
+<	obviously silly.  In general, explicit tests against TRUE and
+<	FALSE are inappropriate, because some library functions
+---
+>	obviously silly.  In fact, explicit tests against TRUE and
+>	FALSE are generally inappropriate, because some library
+==========
+<	On the other hand, Boolean values and definitions can evidently
+<	be confusing, and some programmers feel that TRUE and FALSE
+<	macros only compound the confusion.  (See also question 5.9.)
+---
+>	Although the use of macros like TRUE and FALSE (or YES
+>	and NO) seems clearer, Boolean values and definitions can
+>	be sufficiently confusing in C that some programmers feel
+>	that TRUE and FALSE macros only compound the confusion, and
+>	prefer to use raw 1 and 0 instead.  (See also question 5.9.)
+==========
+  A:	There is no good answer to this question.  If the values are
+	integers, a well-known trick using exclusive-OR could perhaps be
+	used, but it will not work for floating-point values or
+<	pointers, or if the two values are the same variable (and the
+<	"obvious" supercompressed implementation for integral types
+<	a^=b^=a^=b is illegal due to multiple side-effects; see question
+<	3.2).  If the macro is intended to be used on values of
+---
+>	pointers, or if the two values are the same variable.  (See
+>	questions 3.3b and 20.15c.)  If the macro is intended to be
+==========
+	arbitrary type (the usual goal), it cannot use a temporary,
+	since it does not know what type of temporary it needs (and
+<	would have a hard time naming it if it did), and standard C does
+---
+>	it needs (and would have a hard time picking a name for it if
+	it did), and standard C does not provide a typeof operator.
+==========
+	On the other hand, when a definition or declaration should
+<	remain private to one source file, it's fine to leave it there.
+---
+>	remain private to one .c file, it's fine to leave it there.
+==========
+> 10.8a:  What's the difference between #include <> and #include "" ?
+>
+> A:	The <> syntax is typically used with Standard or system-supplied
+>	headers, while "" is typically used for a program's own header
+>	files.
+==========
+< 10.8:	Where are header ("#include") files searched for?
+---
+> 10.8b:  What are the complete rules for header file searching?
+==========
+> 10.10b: I'm #including the right header file for the library function
+>	I'm using, but the linker keeps saying it's undefined.
+>
+> A:	See question 13.25.
+==========
+  A:	You can't do it directly; preprocessor #if arithmetic uses only
+<	integers.  You can #define several manifest constants, however,
+---
+>	integers.  An alternative is to #define several macros with
+>	symbolic names and distinct integer values, and implement
+	conditionals on those.
+==========
+	(Better yet, try to write code which is inherently insensitive
+<	to type sizes.)
+---
+>	to type sizes; see also question 1.1.)
+==========
+	Other possible solutions are to use different macros (DEBUG1,
+<	DEBUG2, etc.) depending on the number of arguments, to play
+<	games with commas:
+---
+>	DEBUG2, etc.) depending on the number of arguments, or to play
+>	tricky games with commas:
+==========
+<	It is often better to use a bona-fide function, which can take a
+---
+>	Finally, you can always use a bona-fide function, which can take
+==========
+<	At the time of this writing, the cost is $130.00 from ANSI or
+---
+>	The last time I checked, the cost was $130.00 from ANSI or
+	$400.50 from Global.  Copies of the original X3.159 (including
+==========
+>	Public review drafts of C9X are available from ISO/IEC
+>	JTC1/SC22/WG14's web site, http://www.dkuug.dk/JTC1/SC22/WG14/ .
+==========
+< 11.2a: Where can I get information about updates to the Standard?
+---
+> 11.2b: Where can I get information about updates to the Standard?
+==========
+< A:	You can find some information at the web sites
+<	http://www.lysator.liu.se/c/index.html and http://www.dmk.com/ .
+---
+> A:	You can find information (including C9X drafts) at
+>	the web sites http://www.lysator.liu.se/c/index.html,
+>	http://www.dkuug.dk/JTC1/SC22/WG14/, and http://www.dmk.com/ .
+==========
+  A:	You have mixed the new-style prototype declaration
+	"extern int func(float);" with the old-style definition
+<	"int func(x) float x;".  It is usually safe to mix the two
+---
+>	"int func(x) float x;".  It is usually possible to mix the two
+	styles (see question 11.4), but not in this case.
+==========
+	(In this case, it would be clearest to change the old-style
+<	definition to use double as well, as long as the address of that
+<	parameter is not taken.)
+---
+>	definition to use double as well, if possible.)
+==========
+<	It may also be safer to avoid "narrow" (char, short int, and
+---
+>	It is arguably much safer to avoid "narrow" (char, short int,
+	and float) function arguments and return types altogether.
+==========
+< 11.12: Can I declare main() as void, to shut off these annoying "main
+---
+> 11.12b: Can I declare main() as void, to shut off these annoying "main
+==========
+<	need to access the environment in ways beyind what the standard
+---
+>	need to access the environment in ways beyond what the standard
+==========
+<	Many books unaccountably use void main() in examples.  They're
+---
+>	Many books unaccountably use void main() in examples, and assert
+>	that it's correct.  They're wrong.
+==========
+<	However, a few older, nonconforming systems may have problems
+<	with one or the other form.  Also, a return from main() cannot
+<	be expected to work if data local to main() might be needed
+<	during cleanup; see also question 16.4.  (Finally, the two forms
+---
+>	However, a return from main() cannot be expected to work if
+>	data local to main() might be needed during cleanup; see also
+>	question 16.4.  A few very old, nonconforming systems may once
+>	have had problems with one or the other form.  (Finally, the two
+	forms are obviously not equivalent in a recursive call to
+	main().)
+==========
+< 11.30: Why are some ANSI/ISO Standard library routines showing up as
+---
+> 11.30: Why are some ANSI/ISO Standard library functions showing up as
+==========
+A:	For one thing, the variable to hold getchar's return value
+	must be an int.  getchar() can return all possible character
+<	values, as well as EOF.  By passing getchar's return value
+<	through a char, either a normal character might be
+---
+>	as well as EOF.  By squeezing getchar's return value into a
+	char, either a normal character might be misinterpreted as EOF,
+	or the EOF might be altered (particularly if type char is
+	unsigned) and so never seen.
+==========
+< A:	In C, EOF is only indicated *after* an input routine has tried
+<	to read, and has reached end-of-file.  (In other words, C's I/O
+---
+> A:	In C, end-of-file is only indicated *after* an input routine has
+>	tried to read, and failed.  (In other words, C's I/O is not like
+	Pascal's.)  Usually, you should just check the return value of
+==========
+<	return value of the input routine (fgets() in this case); often,
+---
+>	the input routine (in this case, fgets() will return NULL on end-
+>	of-file); often, you don't need to use feof() at all.
+==========
+  A:	It's best to use an explicit fflush(stdout) whenever output
+<	should definitely be visible.  Several mechanisms attempt to
+---
+>	should definitely be visible (and especially if the text does
+>	not end with \n).  Several mechanisms attempt to perform the
+==========
+	\% can't work, because the backslash \ is the *compiler's*
+	escape character, while here our problem is that the % is
+<	printf's escape character.
+---
+>	essentially printf's escape character.
+==========
+< A:	printf("%*d", width, n) will do just what you want.
+---
+> A:	printf("%*d", width, x) will do just what you want.
+==========
+< A:	The routines in <locale.h> begin to provide some support for
+---
+> A:	The functions in <locale.h> begin to provide some support for
+==========
+  A:	You can't; an asterisk in a scanf() format string means to
+	suppress assignment.  You may be able to use ANSI stringizing
+	and string concatenation to accomplish about the same thing, or
+<	to construct a scanf format string on-the-fly.
+---
+>	you can construct the scanf format string at run time.
+==========
+<	often useful; see also question 13.6.)  If you do use sscanf(),
+---
+>	often useful; see also question 13.6.)  If you do use any scanf
+>	variant, be sure to check the return value to make sure that the
+	expected number of items were found.  Also, if you use %s, be
+==========
+	When the format string being used with sprintf() is known and
+<	relatively simple, you can usually predict a buffer size in an
+---
+>	relatively simple, you can sometimes predict a buffer size in an
+	ad-hoc way.  If the format consists of one or two %s's, you can
+==========
+<	strlen() on the string(s) to be inserted.  The number of
+---
+>	strlen() on the string(s) to be inserted.  For integers, the
+	number of characters produced by %d is no more than
+==========
+	There is no standard way to discard unread characters from a
+<	stdio input stream, nor would such a way be sufficient, since
+---
+>	stdio input stream, nor would such a way necessarily be
+	sufficient, since unread characters can also accumulate in
+==========
+  12.38: How can I read a binary data file properly?  I'm occasionally
+<	seeing 0x0a and 0x0d values getting garbled, and it seems to hit
+---
+>	seeing 0x0a and 0x0d values getting garbled, and I seem to hit
+	EOF prematurely if the data contains the value 0x1a.
+==========
+<	memcpy() is usually a more appropriate routine to use than
+---
+>	memcpy() is usually a more appropriate function to use than
+==========
+< A:	The only Standard routine available for this kind of
+---
+> A:	The only Standard function available for this kind of
+==========
+	The comparison function's arguments are expressed as "generic
+	pointers," const void *.  They are converted back to what they
+<	"really are" (char **) and dereferenced, yielding char *'s which
+<	can be passed to strcmp().  (Under a pre-ANSI compiler, declare
+<	the pointer parameters as char * instead of void *, and drop the
+<	consts.)
+---
+>	"really are" (pointers to pointers to char) and dereferenced,
+>	yielding char *'s which can be passed to strcmp().
+==========
+	(The conversions from generic pointers to struct mystruct
+	pointers happen in the initializations sp1 = p1 and sp2 = p2;
+	the compiler performs the conversions implicitly since p1 and p2
+<	are void pointers.  Explicit casts, and char * pointers, would
+<	be required under a pre-ANSI compiler.  See also question 7.7.)
+---
+>	are void pointers.)
+==========
+	If, on the other hand, you're sorting pointers to structures,
+	you'll need indirection, as in question 13.8:
+<	sp1 = *(struct mystruct **)p1 .
+---
+>	sp1 = *(struct mystruct * const *)p1 .
+==========
+< A:	Just use the time(), ctime(), and/or localtime() functions.
+<	(These functions have been around for years, and are in the ANSI
+<	standard.)  Here is a simple example:
+---
+> A:	Just use the time(), ctime(), localtime() and/or strftime()
+>	functions.  Here is a simple example:
+==========
+< 13.13: I know that the library routine localtime() will convert a
+---
+> 13.13: I know that the library function localtime() will convert a
+==========
+< A:	ANSI C specifies a library routine, mktime(), which converts a
+---
+> A:	ANSI C specifies a library function, mktime(), which converts a
+==========
+<	the inverse of strftime().  Other popular routines are partime()
+---
+>	the inverse of strftime().  Other popular functions are partime()
+==========
+	Another approach to both problems is to use "Julian day"
+<	numbers.  Implementations of Julian day routines can be found in
+<	the file JULCAL10.ZIP from the Simtel/Oakland archives (see
+---
+>	numbers".  Code for handling Julian day numbers can be found
+>	in the Snippets collection (see question 18.15c), the
+>	Simtel/Oakland archives (file JULCAL10.ZIP, see question 18.16),
+==========
+< 13.24:	I'm trying to port this	     A:	Those routines are variously
+---
+> 13.24:	I'm trying to port this	     A:	Those functions are variously
+==========
+<	Contrariwise, if you're using an older system which is missing
+<	the functions in the second column, you may be able to implement
+<	them in terms of, or substitute, the functions in the first.
+==========
+  A:	In general, a header file contains only declarations.  In some
+<	cases (especially if the functions are nonstandard) you may have
+<	to explicitly ask for the correct libraries to be searched when
+---
+>	cases (especially if the functions are nonstandard) obtaining
+>	the actual *definitions* may require explicitly asking for the
+	correct libraries to be searched when you link the program.
+==========
+  A:	That message is a quirk of the old Unix linkers.  You get an
+<	error about _end being undefined only when other things are
+---
+>	error about _end being undefined only when other symbols are
+	undefined, too -- fix the others, and the error about _end will
+	disappear.
+==========
+  A:	Most computers use base 2 for floating-point numbers as well as
+<	for integers.  In base 2, 1/1010 (that is, 1/10 decimal) is an
+<	infinitely-repeating fraction: its binary representation is
+<	0.0001100110011... .  Depending on how carefully your compiler's
+---
+>	for integers.  In base 2, one divided by ten is an infinitely-
+>	repeating fraction (0.0001100110011...), so fractions such as
+>	3.1 (which look like they can be exactly represented in decimal)
+>	cannot be represented exactly in binary.  Depending on how
+==========
+<	routine to be careful with is atof(), which is declared in
+---
+>	function to be careful with is atof(), which is declared in
+==========
+	C has a pow() function, declared in <math.h>, although explicit
+<	multiplication is often better for small positive integral
+---
+>	multiplication is usually better for small positive integral
+	exponents.
+==========
+< A:	Ajay Shah maintains an index of free numerical software; it is
+<	posted periodically, and archived in the comp.lang.c directory
+<	at rtfm.mit.edu (see question 20.40).
+---
+> A:	Ajay Shah has prepared a nice index of free numerical
+>	software which has been archived pretty widely; one URL
+>	is ftp://ftp.math.psu.edu/pub/FAQ/numcomp-free-c .
+==========
+	It happens that Borland's heuristics for determining
+	whether the program uses floating point are insufficient, and
+<	the programmer must sometimes insert an extra, explicit call to
+<	a floating-point library routine (such as sqrt(); any will do)
+---
+>	the programmer must sometimes insert a dummy call to a floating-
+>	point library function (such as sqrt(); any will do) to force
+	loading of floating-point support.
+==========
+<	Here is an error() routine which prints an error message,
+---
+>	Here is an error() function which prints an error message,
+==========
+	are predictable, you can pass an explicit count of the number of
+	variable arguments (although it's usually a nuisance for the
+<	caller to generate).
+---
+>	caller to supply).
+==========
+	(For analogous reasons, the last "fixed" argument, as handed to
+<	va_start(), should not be widenable.)  See also questions 11.3
+---
+>	va_start(), should not be widenable, either.)  See also
+==========
+< 16.2a: I'm getting baffling syntax errors which make no sense at all,
+---
+> 16.1b:  I'm getting baffling syntax errors which make no sense at all,
+==========
+< 16.2b: Why isn't my procedure call working?  The compiler seems to skip
+---
+> 16.1c: Why isn't my procedure call working?  The compiler seems to skip
+==========
+>	C has only functions, and function calls always require
+---
+<	C only has functions, and function calls always require
+	parenthesized argument lists, even if empty.
+==========
+  16.5:	This program runs perfectly on one machine, but I get weird
+<	results on another.  Stranger still, adding or removing
+<	debugging printouts changes the symptoms...
+---
+>	results on another.  Stranger still, adding or removing a
+>	debugging printout changes the symptoms...
+==========
+<	A better option is to use a macro:
+---
+>	Another option is to use a macro:
+		#define Streq(s1, s2) (strcmp((s1), (s2)) == 0)
+==========
+<	Opinions on code style, like those on religion, can be debated
+<	endlessly.  Though good style is a worthy goal, and can usually
+<	be recognized, it cannot be rigorously codified.  See also
+---
+>	See also question 17.10.
+==========
+<	Evidently it can be easier to remember to reverse the test than
+<	it is to remember to type the doubled = sign.
+---
+>	Evidently it can be easier for some people to remember to
+>	reverse the test than to remember to type the doubled = sign.
+>	(Of course, the trick only helps when comparing to a constant.)
+==========
+  A:	Hungarian Notation is a naming convention, invented by Charles
+<	Simonyi, which encodes things about a variable's type (and
+---
+>	Simonyi, which encodes information about a variable's type (and
+	perhaps its intended use) in its name.  It is well-loved in some
+==========
+<		cs.washington.edu	pub/cstyle.tar.Z
+---
+>		ftp.cs.washington.edu	pub/cstyle.tar.Z
+==========
+	Programming Style_, _Plum Hall Programming Guidelines_, and _C
+<	Style: Standards and Guidelines_; see the Bibliography.  (The
+<	_Standards and Guidelines_ book is not in fact a style guide,
+<	but a set of guidelines on selecting and creating style guides.)
+---
+>	Style: Standards and Guidelines_; see the Bibliography.
+==========
+<	a revision control or		RCS or SCCS
+---
+>	a revision control or		CVS, RCS, or SCCS
+	configuration management
+	tool
+==========
+<	a C declaration aid		see question 1.21
+<	(cdecl)
+---
+>	a C declaration aid		check volume 14 of
+>	(cdecl)				comp.sources.unix (see
+>					question 18.16) and K&R2
+==========
+<	See also questions 18.16 and 18.3.
+---
+>	See also questions 18.3 and 18.16.
+==========
+		Purify, from Pure Software, 1309 S. Mary Ave., Sunnyvale,
+		CA 94087, USA, 800-224-7873, http://www.pure.com ,
+		info-home@pure.com .
+>		(I believe Pure was recently acquired by Rational.)
+==========
+<	archive sites.  An MS-DOS port, djgpp, is also available; it can
+<	be found at ftp.delorie.com in pub/djgpp, or at the various
+<	SimTel mirrors (e.g. ftp.simtel.net in pub/simtelnet/gnu/djgpp;
+<	ftp.coast.net in SimTel/vendors/djgpp).
+---
+>	archive sites.  An MS-DOS port, djgpp, is also available;
+>	see the djgpp home page at http://www.delorie.com/djgpp/ .
+==========
+>	There are currently no viable shareware compilers for the
+>	Macintosh.
+==========
+	Tim Love's "C for Programmers" is available by ftp from svr-
+	ftp.eng.cam.ac.uk in the misc directory.  An html version is at
+<	http://club.eng.cam.ac.uk/help/tpl/languages/C/teaching_C/
+---
+>	http://www-h.eng.cam.ac.uk/help/tpl/languages/C/teaching_C/
+	teaching_C.html .
+==========
+	On some Unix machines you can try typing "learn c" at the shell
+<	prompt.
+---
+>	prompt (but the lessons may be quite dated).
+==========
+	Finally, the author of this FAQ list teaches a C class
+<	and has begun putting its notes on the web; they are at
+---
+>	and has placed its notes on the web; they are at
+	http://www.eskimo.com/~scs/cclass/cclass.html .
+==========
+<	[Disclaimer: I have not reviewed all of these tutorials, and I
+<	have heard that at least one of them contains a number of
+---
+>	[Disclaimer: I have not reviewed many of these tutorials, and
+>	I gather that they tend to contain errors.  With the exception
+==========
+<	This FAQ list's editor maintains a collection of previous
+<	answers to this question, which is available upon request.
+---
+>	This FAQ list's editor has a large collection of assorted
+>	old recommendations which various people have posted; it
+>	is available upon request.
+==========
+> 18.13c: Where can I get a copy of the ANSI/ISO C Standard?
+>
+> A:	See question 11.2.
+==========
+A:	The definitive grammar is of course the one in the ANSI
+	standard; see question 11.2.  Another grammar (along with one
+	for C++) by Jim Roskind is in pub/c++grammar1.1.tar.Z at
+<	ics.uci.edu .  A fleshed-out, working instance of the ANSI
+---
+>	ics.uci.edu (or perhaps ftp.ics.uci.edu, or perhaps
+>	OLD/pub/c++grammar1.1.tar.Z), or at ftp.eskimo.com in
+>	u/s/scs/roskind_grammar.Z .  A fleshed-out, working instance of
+==========
+< 18.15a: Does anyone have a C compiler test suite I can use?
+---
+> 18.15b: Does anyone have a C compiler test suite I can use?
+==========
+< A:	Bob Stout's "SNIPPETS" collection is available from
+---
+> A:	Bob Stout's popular "SNIPPETS" collection is available from
+==========
+	are probably new indexing services springing up every day.  One
+<	of the first was "archie": for any program or resource available
+<	on the net, if you know its name, an archie server can usually
+<	tell you which anonymous ftp sites have it.  Your system may
+<	have an archie command, or you can send the mail message "help"
+<	to archie@archie.cs.mcgill.ca for information.
+---
+>	of the first was "archie", and of course there are a number of
+>	high-profile commercial net indexing and searching services such
+>	as Alta Vista, Excite, and Yahoo.
+==========
+<	How can I print things in inverse video?
+---
+>	How can I print text in color?
+==========
+	using.  You will have to use a library such as termcap,
+	terminfo, or curses, or some system-specific routines, to
+<	perform these operations.
+---
+>	perform these operations.  On MS-DOS systems, two functions
+>	to look for are clrscr() and gotoxy().
+==========
+	For clearing the screen, a halfway portable solution is to print
+	a form-feed character ('\f'), which will cause some displays to
+<	clear.  Even more portable might be to print enough newlines to
+---
+>	clear.  Even more portable (albeit even more gunky) might be to
+	print enough newlines to scroll everything away.
+==========
+<	See any DOS programming guide for lists of keyboard codes.
+---
+>	See any DOS programming guide for lists of keyboard scan codes.
+==========
+<	Three possible test routines are stat(), access(), and fopen().
+---
+>	Three possible test functions are stat(), access(), and fopen().
+==========
+	an approximate answer.  You can fseek() to the end and then use
+<	ftell(), or maybe try fstat(), but these tend to have problems:
+---
+>	ftell(), or maybe try fstat(), but these tend to have the same
+>	sorts of problems: fstat() is not portable, and generally tells
+	you the same thing stat() tells you; ftell() is not guaranteed
+==========
+<	count except for binary files.  Some systems provide routines
+<	called filesize() or filelength(), but these are not portable,
+<	either.
+---
+>	to return a byte count except for binary files.  Some systems
+>	provide functions called filesize() or filelength(), but these
+>	are obviously not portable, either.
+==========
+< 19.12a: How can I find the modification date and time of a file?
+---
+> 19.12b: How can I find the modification date and time of a file?
+==========
+	multiple links).  It is best to remember the names of files
+<	yourself when you open them (perhaps with a wrapper function
+---
+>	yourself as you open them (perhaps with a wrapper function
+==========
+<	be passed through to fopen() (or any other routine) correctly,
+---
+>	be passed through to fopen() (or any other function) correctly,
+==========
+< A:	See if you can use the opendir() and readdir() routines, which
+---
+> A:	See if you can use the opendir() and readdir() functions, which
+==========
+< A:	Unix and some other systems provide a popen() routine, which
+---
+> A:	Unix and some other systems provide a popen() function, which
+==========
+	and the modified environment is generally passed on to child
+	processes, but it is *not* propagated back to the parent
+<	process.
+---
+>	process.  Under MS-DOS, it's possible to manipulate the master
+>	copy of the environment, but the required techniques are arcane.
+>	(See an MS-DOS FAQ list.)
+==========
+< 19.36: How can I read in an object file and jump to routines in it?
+---
+> 19.36: How can I read in an object file and jump to locations in it?
+==========
+	Of these, only clock() is part of the ANSI Standard.  The
+	difference between two calls to clock() gives elapsed execution
+<	time, and if CLOCKS_PER_SEC is greater than 1, the difference will
+<	have subsecond resolution.  However, clock() gives elapsed
+---
+>	time, and may even have subsecond resolution, if CLOCKS_PER_SEC
+>	is greater than 1.  However, clock() gives elapsed processor time
+==========
+	but resist this temptation if at all possible!  For one thing,
+<	your carefully-calculated delay loops will stop working next
+---
+>	your carefully-calculated delay loops will stop working properly
+	next month when a faster processor comes out.  Perhaps worse, a
+==========
+< A:	On many systems, you can define a routine matherr() which will
+---
+> A:	On many systems, you can define a function matherr() which will
+==========
+< 19.40b: How do I use BIOS calls?  How can I write ISR's?  How can I
+<	create TSR's?
+---
+> 19.40b: How do I...  Use BIOS calls?  Write ISR's?  Create TSR's?
+==========
+	%x, etc.) and in the strtol() and strtoul() functions by the
+<	third argument.  During *binary* I/O, however, the base again
+---
+>	third argument.  If you need to output numeric strings in
+>	arbitrary bases, you'll have to supply your own function to do
+>	so (it will essentially be the inverse of strtol).  During
+==========
+  20.12: What is the most efficient way to count the number of bits which
+<	are set in a value?
+---
+>	are set in an integer?
+==========
+<	See also questions question 20.17.
+---
+>	See also question 20.17.
+==========
+<	Note also that // comments, as in C++, are not currently legal
+---
+>	Note also that // comments, as in C++, are not yet legal in C,
+	so it's not a good idea to use them in C programs (even if your
+==========
+	cfortran.h, a C header file, simplifies C/FORTRAN interfacing on
+	many popular machines.  It is available via anonymous ftp from
+<	zebra.desy.de (131.169.2.244).
+---
+>	zebra.desy.de or at http://www-zeus.desy.de/~burow .
+==========
+<	(or some other data structure) to a a bounded number (the "hash
+---
+<	(or some other data structure) to a bounded number (the "hash
+==========
+  20.34: Here's a good puzzle: how do you write a program which produces
+<	its own source code as its output?
+---
+>	its own source code as output?
+==========
+<	Here is a classic example (which is normally presented on one
+---
+>	Here is a classic example (which ought to be presented on one
+	line, although it will fix itself the first time it's run):
+==========
+	newsgroups comp.answers and news.answers .  Several sites
+	archive news.answers postings and other FAQ lists, including
+	this one; two sites are rtfm.mit.edu (directories
+	pub/usenet/news.answers/C-faq/ and pub/usenet/comp.lang.c/) and
+<	ftp.uu.net (directory usenet/news.answers/C-faq/).  An archie
+<	server (see question 18.16) should help you find others; ask it
+<	to "find C-faq".  If you don't have ftp access, a mailserver at
+---
+>	ftp.uu.net (directory usenet/news.answers/C-faq/).  If you don't
+==========
+<	URL's pointing at all FAQ lists (these may also	allow topic
+<	searching) are http://www.cis.ohio-state.edu/hypertext/faq/
+<	usenet/FAQ-List.html and http://www.luth.se/wais/ .
+---
+>	A comprehensive site which references all Usenet FAQ lists is
+>	http://www.faqs.org/faqs/ .
+==========
+< Americal National Standards Institute, _American National Standard for
+---
+> American National Standards Institute, _American National Standard for
+==========
+< Americal National Standards Institute, _Rationale for American National
+---
+> American National Standards Institute, _Rationale for American National
+==========
+< G.E.P. Box and Mervin E. Muller, "A Note on the Generation of Random
+< Normal Deviates," _Annals of Mathematical Statistics_, Vol. 29 #2, June,
+< 1958, pp. 610-611.
+==========
+> International Organization for Standardization, WG14/N794 Working Draft
+> (see questions 11.1 and 11.2b).  [C9X]
+==========
+  Donald E. Knuth, _The Art of Computer Programming_.  Volume 1:
+  _Fundamental Algorithms_, Second Edition, Addison-Wesley, 1973, ISBN 0-
+  201-03809-9.  Volume 2: _Seminumerical Algorithms_, Second Edition,
+  Addison-Wesley, 1981, ISBN 0-201-03822-6.  Volume 3: _Sorting and
+< Searching_, Addison-Wesley, 1973, ISBN 0-201-03803-X.  [Knuth]
+---
+> Searching_, Addison-Wesley, 1973, ISBN 0-201-03803-X.  (New editions
+> are coming out!) [Knuth]
+==========
+> G. Marsaglia and T.A. Bray, "A Convenient Method for Generating Normal
+> Variables," _SIAM Review_, Vol. 6 #3, July, 1964.
+==========
+  Robert Sedgewick, _Algorithms in C_, Addison-Wesley, 1990,
+< ISBN 0-201-51425-7.
+---
+> ISBN 0-201-51425-7.  (A new edition is being prepared;
+> the first half is ISBN 0-201-31452-5.)
+==========
+> Thanks to Jamshid Afshar, Lauri Alanko, David Anderson, Tanner Andrews,
+  Sudheer Apte, Joseph Arceneaux, Randall Atkinson, Rick Beem, Peter
+  Bennett, Wayne Berke, Dan Bernstein, Tanmoy Bhattacharya, John Bickers,
+  Gary Blaine, Yuan Bo, Mark J. Bobak, Dave Boutcher, Alan Bowler, Michael
+> Bresnahan, Walter Briscoe, Vincent Broman, Robert T. Brown, Stan Brown,
+  John R. Buchan, Joe Buehler, Kimberley Burchett, Gordon Burditt, Scott
+  Burkett, Burkhard Burow, Conor P. Cahill, D'Arcy J.M. Cain, Christopher
+  Calabrese, Ian Cargill, Vinit Carpenter, Paul Carter, Mike Chambers,
+  Billy Chambless, C. Ron Charlton, Franklin Chen, Jonathan Chen, Raymond
+> Chen, Richard Cheung, Avinash Chopde, Steve Clamage, Ken Corbin, Dann
+> Corbit, Ian Cottam, Russ Cox, Jonathan Coxhead, Lee Crawford, Nick
+  Cropper, Steve Dahmer, Andrew Daviel, James Davies, John E. Davis, Ken
+  Delong, Norm Diamond, Bob Dinse, Jeff Dunlop, Ray Dunn, Stephen M. Dunn,
+  Michael J. Eager, Scott Ehrlich, Arno Eigenwillig, Yoav Eilat, Dave
+  Eisen, Joe English, Bjorn Engsig, David Evans, Clive D.W. Feather,
+  Dominic Feeley, Simao Ferraz, Chris Flatters, Rod Flores, Alexander
+  Forst, Steve Fosdick, Jeff Francis, Ken Fuchs, Tom Gambill, Dave
+  Gillespie, Samuel Goldstein, Tim Goodwin, Alasdair Grant, Ron Guilmette,
+> Doug Gwyn, Michael Hafner, Darrel Hankerson, Tony Hansen, Douglas
+> Wilhelm Harder, Elliotte Rusty Harold, Joe Harrington, Des Herriott,
+  Guy Harris, John Hascall, Ger Hobbelt, Jos Horsmeier, Syed Zaeem Hosain,
+  Blair Houghton, James C. Hu, Chin Huang, David Hurt, Einar Indridason,
+  Vladimir Ivanovic, Jon Jagger, Ke Jin, Kirk Johnson, Larry Jones, Arjan
+  Kenter, Bhaktha Keshavachar, James Kew, Darrell Kindred, Lawrence Kirby,
+> Kin-ichi Kitano, Peter Klausler, John Kleinjans, Andrew Koenig, Tom
+  Koenig, Adam Kolawa, Jukka Korpela, Ajoy Krishnan T, Jon Krom, Markus
+  Kuhn, Deepak Kulkarni, Oliver Laumann, John Lauro, Felix Lee, Mike Lee,
+> Timothy J. Lee, Tony Lee, Marty Leisner, Dave Lewis; Don Libes, Brian
+  Liedtke, Philip Lijnzaad, Keith Lindsay, Yen-Wei Liu, Paul Long,
+  Christopher Lott, Tim Love, Tim McDaniel, J. Scott McKellar, Kevin
+> McMahon, Stuart MacMartin, John R. MacMillan, Robert S. Maier, Andrew
+> Main, Bob Makowski, Evan Manning, Barry Margolin, George Marsaglia,
+  George Matas, Brad Mears, Wayne Mery, De Mickey, Rich Miller, Roger
+  Miller, Bill Mitchell, Mark Moraes, Darren Morby, Bernhard Muenzer,
+  David Murphy, Walter Murray, Ralf Muschall, Ken Nakata, Todd Nathan,
+  Taed Nelson, Landon Curt Noll, Tim Norman, Paul Nulsen, David O'Brien,
+> Richard A. O'Keefe, Adam Kolawa, Keith Edward O'hara, James Ojaste, Max
+> Okumoto, Hans Olsson, Bob Peck, Andrew Phillips, Christopher Phillips,
+  Francois Pinard, Nick Pitfield, Wayne Pollock, Polver@aol.com, Dan Pop,
+  Claudio Potenza, Lutz Prechelt, Lynn Pye, Kevin D. Quitt, Pat Rankin,
+  Arjun Ray, Eric S. Raymond, Peter W. Richards, James Robinson, Eric
+  Roode, Manfred Rosenboom, J. M. Rosenstock, Rick Rowe, Erkki Ruohtula,
+  John Rushford, Kadda Sahnine, Tomohiko Sakamoto, Matthew Saltzman, Rich
+  Salz, Chip Salzenberg, Matthew Sams, Paul Sand, DaviD W. Sanderson,
+  Frank Sandy, Christopher Sawtell, Jonas Schlein, Paul Schlyter, Doug
+> Schmidt, Rene Schmit, Russell Schulz, Dean Schulze, Jens Schweikhardt,
+  Chris Sears, Peter Seebach, Patricia Shanahan, Aaron Sherman, Raymond
+> Shwake, Nathan Sidwell, Peter da Silva, Joshua Simons, Ross Smith, Henri
+  Socha, Leslie J. Somos, Henry Spencer, David Spuler, Frederic Stark,
+> James Stern, Zalman Stern, Michael Sternberg, Geoff Stevens, Alan
+> Stokes, Bob Stout, Dan Stubbs, Steve Sullivan, Melanie Summit, Erik
+  Talvola, Dave Taylor, Clarke Thatcher, Wayne Throop, Chris Torek, Steve
+> Traugott, Nikos Triantafillis, Ilya Tsindlekht, Andrew Tucker, Goran
+  Uddeborg, Rodrigo Vanegas, Jim Van Zandt, Wietse Venema, Tom Verhoeff,
+  Ed Vielmetti, Larry Virden, Chris Volpe, Mark Warren, Alan Watson, Kurt
+  Watzka, Larry Weiss, Martin Weitzel, Howard West, Tom White, Freek
+  Wiedijk, Tim Wilson, Dik T. Winter, Lars Wirzenius, Dave Wolverton,
+  Mitch Wright, Conway Yee, Ozan S. Yigit, and Zhuo Zang, who have
+  contributed, directly or indirectly, to this article.
+==========
+  Thanks to Debbie Lafferty and Tom Stone at Addison-Wesley for
+> encouragment, and permission to cross-pollinate this list with new text
+---
+< encouragement, and permission to cross-pollinate this list with new text
+  from the book.
+==========
+< This article is Copyright 1990-1996 by Steve Summit.
+---
+> This article is Copyright 1990-1999 by Steve Summit.
+==========
+< Except as noted otherwise, the C code in this article is public domain
+< and may be used without restriction.
+---
+> With the exception of the examples by other, cited authors (i.e. in
+> questions 20.31 and 20.35) the C code in this article is public domain
+> and may be used without restriction.
+==========
+
+						Steve Summit
+						scs@eskimo.com

@@ -1,0 +1,416 @@
+#!/usr/bin/zsh
+
+## Trap; execute sanity checks on status:  INT,TERM
+sanity_checks() {
+ if [[ ${1} =~ (\((^|\/).*?\)+|`pwd`) ]]; then
+  pushd . >/dev/null
+  pushd ${1} >/dev/null || true
+ fi
+ pushd . >/dev/null
+ ## insert other shutdown tasks
+ [[ ! ${TERM} =~ (xterm|rxvt|screen).* ]] && export TERM='xterm-256color'
+ ## Use for INT traps on non-shell programs:
+ [[ "$?" == 2 ]] && { trap - INT; kill -INT "$$"; return 131; } || return 130
+}
+#trap ' { if [ ${EUID} != 0 ]; then pushd . >/dev/null 2>&1 || pushd ${HOME} >/dev/null; sanity_checks ${HOME}; else sanity_checks "${PWD}"; fi; }'  0 1 4 11 13 ## EXIT,HUP,ILL,SEV,PIPE
+trap ' { if [ ${EUID} != 0 ]; then pushd . >/dev/null 2>&1 || pushd ${HOME} >/dev/null; sanity_checks ${HOME}; else sanity_checks "${PWD}"; fi; }' 2 15 ## INT,TERM
+
+# Path to your oh-my-zsh installation.
+export ZSH=/usr/share/oh-my-zsh/
+# Alternate paths to your oh-my-zsh installation.
+#export ZSH=/home/alyptik/.oh-my-zsh
+#export ZSH=/usr/share/oh-my-zsh/
+#export ZSH=/home/alyptik/oh-my-zsh
+
+## Function to capture exit code of laster command.
+## Use in either "${PROMPT}" or "${RPROMPT}"
+check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  local EXIT_CODE_PROMPT=' '
+  if [[ ${LAST_EXIT_CODE} -ne 0 ]]; then
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg_bold[red]%}$LAST_EXIT_CODE%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+  else
+    EXIT_CODE_PROMPT+="%{$fg[green]%}-%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg_bold[green]%}$LAST_EXIT_CODE%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg[green]%}-%{$reset_color%}"
+  fi
+  printf '%s' "$EXIT_CODE_PROMPT"
+}
+[[ "$RPROMPT" != *'$(check_last_exit_code)'* ]] && export RPROMPT='$(check_last_exit_code)'${RPROMPT}
+[[ "$prompt" != *'$(check_last_exit_code)'* ]] && export prompt=${prompt}'$(check_last_exit_code)'
+#export PROMPT=${PROMPT}'$(check_last_exit_code)'
+#export PS1=${PS1}'$(check_last_exit_code)'
+#export RPROMPT='$(check_last_exit_code)$(git_prompt_string)${RPROMPT}'
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+#ZSH_THEME="pygmalion"
+#ZSH_THEME="powerline"
+#ZSH_THEME="agnoster"
+ZSH_THEME="bullet-train"
+export BULLETTRAIN_DIR_EXTENDED=2
+#export BULLETTRAIN_CUSTOM_MSG=`host 192.168.1.98 | sed -r 's/^.*pointer .*?\.(.*\..*\.)$/\1 -/'`
+export BULLETTRAIN_CONTEXT_SHOW=true
+export BULLETTRAIN_GO_SHOW=true
+export BULLETTRAIN_NVM_SHOW=true
+export BULLETTRAIN_TIME_12HR=true
+#export BULLETTRAIN_PROMPT_CHAR="+"
+#export BULLETTRAIN_PROMPT_CHAR=`check_last_exit_code | sed -r 's/.*([[:digit:]]).*/\1/'`
+export BULLETTRAIN_PROMPT_CHAR=`[[ "$EUID" != 0 ]] && printf '%s' '$' || printf '%s' '#'`
+export BULLETTRAIN_STATUS_EXIT_SHOW=true
+export BULLETTRAIN_PROMPT_SEPARATE_LINE=false
+export BULLETTRAIN_PROMPT_ADD_NEWLINE=true
+export BULLETTRAIN_GIT_COLORIZE_DIRTY=true
+export BULLETTRAIN_EXEC_TIME_SHOW=true
+
+# Uncomment the following line to use case-sensitive completion.
+CASE_SENSITIVE="false"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+DISABLE_AUTO_UPDATE="false"
+DISABLE_UPDATE_PROMPT="false"
+
+# Uncomment the following line to change how often to auto-update (in days).
+UPDATE_ZSH_DAYS=1
+
+# Uncomment the following line to disable colors in ls.
+DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+DISABLE_AUTO_TITLE="false"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+CORRECT_IGNORE='${HOME}/.*'
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=${HOME}/.oh-my-zsh
+#ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(tmux tmuxinator gpg-agent ssh-agent archlinux fancy-ctrl-z adb command-not-found systemd zsh_reload screen man stack nmap colorize extract battery catimage copydir copyfile compleat dircycle cp fasd mosh tmux-cssh wd url-tools zsh-navigation-tools z safe-paste singlechar themes rsync dirpersist celery dirhistory kate repo pass pip brew web-search thefuck common-aliases git github brew iwhois)
+#plugins=(tmux tmuxinator gpg-agent ssh-agent git archlinux fancy-ctrl-z adb github command-not-found systemd zsh_reload screen man stack nmap  colorize sudo extract battery catimage copydir copyfile compleat dircycle cp fasd mosh tmux-cssh wd url-tools zsh-navigation-tools z safe-paste singlechar thefuck themes rsync dirpersist celery dirhistory kate repo pass pip history-substring-search iwhois vi-mode brew)
+#plugins=(tmux tmuxinator archlinux fancy-ctrl-z adb command-not-found systemd zsh_reload screen man stack nmap colorize extract battery catimage copydir copyfile compleat dircycle cp fasd mosh tmux-cssh wd url-tools zsh-navigation-tools z safe-paste singlechar themes rsync dirpersist celery dirhistory kate repo pass pip brew web-search thefuck common-aliases git)
+#plugins=(tmux tmuxinator gpg-agent ssh-agent git archlinux colored-man-pages fancy-ctrl-z adb github command-not-found systemd zsh_reload screen man stack nmap common-aliases sudo cp extract common-aliases)
+
+## Enviornment configuration
+
+#export PATH=/home/alyptik/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+export PATH=${HOME}/bin:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/GNUstep/Tools:/store/local/Wolfram/CDFPlayer/10.3/Executables:/usr/local/sbin:/usr/local/bin:/bin:/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+## Automatically added by openresty package
+export PATH=${PATH}:/opt/openresty/bin:/opt/openresty/nginx/sbin
+export PATH=${HOME}/.linuxbrew/bin:${PATH}
+#export MANPATH="/usr/local/man:${MANPATH}"
+export MANPATH=${HOME}/.linuxbrew/share/man:${MANPATH}
+export INFOPATH=${HOME}/.linuxbrew/share/info:${INFOPATH}
+export SYSTEMD_LESS=FRXMK journalctl
+export TERMINAL="terminator"
+#export TERMINAL="konsole"
+#export BROWSER="firefox"
+export BROWSER="google-chrome-stable"
+## Gtk themes
+export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
+export PYTHONSTARTUP="${HOME}/.pyrc"
+## Python2 compatibility
+#export PYTHON=/usr/bin/python2.7
+## You may need to manually set your language environment
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+## Color man pages
+export LESS_TERMCAP_se=$'\E[0m' export LESS_TERMCAP_so=$'\033[38;5;35m' export GROFF_NO_SGR=1
+export LESS_TERMCAP_md=$'\E[01;31m' export LESS_TERMCAP_me=$'\E[0m' export LESS_TERMCAP_us=$'\033[38;5;35m'
+export LLESS_TERMCAP_ue=$'\E[0m' export LESS_TERMCAP_so=$'\E[30;43m' export LESS_TERMCAP_md=$'\E[01;31m'
+#export LESS_TERMCAP_md=$'\E[01;31m' export LESS_TERMCAP_me=$'\E[0m' GROFF_NO_SGR=1 man man
+#export LESS_TERMCAP_se=$'\E[0m' export LESS_TERMCAP_so=$'\033[38;5;35m'
+#export LESS_TERMCAP_us=$'\033[38;5;35m' export LESS_TERMCAP_ue=$'\E[0m' export LESS_TERMCAP_so=$'\E[30;43m'
+
+#export PATH=${HOME}/bin:/usr/local/bin:$PATH
+# export MANPATH="/usr/local/man:$MANPATH"
+
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+## Add vim as default editor
+export EDITOR="vim"
+## Set preferred editor for local and remote sessions
+#[[ ! -z "${SSH_CONNECTION}" ]] && export VISUAL='nano' || export VISUAL='mvim'
+[[ -n "${SSH_CONNECTION}" ]] && export VISUAL='gvim' || export VISUAL='vim'
+#export VISUAL="gvim"
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+ZSH_CACHE_DIR=${HOME}/.oh-m-zsh-cache
+if [[ ! -d ${ZSH_CACHE_DIR} ]]; then
+  mkdir ${ZSH_CACHE_DIR}
+fi
+source ${ZSH}/oh-my-zsh.sh
+
+## User configuration
+
+## Convert ${TERM} to "${TERM}-256color" and if null use "xterm-256color"
+#! [[ "${TERM}" =~ "^screen.*" ]] && export TERM="xterm-256color" || export TERM="screen-256color"
+#[[ ${TERM:-xterm} =~ "^screen.*" ]] && export TERM="screen-256color" || export TERM="xterm-256color"
+#export TERM=$(sed -r 's_([:alphanum:]+|rxvt-unicode)-?.*_\1-256color_'<<<${TERM})
+
+[[ ${TERM:-xterm} =~ ^screen.* ]] && \
+export TERM='screen-256color' || \
+export TERM=`<<<"${TERM:-xterm}" sed -r 's_(rxvt\-unicode|[:alphanum:]+)\-?.*_\1-256color_'` && { 
+[[ ${TERM:-xterm} != l-256color ]] || \
+export TERM='xterm-256color'; } || {
+export TERM='xterm-256color'; }
+
+## Color aliases
+## DO NOT USE RAW ESCAPES, USE TPUT
+#creset=$(tput sgr0)
+#cred=$(tput setaf 1)
+#cblue=$(tput setaf 4)
+#cgreen=$(tput setaf 2)
+
+## Compilation flags
+export ARCHFLAGS="-arch x86_64"
+export LIBVA_DRIVER_NAME="vdpau"
+## SSH
+export SSH_KEY_PATH=".ssh/id_4rsa2"
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities id_identity id_4rsa2 putty_rsa4
+## Keychain: ssh-agent autostart
+eval $(keychain --eval --agents ssh,gpg id_4rsa2)
+#eval $(keychain --eval id_4rsa2)
+#envoy -t ssh-agent -a id_4rsa2
+#envoy -t gpg-agent
+#source <(envoy -p)
+
+zle -N znt-history-widget
+bindkey "^R" znt-history-widget
+zle -N znt-cd-widget
+bindkey "^T" znt-cd-widget
+zle -N znt-kill-widget
+bindkey "^Y" znt-kill-widget
+source /usr/share/zsh/scripts/antigen/antigen.zsh
+zstyle ':completion:*' rehash true
+# History stuff
+HISTSIZE=10000
+SAVEHIST=10000
+#unsetopt correct_all
+unsetopt correctall
+setopt correct
+setopt append_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history
+HISTFILE=${HOME}/.zsh_history # ensure history file visibility
+export HH_CONFIG=hicolor # get more colors
+# History search
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+## if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
+#[[ $- =~ ".*i.*" ]] && bindkey -s "\C-r" "\eqhh\n"
+bindkey -s "\C-r" "\eqhh\n"
+# bind UP and DOWN arrow keys
+zmodload zsh/terminfo
+# bind UP and DOWN arrow keys (compatibility fallback
+# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '\eOA' up-line-or-beginning-search
+bindkey '\e[A' up-line-or-beginning-search
+bindkey '\eOB' down-line-or-beginning-search
+bindkey '\e[B' down-line-or-beginning-search
+#bindkey '^[[A' history-substring-search-up
+#bindkey '^[[B' history-substring-search-down
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+## bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+## bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+# History search (alternate #1)
+#zle -N up-line-or-beginning-search
+#zle -N down-line-or-beginning-search
+#autoload -U history-search-end
+#[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-beginning-search
+#[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
+#[[ -n "${key[Up]}"      ]]  && bindkey  "${key[Up]}"      history-search-backward
+#[[ -n "${key[Down]}"    ]]  && bindkey  "${key[Down]}"    history-search-forward
+#[[ -n "${key[Up]}"      ]] && bindkey  "${key[Up]}"      history-beginning-search-backward
+#[[ -n "${key[Down]}"    ]] && bindkey  "${key[Down]}"    history-beginning-search-forward
+#bindkey "^[[A" up-line-or-beginning-search
+#bindkey "^[[B" down-line-or-beginning-search
+# History search (alternate #2)
+#zle -N history-beginning-s[[ ${TERM} =~ "^screen.*" ]] && export TERM="screen-256color" || export TERM="xterm-256color"earch-backward-end history-search-end
+#zle -N history-beginning-search-forward-end history-search-end
+#bindkey "\e[A" history-beginning-search-backward-end
+#bindkey "\e[B" history-beginning-search-forward-end
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+#source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
+#source /usr/share/zsh/plugins/zsh-autosuggestions/autosuggestions.zsh
+#zle-line-init() {
+#	zle autosuggest-start
+#}
+#zle -N zle-line-init
+
+## Source command-not-found files.
+[ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
+
+## Source aliases
+[ -r ${HOME}/aliases.sh ] && . ${HOME}/aliases.sh || echo 'aliases.sh  not fount...'
+#true || { [ -f ${HOME}/baliases.sh ] && . ${HOME}/baliases.sh || . ${HOME}/.bashrc; }
+#true || { [ -f ${HOME}/baliases.sh ] && . ${HOME}/baliases.sh; }
+
+## Arch latest news
+## The characters "£, §" are used as metacharacters. They should not be encountered in a feed...
+#
+#echo -e "$(echo $(curl --silent https://www.archlinux.org/feeds/news/ | sed -e '
+#	:a;N;$!ba;s/\n/ /g') | sed -e '
+#		s/&amp;/\&/g
+news_cmd_orig() {
+	echo -e "$(echo $(curl --silent https://www.archlinux.org/feeds/news/ | sed -e '
+	:a;N;$!ba;s/\n/ /g') | \
+	sed -e 's/&amp;/\&/g
+		s/&lt;\|&#60;/</g
+		s/&gt;\|&#62;/>/g
+		s/<\/a>/£/g
+		s/href\=\"/§/g
+		s/<title>/\\n\\n\\n   :: \\e[01;31m/g; s/<\/title>/\\e[00m::\\n/g
+		s/<link>/ [ \\e[01;36m/g; s/<\/link>/\\e[00m ]/g
+		s/<description>/\\n\\n\\e[00;37m/g; s/<\/description>/\\e[00m\\n\\n/g
+		s/<p\( [^>]*\)\?>\|<br\s*\/\?>/\n/g
+		s/<b\( [^>]*\)\?>\|<strong\( [^>]*\)\?>/\\e[01;30m/g; s/<\/b>\|<\/strong>/\\e[00;37m/g
+		s/<i\( [^>]*\)\?>\|<em\( [^>]*\)\?>/\\e[41;37m/g; s/<\/i>\|<\/em>/\\e[00;37m/g
+		s/<u\( [^>]*\)\?>/\\e[4;37m/g; s/<\/u>/\\e[00;37m/g
+		s/<code\( [^>]*\)\?>/\\e[00m/g; s/<\/code>/\\e[00;37m/g
+		s/<a[^§|t]*§\([^\"]*\)\"[^>]*>\([^£]*\)[^£]*£/\\e[01;31m\2\\e[00;37m \\e[01;34m[\\e[00;37m \\e[04m\1\\e[00;37m\\e[01;34m ]\\e[00;37m/g
+		s/<li\( [^>]*\)\?>/\n \\e[01;34m*\\e[00;37m /g
+		s/<!\[CDATA\[\|\]\]>//g
+		s/\|>\s*<//g
+		s/ *<[^>]\+> */ /g
+		s/[<>£§]//g
+	')\n\n" | grep -E "^(   :| \[)" ## Remove the grep to show full news posts
+}
+news_cmd() {
+ if [[ "$EUID" == 0 ]]; then
+	#return 0
+	echo -e "$(echo $(curl --silent https://www.archlinux.org/feeds/news/ | sed -e '
+	:a;N;$!ba;s/\n/ /g') | \
+	sed -e 's/&amp;/\&/g
+		s/&lt;\|&#60;/</g
+		s/&gt;\|&#62;/>/g
+		s/<\/a>/£/g
+		s/href\=\"g/§/
+		s/<title>/£@§@£ \\n   :: \\e[01;31m/g; s/<\/title>/\\e[00m::\\n/g
+		s/<link>/ [ \\e[01;36m/g; s/<\/link>/\\e[00m ]/g
+		s/<description>/\\n\\n\\e[00;37m/g; s/<\/description>/\\e[00m\\n\\n/g
+		s/<p\( [^>]*\)\?>\|<br\s*\/\?>/\n/g
+		s/<b\( [^>]*\)\?>\|<strong\( [^>]*\)\?>/\\e[01;30m/g; s/<\/b>\|<\/strong>/\\e[00;37m/g
+		s/<i\( [^>]*\)\?>\|<em\( [^>]*\)\?>/\\e[41;37m/g; s/<\/i>\|<\/em>/\\e[00;37m/g
+		s/<u\( [^>]*\)\?>/\\e[4;37m/g; s/<\/u>/\\e[00;37m/g
+		s/<code\( [^>]*\)\?>/\\e[00m/g; s/<\/code>/\\e[00;37m/g
+		s/<a[^§|t]*§\([^\"]*\)\"[^>]*>\([^£]*\)[^£]*£/\\e[01;31m\2\\e[00;37m \\e[01;34m[\\e[00;37m \\e[04m\1\\e[00;37m\\e[01;34m ]\\e[00;37m/g
+		s/<li\( [^>]*\)\?>/\n \\e[01;34m*\\e[00;37m /g
+		s/<!\[CDATA\[\|\]\]>//g
+		s/\|>\s*<//g
+		s/ *<[^>]\+> */ /g
+		s/[<>£§]//g
+	')\n\n" | IFS="£@§@£" read -r -d "£@§@£" -A apost ## Remove the grep to show full news posts 
+		acount="${#apost[@]}"
+		echo "$(<<<`while [[ $acount -ne 0 ]]; do
+				printf "$apost[$acount}]"; ((acount--))
+			done` grep -E "^(   :| \[)")"
+  else
+	echo -e "$(echo $(curl --silent https://www.archlinux.org/feeds/news/ | sed -e '
+	:a;N;$!ba;s/\n/ /g') | \
+	sed -e 's/&amp;/\&/g
+		s/&lt;\|&#60;/</g
+		s/&gt;\|&#62;/>/g
+		s/<\/a>/£/g
+		s/href\=\"/§/g
+		s/<title>/£@§@£ :: \\e[01;31m/g; s/<\/title>/\\e[00m::\\n/g
+		s/<link>/ [ \\e[01;36m/g; s/<\/link>/\\e[00m ]/g
+		s/<description>/\\n\\e[00;37m/g; s/<\/description>/\\e[00m\\n\\n/g
+		s/<p\( [^>]*\)\?>\|<br\s*\/\?>/\n/g
+		s/<b\( [^>]*\)\?>\|<strong\( [^>]*\)\?>/\\e[01;30m/g; s/<\/b>\|<\/strong>/\\e[00;37m/g
+		s/<i\( [^>]*\)\?>\|<em\( [^>]*\)\?>/\\e[41;37m/g; s/<\/i>\|<\/em>/\\e[00;37m/g
+		s/<u\( [^>]*\)\?>/\\e[4;37m/g; s/<\/u>/\\e[00;37m/g
+		s/<code\( [^>]*\)\?>/\\e[00m/g; s/<\/code>/\\e[00;37m/g
+		s/<a[^§|t]*§\([^\"]*\)\"[^>]*>\([^£]*\)[^£]*£/\\e[01;31m\2\\e[00;37m \\e[01;34m[\\e[00;37m \\e[04m\1\\e[00;37m\\e[01;34m ]\\e[00;37m/g
+		s/<li\( [^>]*\)\?>/\n \\e[01;34m*\\e[00;37m /g
+		s/<!\[CDATA\[\|\]\]>//g
+		s/\|>\s*<//g
+		s/ *<[^>]\+> */ /g
+		s/[<>£§]//g
+	')\n\n" | IFS="£@§@£" read -r -d "£@§@£" -A apost
+		#echo $apost[@]
+		acount="${#apost[@]}"
+		while [[ $acount -ne 0 ]]; do
+			echo $apost[${acount}];
+			#echo $acount
+			(( acount-- ))
+		done
+fi
+}
+news_cmd
+## "Is the internet on fire?" status reports
+host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f moose
+
+## Fix broken man alias
+unalias man >/dev/null 2>&1
+unset -f man >/dev/null 2>&1
+man() { /bin/man "$@"; }
+
+## Autostart tmux
+#[[ ! -z "${SSH_CONNECTION}" && -z "${TMUX}" ]]  && /usr/bin/tmux
+

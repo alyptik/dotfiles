@@ -1,0 +1,86 @@
+[options]
+#allow_bold = true
+audible_bell = true
+#clickable_url = true
+#dynamic_title = true
+#font = Monaco for Powerline 10
+font = Fura Mono Regular for Powerline Nerd Font Complete Mono
+#fullscreen = true
+#geometry = 640x480
+#icon_name = terminal
+#mouse_autohide = false
+#scroll_on_output = false
+#scroll_on_keystroke = true
+scrollback_lines = 10000
+#search_wrap = true
+#urgent_on_bell = true
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+#browser = xdg-open
+
+# "system", "on" or "off"
+#cursor_blink = system
+
+# "block", "underline" or "ibeam"
+#cursor_shape = block
+
+# Hide links that are no longer valid in url select overlay mode
+#filter_unmatched_urls = true
+
+# Emit escape sequences for extra modified keys
+#modify_other_keys = false
+
+# set size hints for the window
+#size_hints = false
+
+[colors]
+# hard contrast: background = #f9f5d7
+background = #fbf1c7
+# soft contrast: background = #f2e5bc
+foreground = #3c3836
+foreground_bold = #3c3836
+
+# light0 + gray
+color0 = #fbf1c7
+color8 = #928374
+
+# neurtral_red + faded_red
+color1 = #cc241d
+color9 = #9d0006
+
+# neutral_green + faded_green
+color2 = #98971a
+color10 = #79740e
+
+# neutral_yellow + faded_yellow
+color3 = #d79921
+color11 = #b57614
+
+# neutral_blue + faded_blue
+color4 = #458588
+color12 = #076678
+
+# neutral_purple + faded_purple
+color5 = #b16286
+color13 = #8f3f71
+
+# neutral_aqua + faded_aqua
+color6 = #689d6a
+color14 = #427b58
+
+# dark4 + dark1
+color7 = #7c6f64
+color15 = #3c3836
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#active_foreground = #e68080
+#active_background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0
+
+# vim: ft=dosini cms=#%s

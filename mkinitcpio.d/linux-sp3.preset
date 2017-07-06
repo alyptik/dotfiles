@@ -1,0 +1,14 @@
+# mkinitcpio preset file for the 'linux-sp3' package
+
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-linux-sp3"
+
+PRESETS=('default' 'fallback')
+
+#default_config="/etc/mkinitcpio.conf"
+default_image="/boot/initramfs-linux-sp3.img"
+default_options="-A esp-update-linux"
+
+#fallback_config="/etc/mkinitcpio.conf"
+fallback_image="/boot/initramfs-linux-sp3-fallback.img"
+fallback_options="-S autodetect"

@@ -1,0 +1,398 @@
+#!/usr/bin/bc -l
+
+### Digits.BC - Treat numbers as strings of digits
+
+bijective=0
+# Returns x mod y, but sets 0 mod y to be y itself in bijective mode
+# . Old version: define bmod_(x,y) { if(bijective){return (x-1)%y+1}else{return x%y} }
+# . This version sets a global variable called bdiv_ containing the result
+# . . of the complementary division
+define bmod_(x,y) { return x-y*(bdiv_=(x-=bijective)/y); }
+
+# Workhorse function - use POSIX scope to check
+# . 'base' parameter of many functions here
+define base_check_() {
+  if(base<2-(bijective=!!bijective)){
+    if(base<=-2){
+      print "Negative bases not currently supported; "
+    } else if(base==-1||base==0||base==1) {
+      print "Nonsense base: ",base,"; "
+    }
+    print "Using ibase instead.\n"
+    base=ibase
+  }
+}
+
+# Number of digits in the base representation of x
+# (compare the int_log function in funcs.bc)
+define digits(base,x) { 
+ auto os,p,c;
+ os=scale;scale=0;base/=1;x/=1
+  if(x<0)x=-x
+  .=base_check_()
+  if(bijective&&base==1){scale=os;return x}
+  if(x==0){scale=os;return !bijective}
+  if(bijective)x=x*(base-1)+1
+  if(x<base){scale=os;return(1)}
+  c=length(x) # cheat and use what bc knows about decimal length
+  if(base==A){scale=os;return c-bijective}
+  if(base<A){
+   if(x>A){c*=(digits(base,A)-1);if(base<4)c-=2}else{c=0}
+  }else{
+   c/=length(base)
+  }
+  p=base^c
+  while(p<=x){.=c++;p*=base}
+ scale=os;return(c-bijective)
+}
+
+# Sum of digits in a number: 1235 -> 11 in base ten
+define digit_sum(base,x) {
+ auto os,t;
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_()
+  t=0;while(x){t+=bmod_(x,base);x=bdiv_}
+ scale=os;return(t)
+}
+
+# Workhorse for the next two functions
+define digit_distance_(base,x,y,sh) {
+  auto os,sgn,dx,dy,d,t;
+  os=scale;scale=0;base/=1;x/=1;y/=1
+  if(x==y||x==-y){scale=os;return 0}
+  if(x==0||y==0){scale=os;return digit_sum(base,x+y)}
+  .=base_check_()
+  sign=1
+  if(x<0){x=-x;sign=-sign}
+  if(y<0){y=-y;sign=-sign}
+  t=0;
+  while(x||y){
+    dx=bmod_(x,base);x=bdiv_
+    dy=bmod_(y,base);y=bdiv_
+    d=dx-dy
+    if(d<0)d=-d;if(sh)if(d+d>base)d=base-d
+    t+=d
+  }
+  scale=os;return sign*t
+}
+
+# Digit distance between two numbers:
+# . e.g. 746(-)196 -> |7-1|+|4-9|+|6-6| = 6+5+0 = 11 in base ten
+# . Degenerates to digit_sum if either of x or y is zero
+# . Not equivalent to hamming distance
+# . + which merely counts the number of differences
+# . . See logic_otherbase.bc for hamming distance function
+define digit_distance(base,x,y) {
+  return digit_distance_(base,x,y,0)
+}
+
+# Digit distance between two numbers assuming shortest path modulo
+#  the given base, e.g. shortest distance between 2 and 8 mod ten is 4
+# . e.g. 746((-))196 -> 4 + 5 + 0 = 9 base ten
+define digit_sdistance(base,x,y) {
+  return digit_distance_(base,x,y,1)
+}
+
+# Product of digits in number
+# e.g. 235 -> 2*3*5 = 30 in base ten
+# . see digits_misc.bc for two alternatives to this function
+define digit_product(base,x) { 
+ auto os,t;
+ if(x<0)return digit_product(base,-x);
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_()
+  t=1;while(x&&t){t*=bmod_(x,base);x=bdiv_}
+ scale=os;return(t)
+}
+
+# Reverse the digits in x using given base
+define reverse(base,x) {
+ auto os,y;
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_()
+  y=0;while(x){y=base*y+bmod_(x,base);x=bdiv_}
+ scale=os;return(y) 
+}
+
+## Palindromes
+
+# Determine if x is a palindrome in the given base
+define is_palindrome(base,x){
+ if(x<0)x=-x
+ return reverse(base,x)==x
+}
+
+# Determine if x is a pseudopalindrome in the given base
+# - a pseudopalindrome is a number that could be a palindrome
+#   if a number of zeroes is prepended to the beginning;
+#   e.g. 101 is a palindrome, but 1010 is not, however 01010,
+#     which represents the same value, is palindromic
+#   All palindromes are also pseudopalindromes since the prepending
+#     of no zeroes at all is also an option
+define is_pseudopalindrome(base,x){
+ auto os
+ if(bijective)return is_palindrome(base,x);
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_()
+  if(x==0){scale=os;return 1}
+  if(x<0)x=-x
+  while(x%base==0)x/=base
+ scale=os;return reverse(base,x)==x
+}
+
+# returns an odd-lengthed palindrome in the given base, specified by x
+define make_odd_palindrome(base, x) {
+  auto s
+  .=base_check_()
+  s=1;if(x<0){s=-1;x=-x}
+  x+=bijective;.=bmod_(x,base)
+  x=x*base^(digits(base,x)-1) + reverse(base,bdiv_)
+  return s*x
+}
+
+# returns an even-lengthed palindrome in the given base, specified by x
+define make_even_palindrome(base, x) {
+  auto s
+  .=base_check_()
+  s=1;if(x<0){s=-1;x=-x}
+  x+=bijective;
+  x=x*base^digits(base,x) + reverse(base,x)
+  return s*x
+}
+
+   #base ten thoughts:
+   #output will have either 2n-1 or 2n digits
+   #x=19; => n=digits((19+1)/2)= digits(10)=2
+   #block for n=1 runs from 1   to 1  +9  +9  -1=18
+   #block for n=2 runs from 19  to 19 +90 +90 -1=198
+   #block for n=3 runs from 199 to 199+900+900-1=1998
+   #block for n runs from 2*10^(n-1)-1 to 2*10^n-2
+   # where is x within that block?
+   #  last entry of first half of block is akin to 19+90-1=108 or 199+900-1=1098
+   #  i.e. 10^n-10^(n-1)-2 = 11*10^(n-1)-2
+   # so if x < 11*10^(n-1)-1, x is in the first half
+   #
+   # if x is in first  half, must subtract 9 or 99 etc. = 10^(n-1)-1
+   # if x is in second half, must subtract 99 or 999 etc. = 10^n - 1
+   # depending on half choose odd or even palindrome based on x
+
+# for each integer x, return a unique palindrome in the given base
+#  i.e. map the integers into palindromes
+#  n.b. map _is_ strictly increasing
+define map_palindrome(base, x) {
+  auto os,r,s
+  if(bijective){"unimplemented for bijective";return 1/0}
+  os=scale;scale=0;x/=1
+   s=1;if(x<0){s=-1;x=-x}
+   .=base_check_()
+   r=base^(digits(base,(x+1)/2)-1)
+   if(x<(base+1)*r-1){
+     x = make_odd_palindrome(base,x-r+1)
+   } else {
+     x = make_even_palindrome(base,x-r*base+1)
+   }
+  scale=os;return s*x
+}
+
+# from a palindrome in a given base, generate a unique integer
+#  i.e. map the class of palindromes into the integers
+define unmap_palindrome(base, x) {
+  auto os,r,s
+  if(bijective){"unimplemented for bijective";return 1/0}
+  os=scale;scale=0
+   s=1;if(x<0){s=-1;x=-x}
+   .=base_check_()
+   r=base^(digits(base,x)/2)
+   x=x/r+r-1
+  scale=os;return s*x
+}
+
+## Stringification
+
+# Determine if a small number is a substring of a larger number in the given base
+define is_substring(base,large,small) {
+ auto os,m;
+ if(bijective){"unimplemented for bijective";return 1/0}
+ os=scale;scale=0;base/=1;large/=1;small/=1;
+  .=base_check_()
+  if(large<0)large=-large
+  if(small<0)small=-small
+  m=base^digits(base,small)
+  while(large){if(large%m==small){m=0;break};large/=base}
+ scale=os;return(m==0) 
+}
+
+# Catenate (join lexically) two integers in the given base
+# e.g. in base ten, the catenation of 1412 and 4321 is 14124321
+define int_catenate(base, x,y){
+ auto os;
+ if(bijective){"unimplemented for bijective";return 1/0}
+ os=scale;scale=0;base/=1;x/=1;y/=1
+  .=base_check_()
+  if(x<0)x=-x
+  if(y<0)y=-y
+ scale=os;return x*base^digits(base,y)+y
+}
+
+# Return the specified number of leftmost digits of a number in the given base
+define int_left(base, x, count){
+ auto os;
+ if(bijective){"unimplemented for bijective";return 1/0}
+ os=scale;scale=0;base/=1;x/=1;count/=1
+  .=base_check_()
+  if(count<0)count=0;
+  count=base^count;while(x>=count)x/=base;
+ scale=os;return x
+}
+
+# Return the specified number of rightmost digits of a number in the given base
+define int_right(base, x, count){
+ auto os;
+ if(bijective){"unimplemented for bijective";return 1/0}
+ os=scale;scale=0;base/=1;x/=1;count/=1
+  .=base_check_()
+  if(count<0)count=0;
+  x%=base^count
+ scale=os;return x
+}
+
+# Return the specified digits of a number in the given base
+define int_mid(base, x, start, end){
+ auto os,lsz;
+ if(bijective){"unimplemented for bijective";return 1/0}
+ os=scale;scale=0;base/=1;x/=1;start/=1;end/=1
+  .=base_check_()
+  if(start<0)start=0;
+  if(end<start){scale=os;return 0}
+  lsz=base^end;while(x>=lsz)x/=base;
+  x%=base^(end-start+1)
+ scale=os;return x
+}
+
+## Cantor reinterpretation
+
+# Set to zero to suppress warnings from cantor()
+cantorwarn_=1
+
+# 0 = don't perform baseto modulus on digit; 1 = modulus
+cantormod_=0
+
+# Error checker for below
+define cantor_trans_(d) {
+  d=d*mul+cons;
+  if(scale(d)){
+   if(os<5)scale=5 else scale=os;
+    d+=A^(2-scale)
+   scale=0;d/=1
+  }
+  if(cantormod_){
+    d-=bijective
+    d%=baseto;if(d<0)d+=baseto
+    d+=bijective
+  }
+  if(cantorwarn_)if((bijective>d||d>=abt+bijective)&&!warned){
+    warned=1;print "cantor warning: made ";
+    if(d==0){print "bad zero"
+    } else if(bijective>d){print "negative"}else{print "oversized"}
+    print " digit for destination base\n";
+  }
+  return d
+}
+
+# Workhorse for managing -ve basefroms
+define cantor_trans_negabase_(basefrom, baseto, mul, cons, x) {
+  auto os,i,bf2,bt2,d,a[],shft,y,p,abt
+  os=scale;scale=0;basefrom/=1;baseto/=1
+  if(basefrom>1)base=-base
+  if(basefrom>-2)base=-obase
+  bf2=basefrom*basefrom
+  bt2=baseto*baseto
+  abt=baseto;if(abt<0)abt=-abt
+  bijective=!!bijective
+  i=x/1;shft=0;if(x!=i)shft=1
+  if(bijective&&shft){
+    shft=0
+    if(cantorwarn_){
+      print "cantor warning: can't do fractional part in bijective mode\n"
+    }
+  }
+  p=bt2
+  if(shft){
+    d=A^scale(x)
+    shft=-1
+    p=1;for(i=1;i<=d;i*=bf2){.=shft++;p*=bt2}
+    shft+=shft
+    x*=i/bf2
+  }
+  for(i=1;x;i++){
+    d=((x-bijective)%basefrom)+bijective;if(d<bijective)d-=basefrom;a[i]=d/1
+    if(shft)if(!--shft)a[++i]=-1
+    x=(x-d)/basefrom
+  }
+  if(shft){
+    while(shft--)a[i++]=0
+    a[i++]=-1
+  }
+  y=0
+  for(--i;i;i--)if((d=a[i])==-1){
+   # skip decimal point
+  } else {
+   y=y*baseto+cantor_trans_(d)
+  }
+  scale=os;return (y*bt2)/p
+}
+
+# Treat x's representation in basefrom as a representation
+# in baseto and return the resulting number, allowing for a translation
+# of digits via multiplier and offset constant
+# e.g. Cantor's original transformation from binary to ternary
+#      can be represented here by cantor_trans(2,3, 2,0, x)
+#      i.e. from base 2 to base 3, multiplying by 2, adding nothing (0)
+define cantor_trans(basefrom, baseto, mul, cons, x) {
+  auto d,y,p,ix,fx,os,warned,abt;
+  cantorwarn_=!!cantorwarn_; bijective=!!bijective;
+  os=scale;scale=0
+  basefrom/=1;baseto/=1
+  ix=2-bijective;fx=3-bijective;d=0
+  if(-2<basefrom&&basefrom<ix)d=basefrom=ix
+  if(-2<baseto&&baseto<ix)d=baseto=fx
+  if(d&&cantorwarn_)print "cantor warning: bad base supplied.\n"
+  if(basefrom==baseto&&mul==1&&cons==0){scale=os;return x}
+  if(basefrom<0){scale=os;return cantor_trans_negabase_(basefrom,baseto,mul,cons,x)}
+  abt=baseto;if(abt<0)abt=-abt
+  ix=x/1;fx=x-ix
+  warned=0
+  p=1
+  # integer part
+  while(ix){
+    d=bmod_(ix,basefrom)
+    ix=bdiv_
+    y+=p*cantor_trans_(d)
+    p*=baseto
+  }
+  if(fx==0){scale=os;return y}
+  if(bijective){
+    if(cantorwarn_){
+      print "cantor warning: can't do fractional part in bijective mode\n"
+    }
+    scale=os;return y
+  }
+  # fractional part
+  p=1
+  scale=os+=os
+  while(p){
+    fx*=basefrom;
+    scale=0;d=fx/1;fx-=d;scale=os
+    p/=baseto
+    scale=0;y+=p*cantor_trans_(d);scale=os
+  }
+ scale/=2
+ return y/1  
+}
+
+# Treat x's representation in basefrom as a representation
+# in baseto and return the resulting number
+define cantor(basefrom, baseto, x) {
+  if(basefrom==baseto)return x;
+  return cantor_trans(basefrom, baseto, 1, 0, x)
+}

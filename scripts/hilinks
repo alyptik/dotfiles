@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [[ -n "$3" ]] || [[ "$2" =~ ^(ansi|xterm256|truecolor)$ ]]; then
+	oformat="$2"
+	theme="${3:-zenburn}"
+else
+	oformat="ansi"
+	theme="${2:-zenburn}"
+fi
+
+links -dump "$1" | \
+	highlight --syntax=conf --style="$theme" --out-format="$oformat"
+
+unset oformat theme

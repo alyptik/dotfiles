@@ -1,0 +1,963 @@
+; File written on Thu Sep 22 03:16:54 2016
+; dnssec_signzone version 9.10.4-P2
+alyptik.tk.		3600	IN SOA	ns1.alyptik.tk. postmaster.alyptik.tk. (
+					2016092205 ; serial
+					3600       ; refresh (1 hour)
+					600        ; retry (10 minutes)
+					604800     ; expire (1 week)
+					3600       ; minimum (1 hour)
+					)
+			3600	RRSIG	SOA 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					qA06HkfyC3Y2K5gzybcJhmhdfyijtQdc37R3
+					zHVL9hCL/qQECtHpWs9DGtNAHvZ8omC9j+nr
+					NcfIozp64O5lg5tw8dDgYcQVQyfv0bZoxRzs
+					cSJsUTNDGSh12uqPyr31uGTRrjNHTky1Olfy
+					3BIdsQQBYDPHKTMrgQLRwA3F3lB6Qc1peF7i
+					DL9bhGpG0cxTJdriL//WnUcGO82mtwj7uusI
+					8tmP2QgDJFonysdKApCy7i1zBxVI024mTcOt
+					9BSHZL6FhnluMMFaoJX6GfEVUST0B4I8vJMi
+					58ePHjPU9r/Jz9mt0d/tec0nAiJWWBfmlThQ
+					Z6M5OUjZaXTo7nRT/w== )
+			3600	NS	ns1.alyptik.tk.
+			3600	NS	ns2.alyptik.tk.
+			3600	NS	ns3.alyptik.tk.
+			3600	NS	ns4.alyptik.tk.
+			3600	RRSIG	NS 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					BsC904rztVMISHcTffvepJoNQuLxSFTamOdF
+					Rf2ZEpjyNbzjStMB6tBxK6G/V1IZY2rCcDoC
+					cipYcCn6kEjhpscF3kIQjMbTQcNudP0V8L4i
+					4IdDE6BTSYfO2BFJeG4dHr074q3cvcMx/oT6
+					sFOENbvgujk6EvLG1RkwlKp1QJvruhcMoIHR
+					7sZNClvyWjGRUIuq8kat34tFYsnKRKARjz3x
+					H+EIOs9vLHMOcUgQc7HNylxhG6jAPQdsiODX
+					+rT1VKYD0kuabCNOMaIz2SYoa7RCnfB+eOAG
+					LnfyFbigSKyuDWXXgmabouHsN3UlQd/FBqWE
+					79demmm31dvwbmFPXA== )
+			3600	A	76.173.133.37
+			3600	RRSIG	A 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					iTpjMFr/mjD5y8BOyPRvwxNVNCb5Lmp1hBXm
+					xAWlA9h/dpOdQERoJQqDA6iei6Yn1yARhnxY
+					7V0UECnmhu7UPmclUDietXFgJLfHJyJGu3GS
+					4UaKiveA0rDhaUPxgJpGtRJgCdb0OhbV8FLK
+					XdjiC/UuCFoR0SVjfC+y87loRwoagMex2+N+
+					kIR+/DpJtfUjeJPmGIMJwjnWRsVALPgfru6q
+					dUSY6YXa4+PEGcXx7VgXIoSsFTPN1lypv41+
+					3bjtj5CFl1CAlIFDIC7921ZjooVBU/yWPN5m
+					wm5k2V+pQHnqI/WdXPT4zl9UKxe3BskOTcbI
+					mZvhkEz2TXBblUV5rA== )
+			3600	MX	0 mail.alyptik.tk.
+			3600	MX	10 gmail-smtp-msa.l.google.com.
+			3600	MX	20 mx1.hostinger.in.
+			3600	MX	20 dnvrco-twc-vip.email.rr.com.
+			3600	RRSIG	MX 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					IqDVcqGRdTRWfopfLi7tZLGR4L+OXVuf6fKg
+					hWmgH5g7x36PtO/JXL5Ixi4wpA4nicrahXRO
+					HQNJ+etwhFUVWYf3nwkedfwSifFppCEb2ffS
+					VpCfAWZtgSaqrZHtQsAitnG8jLio+tRnPuuj
+					ow7W/1n8bMfJLcljpWrfCVomRJrv7rtuXjT/
+					YV7p9dntuZTQlBj/iN1mJyXk4jd26daDTvLn
+					zvNlahlgEnGQs3mBDKW9zGlqgD1b7v6f7BN0
+					rInAI/ssDt8j2HkpWqmOUInL0jg7TyzDkZGl
+					2VKQlPUrZFQXzbEzx1OfN//dm+UD1eFWi4F2
+					2vdoO/tQCVsRQ2ppUg== )
+			3600	TXT	"v=spf1 mx a ptr ?include:_spf.google.com. ?include:a._spf.rr.com. ~all"
+			3600	RRSIG	TXT 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					FHBphAlnnQqozOeyP2P04bOu0GKnkTWWDAts
+					HKNseygPaxQ1V9RGl4czC1+9K4vYRwAkhD02
+					6G/bcHPwrssUG9drAZJqNfgemA5IuvrcdKQ3
+					lj4l2oluUZ0KKkH/u/6TyOD/HLrfSAcgDNo3
+					eCXly/CoAciHu9MMcFpQCUfT/3sZrIK1FCFa
+					brDzF28wZkp4vbjGDOig8CZm2zhF6NN5/Cpn
+					eZ5lbkTGSHT9gNgmAr9/SOPCRdFogr5/I8P9
+					GHRjZRtVY46FmeqsnKOLg0HYiEZ7j5/5iMtz
+					5lI9tjeGHNFH8BSsCe/GLzqpcNCtHBAjPido
+					aMXpSNGsrbO9TUpNdg== )
+			3600	AAAA	2605:e000:efc0:5f:4e8:e1ef:9271:c330
+			3600	RRSIG	AAAA 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					xGzhicgdiZWeDlRo4bEz9sqnWiRqEbg6vBLk
+					Fessuz7ve8yoBXVUGzhsWSI1vD9vqEEFIgfx
+					ifbyfGadGZblOsAnLuEMtMroONyN92nJLatB
+					voL0bNmBgdik8arb7TpBYqNM0G0R/HPFjP6F
+					j2rT/VbdvMKhqqwvBGcIh5DH+YbkMMjvQ4iU
+					bCohjFsKfFuvNEq1J6TSGqMRn+urSDqi1HP6
+					mtEkqzpVijaqFEuZhQWvPfonG0UTIZXTVQjY
+					bHOpOwk3jSA2JvY73cCRvLI6cCG0h7EMlen4
+					dA2dEI01PI3rf1o8v46qNxAq5BhY794CwqRQ
+					jI+HTcmPbcBaUpuOfA== )
+			3600	DNSKEY	256 3 7 (
+					AwEAAcYeUSyg/w/hz1mmHaGXW7stmHeEIZrW
+					6RY1x0zQxCZ5cGbsCQHgNy9kWhkGEWWQWVmx
+					jNioEOQaQj/Y4l0g8yddgu+1h5fgMeTzZfUv
+					LLKlSieAsU2tQJR7KvZeAfjopjg5QDcFfqT8
+					vKv0AFVEHNtvjS+ItboJwPzmWJI1H0mKTlvW
+					pdIlizchegLVT+nMPBFQYJBSU/bhctZAMBon
+					VhTSbEmljkvxVVUy711lkHRd7e9O3l8Ogabl
+					9h8/j0WPszeu7CzSI76WQWZnlD4aF/vuBtUK
+					uOUm9Rz4Mhro5yUfrNhgoPTuqizvrF6le4sh
+					dGROzqDxkDNkL5plr6ECPkE=
+					) ; ZSK; alg = NSEC3RSASHA1 ; key id = 2972
+			3600	DNSKEY	257 3 7 (
+					AwEAAcFKgQDJxmRxHh9igO1KfHPGzdCG7WU/
+					dUgt52S4U+YMftncuzdUe16bFvUwOQDA6UQe
+					1NpBuMzWTfVSd+iIx2tvYAU8Kd9mfDlMOCLz
+					i8P3BAvfXuONki7MvCEWIYMmyEFYPLPhO27Q
+					kKHUZqexJ/aJj+v8VCIo12btmZCAAEZ+Yto+
+					pAEST0+8yQmsqZLq8hl9RZHg5OOptmmjg0wD
+					EGlaeJ8VGHv3LpnCyZujwwusUbE0lOJLrMNG
+					yMombvpfXIBZajZ+wXS6Eqq97GFH2PyHbRMi
+					RCnwQ0EcCu1XJy8Rfap5bCQoBwDRaw+ALkiN
+					0PJm8imknWCHVsJ3myIGC16prrOhUtxS1q+f
+					MBhWMkaUKlZDr+iwYX7Oybc17TL/vfYqqLkH
+					ndeKpamrnyPaM+x3mhhdn0qbhBAd7ZxdFRUz
+					EvEG67vBDbljxweaRUNheAvQ7cxCOqOkNGqB
+					q5rbsB45jJzMKcYgC1lmHdTwU4VOlsHqrzLY
+					AE5qpsFVtPqm+rYtjuzr4jTq+KUwYWl4U10K
+					dNwuAdfAwEFIi27bfjNwUO/HB4slyjQhksE/
+					nPyzE1xfbjHwoSByTeSyS4xkSh+SRwUmCQv4
+					FX7R1FUWLhFWHvuAsjr7njj0n1OmquY7fV8m
+					vfACGXOh2tOhLgGMggKq82fE1vfUsEWxEEjK
+					J6XZ
+					) ; KSK; alg = NSEC3RSASHA1 ; key id = 1296
+			3600	RRSIG	DNSKEY 7 2 3600 (
+					20161022121653 20160922121653 1296 alyptik.tk.
+					vX2VsyKfypScbWmxLcvWr+wBIPwUnyS+cc6Z
+					atLmEqYxtLcN7qkJeSyAjQyUOwJVT0Dw4yfc
+					iHCEpRiHD0SZEgZflqs6D/Phkl4ZoegMTiIY
+					UTlORORoB3VYm9/oPeht7CyY67Pyj/NTIdYn
+					V694ooYO0VBlBcXGu5rG8ECxemYMTlXT1t0H
+					HEZs7LklCmyNGw76nxH6Pc5IDijO7tQ/eOnm
+					Uz2+a+FPf/TeE1+Ke8CdikG1GjdVBzsS2XHB
+					XXRrJFiBag912Zogy9XKcMFdRCPFQSxskCni
+					00bgolsknJjfBV5cUSUQkNYpDKujk+wJsXVJ
+					/1F5y3XAiNkhtD7Z++DFJ/87jyKuOBBHBio9
+					aPtCNTKwQIR54I25jvUHxBjhs12BLqpA1lhS
+					l0sogi2vHEol67k3phyZx+SmtZhPV4YrmY13
+					X1Z8ZWU+sF+2FeA5Ybdia4FxzIoJEbB9OD4Y
+					HRN60ajL8viRbJ6Wx3eTihu5X6bfUiDhlj2P
+					gtBlyr7hKJophUSlDmCMKXh1n20yosYMDCcS
+					QUfWLWAAEtdIWS8G1sRjy75xtrpYPcbbLSRt
+					FxGMyBb6we/XoeaR2aT7whI6AXYgexwakzAi
+					QpSNFTeKIZ5OW4/kskk1IXrGXOJscLKPVoki
+					NgfU4C41G1hbfSJ8Spgnx/3XraYXVEfVniY= )
+			3600	RRSIG	DNSKEY 7 2 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					GdLExqsa7+KA0BKzbhtktiteHhAfu+P4Cn+K
+					uNCgdd+4r9VYaZpbuKwqZ3TNbvCP0I5Q+H6l
+					M/EI63lugR3x6LsPRNFaPpO3nDG7fZKiSrwJ
+					INCA7eFwhjVd/7Pqlf2lua4yp6dnpUVmenT4
+					qgHT1lBQzvv5MQ6RSO3ZRgJfF5mM8025HyaB
+					Fyqiz9zPnN6pdyqCCz7KoPC8/vIsvbFAGYfv
+					5i0wyvXcK1TtrWbXG6JRlfpA4pqWR99r65FA
+					BVpogn2bD7eDHGrvHm+vU1obC3k1Fjmnmeti
+					sK/VyVqerbz/LaK0yKcNhR38CAyAlWhrTK6V
+					YZCKvtDc17iOplT8kA== )
+			0	NSEC3PARAM 1 0 10 3B747AB20CED9F08
+			0	RRSIG	NSEC3PARAM 7 2 0 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					OpWtBzXg0i48Du8FjEeuBX8w35tHmbBTIVT9
+					Zw7vi4zQ5vPm9qi1Ql0xhvJpk4dtE4zBcDJA
+					K4p3C77j4cwygvESck19HpME/PtNVT4vxuUQ
+					xJ6KIhaBdWwT28khRGlNHi6QCCg7lkG6YUw8
+					NVf8FxiKebyZSQY8Y42zk9Qox7mxX//I8wBY
+					vYs0Dk1Y+i3NfpySGNhJIBjKU4bztPYGgPRd
+					ui7qrCtE5yuWrr55YuLoC6zWMA6aD8IXTuJP
+					inUUU+owKhDiYFR0QZor4ltpzl9b4u4tls5d
+					PfweZZgt2qzIhy27TMbaJYkDrtwV90igCDKh
+					XAAEkAxVaUOJNbD15A== )
+arch.alyptik.tk.	3600	IN A	192.168.1.99
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					jOPg58hJJHGRHjFFYhfb/O2on6g5iUoZhf3K
+					77EW2rsO0mKldqAmRRw3QryZzwKt9INIx+gH
+					U6iu+f/RYFn3V2VEjcCA4dvV2+VLtTvLdbhH
+					YIPJogb5Lw1t4VrWhYK8LFxq861YCpGK8dEb
+					OmVvsmL6SOi1YQOq6iHINX4vKAfIKTD/VlZk
+					EX3KNLY+2enQtttVYscrLxLjTB2+PHugMXH7
+					YfhmZgo0aKgrDEBhv2N1QKqNJ91MwBEm+IDY
+					ZNHgtgHS7/ZqQyW+LBCbgT8v2t6JYsJcV6nr
+					339vZFtXxe729VI+6o7/FdhFhofKZ6DO3js3
+					037jPBmhCnRWTzR/eQ== )
+deluge.alyptik.tk.	3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					fhKKkkMoCTKT2gCM7EeKhikOo/UX+H70Jd8d
+					GcSo6ISN4iyYSKDtEMJSd2QPmCqxKp5+RG2E
+					U7Jh0E2g4hpp4U/K3YTms9L5AFve9L1k8s5e
+					NlW+2D4CZXqNPHL3FM+tAzZ2uwwTVaaF6ApB
+					YXae/WJcCw17sAOaUydyJcWhSwK358y0Tj93
+					HHBwKiJqTJr9vQrdRP5C5C4Nd0YzMI0u3AHm
+					IoLPcAKat6GuTxC1RRi02APJ9DS3bd1bfCh2
+					CJ81uWN8wJXphb9TiArteuS0oPolZrM0QKYM
+					X0T21q+BNconLL/MVq7GkNevMYnJ0UX7NZer
+					kaKzSXeYAmIRrCtWag== )
+ftp.alyptik.tk.		3600	IN CNAME web.alyptik.tk.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					bVm4f9FwRufXv5su6mQqt/2mpn1HuCQimg1W
+					TOCCVmPO9MEkusJNCSGUfCeOo2jtfO00785m
+					LoEkPpPBvJS8datQw9ha7oZubVKsVGcD8wxN
+					0bjRFLDqk8Mxls/+Ijxx2MJQMnPubLSnQw6w
+					TdM9f0pEH+h3psD+wpYWtR/AJfN/UdOXy+B8
+					I5VLHzwNi93GMHFANhR2YX2VDYW22OyFGdak
+					0VmCPYyoqePU3LNZzfS2zDMIUaOUZjgqKJuy
+					Y2mXCeqTSoDHIVJ1BhVqlHWacRpmIkYyteTy
+					Ge727u2+JJkDFAZvz6qn+5iVGwFOEnGp8/Z8
+					MtJ96HN8KGyExL7qFQ== )
+imap.alyptik.tk.	3600	IN CNAME mail.alyptik.tk.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					hjww95WAsDzQZ5EhIiR4N5SJyFufyVPKx+yM
+					nXVMV0mR8lvi69STK1izZDs65qePKPtAhr6/
+					3w4xK4gf+sVluqyMB1oHyqJ/WCauv6LM1koo
+					/kxV8fGiuYiZ1y4t7nLIeoW20TMWw8tyAJuV
+					tGEX+hWD4iVA/J3FI+G4Am1mBs0MxwjC7ns1
+					Ht1vVFvrEUDO4ObRFWiTSojRa22lPBuDj0qq
+					KHrWVZjQ5sMHpD0eimg2dVHqw5+Z1DG21TIy
+					dOmdMkJgWrytlDVhlSQ+YDO796dgAghNv8FZ
+					VEZ8B0SRnpNQcsqfS8aqOSPQyDrvHaqOMQc8
+					V6XmDypghbI4TZY5Uw== )
+i2p.alyptik.tk.		3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					b7N31NO/HcUjSqqwljtsUZ1LQ34jCaB2bOPz
+					UytqwY1u+/wkrVB9DZTEK8685IDs/uEaPAqi
+					ZODB4rVo1vKe46lynViJJHa3TcnJYUVSIGyv
+					g/KT6jMNdcC3CLWwwt+UnFCsAnhfBC+CjlNX
+					kwJ+KTzZI+KfUFb/jZJERJ20eoS6iekG+OlO
+					asARRY+CPGT6oTopnGc8KjCNHT4pUS3QTF3M
+					5i9r9EQuxXAw6ER13iqzp6UTadJhgcBEl1OI
+					vWct3NF7AM+0X5JTfNUcXo+Fguak0hZqZBQ6
+					mGNX6uulqcrt0oCv/6qPh9dmxbPuwuW75Ctr
+					53xAyTCk7j28mOokVw== )
+asus.alyptik.tk.	3600	IN CNAME alyptik.ddns.net.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					Lr5o4ung2yxYF2EtZaZoeFpFUM//pxaugaeE
+					1ZRpTnq3J/0mNm1W8k9C//YXv3WtKKeTdzTO
+					QdNL46bgmR7kWClgSZ89KYV33KULOoZXqBaI
+					xr1JMocScRB1XijSeE80YXoo+ZWX8lkaN/rU
+					G2vCmDyTA406tIa38C5nz4rhbrhp91eazZHn
+					/C/xVAx8OuV7K9vp0gocfMILszc5lTr8vPqC
+					nwu6EexRhIvUBgECtVqy5FGM1fRh5ofDwq/e
+					gP+Jqxhxw9Iihay48sHNtfad/GMTPdI+1KzL
+					E1rINjVrbI1csBaSeTCTRsIqrZ7ocyN7+Kse
+					uacbIvq8Smjix7OpKw== )
+cube.alyptik.tk.	3600	IN CNAME alyptik.xyz.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					SdKsKOXw8cC2JHciv7H4EeODtf8NmY/YJnXK
+					7JsdH35iLqmDEUORS3npoXABvGvngXzeiKzV
+					L47N131hl8qoI6Dae8k6ZdnkMKtvLEPElleD
+					eOrlg61f5V0oIl3lwMzJDk0mPQ3H3n9Jm0f9
+					gzrkuvaDMSEfO5U98ytWx9myj1MFC68KEq8x
+					Ji4nBZ+Be9IeSqCyKed0QmWPtLpxI832zo5K
+					+8wLR9096enFooK02ZBPmfm5JeYEoqwQnEU1
+					aau8VoAiriSyeIaqVsl8dDtsIqdy22Dxf7B5
+					3CFTDcTXArde6EAjWRZ3w3K+2tx/7MK62Ydq
+					gR4TtKhlU2xfwoxhUw== )
+ddns.alyptik.tk.	3600	IN CNAME alyptik.sytes.net.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					JgCzMSm0Q13CkZgn+995pkORB7mus8Vx6xLY
+					neoGFg1Jmv3lE1087PGglHkeYIsoTEUi7VP5
+					xo4S5RUTj9CNsXEpFSe3U36bJBYU4FPgLT5R
+					f6sjONEhOPNAerejryaM4BOOHIehT0CM1TAr
+					LbSpWHREIgBgam3kYC2VB1c9OCCm3YPEaB1D
+					7IF5GM2KIUnRhzX/kXYImv/RxBrwgUPYZf2L
+					Yo5wKN0IWGhdQJVvwLIA283bjos//jsS6Ip4
+					HazQ4ZUcFfIm3NS5Te1bd2pHM6x/2O/e42t9
+					5g8aqvS94nlzmBQ3KzQtVfhkBq/w/vpkzY9w
+					/jJPEzfoCFqpUgslXQ== )
+mpd.alyptik.tk.		3600	IN A	98.150.136.16
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					T7iNH97+UNQjz0HE8S59M9sq5wLYfHDusN7L
+					upZFqHaypFIYrKcX4ueNhNr1Tl1oCtMk6RlB
+					1jHqWvjNRI5J3rmOQiemZz4EJil/HHLiT3Wx
+					gApj8HJ3i25a7B1GNIxzY81ux7FQhmqOFQsE
+					Fo9aVO8ynIM+/ft0rmCPwIZ/msLQJal+anYp
+					SRRm0+ZPojc2vaVDa/cwMLBh/BpLrL67J1mU
+					yXbNdVTas4jPgw9v1Mx38o9bcJET7tFx/zdh
+					NP8+NggYHV/Ke2250qTBMjFRrFdxSRxGURMG
+					4w25dnHGzUv0rMnbCTw4LC7hxbvz7NDSziQi
+					jVD805z5G+LZ1VY3FA== )
+mx.alyptik.tk.		3600	IN CNAME mail.alyptik.tk.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					tpu5M0qHKuj5WiG+MWs+UITMGTO23Rk3cJyj
+					RCRdm0hk7pu8EpqqLSytxuWf0VVWB5kQCU6O
+					PttPQwPi8qSYdS0A7fqI4+Ck15Hhyi2GD17g
+					m6nLHLT52q1E7xkI2MZ8A7/N5bR4OIRAtcpT
+					GbOTuOhrVEPGxpNBnHgTQLY4LzeUJK7qIxN/
+					zX9X+VuxBX9m8B+HFrWwJPfIpAk4Q8aglPZH
+					LDgskbv3QCKCmLCfXMUrCGwnYPHk+MFWxtBC
+					uu/N2KKBwPERJufbKfjhE2RgSI/NxxUwzVPM
+					L8eEujO1+0lwNNSu+2PqgH2NMhem5QJCQoNU
+					sYRvNyroBB454gHMmg== )
+ns1.alyptik.tk.		3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					BfEJXQnLL6KPcJ3+FgM7MTCmlI239PDuplD7
+					sdPns7bt9wG2Cgx3VMwq/VHevdhShMfFKy6s
+					f9hRK2r1kdcuynQ+FlVRzlIUxeNeZnmPaA/y
+					5RLfzvpNSLthI63ApSjyumC+pJO6w+TZfOjM
+					wTnSC3ldlJXJxKW5Cnh+3iXcs7yBQUjhbORh
+					Q914LJKFdGPhJ3DppPtsp9uqHQffcV46ZHuq
+					uv/GZ8Rk136nIJmYoBp/xrGdX1Lt2Ft+i8EE
+					fF8sbN7G00FRExZDTV73QzxszwZtCRwNu+CQ
+					IZplXdCg9L/7Pxa9s2V8Iw8sK4NAuYOm2ngD
+					H+q+JjVCYiUPxA4tvg== )
+ns2.alyptik.tk.		3600	IN A	98.150.136.16
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					iO5y1hANc3bzYpq3/xVIcdYqzHYjxZLtyd/j
+					yMjBAZ6MaS73pYE0ajvvTxlonLb79huW/E7g
+					jKECO8GDhsaa5VOaoTzoeDgXeJlpjNdIimO3
+					fkyubYwPpa+FNK6O/GmCNg1IwQXTEcvPVJhb
+					ZEEcd5oBrs6R5skjkA1l2PfueVn8To4KRM8d
+					xK14CsdFLhyjLcOckmLo9xqNcO51til5stUw
+					CdY7ez29oWncRwmfo9bcrr/3jAmfFNkdjH5N
+					RR3V7KghVVcas1dVvJV+05srfLH0gHQqEgqJ
+					PZv1g0DvBzdNRPB36tNYWASIql32ZMpCPPzI
+					yKcGvdG6+de5KEGJrw== )
+mail.alyptik.tk.	3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					Vdf6fahwV6OX8CuRPLJyVU4rt39S2iDAbzvE
+					OUshT22o7rBvB4cqE6Ry2s4wPIN+pQ5EiPeh
+					Uv69GMPVOrQyXI6bn+48F5fOkHg6lG0jyxjp
+					R5kfkeiwHWWT4s5GnvYiJSJNA9CSoZXYy+Yo
+					0S+K52NtuTssy+wjavw+BmvqM9QyYp4wytu5
+					5xbqQjUL/aKJHiujxvD1+Dq7ZYe2NeRAhyLP
+					S/hPiZ1UrPI/1VvekKTTUSp4wZQG+DV2RND5
+					RRDytB8f5ZnRbOq0xjIycKoDBgaUNXVpbNFS
+					JC4/FvaAFJiaunIkDMK2jWrHLxfb9fuD/TTw
+					SpSdN6S7arbkCrt2DQ== )
+ipv6.alyptik.tk.	3600	IN AAAA	2605:e000:efc0:5f:4e8:e1ef:9271:c330
+			3600	RRSIG	AAAA 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					NSpEmHSRTWbWgoK4DuLKvfD8Fv5Cmq2+yK7X
+					RRfFlwWSEcAgdvV0eG1r6n0p0qZip744hf0m
+					eMIqQ8KbxjvfvQDbxfcjWpXqXC3Lq3pmp1DI
+					YCNWipdDA8hQuA0K91YTvFWIgsyd3rIVJnKI
+					m671i0oQbPhHOC8+fBCy/RfsSX92/sx8DXPT
+					dRo11wigQTN7KLS+tmi4vt7BpT3CvrG2rneC
+					m5d5LavdpMFh03zwQaoywpGfLp9FbMT9R8Xo
+					ElF07j/vXPR8j1vyvQRs2YtL5xmeJEps4vLu
+					3RMmD/szbE9dIYxlqaBa7MzMO1fkf6TRdX1j
+					WUgMfFV7riW4td3C/w== )
+ns3.alyptik.tk.		3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					kVfSkM+xEXqy50+FzOmfBBk/HY64zYdIfXzS
+					vjvjFqGIg9dqWLLgBYBnhPWQaLUs4X4rDGmD
+					jFfyhCZl8sMXVXxTqiJGzbDKgM/bDzaYbPma
+					/TyPFriUpEpJJCphV/ujvmRMD+OmC/+fAzkT
+					MaI+0+tspwuSRdmTMZoQjKYiQHcm4D980HiZ
+					1q55LM5EL33ftdcXCQzU1/5NX76mjSrI5qQD
+					wmjtr3tG7+tvOFB53vfBu/pHfLtibE7OXFag
+					g1Kts2ktFZzlvcquD4xuAsLR5MX0Xj6jLgkQ
+					yXxqpNbAhwtvmPQzkGPDc3zhoqBfzosKXd7W
+					KnZ+3eQmSTq+/TEYwA== )
+stream.alyptik.tk.	3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					iBGjW3dbQF6yy0WYIV47MlmrW7IKrAu+Z5HH
+					7p14/syVm9I7mqStLh3q3tzCapE6PmeJXLRT
+					pKfdwmATMSdCUqKfChhpXGsfYYyMV5u6Mq+e
+					ywLfQRM3f+2uSWp5TRvgAfFlFeCctCmBat7g
+					mlq56ajZZaOTAQa870+OXZDDPqFlAvDPNHWc
+					OCVZbw4Jr3rKjVPSjjafAKYd9sE3hH9DbDaX
+					RpztMfY7g0mb6YKKvgxxRhbYA7g/pCRD5kte
+					fLXQijJkxgCNASXtHUfE40RgrGkQGPmZGxwM
+					lq6VEfEyVWgCue+WG186q72+K+Rq1pFah8t8
+					ZXM3mVHi7xENLDLQmA== )
+tor.alyptik.tk.		3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					IwydvqCrih6eX1Lci48mImUT68eStlP2yEWU
+					JfOoVcnyXeBH/tV6iKdX+8/AqfckpjoIUuG3
+					n9L5dfF5rE0O1i0LFS4Tf3R/q49Rp7jkUdDh
+					LfacEHe8a4eXNey9IGDwIHV4Y5Ezj7LK1LZ4
+					BPqvt6fnnkydSyryvOouLyAT/QuOtE3CGFlT
+					FYC9nOniG1CxsYiRsNQfhUSds9qkIFvC2Qhp
+					EI+uj4avo6EwiB37xoTBID1shzYZmDf320zo
+					c5r6R32X4w62pyfBrDYlWnwmpXfye3gaMVKG
+					DzeWDRBtYlreo2oFsBeQQHk5FLWeMucD09mT
+					NKRRR1RQKlg6uQokGA== )
+loop.alyptik.tk.	3600	IN A	127.0.0.1
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					dxrs1UXeQxecFStPZmwJo2IU1yCrb2AZ33sR
+					231Nlb0PF3oAYB6uN7MVaBavepZTE6QPiQbb
+					22JnDsq3Clk1INaa9MVcdhWBuQ6s3+5lXz6P
+					Oax0q+OEtrviwc3BkYUoiVmF6Md6jvCsbdtq
+					KZcdlzBeJCGrNABpCoMK+wMPz4Iyua2mnbUI
+					eKtIymZ5tPCQktkQkqyCub/spFJ3JvckBCIC
+					+8GWrKYdBmXaVzJiSNcyA0es/t1+1t3QiEwI
+					qg3cZxbILv3vnryiNS+xCC6qZW6afyI5hd4I
+					Zq5RzeprCMsWYzM+1keZ6Y9wANZms0l12PfO
+					7Ei6++Fc0871BZJlWg== )
+			3600	AAAA	::1
+			3600	RRSIG	AAAA 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					kzs/hlocwTZqcGA8YDOsOl60QysKxNmSScT2
+					WXqFEuHDSPIG5ZntnOnCY4th1MfYTBNhMTmH
+					m6xx022GXB3gS4k0Qe/0PAMmnPx8DCIYGHGc
+					59OrxL8qGkVaeLKQKDB12zel8mpKFBWoAMEn
+					MAL/7QGpjaB4EyxDn0SnxKUyVYezFqHbP1GO
+					8OgIbEa6rgMXxd4LWjt/eHzPHL3Xk0qpXz9f
+					GK0vXgG9nG975Mo3sk8Jkk2SqPX90DGH5tCK
+					JleN/HjkbU0bxMsXysRk7fBMR958ERnJE9qO
+					CS4OJzU7JIGt5B3K7gd941j3e90swFFTl+RT
+					toQH/eQgMxWkjx4DWw== )
+pop.alyptik.tk.		3600	IN CNAME mail.alyptik.tk.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					at2gZoODNImmn8Q4sVKcKtpZzZgtQZC44qAG
+					nI3lxQc32RMAVO5mL/xycMECHteJR7LU78fN
+					Q9TzNxTdydJoLYbWwylUUmItdRyi70H6DF2D
+					jptKEIJTsIckPw5PmG5tUWpEPoVAexn8hYYD
+					3go6N4X/jNpIlaQF+wq+qhU0uNCb3JAelkyY
+					GFWXRfg//eLsox16meS6TwfwHJvTT4M9Nmww
+					fZIzU4awFJ7w/7fHzjethBMisJuSizFDlz8n
+					sPjQZI4OWxnlk8sTtonz0f+O+s2WHcgrTQac
+					g5OLlFp8z0LbWDVGGNOuYdIcAuNhIhIiP73G
+					zUyEbKimsL9tI6TF8A== )
+alyptik.xyz.		3600	IN DNSKEY 256 3 7 (
+					AwEAAc9VcNasQMnBAq+KY2fvGx1aGHwKQEwy
+					FKjsY43fQHiI6CdJc48llzSFV50jUrn0kh/k
+					OdaEntPXGgQiauNbjXPCsTy7pim/NULjlCws
+					8D8C9UNFoCwXR206du0YiQMKfksDJLsbl0gp
+					klHvpwnW8CR2+4EXcyRmcpL7jGWL845DXOW7
+					vfUQiVuE76b+MEkadbqTtdm5UwI/gkoonaLl
+					VUTJsvgtb1+UgkM7eBJ0biyfUNEkx3qMEUf0
+					bpFTI+E613BZ2cSt8pQPXEIpowMRsOKSH2+l
+					DnD970bcRQWUlbx0GfEX5SX3CezkYDrNhjzx
+					JNLVr11QmHSXLD85gc4qzGk=
+					) ; ZSK; alg = NSEC3RSASHA1 ; key id = 56612
+			3600	IN DNSKEY 257 3 7 (
+					AwEAAdNS5NExEUU2FxC2N+u8u4A/x1fqnw3N
+					4ondU44+YPKxcFTLOchDyV58yhiOZnoBuWP1
+					Fh4eNq5j91JWb3MYUm1qxaCovxdKiuryHKOX
+					OdWtGfEnFBvbgWxwBVS/+F7OjL5dDrtjXOAq
+					GKzCCMXnpY6VEhqcmgsGZk17IU8/lpBILMc3
+					tyXRKQ7NDDt3UbeGXmkO0SSL9w6xV869oDi+
+					Q7ZTMiKCNQOqxgaxdNi1jtuBh4uKngRhjpwO
+					evVvnTp2hDCv6RDsAgAD8GzCFEfuzh5H18jZ
+					FxLA00uuR0a3PG+w8AEXM3VuzbW+15XPfjYO
+					TGc7MPVkmQ8WroV93oTPmvXCYtIN9ObyJykC
+					PO6F9Q7oSg/YnjIlclyeyn3DJKdyExA+VzN9
+					HIRiWYsM01t8hnQN+yNsrFR0VBCXTg/staI7
+					hk43JsYVBms+SRF3hSkaRUtgu5pguQ8W7LAi
+					z3ZqroahjqJBGihfsV3jnA5+tTrqgeH5P3FN
+					oSUgNKs8Wl1lizJmdAy3wp7AaT3u0DgvGkSb
+					eRKmb1uxVihF4dBBVd1dNeQyqnAohLtAigt7
+					Du+T8oRMb+C2xPI8O2mDT7eOOcdhgoBBFdp7
+					2itSjuTtBvNpCwne3xrgne25sBqbnItCFB52
+					pNAaft2N9ZMgUCc5lDJPWNLLxa01nUqJtCJd
+					hkh3
+					) ; KSK; alg = NSEC3RSASHA1 ; key id = 17478
+_http._tcp.mpd.alyptik.xyz. 3600 IN SRV	0 5 8000 98.150.136.16.alyptik.tk.
+ns4.alyptik.tk.		3600	IN A	98.150.136.16
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					joUJN6l3zCUtgL8TJJkw2X5UpQRqAdIHMTqE
+					sO/iyzPiqMVpk/jZ8Tbmv16+nSFUvYc1w+a8
+					3Jf+fizQINHe5jGvoWtvxipK+uv6c5nKI2H6
+					p4NiAJGvaUMvrqT6G9D4zWGhawz1rASLL+rN
+					evZoEU1q3JsaWkp8LhprqxIcZNCYcnbGvK+a
+					CtP7qRbFi5zF4RIrDm/BIaZxsbg0BzwxEanL
+					LD+C9gDj4Jn6fauo4KixlPKhVSHM1fwjFx7i
+					rPsp4ZnAID1hplooJah5vE16gI5UzINCpFTv
+					7MHqfTQ3x2yLBzYDnPkQfyHX3FMqrUAvOMZ4
+					HymsEqWPdd8uPTgzGA== )
+pma.alyptik.tk.		3600	IN CNAME alyptik.xyz.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					NmT0swINUePLE83ygTvSfi4DzE0Wv0gijrxB
+					mWe2B9mlF+OXXqOlCYLZ/neWfweaV0DXj8s0
+					OsFfyQTonAKlvZch7byOeKlRALBj3zYNAKYj
+					JMezhEaDK2VcoBaiEURu7ttus+ViW/gS06zc
+					zfJ92D0omw73g/Dta6EqssHz1ItPkpKNNgX8
+					fdBq2i/vPubsbru53vP8BnhA0oNUlqWkgQAE
+					QsD7pZIWxmo8Q3qrrSes+v+4KtoZUlxdxtLh
+					xtn0Sxx8EnLzUtq/gPRGP0wWn/V1dMlwuSYT
+					Xb0jqPm4ljUsZzJHuWiTRN0kqqSCBu7mosj8
+					F9BHVn9qfQ/uI7eLmQ== )
+surface.alyptik.tk.	3600	IN A	192.168.1.98
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					ew2QnYmBEyRAEUZDwJ8sDcTfxwZ0gAAd0TY4
+					laqtvNapc5/ZAIGakLg9n8yoPi8AQnd+IVu6
+					hQfrzJ/gHXQ6/pwuDxHUYGjFo9rd9canoowM
+					BS6PGXLbZJNK3tkokte7Mptrw8VH8kz4bfSG
+					Y69GB8m1PYTowAXchb43JZw3DjsCLrKRvILc
+					SakMoT4OkXoo3NBHfE4wNXQq80PIhPYr873g
+					Bx0eiAXkkP0sSZBA3qUoioJRU6WdXtPZolB2
+					6IDjE4BkSAgTZnQ1fKLIGp28Gy1KJmHKhMT4
+					cMkbPX16qLhBi8eX2SrHoPmrjBW7Hq97B+eD
+					U2Zpy8cUlCeC7krKwA== )
+smtp.alyptik.tk.	3600	IN CNAME mail.alyptik.tk.
+			3600	RRSIG	CNAME 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					Ck/O5aWA1g0tupbqYMrhnebBrtc+UHWn1+SD
+					3SMoYtIiqascm5Sf7swz38uE01brXX1jCeGQ
+					pM6SMeXmmunbsl3uKiAfkmWrfmKQKTfc5J5A
+					JtvUvMMopfajy4fax/H+YOUdUvN2+h7JoUEQ
+					qCg+1ZzmpcBibDrQ+cHqAqBsj06D6g4Fezbm
+					vywDd8lCgfWcSiKb96JzoRq530SGlupDoxtT
+					OSlwxLD0iInslDVR7I3YYahrJCVqlul8qPF2
+					2e6QY1aNWuijR53p5RoslSCahsR/VpN++18m
+					Q8h6CtUZCpVMHk4t/V8PrEPSTEOEG0gkLErJ
+					P8f2Gg+pzWS+2IF4Zg== )
+webmail.alyptik.tk.	3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					hP1OsqYK0TYZf9L0IMkK2umoKSawsrBBNkSu
+					CYw4u22VhDm7+3MdzwvZToH2TyL+un31ggtf
+					gFhLHW5o2EdH/5Ka/lA9lsdlIpPWigyFztfA
+					xCLCqrVx4Ns8ml5R7FDpAmEcsLrnNJAJ5ERg
+					GbZqv20rFo5ORYQ5aULU3uOmBVpLi90YbgTM
+					VmVeIyIE5oE4o9EYg9PhCxyDjcaPoknGPtX7
+					Ko647TLDmXd7Mtl6c/YTNJWPWi1ea7GOmsVu
+					Qb8bU2HwKHXPafMMlfxCoYy8i02DxrwwToyK
+					dT6PBdCb+0e0TiWolrs6oIrm5+zO87TQxYKe
+					X0jAVc5CFugs/mMDDg== )
+www.alyptik.tk.		3600	IN A	76.173.133.37
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					gMtTBDpY3LhqK60ZNWcyliYOLnjeDmk8CE7V
+					K04jgyKEbayATFo7Vxaxgfp/9p59guX1ZY8j
+					8VJoQ+AGv31ZQUWziZtGZSd298NdMDMye+As
+					hasH3gBhJpK+ZsgwIQlax6BzAW1QZZzdt2nY
+					OpJZMp5C9b72gSARNNX5BBsTDcnNYKYvd881
+					2dM9j+gnJj+xJdqeWihZVuun47HSlm8AzzSl
+					97XP1jucwuCoqNCAsLYdfbJx8Idsal3nqug+
+					m/xP6dpGkmNrJokAIN/6inkk7V2zTqxz6tjW
+					G+GDff1/Azu6nx/oFUxLIjE2K4oM0r/jsAKf
+					4Gk32QKva9PDuPGKiA== )
+2U96CE34D0DUMMGSN57J9APOE2MJOPRP.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					3989QQL3684KH993CEC8796KI4I9VKNC
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					PxdHQ2K+ChfnkdZqD6WJiR8wRNd/42bNxEW6
+					Dk9KP4B3uX4bQimZt1eI/BqB26DnH9PDw6nj
+					HQVJbXmmP+r4HWFXVmeE6vjKFyv0G7CSKD1s
+					S9xT6xOt/ksW5ZFyjZm0W2Rd//uK1DtLgeJA
+					geTstbnhXjfS6o/SU8Ir3ck6YUTndKBvB81r
+					pTl6R+G5XkrhmiQfivsAoIuk+BWX9zGNaGUk
+					FKdAJM2GuyxjzDgdBgTxshq3cGVDkWyqAISH
+					ErjHw4s2TTpkyD5vImbLgEk51g8NBomqmmBk
+					aNrOoSmXSR4KOxZHyhhGqW7ryACrmCd/H9a+
+					UF7St0Jd3ZjGdkQrfA== )
+1T6CPRDFMC4LP86530D4JM7PK2J4QB0K.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					2U96CE34D0DUMMGSN57J9APOE2MJOPRP
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					LK1k1FtxMQcWngdLh2bWCIfKNHDrsxGq2RPd
+					90p4dRFJsDskY65FlqrQkinsCwdSCXgomOCx
+					J56KQAeh9EpxL91B8584FK3QVE+noNtl1bfS
+					EziuI6278L5jVovGxT6ZM1iKqXTFmPJRIay9
+					i1yqpkVD7psxfDGHfdMaPEPltVDGN1SPJ54o
+					4tsKunndaWlkqnZ6MUBfJNdDY1Hla/f2h5M5
+					gsPAKQw+KxKy1EbU0JRfYp0TOgVx77FpPdew
+					C0JANZfuRwBxvU68s2VUoridBJaoL0T8YXd5
+					6AYnmJzqg57mmVDyenxnhejeZXCrHq6K44CI
+					fsVdUMJBq3mzyFFqNg== )
+02369TEB8O7ESKAUP4C3EAKOC65BBL2P.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					1T6CPRDFMC4LP86530D4JM7PK2J4QB0K
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					FZb1cqJ92fUSV8LZ5K9AiT3fJ88JEhUviHcI
+					2VOffvAA5iF55mSQxLjJUopXqslO0+DxrB/l
+					SB00h3UM2LJc3YK6JOcSWAyPvxSpO+in/p6a
+					KJWHo/SsrgLc8oOqxc7zJB5m2rOrOBkkVNsC
+					Muq3PuNingeIFp9VJNPK1UJrOIeUWqe2MfC9
+					IcT6OS9OlTv7k0ZYADeFNY84WTNDWamp+DRm
+					L/ms8jCMwLKm/pnY362jHNmOzkT1o6HCpDbe
+					1fMl0ALqbDr4jobk4appnJ+txCq8HAFJjRZB
+					AiNG0CPBpq/d5BctmootmBqXzfowp4khvjeK
+					+IqKesocAKps9wnXGA== )
+web.alyptik.tk.		3600	IN A	185.28.20.29
+			3600	RRSIG	A 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					CTgy3/kkVwKa4pxAiXzYqEwdz9vdsa4YUASg
+					0loQhIfmLOM7un5PZJQeRLJAEwJIj32gcjDe
+					yEYyIstvmd35JtcTM0imhLfBv9jK8rEs5lA3
+					KZDyAZbfmS6fOS7lPpfKF2r/43Iki3EfkqJA
+					2QeEHQNPBoadr6KiYz2p5mXmIZg4hBjMCyCR
+					YngXPbC+mytCTtWuN+ZhDLpIol0wV2qWSHkQ
+					ghxazuEvGkJAxaq5zfPkH4XJUoes6eQ5JWQ7
+					h6eaJe4PGlFT/nv+vpKa94maB5b/kxs01BBU
+					+CqwUtmib7n0WfQG5fVesX2QXYbAhyJZ3UbL
+					c6fsHnm10COt4XFaFw== )
+3989QQL3684KH993CEC8796KI4I9VKNC.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					5CJHVTGJTASJ5HL19HQ1AOEE06G5FP91
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					WW8VMueOCY1QOywU8U481ipZ5/W7kS32a5iY
+					VrlZEC/hIRcmpY/MD059zajzlDQci8if7Cpu
+					7ZvMrOZbVuMgoiWKE97H+1KV1C7sxy9w1EJm
+					zwOfJ5qGUAOjfaFiCWOHKqtOxvxItqIUt668
+					3GBU1A1ip6RNo14I5itCYu9qWljZYIhovumU
+					KTCxRsxldXpIXKnKW6BBNimlc/uLtVvC1/uF
+					P3NwtT5FyD3Dv5vSwKkHLvKb9EdK7F7cZMb+
+					pvrZRFZDm5NrJ1hjFo443IgKqqlR267UdZDQ
+					csuFhdbOaTQVy9L+f1BZEzLW2FeZ5UZHA4ZD
+					94Hp2HQKA3t+8ICdRw== )
+5CJHVTGJTASJ5HL19HQ1AOEE06G5FP91.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					6FHVQ7UFTOPJ8E27V9BHGHCJ1LG9J82C
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					VyQ7KrRGRp4HaNkOMSvJC+CwGlLGY8idvujV
+					EEsJ7TaV0CP7GCVUbeE+LMBFbs4aWoz3WR8M
+					4P9XI2GYBVOL30/WAJbsM5/cR1VsXaM0yI3v
+					MT50WMwuyviwPqTt9nRWN8eLjSVqo/T3HHHW
+					gTyBJGV8D3ODAwsWNxUoYEaMX802Wpq3Qcny
+					qt5D6I+jOjh9ca9mct9baCHa3ktqk5EBLmXe
+					InkaDH+IhqdeHFlgKGoIBAL1ifH5SxXkr5TN
+					LQnD1ix50IDWt24lWtahvUnf833wMLj0idcQ
+					fvuu+AOWndR08ZNSfrqzp5YrDNkKXejHzG9E
+					lxbOFtKH9QB6Y3ODpw== )
+BVQDATLJ8DITN1TPH55I3O656K12UMH7.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					C94QVQNU6U6CPN48TEAFRBU8VG37H63K
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					Ko0qbLMiEf0EFVWBJmpVC4Tase2keMTKNq7u
+					u0Qy/x2R2nHH9nJBbIrlMPIfQUaJOC+snd05
+					HNxZRSFtR8RpSYJzmbw4gjJL6fHaUIno239q
+					exJ+jnq8LRCdKEjCOY2NzIYtk0PdTE/7sl4j
+					NRww7ry0FFt4JwCs64dyWg8ZKZdAXLDNnvt7
+					H+GjZ+YXtb9RTJAohzVA4PYYPb4em9cjTRlP
+					/RR3ZjfbTAIpMNzlboTpJdszG9FAv7ksG6Mk
+					m9Njj2t5YLisr4d6p9hykkxQ994uUwoI6WLv
+					EOVsJ49wzgg5XdezLZKYXwovAx8iuAUfERnt
+					KbjShc7R39Y8wR3jQg== )
+BP1I29O6FHJPJS7T8EC22HIUSTV50OCR.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					BVQDATLJ8DITN1TPH55I3O656K12UMH7
+					A NS SOA MX TXT AAAA RRSIG DNSKEY NSEC3PARAM )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					C4SFx2D63Sr+B/UQlvokG2l5A6zkexkgIu4f
+					j5Yzcfh82+sC8qQTvzeVF745Vnuqlrdx2bn5
+					ZtJBB5+cI3NRgbsZvtzvtuVqU4ijr2UGCFzC
+					9vkVB5jYKk9UM9fNoVrg2Hx6RFxwVLJhWkwO
+					PYVoHOrbm8IU6nC3IuEKVmgzt47+OP7o+X8C
+					b8UCoIyIq1fUGLZRaHSqBqbcdvSr39QW/ybS
+					6aZ5QPtKwUXxZMuMuWFMwGLVCjLErgOxN+Kk
+					uWfgZtdVW/XlvyVDCSUjNPfOqYYaT7y0w4N3
+					HuXXmKvuSdiI5ucrjfOjisZIj6F/oyDey+rS
+					deqHPYqvmGARNOHwaA== )
+C94QVQNU6U6CPN48TEAFRBU8VG37H63K.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					COIN0EALJ37TQHEUMI4TRBL7FGNDAL4G
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					eJlkl3S6iafRbmMsuqLJMY1NK1xicDFkEvxY
+					P8cPk/utDj+WjcyqjoDgY2AB7obTadWotJvA
+					/L92BidhwJ4dnU6dx17Q52rmbHf3G2c/byFX
+					eZ84tP3mDtad6cu6mGWFytC1Ai/3rFivJh5D
+					5PDK0m/UkrJAehhSjbG6ITI4u/R8wFYbIXVX
+					mM2SoWJmivz9xH9YRjVP4EqNtFx03P04TofT
+					igq2H6XCLQZm4IJRU7fpPsaaGnMudpdYQsK6
+					BC99xzzFwYRkPXdA88NiNBib2xn4/eXTmGTy
+					uh/cheDLkvzCTt8+Cyjn3rh90+pUxx7eGm8A
+					yxza/egYi6APS94ISw== )
+6FHVQ7UFTOPJ8E27V9BHGHCJ1LG9J82C.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					76N0ICR37MPAB2FC85M687JOGVS4QHSF
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					TPJ1f3ifLuyT0Bx62mEkKyH4fWtlMCNLUlyY
+					qsbwai25JrnMkU/TQ9ncOGADyWA2SYh64/Hh
+					4rp2KpFlo5vxTDEq2MSt0uSKfU8JFJGET2wL
+					2KZt527n7MEukh+1h/enyynfhyxXxmMev7pW
+					GFnUZICP8PELb32v1sGnMjerNXACjfAmN5DV
+					rm+TJ9UnU4RMpg/eLI+H7kkeejD3c2CSUxxX
+					A0vvcmsle0F3x0quLIvfS4aXM4IX4Zirlbio
+					56BRH+9FmqH0juI86+lhBhXmx9g7QENeoAx3
+					BnIWIesRy6damo+uoFKV60Os78gZlQIVuBTC
+					NoCe3NsyXd/JtseMRg== )
+F1HGIKO7L5N211H0KV16CMK3BGPEGNEU.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					FUJN3J4G7EC4BMIVC07A25TKHNEUQTES
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					GzNslvLJx+1k3L1rEK76XmWB0GME18zlJ5lr
+					yo7Dz+uo/CbrTdDbElTHM+3X7bLDPDgvheGl
+					xfCi6OG+iAxnY0MjQ7l4cEZH3xXdgwZgv8R/
+					QVxWTosv/NkiGIFp4dtafrciu7Ic6f9f56zw
+					fmBGdJpQWgp441K7uwmB3RlaQFcqkgrYbrAv
+					tgfCrhhMy2LAG9hUgldB0ejpHF8IL9sFkjxK
+					k8VIB5A6tVP/3v7WzC6ArDS5Xmtq28u7zyc+
+					31ic+b7P9htvTTE6hCffje8GsQj8+mKRRiKT
+					cKF+ID+xdiUw5ydCQr7WqGjOiae1BG7uGFeq
+					Oio1ifl9MvIh40167Q== )
+76N0ICR37MPAB2FC85M687JOGVS4QHSF.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					BP1I29O6FHJPJS7T8EC22HIUSTV50OCR
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					DcRImR7mPklZazCbpQWuO7hWCbhbCOqQAwjg
+					Ga4tNvLfMszqRFu8RHPp39S80pz+x8nIE8Bc
+					gGO8FPI2wephzuG88QPIoUN1b/YwxS5yicCv
+					LTJr/FYctI3xjTmrBBPmanJJyoZbtX0RUkr/
+					yLMF7y+BN4zzwwrHkvQQAzKUD61u+W2Aqmj0
+					FMSiW5s6U2xO+AGesUsLboJhi4ZI+DAHJokW
+					j8nNoUX+747r5vNq4+1f5sVdpFiO/dAe9GhQ
+					zVV9K8AViJwOJ2ia4CXQFtvHdRO79tTuMh2s
+					ojJ0Raalb0r+7O+d1RgheQevtlSr5uFCJBJ2
+					LbPE/XRbP/XBTuwxkQ== )
+DI01DM8KEVS672FGMBKNAO8V9J8TPFT0.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					F1HGIKO7L5N211H0KV16CMK3BGPEGNEU
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					uw7toX5KRbADOyhoX3pNJZBrs4JRVr/bBHzh
+					gpB0BJ/qnf1mHtb/45tXsu+V7hOe5a9tZELW
+					Jr+s8qgvisdxV0QTRiGYkdiGdyKzd6n4MU2n
+					8p+9jBJr6qrd75iJ8/GPe6UKgdnjcuuvVT0d
+					8x7CLRZmzPAO8GTBzLxIyJDUAp93UbOWG1CP
+					PrWB1+x37NwmqUL85gg3Fr68eznUtuFlfE/r
+					2ZlAcMvjjQVZVTuGXhgIL4AJhA8NIgQKgqqF
+					XzZvBqivsofSlitcPMCwR17iiLnhcv7nUbHk
+					LMvbMRDoG9ufcqfZXIx3nBRtbKIaA62pwCpi
+					+yaKQAEAdYD+O7JkIA== )
+COIN0EALJ37TQHEUMI4TRBL7FGNDAL4G.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					DI01DM8KEVS672FGMBKNAO8V9J8TPFT0
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					EEyDLPW53SjNFzoPM4eBRb69i3L70HVKIewl
+					9h7/p7W/A5wlAGBZ34IYZ8M+gewIp9W+RSTK
+					Cs0BNEX+FMVg4ILHvUJLYclZ0BHMc61MGHZS
+					GwYiO1qlSzq8sCiCjDfPOF2IYNoOOFYz5Xyo
+					XeUiXcgaqsMp5AMAdtfO8+LttozMGnHGR5jB
+					9arxaY3HoKSP63L9AGvFRX329BTv49cJDFTY
+					QLq+xQjZ4PhVnqBtxYpe3/zEsUQQbZ25iVsU
+					i0Uj7OwKxJIdNs4cTfND5yNuDnWCoufXv1nG
+					MiUjNfLXRAov8uPoLbAmDq5TGGLuC5STL0Rb
+					lp1zoNOpittPCt9LKg== )
+HI3P3EB60V7855B64BT9CDAR27EOV907.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					HL55FKC4RO111MTA4JEOM2DTDHFIMEFO
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					ungO+Jjc0lLU3+99N5PsnYICLsn14blt8spv
+					x+vARAi8YCBzIUp8tdCBe+IJ86isTNVtpFMF
+					3CkL6fdZmuwtKQu/0O1D88B/thZMJZbNj17L
+					R17gOoR7qXvhvAm21fp3L4xzg7fDgXV9NHkD
+					BlMvk+eWIhhUGbgJ06sRyk6C+lYuFNtPTv6u
+					bawunVJSnUfOHWI2YEMZ8IF0FtaXiVjieXNt
+					cF/+GX1pXdYsUK7gW6w7Pti5CfCOMPYCcpCs
+					4QNPPWNVsCQbBwt2yHB0+4Y2V1k5AnLNzOWF
+					5X/GJYH3ouOUWWFPOv39Kv8g4KXECkhoEI8z
+					r6Vw0Jg+kpjLmfQ5PA== )
+HL55FKC4RO111MTA4JEOM2DTDHFIMEFO.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					ILT380O0POIRRQAS2R4ODJRFDDGCSQE1
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					vvCUvnSlTQQPAxSB9cJ2Tcd6W3ncUpDQCjib
+					1HMq/d25mulaCaxSZC1SLEjgW1ImniiC6Vmb
+					stYkzhmC0Weoi+zL2USWsSQH1DGH0v4P0ON3
+					8i/BOIYV3bBuQivnh7/bRcDB51yj+voQ5lFv
+					8gkaDOqEVPYpDfR2lr69IY20VPOMtL5tsSRv
+					USD/m905vekuPf3R48Ey5Y8ZC5cixamPpSOH
+					3fdPbEWEZVEIcjxj5+TJSRztENY74BBCnTS3
+					3ZwmCXRwZ62aONm6DRkzwELyRW0Y0YPXQ72Q
+					XWiPyRx3sJdFlLPdIzejk2uJ1x990gKJahBN
+					KajdJ4xiai/gGxGWfw== )
+FUJN3J4G7EC4BMIVC07A25TKHNEUQTES.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					HI3P3EB60V7855B64BT9CDAR27EOV907
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					LWS99lDXD7SvtaF4uHb23JUdWCp9DylIURr0
+					ryoqePG7IqGQexu6rBVVebbVafgctaIjc02O
+					xKdroux2yAG3es+GcUHIqVG0g9OLutc1Gtrq
+					5tQYZAcHDW7CEBy6i7MRJaVLQmXxN9HTfIPQ
+					PgEs9/xjngz+t8z66ylP08vIyo1tLrQ2AMho
+					DnS4KUncrCpf6/ZZB+wkO5ZK5K0cZkAGLZSl
+					i516ZE3yiYM6JiiSoJ95aUAqPjt9djHcKtkp
+					BvhXokk+GcsqbRp53D1dZzwzCfzkOY1rRFIL
+					1VlVlRsSAWTV/gBsUJLODqv/w/sqKzP2KCB/
+					KVerF03vIcxVW2hmcw== )
+ILT380O0POIRRQAS2R4ODJRFDDGCSQE1.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					KB78CAVTLLMLNSL2I4ERP25SSQTVVAIB
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					b9W/eEdF5FPPuxJLKMfR+94ZFncr7Qfq1EzJ
+					m6yNxeKcsJ8x3699Hu92ujm/PmHKJVLD22ul
+					/mGvIZ3AKtMnDgyTQvpirNa0XvVDAQjV3mGE
+					52mZf9wYsM+DWH6h/Zsdtxv0stvm8JBxgUgH
+					+BfrnLN6MvYgyr0y8hcuYoCb2RUIC8JQTFTS
+					hKNXfT/zyutvV2/UzXhoVwgXi9QFPwOdSKEk
+					7c3CsxJARIZ1Je2ltnCiI2jJ65JNlFbdTuiH
+					6dsXBePOhOUfq4uFnZxWKEEWCw//NjdGkLuC
+					HwfZNuX1ZtLiTGTKeQIxzyZQC15U5TiRP02T
+					E6ALMxfZ9Ks/niulDw== )
+M9LRC0DDT0VRP66P0UI3RHRE23333VGC.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					MEND0FR79AD47D73655P8SM96N9S8D6M
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					Pn6sF+yiBBhvSeUw7klf55DwpeaWyMd4lJhY
+					luSw51gTqKlWqX6dvRM2GcC1OpxkfbtU7KdP
+					o0ie9jgzCNHrwuzgXt/ye75Z5tSB0t8n00e+
+					++qWm3qHhkM1dDKQwJ1Hpq15JfvSb9hDUtGw
+					kbioK/QJdYvAJatMJBmq3MwlqlPysGesMKDj
+					sOPhmaSFw04i5vy2BJpQDeRQvpO6cgYZWghJ
+					M7Wu6r17HrNmWFXRFjW72tRXv7dDEGQ7QwBA
+					TjO05lC0c6KScmXu62t8He3t5EFr7nHWaznh
+					PNmu2JLN1XHQbogA7tMHe/JsQiXXedMvvItH
+					8mnDET7Yokar+tGOXw== )
+MT5O75U6N1UK52P2VI7J3A3NH34OU3EU.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					R5TVD86FENT3F30IJ7N7O26BSIK40UNI
+					A AAAA RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					qhfioOazmbfdON2kDPOkWGJgxh0WfPRapdO9
+					fkNy+fMx/Yb+JdxNafGkU5MGNXYwpjsm3+S/
+					6lQJkFMvD8bzF80kMMDH+fltONSzCSJOdBP6
+					ILj5jxQEnsUsMFMGrPGK34XDQPGD8Sb3fawQ
+					A6ilGmuts0pIzKL9dVzlD/E+XHgL9vLl6XFu
+					udCM+Zt/k4Im5kGXedk+rBmXvNQGGKK/5ijt
+					XYxlyMdEyN0SYZ7QzSNwf6jasLF1C0ehknt/
+					OMDRiZtL9xx7RtC12PbBs6eh7IqJrEKoq8cW
+					nCXTxQPJAolnuzT1TzbxXpp1dzS7Doqq0w5M
+					s1gaJQBzEYHAMIxB+w== )
+MEND0FR79AD47D73655P8SM96N9S8D6M.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					MT5O75U6N1UK52P2VI7J3A3NH34OU3EU
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					PhIfdyGDF5v03qy7p23pRUfZrDZ9fOxlKeDJ
+					yKwz8290MgnBsWWRiAxIhefxTXwxM7vGis3t
+					hYiyfz1ttv3HVWdwFC2Fv4CBLYewvaSGH2ZM
+					8SbsNlcQidHkF1wJbeMAU7Z3tefYxnr3ERIs
+					kacFU6yfxeVEj1/QFGMhtV59sLxArFI70aIv
+					+/j8ZTiSMMjnn2RMKn7/AnoBI24KAo+qxibB
+					LfaArApQwu5h0TZgM9aQYYRF1GLzIhImJU9T
+					vQBdaXI1pojaXjIoeK3sTSYHIB80iedk1gCX
+					9d+2jpxGDA7GXxM2yklsFGE0F2roRR5KGeQQ
+					mHR7l8jbMaCFS6D+9A== )
+KB78CAVTLLMLNSL2I4ERP25SSQTVVAIB.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					M9LRC0DDT0VRP66P0UI3RHRE23333VGC
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					dyFLSrhGpTQdhWPpxp6axE9Dc+UDwFkHaVGL
+					DCIfct9HQF7id/JEmfeZSDCgO5y1dvv6wtoL
+					GE3P04I/OoRA1kg4JKQlUVObgmhY8HDwv0Dk
+					gU9oV8Zxyhlnhu4YB8o5/3ifswDhzjyQ+ogQ
+					ydUTxgeUtvcKBZ+5WbLT93EdqbdidIAKdRWH
+					tNPTUNRLWRsh7+d9WBhl3Upeu+OLNSFF6McJ
+					ebZgjb57dN1ciSoAa2TZjb55JVdF1XEJShUw
+					00V8kiJaMP58N7iaNo9552fgQZ6FelMhP6lq
+					wATvf4qnDH5Y0HlpV+6xDqqg85+e+pVa+5b/
+					vK9EeQf3W7uieGN7wg== )
+RBEMREK84MV5NB5QDFUNBH83E0U3T1RC.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					RMQ090GSH94UUFM2RQ1AV1J1QB23JNBN
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					Fec6tMKXlN+zNacCxj2WOaN7FtKZNy1EmfQN
+					WKnxo3xiIx/nFGgub1aBOc2u0YgtFEJ9q4Ld
+					K+HjUOD1dj+iOUlfNjynU31UXMcX0jU1Lbnm
+					Zw2MQqkX0l0LrV6B1X7+kZl0DBSB0ecpYFEL
+					hJvcRb0G4x8LNmXvP/7WBBEgDHBNuFWOseSO
+					ceDWbdgzGIwwMfF/j1OXoPqiKjzqhOilJkCp
+					eu4GJriMRtu8CjRMa2rKUKoIzYyfC6UKIrWE
+					OkngFT4bR1PbTBSOnF81bmDTGJYuTEZouYtj
+					RJGaSBQ3B92jIn9lOJ+NK+D45OyU3y/PkpVE
+					k8YF0c8gnPOqHx6rIA== )
+SUUOQ47TNCA7179B4BNLTO4G9K80FST2.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					UFPLM61MUKOVVLEIJTAQOMMQP7VM025B
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					YvjzDmM/J+p9diySQum6ZwlYZR6x5m2YAU8M
+					Y+D3qdluvYUx+1q9YHsvFFL5/gfuk3q4VTJU
+					+8qoBsR8hN1rANf8ksN5z/cSZ5Cnk41QojEI
+					fgzNK99dykuA/br16+BpZFwfBhSUuJNpmK+e
+					NzNQMsRuHPXQ50p9cPxncGDcWbpOqHKAkEvq
+					RpbalY1tCnUltx7g26B8qW/RQ3en419ZYeEW
+					kAhgilifXX2WSCQ2uGxEsKr8vr8o1gFlu6F+
+					3Nj4DGgWf69M4XsaGI2HWfLV7eoYZdmoliEf
+					dw9ytso3D/o3ls7sWCL1spg/8NKPAP3beRbh
+					6jn2BI8saQlTf75Uvg== )
+R5TVD86FENT3F30IJ7N7O26BSIK40UNI.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					RBEMREK84MV5NB5QDFUNBH83E0U3T1RC
+					AAAA RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					O3J0XRa9VvwX4ketru4yydQSe1nhmkBRIArJ
+					AQOTNoNuImNTqvejehS7n++/wiMKLd9uX6re
+					w+812rKKXrxCWmAWVKIJrP5a4L129CewndZM
+					k2192FPt7Ogm843APHoi9wkCzjJZoAQlsVRx
+					xzSlGnJ+p9HGtQWC1FLtntDue95ax6Shbf4q
+					oz3GIP1pORwE7o1Eh6rSgXhADcQt0jJA3NDy
+					Tnr6Ury21/gGMLuWBCOqptcmYurBpfIbb5ik
+					Xt3QQLbe2xBPh/eYLJxQaimlaUF+gXAczWeP
+					sUxw6UqC3GUolPicZeGmXfZJFo4YVOJ/o1qk
+					7YdZyDwStW/+7Sd3pg== )
+ROQB8LK88495J2PN1PCJR1886BHMBJM4.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					SUUOQ47TNCA7179B4BNLTO4G9K80FST2
+					CNAME RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					hkgji3BcugEo+fDklP57zc2CXi0uMVAZhg9J
+					Zgvf7wN7gAuSvthg6U5O8ARDAjd5UpX+Tg5g
+					+coQlpRlDgY6yVdYugwOFMg4QWUUtEZ+xpss
+					qUZ7j5KA5Mll0N2RrEBurA4UStvsvbjrW4ZV
+					MXcBfvZ1jiL3vN8+ShEgcM3OE4AwwHmK7S5X
+					VkuMe+mnUlj7gPmxdIpdoJ4pwclT3YVDQiXW
+					Tx5zYICMyUNih7sPcc5vEoxVgIGRywVhFMLB
+					14ovF+lNvJk8EiNclnUHcZYadaSYAWWTu+2u
+					p06p3DWPgzoC8YWy1rakdTKLzHlmUAF5mpTK
+					qTwmWQgkqSkSuvEC7g== )
+RMQ090GSH94UUFM2RQ1AV1J1QB23JNBN.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					ROQB8LK88495J2PN1PCJR1886BHMBJM4
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					lp7hzcQVx/OU/+GCXMTgdP0qjCDgDBlbLGQD
+					dU0ch3nc10+Bm1FKIO1ffY01cQqK+pPO4/l8
+					MLPD9hezTOgRVHHvUxVeaIrLYrWk37C3wdIa
+					ogsluF5727voqn+UAWS2EgxVXoX16cRjih53
+					5HVfOXEHPkuJxld1dPZKXo49pMruLIs/aqVs
+					hbJy4Ic8OMrSjUoN8uFsdVzqsmCtJ5jTDmr9
+					kXgmBj0kKWT8I7qOPGS5Sw/9HwQvxPlV1IiM
+					xXFfv6G35897UFtT3cP5PYcr4/1NrKLnqKxT
+					gh3D2EN3bqFPXHnJQuNbzbwauhSqWKlGU9oG
+					WAlb7WzmSwYe/Etmqg== )
+UFPLM61MUKOVVLEIJTAQOMMQP7VM025B.alyptik.tk. 3600 IN NSEC3 1 1 10 3B747AB20CED9F08 (
+					02369TEB8O7ESKAUP4C3EAKOC65BBL2P
+					A RRSIG )
+			3600	RRSIG	NSEC3 7 3 3600 (
+					20161022121653 20160922121653 2972 alyptik.tk.
+					OqcPveWbE/XYwScg+pWJONZ/41TNSD0PEcJ9
+					s1DdkI+QDL++hip039U1461F4XSqBkdrD27n
+					RXLw0anaNV70eNE4A/oZB7T/OgyKg+/ElTF1
+					3OaaeA8zOlg2lodqivCXv6hDC/PxEVYVHmrz
+					QRYVqQdIlAgoAaKV9JNQI/ddqt7K8Q+KN0fb
+					f06hILIfe0x060wAPtFWYhuF2shAy7DkACbY
+					IwXnSlkh5NC/O41bmlh7z8EJ7AhJ+kYCJ8SA
+					obTOIW73ISWiBH2/3nBookEJe7wVBYz/9UZ6
+					5sCtU0k39VFm3z479imnU/t+KfDZstsB6FHJ
+					g0csuKBL5y6bxlNjtg== )

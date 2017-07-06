@@ -1,0 +1,518 @@
+#!/usr/bin/bc -l funcs.bc
+
+### Factorial.BC - Approximations to, and methods for calculating factorials
+ 
+ # Requires funcs.bc
+
+# Gosper's approximation to the natural log of x!
+define gosper(x) {
+ auto os,s,intx,pi;
+ pi=pi();
+ if(x==0)return 0 
+ if(x<0){
+   os=scale;scale=0;intx=x/1;scale=os
+   if(x==intx) return (-1)^x*A^scale
+   x=-x;pi*=x
+   s=s(pix)
+   if(s<=0) return 1-A^scale
+   return l(pix/s)-gosper(x)
+ }
+ return(  x*(l(x)-1) + ( l(2*x+1/3)+ l(pi) )/2  )
+}
+
+# Gosper's approximation to n!
+define gfactorial(n) { return ceil(e(gosper(n))) }
+
+# Nemes' approximation to the natural log of x!
+# with minor tweak to bring it closer to the true value
+define nemes(x) {
+ auto os,s,lx,intx,pix,l10,corr;
+ pix=pi()*x;
+ if(x==0||x==1)return 0 
+ if(x<0){
+   os=scale;scale=0;intx=x/1;scale=os
+   if(x==intx) return (-1)^x*A^scale
+   x=-x;pix=-pix
+   s=s(pix)
+   if(s<=0) return 1-A^scale
+   return l(pix/s)-nemes(x)
+ }
+ lx = l(x)
+ s = x*(lx-1) + l(2*pix)/2 + 1/(C*x + 2/(5*x + (5*A+3)/(4*A+2)/x))
+ l10 = ((A*5*7-3)*E*B+5)/(A*B*(E*F+1)) # approximation to log 10
+ corr = 7*(9/8+lx)
+ if(corr/l10 < scale){
+   #"correcting ";s
+   s -= e(-corr) # minor correction
+ }
+ return s;
+}
+
+# Nemes' approximation to n!
+define nemfactorial(n) {
+  auto a;
+  a=n=nemes(n);if(a<0)a=-a
+  if(a+a>A^scale)return n
+  return e(n)
+}
+
+# Stieltjes approximation to ln(n!)
+define stieltjes(n) {
+  auto oib,os,ln,intn,pin,a[],s,i
+  if(n==0||n==1)return 0 
+  if(n<0){
+    os=scale;scale=0;intn=n/1;scale=os
+    if(n==intn) return (-1)^n*A^scale
+    n=-n;pin=pi()*n;s=s(pin)
+    if(s<=0) return 1-A^scale
+    return l(pin/s)-stieltjes(n)
+  }
+  oib=ibase;ibase=A;scale+=50
+  a[B]=100043420063777451042472529806266909090824649341814868347109676190691/13346384670164266280033479022693768890138348905413621178450736182873
+  a[A]=152537496709054809881638897472985990866753853122697839/24274291553105128438297398108902195365373879212227726
+  a[9]=26370812569397719001931992945645578779849/5271244267917980801966553649147604697542
+  a[8]=455377030420113432210116914702/113084128923675014537885725485;a[7]=29404527905795295658/9769214287853155785;a[6]=109535241009/48264275462
+  a[5]=29944523/19773142;a[4]=22999/22737;a[3]=195/371;a[2]=53/210;a[1]=1/30;a[0]=1/12
+  s=1;for(i=B;i>=0;i--)s=n+a[i]/s;s-=n
+  s+=l(2*pi())/2-n+(n+.5)*l(n)
+  obase=oib;scale-=50;return s/1
+}
+
+# Stieltjes' approximation to n!
+define stielfactorial(n) {
+  auto a;
+  a=n=stieltjes(n);if(a<0)a=-a
+  if(a+a>A^scale)return n
+  return e(n)
+}
+
+# Spouge factorial - workhorse for below
+define spouge_(n,l,exact){
+  auto os,h,tltp,tp,a,k,f,e1,z,iz,fz,d,nm,dm;
+  os=scale;scale=1;h=1/2;scale=os+os
+  if(exact&&os>3){scale=3;a=spouge_(n,0,0);scale=8*length(a)/5+os}
+  tltp=2*l(tp=2*pi());a=lambertw0(A^scale*tltp/tp)/tltp
+  nm=sqrt(tp);dm=1;e1=e(1)
+  f=1;for(k=1;k<a;k++){
+    #z=-e((k-h)*l(a-k)+a-k)*(-1)^k
+    z=(k-h)*l(a-k)+a-k
+    #z=-pow(e1,z)*(-1)^k
+    scale=0
+     iz=z/1;fz=z-iz
+     z=fastintpow__(e1,iz)
+    scale=os+os
+    if(fz>h){z*=e1/e(1-fz)}else{z*=e(fz)}
+    z=-z*(-1)^k
+    d=f*(n+k)
+    nm=nm*d+dm*z
+    dm*=d
+    f*=k
+  }
+  z=(n+h)*l(n+a)-n-a
+  if(l){
+    z+=l(nm/dm)
+  } else {
+    #z=pow(e1,z)*nm/dm
+    z=e(z)*nm/dm
+  }
+  scale=os
+  return z/1
+}
+
+# ... calculate to scale decimal places - slow!
+define spougefactorialx(n) { return spouge_(n,0,1) }
+define spougex(n)          { return spouge_(n,1,1) }
+
+# ... calculate to scale significant figures
+define spougefactorial(n)  { return spouge_(n,0,0) }
+define spouge(n)           { return spouge_(n,1,0) }
+
+# generate the Euler's gamma constant to the current scale
+# . Warning - Slow to calculate
+# . Caches calculated value to save on recalculation for
+# . . same or smaller scales
+define eulergamma() {
+  # Uses fact that eulergamma = -Gamma'(1)
+  auto os,eps,g;
+  if(scale==(os=scale(eulergamma_)))return eulergamma_
+  if(scale<os)return eulergamma_/1
+  os=scale;if(scale<5)scale=5
+  scale=ceil(scale*(A*A+6)/(6*A+7)) # scale/(1-1/e)
+  eps=A^-scale
+  scale+=scale
+  g=(spouge_(-eps,0,0)-spouge_(eps,0,0))/(eps+eps)
+  scale=os;return eulergamma_=g/1
+}
+
+# x! - an approximation to the factorial function over the reals
+#      is accurate as possible for all integers and half-integers
+#      interpolates otherwise
+factorial_substrate_=2
+define factorial_substrate_(n) {
+  if(factorial_substrate_==0)return pow(e(1),gosper(n))
+  if(factorial_substrate_==1)return pow(e(1),nemes(n))
+  if(factorial_substrate_==2)return pow(e(1),stieltjes(n))
+  if(factorial_substrate_==3)return spougefactorial(n)
+  if(factorial_substrate_==4)return spougefactorialx(n)
+  factorial_substrate_=2
+  return factorial_substrate_(n);
+}
+define factorial(x) {
+ auto i,xx,x2,xx2,k,a,b,na,nb,os,oib
+ if(x==0||x==1)return 1
+ oib=ibase;ibase=A
+ if(x==0.5){ibase=oib;return sqrt(pi()/4)}
+ if(0<x&&x<1){
+  .=x++;ibase=oib
+  return factorial(x)/x
+ }
+ os=scale;scale=0;xx=x/1;scale=os
+ if(x<0){
+   if(x==xx) return (-1)^xx*A^scale
+   x=-x;
+   a=pi()*x;
+   ibase=oib
+   return a/s(a)/factorial(x)
+ }
+ x2=x+x
+ os=scale;scale=0;xx2=x2/1;scale=os
+ if(x==xx){
+  xx=1;for(i=x;i>=1;i--)xx*=i
+  ibase=oib
+  return xx;
+ } else if (x2==xx2) {
+  x-=.5
+  xx=1;for(i=x2;i>x;i--)xx*=i
+  scale+=x;
+   xx/=2^(xx2-1)
+   xx*=sqrt(pi()/4)
+  scale-=x;
+  ibase=oib
+  return xx/1;
+ }
+ /* Other factorial cases here */
+ if(factorial_substrate_>=3){ibase=oib;return spouge_(x,0,factorial_substrate_-3)}
+  x2=2*(x-xx)
+  if(x2>.5){
+   x2-=.5
+   xx+=.5
+  }
+  xx+=5
+   a=factorial(            xx    )
+  na=factorial_substrate_( xx    )
+   b=factorial(            xx+0.5)
+  nb=factorial_substrate_( xx+0.5)
+  k=na/a
+  k+=(nb/b-k)*x2
+  xx=factorial_substrate_(x+5)/(k*(x+5)*(x+4)*(x+3)*(x+2)*(x+1))
+ ibase=oib
+ return xx;
+}
+
+define lnfactorial_substrate_(n) {
+  if(factorial_substrate_==0)return    gosper(n)
+  if(factorial_substrate_==1)return     nemes(n)
+  if(factorial_substrate_==2)return stieltjes(n)
+  if(factorial_substrate_==3)return    spouge(n)
+  if(factorial_substrate_==4)return   spougex(n)
+  factorial_substrate_=2
+  return lnfactorial_substrate_(n);
+}
+# logarithm of the above
+define lnfactorial(x) {
+ auto i,xx,x2,xx2,k,a,b,na,nb,os,oib;
+ if(x==0||x==1)return 0
+ oib=ibase;ibase=A
+ if(x==0.5){ibase=oib;return l(pi()/4)/2}
+ if(x<=2470){ibase=oib;return ln(factorial(x))} # l(factorial()) is faster below 2470ish
+ if(x>1000000){ibase=oib;return stieltjes(x)}
+ if(x>10000){ibase=oib;return spouge(x)}
+ if(0<x&&x<1){
+  .=x++
+  return lnfactorial(x)-l(x)
+ }
+ os=scale;scale=0;xx=x/1;scale=os
+ if(x<0){
+   x=-x;
+   a=pi()*x;
+   ibase=oib
+   na = s(a)
+   if(na<=0) return 1-A^scale
+   return l(a/na)-lnfactorial(x)
+ }
+ x2=x+x
+ os=scale;scale=0;xx2=x2/1;scale=os
+ if(x==xx){
+  xx=0.5*x*A^-scale;for(i=x;i>=1;i--)xx+=l(i)
+  ibase=oib
+  return xx;
+ } else if (x2==xx2) {
+  x-=.5
+  xx=0.5*x*A^-scale;for(i=x2;i>x;i--)xx+=l(i)
+  scale+=scale;
+   xx-=(xx2-1)*l(2)
+   xx+=0.5*l(pi()/4)
+  scale=os;
+  ibase=oib
+  return xx/1;
+ }
+ /* Other factorial cases here */
+ if(factorial_substrate_>=3){ibase=oib;return spouge_(x,1,factorial_substrate_-3)}
+  x2=2*(x-xx)
+  if(x2>.5){
+   x2-=.5
+   xx+=.5
+  }
+  xx+=5
+   a=lnfactorial(            xx    )
+  na=lnfactorial_substrate_( xx    )
+   b=lnfactorial(            xx+0.5)
+  nb=lnfactorial_substrate_( xx+0.5)
+  k=na/a
+  k+=(nb/b-k)*x2
+  #k=(11*k-3)/8 # correction
+  xx=(lnfactorial_substrate_(x+5)-l((x+5)*(x+4)*(x+3)*(x+2)*(x+1)))/k
+ ibase=oib
+ return xx;
+}
+
+# Inverse factorial (approximate)
+#   Based on a derivation by David W. Cantrell in sci.math
+define fast_inverse_factorial(x) {
+  auto t,f,eps,os,oib;
+  if(x==1||x==2) return x;
+  oib=ibase;ibase=A;
+  if(0.89<=x&&x<=3.9){
+    os=scale
+    if(scale>25)scale=25
+    eps = A^(5-scale);if(eps>1)eps=1
+    t=x;f=x-factorial(t)
+    while(abs(f)>eps){t+=f/x;f=x-factorial(t)}
+    scale=os;ibase=oib
+    return t
+  }
+  scale += 3
+  t = l((x+0.036534)/sqrt(2*pi()))
+  t /= lambertw0(t/e(1))
+  t -= .5
+  scale -= 3
+  ibase=oib
+  return t/1 
+}
+
+# Inverse factorial (as accurate as possible*)
+#   *Uses current factorial substrate and the above
+#     to iterate to a possible answer
+#   Much slower than the above
+define inverse_factorial(f) {
+  auto os,g0,g1,g2,g3,d,eps
+  eps=A^-scale;scale+=5
+  os=scale
+  g0=fast_inverse_factorial(f)
+  if(g0==f||f<1)return g0;
+  while(abs(g0-g1)>eps){
+    g1=g0
+    g2=g1+(f/factorial_substrate_(g1)-1)/l(g1)
+    if(g2==g1)break
+    g3=g2+(f/factorial_substrate_(g2)-1)/l(g2)
+    if(g3==g2){g0=g2;break}
+    scale+=scale
+     g0=g2
+     d=g2+g2-g1-g3
+     if(d!=0)g0=(g2*g2-g1*g3)/d #glai
+    scale=os
+    g0/=1
+  }
+  scale-=5
+  return g0/1
+}
+
+# Inverse of lnfactorial (approximate)
+define fast_inverse_lnfactorial(x) {
+  auto k,f
+  if(x<=3)return fast_inverse_factorial(e(x));
+  if(x<=6){k=(6-x)/3;f=fast_inverse_factorial(e(x))}
+  x-=l(2*pi())/2
+  x/=lambertw0(x/e(1))
+  x-=1/2
+  if(k)x+=k*(f-x)
+  return x
+}
+
+# Inverse of lnfactorial (as accurate as possible*)
+#   *Uses current lnfactorial substrate and the above
+#     to iterate to a possible answer
+#   Much slower than the above
+define inverse_lnfactorial(x) {
+  auto g0,g1,g2,n,eps
+  eps=A^-scale;scale+=5
+  n=x
+  g0=fast_inverse_lnfactorial(n)
+  if(g0<3){
+    scale-=5
+    return inverse_factorial(e(x))
+  }
+  while(abs(g0-g1)>eps) {
+    g1=fast_inverse_lnfactorial(n+=x-lnfactorial_substrate_(g0))
+    g2=fast_inverse_lnfactorial(n+=x-lnfactorial_substrate_(g1))
+    g0=g2
+  }
+  scale-=5
+  return g0/1
+}
+
+# Number of permutations of r items from a group of n
+# ... using integers only
+define int_permutation(n,r) {
+ auto i,p,os;
+ os=scale;scale=0;n/=1;r/=1
+ if(n<0||r<0||r>n)return(0)
+ p=1;for(i=n;i>n-r;i--)p*=i
+ scale=os;return(p)
+}
+
+# ... using real numbers
+define permutation(n,r) {
+ auto os;os=scale;scale=0
+ if(n==n/1&&r==r/1&&n>=0&&r>=0){scale=os;return int_permutation(n,r)}
+ if(n<0||r<0){scale=os;return factorial(n)/factorial(n-r)}
+ scale=os
+ n=lnfactorial(n)-lnfactorial(n-r)
+ if(n<=5*A^3)return e(n)
+ if(n>=  A^7)print "permutation: calculating huge result; consider using lnpermutation\n"
+ return pow(e(1),n)
+}
+
+# ... logarithm of the above; good for larger n and r
+define lnpermutation(n,r) {
+  return lnfactorial(n)-lnfactorial(n-r)
+}
+
+# Number of combinations of r items from a group of n
+# ... using integers only
+define int_combination(n,r) {
+ auto c,os;
+ os=scale;scale=0;n/=1;r/=1
+ if(n<0||r<0||r>n){scale=os;return(0)}
+ if(r+r>n)r=n-r
+ c=int_permutation(n,r)/factorial(r)
+ scale=os;return(c) 
+}
+
+# ... using real numbers
+define combination(n,r) {
+ auto os;os=scale;scale=0
+ if(n==n/1&&r==r/1&&n>=0&&r>=0){scale=os;return int_combination(n,r)}
+ if(n<0||r<0){scale=os;return factorial(n)/factorial(n-r)/factorial(r)}
+ scale=os
+ n=lnfactorial(n)-lnfactorial(n-r)-lnfactorial(r)
+ if(n<=5*A^3)return e(n)
+ if(n>=  A^7)print "combination: calculating huge result; consider using lncombination\n"
+ return pow(e(1),n)
+}
+
+# ... logarithm of the above; good for larger n and r
+define lncombination(n,r) {
+  return lnfactorial(n)-lnfactorial(n-r)-lnfactorial(r)
+}
+
+# Catalan numbers
+define catalan(n) {
+  auto os,t;
+  if(n==-1)return -1/2;
+  t=n+n;os=scale;scale=0
+  if(n<0)if(t/1==t){
+    t%=2;scale=os
+    if(t)return -1+A^os # -ve half-integers -> infinite
+    return 0            # -ve integers < -1 -> 0
+  }
+  scale=os;n=combination(t,n)/(n+1)
+  scale=0 ;t=n/1;if(n==t)n=t
+  scale=os;return n
+}
+
+# double factorial is also written x!! [not equal to (x!)!]
+define double_factorial(x) {
+ auto i,xx;
+ if(x==0||x==1)return 1
+ xx=int((x+1)/2)
+ if(x<0&&x==xx+xx-1){
+   return (-1)^xx*double_factorial(-2*xx-1)
+ }
+ xx=int(x)
+ if(x==xx){
+  xx=1;for(i=x;i>=1;i-=2)xx*=i
+  return(xx)
+ }
+ x/=2
+ xx=factorial(x)
+ x-=.5
+ xx*=e(x*l(2))
+ xx/=sqrt(pi()/4)
+ return xx
+}
+
+# number of derangements of n
+# . = number of permutations where no element is in its original place
+# Is accurate for integers and performs a naive interpolation otherwise
+define subfactorial(n){
+  auto os,ns,in,fn,a,b,e,sa,sb;
+  if(n<0)return 1-A^scale
+  if(0<n&&n<1)return (subfactorial(n+1)+c(pi()*n))/(n+1)
+  os=scale;scale=0 
+  fn=n-(in=n/1)
+  if(n==in){
+    b=0;for(a=0;a<=n;a++)b=b*a+(-1)^a
+    scale=os;return b
+  }
+  ns=length(factorial(in))-1;if(ns<os)ns=os
+  scale=ns
+    e=e(1);sb=1/2
+    a=factorial(in)/e;b=a*(in+1);n=factorial(n)/e
+  scale=0 ;sa=(a+sb)/1;sb=(b+sb)/1
+  scale=ns;sa/=a;sb/=b
+  scale=os;return n*(sa+fn*(sb-sa))/1
+}
+
+# Returns the lowest common multiple of all numbers 1..x
+define lcmultorial(x) {
+  auto f;
+  x=int(x);if(x<=1)return 1
+  for(f=1;x>1;x--)f=int_lcm(x,f)
+  return f;
+}
+
+# y-th factorial of x: x!_y
+# ... integers only
+define int_multifactorial(y,x) {
+ auto i,xx,os;
+ os=scale;scale=0;x/=1;y/=1
+ xx=1;for(i=x;i>=1;i-=y)xx*=i
+ scale=os;return(xx);
+}
+
+# only works for x==1 mod y # to fix
+#define multifactorial(y,x) {
+# auto os,c[],nc[],t,ix,iy
+# os=scale;scale=0
+# ix=x/1;iy=y/1
+# c[00]=int_multifactorial(iy  ,ix)
+# if(y==iy&&x==ix&&y>=0&&x>=0){scale=os;return c[00]}
+# c[01]=c[00]*(iy  +ix)
+# c[10]=int_multifactorial(iy+1,ix)
+# c[11]=c[10]*(iy+1+ix)
+# scale=os;
+# t=lnfactorial(1/iy)
+#  nc[00]=e((ix-1)*l(iy)/iy+lnfactorial( ix   /iy)-t)
+#  nc[01]=e( ix   *l(iy)/iy+lnfactorial((ix+1)/iy)-t)
+# .=iy++
+# t=lnfactorial(1/iy)
+#  nc[10]=e((ix-1)*l(iy)/iy+lnfactorial( ix   /iy)-t)
+#  nc[11]=e( ix   *l(iy)/iy+lnfactorial((ix+1)/iy)-t)
+# .=iy--
+# for(t=0;t<=11;t++)if(c[t])nc[t]/=c[t]
+# c[0]=nc[00]+(nc[01]-nc[00])*(y-iy)
+# c[1]=nc[10]+(nc[11]-nc[10])*(y-iy)
+# c[0]= c[ 0]+( c[ 1]- c[ 0])*(x-ix)
+# return c[0]*e((x-1)*l(y)/y+lnfactorial(x/y)-lnfactorial(1/y))
+#}

@@ -1,0 +1,20 @@
+[connection]
+id=Tomato PPTP
+uuid=27f0c1ec-32b8-4bed-b3d8-942ad1afcad8
+type=vpn
+permissions=
+secondaries=
+
+[vpn]
+gateway=alyptik.ddns.net
+user=alyptik
+password-flags=1
+service-type=org.freedesktop.NetworkManager.pptp
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+dns-search=
+method=auto

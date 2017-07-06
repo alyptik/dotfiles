@@ -1,0 +1,29 @@
+#!/bin/bash
+
+TMP=/tmp/${USER}-screencast.pid
+
+fname=${HOME}/Vídeos/screencasts/screencast-$(date +%s).webm
+
+if [[ -f ${TMP} ]]; then
+    kill $(cat ${TMP})
+    rm -f ${TMP}
+else
+
+audio=$(pacmd list-sources | sed -n 's/\s*name: <\(.*\.monitor\)>/\1/p')
+
+pactl set-default-source "$audio"
+
+gst-launch-1.0 ximagesrc \
+    ! videoconvert \
+    ! queue \
+    ! videorate \
+    ! vp8enc  min_quantizer=10 max_quantizer=10 cpu-used=2 deadline=1000  threads=2 \
+    ! queue \
+    ! mux. pulsesrc \
+    ! queue \
+    !  audioconvert \
+    ! vorbisenc \
+    ! queue \
+    ! mux. webmmux name=mux \
+    ! filesink location=$fname & echo $! > ${TMP} 
+fi

@@ -1,0 +1,5 @@
+user = postfix_user
+password = Rapture1123!
+hosts = localhost
+dbname = postfix_db
+query = SELECT domain FROM domain WHERE domain='%s' and transport = 'relay' and active = 1 AND NOT exists (select * from alias_domain where alias_domain = '%s' AND alias_domain.active = '1')

@@ -1,0 +1,31 @@
+#!/bin/bash ./randbc
+
+done = 0
+
+while (!done) {
+    print "Please enter maximum number to guess.\n> "
+    max = read()
+    if (max <= A) max = A
+    print "\n"
+
+    r = rand(max)
+    guesses = 0
+
+    while(guess != r) {
+        guesses += 1
+        print "Enter your guess (1 - ",max,")\n> "
+        guess = read()
+        if (guess <= 0) halt
+        print "\n"
+
+        if (guess < r) print "Higher.\n\n"
+        if (guess > r) print "Lower.\n\n"
+    }
+
+    print "Well done! You took ",guesses," guesses to get to ",r,".\n\n"
+
+    print "Type 0 to play again or any other number to quit.\n> "
+    done = read()
+    print "\n\n"
+}
+quit

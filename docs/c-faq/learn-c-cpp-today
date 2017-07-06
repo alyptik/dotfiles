@@ -1,0 +1,1266 @@
+Path: senator-bedfellow.mit.edu!bloom-beacon.mit.edu!news.moneng.mei.com!daily-planet.execpc.com!spool.mu.edu!vinny.csd.mu.edu!root
+From: carpenterv@vms.csd.mu.edu (V. S. Carpenter)
+Newsgroups: comp.lang.c,comp.lang.c.moderated,comp.lang.c++,news.answers,comp.answers
+Subject: LEARN C/C++ TODAY (A list of resources/tutorials)
+Followup-To: comp.lang.c,comp.lang.c++
+Date: 1 Aug 1995 04:18:52 GMT
+Organization: Vinny's Linux PC
+Lines: 1248
+Approved: news-answers-request@MIT.EDU,clc@solutions.solon.com
+Expires: 1 Sep 1995 00:00:00 GMT
+Message-ID: <learn-070195@vinny.csd.mu.edu>
+NNTP-Posting-Host: vinny.csd.mu.edu
+Keywords: learn c c++ programming tutorials WWW
+X-Submissions-to: carpenterv@vms.csd.mu.edu 
+X-Questions-to: carpenterv@vms.csd.mu.edu 
+Originator: root@vinny.csd.mu.edu
+Xref: senator-bedfellow.mit.edu comp.lang.c:148742 comp.lang.c.moderated:1198 comp.lang.c++:140854 news.answers:49700 comp.answers:13413
+
+
+Archive-name:	C-faq/learn-c-cpp-today
+Last-modified:  Tuesday - August 01, 1995
+
+    					Copyright (c) 1995  Vinit Carpenter 
+    							All rights reserved
+
+
+Introduction:
+-------------
+
+    This is a list of a  few  C  and  C++ language tutorials available to a
+    user.   This  list includes interactive tutorials,  public-domain  code
+    collections, books etc.  I've developed this FAQ purely as a  volunteer
+    effort  as  a service to the Internet community.  Although every effort
+    has been made to insure that all the information here is as accurate as
+    possible, no guarantee is implied or intended.
+
+    I welcome comments, suggestions  or  criticism  for  all the people out
+    there  on the net that read this.  If you can help me make this list  a
+    little better, you will be helping a lot of people  out  there  on  the
+    net.   I  am  a horrible writer and an even worse speller.  If you find
+    any errors or would like to  suggest  any additions please feel free to
+    email me at the address below:
+
+    		carpenterv@vms.csd.mu.edu
+
+  
+What's new in this issue:
+-------------------------
+
+    This section of the  document  will  point  out  all the new additions,
+    corrections,  updates  etc.  If there is enough interest, I will  start
+    producing a 'diff' version.  
+
+    1. Added a second web server that has the HTML and PS version of this 
+       document.
+    2. Updated the information on the 'C++ on the WWW'.  The address has
+       of the web server has changes.  The author also converted Dordill's
+       C++ course to HTML which is online.
+    3. Updated the information in the MSDOS/Windows compiler section.
+    4. Added a new item called `Programming in C' that contains a great 
+       collection of C and programming items.
+    5. Updated the information on the C++ FAQ.  
+    6. Added a lot of information on OS/2. (Joe Dougherty)
+    7. Added more information about Scott Meyers new book titled "More
+       Effective C++". 
+    8. Updated the oak.oakland.edu info and the directory structure has
+       been changed.
+    9. Update the information on the C Snippets packages.  The author 
+       released a new package that includes 400+ files.
+
+
+    I am switching to URL in place of the standard ftp and filename format.
+    URL stands for "Uniform Resource Locator".   Think of it as a networked
+    extension of the standard filename concept: not only can you point to a
+    file  in a directory, but that file and that directory can exist on any
+    machine on the network, can be served  via  any  of  several  different
+    methods,  and might not even be something as simple as a file: URLs can
+    also point to  queries,  documents  stored  deep  within databases, the
+    results of a finger or archie command, or whatever.
+   
+    File URL:
+    ---------
+	file://oak.oakland.edu/simtel/msdos/c/00_index.txt
+
+    Gopher URL:
+    -----------
+    To connect to a particular gopher server, use this URL:
+
+	gopher://gopher.tc.umn.edu/
+
+    News URL:
+    ---------
+    To point to a Usenet Newsgroups, the URL is simply:
+
+	news:comp.lang.c
+
+    HTTP URL:
+    ---------
+    HTTP  stands  for  HyperText  Transport  Protocol.   HTTP  servers  are
+    commonly used for serving hypertext documents
+
+	http://vinny.csd.mu.edu
+
+    This file is posted on the 1st and the 15th of each month to the Usenet
+    Newsgroups    COMP.LANG.C,     COMP.LANG.C.MODERATED,    COMP.LANG.C++,
+    NEWS.ANSWERS  & COMP.ANSWERS.  The HTML and postscript version of  this
+    documents are available.  Here's the URL:
+
+	http://vinny.csd.mu.edu      		     
+
+    NOTE: This is my Linux PC  that  does  get inundated with request.  The
+    last  time  I checked the stats, there were about 27 connections  every
+    minute.  If you get timed out, please try  again.   The  most  recently
+    posted  version of this document is kept on the news.answers archive on
+    rtfm.mit.edu.  You can receive it via anonymous ftp.  The URL is listed
+    below.
+    
+    	ftp://rtfm.mit.edu/pub/usenet/news.answers/C-faq/learn-c-cpp-today
+
+    If you don't have access to ftp, you can also receive this file via
+    e-mail by sending mail to mail-server@rtfm.mit.edu with:
+
+	send /pub/usenet/news.answers/C-faq/learn-c-cpp-today
+
+    in the body (not subject line) of your message. You can also receive
+    the latest version via electronic mail by e-mailing me.
+	
+    	To: learncpp@vinny.csd.mu.edu
+	Subject: send learn-c-cpp-today
+	Body: ignored. Can be blank.
+
+    A lot of tutorials discussed here  are available via anonymous ftp.  If
+    you  don't have ftp, you can also retrieve these files via a  ftp-email
+    gateway.    To   retrieve   files   via   e-mail,    send    mail    to
+    ftpmail@decwrl.dec.com with the command HELP in the body of the message
+    to  receive  a  complete list of all commands.  A typical message would
+    look something like this:
+
+    		connect oak.oakland.edu
+    		chdir /simtel/msdos/c
+    		binary
+    		uuencode
+    		get xxx.zip
+    		quit
+
+    Some of the items discussed  here  are  platform-dependent, but most of
+    the  items are applicable across all platforms (portable).  If you have
+    any comments, suggestions, complaints, additions, etc, please feel free
+    to e-mail me at the following address:
+
+	    carpenterv@vms.csd.mu.edu
+
+    If you are working on a tutorial or would like something added to this
+    list, please e-mail me at the address given above.
+
+The Origins of C and C++:
+-------------------------
+
+    The  'C'  programming  language   was   originally  developed  for  and
+    implemented  on  the UNIX operating system, on a DEC PDP-11  by  Dennis
+    Ritchie.  One of the best features of C is that it is not tied  to  any
+    particular  hardware or system.  This makes it easy for a user to write
+    programs that will run without any changes on practically all machines.
+    C is often called a  middle-level  computer language as it combines the
+    elements  of  high-level languages with the functionalism  of  assembly
+    language.
+
+    C allows the  manipulation  of  bits,  bytes  and  addresses- the basic
+    elements with which the computer functions.  Another good point about C
+    is  its  portability which makes it possible to adapt software  written
+    for one type of computer to another.  C was  created,  influenced,  and
+    field  tested  by  working programmers.  The end result is that C gives
+    the programmer what  the  programmer  wants.   C  offers  the  speed of
+    assembly  language  and  the  extensibility of FORTH, but  few  of  the
+    restrictions of Pascal and Modula-2.
+
+    C++ is an enhanced version of  the C language.  C++ includes everything
+    that  is  part  of C and adds support for  object-oriented  programming
+    (OOP).  In addition, C++ also contains many improvements  and  features
+    that  make it a "better C", independent of object oriented programming.
+    C++ is actually an extendible language since we can define new types in
+    such a way that they act just  like the predefined types which are part
+    of the standard language.
+
+    If you just use C++ as a  better  C,  you  will not be using all of its
+    power.  Like any quality tool, C++ must be used the way it was designed
+    to  be used to exploit its richness.  Some of the new features  include
+    encapsulation,   inline   function   calls,   overloading    operators,
+    inheritance and polymorphism.  I am not going to explain what they mean
+    here  as  that  would simply take me away from my purpose here, but you
+    can refer to any  good  C++  book  or  the  C++  FAQ  (Item 7) for more
+    information.
+     
+
+What do you need to get started?
+--------------------------------
+
+    The first thing you need is  a  compiler.   A compiler reads the entire
+    program and converts it into object code, which is a translation of the
+    program source code into a form that the computer can execute directly.
+ 
+	
+UNIX SYSTEM:
+	
+    Type cc at the %  prompt.   If  you  don't  get any error messages, you
+    probably have a C compiler .  If you get an error message, try acc, gcc
+    or  g++.   If  any  of  these don't work,  contact  your  local  system
+    administrator and ask him/her to get you a C/C++ compiler.   GNU  C/C++
+    compiler is available from a lot of anonymous ftp sites free of charge.
+    Look  into  it.   (I've  got  g++  running  on my Linux box without any
+    problems)
+	
+MSDOS/Windows/OS2/Linux (IBM COMPATIBLES): 
+	
+    There are a lot of good compilers  available to you.  Microsoft Quick C
+    and  Borland Turbo C/C++ are both good products for beginners.  You can
+    buy both of them for  under  $50.00.   I  use  Microsoft  Quick  C  and
+    MS-Visual  C/C++, and I prefer Quick-C for all my DOS programs as it is
+    small, and yet very powerful.   Most  of  my  programming  is now on my
+    Linux  PC with gcc/g++.  (If you want a great 32 bit operating  system,
+    you should look into Linux.  E-mail me for details).  You can also  get
+    the   DOS   port   of  GNU  C/C++  called  DJGPP  from  oak.oakland.edu
+    /simtel/vendors/djgpp.
+
+    The increased popularity of OS/2 and  it's latest incarnation Warp, has
+    provided   programmers   with  a  wider  selection  of  compilers   and
+    programming tools.  Still available for free is  the  GNU  gcc  package
+    under  the  name  emx.   Emx integrates nicely with the Extended Editor
+    included with OS/2.  It's  available on ftp.cdrom.com, hobbes.nmsu.edu,
+    and  other  sites.  IBM provides the CSet++ 2.x, as well as a  smaller,
+    less-expensive package on  CD-ROM  called  CSet++  First  Step.   Other
+    popular  compilers  include  Borland C++ 1.0 for OS/2, and Watcom C/C++
+    for OS/2 10.0, and CA-C++ for OS/2 from Computer Associates.
+
+	
+OpenVMS (VAX & AXP)
+	
+    If you're on a VAX, type  in  CC  to  check  and  see if you have a C
+    compiler.  VAX C is not the best compiler around, but it certainly does
+    the  job.   If  you don't have a C compiler, look into  the  GNU  C/C++
+    compiler GCC.  You can get the VAX version of GCC from ftp.spc.edu  via
+    anonymous  ftp.   If  on  a  AXP  system, you should have access to DEC
+    C/C++.  Please contact  your  local  system  administrator  or computer
+    consultant for more site specific questions.
+
+Macintosh (Apple/PowerMac)
+
+    There are three main  players  in  the  Mac  compiler market: MPW (from
+    Apple),  THINK  C / Symantec C++ (both from Symantec),  or  CodeWarrior
+    (from Metrowerks): THINK C is $225 (only a C compiler), while  Symantec
+    C++  is  $375 (includes C and C++ compilers).  CodeWarrior comes in two
+    versions: bronze and gold, at $199/299/399, respectively.  The Symantec
+    C++ compiler (ver  8.0)  is  PowerMac  native.  Symantec and Metrowerks
+    offer  academic pricing on their products which are substantially  less
+    than the commercial prices.
+
+    There have been  two  attempts  at  freeware/shareware Mac C compilers:
+    Sesame  C  and  Harvest.   Harvest  C was an  ambitious  attempt  at  a
+    production-quality  freeware compiler which was later abandoned by  the
+    author.
+
+
+Tutorials:
+----------
+
+1) Title:       A C tutorial. 
+   Filename:	C-LESSON.ZIP
+   Author:	Christopher Sawtell.
+   E-mail:	chris@gerty.equinox.gen.nz
+   URL:		ftp://garbo.uwasa.fi/pc/c-lang/c-lesson.zip
+
+    This tutorial contains  a  complete  course  for  you  to learn the 'C'
+    computer  language itself.  Some knowledge, of computers and the jargon
+    is  assumed,  but  complicated  concepts  are  fully  explained.   This
+    tutorial  is  geared  towards the UNIX operating system, but everything
+    discussed here applies across all  platforms.   Most of the source code
+    included  here compiles under all the platforms.  This is a good effort
+    and is worth your time.  Updates to this tutorials are  posted  to  the
+    USENET group comp.lang.c.
+
+2) Title:	Coronado;s Generic C tutor v2.0
+   Filename:	GENCSRC.ZIP
+		GENCTXT.ZIP   
+   Author:	Gordon Dodrill
+   E-mail:	--
+   URL:		ftp://oak.oakland.edu/simtel/msdos/c/gencsrc.zip
+   		ftp://oak.oakland.edu/simtel/msdos/c/genctxt.zip
+
+
+    This is one of the most complete tutorials out there.  Once again, most
+    of the items covered here  are  apply  across all platforms.  There are
+    some  items  discussed  here  that are  DOS  dependent.   The  tutorial
+    includes a manual that covers all the aspects of the C  language.   The
+    archive  also includes a huge collection of C code that is discussed in
+    this tutorial.   The  best  way  to  learn  anything  is  by  practical
+    application  and this tutorial does just that.  A payment of $10.00  is
+    requested by the author if you  find  the  tutorial  helpful,  but  the
+    payment  is  not  required.  I think you should send in the $10.00 as a
+    lot of time and effort went into this project.
+
+3) Title:	Thread An On-Line C Help File V 1.01
+   Filename:	THREAD.ZIP
+   Author:	Fran Horvath
+   E-mail:	--
+   URL:		ftp://oak.oakland.edu/simtel/msdos/c/thread.zip
+
+
+    Thread is a C language help utility.  It was written by a member of the
+    U.S.D.A.  Grad School faculty to help students learning the C language.
+    Thread is a variable  record-length  database,  together with an index,
+    that  enables  the  fast lookup and  display of  C  keywords,  standard
+    library  functions,  and  other  items.   There  are  a  few  important
+    functions missing from this help utility, but it is still a pretty good
+    resource.  Give it a shot.
+
+4) Title:	Collection of C-Snippets
+   Filename:	SNIP9503.ZIP
+   Author:	Bob Stout
+   E-mail:	bobstout@neosoft.com
+   URL:		ftp://oak.oakland.edu/simtel/msdos/c/snip9503.zip
+
+    This  is  the  March  95   release   of  SNIPPETS  which  is  a  public
+    domain/freeware portable C source code & instructional text.  According
+    to  the  author,  the  1.6  MB archive  contains  over  400  files  and
+    approximately 35% of it is PC-specific.  The rest of it  is  completely
+    portable.  The PC-specific functions are system-level utility code with
+    no multimedia or GUI code.  This archive has been tested on all popular
+    PC  compilers  and  gcc,  SCO,  and HP/UX compilers where possible.  An
+    eclectic  collection  containing  everything  from  macros  to complete
+    cut-and-paste  C  code  solutions  &  utilities,  along  with  FAQ  and
+    instructional files.
+
+    There is a piece of code for  every single task starting with macros to
+    complete  cut-and-paste C code solution and utilities, along with  some
+    frequently asked questions and instructional files.  This archive is  a
+    must for every programmer.  If you already have a copy of snip9404.zip,
+    see   snpd9503.zip  which  includes  the  diff  needed  to  upgrade  to
+    snip9503.zip.  Numerous bug fixes  and  enhancements  were made in this
+    archive and 60 New files added.
+
+    This is Public  Domain/freeware  created  by  the archivist, ex Fidonet
+    C_Echo moderator and author, Bob Stout
+
+
+5) Title:	COMP.LANG.C FAQ
+   Filename:	FAQ
+   Author: 	Steve Summit 
+   E-mail: 	scs@eskimo.com 
+   URL: 	ftp://rtfm.mit.edu/pub/usenet/news.answers/C-faq/faq
+   
+
+    The FAQ (Frequently Asked  Questions)  is  a compilation of frequently-
+    asked  questions  of  the  usenet group,  COMP.LANG.C  along  with  the
+    answers.  Steve's put in a lot of work and this compilation  shows  it.
+    I  found that the FAQ answered a lot of my questions.  I even learned a
+    lot of new things  browsing  through  the  document.   I think this FAQ
+    should  should  be  on  your  computer desk right  next  to  a  good  C
+    programming book.  The FAQ is posted to  COMP.LANG.c  and  news.answers
+    every month along with the diff version.
+
+
+6) Title:	TUTOR v3.10
+   Filename:	CTUTORDE.ZIP
+   Author:	Gordon Dodrill
+   E-mail:	rowe@netcom.com
+   URL:		ftp://oak.oakland.edu/simtel/msdos/c/ctutorde.zip
+
+
+    This is an educational learning tool which helps expedite the difficult
+    process  of  learning  the  C  Programming  Language.   It  includes  a
+    tutorial,  style  guide,  and interactive quiz program  all  integrated
+    together in one program.  The tutorial covers both K&R version of C and
+    ANSI C.  One of the biggest limitation of this tutorial is that  it  is
+    only available for DOS computers.
+
+
+7) Title:	Programming in C
+   Filename:	CE.html
+   Author:	Dave Marshall
+   E-mail:	Dave.Marshall@cm.cf.ac.uk
+   URL:		http://www.cm.cf.ac.uk/Dave/C/CE.html
+
+    This is one of the best C  programming tutorials out there on the World
+    Wide  Web (WWW).  See tutorial #11 for more information on the web  and
+    tools to access the web.  This tutorial  starts  out  with  some  basic
+    ideas  and  then extends to some more advanced features of C.  With the
+    popularity of the World Wide Web, items on the web servers are going to
+    be very popular.  This is  really  a  great tutorial and worth checking
+    out.   Some  of  the  items discussed here are  loops,  arrays,  string
+    manipulation,  pointers,  dynamic  memory  allocation,  I/O,  UNIX,   C
+    preprocessor  and  some  exercises.   While you're out there, check out
+    Ceilidh, the online C tutoring system.
+                                          
+
+
+8) Title:       ANSI C for Programmers on UNIX systems.
+   Filename:	love_C.ps.z, love_C.shar
+   Author:	Tim Love
+   E-mail:	tpl@eng.cam.ac.uk
+   URL:		ftp://svr-ftp.eng.cam.ac.uk/pub/misc/love_C.ps.Z
+
+
+    This is a really nice C  tutorial  geared towards people on UNIX system
+    as  the  title would suggest.  This document introduces C by  providing
+    sample programming tasks.  One of the good things about  this  tutorial
+    is  that all the source code included is ANSI compliant.  This tutorial
+    also includes programming exercises to  aid  or  gauge your progress as
+    you  go through the material (answers included in back).  The  tutorial
+    covers some of the  basics  such  as  functions,  pointers  and  string
+    manipulation  followed  by some programming examples to apply the items
+    you've just learned.
+
+    There is also a section  on  memory allocation that illustrates the use
+    and dangers of malloc.  The section on the Make utility helped me a lot
+    as I really don't like make and makefiles.  The section of debugging is
+    also  extensive and has some great tips.  The appendix of this tutorial
+    also has a section of converting from K&R to ANSI C.  Really great  job
+    and well worth the checking into.
+
+
+9) Title:	Coronado Enterprises C++ Tutorial (v2.20)
+   Filename:	CPTUTS22.ZIP   
+		CPTUTT22.ZIP   
+   Author:	Gordon Dodrill
+   E-mail:	--
+   Phone:	(505) 293-5464
+   URL:		ftp://oak.oakland.edu/simtel/msdos/cpluspls/cptuts22.zip
+   		ftp://oak.oakland.edu/simtel/msdos/cpluspls/cptutt22.zip
+
+
+    Just like its C counterpart, this  is  really  one of the best and most
+    complete  C++ tutorial out there.  This tutorial is not for the  person
+    just starting out in programming as C++ is not an ideal first language.
+    But if you are familiar with C or any other programming language,  this
+    tutorial  will  get  you started with C++.  All the source discussed in
+    this tutorial is included and learning is really accelerated as you can
+    compile the code while you  are  reading  about it.  This tutorial will
+    assume  a  thorough knowledge of the C programming language and  little
+    time will be spent on the fundamental aspects of the language.  Special
+    attention has be devoted to explaining the newer additions as  provided
+    by  the  ANSI-C  standard, as  many programmers are used to the old K&R
+    school of thought.
+
+10) Title:	COMP.LANG.C++ FAQ
+   Filename:	FAQ
+   Author: 	Marshall P. Cline, Ph.D. 
+   E-mail: 	cline@parashift.com
+   URL: 	ftp://sun.soe.clarkson.edu/pub/C++/FAQ
+    
+    Wow!!!  That's really all I can  say about this collection of questions
+    and answers for C++ and Object Oriented Programming (OOP).  This is the
+    complete FAQ for the Newsgroups COMP.LANG.C++ compiled by Dr.  Marshall
+    Cline.  I have been programming in C++ for a few months and am far away
+    from  being  an  'expert', and this compilation helped  me  enormously.
+    Once again, this is not for the person that is starting to  learn  C++,
+    but  if  you've  already taken the first step, this FAQ is for you.  If
+    you don't have ftp, you  can  also  receive  it via e-mail by sending a
+    message  to archive-server@sun.soe.clarkson.edu with the subject  `send
+    C++/FAQ'.
+
+    The C++ FAQ has been released as  a book called `C++ FAQS -- Frequently
+    Asked  Questions'  by Addison-Wesley.  The book is a complete  re-write
+    and contains about 5 times the  material  that  is  indexed  and  cross
+    referenced.   Check out the book section for a review of the book.  The
+    FAQ will still be  posted  in  the  Newsgroup comp.lang.c++, but if you
+    find the FAQ helpful, you should really buy the book.
+
+    
+11) Title:	C++ on the World Wide Web
+   Filename:	C++.html
+   Author:	Marcus Speh
+   E-mail:	marcus@x4u.desy.de
+   URL:		http://uu-gna.mit.edu:8001/uu-gna/text/cc/index.html
+
+    This is one of  the  award  wining  courses  at  the 1st WWW conference
+    (congratulations  Marcus.  great job).  One of the newest addition here
+    is the Dorill C++ course converted to  HTML.   There  is  a  wealth  of
+    information  on  C++  available on the World Wide Web (WWW).  The World
+    Wide Web (WWW) is a  wide  area hypermedia information retrieval system
+    that  gives the user universal access to a large universe of documents.
+    One of the most popular to the Web is called Mosaic developed by  NCSA.
+    Mosaic  is  an Internet based global hypermedia browser that allows you
+    to discover, retrieve and display documents  and data from all over the
+    world.   Global  hypermedia means that information located  around  the
+    world is interconnected in an environment that  allows  you  to  travel
+    through  the  information  by  clicking on hyperlinks-- terms, icons or
+    images in documents that point to  other related documents.  Here's the
+    URL (Uniform Resource Locator) for the C++ Virtual Course.
+
+    		http://uu-gna.mit.edu:8001/uu-gna/text/cc/index.html
+
+    You might also want to connect  to  info.desy.de and browse.  I found a
+    lot  of  great  items such as documents and sources on C++  and  Object
+    oriented programming, Internet groups for discussions and questions  on
+    C++,  discussion of Object-Oriented Literate Programming and many other
+    postscript papers.
+
+		http://info.desy.de/general/users.html
+
+
+12) Title:	Programming in C
+   Filename:	index.html
+   Author:	Jutta Degener
+   E-mail:	jutta@cs.tu-berlin.de
+   URL:		http://www.lysator.liu.se/c/index.html
+
+    
+    This is really one of the best  collection of C related items out there
+    on  the  World Wide Web maintained by the Lysator computer society,  an
+    association of  computer  science  students  at  Linkoping  University,
+    Sweden.   Here's a list of some of the items.  There is a great section
+    on ANSI C, reviews of 3 books and a list of errata from 2 books.  There
+    is a very interesting paper called `A development of the C language' by
+    Dennis Ritchie that traces the origin of  the language we know and love
+    today.
+
+    There is a HTML version of  Kernighan's historical "Programming in C: A
+    Tutorial"  from 1974 (that describes an early version of C, four  years
+    before K&R.  WARNING: DO NOT USE THIS DOCUMENT  AS  A  TUTORIAL);  also
+    included  are  the  "Ten  Commandments  for  C  Programmers  (Annotated
+    Version)" and a HTML version of Steve Summit's comp.lang.c FAQ.
+    
+13) Title:	C++ Annotations (ver 3.3.3)
+   Filename:	cplusplus.html
+   Author:	Frank Brokken & Karel Kubat 
+   E-mail:	frank@icce.rug.nl, karel@icce.rug.nl
+   URL:		http://www.icce.rug.nl/docs/cplusplus/cplusplus.html
+
+    This web based tutorial is  intended  for  knowledgeable users of C who
+    would  like  to make the transition to C++.  This document presents  an
+    introduction to programming in C++.  It  is  a  guide  for  programming
+    courses  taught at State University of Groningen This document is not a
+    complete C/C++ handbook, but  rather  serves  as  an  great addition to
+    other  documentation sources.  The reader should take note of the  fact
+    that an extensive knowledge of the C programming  language  is  assumed
+    and required.
+
+    This document continues where topics of the C programming language end,
+    such as pointers, memory allocation and compound types which makes it a
+    very good programming guide.  I  highly  recommend this tutorial to any
+    individual who is really interested in becoming extremely knowledgeable
+    on C++ and a proficient programmer.  Here is a listing of the chapters.
+   
+		1. Introduction to C++
+		2. A first impression of C++
+		3. Classes
+		4. Classes and memory allocation
+		5. Static data and functions
+		6. Inheritance 
+		7. Polymorphism, late binding and virtuality
+		8. Concrete examples of C++ 
+		9. Templates
+
+14) Title:	C programming reference 1.1
+   Filename:	cref.html
+   Author:	Martin Leslie
+   E-mail:	leslim@gatwick.Geco-Prakla.slb.com
+   URL:		http://vinny.csd.mu.edu/martin/DOC/C/cref.html
+   
+    This is not an ordinary  C  language  tutorial,  rather  it is a great
+    reference  guide for the C programming language.  As the author states,
+    "I have found several C  tutorials  and  lessons  on  the  net  but  no
+    reference  documents.   This is not an attempt to replace the many high
+    quality books available, but does  try  to provide an on-line reference
+    that can give answers to questions quickly and without hassle".
+
+    Martin has put a lot  of  work  in  this  and the archive is definitely
+    worth  checking  out.   One of the nicest item is the  `Function  Quick
+    Reference'.  It is a summary of a lot  of  useful  functions  including
+    ANSI  standard  functions,  Non  Standard  functions  from CONIO.H, non
+    Standard UNIX functions,  user  written  functions  and variable length
+    argument  lists  including the library, prototype, syntax  and  example
+    programs.  Here's a sample.
+
+                         FGETC/GETC FUNCTION 08-MAY-94
+                                       
+    fgetc and getc both read  a  character  from  a file (input stream) and
+    have the same syntax.  They are for all intents and purposes the same!
+
+	Library:   stdio.h
+
+	Prototype: int fgetc(FILE *stream);
+
+	Syntax:    ch = fgetc(file_pointer);
+        	   ch = getc(file_pointer);
+
+	   [IMAGE] example program.
+	   See also:
+   
+	   getchar, fgets, gets
+	   getch, getche (non standard)
+
+
+    And if you're really nice to him, he will give a really cool program to
+    randomly change the root window  color  on  X Displays.  :) The program
+    randomly selects a target color and then performs a basic interpolation
+    to  move  from the current color to the target color.  When the  target
+    has been reached, a new target is selected and the process is repeated.
+ 
+
+
+Books currently being reviewed:
+------------------------------
+
+    If you have any thoughts or comments, please feel free to e-mail me at
+    carpenterv@vms.csd.mu.edu
+
+1.  C++ A Pratical Introduction by Brian Hahn (ISBN 1-85554-325-7)
+
+2.  C++ For Dummies by Stephen R.  Davis (ISBN 1-56884-163-9)
+
+3.  The Craft of  C:  Take  Charge  Programming  by  Herbert  Schildt (ISBN
+    0-07-881882-6)
+
+4.  C By Discovery by L.S.Foster (ISBN 1-881991-29-6)
+
+5.  Teach yourself C++  programming  in  21  days  by  Jesse  Liberty (ISBN
+    0-672-39541-0)
+
+
+Books:
+------
+
+
+[1] "The C Programming Language" (2nd ed.)
+    Brian W. Kernighan & Dennis	Ritchie
+    Prentice Hall ISBN: 0-13-110362-8
+
+    This is the second edition  of  the  original Kernighan & Ritchie (K&R)
+    text.   This  book is  commonly referred to as the New Testament as  it
+    includes the modifications incorporated by  the  ANSI  standard,  while
+    retaining  the  nature  of the 1st edition.  This book assumes that the
+    reader  has  some  basic  programming  knowledge.   So  if  you're just
+    starting  to program and C is the first language, this might not be the
+    ideal book.  This is one of THE  BEST books  on  C  and  a  must  have,
+    especially if you're starting your own little programming library.
+
+    A good book to go along with K&R's "The C Programming Language" is "The
+    C Answer Book" by Clovis L.  Tondo and Scott E.  Gimpel, Prentice Hall,
+    subtitled 'Solutions to the  Exercises  in  The C Programming Language,
+    second  edition  by  Brian W.  Kernighan & Dennis  M.   Ritchie',  ISBN
+    0-13-109653-2
+    
+
+[2] "Programming in ANSI C" (Revised edition: 1994)
+    Kochan, Steven
+    SAMS Publishing ISBN 0-672-30339-6
+
+    This book by  Steve  Kochan  is  absolutely  the  best  book for anyone
+    starting  out programming in C.  This is an excellent introductory text
+    with frequent examples and good text.  This book makes  no  assumptions
+    about the particular computer system or operating system on which the C
+    language  is  implemented.   This  books  is  written  for  novices and
+    experienced programmers alike.  I  love  this book as the comprehensive
+    'teach by examples' book can help you master the unique features of the
+    C  language.   There is complete coverage of program looping,  decision
+    making, arrays,  strings,  pointers  and  bit  operations  and  helpful
+    end-of-chapter  exercises.   This  is the book I used to learn C and it
+    really is a great book.  The  K&R  book is really great as a reference,
+    but not as the first book.
+
+
+[3] "Expert C Programming: Deep C Secrets"
+    Peter Van Der Linden
+    SunSoft Press. (ISBN 0-13-177429-8)
+
+
+    Peter has written one of the  greatest  books  to hit the computer book
+    stands  in a long time!  This is not your typical C book, but is rather
+    a fun book to read.  As I told Peter,  most  C  programming  texts  are
+    really boring as all they do is describe the functions, give a abstract
+    example  and  then  move  onto something different.  This book is chock
+    full of real world C stories and  folklore, including a story about the
+    C  bug that brought down the AT&T network.  I found the tongue-in-cheek
+    attitude and real world examples/stories very, very interesting.   Run,
+    don't  walk,  down  to  your  local  store and buy this book.  I really
+    really loved this book, and I read most of it in one sitting.  There is
+    also a great introduction to C++  for  C  programmers that will get you
+    started with C++ and Object-Oriented programming.  This book is not for
+    beginners, but is a great second book on C.
+
+    Expert C Programming is also ideal for  those C programmers who want to
+    move  to C++.  According to the author, the book puts the "fun" back in
+    "functions" :)
+
+
+
+[4] "C: The Complete Reference" (2nd ed.) 
+    Schildt, Herbert.
+    Osbourne/McGraw-Hill.  (ISBN 0-07-881538-X).
+
+    This is a pretty good C language  reference book.  I am more partial to
+    the Microsoft C Bible as a reference but this is not a bad book at all.
+    If  you're  a beginning C programmer or a seasoned pro, the answers  to
+    most of C questions can be found in this one-step resource.  This  book
+    presents  an  extensive  summary of C library functions defined by ANSI
+    and many common extensions  including  UNIX.  
+
+[5] Absolute Beginner's Guide to C
+    Perry, Greg
+    SAMS Publishing. ISBN 0-672-30341-8
+
+    This is a absolutely  beginner's  book.   If  you have never programmed
+    before,  this book is for you.  No knowledge of any programming concept
+    is assumed.  I like the fact that this book talks to you at your  level
+    without  ever talking down to you.  This book does not try to overwhelm
+    the  beginners  with  a  lot  of  technical  details  while emphasizing
+    introductory  principles.  If you've never programmed, this is the book
+    for you.  If you are familiar with programming, I would suggest  either
+    'The  C programming language' by Kernighan & Ritchie or 'Programming in
+    ANSI C' by Kochan.
+
+[6] Microsoft C Bible. 1990 (2nd ed.)
+    Waite Group Staff.
+    Howard W. Sams & Company. ISBN 0-672-22620-0 
+
+    This book is a must for  every programmer, especially those who program
+    in  the  DOS  environment.   The Bible  organizes  and  simplifies  the
+    information contained in Microsoft's C  library.   Each  function  page
+    gives the purpose, syntax, example call, includes, common uses, returns
+    and  examples.  The book also has compatibility check boxes, so you can
+    be sure your program compiles with  the Microsoft C v5.0-7.0, Microsoft
+    Quick C, Borland Turbo C and UNIX system V compilers.
+
+[7] Programming C in 12 Easy Lessons
+    Greg Perry  ISBN:0-672-30522-4
+    Sams (1st edition, 4/94)
+    Reviewed by: Don Lockhart (dlock@nlbbs.com) 
+                
+    In a nutshell: This book is  very  well  thought out.  It is very clear
+    and  easy to follow for the new user.  It categorizes information  into
+    Notes, Tips, Warnings, and starts each lesson with an overview  of  the
+    concepts to be presented as well as a review of them at the end of each
+    lesson.   Sidebars are also presented with useful relevant information.
+    When new terms appear a definition  of  them appears in the page margin
+    to  further  explain their usage.  Each lesson ends with some  practice
+    "homework" and "extra credit" work to further enhance what you've  just
+    learned.   In  the front of the book, there's a tear-out reference card
+    with C functions, operators etc on one side, and Turbo C++ editing keys
+    and functions on the other side.   In  the  back of the book there's an
+    offer for Borland C++ 4.0 or full blown Turbo C++ at "discount rates".
+
+    All lesson coding is also pre-typed  on the included diskette.  Also on
+    the  disk  you'll  find the answers to all the homework as  well  as  a
+    "lite" version of Borland's Turbo C++ compiler.  Differences from  ANSI
+    C to C++ are always noted.
+
+    I have been "threatening" to learn C  for a couple of years.  This book
+    has  quickly  taken me from the sidelines to diving in head first,  and
+    actually gotten me excited about it.  The info is well presented, and I
+    haven't come up with any questions yet that I have  not  been  able  to
+    find  the  answer in the book.  I'm not 100% sure, but I believe when I
+    was at the book store there  is  also  a  sequel to this book that even
+    gets into more of actually developing applications using C.
+
+[8] Teach Yourself C++ 1992
+    Herbert Schildt
+    Osborne McGraw-Hill. ISBN 0-07-881760-9
+
+    Teach Yourself C++ is another  great  book  from Herbert Schildt who is
+    more  popular for his great C books.  This book is especially  designed
+    for programmers who already know how to  program  in  C.   Based  on  a
+    15-minute lesson format, this book includes a lot of exercise and skill
+    checks  to  make  sure your programming abilities grow by each chapter.
+    This book is  really  the  perfect  introductory  guide  for anyone who
+    already knows how to program in C.
+    
+    According to my sources, this book  is currently under revision.  There
+    are  several items missing from this book as it was written before  C++
+    was finalized.  I still think it is a pretty nice book.
+
+
+[9] The C++ Programming Language (2nd edition)
+    Bjarne Stroustrup
+    Addison Wesley (ISBN 0-201-53992-6)
+
+    Bjarne Stroustrup is the designer of C++  and has written 2 great books
+    on C++.  This book is divided into three parts: The first part provides
+    a  tutorial introduction to C++.  The second part presents a discussion
+    of design and software development issues arising  in  connection  with
+    the use of C++ and the third part is a complete reference manual.  With
+    the  popularity  of  C++, several independent distributions of C++ have
+    come  forward,  but  the  book  discusses   'pure  C++;'  that  is,  no
+    implementation  dependent extensions are used.  I have been programming
+    in C++ for a while and yet found this book very helpful.   One  of  the
+    best  way  to learn a programming language is by writing small programs
+    relevant to the item you study.  There are exercises at the end of each
+    chapter to test/apply  what  you  learned  in  that particular chapter.
+    This  wasn't  the book I used to learn C++ and I only recently  got  it
+    from DEC [DEC ships this book with their C++ compiler in lieu  of  real
+    documentation :)], but I wish I had gotten it sooner.  This is really a
+    great  book and worth every penny. 
+
+    There is also a book called  "The  C++ answer book" by Tony L.  Hansen.
+    (Addison-Wesley  ISBN # is 0-201-11497-6) and it contains the solutions
+    to the problems in "The C++ Programming Language" by Bjarne Stroustrup.
+
+
+
+[10]Using Visual C++
+    Shammas, Namir
+    Que Corporation  ISBN: 1-56529-626-5
+
+    A lot of people have e-mailed me asking for recommendation for a Visual
+    C++/MS-Windows programming book and  the  one I use/recommend is 'Using
+    Visual  C++'.   This book is aimed at readers who are already  familiar
+    with C++ and Windows.  This book covers many  programming  topics  that
+    use  C++  and the Microsoft Foundation Classes (MFC).  This book starts
+    with an overview of  the  Visual  C++  workbench and the MFC hierarchy.
+    The  book  also  discusses the AppWizard, ClassWizard  and  App  Studio
+    utility.  This book really lets you take  full  advantage  of  the  C++
+    compiler and all the utilities that come with it.  Microsoft provides a
+    lot of great information with the compiler package, but I found it hard
+    to  look  through  20 different manuals to find some basic information.
+    By the time you finish this book, you  will be ready to create your own
+    MS-Windows  applications.   Windows programming is pretty complex,  but
+    this comprehensive guide shows you efficient and proven  techniques  to
+    build powerful applications.  
+
+    Another great  book  is  'Visual  C++:  A  Developer's  Guide'  by Alex
+    Leavens.  (ISBN 1-55851-339-6) This book explores the comprehensive set
+    of  programming  tools that come with Visual C++.  This book shows  you
+    how to take advantage of MFC, OLE 2.0, add sounds  to  various  Windows
+    systems events and creating icons, cursors and bitmaps images.
+
+
+
+[11]C++ Primer  (2nd edition)
+    Lippman, Stanley B
+    Addison Wesley  ISBN 0-201-54848-8
+
+    The C++ Primer is a great book and  will make learning C++ a joy.  This
+    really  is  one of the best books C++ book out there, but it assumes  a
+    lot of familiarity with programming concepts and a  proficiency  in  C.
+    Everyone  I know who uses C++ recommends this book very highly.  If you
+    are interested in  learning  more  about  Object  Oriented Program, you
+    might consider buying "Object Oriented Design" by Peter Coad and Edward
+    Yourdon" (ISBN 0-13-630070-7)
+
+
+[12]"C++ FAQs: Frequently Asked Questions"
+    Marshall P. Cline and Greg A. Lomow
+    Addison-Wesley ISBN 0-201-58958-3
+
+    When I first heard  about  the  book,  it  thought  it  would just be a
+    reprint  of  the  electronic version of the FAQ, but I  was  pleasantly
+    surprised when I got my hands on the book (Thanks Deborah) This  is  no
+    mere  reprint.   This  is a *great great* book that contains answers to
+    about 500 questions on programming, design, analysis and testing.  This
+    book is not for beginners, but for programmers who have figured out the
+    syntax of the language, and are looking to implement them.  If you have
+    questions like  "What  is  a  class  invariant?",  "How  should  I  use
+    exceptions?",  "What happens when a destructor is executed?", then this
+    is the book for you.
+
+    This is a very practical book  that contains answers to some real-world
+    programming  questions  that  will  really help  anyone  involved  with
+    software development.  I just wish I had this book around  when  I  was
+    taking  my  C++  classes.  Unlike other books, this book contains about
+    200 complete program rather than code  snippets that leave you guessing
+    about the implementation.  This book is a definite gem and should be in
+    every  single  programmers  library.  Go out and buy 2 copies  of  this
+    book: One for the office and one for the nightstand at home.
+
+
+[13]Learn C++ on the Macintosh
+    Dave Mark
+    Addison-Wesley ISBN 0-201-62204-1
+
+    This book comes  with  a  customized  version  of  Symantec C++ for the
+    Macintosh.   In addition, there is a coupon for obtaining the  complete
+    version of Symantec C++ at a much reduced  price.   I  would  recommend
+    this  book for those who are just beginning to program in C++; however,
+    it does assume at least  a  working  knowledge  of C.  There is a quick
+    review  of  C at the beginning.  Dave Mark also has a book 'Learn C  on
+    the  Macintosh'.   It  has  the  same  great  style  and  comes  highly
+    recommended.  Thanks Lizann Bolinger.
+
+
+[14]Effective C++
+    Scott Meyers
+    Addison-Wesley ISBN 0-201-56364-9
+
+    This is just a  great  great  book  on  C++  and  is  a  must for every
+    programming  library.   The book is a listing of things which you  must
+    get right if your program is to be  safe  and  reliable,  and  a  clear
+    description  of what it means to get them `right.' The book raises some
+    very interesting issues that every  programmer faces.  C++ provides the
+    structure  and  the means to talk about them in a concrete way  and  to
+    program them explicitly.
+
+    The author is working on another C++  book, and the title will be "More
+    Effective  C++.   " Here's more information that the author  posted  in
+    comp.lang.c++.  If all goes according to  plan,  "More  Effective  C++"
+    should be available around the end of September.
+
+    As for  the  book  itself,  "More  Effective  C++"  will  use  the same
+    Item-based  organization  that I used in "Effective C++," but  it  will
+    cover all new material, and it will not assume that readers  have  read
+    "Effective  C++."  (If  they  have,  so much the better, but it's not a
+    prerequisite.) As such, "More  Effective  C++"  isn't really "Effective
+    C++, Volume 2," though it can be read that way, if you like.
+
+    Like "Effective C++," "More  Effective  C++"  will  cover  a variety of
+    topics.   One  of those topics will be efficiency.  The  current  draft
+    contains at  least  12  Items  on  that  topic  alone,  and  efficiency
+    considerations  comprise a thread that winds through many of the book's
+    other Items, too.
+
+[15]Scientific and Engineering C++: An introduction with advanced techniques 
+    and examples
+    John J. Barton and Lee R. Nackman
+    Addison Wesley ISBN 0-201-53393-6
+    Reviewed-by: ajayshah@cmie.ernet.in (Ajay Shah)
+
+    A plethora of books on C++ exists;  the  above promises to be a book on
+    numerical computation in C++.  The authors are both from T.  J.  Watson
+    Research Center and they do numerical computation for a living.
+
+    Before we get to what the book offers, we should clarify what it is not
+    : It is not a Numerical Recipes.   It does not discuss the mathematical
+    ideas underlying numerical algorithms, and it presents no library which
+    you can start off using from day 1.
+
+    Instead the authors are attacking a different problem, that of applying
+    OOP in its C++ incarnation  to  do  numerical computation.  The typical
+    reader is expected to be someone who is currently getting his work done
+    in  C  or  Fortran  and  would like to migrate  to  C++.   The  authors
+    literally start from scratch in this enterprise; they have two versions
+    of chapter 1, one aimed  at  migrants  from  C  and  another  aimed  at
+    migrants from Fortran.
+
+    Does the book succeed  in  these  objectives?   For  the major part, my
+    answer would be Yes.  I will address two issues here:
+
+ o  Teaching C++ and OOP 
+
+    This is done reasonably well.   However,  I  expect anyone who actually
+    plunges  into C++ seriously will want the primary two books on C++  too
+    (i.e.  Stroustrup and Lippman).  They do a  good  job  of  the  overall
+    question  of applying OOP to scientific computation, but I have a guess
+    that you would come up with a lot of this yourself, and that your sense
+    of taste may differ from theirs to some extent.
+
+ o  Practical advice aimed at numerical computing applications 
+
+    I felt the book does really well on  this score.  They take up a series
+    of  problems  and give us the benefit of their good taste in coming  up
+    with designs.  The last chapter does maximum likelihood using automatic
+    differentiation to obtain derivatives -- this is a  lovely  theme  that
+    has not been much explored in the literature.
+
+    One of the big questions on the  minds of anyone thinking about using C
+    or  C++  for numerical computation is the existence of  libraries  like
+    linpack; they are incredibly ugly on the score of software engineering,
+    but they are incredibly well done on debugging and efficiency.  Between
+    f2c and C++, it appears quite possible to hide these ugly (but working)
+    beasts under nice modern interfaces.
+
+    This issue is really important at  a  practical  level, and so far I've
+    only  seen  net.wisdom  on the subject.  The authors deal  with  it  in
+    detail.  It would have been awfully nice if they had just  given  us  a
+    full  C++ view to lapack :-) but their focus is on ideas, not on giving
+    blackboxes of code.
+
+    All the source code of the book is on the net.
+
+    I'm personally at the stage of  having  browsed  in C++ for a while now
+    but  not  having  taken the plunge of fully leaving C yet.   This  book
+    feels very useful to me at this point in my transition.
+
+
+[16]C, A Software Engineering Approach
+    Peter A. Darnell & Philip E. Margolis  ISBN:0-387-97389-3 & 3-540-97389-3
+    Springer-Verlag
+    Reviewed by: Klaas Teschauer (positron@techno.isys.net)
+
+    This is the book which  was  used  in  my C course.  When I started the
+    course  I  went to my local book shop and digged through the  available
+    books about C.  This book was recommended by our teacher,  but  it  was
+    rather  expensive  and, if possible, I wanted to avoid the expense, But
+    alas, I finally settled for  it,  because it was the most comprehensive
+    and  complete  book on offer and it obviously contained many  tips  and
+    hints not available elsewhere.
+
+    The book is totally  platform-independant,  and  covers all features of
+    the  language  in detail.  It is written for someone who already  knows
+    another programming language;  as  it  is  an  arduous  task  to  learn
+    programming  with  C.   It  covers ANSI C as well; but the examples are
+    written in K&R C.  (BTW, here  in  Germany  we sometimes expand this to
+    "Knall  und  Rauch C", which means "Bang and Smoke C"  when  translated
+    literally :).  )
+
+    Apart from the explanation of the syntax and semantics of C and how the
+    constructs are actually used,  the  book offers numerous so-called "Bug
+    Alert"  or "ANSI Feature" boxes, which point to common coding errors or
+    explain relevant features of the ANSI Standard, respectively.   At  the
+    end  of each chapter a number of excercises are provided.  Furthermore,
+    the Appendix contains a complete reference  manual for the ANSI runtime
+    library  and  a number of concise discussions like differences  between
+    ANSI and K&R or reserved names and the like.  The last regular  chapter
+    is  an  excellent introduction into software engineering issues.  As an
+    example serves a  project  for  developing  a  C  interpreter (well, it
+    implements only a subset) and the complete source code of which is also
+    provided  in the appendix.  It is in my opinion an outstanding book and
+    worth every dollar.
+
+
+[18]Windows++
+    Paul Dilascia  ISBN:0-201-60891-X
+    Addison-Wesley
+    Reviewed by: Klaas Teschauer (positron@techno.isys.net)
+
+    This book is not  an  introduction  to  C++,  but  it provides a breeze
+    through  the  most  important  features for C  programmers.   The  book
+    describes the actual process of the development of a C++ class  library
+    for  Microsoft  Windows 3.1.  It is a book about programming Windows in
+    the first place, but I  learned  a  lot  from it how to design reusable
+    classes  and  code.   You still need another  Windows  introduction  or
+    reference manual like the Petzold(*).  Although it is stuffed with code
+    snippets, it is fun to read it, because the author  writes  in  a  more
+    colloquial  style.   The  language  is like what he would have actually
+    said to the reader if he and  the  reader were sitting in front of a PC
+    and the author would explain it.  Examples:
+
+    ...  It's been a long chapter (I warned you), ...
+
+    ...  Do I really have to mess with  blocks and locks and heaps and free
+    chains and all that low-level stuff?!  Yecch!!  The operating system is
+    supposed to do that; OO programmers don't DO memory management!  ...
+
+    ...  Since you have your OOP cap  on  (if not put it on now!), a little
+    light bulb should go on in your head that says application object!  ...
+
+    The book is divided into chapters  roughly along the different parts of
+    the  Windows API (GDI, etc.) that are encapsulated.  Usually the author
+    starts out with describing the implementation of  a  small  application
+    and  then  tries  to  extract all reusable code from the application in
+    order to put it into the  library.   He not necessarily follows the one
+    true  path  recommended by Microsoft, but tries to make the library  as
+    useful as possible  for  the  applications  that  base  on  it.   Where
+    necessary,  the  book  goes into reasonable details about Windows.  The
+    full source code of the library and of the applications developed along
+    the way is supplied in  the  appendix, plus makefiles for Microsoft and
+    Borland  C/C++.   The sources are also available on diskette  from  the
+    author.  During the course of the book,  he  also  provides  hints  for
+    die-hard  C  programmers  that  don't  want  to  migrate to C++, how to
+    implement the discribed features in pure C.
+
+    I had a lot of fun just  reading  it  like a normal book and enjoyed it
+    very  much.  The Windows++ library would in my opinion be very  useful,
+    if it had not a serious deficiency.  The part that covers the GDI  just
+    encapsulates   and  repackages  its  functionality,  which  is  clearly
+    insuffcient for larger apps.   IMO,  for  the  development  of a modern
+    Windows  app a good graphics library is essential.  But the book is not
+    to blame  because  its  stated  goal  is  to  describe  and  teach  the
+    development  of  reusable class libraries and does so at the example of
+    Windows class library.   Windows  has  the  advantage  of being popular
+    enough and of allowing it to define the task sufficiently precise.
+
+    I doubt that the author will  provide  an update for Windows 95, but as
+    long  as  the  most  recent  Windows version at any  time  is  not  too
+    different from Windows 3.1, it will still be useful.
+   
+    (*) Charles Petzold, Programming Microsoft Windows 3.1, 1992
+        published by Microsoft Press
+ 
+
+[19]C++ How to Program 
+    H.M. Deitel & P.J. Deitel 
+    Prentice Hall ISBN ??
+    Reviewed-by: David M. Botters (102251.2712@compuserve.com)
+
+    This is basically a college text  book,  but  is available in most book
+    stores  with  a  decent  section for computer  programming.   The  book
+    assumes no previous knowledge of C or programming, and is designed with
+    a beginner in mind.
+
+    It makes the claim at  the  outset  that  C++ is difficult and makes no
+    pretense  that  you can learn Windows C++ in 20 minutes, like  so  many
+    other books on the market today.  It provides a very  basic  intro  and
+    moves along at a good clip covering most everything you need to know.
+
+    After buying so many of the Programming in 20 Minutes type books, I was
+    happy to see this book.  It is definately  a good choice for one who is
+    seriously about learning C++ from the ground up.
+
+[20]Safer C, Developing Software for High-integrity & Safty-critical Systems
+    Les Hatton
+    Publisher  ISBN
+    Reviewed-by: Clive King (cmk@aber.ac.uk)
+
+    Software is now an integral part of most spheres of life and the future
+    can only see this trend increase.   The complexity of software required
+    to  enable  the  technologies now exceeds that of any  other  man  made
+    construction.
+
+    How many times have  you  found  that  some unexplained behavior in the
+    program  you were writing was a result of a simple error, maybe using a
+    == instead of a = in an assignment statement!  The  programmer  writing
+    the code that controls the landing gear of the next plane you fly on is
+    also  human  and  is  therefore  capable  of  making  the same sorts of
+    mistakes as you.  Agree?  If not  there  is a very bright career in the
+    safety  critical  software  development business or you are  not  being
+    totally honest with yourself.
+
+    Safer C attempts to  shed  light  on  improving the quality of software
+    constructed  for high-integrity and safety critical systems.  The  book
+    concentrates on the process of developing  software  and  the  language
+    issues  which  effect software quality.  It rightly does not attempt to
+    address the issues of specification and design.
+
+    The use of C, which is well known  for its many traps and pitfalls, may
+    seem  a  curious choice to some.  The choice is founded on the  authors
+    observation that C has been in used for a number of years,  C  programs
+    including  UNIX  have  been ported between a multitude of platforms.  C
+    has been misused in a multitude of ways  and the problems of C are very
+    well documented.  C is a small, standardized language and a subset of C
+    which  eliminates the language feature which may bring problems can  be
+    described.  The most important feature of using C in the development of
+    high-integrity and safety critical systems and a recurring theme of the
+    book is that better tool support for finding potential coding  problems
+    and language misuse is currently available for C than other languages.
+
+    The case presented for C is  strong,  but by the same argument the case
+    for  Ada  is  worth  considering if using  best  current  practice  and
+    appropriate tool support are too much effort to  overcome  for  reasons
+    associated  with the management of a project and programmer psychology.
+    A better alternative  I  am  sure  is  to  prevent  by  law such people
+    participating in projects whose product may be used in a situation when
+    human life may be threatened.  That day is getting closer.
+
+    The underlying  theme  throughout  the  book  is  to identify dangerous
+    practice and ruthlessly eliminate it via the use of appropriate methods
+    and  tool  support.   Much  useful material is  presented  on  software
+    complexity and metrics, testing strategies, quality procedures such  as
+    ISO9001, Capability Maturity model and Total Quality Management.  Where
+    this  book really excels is in describing the potential problems areas,
+    there severity, how they can be  detected  and manage there use in code
+    by either forbidding use or a strategy for safe use is given.
+
+    The book justifies its self in  a chapter devoted to population studies
+    of  C programs where software from a wide range of application  domains
+    is analyzed for faults and transgressions from  programming  standards.
+    Also  presented  are  the  results  of a study into the complexity of a
+    range software.
+
+    Formal methods were one of the great  white hope in the 1980's, but the
+    many software developers view formal methods as a smoke screen which is
+    loaded  with  hype.  Rightly Hatton points out that formal methods  are
+    another way of thinking about program design and  construction  through
+    the  medium  of  mathematics.   14  pages  are  spent discussing formal
+    methods.  What exists is very  illuminating  to those with no knowledge
+    of  formal methods and there application to producing C programs.  Some
+    consideration of how to develop substantial systems in C from a  formal
+    specification,  rather  than just considering small examples would have
+    been useful.
+
+    Hatton's humor makes the book  enjoyable  to  read, though at times you
+    wonder  how  such  a  serious subject can generate  such  a  stream  of
+    antidotes.  The author sometimes gives the impression  of  writing  the
+    book  out  of  a  passion  for  self  preservation, instead of the more
+    mundane reasons.  Hatton  digresses  to  talk  about  the importance of
+    structure in music and architecture and manages to make coherent use of
+    diverse  examples such as Mozarts's 40th Symphony, Jimi Hendrix and the
+    UNIX diff program to illustrate the importance of refinement.
+
+    After reading the book, I concluded that  given a choice of flying in a
+    plane  with software written using best current practice in C, C++,  or
+    Ada, I would choose the plane that used C software.  If the emphasis is
+    not placed here on best current practice, I might just stay at home.
+
+    Safer C should be required reading for  anyone who intends to write a C
+    program  outside  a classroom, anyone who intends to write code  for  a
+    high-integrity or safety-critical system  and  anyone  who  intends  to
+    manage  a project that has high-integrity or safety-critical element or
+    uses C.  I would also recommend  it  to  anyone who is trying to decide
+    which language to use on a project.
+
+    I could go into far more  detail  about the good sense the book extols,
+    but  if developing software is your business, can you really afford not
+    to read it?
+    
+
+Conclusion:
+
+    C and C++ are great  programming  languages that can make programming a
+    lot  of fun.  One of the best ways to learn is by taking a  programming
+    class.  See if you can take a class at your school, or take a class  at
+    night school.  Programming in C/C++ is a skill that could end up saving
+    you your job or help you get a better job.  I hope these tutorials help
+    you in your quest to learn the C and C++ programming language.
+
+
+Acknowledgment:
+---------------
+
+	Steve Summit 		scs@eskimo.com
+	Lizann Bolinger		bolinger@zeno.ibd.nrc.ca
+	Blake Sobiloff		sobiloff@mail.lap.umd.edu
+	Alex Wu			wua@cpsc.ucalgary.ca
+	Ian Jackson		ijackson@nyx.cs.du.edu
+	Peter Vanderlinden	Peter.Vanderlinden@eng.sun.com
+    	Robin Schogol		rschogol@lehman.com
+	Marcus Speh 		marcus@x4u.desy.de
+	Jutta Degener 		jutta@cs.tu-berlin.de
+	Joe Dougherty		jdough@gate.net
+        Ajay Shah               ajayshah@cmie.ernet.in
+	Sonia Hamilton 		soniah@magna.com.au
+	Klaas Teschauer		klaas@tesch.hh.provi.de
+	Clive King 		cmk@aber.ac.uk
+	Richard Grubb		grubb@bcstec.ca.boeing.com 
+	Lincoln Abbey 		labbey@delta.eecs.nwu.edu
+	Scott Hankin 		hankin@osf.org
+
+---------
+               * List of C tutorials   Last Update: 08/01/95 *
+       * Compiled By:  Vinit Carpenter -  carpenterv@vms.csd.mu.edu *
+
+
+    Note that this document is provided  as  is.   The information in it is
+    *not* warranted to be correct; you use it at your own risk.
+
+o   The LEARN C/C++ TODAY  List  is  Copyright  1994 by Vinit S.  Carpenter
+    (carpenterv@vms.csd.mu.edu).   It may be reproduced and distributed  in
+    whole or in part, subject to the following conditions:
+
+o   This  copyright  and  permission  notice   and  the  paragraph  in  the
+    introduction  about  the frequency of updates must be retained  on  all
+    complete or partial copies.
+
+o   Any translation or  derivative  work  must  be  approved  by  me before
+    distribution.  Email me - I'll will be happy to oblige !
+
+o   If you wish  to  charge  for  non-machine-readable  copies  you need my
+    approval  before  distribution.   Note  that this  restriction  is  not
+    intended to prohibit charging for the service of printing or copying  a
+    document supplied by your customer.
+
+o   If  you  distribute  partial  copies  of  this  list,  instructions for
+    obtaining  the  complete  version  must be included, and  a  means  for
+    obtaining a complete version free or at cost price provided.
+
+o   Exceptions to these rules  may  be  granted,  and  I  shall be happy to
+    answer  any questions about this copyright --- Simply e-mail me.  These
+    restrictions are here to protect the contributors, not to restrict  you
+    as educators and learners.
+
+o   Vinit Carpenter asserts the  right  to  be  identified as the author of
+    this  work, and claims the moral rights of paternity and integrity,  in
+    accordance with the Copyright, Designs and Patents Act, 1988.
+
+-----------------------------------------------------------------------------
+Vinit S. Carpenter 	  Marquette University      carpenterv@vms.csd.mu.edu
+-----------------------------------------------------------------------------
+     Author of the INTERNET-MENU for OpenVMS and LEARN C/C++ TODAY List
+                       Moderator: COMP.BINARIES.IBM.PC
+                          * Email me for details *
+     <a href="http://vinny.csd.mu.edu"> My Personal Linux Web Server</a>
+-----------------------------------------------------------------------------
+                  * Ayrton Senna daSilva - Rest In Peace *
+-----------------------------------------------------------------------------
+Geek Code:    	GE d? H S+:+ g+ p? au+ a26 w++ v C++++ UL++++ P++ L+++ 3-
+      E--- N+++ K--- W--- M-- V$ -po+ Y+ t+++ 5- j tv+++ b+++ D++ B---
+                          e- U--- h++ f? r n--- y*
+

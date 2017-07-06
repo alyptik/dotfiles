@@ -1,0 +1,380 @@
+General
+
+SSL (and its successor, TLS) is a protocol that operates directly on top of TCP (although there are also implementations for datagram based protocols such as UDP). This way, protocols on higher layers (such as HTTP) can be left unchanged while still providing a secure connection. Underneath the SSL layer, HTTP is identical to HTTPS.
+
+When using SSL/TLS correctly, all an attacker can see on the cable is which IP and port you are connected to, roughly how much data you are sending, and what encryption and compression is used. He can also terminate the connection, but both sides will know that the connection has been interrupted by a third party.
+
+In typical use, the attacker will also be able to figure out which host name you're connecting to (but not the rest of the URL): although HTTPS itself does not expose the host name, your browser will usually need to make a DNS request first to find out what IP address to send the request to.
+
+High-level description of the protocol
+
+After building a TCP connection, the SSL handshake is started by the client. The client (which can be a browser as well as any other program such as Windows Update or PuTTY) sends a number of specifications:
+
+which version of SSL/TLS it is running,
+what ciphersuites it wants to use, and
+what compression methods it wants to use.
+The server checks what the highest SSL/TLS version is that is supported by them both, picks a ciphersuite from one of the client's options (if it supports one), and optionally picks a compression method.
+
+After this the basic setup is done, the server sends its certificate. This certificate must be trusted by either the client itself or a party that the client trusts. For example if the client trusts GeoTrust, then the client can trust the certificate from Google.com, because GeoTrust cryptographically signed Google's certificate.
+
+Having verified the certificate and being certain this server really is who he claims to be (and not a man in the middle), a key is exchanged. This can be a public key, a "PreMasterSecret" or simply nothing, depending on the chosen ciphersuite. Both the server and the client can now compute the key for the symmetric encryption whynot PKE?. The client tells the server that from now on, all communication will be encrypted, and sends an encrypted and authenticated message to the server.
+
+The server verifies that the MAC (used for authentication) is correct, and that the message can be correctly decrypted. It then returns a message, which the client verifies as well.
+
+The handshake is now finished, and the two hosts can communicate securely. For more info, see technet.microsoft.com/en-us/library/cc785811 and en.wikipedia.org/wiki/Secure_Sockets_Layer.
+
+To close the connection, a close_notify 'alert' is used. If an attacker tries to terminate the connection by finishing the TCP connection (injecting a FIN packet), both sides will know the connection was improperly terminated. The connection cannot be compromised by this though, merely interrupted.
+
+Some more details
+
+Why can you trust Google.com by trusting GeoTrust?
+A website wants to communicate with you securely. In order to prove its identity and make sure that it is not an attacker, you must have the server's public key. However, you can hardly store all keys from all websites on earth, the database would be huge and updates would have to run every hour!
+
+The solution to this are Certificate Authorities, or CA for short. When you installed your operating system or browser, a list of trusted CAs probably came with it. This list can be modified at will; you can remove whom you don't trust, add others, or even make your own CA (though you will be the only one trusting this CA, so it's not much use for public website). In this CA list, the CA's public key is also stored.
+
+When Google's server sends you its certificate, it also mentions it is signed by GeoTrust. If you trust GeoTrust, you can verify (using GeoTrust's public key) that GeoTrust really did sign the server's certificate. To sign a certificate yourself, you need the private key, which is only known to GeoTrust. This way an attacker cannot sign a certificate himself and incorrectly claim to be Google.com. When the certificate has been modified by even one bit, the sign will be incorrect and the client will reject it.
+
+So if I know the public key, the server can prove its identity?
+Yes. Typically, the public key encrypts and the private key decrypts. Encrypt a message with the server's public key, send it, and if the server can repeat back the original message, it just proved that it got the private key without revealing the key.
+
+This is why it is so important to be able to trust the public key: anyone can generate a private/public key pair, also an attacker. You don't want to end up using the public key of an attacker!
+
+If one of the CAs that you trust is compromised, an attacker can use the stolen private key to sign a certificate for any website they like. When the attacker can send a forged certificate to your client, signed by himself with the private key from a CA that you trust, your client doesn't know that the public key is a forged one, signed with a stolen private key.
+
+But a CA can make me trust any server they want!
+Yes, and that is where the trust comes in. You have to trust the CA not to make certificates as they please. When organisations like Microsoft, Apple and Mozilla trust a CA though, the CA must have audits; another organisation checks on them periodically to make sure everything is still running according to the rules.
+
+Issuing a certificate is done if, and only if, the registrant can prove they own the domain that the certificate is issued for.
+
+What is this MAC for message authentication?
+Every message is signed with a so-called Message Authentication Code, or MAC for short. If we agree on a key and hashing cipher, you can verify that my message comes from me, and I can verify that your message comes from you.
+
+For example with the key "correct horse battery staple" and the message "example", I can compute the MAC "58393". When I send this message with the MAC to you (you already know the key), you can perform the same computation and match up the computed MAC with the MAC that I sent.
+
+An attacker can modify the message, but does not know the key. He cannot compute the correct MAC, and you will know the message is not authentic.
+
+By including a sequence number when computing the MAC, you can eliminate replay attacks. SSL does this.
+
+You said the client sends a key, which is then used to setup symmetric encryption. What prevents an attacker from using it?
+The server's public key does. Since we have verified that the public key really belongs to the server and no one else, we can encrypt the key using the public key. When the server receives this, he can decrypt it with the private key. When anyone else receives it, they cannot decrypt it.
+
+This is also why key size matters: The larger the public and private key, the harder it is to crack the key that the client sends to the server.
+
+How to crack SSL
+
+In summary:
+
+Try if the user ignores certificate warnings;
+The application may load data from an unencrypted channel (e.g. http), which can be tampered with;
+An unprotected login page that submits to HTTPS may be modified so that it submits to HTTP;
+Unpatched applications may be vulnerable for exploits like BEAST and CRIME;
+Resort to other methods such as a physical attack;
+Exploit side channels like message length and the time taken to form the message;
+Wait for quantum attacks.
+See also: A scheme with many attack vectors against SSL by Ivan Ristic (png)
+
+In detail:
+
+There is no simple and straight-forward way; SSL is secure when done correctly. An attacker can try if the user ignores certificate warnings though, which would break the security instantly. When a user does this, the attacker doesn't need a private key from a CA to forge a certificate, he merely has to send a certificate of his own.
+
+Another way would be by a flaw in the application (server- or client-side). An easy example is in websites: if one of the resources used by the website (such as an image or a script) is loaded over HTTP, the confidentiality cannot be guaranteed anymore. Even though browsers do not send the HTTP Referer header when requesting non-secure resources from a secure page (source), it is still possible for someone eavesdropping on traffic to guess where you're visiting from; for example, if they know images X, Y, and Z are used on one page, they can guess you are visiting that page when they see your browser request those three images at once. Additionally, when loading Javascript, the entire page can be compromised. An attacker can execute any script on the page, modifying for example to whom the bank transaction will go.
+
+When this happens (a resource being loaded over HTTP), the browser gives a mixed-content warning: Chrome, Firefox, Internet Explorer 9
+
+Another trick for HTTP is when the login page is not secured, and it submits to an https page. "Great," the developer probably thought, "now I save server load and the password is still sent encrypted!" The problem is sslstrip, a tool that modifies the insecure login page so that it submits somewhere so that the attacker can read it.
+
+There have also been various attacks in the past few years, such as the TLS renegotiation vulnerability, sslsniff, BEAST, and very recently, CRIME. All common browsers are protected against all of these attacks though, so these vulnerabilities are no risk if you are running an up-to-date browser.
+
+Last but not least, you can resort to other methods to obtain the info that SSL denies you to obtain. If you can already see and tamper with the user's connection, it might not be that hard to replace one of his/her .exe downloads with a keylogger, or simply to physically attack that person. Cryptography may be rather secure, but humans and human error is still a weak factor. According to this paper by Verizon, 10% of the data breaches involved physical attacks (see page 3), so it's certainly something to keep in mind.
+
+Since the general concept of SSL has already been covered into some other questions (e.g. this one and that one), this time I will go for details. Details are important. This answer is going to be somewhat verbose.
+
+History
+
+SSL is a protocol with a long history and several versions. First prototypes came from Netscape, when they were developing the first versions of their flagship browser, Netscape Navigator (this browser killed off Mosaic in the early times of the Browser Wars, which are still raging, albeit with new competitors). Version 1 has never been made public so we do not know how it looked like. SSL version 2 is described in a draft which can be read there; it has a number of weaknesses, some of them rather serious, so it is deprecated and newer SSL/TLS implementations do not support it (while older deactivated by default). I will not speak of SSL version 2 any further, except as an occasional reference.
+
+SSL version 3 (which I will call "SSLv3") was an enhanced protocol which still works today and is widely supported. Although still a property of Netscape Communications (or whoever owns that nowadays), the protocol has been published as an "historical RFC" (RFC 6101). Meanwhile, the protocol has been standardized, with a new name in order to avoid legal issues; the new name is TLS.
+
+Three versions of TLS have been produced to far, each with its dedicated RFC: TLS 1.0, TLS 1.1 and TLS 1.2. They are internally very similar with each other, and with SSLv3, to the point that an implementation can easily support SSLv3 and all three TLS versions with at least 95% of the code being common. Still internally, all versions are designated by a version number with the major.minor format; SSLv3 is then 3.0, while the TLS versions are, respectively, 3.1, 3.2 and 3.3. Thus, it is no wonder that TLS 1.0 is sometimes called SSL 3.1 (and it is not incorrect either). SSL 3.0 and TLS 1.0 differ by only some minute details. TLS 1.1 and 1.2 are not yet widely supported, although there is impetus for that, because of possible weaknesses (see below, for the "BEAST attack"). SSLv3 and TLS 1.0 are supported "everywhere" (even IE 6.0 knows them).
+
+Context
+
+SSL aims at providing a secure bidirectional tunnel for arbitrary data. Consider TCP, the well known protocol for sending data over the Internet. TCP works over the IP "packets" and provides a bidirectional tunnel for bytes; it works for every byte values and send them into two streams which can operate simultaneously. TCP handles the hard work of splitting the data into packets, acknowledging them, reassembling them back into their right order, while removing duplicates and reemitting lost packets. From the point of view of the application which uses TCP, there are just two streams, and the packets are invisible; in particular, the streams are not split into "messages" (it is up to the application to take its own encoding rules if it wishes to have messages, and that's precisely what HTTP does).
+
+TCP is reliable in the presence of "accidents", i.e. transmission errors due to flaky hardware, network congestion, people with smartphones who walk out range of a given base station, and other non-malicious events. However, an ill-intentioned individual (the "attacker") with some access to the transport medium could read all the transmitted data and/or alter it intentionally, and TCP does not protect against that. Hence SSL.
+
+SSL assumes that it works over a TCP-like protocol, which provides a reliable stream; SSL does not implement reemission of lost packets and things like that. The attacker is supposed to be in power to disrupt communication completely in an unavoidable way (for instance, he can cut the cables) so SSL's job is to:
+
+detect alterations (the attacker must not be able to alter the data silently);
+ensure data confidentiality (the attacker must not gain knowledge of the exchanged data).
+SSL fulfills these goals to a large (but not absolute) extent.
+
+Records
+
+SSL is layered and the bottom layer is the record protocol. Whatever data is sent in a SSL tunnel is split into records. Over the wire (the underlying TCP socket or TCP-like medium), a record looks like this:
+
+HH V1:V2 L1:L2 data
+where:
+
+HH is a single byte which indicates the type of data in the record. Four types are defined: change_cipher_spec (20), alert (21), handshake (22) and application_data (23).
+V1:V2 is the protocol version, over two bytes. For all versions currently defined, V1 has value 0x03, while V2 has value 0x00 for SSLv3, 0x01 for TLS 1.0, 0x02 for TLS 1.1 and 0x03 for TLS 1.2.
+L1:L2 is the length of data, in bytes (big-endian convention is used: the length is 256*L1+L2). The total length of data cannot exceed 18432 bytes, but in practice it cannot even reach that value.
+So a record has a five-byte header, followed by at most 18 kB of data. The data is where symmetric encryption and integrity checks are applied. When a record is emitted, both sender and receiver are supposed to agree on which cryptographic algorithms are currently applied, and with which keys; this agreement is obtained through the handshake protocol, described in the next section. Compression, if any, is also applied at that point.
+
+In full details, the building of a record works like this:
+
+Initially, there are some bytes to transfer; these are application data or some other kind of bytes. This payload consists of at most 16384 bytes, but possibly less (a payload of length 0 is legal, but it turns out that Internet Explorer 6.0 does not like that at all).
+The payload is then compressed with whatever compression algorithm is currently agreed upon. Compression is stateful, and thus may depend upon the contents of previous records. In practice, compression is either "null" (no compression at all) or "Deflate" (RFC 3749), the latter being currently courteously but firmly shown the exit door in the Web context, due to the recent CRIME attack. Compression aims at shortening data, but it must necessarily expand it slightly in some unfavourable situations (due to the pigeonhole principle). SSL allows for an expansion of at most 1024 bytes. Of course, null compression never expands (but never shortens either); Deflate will expand by at most 10 bytes, if the implementation is any good.
+The compressed payload is then protected against alterations and encrypted. If the current encryption-and-integrity algorithms are "null", then this step is a no-operation. Otherwise, a MAC is appended, then some padding (depending on the encryption algorithm), and the result is encrypted. These steps again induce some expansion, which the SSL standard limits to 1024 extra bytes (combined with the maximum expansion from the compression step, this brings us to the 18432 bytes, to which we must add the 5-byte header).
+The MAC is, usually, HMAC with one of the usual hash functions (mostly MD5, SHA-1 or SHA-256)(with SSLv3, this is not the "true" HMAC but something very similar and, to the best of our knowledge, as secure as HMAC). Encryption will use either a block cipher in CBC mode, or the RC4 stream cipher. Note that, in theory, other kinds of modes or algorithms could be employed, for instance one of these nifty modes which combine encryption and integrity checks; there are even some RFC for that. In practice, though, deployed implementations do not know of these yet, so they do HMAC and CBC. Crucially, the MAC is first computed and appended to the data, and the result is encrypted. This is MAC-then-encrypt and it is actually not a very good idea. The MAC is computed over the concatenation of the (compressed) payload and a sequence number, so that an industrious attacker may not swap records.
+
+Handshake
+
+The handshake is a protocol which is played within the record protocol. Its goal is to establish the algorithms and keys which are to be used for the records. It consists of messages. Each handshake message begins with a four-byte header, one byte which describes the message type, then three bytes for the message length (big-endian convention). The successive handshake messages are then sent with records tagged with the "handshake" type (first byte of the header of each record has value 22).
+
+Note the layers: the handshake messages, complete with four-byte header, are then sent as records, and each record also has its own header. Furthermore, several handshake messages can be sent within the same record, and a given handshake message can be split over several records. From the point of view of the module which builds the handshake messages, the "records" are just a stream on which bytes can be sent; it is oblivious to the actual split of that stream into records.
+
+Full Handshake
+
+Initially, client and server "agree upon" null encryption with no MAC and null compression. This means that the record they will first send will be sent as cleartext and unprotected.
+
+First message of a handshake is a ClientHello. It is the message by which the client states its intention to do some SSL. Note that "client" is a symbolic role; it means "the party which speaks first". It so happens that in the HTTPS context, which is HTTP-within-SSL-within-TCP, all three layers have a notion of "client" and "server", and they all agree (the TCP client is also the SSL client and the HTTP client), but that's kind of a coincidence.
+
+The ClientHello message contains:
+
+the maximum protocol version that the client wishes to support;
+the "client random" (32 bytes, out of which 28 are suppose to be generated with a cryptographically strong number generator);
+the "session ID" (in case the client wants to resume a session in an abbreviated handshake, see below);
+the list of "cipher suites" that the client knows of, ordered by client preference;
+the list of compression algorithms that the client knows of, ordered by client preference;
+some optional extensions.
+A cipher suite is a 16-bit symbolic identifier for a set of cryptographic algorithms. For instance, the TLS_RSA_WITH_AES_128_CBC_SHA cipher suite has value 0x002F, and means "records use HMAC/SHA-1 and AES encryption with a 128-bit key, and the key exchange is done by encrypting a random key with the server's RSA public key".
+
+The server responds to the ClientHello with a ServerHello which contains:
+
+the protocol version that the client and server will use;
+the "server random" (32 bytes, with 28 random bytes);
+the session ID for this connection;
+the cipher suite that will be used;
+the compression algorithm that will be used;
+optionally, some extensions.
+The full handshake looks like this:
+
+  Client                                               Server
+
+  ClientHello                  -------->
+                                                  ServerHello
+                                                 Certificate*
+                                           ServerKeyExchange*
+                                          CertificateRequest*
+                               <--------      ServerHelloDone
+  Certificate*
+  ClientKeyExchange
+  CertificateVerify*
+  [ChangeCipherSpec]
+  Finished                     -------->
+                                           [ChangeCipherSpec]
+                               <--------             Finished
+  Application Data             <------->     Application Data
+(This schema has been shamelessly copied from the RFC.)
+
+We see the ClientHello and ServerHello. Then, the server sends a few other messages, which depend on the cipher suite and some other parameters:
+
+Certificate: the server's certificate, which contains its public key. More on that below. This message is almost always sent, except if the cipher suite mandates a handshake without a certificate.
+ServerKeyExchange: some extra values for the key exchange, if what is in the certificate is not sufficient. In particular, the "DHE" cipher suites use an ephemeral Diffie-Hellman key exchange, which requires that message.
+CertificateRequest: a message requesting that the client also identifies itself with a certificate of its own. This message contains the list of names of trust anchors (aka "root certificates") that the server will use to validate the client certificate.
+ServerHelloDone: a marker message (of length zero) which says that the server is finished, and the client should now talk.
+The client must then respond with:
+
+Certificate: the client certificate, if the server requested one. There are subtle variations between versions (with SSLv3, the client must omit this message if it does not have a certificate; with TLS 1.0+, in the same situation, it must send a Certificate message with an empty list of certificates).
+ClientKeyExchange: the client part of the actual key exchange (e.g. some random value encrypted with the server RSA key).
+CertificateVerify: a digital signature computed by the client over all previous handshake messages. This message is sent when the server requested a client certificate, and the client complied. This is how the client proves to the server that it really "owns" the public key which is encoded in the certificate it sent.
+Then the client sends a ChangeCipherSpec message, which is not a handshake message: it has its own record type, so it will be sent in a record of its own. Its contents are purely symbolic (a single byte of value 1). This message marks the point at which the client switches to the newly negotiated cipher suite and keys. The subsequent records from the client will then be encrypted.
+
+The Finished message is a cryptographic checksum computed over all previous handshake messages (from both the client and server). Since it is emitted after the ChangeCipherSpec, it is also covered by the integrity check and the encryption. When the server receives that message and verifies its contents, it obtains a proof that it has indeed talked to the same client all along. This message protects the handshake from alterations (the attacker cannot modify the handshake messages and still get the Finished message right).
+
+The server finally responds with its own ChangeCipherSpec then Finished. At that point, the handshake is finished, and the client and server may exchange application data (in encrypted records tagged as such).
+
+To remember: the client suggests but the server chooses. The cipher suite is in the hands of the server. Courteous servers are supposed to follow the preferences of the client (if possible), but they can do otherwise and some actually do (e.g. as part of protection against BEAST).
+
+Abbreviated Handshake
+
+In the full handshake, the server sends a "session ID" (i.e. a bunch of up to 32 bytes) to the client. Later on, the client can come back and send the same session ID as part of his ClientHello. This means that the client still remembers the cipher suite and keys from the previous handshake and would like to reuse these parameters. If the server also remembers the cipher suite and keys, then it copies that specific session ID in its ServerHello, and then follows the abbreviated handshake:
+
+  Client                                                Server
+
+  ClientHello                   -------->
+                                                   ServerHello
+                                            [ChangeCipherSpec]
+                                <--------             Finished
+  [ChangeCipherSpec]
+  Finished                      -------->
+  Application Data              <------->     Application Data
+The abbreviated handshake is shorter: less messages, no asymmetric cryptography business, and, most importantly, reduced latency. Web browsers and servers do that a lot. A typical Web browser will open a SSL connection with a full handshake, then do abbreviated handshakes for all other connections to the same server: the other connections it opens in parallel, and also the subsequent connections to the same server. Indeed, typical Web servers will close connections after 15 seconds of inactivity, but they will remember sessions (the cipher suite and keys) for a lot longer (possibly for hours or even days).
+
+Key Exchange
+
+There are several key exchange algorithms which SSL can use. This is specified by the cipher suite; each key exchange algorithm works with some kinds of server public key. The most common key exchange algorithms are:
+
+RSA: the server's key is of type RSA. The client generates a random value (the "pre-master secret" of 48 bytes, out of which 46 are random) and encrypts it with the server's public key. There is no ServerKeyExchange.
+DHE_RSA: the server's key is of type RSA, but used only for signature. The actual key exchange uses Diffie-Hellman. The server sends a ServerKeyExchange message containing the DH parameters (modulus, generator) and a newly-generated DH public key; moreover, the server signs this message. The client will respond with a ClientKeyExchange message which also contains a newly-generated DH public key. The DH yields the "pre-master secret".
+DHE_DSS: like DHE_RSA, but the server has a DSS key ("DSS" is also known as "DSA"). DSS is a signature-only algorithm.
+Less commonly used key exchange algorithms include:
+
+DH: the server's key is of type Diffie-Hellman (we are talking of a certificate which contains a DH key). This used to be "popular" in an administrative way (US federal government mandated its use) when the RSA patent was still active (this was during the previous century). Despite the bureaucratic push, it was never as widely deployed as RSA.
+DH_anon: like the DHE suites, but without the signature from the server. This is a certificate-less cipher suite. By construction, it is vulnerable to Man-in-the-Middle attacks, thus very rarely enabled at all.
+PSK: pre-shared key cipher suites. The symmetric-only key exchange, building on a pre-established shared secret.
+SRP: application of the SRP protocol which is a Password Authenticated Key Exchange protocol. Client and server authenticate each other with regards to a shared secret, which can be a low-entropy password (whereas PSK requires a high-entropy shared secret). Very nifty. Not widely supported yet.
+An ephemeral RSA key: like DHE but with a newly-generated RSA key pair. Since generating RSA keys is expensive, this is not a popular option, and was specified only as part of "export" cipher suites which complied to the pre-2000 US export regulations on cryptography (i.e. RSA keys of at most 512 bits). Nobody does that nowadays.
+Variants of the DH* algorithms with elliptic curves. Very fashionable. Should become common in the future.
+Certificates and Authentication
+
+Digital certificates are vessels for asymmetric keys. They are intended to solve key distribution. Namely, the client wants to use the server's public key. The attacker will try to make the client use the attacker's public key. So the client must have a way to make sure that it is using the right key.
+
+SSL is supposed to use X.509. This is a standard for certificates. Each certificate is signed by a Certification Authority. The idea is that the client inherently knows the public keys of a handful of CA (these are the "trust anchors" or "root certificates"). With these keys, the client can verify the signature computed by a CA over a certificate which has been issued to the server. This process can be extended recursively: a CA can issue a certificate for another CA (i.e. sign the certificate structure which contains the other CA name and key). A chain of certificates beginning with a root CA and ending with the server's certificate, with intermediate CA certificates in between, each certificate being signed relatively to the public key which is encoded in the previous certificate, is called, unimaginatively, a certificate chain.
+
+So the client is supposed to do the following:
+
+Get a certificate chain ending with the server's certificate. The Certificate message from the server is supposed to contain, precisely, such a chain.
+Validate the chain, i.e. verifying all the signatures and names and the various X.509 bits. Also, the client should check revocation status of all the certificates in the chain, which is complex and heavy (Web browsers now do it, more or less, but it is a recent development).
+Verify that the intended server name is indeed written in the server's certificate. Because the client does not only want to use a validated public key, it also wants to use the public key of a specific server. See RFC 2818 for details on how this is done in a HTTPS context.
+The certification model with X.509 certificates has often been criticized, not really on technical grounds, but rather for politico-economic reasons. It concentrates validation power into the hands of a few players, who are not necessarily well-intentioned, or at least not always competent. Now and again, proposals for other systems are published (e.g. Convergence or DNSSEC) but none has gained wide acceptance (yet).
+
+For certificate-based client authentication, it is entirely up to the server to decide what to do with a client certificate (and also what to do with a client who declined to send a certificate). In the Windows/IIS/Active Directory world, a client certificate should contain an account name as a "User Principal Name" (encoded in a Subject Alt Name extension of the certificate); the server looks it up in its Active Directory server.
+
+Handshake Again
+
+Since a handshake is just some messages which are sent as records with the current encryption/compression conventions, nothing theoretically prevents a SSL client and server from doing a second handshake within an established SSL connection. And, indeed, it is supported and it happens in practice.
+
+At any time, the client or the server can initiate a new handshake (the server can send a HelloRequest message to trigger it; the client just sends a ClientHello). A typical situation is the following:
+
+An HTTPS server is configured to listen to SSL requests.
+A client connects and a handshake is performed.
+Once the handshake is done, the client sends its "applicative data", which consists of a HTTP request. At that point (and at that point only), the server learns the target path. Up to that point, the URL which the client wishes to reach was unknown to the server (the server might have been made aware of the target server name through a Server Name Indication SSL extension, but this does not include the path).
+Upon seeing the path, the server may learn that this is for a part of its data which is supposed to be accessed only by clients authenticated with certificates. But the server did not ask for a client certificate in the handshake (in particular because not-so-old Web browsers displayed freakish popups when asked for a certificate, in particular if they did not have one, so a server would refrain from asking a certificate if it did not have good reason to believe that the client has one and knows how to use it).
+Therefore, the server triggers a new handshake, this time requesting a certificate.
+There is an interesting weakness in the situation I just described; see RFC 5746 for a workaround. In a conceptual way, SSL transfers security characteristics only in the "forward" way. When doing a new handshake, whatever could be known about the client before the new handshake is still valid after (e.g. if the client had sent a good username+password within the tunnel) but not the other way round. In the situation above, the first HTTP request which was received before the new handshake is not covered by the certificate-based authentication of the second handshake, and it would have been chosen by he attacker ! Unfortunately, some Web servers just assumed that the client authentication from the second handshake extended to what was sent before that second handshake, and it allowed some nasty tricks from the attacker. RFC 5746 attempts at fixing that.
+
+Alerts
+
+Alert messages are just warning and error messages. They are rather uninteresting except when they could be subverted from some attacks (see later on).
+
+There is an important alert message, called close_notify: it is a message which the client or the server sends when it wishes to close the connection. Upon receiving this message, the server or client must also respond with a close_notify and then consider the tunnel to be closed (but the session is still valid, and can be reused in an ulterior abbreviated handshake). The interesting part is that these alert messages are, like all other records, protected by the encryption and MAC. Thus, the connection closure is covered by the cryptographic umbrella.
+
+This is important in the context of (old) HTTP, where some data can be sent by the server without an explicit "content-length": the data extends until the end of the transport stream. Old HTTP with SSLv2 (which did not have the close_notify) allowed an attacker to force a connection close (at the TCP level) which the client would have taken for a normal close; thus, the attacker could truncate the data without being caught. This is one of the problems with SSLv2 (arguably, the worst) and SSLv3 fixes it. Note that "modern" HTTP uses "Content-Length" headers and/or chunked encoding, which is not vulnerable to such truncation, even if the SSL layer allowed it. Still, it is nice to know that SSL offers protection on closure events.
+
+Attacks
+
+There is a limit on Stack Exchange answer length, so the description of some attacks on SSL will be in another answer (besides, I have some pancakes to cook). Stay tuned.
+
+After the lengthy presentation of SSL in the previous answer, let's go with the fun stuff, namely:
+
+Attacks on SSL
+
+There have been many attacks on SSL, some building on implementation errors, others on true protocol weaknesses.
+
+One must remember that while SSL is one of the most attacked protocols (since it is very high profile: a successful application to SSL looks very nice in the abstract of a research article), SSL is also one of the most repaired protocols. It is to be considered to be robust precisely because all known ways to attack transport protocols have been tried on SSL, and SSL has been patched where appropriate.
+
+Version Rollback
+
+In the early days of SSLv3, SSLv2 was still widely used, and therefore clients were commonly sending SSLv2-compatible ClientHello messages, which merely indicated that SSLv3 was supported as well; the server would then take the hint and respond in SSLv3+ dialect (see appendix E of RFC 2246 for details). Since SSLv2 had weaknesses, it was in the best interest of the attacker to arrange for a client and server, both knowing SSLv3, to nonetheless talk with each other using SSLv2. This is called a version rollback attack. The concept formally extends to later versions as well.
+
+Kludges have been added to detect rollback attempts. For the back-to-SSLv2 rollbacks, a client who knows SSLv3+ should employ a special padding for the RSA encryption step (SSLv2 supported only RSA-based key exchange): in PKCS#1, the data which is to be encrypted is supposed to be padded with a number of random bytes; an SSLv3-aware client is then supposed to set each of the last eight padding bytes to the fixed value 0x03. The server then checks these bytes; if the eight 0x03 are found, then a rollback is most probably attempted, and the server rejects the attempt (an SSLv2-only client has probability only 255-8 to use such padding bytes out of sheer lack of luck, so false positives occur at a negligible rate).
+
+For rollbacks to an old version of SSL/TLS, but not older than SSLv3, another kludge was added: in the pre-master secret of 48 bytes which the client encrypts with the server's RSA key, the first two bytes are not random, but should equal the "maximum supported protocol version" which the client wrote first in its ClientHello message. Unfortunately, some clients got it wrong, and this kludge works only with a RSA-based key exchange, so the protection against rollback is very limited there. Fortunately, SSLv3+ has another, much more powerful protection against rollbacks, which is that the handshake messages are hashed together when the Finished messages are built. This protects against rollbacks, unless the "old version" would be so thoroughly weak that the attacker could totally break the whole encryption before the end of the handshake itself. This has not happened yet (SSLv3 is still reasonably robust).
+
+Weak Cipher Suites
+
+Some of the standard cipher suites are intentionally weak in some way. There are:
+
+some cipher suites with no encryption at all, only integrity check, e.g. TLS_RSA_WITH_NULL_SHA;
+some cipher suites with 40-bit encryption, such as TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5 (cipher suites meant to comply with the stringent US export rules from last century -- these regulations have been mostly lifted at the end of the Bill Clinton era);
+some cipher suites with 56-bit encryption, such as TLS_RSA_WITH_DES_CBC_SHA. 56-bit DES is breakable with existing technology, but that's still a bit hard for an amateur (even a bored student with access to a few hundred university machines), so I tend to qualify 56-bit DES as "medium strength".
+This opens the road to a variant of version rollback attacks, in which the attacker forces client and server to agree on a weak cipher suite, the idea being that the attacker modifies the list of cipher suites announced by the client. This is workable for the attacker if the selected cipher suite is so weak that he can break it in order to recompute an apparently correct Finished message. Actually, the MAC used in SSLv3+ (even when based on MD5) is robust enough to prevent that. So no actual worry here. Also, my opinion is that any real weakness here is when a client or a server accepts to use a weak cipher suite at all.
+
+By default, modern Web browsers do not allow the use of such weak cipher suites.
+
+Private Key Theft
+
+If a SSL connection uses RSA key exchange, and an attacker keeps a copy of the records, and then later on (possibly months after, possibly by inspecting all backups on discarded hard disks or tapes) obtains a copy of the private key, then he can unravel the handshake and decrypt the data.
+
+Perfect Forward Secrecy is about countering this "later on". You get it by using the DHE cipher suites. With a DHE cipher suite, the actual private key which could be used to unravel the handshake is the ephemeral Diffie-Hellman key, not the server's RSA (or DSS) private key. Being ephemeral, it existed only in RAM, and was never written to the hard disk; as such, it should be much more resilient to ulterior theft.
+
+So the lesson is: as a rule, try to use a DHE cipher suite if possible. You should still mind your backups and not let your private key leak, but, at least, the DHE suites make such leakage a bit less of an issue, especially if it happens after the end of the key lifetime (i.e. the corresponding certificate is no longer valid).
+
+Certificate Woes
+
+The whole certificate business is a sore spot in SSL.
+
+Technically, SSL is quite independent from X.509. The certificate chains are exchanged as opaque blobs. At some point, the client must use the server's public key, but the client is free to "know" that key in any way that it sees fit. In some specific scenarios where SSL can be used, the client already knows the server's public key (hardcoded in the code) and just ignores the certificate sent by the server. Nevertheless, in the common case of HTTPS, the client does validation of the server's certificate chain as described in X.509 (read it at the expense of your sanity; you have been warned).
+
+This yields a number of attack vectors, for instance:
+
+Validation entails verifying that the certificates are still valid at the current date. How does the client machine knows the current date ? By its internal clock, and possibly by talking with NTP servers (in a quite unprotected way !). The client could be off by several minutes, hours, days, even years (I have seen it), and, to some extent, a powerful attacker could force it by fiddling with NTP messages. This would allow the attacker to use obsolete certificates which have been revoked years ago. Note a fun fact: the SSL "client random" and "server random" should contain 28 random bytes and the local date and time (over 4 bytes). This inclusion of time was meant to be part of a workaround against time-based attacks. I am not aware of any implementation which really checks it.
+Up to circa 2003, the implementation of certificate validation in Internet Explorer / Windows did not process the "Basic Constraints" extension properly. The net effect was that anybody with a 100€ certificate could act as a CA and issue "certificates" with arbitrarily chosen name and keys.
+X.509 includes a damage containment feature called revocation: this is about publishing a list of banished certificates, which look good, cryptographically speaking, but should not be trusted (e.g. their private key was stolen, or they contain an erroneous name). Revocation works only as far as the involved parties (i.e. browsers) accept to download mammoth revocation lists (which can be several megabytes long !) or to contact OCSP servers. Modern browsers now do it, but a bit reluctantly, and many will accept to connect anyway if they could not obtain revocation status information in a timely fashion (because the human user is not patient). The overall situation improves over the years, but quite slowly.
+Some root CA did commit some blunders in the past (e.g. Comodo and DigiNotar). This resulted in issuance of fake certificates (the name is www.microsoft.com but the private key is not in the hand of Microsoft at all...). These blunders were discovered, and the certificates revoked, but it still raises some uncomfortable questions (e.g. are there other CA who had such problems but did not reveal them, or, even worse, never noticed them ?).
+X.509 is a very complex assembly of algorithms, technologies, specifications and committees, and it is very hard to get it right. Trying to decode X.509 certificates "by hand" in an unprotected programming language like C is an easy way to obtain buffer overflows.
+
+Bleichenbacher Attacks
+
+Daniel Bleichenbacher found in 1998 a nice attack against RSA. When you encrypt a piece of data with RSA (as occurs for the ClientKeyExchange message in SSL), the data which is to be encrypted must be padded in order to make a byte sequence of the same length as the RSA modulus. The padding consists mostly of random bytes, but there is a bit of structure (notably, the first two bytes after padding must be 0x00 0x02).
+
+Upon decryption (on the server, then), the padding must be found and removed. It so happens that, at that time, when the server decrypted but obtained an invalid padding (the 0x00 0x02 bytes were not there), then it reported it with an alert message (as per the SSL specification), whereas a valid padding resulted in the server using the seemingly decrypted value and keeping on with the handshake.
+
+This kind of thing is known as a padding oracle. It allows an attacker to send an arbitrary sequence of bytes as if it was an encrypted pre-master secret, and know whether the decryption of that sequence would yield a valid padding or not. That's a mere 1-bit information, but it is sufficient to recover the private key with a few millions of requests (with cunningly crafted "encrypted" strings).
+
+Workaround: when the decryption results in an invalid padding, the server keeps on using a random pre-master secret. The handshake will then fail later on, with the Finished messages. All current implementations of SSL do that.
+
+The Padding Oracle Strikes Back
+
+Another area where a padding oracle was found is in the records themselves. Consider CBC encryption and HMAC. The data to encrypt is first MACed, then the result is encrypted. With CBC encryption, the data to be encrypted must have a length which is a multiple of the block size (8 bytes for 3DES, 16 bytes for AES). So some padding is applied, with some structure.
+
+At that time (the attack was found out by Vaudenay in 2002), when a SSL implementation was processing a received record, it returned distinct alert messages for these two conditions:
+
+Upon decryption, no valid padding structure was found.
+Upon decryption, a valid padding was found, but then the MAC was verified and it did not match.
+This is a padding oracle, and that can be used to recover some encrypted data. It requires an active attacker, but it is not that hard. Vaudenay implemented it, and it was extended to the case where a modified SSL implementation returned the same alert message in both case, but took longer to return in the second case, because of the time taken to recompute the MAC (a nice demonstration of a timing attack).
+
+Because people never learn, the Microsoft implementation of SSL used in ASP.NET was still unpatched as of 2010 (eight years later !) when Rizzo and Duong reimplemented the Vaudenay attack and built a demonstration which recovered HTTP cookies.
+
+See this page for some pointers. One must note that if SSL had used encrypt-then-MAC, such problems would have been avoided (the faulty records would have been rejected at the MAC level, before even considering decryption).
+
+BEAST
+
+The BEAST attack is again from Duong and Rizzo, and, again, it is a remake of an older attack (from Philip Rogaway in 2002). To get the idea, consider CBC. In this mode of operation, each block of data is first XORed with the result of the encryption of the previous block; and that's the result of the XOR which is encrypted. This is done in order to "randomize" the blocks and to avoid the leaks which are found with ECB mode. Since the first block does not have a "previous" block, there must be an Initialization Vector (IV), which plays the role of previous block for the first block.
+
+It turns out that if an attacker can control part of the data which is to be encrypted, and also can predict the IV which will be used, then he can turn the encryption machine into yet another decryption oracle and use it to recover some other encrypted data (that the attacker does not choose). However, in SSLv3 and TLS 1.0, the attacker can predict the IV for a record: it is the last block of the previous record ! So the attacker must be able to send some data in the stream, in order to "push" the target data, at a point where the implementation built and sent the previous record (typically when 16 kB worth of data have been accumulated), but did not begin to build the next one.
+
+TLS 1.1+ is protected against that, because in TLS 1.1 (and subsequent versions), a per-record random IV is used. For SSLv3 and TLS 1.0, a workaround is to send zero-length records: that is, records with a payload of length zero -- but with a MAC and padding and encryption, and the MAC is computed from a secret key and over the sequence number, so this plays the role of a random number generator. Unfortunately, IE 6.0 chokes on zero-length records. Other strategies involve a 1/n-1 split (a n bytes record is sent as two records, one with a single byte of payload, the other with the remaining n-1).
+
+Another workaround is to force the use of a non-CBC cipher suite when possible -- the server selects an RC4-based cipher suite if there is one in the list of cipher suites sent by the client, even if the client would have preferred a CBC-based cipher suite. This tool can tell you if a given server apparently acts like that. (Note: BEAST is an attack on the client, but, by selecting an RC4 cipher suite, the server can protect a careless client.)
+
+See this page for some pointers. While TLS 1.1 is from 2006, the BEAST attack may force the browser vendors to finally upgrade.
+
+CRIME
+
+As for any Hollywood franchise, Duong and Rizzo published in 2012 the sequel of the sequel. CRIME exploits a leakage which was theorized years ago, but was only vividly demonstrated in the demonstration they recently published. CRIME exploits compression, in the same setup as the BEAST attack (attacker can send some data of its own in a SSL connection, where interesting target data such as a cookie is also sent). Roughly speaking, the attacker puts in its data a potential value for the target string, and, if it matches, compression makes the resulting records shorter. See this question for a (pre-cognitive) analysis.
+
+CRIME is avoided by not using TLS-level compression at all, which is what browsers now do. Internet Explorer and IIS never implemented TLS-level compression in the first place (for once, sloppiness saved the day); Firefox and Chrome implemented it, and deactivated this summer (they were forewarned by Duong and Rizzo, who are quite responsible in their activity).
+
+CRIME shows why I wrote, near the beginning of my SSL explanations:
+
+SSL fulfills these goals to a large (but not absolute) extent.
+Indeed, encryption leaks the length of the encrypted data. There is no known good solution against that. And length alone can reveal a lot of things. For instance, when observing with a network monitor a SSL connection, we can spot the "extra handshakes" within the stream (because the first byte of each record identifies the type of data in the record, and it is not encrypted); with the lengths of the records, it is pretty easy to see whether the client provided a certificate or not.
+
+Poodle
+
+(edit: this section has been added on 2014-10-15)
+
+The "Poodle" attack exploits a flaw that is specific to SSL 3.0 with CBC-based cipher suites. It relies on an often overlooked feature of SSL 3.0: most padding bytes are ignored. In TLS 1.0, the padding (bytes added in a record to make the length compatible with CBC encryption, which only processes full blocks) is fully specified; all the bytes must have a specific value and the recipient checks that. In SSL 3.0, padding byte contents are ignored, which allows an attacker to perform alterations that go mostly unnoticed. The alteration impacts only non-applicative data, but can be used as a decryption oracle in a way vaguely similar to BEAST.
+
+More details can be read in this answer.
+
+The Future
+
+Humans never learn. There is a lot of pressure to add nifty extensions to SSL for a lot of reasons which always look good at the beginning, but can induce extra problems.
+
+Consider, for instance, SSL FalseStart. Mainly, this is about the client sending its application data right after having sent its Finished message (in a full handshake), without waiting for the Finished message from the server. This reduces latency, which is good and well-intentioned. However, it changes the security situation: before having received the Finished message from the server, the latter is only implicitly authenticated (the client has no proof yet that the intended server was really involved at all; it just knows that whatever it sends will be readable only by the intended server). This can have impacts; for instance, an attacker could emulate the server up to that point and force, e.g., the client to use a CBC-based cipher suite or TLS compression. Therefore, if a client implements FalseStart, then it decreases effectiveness of protection measures against BEAST and CRIME, as could otherwise be enforced by the server.
+
+(Google disabled FalseStart this spring, apparently because of compatibility issues with some servers. Anyway, the "30% latency reduction" looked weird, because FalseStart would have some influence only on full handshakes, not abbreviated handshakes, so I don't believe in these alleged benefits; not to that magnitude, at least.)

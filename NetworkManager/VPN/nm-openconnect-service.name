@@ -1,0 +1,14 @@
+# This file is obsoleted by a file in /usr/lib/NetworkManager/VPN
+
+[VPN Connection]
+name=openconnect
+service=org.freedesktop.NetworkManager.openconnect
+program=/usr/lib/networkmanager/nm-openconnect-service
+supports-multiple-connections=true
+
+[libnm]
+plugin=/usr/lib/NetworkManager/libnm-vpn-plugin-openconnect.so
+
+[GNOME]
+auth-dialog=/usr/lib/networkmanager/nm-openconnect-auth-dialog
+properties=/usr/lib/NetworkManager/libnm-openconnect-properties

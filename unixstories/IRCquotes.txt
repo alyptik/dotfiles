@@ -1,0 +1,1744 @@
+In #linux (Aitvaras):
+<par> hm.. galetu skaipas feature'a padaryt, kad uzhsidedi koki laikina ar permanent notify, kada konkretus zmogus ateis online. Nereiktu kas 20 minuciu vis ziuret :)
+<^la> yra toks fyceras.
+<^la> parasai kontaktui "Ei, gaidį"
+<^la> ir kai jis bus online - labai tiketina, kad gausi atsakyma atgal
+%
+In ##linux (freenode):
+<MBD123> How do you run a Perl script in Ubuntu?
+<Padhu1> MBD123: py prel.py
+<MBD123> Padhu1: You said py prel.py and I thought you meant that I should use Python instead of Perl
+<Padhu1> python is an program and perl is an scripting language
+%
+In ##linux (freenode):
+<mesa_booger> heck i've even run X on 4MB with 1-bit colour
+<mamont> I've done it with 0.5-bit color
+%
+In ##linux (freenode):
+<xray7224> hey i want to know what programming language pidgin is writen in
+<grawity> xray7224: I guess it's C++, let me check
+<xray7224> =[ damn i didnt want it to be c++
+<grawity> xray7224: why?
+<xray7224> i wanted it to by python
+<darkrain42> Pidgin is written in C
+<xray7224> right ok thanks
+<xray7224> and i wanted it to be python because im learning python
+%
+In ##linux (freenode):
+<untermensch> proq: you can only push files with scp.
+<llutz> untermensch: wrong
+<untermensch> llutz: what?? you can grab??
+<untermensch> holy wow..
+%
+<canthus13> That was bizarre.  For 5 minutes, all the Motorola DCX3400 boxes went to black-and-white, and displayed the word 'NEAT' in giant red letters.
+%
+In #defocus (freenode):
+<+Computer> dude so i locked my keys in my car the other day at school.. asked this girl if i could borrow her phone (because my phone was locked in my car). she overheard me asking someone to come help me get my car unlocked, and is like "hey i have all that stuff in my car dont worry about it"
+<+Computer> this crazy tatooed girl has this car-theft kit in her back seatt
+<+Computer> i dont even go with her, she asks what kind of car i have and generally where it is, and says BRB
+<+Computer> comes back and is like hey its open
+<+Computer> and im like what? are you sure it was the right car?
+<+Computer> she looks at me like "oh crap, youre right"
+<+Computer> i should have got her phone number or something
+%
+In #defocus (freenode):
+<DuClare> The presence of tech people is what made freenode really different
+<DuClare> But these days I'm on #freenode helping people buy a dog kennel because they can't comprehend inches and feet
+%
+In ##linux (freenode):
+<LordFrith> If you need floating point math in your script, you need to begin writing in a complete language.
+<grawity> Speaking of which. Is it bad when half of my script is bash, the other half is Perl?
+<lautriv> grawity, as long as the third half is NOT VB, it's ok.
+<grawity> Halves usually come in pairs of two.
+<LordFrith> Someone programming in VB might not realize that.
+%
+<dug> named.conf: recursion redefined near recursion
+%
+In #xkcd (Foonetic):
+<defbase> stop making bucket remember my qoteis
+%
+In #xkcd (Foonetic):
+<nathan7> Bucket: tech support is <reply> ME NOT KNOW. I JUST CLEANER.
+%
+<@ProTON> gavau jemailą
+<@ProTON> nuo Kristina [monika@domenas.lt]
+%
+<drbob> When it comes down to it, "freedom" only exists for those with the largest guns.
+%
+<kaeser_notebook> WHEN WATCHING PORN, NEVER TRUST ACPI
+<kaeser_notebook> or the consequences could be disastrous
+<PingFloyd> kaeser_notebook: what does acpi have to do with porn?
+<kaeser_notebook> you think you downed the volume, when in fact is in 100%
+%
+In #clueirc (Cluenet):
+<niekie> nathan: I accidentally just pizza'd your house.
+<niekie> Sorry :(
+<niekie> I wanted to place an order and this stupid order thing selected the last address I ordered from.
+<niekie> Anyway, enjoy the pizza.
+%
+In #irssi (freenode):
+<+rudi_s> You should use ssl_verify, otherwise using ssl doesn't matter.
+<+billnye> hey baby, I've got Alice and Carol back at my apartment, and I'm looking to play "Man-in-the-middle", you wanna join in?
+%
+In #xkcd (Foonetic):
+<PSOAddict> my mom installed a motherfucing chandelier in the garage
+<@snark> as mothers get older, they sometimes want more mother-fucking appliances
+<@snark> a chandelier is quite unusual though
+%
+In #xkcd (Foonetic):
+<Walther> hmh, i have to say IRC is quite odd
+<Walther> the first word i read after joining, was penis. Again.
+---
+In #xkcd, a few years later:
+18:48 (mrkman) Joker: you probably just enjoy being quoted talking about penis to much
+18:48 (Walrushead) penis jokes are prehistoric though
+...
+18:53 (Bucket) <Walther> the first word i read after joining, was penis. Again.
+%
+<Seth> A girl's thighs can be a powerful weapon, for good or for ill
+%
+<alexandrite> My uncle died of backslashitis.  It was tragic.  He tried to escape his grave
+%
+<Daevien> *sigh* it's gonna be a strange day today. do backup, open random & innocent sounding filename as test to make sure the backup worked. find naked picture of computer owner instead of the innocent file
+<Daevien> though she wasn't bad looking. least it wasn't a scary looking naked dude, that would be much worse for first thing on monday (for me anyway, maybe osme of you like scary naked dudes)
+%
+In ##linux (freenode):
+<hunterm> oh guies, i'm down to a 11 second boot time
+<Wvm> Boot?  What is this deprecated action you speak of?
+<Wvm> Does it involve a shoe?  :P
+%
+In ##linux (freenode):
+(RealEyes) anyone ever have arch freeze on them?
+(grawity) RealEyes: Yes.
+(RealEyes) grawity: why did it do that?
+(grawity) RealEyes: Let's see... Bugs in systemd, bugs in kernel, bugs in USB devices, overheating, Xorg misconfiguration, systemd misconfiguration, accidental forkbombing, VirtualBox bugs, bugs in coLinux, intentional forkbombing, NFS fuckups, scratched LiveCD, nvidia driver #96 crashes, lack of suspend support on old hardware, coffee in hard disk and motherboard, and a few kexec mishaps.
+%
+In #xkcd (Foonetic) ~15 min after quantum mechanics discussion:
+(DerpNauce) I love how #xkcd-masturbation is completely empty
+(Random832) wait
+(Random832) how did you manage to observe a channel in a completely empty state
+(ellipsis) aaaand we're back to quantum mechanics, awesome
+%
+(rickest) reinventing the wheel is exactly what allows us to travel 80mph without even feeling it.  the original wheel fell apart at about 5mph after 100 yards. now they're rubber, self-healing, last 4000 times longer.  whoever intended the phrase "you're reinventing the wheel" to be an insult was an idiot.
+%
+(nathan28) you can't spell dumb without dwm
+%
+In #systemd (freenode):
+(thrice`) k-s, seriously speaking, are there any e17 release plans on the horizon?
+(k-s) thrice`: there is, but nobody clearly understand raster on that
+(k-s) thrice`: when it's good enough and we could just releae
+(k-s) thrice`: he enters "madman" mode and starts committing like crazy "missign things for release", then things get unstable
+(k-s) thrice`: then we need to wait to stablize... and no releases. When we push releases, cycle repeats :-(
+%
+In #archlinux (freenode):
+<King_Ozzy> COMMENCE THE FAPPING
+%
+In #archlinux (freenode):
+<Cloudef> Time to touch myself while reading dmesg.
+%
+In #archlinux (freenode):
+<falconindy> look at --debug output then
+<dspider> look at what, exactly?
+<falconindy> there's a lot to read
+<falconindy> start at the top
+<falconindy> use that big beautiful head that your mother squeezed out one fateful day several years ago
+%
+In #archlinux (freenode):
+<Tucos> falconindy: your handy scripts aren't doing a particularly good job at scaring the nubs away :p
+<falconindy> Tucos: dude, my documentation was FLAWLESS some douchecanoe got to it
+%
+<Tito_> Splitnooooode \o/
+<faen> well, it's not called freeconnectedgraph, is it
+%
+In #archlinux (freenode):
+<yorick> gtmanfred: does it do fingerprints too?
+<yorick> gtmanfred: I have a fingerprint reader that nothing uses
+<gtmanfred> oh, no
+<gtmanfred> yorick: pacman-key --finger daniel\ wallace
+<gtmanfred> heh
+<gtmanfred> that might not work on the pacman in repos
+<worxed> gtmanfred: did you just give him the finger through pacman? :D
+<gtmanfred> worxed: no, but my fingerprint is on his computer
+<worxed> gtmanfred: stop fingering other peoples computers man
+<worxed> its not nice :/
+<JCDenton> Yes, finger me ins-
+<JCDenton> nevermind
+<JCDenton> nothing.
+<gtmanfred> >.> nothing to see here
+<gtmanfred> !channelsex
+<phrik> pks asks ScottG to unzip his pants in a spicy private msg
+<worxed> everyone /cls :P
+%
+<fulltang> that's why I use a eunuchs-based OS. balls are bloat
+%
+<RainbowDashh> set phasers to kline.
+%
+In #atheme (StaticBox):
+<@nenolod> remember when rob levin klined *@* on freenode?
+<@nenolod> it was great
+<alyxkitty> ..LOL what
+<phlux> rip
+<alyxkitty> nenolod: lilo klined *@*?
+<@nenolod> not exactly.
+<@nenolod> he klined * @*.blah.com
+<alyxkitty> tell us this story. :D
+<alyxkitty> ...oh god.
+<alyxkitty> xD
+<@nenolod> but because asuffield is an idiot
+<@nenolod> and used sscanf()
+<@nenolod> specifically
+<@nenolod> %s@%s
+<@nenolod> this somehow got translated into *@*
+<@nenolod> actually, more specifically
+<@nenolod> it got translated into *@0.0.0.0/0
+<alyxkitty> how the fuck.
+<@nenolod> dancer-ircd mannnnn
+<alyxkitty> nenolod: are the developers still on IRC?
+<alyxkitty> I need to inquire as to where they bought their drugs.
+<@nenolod> alyxkitty: yes, feel free to talk to jilles about dancer-ircd/hyperion-ircd
+<@nenolod> :)
+<@nenolod> (that particular bug came from andrew suffield though)
+<@nenolod> i know this, because rob called me at whatever unforsaken hour in the morning it was
+<@nenolod> i was like 16 at the time
+<@nenolod> "OMG HOW DO I FIX THIS SHIT YOU'RE THE ONLY ONE I KNOW WHO KNOWS ANYTHING ABOUT IRCD THAT IS UP AT THIS HOUR"
+<alyxkitty> ...O_o
+<alyxkitty> LOL
+<@nenolod> lolz
+<@nenolod> anyway, that incident is why charybdis has what might be referred to as the 'lilo-guard'
+<@nenolod> e.g. you have to have some level of mask complexity in k-lines
+%
+In #freenode:
+<newcomer[wisam]> The thing is, I've been using freenode for 9 years. It's totally different than the other networks where you get asl'd the moment you join a channel. Tech oriented and all. A few months ago I stumbled upon the Syrian channel and it was like a scary dark area in freenode. I've never seen much trollig, swearing and immaturity on freenode before.
+%
+In #archlinux (freenode):
+<d_garbage> Let me be unusually plain for a moment. There are about a half a dozen people on this channel who make it work properly. Whatever else you might think this is the case, and is true for most channels in my experience. the exact half-dozen changes, but the number doesn't
+<d_garbage> so more power to the current half-dozen , i say
+%
+In #git (freenode):
+<aeontech> ojacobson: i'm surprised you're still helping after he called you an asshole for no reason, you're a kinder person than me :D
+<ojacobson> aeontech: less "kinder"
+<ojacobson> more "selectively abusive"
+<SJS> maybe 'asshole' is considered a title worthy of high esteem.
+<ojacobson> well, they get rid of shit
+%
+<+Erik> oh yeah, isp seems to be having routing problems recently as they're adding peers
+<+Cronus> peer pressure
+%
+In #unreal-support (UnrealIRCd):
+<@n0kS> then someone should contact cards@420-hightimes.com and tell him to fix his module
+<+nenolod> 420-hightimes.com doesn't really inspire confidence in the 'competent C coder' department :/
+%
+In #archlinux (freenode):
+<halosghost> if you took udev and wrote some… interesting rules, and then coupled it with a couple other things, you could use it as a web browser
+%
+In #archlinux (freenode):
+<grawity> Tom^: btw, could you pastebin `gdbus introspect -e -d org.mpris.MediaPlayer2.spotify -o /org/mpris/MediaPlayer2`
+<Tom^> grawity http://sprunge.us/NOgj
+<grawity> Yeah, spotify sucks at DBus.
+ * grawity installs amarok to check if it's a Qt thing or a Spotify thing
+ * Earnestly just thinks grawity is trying to rationalise his love for amarok
+<Tom^> agreed
+<buhman> ^ probably
+<grawity> wat
+<buhman> ^ denial
+<grawity> wat
+<Tom^> ^ anger
+%
+In #gnome-hackers (GIMPnet):
+ * @desrt adds "maintainership" to the "death and taxes" list
+<@mclasen> desrt: I think going through the google blackhole might purge you of all that - if you come out at the other end; holographic principle, etc...
+ * @desrt ponders swamp man
+<@desrt> if someone disappears from the free software world and at the same moment some other exact same arrangement of atoms appears inside of google, is it really the same person?
+%
+In #freenode:
+<zyngawow> Where can I ask how much to charge for developing a programm?
+<+jbroome> if you're actually from zynga, "food and water" is probably a good range to start with right now
+%
+In #archers (freenode):
+<sl> dmca is crap, also it's not up to jimbob joe fucktard "el capitan de los tubes internetos" to enforce it
+%
+In #archers (freenode):
+<thestinger> lol @ the graysky TU application thread
+<thestinger>  I certainly didn't see this coming: I can't believe so many TUs voted
+<thestinger>  "NO" without expressing the slightest objection or concern in the
+<thestinger>  application thread, except for (extremely influential, apparently)
+<thestinger>  Dave Reisner.
+%
+17:45 <Sebastien> why use google
+17:45 <Sebastien> this would make irc obsolete
+17:45 <Sebastien> i come here to talk to people, not to search on the web
+…
+18:13 <hXm> how to use a proxy?
+18:47 <Sebastien> hXm google is your friend.
+%
+In #archers (freenode):
+(thestinger) vegai: bors is actually kind of terrifying, now that I think about it
+(thestinger) he has commit access to his own codebase
+(thestinger) this is how skynet happens
+%
+In #archlinux (freenode):
+ ~ Mode #archlinux [-o Tom^] by ChanServ
+ ~ Mode #archlinux [-o sudokode] by ChanServ
+<+sudokode> pfft
+ ~ Mode #archlinux [-v sudokode] by ChanServ
+<+Tom^> I AM VICTORIOUS
+ ~ Mode #archlinux [+o Tom^] by ChanServ
+<grawity> now you have an asshat
+<@Tom^> no i got an murderhat
+<@Tom^> TIME TO MURDER
+ « Tom^ has kicked Tom^ (Tom^)
+%
+In #hexchat (freenode):
+00:04  * tophalf01 is away: I'm not here right now. Don't send me any messages because you won't get a response. Why the fuck do you even want to talk to me anyway? WHAT ARE YOU, A FUCKING SPY? FUCK OFF.
+00:19 <hexbot> hexchat/hexchat (in master): TingPing committed Remove away announce http://ur1.ca/dkyxg
+%
+In #irchelp:
+<nfrmatk> ok, irc is officially surreal. it's like any other chat service i've ever used on steroids.
+%
+In #archers (freenode)
+(falconindy) best internal bug ever: "So, I _may_ have left a car parked at 900 for the past 3 years."
+(falconindy) pretty sure this eclipses the guy who complained about the cafe named "fork()" lacking forks.
+(falconindy) the best part is -- the car was moved because they repaved the lot where he left it
+(falconindy) and it's still there
+%
+In #znc (freenode):
+([Ben]) I've also wondered what the point is in saying Debian Stable repositories have 0.206 in the topic.
+(grawity) [Ben]: the emphasis is on "1 year old"
+(DarthGandalf) 1 year is not so much, but previous stable was older
+(DarthGandalf) Debian has fixed that by releasing new debian
+%
+In #git (freenode):
+(Adlai) `rebase -i' has rocked my world so hard, so many times
+(Adlai) I think I'll name my firstborn child "Rebase --Interactive Chandrasekhar"
+%
+In #ircv3 (StaticBox):
+(Aerdan) but honestly if you're going to use a crazy Qt client, KVirc is superior.
+(Aerdan) even if KVS /is/ fucking Cthulhu.
+(Aerdan) "KVS is the KVirc Scripting language. It was inspired by C++,sh,perl,php and mIrc scripting language implementations."
+%
+In #freenode:
+(+jtrucks) we're all ascii dreams to me.
+%
+In #archers (freenode):
+(falconindy) logind has a non-dbus interface
+(thestinger) falconindy: where?
+(falconindy) /usr/include/systemd/sd-login.h
+(thestinger) jesus fucking lennart, thank you
+%
+In #archlinux-offtopic (freenode):
+(mar77i) top centos faq question: WHY DOES CENTOS EXIST?
+%
+(kaniini) i think in an ideal world, all software should be free software
+(kaniini) on the other hand... i also like getting laid
+%
+In #fredrin (freenode):
+(DarkoNeko) ...now that I think about it, in Code Geass, the world was divided by Zero
+(DarkoNeko) *proud*
+%
+In #xkcd (Foonetic):
+(Althir) And when you stare at the mibbit, the mibbit, too, stares at you.
+%
+(samruger) HI!
+(yoshi314) samruger: WELCOME, HUMAN.
+(yoshi314) samruger: DISENGAGE THE CAPSLOCK AND NO CASUALTIES WILL BE INFLICTED
+%
+In #freenode:
+(nitrix) +b was on the channel, +q seems to send on the server window.
+(nitrix) Strange, thanks.
+(spb) especially the bathroom window; people often break in through those if you leave them unlocked
+(+tt) oh man, you guys
+(+tt) I have the best idea for a serial crime
+(+tt) I am going to break into people's bathroom windows, flip the toilet paper over so it feeds the other way, and leave.
+%
+In #fredrin (freenode):
+(@pirokoro) klange: http://www.megatokyo.com/scr33n/scr33n_2013-09-04_72222.png
+(@klange) <3
+(projectmars) Mugi mugimugimugimugimugi
+(hoolibas) I can see Mugi asking "Yer gunna what me?"
+(@klange) All night long.
+(projectmars) And then the next face is gonna be sheer contempt: "Yer gonna lose limbs boy."
+(@klange) Worth it.
+(@klange) Death by snu-snu.
+%
+In #inspircd (ChatSpike):
+(NEone) just wanted to align the settings of services (Anope) with the length inspircd supports. Never said I need more than 64
+(+grawity) hm, so Anope has a setting for that
+(kaniini) whyyyyyyyyyyy
+(kaniini) that is the stupidest thing i have ever heard of
+(NEone) yes it has. and it defaults to 64, which is fine I guess
+(kaniini) lets file this under bad settings
+(+grawity) oh, apparently nefarious allows 75
+(kaniini) HURP A DUR
+(kaniini) ...are you for fucking real
+(kaniini) hang on.
+(kaniini) i'll be right back.
+%
+In #archlinux-offtopic (freenode):
+(dowaat) carharttjimmy:
+(carharttjimmy) dowaat:
+(dagle) Now kiss.
+%
+In #archlinux (freenode):
+(vodik) http://ix.io/77J
+(vodik) do i win?
+(vodik) i use systemd-git on my desktop
+(vodik) + all those
+(grawity) vodik: not even close http://ix.io/77K
+(vodik) grawity: nice
+(zendeavor) grawity: you have a problem dude
+(grawity) zendeavor: no I don't, it was fixed in today's -git
+%
+In #freenode:
+ * propheticsquiddy is away: I'm busy
+(+LoRez) propheticsquiddy: turn that off.
+(propheticsquiddy) k one sec, sry bout that
+(Eren97) not allowed on freenode?
+(+LoRez) public away messages are just obnoxious and not very useful in general.  I doubt 1000+ people in this channel alone need to know that he's away and/or back
+(+LoRez) in some channels it'll get you outright banned
+(stan404) on facebook you'll get a 'like'
+%
+(tacowho) who killed the chat
+(HisaoNakai) tacowho: Curiosity.
+%
+In #charybdis (StaticBox):
+21:32 --> href (~href@1169wgv.random.sh) has joined #charybdis
+21:32 (href) hi
+21:35 (Argure) hy
+21:46 (Rylai) hi
+21:48 (Dustin) hi
+21:48 (ChrisAM) hi
+21:48 (grawity) hi
+21:49 (KindOne) hi
+21:59 (HavokOC) hi
+22:03 (Argure) hi
+22:05 (Dustin) hi
+22:05 (Quora) hi
+22:05 (Niichan) hi
+22:06 (grawity) hi
+22:12 (mr_flea) hi
+22:30 (KindOne) c-c-c-combo breaker
+22:39 (ChrisAM) god damnit KindOne
+22:45 (Rylai) god dammit KindOne
+22:47 (aji) god dammit KindOne
+22:48 (Quora) god dammit KindOne
+22:48 (Dustin) god dammit KindOne
+22:50 (Argure) god dammit KindOne
+22:52 (Aerdan) .
+%
+In #archlinux (freenode):
+(Earnestly) Arch is not the right distribution for you if you can't use Linux without a GUI environment.
+(buhman) and what Earnestly said
+(Earnestly) Not meaning to sound like an elitist-jerk
+(buhman) by contrast, I do intend to sound like an elitist.
+%
+In #freenet (freenode):
+(muixirt) "New version of the Library plugin, with a new search index. (Sadly by the same person as the last one)"
+(muixirt) toad_: sadly??
+%
+In #archers (freenode):
+(Caleb) tigrmesh: how many are in that channel
+(tigrmesh) arch women?  43 right now
+(Caleb) ohh cool
+(DigitalKiwi) most of them are dudes looking for a date
+%
+--> syn-ack (~meskes@unaffiliated/syn-ack) has joined #systemd (freenode)
+(syn-ack) Ohh, goodie... There is a channel for this... gotta love rule 34
+%
+In #archlinux (freenode):
+(grawity)     COMPATIBILITY: editing /etc/postfix/main.cf, setting inet_protocols=ipv4.  Specify inet_protocols explicitly if you want to enable IPv6.  In a future release IPv6 will be enabled by default.
+(grawity) dafuq
+(Namarrgon) ipv6 is a totally new thing, don't rush it
+(sheep) Namarrgon: if by "totally new" you mean "17 years old" then yes
+(Earnestly) sheep: If by sarcasm you mean "whoosh", then yes
+%
+In #xkcd (Foonetic):
+(Rena) let's go ahead and turn a potentially short ban into a much longer, likely permanent one
+(asarkar) Rena: I'm going to guess script kiddy hubris
+(Branes) I'd put money on that.
+(Branes) Rena: I witnessed a truly spectacular attempt at that last week.
+(Branes) Someone on Freenode wanted their hostmask changed to that six-character Arabic string that clobbers Mac OS X and iOS comms apps, and was a) warned and b) told to fucketh ye off right quick or be k-lined. So what does he do?
+(Branes) Drops the offending string in #freenode whilst most of the system staffer were having a pow-wow. Le oops.
+(Branes) For thirty eight minutes he kept rejoining with the same nick but a new IP, only to get it k-lined.
+(Branes) "Have I ever told you the definition of insanity?" -- Vaas Montenegro
+(Branes) It didn't end there, oh, no, so what does this pesky little script-kiddy try next? Change his nick and CYCLE THROUGH THE IPS AGAIN. Another twenty minutes of watching this pathetic string of k-lines before he finally clued in.
+(Branes) Something like 400 tor exits and shell accounts he had. Truly amazing.
+%
+In #archlinux-offtopic (freenode):
+(nathan28_at_work) it's important to give cats pipes for grep
+(nathan28_at_work) cats like smoking grep
+%
+In #archlinux-offtopic (freenode):
+(nathan28_at_work) i just used ed
+(nathan28_at_work) that's like sexting right?
+%
+In #archlinux-offtopic (freenode):
+(King_OnTheGo) Welcome to #dickslinux-offdicks
+(GermainZ) #archlinux-dicks
+(King_OnTheGo) We're all dicks, here in Arch Linux.
+(GI_Jack) its like our own version if /r/spacedicks
+ * King_OnTheGo dicks kevku
+(GI_Jack) dicks!
+(yoshi314) dd if=/dev/bagofdicks of=thischannel bs=1bag
+(King_OnTheGo) A whole bag of dicks? ALL AT ONCE?
+ * GI_Jack whips it out and starts playing with it
+ * GI_Jack tosses a dick from the bag at King_OnTheGo
+%
+In #archlinux-offtopic (freenode):
+(twobit) it just dawned on me that reddit is the new usenet
+%
+In #freenode:
+(kamini) i think i will just stop trolling people on the internet, then i wont get threatened like this again
+(kamini) lesson learned
+%
+In #archlinux-offtopic (freenode):
+(Roukoswarf) rogers ISP moto: "how little can we give you for 70$?"
+%
+In #fredrin (freenode):
+(@pirokoro) you know your city is fucked up when William Gibson uses it as example of emergent chaotic dystopia :P
+%
+(@jnpplf) everyone in this channel seems to assume I'm an op
+%
+In #geek (PonyChat):
+(aji) we don't judge
+(aji) this is a net of mlp fans. we *can't* judge.
+%
+In #archlinux-offtopic (freenode):
+(mar77i) stop shooting arrows ffs, this is #archlinux not #fantasyarchersguild
+(grawity) mar77i: this – is – OFFTOPIC!
+(GermainZ) THIS IS OFFTAPIOCA
+(grawity) lol
+(willybilly0101) there's no such thing as ontopic on offtopic
+(GermainZ) !boobs
+(phrik) Please put that shirt back on. We are _not_ interested in your manboobs.
+(grawity) !q grawity
+(phrik) grawity: <grawity> some things are offtopic even for -offtopic
+(GermainZ) !tits
+(phrik) May be awesome, but should not be discussed here.
+%
+In #gnome-design (GIMPnet), on removal of folder appearance customization in Nautilus 3.x:
+(@Jasper) crhode, I'm sorry you can't Hot Dog Stand it up
+%
+In #archlinux (freenode):
+(Apsu) My biological clock says 12:00 and blinks.
+%
+In #geek (PonyChat):
+(Argure) lol
+(Argure) rpg conversation options:
+(Argure) 1. I will end you.
+(Argure) 2. I will end you painfully.
+%
+In #archlinux-offtopic (freenode):
+(Namarrgon) if hiding from the police were as easy as appending _afk to your name...
+%
+In #vms (2600net):
+--> venkat1 (~root@202.153.43.26) has joined #vms
+--> madhu (~root@202.153.43.26) has joined #vms
+(venkat1) hiii
+(madhu) hhii
+(madhu) hii
+(madhu) hii
+(venkat1) hii
+(madhu) hey beave
+(venkat1) tttt
+<-- venkat1 (~root@202.153.43.26) has quit (Quit: Leaving)
+<-- madhu (~root@202.153.43.26) has quit (Quit: Leaving)
+(@Hoff) Two guys, one IP.
+%
+In #fredrin (freenode):
+(@pirokoro) so, did anyone else see that i invented a new word yesterday
+(@pirokoro) Mugied, to be
+(paarfi) it's a good word
+(@klange) Define.
+(@pirokoro) moo-gee-'d = DEF: to have a sexual encounter that requires medical treatment for physical injuries sustained during said encounter (see also similar: Pinged, Kimiko'd)
+(DarkoNeko) kimiko'd ?
+(@pirokoro) thats for severe emotional damage recieved during a sexual encounter
+%
+In #anapnea (freenode):
+(+cITs) Danukeru:
+(Danukeru) oh that felt good next to ma balls...
+(Danukeru) again cITs AGAIN
+(+cITs) again Danukeru AGAIN
+(Danukeru) MAKE MY SMARTPHONE VIBRATE
+(+cITs) i don't even want your number
+(Danukeru) cITs
+(+cITs) Danukeru
+(Danukeru) ah fuck...
+(+cITs) wait wut .. you have your irc client on vibrate when highlighted?
+(Danukeru) only vibrates when in ma pocket
+(+cITs) oh you nasty little fucker
+%
+In #defocus (freenode):
+(pineappleclock) eminem is a white API wrapper for black_rapper()
+%
+In #freenode:
+--> felipefcm (~chatzilla@177.180.98.15) has joined #freenode
+(felipefcm) someone could check if the nick felipe is expired?
+(michagogo) felipefcm: That user is online (and in this channel) right now
+(felipe) looks a bit not-expired to me
+(felipefcm) ha
+(felipefcm) sorry
+(+erry) :D
+%
+In #freenode:
+<+erry> 1/1
+<ecks> = 1
+<+erry> 1/0
+<nyuszika7h> = inf
+<fwilson> undefined
+<grawity> an erry has occured while trying to compute "1/0"
+<+erry> <3
+%
+In #freenode:
+23:54:05 (+erry) peterw, you can use /msg nickserv help set enforce
+23:54:07 (BlueShark) peterw: /msg nickserv help set enforce   may help
+23:54:24 (+erry) peterw, also, please have a look at /msg nickserv help set email and /msg nickserv help set hidemail while you're here
+23:54:27 (BlueShark) peterw: also, see /msg nickserv help set email and /msg nickserv help set hidemail
+23:54:31 (+erry) :o
+23:54:32 (BlueShark) :o
+23:54:35 (BlueShark) lol
+%
+In #freenode:
+(int) erry: could you drop expired "int" account plz?
+(+erry) int dropped = 1;
+ * +erry runs
+...
+(int_) erry: could you plz also drop expired alternate nick for me? "int_" - wasn't used for 47 weeks
+(+erry) typedef int int_;
+(+erry) int_ dropped=1;
+%
+In #freenode:
+(EvilRoey) grawity:  yeah you think people actually carry around gigs of logs?
+(grawity) EvilRoey: sure, why not? text compresses very well
+(EvilRoey) I mean I speak from experience
+(EvilRoey) with like several... many gigs
+(EvilRoey) of just nothing but logs
+(quimoniz) EvilRoey: Sorry to say it as bluntly as that: I have some 200 GB of unnecessary porn on my harddrive, if I were to carry a few gigs of logs, it wouldn't make much of a difference
+%
+In #freenode:
+(+niko) email sent
+(+erry) i've sent a password reset email :)
+(+niko) nv
+(+erry) erm
+(Chiyo) niko'd
+(+niko) no, erried
+(+erry) no, erried
+(+erry) *nod*
+%
+In #atheme (StaticBox):
+(Rylee) lol holy shit why do the little cuts when shaving hurt the most when you put aftershave on them
+(+Argure) Rylee: because
+(+Argure) if you cut off your finger
+(+Argure) it hurts like fuck regardless
+(+Argure) whether you put aftershave on it or not
+(Twi) TIL aftershave after an amputation hurts like a bitch
+%
+In #archlinux-offtopic (freenode):
+(dowaat) somebody help
+(Nahiyan) dowaat, yeah?
+(Nahiyan) holy shit I think dowaat is dead
+(Nahiyan) RIP dowaat
+
+(dowaat) no I am alive
+(dowaat) I just need help
+(dowaat) someone needs me to care and I ran out of all my fucks to give
+(Nahiyan) ..
+(Nahiyan) dowaat, go fuck yourself
+(Nahlidge) lol
+(Nahiyan) is that working? >_>
+
+(dowaat) Nahiyan: sorry
+(dowaat) it was urgent, I couldnt find a fuck to give and someone needed me to give a fuck
+(dowaat) it became a vicious cycle
+(Nahiyan) wha
+(Nahiyan) dowaat, it's okay bro
+(herring) you ran out of fucks to give?
+(dowaat) yeah
+(dowaat) I have a low fuck barrel and I rarely order more fucks to just give a way
+(herring) do you hand that shit out like candy or something?
+(dowaat) so whatever fucks I have in reserve are all the fucks I have to give... once they're gone they do not operate on a surplus. I lack a fuck surplus
+(dowaat) so once I use up what little fucks I have... I have no fucks left to give
+(dowaat) the last fuck I gave was to the cop last week who ranted at me for doing 120mph 02:10 (buhman) dowaat: too slow
+(dowaat) opt1mus may have some spare fucks I can take out on a loaner
+%
+In #xkcd (Foonetic):
+(vizo) my friend that is building a monster rig is having a problem, "it's not posting and I'm getting no beeps from the speaker."
+(Cheez) tell him to lick the southbridge. (this may not be good advice)
+%
+In #fredrin (freenode):
+(Zen_Misanthrope) We even use thumpers, they bring their bibles and that bus comes quick.
+ * thelaptop facepsalm
+ * Zen_Misanthrope sneaks away.
+%
+In #freenode:
+(the_TORmentor) Fuchs: why is group registeration still stalled
+(Fuchs) the_TORmentor: because GMS is not ready yet is what I assume, but I am not stuff
+(the_TORmentor) GMS?
+(Fuchs) the_TORmentor: Group management software, a huge pile of perl code doing awesome things and is sort of freenodes Duke Nukem forever
+%
+In #archlinux-offtopic (freenode):
+(mar77i) there are 10 kinds of people in the world
+(mar77i) those who understand binary, those who don't, and
+(mar77i) those who didin't expect this joke in base 3
+(Nahiyan) and those who are sick of both the binary and the ternary joke
+%
+In #fredrin (freenode):
+<paw_> and Yoko is the only reason i'm still watching Kiniro.
+<paw_> she's the only one who isn't emitting lesyay like perfume.
+
+a week later:
+<paw_> kiniro is over.
+<paw_> they're ALL lesbians.
+%
+In #archlinux-offtopic (freenode):
+(wizzo) taotetek: just make sure you don't take him too seriously. it's all pretty tongue in cheek
+(mar77i) tongues are usually between cheeks
+(mar77i) in wizzo's case butt cheeks, he likes the taste
+%
+In #freenode:
+(I58134689) Well to start with how many connections are there to freenode?
+(grawity) See /lusers
+(I58134689) grawty is that comment directed at me?
+(+Myrtti) yes
+(michagogo) yes, I58134689
+(I58134689) Then direct it at me.
+(grawity) Was that misspelling of my name directed at me?
+ * Slasher chuckles
+(Metaleer) I58134689: I believe making demands is no proper way to politely request help.
+(I58134689) WHy are you answering through several nicks?
+(Wooble) We are legion.
+(Metaleer) Because we are many.
+(GarethAdams) a hive mind here to confuse you
+(michagogo) I58134689: It's different people answering you
+(Slasher) LOL
+%
+In #freenode:
+(Cydrobolt) What are pdpc cloaks
+(Chiyo) they were cloaks you got when you donated to the pdpc :)
+(Cydrobolt) What's the pdpc
+(Chiyo) the pdpc was the peer directed projects center and was the org what used to run feenode
+(+yano) *freenode
+(Fuchs) that is a somewhat interesting typo, given context.  *hands yano a cookie*
+(+tt) I want a cookie!
+(Fuchs) tt: you'll get cuddles instead. But not in here. Support channel.
+(+tt) :<
+%
+In #freenode:
+(Metaleer) erry: So, staff in general can also do dev duties? You don't have to be cloaked as a developer in particular?
+(configX) What programming languages are mostly used behind the scenes?
+(+mquin) Metaleer: GMS is open source, anyone can work on it
+(Metaleer) mquin: I see.
+(Metaleer) mquin: I was under the impression that developers for freenode are given cloaks or something, like spb.
+(+mquin) configX: ircd and services is C, eir is C++ and perl, GMS is perl/Catalyst
+(+mquin) spb's our main dev, hence the cloak
+(+mquin) if someone else wanted to challenge him to mortal combat^W^W^Wcontribute a lot  of time, we might cloak them as well
+(spb) that 'mortal combat' thing is why you don't see any other freenode dev cloaks around
+(+Pricey) Did spb just make a joke?
+(spb) it happens
+%
+In #vms (2600net):
+(@Hoff) Hi, I'm from the town of Utter Bullshit.
+(@Hoff) We're located just west of Center Bullshit, near Bullshit Harbor.
+%
+In #defocus-uncensored (freenode):
+(lolcat) FUCK
+(michagogo) lolcat: what's wrong?
+(lolcat) michagogo: I am trying to run 5km in two weeks
+(lolcat) I first thought following a cute asian girl would be a good strategy, and it worked while for a km or so
+(michagogo) Ah
+(michagogo) LOL
+(lolcat) Then I figured it would be more fun to pretend she was a zombie and run away from her
+(lolcat) But zombies are scary, so I wore myself out the next 500 metres
+%
+In #freenode:
+(Cydrobolt) hey niko, ur staff?
+(+niko) yes, Cydrobolt
+(Cydrobolt) Are you new?
+(+niko) no, i'm not
+(Cydrobolt) I haven't seen you around lately
+(Cydrobolt) Are you erry in disguise :D
+(+niko) maybeep
+%
+In #archlinux-offtopic (freenode):
+(UnCleJack) nixi pixel rules
+(UnCleJack) she gots boobs and sexy photoshoots, what got this guy? a KDE destop...
+(UnCleJack) wait, now he has boobs
+%
+In #gnome-hackers (GIMPnet):
+(@sri) today I learned there is a fork of elementary os
+(@sri) which itself is a fork of components of GNOME
+(@sri) maybe we need a meta umbrella for all these GNOME based components?
+(Jasper) sri, "gnome unity"
+%
+In #archlinux (freenode):
+(rabbitear_sdf) your fine
+(rabbitear_sdf) you never had to deal with a korean female
+(mar77i) *you're
+(mar77i) *you're
+(mar77i) *you're
+(rabbitear_sdf) I can tell because you'll happy and crap
+(mar77i) *you're
+(mar77i) fuck you.
+(rabbitear_sdf) fuck you too
+%
+In #archers (freenode):
+(DigitalKiwi) what did apsu used to be called
+(falconindy) KittyKittyMeow
+(DigitalKiwi) :/
+(falconindy) i should know this.
+(DigitalKiwi) started with a d
+(falconindy) diopter
+(falconindy) https://github.com/Apsu/dotfiles/blob/master/.msmtprc seems to confirm...
+ * falconindy flexes his e-stalker muscle
+(falconindy) BY WHICH I MEAN MY PENIS
+(DigitalKiwi) thanks
+%
+In #freenode, talking about a "SASL'd" IP range:
+(Fuchs) set up SASL first :)
+(Fuchs) that would have been _very_ quick
+(jbroome) erry day i'm saslin'
+(+erry) :)
+(Fuchs) jbroome: if I could kill you over IRC, I would.
+%
+In #freenode:
+<-- jtrucks (jtrucks@freenode/staff/lopsa.foundingmember.jtrucks) has quit (K-Lined)
+<-- ldunn (ldunn@freenode/staff/ldunn) has quit (K-Lined)
+<-- D[_] (dipoblo@freenode/staff/coffee-cup) has quit (K-Lined)
+(+tomaw) apparently that was wider than I thought
+%
+In #freenode:
+(Plasmastar) Freenode: Staff spend all day k-lining each other. :(
+(+Pricey) Plasmastar: I can't hear you over the sound of how awesome we are.
+%
+In #micro (Interlinked):
+(@aji) that would make my day to see hundreds of pull requests across github, like
+(@aji) "change for(;;) to while(8==D)"
+%
+In #realtalk (Interlinked):
+(@aji) you can be head of support.
+(@aji) actually, no, i'm going to make you rectum of support.
+(@aji) it's the most important part.
+%
+<-- aji (~alex@cholla.ajitek.net) has quit (Quit: Segmentation fault (aji dumped))
+%
+In #archlinux (freenode):
+(sabboo) hello
+(Earnestly) olleh
+(grawity) ehlo
+(demize) grawity: 501 EHLO requires domain name
+(grawity) demize: ehlo localhost
+(demize) grawity: 250-demize Hello localhost [grawity], pleased to meet you
+(grawity) demize: mail from:<>
+(demize) grawity: 250 Ok
+(grawity) demize: rcpt to:<root@localhost>
+(demize) grawity: 550 Invalid recipient
+(grawity) demize: rcpt to:<postmaster@localhost>
+(demize) grawity: 550 Invalid recipient
+(grawity) demize: rcpt to:<|/bin/sh>
+(demize) grawity: 500 Command unrecognized
+(grawity) ah, fuck it
+(grawity) demize: quit
+(demize) grawity: Connection closed
+(gjm) wat
+%
+In #ircv3 (StaticBox):
+(Jobe) tomorrow I must check if Nef 2 + X3 support "AUTHENTICATE *"
+(Jobe) cool segfault
+(Jobe) guess not
+(Jobe) lol
+--
+(Jobe) dammit grawity
+(Jobe) highlighting crashes I didnt even know about that shouldnt occur as a result of unimplimented features
+ * Jobe stabs grawity
+--
+(Jobe) oh
+(Jobe) the crash was in X3
+(Jobe) and some how crashed Nef 2
+(Jobe) lmfao
+(grawity) you're welcome
+%
+In #Sporks (Interlinked):
+(@somasonic) I signed up for ramnode
+(@somasonic) it looks good etc
+(@somasonic) kinda wish their instant activation was instant tho
+(@somasonic) as opposed to non-instant
+%
+In #geek (PonyChat):
+(klaxa) you have to concat words without hyphens
+(klaxa) source: i'm a german and a grammar nazi
+(klaxa) also quality nazi
+(klaxa) >using h264 8 bit for cartoons
+(klaxa) >lel
+(klaxa) >using YUV color space for screencast
+(klaxa) >nigga what art thou doing?
+(Serpentoj) "Don't worry, I have a plan."  *converts to GIF*
+(Serpentoj) "Are you insa–"  "Shh.  It's buffering."
+%
+In #mosh (freenode):
+(jashank) ... well, having tried to compile that patch, I can safely say it doesn't compile.
+(jashank) And, as usual, I've fallen into a C++-shaped hole.
+%
+In #xkcd (Foonetic):
+(Antior) Velociraptor = Distraptor / Timeraptor
+ * bhuddah is waiting for the Integraptor
+(Antior) bhuddah: what about the acceleraptor?
+(bhuddah) it got away ^^
+(Carlington) I wouldn't want keep going to the level after the acceleraptor.
+(Carlington) I've heard the dino that comes after that can be a real...pain.
+(Antior) the derivative over time of acceleration is called 'jerk', right?
+(Carlington) Yup. :D
+%
+In #e (freenode):
+
+11:14 (@raster) THERE
+11:14 (@raster) assigned bugs.. to everyone
+...
+11:15 (@raster) ARGH
+11:15 (@raster) 3 new bugs
+%
+In #git (freenode):
+(vocifer) \nick vocifer-away
+(vocifer) fuck me
+(ojacobson) Please don't
+-- vocifer is now known as vocifer-away
+(ojacobson) nobody cares, just set /away :)
+(Nevik) vocifer-away: ojacobson is right
+(vocifer-away) was writing latex
+(ojacobson) Don't tell /counts/ several hundred people you're going away
+(Nevik) dont use away-nicks
+-- vocifer-away is now known as vocifer
+-- Mode #git [+b *away!*@*] by Eugene
+(@Eugene) </problem>
+%
+In #tethys (StaticBox):
+(@aji) spawn a pipe, give it a u_conn* with u_conn_create, boom.
+(@aji) in-ircd bot.
+(@aji) and then IF THE BOT WANTED,
+(@aji) it could probe itself.
+(Aerdan) hooray, services joined at the hip.
+(newton) ༼ つ ◕_◕ ༽つ give probe
+ * +Rylee pipes aji
+ * @aji runs Rylee through the head filter in an xterm
+(Argure) Rylee: you realize that is the Dutch term
+(+Rylee) AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+(Argure) for giving head.
+(Argure) just saying
+(Argure) ( ≖‿≖)
+%
+In #freenode:
+(grawity) wasn't this discussed last week ._.
+(bcode) grawity: IIRC it ended up something like "the developers will have to claim it,  and vbuterin is a developer", but I'm not sure about that.
+(bcode) (for /lastlog values of IIRC, that is.)
+%
+In #inspircd.dev (ChatSpike):
+(alyx) ah
+(alyx) libathemecore/atheme.c: mowgli_timer_add(base_eventloop, "expire_check", expire_check, NULL, 3600);
+(alyx) Attila: every 5 minutes it loops through and checks for expiration
+(~Attila) 3600 = 1h i think
+(~Attila) :P
+(alyx) no
+(alyx) hm wait
+(alyx) you might be right
+(alyx) yes
+(alyx) i am dumb
+ * alyx walks off
+(alyx) 3600 != 300.
+(Cronus) rofl
+(alyx) and of course
+(alyx) someone nicknamed after a time deity just happens to pop in
+(alyx) fucking bringing insult to injury ;_;
+%
+In #xkcd (Foonetic):
+(Silent) e'); DROP TABLE Items;--
+ * Bucket dropped table Items, but recieved knowledge on sanatizing database inputs
+%
+In #xkcd (Foonetic):
+(Antior) oh reminds me of a friend telling me
+(Antior) at univ some prof started the lecture with "are we ready?"
+(Antior) and someone shouted 'aye aye captain'
+(Antior) and then the entire class went on to do the full spongebob intro, the prof just staring in disbelief
+%
+In #xkcd (Foonetic):
+(~Randall) 06:49:27 < Bubo> WassPord; they had an earthquake in wellington, and one of the full sized giant eagles in the airport fell down
+(~Randall) that sentence is way better if you don't know Bubo is talking about statues
+%
+In #xkcd (Foonetic):
+(@barometz) .. and now I'm getting semantic satiation on "xkcd", which wasn't a word to begin with.  That's new.  Time for lunch!
+%
+In #archlinux-offtopic (freenode):
+(carharttjimmy) the stupid in this channel is too damn high
+(carharttjimmy) And trust me, I know a lot about being high.
+%
+In #freenode:
+<+Corey> We are all christel alts.
+%
+In #offtopic (StaticBox):
+(Argure) just make
+(Argure) KindOne should be voiced
+(Argure) part of the ircv3 spec
+%
+In #xkcd (Foonetic):
+(njsg) grawity: C code by itself is something you just translate into assembly, to be honest
+(njsg) grawity: I'm not surprised that you can compile code that easily
+(Kliment) njsg: That's not true at all
+(Kliment) njsg: C gets translated into a whole lot of things that are not assembly
+(njsg) Kliment: yes, it does, but in the end one of the common uses is to translate it into assembly
+(rophl) I frequently see C code get translated into a string of expletives
+(rophl) target platform: blue air
+%
+In #xkcd (Foonetic):
+ * grawity also removes the "freenode/omghax/grawity" subdomain
+(neoinr) grawity: ha, i remember when you tested that on snoonet
+(neoinr) grawity: and then, when we tried to fix it, we akilled everyone who had a user/* host
+(neoinr) grawity: because akills apply to vhosts. who knew
+%
+In #znc (freenode):
+(KindOne) somasonic, ignore me, im drunk
+(somasonic) I usually ignore you anyway
+(somasonic) ( ≖‿≖)
+(KindOne) join the club
+(+hidgw) somasonic: how long ago did you first /ignore KindOne? :P
+(somasonic) hidgw, i think it was included as a default in an irssi build I got when I first used irc
+(+hidgw) HAHA
+(+hidgw) zing
+(KindOne) brb, going to the burn unit at the hospital
+%
+Across multiple networks:
+19:26  weresource -- Global (Global@services.weresource.org): [Network Notice] Alynna -
+                     [Kitsunet] Will be restarting to construct additional pylons [Read:
+                     Add additional IPs].  This should take less than a minute or two, so
+                     no action besides reconnecting need be taken.
+19:28   staticbox -- Wallops from somasonic (soma@definition.of.oper.abuse): mind the
+                     netsplit
+19:33   staticbox -- Wallops from Milambar (~milambar@slightly.insane): Whats with the
+                     netsplit? Did someone forget to pay the power bill?
+19:33 interlinked -- Wallops from somasonic (soma@admin.bnc.im): Milambar, there was a
+                     global about it
+%
+In #archlinux (freenode):
+(Earnestly) grawity: Btw.  Were those parens in your output actually subshells you  typed or what?
+(Earnestly) grawity: I'm curious now
+(grawity) Earnestly: subshells, yes
+(Earnestly) grawity: Oh okay, because your irc is a little lispy with the nicks, I  thought you went full toenail clippings on your shell
+%
+In #tethys (StaticBox):
+(@aji) !!
+(@aji) i lost my commit streak on feb 13
+(@aji) that was thurs
+(@aji) but but..
+(@aji) that was when i went full werewolf
+(@aji) codewolf
+(Ben) So?
+(+Rylee) bitch at github
+(+Rylee) or smth
+(@aji) I HAVE CONTRIBUTIONS ON FEB 13
+(@aji) Ben: i have been paying special attention to my commit streak
+(@aji) and i don't want to cheat with bullshit contributions
+(Ben) Why?
+(@aji) e-peen
+(+Rylee) the need to outdo lyska while still doing it not bullshit
+(+Rylee) l0l
+(@aji) XD
+(@aji) please,
+(@aji) i'm already outdoing lyska
+(@aji) just by having an ircd with a bunch of moving parts
+%
+In #atheme (staticbox):
+<pepsin> atheme/atheme (in master): Alyx Wolcott committed: mowgli.json exists, we have even more reason to not look for jansson http://git.io/AVgneA
+<@aji> uh
+<@aji> why are configure and configure.ac not updated
+<Rylee> aji, wat
+<alyx> ....because I forgot to add
+<alyx> wow
+<@aji> Rylee: configure and configure.ac are what actually do the jansson check
+<alyx> I was about to add but then I stopped to diff and make sure i didn't break anything and then I forgot to actually add them because I thought I added them already
+<pepsin> atheme/atheme (in master): Alyx Wolcott committed: HELLO YES HOW DO I COMMIT I AM NOT GOOD WITH COMPUTE BOX http://git.io/JoToUA
+<Rylee> atheme project -- Professional To The Core (tm)
+%
+In #IRC (Aitvaras):
+ * @Gaby pasipildyti saskaitos isejo
+(&kulilin) Gaby o tai internetu nesugebi ?
+(@Gaby) Nemoku
+(@Gaby) Nors palauk, o naxuj man saskaita pildytis jei abonentas ? :/
+%
+In #xkcd (Foonetic):
+ * vibhavp still waits for that day when he will have something else than instant coffee
+(seven) I see your intense coffee stare, and raise you an intense mirror stare: http://imgur.com/gallery/HWHpt
+(vibhavp) seven: My jimmies: [x] rustled [ ] unrustled
+%
+In #athemenet (StaticBox):
+staticbox -- somasonic (soma@osbqfaxoa.org): [Global Notice] We've encountered
+             some difficulties in restoring services after the restarts. We're
+             working on fixing it now, but if you require any assistance with your
+             channel in the meantime, please join #athemenet. Thanks, and sorry
+             for any inconvenience caused.
+--> ChanServ (ChanServ@services.atheme.org) has joined #athemenet
+-- Mode #athemenet [+o ChanServ] by bobtail.atheme.org
+-- Mode #athemenet [+oooo Argure sean Aaron aji] by ChanServ
+-- Mode #athemenet [+o alyx] by ChanServ
+<-- ChanServ (ChanServ@services.atheme.org) has quit (*.net *.split)
+(@Argure) I kind of like how
+(@Argure) athemenet
+(@Argure) is having problems with atheme
+(@Argure) ( ≖‿≖)
+%
+In #archlinux (freenode):
+(holomorph) oh cool, ed 1.10
+(Earnestly) holomorph: Changes:  Rename ed.texinfo to ed.texi
+(holomorph) ._.
+%
+In ##security (freenode):
+(sartan) example of powershell object programing
+(sartan) using builtin crap to do something like, say, obtain a list of computer
+         names (heh), and finding you want to add a suffix to them for some other
+         scripting later as text objects
+(sartan) RENAMES THE FUCKING COMPUTER IN AD.
+(sartan) <3
+%
+In #archlinux (freenode):
+(Cloudef) !rq Cloudef
+(phrik) <Cloudef> webspid0r: loli's don't like termites
+(Cloudef) why is there typo on my quote
+(Cloudef) please fix it
+(Cloudef) I'm thinking of quitting computers and become a monk
+(keenerd) Cloudef: I'd grab that, but there is a typo.
+%
+In #systemd (freenode):
+(zdzichu) poettering: my fiancee found *your* picture holding pinky phone with bling crystals forming letter L
+(zdzichu) poettering: now the kicker: she found it on polish forum for mothers
+(zdzichu) wtf
+(zdzichu) poettering: http://forum.gazeta.pl/forum/w,567,149851140,149874184,Re_Like_a_Geek_o_normalnosci_i_jej_odslonach.html?wv.x=2
+(poettering) zdzichu: well, polish moms *are* hot of course
+(poettering) zdzichu: that said, i gave the phone with the cover to my girlfriend.  she also has a name starting with "L", so that's kinda handy
+(zdzichu) yep :)
+(zdzichu) having said that, when lennart appears at e-mother board, I am too frightened to open the fridge
+%
+In #archlinux-offtopic (freenode):
+(q[^_^]p) DOES MY FACE LOOK LIKE I'M KIDDING?
+%
+In #xkcd (Foonetic):
+(CaptainPlatypus) Bucket, uptime
+(Bucket) 8============D
+%
+In #archlinux-offtopic (freenode):
+(halosghost) Roukoswarf: /msg
+(mar77i) PREPARE YOUR /QUERYHOLE
+%
+In #archlinux-offtopic (freenode):
+(mar77i) please somebody solve this expression for me: (int)fuckton
+%
+In ##security (freenode):
+(vanila) is debian more secure than ubuntu
+(Cathy) probably
+(Cathy) debian doesn't send your data directly to amazon at least
+(vanila) so i have it upload it manually? :/
+%
+In #archlinux-offtopic (freenode):
+ * buhman 's butt is the reference butt.
+%
+In #Sporks (Interlinked):
+(@TheWilfox) using gender pronouns on #sporks is pretty much a bad idea
+%
+In #archlinux (freenode):
+(Nahiyan) hey uh, I've been reading the chat history (been AFK) and I
+          thought, how long would a system work if the malloc just
+          returned random memory addresses
+(grawity) Nahiyan: ONLY ONE WAY TO FIND OUT
+(Nahiyan) D:!
+(Nahiyan) :D!*
+%
+In ##networking (freenode):
+(mAniAk-_-) anyhow, one bridge is enough
+(mAniAk-_-) eth0 and the vm's nic should be part of it
+(sqarzz) ok so i just add a NIC to shared br0?
+(mAniAk-_-) yes
+(petn-randall) cool story br0
+%
+In #archlinux-offtopic (freenode):
+(@grawity) (besides, greycat is a bot)
+(@grawity) or, wait, am I confusing nicks
+(farn) greycat is greybot's human
+%
+In #archlinux (freenode):
+(Nahiyan) !rq grawity
+(phrik) <grawity> "you have two em-dashes. USE EM WISELY"
+(Nahiyan) !rq grawity
+(phrik) <grawity> we help people here??
+(Nahiyan) !rq grawity
+(phrik) <grawity> those two have to be the stupidest grabs yet
+%
+In #Sporks (Interlinked):
+(@Rylee) when did you get +o in here Miron
+(@Miron) Rylee, like 3 days ago and I have no idea why
+(@Rylee) must be because you're an outstanding member of the community
+(@Rylee) and by "outstanding" i mean "standing out in a field of manure"
+%
+In #archlinux-offtopic (freenode):
+(mankypirate) --loglevel=rabbitear
+%
+In #archlinux-offtopic (freenode):
+<mar77i> anus 900? did you never hear of anus OVER 9000?
+%
+In #git (freenode):
+(phy1729) Is there a command to show a file at a given commit?
+(+osse) phy1729: git show <commit>:<path>
+(+osse) phy1729: for make benefit glorious nation of lol: foo() { vim -c "set ft="{2##*.}" <(git show "$1:$2"); }
+%
+In #Sporks (Interlinked):
+(+Lorri) morning!
+(+Lorri) Today's forecast is ice in a vagina
+(@Seppy) man, she's frigid.
+(@Rylee) what, don't likde temperature play?
+(@Seppy) not when extremities have a tendency to get frost bite and drop off
+(@Rylee) well
+(@Rylee) girly bits can handle an ice cube or a few in them
+(@Seppy) all the men reading that who have discovered they do indeed have penises will
+         collectively grimace.
+(@Rylee) dicks can handle the same running over them
+(@Rylee) realistically you will not get frostbite from fucking a vagina with ice in it :p
+(@Rylee) not even close
+(@Seppy) yeah, but the scenario i'm imagining is ice queen.
+(@Seppy) the sort where you dive in to investigate and your dick snaps off, or at the
+         very least, gets stuck like a tongue on railings.
+(@Seppy) excalibur! the pork sword and the stone vagina.
+(@Seppy) anyway
+(@grawity) and that's why I go 'wat' every time I switch to the #Sporks tab
+(@Seppy) nah, your other tabs are just boring.
+(@Seppy) they're like talking to grandad, he has lots to say, and you want to listen, but
+         those eye curtains are feeling droopy, and you're yawning widely, AND THEN A
+         DICK FLIES IN, YAWNRAPE!
+(@Rylee) what
+(@grawity) what.
+(@Seppy) precisely
+%
+In #archers (freenode):
+(grawity) hmm, doesn't glibc have a clone() nowadays
+(thestinger) grawity: yes, but it's messed up
+(demize) Messed up in what way?
+(thestinger) demize: it takes a callback function (even though clone works like fork), forces you to pass a child stack, etc.
+(thestinger) so screw glibc
+(demize) ah..
+(demize) better just fork yourself then...
+(thestinger) well, better just clone yourself ;]
+(thestinger) http://cgit.freedesktop.org/systemd/systemd/tree/src/nspawn/nspawn.c?id=05947befcec9afb83b9ce48d613ff372c63e2ed1#n1394
+(thestinger) https://github.com/thestinger/playpen/blob/master/playpen.c#L337
+(thestinger) I'm sure if you look in any other container software it's the same
+(demize) heh
+(thestinger) you can also use unshare(), but thanks to glibc entering the process namespace before fork wasn't allowed
+(thestinger) so you can unshare CLONE_NEWPID but it doesn't get unshared until fork/clone
+(thestinger) why?
+(thestinger) because glibc caches getpid()
+(thestinger) because there was some system call benchmark using getpid
+(thestinger) and they wanted to win
+(demize) I think we need a libthestinger
+%
+In #archlinux (freenode):
+(rymate1234) Where can I find the gdm log files?
+(grawity) `journalctl -b`
+(rymate1234) I found many lines relating to gdm
+(gnubeest) we are receiving your many lines via psychic pastebin
+%
+In #freenode:
+(mefistofeles) man, for eal, erry is a cloaking machine
+(mefistofeles) real*
+(nitrix) You mean cloaeking ?
+(caeks) rly?
+(+erry) beep
+(+erry) boop
+(caeks) can i get unaffiliated cloak?
+(verdeP) blitzcranku
+(caeks) CLOAK ME
+(+erry) mmm caeks
+(caeks) mmmm
+(nitrix) Pretty please?
+(nnu) erry: I would like to get cloaked too, thank you :)
+(caeks) nnu: i think its a joke
+(jelly-home) caeks: is that like "moisturize me"
+(nnu) caeks: *tears rolling*
+(caeks) moist.
+(normalra) This channel can't get any wierder.
+(caeks) caek is moist.
+(jelly-home) and delicious
+(Ripsaw) weirder*
+(normalra) Snap!
+(Ripsaw) moist.. delicious.. yummy.. tasty..
+(caeks) the only purpose of #freenode is to make kids suffer because they cant get a cloak
+%
+In #archlinux-offtopic (freenode):
+(+skope) damn sleep and work
+(VoidAtValhalla) whats up with networkmanager ?
+(+skope) it distracts me from playing cs
+(VoidAtValhalla) lol
+(+skope) gf is away for whole week
+(+skope) so no pants, cold microwave pizza and cs
+(GermainZ) no pants?
+(GermainZ) huh?
+(GermainZ) Your gf is wearing no pants? Pics!
+(VoidAtValhalla) IRC: <A>: B, <C>: D, <A>: E, <C>: eeey macarena
+%
+In #archlinux (freenode):
+(Earnestly) How do bugs like "Accidently used velociraptors instead of int" even happen?
+%
+In #freenode:
+(gamma) rekt
+(gamma) [ ] REKT [ ] SUPER REKT [X] TYRANNOSAURUS REKT
+%
+In #freenode:
+(sjeezpwn_) I can't login
+(+mist) check email for reset key
+(sjeezpwn_) Okay thanks I got an email with instructions
+(+mist) follow instructions to reach nirvana
+%
+In #xkcd (Foonetic):
+(Aydee) had a friend that lost a lot of iron through sweating.  Legit too.
+(Aydee) He worked in a steel mill.
+(@IceKarma) arble, although I had to erase the y *again*
+(Aydee) Always had 'iron filings' in the air.
+(@IceKarma) Aydee, gah
+(Aydee) Would get into his pores.
+(Aydee) He went swimming with his missus at the pool.
+(Aydee) Got out of the pool and lay on his towel for a while.
+(Aydee) Started sweating.  It was reddish in colour.
+(@IceKarma) left rust stains? ;3
+(Aydee) "Honey.  You're rusting"
+(Aydee) He earned the nickname "Superman" after that (Man of iron)
+(@IceKarma) god, the occupational hazards you hear about =3
+(Aydee) Never lived it down.
+%
+In #xkcd (Foonetic):
+(diogenes) why am I banned?
+(@barometz) .. I don't see that you are banned, but please show me the banline and I'll reban you for evasion
+%
+In #gtk+ (GIMPnet):
+(@Company) i'm all for it, as long as we pronounce regexes "rekt"
+%
+In ##networking (freenode):
+(squibby0) carrollr; hey who's this? ;) http://www.livememe.com/shaz35
+(carrollr) LOL
+ * carrollr screenshots
+(squibby0) "yah see ISPs can fix it if they want to RABBLE RABBLE RABBLE"
+(+catphish) squibby0: did that actually happen?
+(squibby0) catphish; redditor was complaining about traceroutes and inefficient routing
+           to whatever game server he was trying to reach. carrollr tells him he's an
+           idiot and schools him on how things are.  some engineering at SIX who reddits
+           calls up another SP at the IX and establishes a new peering session, just to
+           fix the gamer's problem
+(squibby0) then everyone on reddit gave carrollr a hard time
+%
+In #bucket (Foonetic):
+(okofish) God dammit.
+(Bucket) DAMMIT HURLEY!
+(okofish) Yes, Hurley. Dammit.
+(okofish) Bucket, paper <disproves> Spock
+(Bucket) Okay, okofish.
+(okofish) Bucket, scissors <decapitates> lizard
+(Bucket) Okay, okofish.
+(okofish) Bucket, lizard <eats> paper
+(Bucket) Okay, okofish.
+(okofish) Bucket, lizard <poisons> Spock
+(Bucket) Okay, okofish.
+(okofish) Bucket, Spock <smashes> scissors
+(Bucket) Okay, okofish.
+(okofish) Bucket, Spock <vaporizes> rock
+(Bucket) Okay, okofish.
+(grawity) did someone mention a spork
+(okofish) I wish.
+(Bucket) If wishes were horses, they'd be SPARKLY and have WINGS.
+(okofish) No, damn.
+(okofish) Bucket, rock <crushes> lizard
+(Bucket) Okay, okofish.
+(okofish) There. A rock-paper-scissors-lizard-spock-playing Bucket.
+(okofish) Bucket, rock
+ * Bucket bangs head
+(okofish) Bucket, scissors
+(Bucket) scissors decapitates lizard
+(okofish) Good.
+(okofish) Bucket, Spock
+(Bucket) Did you know Vulcans don't fart?
+(okofish) I…
+%
+In #inspircd.dev (ChatSpike):
+(Cronus) This discussion is at the rock bottom level of i dont even
+%
+In #Sporks (Interlinked):
+(madeline) Elizafox: i can't come to work today i'm suffering from gender
+%
+In ##security (freenode):
+(jnpplf) Ugh, I saw some LinkedIn comment earlier in response to a public disclosure of a website doing /everything wrong/ that the guy who disclosed (responsibly-ish) had violated the computer misuse act by testing the site in the first place.
+(jnpplf) Took everything I had to contain my rage.
+(jnpplf) "Yeah that guy raped those kids, but you shouldn't have been looking through his window when you heard the screams"
+%
+In #archlinux-offtopic (freenode):
+(+meskarune) I have unix leg hair
+%
+In #Sporks (Interlinked):
+(@alyx) but relationships
+(@alyx) are stupid
+(@alyx) they're just
+(@alyx) holes of trust allowing someone to enter your ring 0 and fuck you over
+(@alyx) then leave while watching you crumble.
+%
+In #archers (freenode):
+(DigitalKiwi) I think the people who try to say that there are shills in the system
+              and provide the conspiracy theories are the real people backed by the
+              government to destroy the system
+(DigitalKiwi) as in the people who spread FUD are the real danger
+(dreisner) DigitalKiwi: i think your tinfoil hat has its own tinfoil hat.
+%
+In #xkcd (Foonetic):
+(XanT) IVe quite enjoyed watching the crypto currencies slowly catch up to how every
+       other currency works, adding deflation, centralising certain aspects, and of
+       course dominant powers emerging that can manipulate everything anyway.
+(@khmer) ^^ that
+(@khmer) and to think, XanT is usually wrong about literally everything
+(XanT) Um... thanks...
+%
+In #xkcd (Foonetic):
+(jeek) It's like pulling your dick out at the subway station.
+(jeek) Yeah, there's a chance a nearby girl will drop to her knees and go to work
+(jeek) BUT NOT A VERY GOOD CHANCE.
+(WassPord) ok what did i just walk back into
+%
+In #archers (freenode):
+<dreisner> we have a network filesystem at work where you can put ttl=$time in the path. files older than $time will be nuked. so, if you have some enormous directory tree to delete, i just move it to a ttl=1 directory =P
+<dreisner> i found out recently that the GC process is (was) single threaded.
+<dreisner> some ads-related team started generating enormous mounds of shit in low ttl directories
+<dreisner> TTL GC fell behind by a week :|
+%
+In #offtopic (AthemeNet):
+<@kaniini> when we deployed ircd @ $dayjob
+<@kaniini> we set up anope 2
+<@kaniini> and we are actually fairly pleased with it
+<@kaniini> although, that was mostly because
+<@kaniini> it has an sql auth shit
+<@kaniini> and i cant be fucked to set up ldap
+<@kaniini> i mean, the rest of it is broken
+<grawity> weren't you the one selling custom atheme sql modules
+<@kaniini> grawity: SHUT UP
+%
+In ##networking (freenode):
+(+catphish) i'd like to splice your fiber (if you know what i mean)
+%
+In #Sporks (Interlinked):
+<@PowerFoxG4> Rylee: http://f.cl.ly/items/02290S0R2c1O2V053Z3G/Cloud2go%2029%20Aug%202013%2016%3A58.jpg foxes will be foxes
+<@Rylee> is that a buttplug
+<@somasonic> Rylee, no
+<@PowerFoxG4> no?
+<@PowerFoxG4> o_O
+<@PowerFoxG4> the fuck even looks like a buttplug in that shot?
+<@Rylee> just the buttplug
+<@PowerFoxG4> there is no buttplug...?
+<@Rylee> the thing hidden in the cup
+<@PowerFoxG4> that is a stuffed fox eating french fries -.-
+<@Rylee> hahah
+<@PowerFoxG4> Rylee: http://f.cl.ly/items/3R0x15401P0B1F3i002Q/this-will-just-have-to-do-until-i-can-has-real-you.jpg
+<@PowerFoxG4> Rylee: picture of me with fox
+<@PowerFoxG4> Rylee: NOT A BUTTPLUG
+%
+In #xkcd (Foonetic):
+(WassPord) I'm the thing that goes *bump* OW, FUCKFUCKFUCK in the night.
+%
+In #archlinux-mordor (freenode):
+<+tigrmesh> is rabbitear ... sober?
+<+Mion> he is like DF, only makes sense when he is drunk
+%
+In #Sporks (Interlinked):
+<@lstarnes> wtf.  minecraft main screen message: Lennart lennart = new Lennart();
+%
+In #charybdis (StaticBox):
+<aji> va_end(va);
+<va> or as we say, "amen".
+%
+In #geek (PonyChat):
+<Khiriena> Hypothetical:  The tribes of Apeshit and Batshit are in a religious war over holy ground.  During the day, Apeshit sends one person -more than that is considered sacrilege- over to their shrine, at the end of the holy ground farthest from their village.
+<Khiriena> This is impeded by the efforts of the Batshit tribe, who, as their "war tactic", during the nights, when the Apeshit tribe members are asleep, construct a maze of sorts.  They aren't very creative however, so the maze only ever has one correct path.
+<Khiriena> That is, the maze has three sections where one is to choose from two pathways.  The wrong paths lead to dead ends, sometimes with literal death at the hands of the Batshit tribe members.  Which paths are wrong changes every night, since the Batshit tribe members rebuild the maze each time.  It is, however, consistently too large to be navigated around.
+<Khiriena> Thus, assuming the Apeshit tribe members want to send someone to provide offerings to their shrine, and the offering bringer is guaranteed to survive if the correct paths are chosen in the maze, what are the odds the offering bringer will reach the shrine?
+<Khiriena> In simpler terms, I guess....  The correct one of two paths must be chosen three times in succession to get through the maze.  What are the odds of succeeding?
+<DewdropMaple> That's a one-in-eight chance of success.
+<DewdropMaple> Exactly one valid path out of 2^3 possible paths, so 1/8.
+<Khiriena> Ah yes.  Thanks & sorry, for both my stupidity, and my stupid "story".
+%
+<@kaniini> i was pretty much stoned when i wrote most of atheme
+%
+In #archers (Freenode):
+<vegai> If you put root beer in a square cup, does it become normal beer?
+%
+ * Majic 2005-glomps Milambar
+<Majic> 2005 because... 2006 was the year the glomp became less about fanime and more about premarital sex.
+%
+In #archlinux (freenode):
+<Auv> What would be a good way to pick a tiling window manager?
+<@grawity> dice roll
+%
+In #archlinux-offtopic (freenode):
+-i- polyzen is now known as bender
+<bender> .gif
+%
+In #archers (freenode):
+<demize> Your English had issues too. ;p
+<demize> ‘needs reinstalled’ doesn’t English.
+<amcrae> that still seems fine to me...
+<demize> That sentence needs a ‘to be’ in it.
+<grawity> your English needs reinstalled
+<amcrae> "to be" is optional according to the saying:  "to be or not to be"
+<demize> Don’t take your grammar advice from Shakespeare.
+%
+In #archers (freenode):
+<dreisner> from #bash: "so if i background variables, they should all be quicker?"
+%
+In #irchelp (EFnet):
+(grawity) hmm, how many EFnet servers run SSL on 6697 now?
+(grawity) IIRC, it used to just be 9999
+(@Raccoon) nearly half
+(@Raccoon) some do both
+(@Raccoon) btw, 9999 was totally accidental
+(grawity) ?
+(@Raccoon) AndroSyn used 9999 as a test port one day and forgot to switch the default config back to 6697 when a major release went out
+(@Raccoon) So servers just used it.
+%
+In #systemd (freenode):
+(dreisner) doctor, it hurts when i do this.
+-i- dreisner is now known as dr_eisner
+(dr_eisner) don't do that.
+-i- dr_eisner is now known as dreisner
+%
+In #atheme (freenode):
+(@kaniini) ChanServ: topicappend <Jack> Ok, the support here, is very bad, i install anope for my server, bye
+(@kaniini) you know the concept of sticking someone's head on a pole to discourage others from visiting?
+(@kaniini) yeah, that's what that is.
+%
+In #archers (freenode):
+(strcat) it's not my fault my wife was my sister
+...
+(strcat) I'm currently married to my grandmother
+(strcat) she has good stats and I don't need more kids
+(strcat) so why not reuse her
+%
+In #archlinux-offtopic (freenode):
+(rabbitear_sdf) when I'm scared I echo it to the irc or stdout first
+...
+(grawity) ...did someone replace rabbitear_sdf with a markov chain?
+(+GermainZ) grawity: no that's how he normally operates
+(+mankypirate) grawity: could you tell the difference anyway
+%
+<-- kaniini (~kaniini@snuggly.rabbit) has quit (K-Lined)
+(Aerdan) they accidentally klined themselves.
+%
+In #archlinux-offtopic (freenode)
+(grawity) jesus fucking christ how many dick quotegrabs can one person have
+...
+(+Celti) I (thankfully) don't have many dick quotes.
+(+Celti) And hopefully never will.
+(demize) !qg 34168
+(@phrik) demize: <Celti> Aaaaand we're back to penises *again*.
+...
+[after some '!ungrab'bing]
+(James_T) my qlist shrank! :O
+(+Celti) Every guy has that problem occasionally, James_T. It happens.
+%
+In #xkcd:
+(epicloot) leg hair is growing its own leg hair
+%
+In #archlinux (freenode):
+(Tom^) Arch-TK: "Your 93MB of .rar files could not be found. Are you sure you didn't accidentally them?"
+(Tom^) Arch-TK: wat
+(Arch-TK) Tom^: Did you accidentally your 93 MB of .rar files?
+(Tom^) Arch-TK: i dont rar
+(ecogiko) do you even rar bro
+%
+In #vms (2600net):
+<lordnkon> hm, seems that i forgot my password or doesnt have an account anymore and when creating some new account: Error MAIL$_ERRACTRNS: cannot activate transport. Is SMTP configured?
+<Hoff> Aaaaaasrrrggggjhjhhhh fscking deathrow mail.
+<Hoff> Mail on the cluster is dead dead dead dead dead.
+<Hoff> Mail does not work.
+<Hoff> Mail will not work.
+<Hoff> Mail has been hosed.
+<Hoff> Mail will be hosed.
+<Hoff> Do not expect Deathrow mail to work.
+<Hoff> Ever.
+<Hoff> Mail is a problem.
+<Hoff> One of the most frustrating things with that damn cluster.
+<pontus> clusters in general or just deathrow
+<Hoff> Messages.  Warnings.  Whatever.   All ignored.
+<Hoff> That, and with MAIL dead the reset and the registration is dead.
+<Hoff> Which just means more questions about Mail.
+<Hoff> Fucking deathrow.  Utter crap configuration.  Crap DNS.  Crap connection.   Which leads to me getting piles of “MAIL IS BORKED” questions, and there’s nothing I can do about it.  And — as the next offer will invariably involve help, I know what’s wrong, and it’s out of my control.
+<Hoff> Damned mail has very nearly convinced me to log off the cluster permanently.
+<Hoff> *Yeah, you’ve hit a nerve.*
+<lordnkon> lol
+<Hoff> Um, that’s not a joke.  I’m pissed off at this problem, and I’m tired of being in the middle of this.  I don’t need that.
+<Hoff> Ah, I see it’s time to go do something else for a while.  Have fun, y’all.
+<-- Hoff (~Adium@static-64-223-186-195.man.east.myfairpoint.net) has quit (Quit: Leaving.)
+<krokodil> lol
+<krokodil> wow i have never seen that before
+%
+In #Sporks (Interlinked):
+(@Elizafox) firefly cosplay
+(@Elizafox) "I WISH I COULD QUIT YOU"
+(mc68030) Elizafox: firefox cosplay
+(mc68030) I AM A LEAF ON THE WIND, WATCH ME SEGFAULT
+%
+In #gentoo-chat (freenode):
+(+wiktor_b) gut checkout master
+(+wiktor_b) gut says master checks out daaaamn nice
+%
+In #xkcd:
+<ten> my prefered pronouns are veni/vidi/vici
+%
+In #xkcd:
+<ten> your spirit animal must be a box of kleenex
+%
+In #archlinux (freenode):
+(@amcrae) I potentially know what I am doing :P
+(@amcrae) but I am also doing the update while drunk, so....
+%
+In #archlinux (freenode):
+(Tom^) !shrug
+(phrik) ¯\(º_o)/¯
+(hiptobecubic) looks like phrik is on meth
+(beest) !gurhs
+(phrik) _/(o¯ō)\_
+(grawity) ...that exists?
+(beest) oh, someone changed the shrug
+(grawity) of course it exists.
+(beest) yes, i was bored and a little stoned.
+%
+In #freenode (freenode):
+(cadenadebloques_) Watching some of the "conversation" here, I wonder how it differs
+                   from a bitcoin nodes using IRC for peer discovery.
+(cadenadebloques_) As far as I know, everyone here is an "intelligent" botnet.
+(cadenadebloques_) I wonder about obfuscating such a thing. Instead of doing what
+                   bitcoiners did by hiding the channel and trying to obscure it,
+                   rather being loud in a public channel using next generation Eliza
+                   tech, but the machine generated language was actually a form of
+                   code.
+(cadenadebloques_) "Hey how is everyone today?" = "PING"
+(cadenadebloques_) "Shut up faggot" = PONG
+(cadenadebloques_) No one would even notice
+%
+In #archlinux (freenode):
+<Arch-TK> This is quite funny, I once ran a teamspeak server temporarily for some friends on my server, and now I check it and there's 4 random polish people there. It's like internet squatting.
+%
+In #archlinux:
+<sudokode> you only use 10% of your brain because the other 90% is needed to run flash
+%
+In #archlinux:
+<Arch-TK> Adobe: "Do you know what your marketing team is doing?"
+<Arch-TK> on an advert involving a guy trying to get drugs from a drug dealer.
+<Arch-TK> Does adobe know what *their* marketing team is doing?
+%
+In #fredrin (freenode):
+<DarkoNeko> so, miho's haircut is dangerous to catgirls.. because you may see the ears sometimes ?
+<@RayKremer> darko: the vast majority of catgirls with "real" cat ears, their hair style hides where the human ears should be so that it doesn't get all uncanny valley
+<@RayKremer> Fred likes to throw around a silly notion that checking under a catgirl's hair would be like dividing by zero
+%
+In #xkcd (Foonetic):
+<rcombs> "I do not have enough middle fingers to respond to that."
+<rcombs> ^ this game's localization is 
+%
+In #systemd (freenode):
+(twb) One hilarious case I saw recently was "average HTTP response code: 200.17"
+(twb) Thinking "oh yes, we should set it to send an alert if it gets as high as 210"
+%
+In #anime (freenode):
+12:48 <trohrt> ,stab nexia 
+12:48 <+kotorin> trohrt: o()xxxx[{::::::*nexia*::::::>
+12:58 --> nexia [Nexia] (Qwertie) (~nexia@unaffiliated/nexia) has joined #anime
+12:58 <nexia> did you like just, stab me
+12:58 <nexia> ,stab trohrt 
+12:58 <+kotorin> nexia: nexia tries to stab trohrt, but instead they slip and accidentally stab themself!
+12:58 <+kotorin> nexia: o()xxxx[{::::::*nexia*::::::>
+%
+In #git (freenode):
+<awilkins> Then you have Visual SourceSafe which takes most of the flaws of CVS and elevates them to a fine art
+<awilkins> The ability to commit changes in the FUTURE that occur later
+<awilkins> You could wind your clock forward, commit a change, and it wouldn't show up until that time
+<awilkins> Ideal for delayed-action logic bombs in companies you hate
+%
+In #archlinux-offtopic (freenode):
+(diegoviola) how does one adds an entry to the linux menuconfig?
+(diegoviola) no, fuck that
+(diegoviola) found it
+(diegoviola) should I remove the driver mention also from teh MAITNAINERS file?
+(diegoviola)         modified:   drivers/net/ethernet/Kconfig
+(diegoviola)         deleted:    drivers/net/ethernet/jme.c
+(diegoviola)         deleted:    drivers/net/ethernet/jme.h
+(grawity) lol good fucking luck getting that upstreamed
+(diegoviola) grawity: I've been trying to get help from the maintainer for days and he ignores me
+(grawity) no, seriously, if you manage to upstream that, I'll strangle you with a Cat5
+(grawity) because that's also my Ethernet driver
+%
+In #charybdis (freenode):
+<Bureaucat> static const char lusers_desc[] =
+<Bureaucat>         "Provides the LUSERS command to view the number of virgins on the current server";
+<Bureaucat> ...
+<Bureaucat> nah I shouldn't
+<Bureaucat> actually maybe I should
+<Bureaucat> it'll be hilarious
+<Bureaucat> someone will be like
+<Bureaucat> "HOW DOES IT KNOW?"
+<Bureaucat> *looks at lusers output*
+<Bureaucat> "that's the total number of us... oh"
+%
+In #xkcd (Foonetic):
+<CO2> the next version should be called C-quel
+<CO2> although people will confuse that with SQL
+<drowsyturtle> get meta and call it "C what-we-did-there"?
+<drowsyturtle> (I don't get to name things much)
+%
+In #linux (Aitvaras):
+<@Prasmatnus> pwgen -s 30 ir pirmi 5 simboliai "kurva"
+<@Prasmatnus> :|
+%
+In #irssi (freenode):
+<dx> Rhonda: do the thing you have to do
+<dx> DalekSec: be ready to get the thing done
+<dx> everyone else: get hype
+%
+In #archlinux (freenode):
+<savu> hi there, what would be the sane course of action in using ubuntu packages / ppa in arch?
+<Scimmia> savu, not already in the AUR?
+<savu> Scimmia: I'll check to be certain but it was released yesterday so I doubt it :)
+<grawity> savu: what *is* the program, anyway
+<savu> grawity: Runescape NXT client
+<grawity> savu: oh, I packaged that before the first beta came out
+<savu> no you didn't :D
+<grawity> savu: aur/runescape-launcher
+<savu> dang
+<thurstylark> hah, xyproblem peak reached
+<savu> yeah the embarrassment
+%
+In #xkcd:
+<seven> In case you forgot, I'm here to help you re-meme-ber: http://knowyourmeme.com/memes/the-icy-hot-stuntaz 
+<seven> I feel pretty good about that re-meme-ber thing.
+%
+In #archlinux-offtopic:
+<pingfloyd> revolutionary IOT cloud service providing 5 neins availability
+%
+In #freebsd (freenode):
+<Midian> Anyone know why 11 is being delayed?
+<mulvane> The knob only goes to 10.
+%
+In #archlinux-offtopic (freenode):
+<Shinryuu> how did I fap myself in to this condition..
+%
+In #archlinux-offtopic (freenode):
+<besenwesen> Now playing: ♫Too Many Hats feat. halosghost – The Bagels of Doom♫
+%
+In #archlinux-offtopic (freenode):
+(James_T) !pastryroulette
+(@phrik) bagel
+(James_T) !pastryroulette
+(@phrik) bagel
+(James_T) what
+(James_T) !literal pastryroulette
+(@phrik) James_T: <reply> bagel
+(James_T) :|
+%
+In #archlinux-offtopic (freenode):
+<U83R> what the hell?
+<@tigrmesh> U83R: you came in after a mass kick and ban
+<onetwo_> tfw I am not among them this time
+<U83R> tigrmesh: what exatcly happened?
+<@tigrmesh> they posted links to stupid stuff
+<onetwo_> If the memes had at least been dank

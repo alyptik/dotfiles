@@ -1,0 +1,45 @@
+# Do not edit -- this file documents how Postfix was built for your machine.
+#----------------------------------------------------------------
+# Start of summary of user-configurable 'make makefiles' options.
+# CCARGS=-DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl                -DHAS_LDAP                -DUSE_TLS                -DHAS_MYSQL -I/usr/include/mysql                -DHAS_PGSQL -I/usr/include/postgresql                -DHAS_SQLITE                -DHAS_CDB                -DDEF_COMMAND_DIR=\"/usr/bin\"                -DDEF_DAEMON_DIR=\"/usr/lib/postfix/bin\"                -DDEF_SENDMAIL_PATH=\"/usr/bin/sendmail\"                -DDEF_README_DIR=\"/usr/share/doc/postfix\"                -DDEF_MANPAGE_DIR=\"/usr/share/man\"        
+# AUXLIBS=-lsasl2                -lldap -llber                -lssl -lcrypto                -lmysqlclient -lz -lm                -lpq                -lsqlite3 -lpthread                -lcdb        
+# shared=yes
+# dynamicmaps=
+# pie=yes
+# End of summary of user-configurable 'make makefiles' options.
+#--------------------------------------------------------------
+# System-dependent settings and compiler/linker overrides.
+SYSTYPE	= LINUX4
+_AR	= ar
+ARFL	= rv
+_RANLIB	= ranlib
+SYSLIBS	= -pie -lsasl2 -lldap -llber -lssl -lcrypto -lmysqlclient -lz -lm -lpq -lsqlite3 -lpthread -lcdb -lpcre -ldb -lnsl -lresolv -ldl -L/usr/lib -licui18n -licuuc -licudata 
+CC	= gcc -fPIC -I. -I../../include -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl -DHAS_LDAP -DUSE_TLS -DHAS_MYSQL -I/usr/include/mysql -DHAS_PGSQL -I/usr/include/postgresql -DHAS_SQLITE -DHAS_CDB -DDEF_COMMAND_DIR=\"/usr/bin\" -DDEF_DAEMON_DIR=\"/usr/lib/postfix/bin\" -DDEF_SENDMAIL_PATH=\"/usr/bin/sendmail\" -DDEF_README_DIR=\"/usr/share/doc/postfix\" -DDEF_MANPAGE_DIR=\"/usr/share/man\" -I/usr/include -DHAS_DEV_URANDOM -DHAS_PCRE -DUSE_DYNAMIC_LIBS -UUSE_DYNAMIC_MAPS $(WARN)
+OPT	= -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -Wl,-O1,--sort-common,--as-needed,-z,relro
+DEBUG	= 
+AWK	= awk
+STRCASE = 
+EXPORT	= CCARGS='-I. -I../../include -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl -DHAS_LDAP -DUSE_TLS -DHAS_MYSQL -I/usr/include/mysql -DHAS_PGSQL -I/usr/include/postgresql -DHAS_SQLITE -DHAS_CDB -DDEF_COMMAND_DIR=\"/usr/bin\" -DDEF_DAEMON_DIR=\"/usr/lib/postfix/bin\" -DDEF_SENDMAIL_PATH=\"/usr/bin/sendmail\" -DDEF_README_DIR=\"/usr/share/doc/postfix\" -DDEF_MANPAGE_DIR=\"/usr/share/man\" -I/usr/include -DHAS_DEV_URANDOM -DHAS_PCRE -DUSE_DYNAMIC_LIBS -UUSE_DYNAMIC_MAPS' OPT='-march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -Wl,-O1,--sort-common,--as-needed,-z,relro' DEBUG=''
+WARN	= -Wall -Wno-comment -Wformat -Wimplicit -Wmissing-prototypes \
+	-Wparentheses -Wstrict-prototypes -Wswitch -Wuninitialized \
+	-Wunused -Wno-missing-braces
+DEFINED_MAP_TYPES = ldap mysql pgsql sqlite cdb dev_urandom pcre
+MAKE_FIX = 
+# Switch between Postfix static and dynamically-linked libraries.
+AR	= :
+RANLIB	= :
+LIB_PREFIX = postfix-
+LIB_SUFFIX = .so
+SHLIB_CFLAGS = -fPIC
+SHLIB_DIR = /usr/lib/postfix
+SHLIB_LD = gcc -shared -Wl,-soname,${LIB}
+SHLIB_SYSLIBS = -lsasl2 -lldap -llber -lssl -lcrypto -lmysqlclient -lz -lm -lpq -lsqlite3 -lpthread -lcdb -lpcre -ldb -lnsl -lresolv -ldl -L/usr/lib -licui18n -licuuc -licudata
+SHLIB_RPATH = -Wl,--enable-new-dtags -Wl,-rpath,${SHLIB_DIR}
+# Switch between dynamicmaps.cf plugins and hard-linked databases.
+NON_PLUGIN_MAP_OBJ = $(MAP_OBJ)
+PLUGIN_MAP_OBJ = 
+PLUGIN_MAP_OBJ_UPDATE = 
+PLUGIN_MAP_SO_MAKE = 
+PLUGIN_MAP_SO_UPDATE = 
+PLUGIN_LD = 
+# Application-specific rules.

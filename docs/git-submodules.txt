@@ -1,0 +1,132 @@
+# Dealing with `git` submodules
+
+> Programs must be written for people to read, and only incidentally for
+> machines to execute. -- Hal Abelson
+
+Often when building packages from git sources you can encounter submodules.
+These can be problematic if not handled correctly particularly if they are large
+repositories as each time you run `makepkg` with a naïve PKGBUILD it will
+re-initialise and download each one, each time.
+
+A good strategy to deal with this is including each submodule as a separate
+entry in "`source=()`" and then update the main repositories submodule
+configuration to point at the local clones in the "`prepare()`" function.
+
+## Case study: PPSSPP
+PPSSPP is a HLE (High Level Emulator) emulating the PSP.  It contains a number
+of submodules and a custom fork of ffmpeg which is over 340M in size!
+
+A naïve solution may look something like this:
+
+```bash
+source=('git://github.com/hrydgard/ppsspp.git')
+
+prepare() {
+    cd ppsspp
+    git submodule update --init --recursive
+    # Potentially more operations such as checking out branches and pulling
+}
+```
+
+It's pretty unrealistic to clone over 350M of data for every invocation of
+`makepkg` so lets fix this.
+
+We begin by looking at PPSSPP's "`.gitmodules`" file and see the following:
+
+```ini
+[submodule "native"]
+	path = native
+	url = https://github.com/hrydgard/native.git
+[submodule "pspautotests"]
+	path = pspautotests
+	url = https://github.com/hrydgard/pspautotests.git
+[submodule "lang"]
+	path = lang
+	url = https://github.com/hrydgard/ppsspp-lang.git
+[submodule "ffmpeg"]
+	path = ffmpeg
+	url = https://github.com/hrydgard/ppsspp-ffmpeg.git
+[submodule "dx9sdk"]
+	path = dx9sdk
+	url = https://github.com/hrydgard/minidx9.git
+[submodule "redist"]
+	path = redist
+	url = https://github.com/hrydgard/ppsspp-redist.git
+```
+
+We can immediately see that not only are there some fairly large repositories 
+but that we don't even need half of these on Linux!
+
+After some investigation we might find that the only needed submodules for us
+is "`native`", "`lang`" and "`ffmpeg`" as we don't need Visual C 2010
+Redistribution files for an installer ("`redist`"), DirectX9 SDK for their
+buildbot ("`dx9sdk`") or the development tools like "`pspautotests`".
+
+So lets flesh out our naïve solution and add those submodules to the
+"`source=()`" array.
+
+```bash
+source=('git://github.com/hrydgard/ppsspp.git'
+        'git://github.com/hrydgard/native.git'
+        'git://github.com/hrydgard/ppsspp-lang.git'
+        'git://github.com/hrydgard/ppsspp-ffmpeg.git')
+
+prepare() {
+    cd ppsspp
+    git submodule update --init --recursive
+    # Potentially more operations such as checking out branches and pulling
+}
+```
+
+Oops, we've now managed to clone everything twice and more!  This is because we
+haven't fixed the "`prepare()`" function to switch the location for our newly
+cloned submodules.
+
+Git provides a 
+[git-config(1)](https://www.kernel.org/pub/software/scm/git/docs/git-config.html)
+command which lets us intelligently reconfigure the repositories' submodules.
+
+With this in mind we can manually adjust each of the required submodules to use
+"`"$srcdir"/<submodule>`" and then update them.
+
+```bash
+source=('git://github.com/hrydgard/ppsspp.git'
+        'git://github.com/hrydgard/native.git'
+        'git://github.com/hrydgard/ppsspp-lang.git'
+        'git://github.com/hrydgard/ppsspp-ffmpeg.git')
+
+prepare() {
+    cd ppsspp
+    # First initialise the submodules.
+    git submodule init
+
+    # Each of the clones are included under "$srcdir" (as everything in the
+    # `source=()` is) so we simply need to adjust the submodules to use them
+    # instead.
+    git config submodule.native.url "$srcdir"/native
+    git config submodule.lang.url "$srcdir"/ppsspp-lang
+    git config submodule.ffmpeg.url "$srcdir"/ppsspp-ffmpeg
+
+    # Now that we've configured the needful submodules let's update them.
+    # Note: You need to be explicit here otherwise it will attempt to update
+    #       the other unecessary submodules as well!
+    git submodule update native lang ffmpeg
+}
+```
+
+Some git repositories can be a little tricky with regards to where exactly the
+submodules are found.
+
+For example
+[blender](http://git.blender.org/gitweb/gitweb.cgi/blender.git/tree) keeps all
+of their submodules under "`release/*/submodule`" which would thus require using
+the following "`git-config`" to correctly set the new location:
+
+```bash
+git submodule init
+git config submodule.release/scripts/addons.url "$srcdir"/addons
+git submodule update release/scripts/addons
+```
+
+And that's all there is to it.  Submodules dealt with.
+

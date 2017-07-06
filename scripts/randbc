@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Use bash's random number feature to seed rand.bc's random number
+# generator (bc has no means of generating a seed).
+
+# This script can be used instead of the bc executable to start
+# bc when random numbers are required.
+
+TEMPFILE=/tmp/$(basename $0).$$.bc
+echo ".=srand($RANDOM.$RANDOM$RANDOM$RANDOM$RANDOM/9)" > $TEMPFILE
+
+\bc "$@" rand/rand.bc $TEMPFILE
+\rm -f $TEMPFILE

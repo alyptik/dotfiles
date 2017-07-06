@@ -1,0 +1,71 @@
+--- urxvt/perl/url-select	2015-06-13 10:37:43.000000000 -0700
++++ urxvt/perl/url-select	2015-09-07 22:49:14.727155524 -0700
+@@ -94,7 +94,7 @@
+ sub line_update {
+ 	my ($self, $row) = @_;
+
+-	my $line = $self->line($row);
++	my $line = $self->multiline($row);
+ 	my $text = $line->t;
+ 	my $rend = $line->r;
+
+@@ -191,7 +191,7 @@
+ 	if ($event->{button} == $self->{button} && ($event->{state} & $mask) == $self->{state}) {
+ 		my $col = $event->{col};
+ 		my $row = $event->{row};
+-		my $line = $self->line($row);
++		my $line = $self->multiline($row);
+ 		my $text = $line->t;
+
+ 		for my $pattern (@{$self->{pattern}}) {
+@@ -255,9 +255,9 @@
+
+ 	while (($dir < 0 && $row > $self->top_row) ||
+ 	       ($dir > 0 && $row < $self->nrow - 1)) {
+-		my $line = $self->line($row);
++		my $line = $self->multiline($row);
+ 		$row = ($dir < 0 ? $line->beg : $line->end) + $dir;
+-		$line = $self->line($row);
++		$line = $self->multiline($row);
+ 		my $text = $line->t;
+
+ 		for my $pattern (@{$self->{pattern}}) {
+@@ -401,3 +401,38 @@
+
+ 	()
+ }
++
++# copied from rxvt-unicode-9.21/src/urxvt.pm:1790
++# originally "sub line"
++sub multiline {
++   my ($self, $row) = @_;
++
++   my $maxrow = $self->nrow - 1;
++
++   my ($beg, $end) = ($row, $row);
++
++   my $ncol = $self->ncol;
++
++   ################################################################
++   # FHE 07 Sep 2015
++
++   # Change the definition of extended lines to work with curses
++   # applications. We could also do this by changing ROW_is_longer in
++   # the urxvt core, not sure what that would affect
++
++   # --$beg while $self->ROW_is_longer ($beg - 1);
++   # ++$end while $self->ROW_is_longer ($end) && $end < $maxrow;
++
++   --$beg while $self->ROW_l($beg-1) == $ncol;
++   ++$end while $end < $maxrow && $self->ROW_l($end) == $ncol;
++   ################################################################
++
++   bless {
++      term => $self,
++      beg  => $beg,
++      end  => $end,
++      ncol => $self->ncol,
++      len  => ($end - $beg) * $self->ncol + $self->ROW_l ($end),
++   }, urxvt::line::
++}
++

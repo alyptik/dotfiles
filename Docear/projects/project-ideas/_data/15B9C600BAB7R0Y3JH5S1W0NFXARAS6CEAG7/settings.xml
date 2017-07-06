@@ -1,0 +1,12 @@
+<project name="project-ideas" ID="15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7" version="docear 1.0">
+<folder type="library" name="Library">
+<link type="literature_annotations" name="Literature &amp; Annotations" path="project://15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/_data/15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/default_files/literature_and_annotations.mm"/>
+<link type="file" name="Temp" path="project://15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/_data/15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/default_files/temp.mm" system="true"/>
+<link type="file" name="Trash" path="project://15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/_data/15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/default_files/trash.mm" system="true"/>
+</folder>
+<folder type="physical" name="My drafts" path="project://15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/_data/15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/My%20Drafts/"/>
+<folder type="literature_repository" name="Literature repository" system="true">
+<folder type="repository_path" name="default" path="file:/home/alyptik/Docear/projects/project-ideas/literature_repository"/>
+</folder>
+<link type="references" name="References" path="project://15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/_data/15B9C600BAB7R0Y3JH5S1W0NFXARAS6CEAG7/default_files/project-ideas.bib" system="true"/>
+</project>

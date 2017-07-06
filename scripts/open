@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -o errexit -o pipefail
+
+{ if [[ -t 0 ]]; then
+	[[ -z "$*" ]] && exit 1
+	<<<"$@" tee \
+		>(plumber) \
+		>(perl -pe "chomp" | xsel -ib)
+else
+	xargs -r echo | tee \
+			>(plumber) \
+			>(perl -pe "chomp" | xsel -ib)
+fi; } >/dev/null 2>&1
+
+# >(perl -pe "chomp" | xclip -i -selection clipboard) >/dev/null 2>&1

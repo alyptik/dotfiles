@@ -1,0 +1,488 @@
+#!/usr/bin/bc -l
+
+### Complex.BC - Rudimentary complex number handling for GNU BC
+
+  ## Not to be regarded as suitable for any purpose
+  ## Not guaranteed to return correct answers
+
+# Uses the undocumented pass-by-reference method for arrays
+# Uses arrays to store complex and imaginary parts
+
+# Most functions are of the form f(*c, otherparams) meaning c = f(otherparams)
+
+# Code can be somewhat unwieldy
+# e.g. .= makecomplex(a[],1,2) sets a[] to be the complex number 1+2i
+
+# Non-trivial example: To find the absolute value of the arc-cosine of 1+2i
+# i.e. |arccos(1+2i)|, use: .=makecomplex(a[],1,2)+carccos(a[],a[]);cabs(a[])
+# ".=" is a bc trick to suppress output of function values
+# the "+" sign is used because it is shorter than ";.="
+#   i.e. end of statement and further output suppression
+# carccos(a[],a[]) means a = arccos(a)
+#   n.b. the first a[] is passed by reference, the second is by value
+# cabs() is used on its own as it returns a proper bc number
+
+# make a complex number from real and imaginary parts
+define makecomplex(*c__[],r,i) {
+  c__[0]=r;c__[1]=i
+}
+
+.= makecomplex(complex0[],0,0)
+.= makecomplex(complex1[],1,0)
+.= makecomplex(complex2[],2,0)
+.= makecomplex(complexi[],0,1)
+
+define makeomega() {
+  auto mh,hs3
+  mh=-1/2;hs3=sqrt(3)/2
+  .= makecomplex(complexomega[] ,mh, hs3)
+  .= makecomplex(complexomega2[],mh,-hs3)
+}
+.= makeomega()
+
+## Arrays - can't have an array of arrays in bc so workarounds required
+
+define carrayget(*c__[],a__[],i) { # c = a[i]
+  c__[0] = a__[i+=i]
+  c__[1] = a__[i+=1]
+}
+
+define carrayset(*a__[],i,c__[]) { # a[i] = c
+  a__[i+=i] = c__[0]
+  a__[i+=1] = c__[1]
+}
+
+## Useful basics
+
+# copy right hand parameter's contents into left; i.e. c = x
+define cassign(*c__[],x__[]) {
+  c__[0]=x__[0];c__[1]=x__[1]
+}
+
+# Assign the complex conjugate of a complex number; c = x*
+define cconj(*c__[],x__[]) {
+  c__[0]=x__[0];c__[1]=-x__[1]
+}
+
+# Turn a complex into its own conjugate
+define cconjself(*c__[]) {
+  c__[1]=-c__[1]
+}
+
+# Negate a complex; i.e. c*=-1
+define cnegself(*c__[]) {
+  c__[0]=-c__[0]
+  c__[1]=-c__[1]
+}
+
+# assign the negative of the right hand side to the left; c = -x
+define cneg(*c__[],x__[]) {
+  c__[0]=-x__[0]
+  c__[1]=-x__[1]
+}
+
+# Extract the real part; Re c
+define real(c__[]) {
+  return c__[0]
+}
+
+# Extract the imaginary part; Im c
+define imag(c__[]) {
+  return c__[1]
+}
+
+# Calculates the absolute value of a complex number; |c|
+# NB: returns a standard bc number and not a new fangled 'complex'
+define cabs(c__[]) {
+  return sqrt(c__[0]^2+c__[1]^2)
+}
+
+# Print a generated complex number
+define printc(c__[]) {
+  auto r,i
+  r = c__[0]
+  i = c__[1]
+  print r
+  if(i<0){print " -";i=-i}else{print " +"}
+  print " i*",i,"\n"
+}
+
+## Boolean
+
+define cequal(a__[],b__[]) {
+  return (a__[0]==b__[0])&&(a__[1]==b__[1])
+}
+
+## Basic math
+
+# Add two complex numbers; c = a + b
+define cadd(*c__[],a__[],b__[]) {
+  c__[0]=a__[0]+b__[0]
+  c__[1]=a__[1]+b__[1]
+}
+
+define caddassign(*c__[],b__[]) { # c += b
+  c__[0]+=b__[0]
+  c__[1]+=b__[1]
+}
+
+# Subtract a complex number from another; c = a - b
+define csub(*c__[],a__[],b__[]) {
+  c__[0]=a__[0]-b__[0]
+  c__[1]=a__[1]-b__[1]
+}
+
+define csubassign(*c__[],b__[]) { # c -= b
+  c__[0]-=b__[0]
+  c__[1]-=b__[1]
+}
+
+# Multiply two complex, return complex; c = a * b
+define cmul(*c__[],a__[],b__[]) {
+  c__[0]=a__[0]*b__[0]-a__[1]*b__[1]
+  c__[1]=b__[0]*a__[1]+a__[0]*b__[1]
+}
+
+define cmulassign(*c__[],b__[]) { # c *= b
+  auto a__[];
+  return cassign(a__[],c__[])+cmul(c__[],a__[],b__[])
+}
+
+# Divide one complex by another, returning a third
+define cdiv(*c__[],a__[],b__[]) {
+  auto aa;
+  aa = b__[0]^2+b__[1]^2
+  c__[0]=(a__[0]*b__[0]+a__[1]*b__[1])/aa
+  c__[1]=(b__[0]*a__[1]-a__[0]*b__[1])/aa
+}
+
+define cdivassign(*c__[],b__[]) { # c /= b
+  auto a__[];
+  return cassign(a__[],c__[])+cdiv(c__[],a__[],b__[])
+}
+
+## Basic Math II - fast[er] squaring, square roots and integer power
+
+# Square a complex number; c = x^2
+define csquare(*c__[],x__[]) {
+  c__[0]=x__[0]^2-x__[1]^2
+  c__[1]=2*x__[0]*x__[1]
+}
+
+define csquareself(*c__[]) { # c*=c or c^=2
+  auto a__[];
+  return cassign(a__[],c__[])+csquare(c__[],a__[]) # a = c; c = a^2
+}
+
+# Find the primary square root of a complex number; c = sqrt(x)
+define csqrt(*c__[],x__[]) {
+  auto r,i, sr, si
+  if(x__[1]==0){if(x__[0]>=0){
+    c__[0]=sqrt(x__[0]);c__[1]=0
+    return;
+  } else {
+    c__[0]=0;c__[1]=sqrt(-x__[0])
+    return;
+  }}
+  c__[0] = sqrt((sqrt(x__[0]^2+x__[1]^2)+x__[0])/2)
+  c__[1] = x__[1]/c__[0]/2
+}
+
+define csqrtself(*c__[]) { # c = sqrt(c)
+  auto a__[];
+  return cassign(a__[],c__[])+csqrt(c__[],a__[]) # a = c; c = sqrt(a)
+}
+
+# subfunctions for use by cintpow
+define mod(n,m) {auto s;s=scale;scale=0;n%=m;scale=s;return(n)}
+define int(n)   {auto s;s=scale;scale=0;n/=1;scale=s;return(n)}
+
+# Raise a complex number [z] to an integer power [n]
+# NB: n is a standard bc number and not a complex
+define cintpow(*c__[], z[], n) { # c = z^n
+  n = int(n)
+  if(n<0) { 
+    .= cintpow(c__[], z[], -n); # c = z^-n
+    .= cdiv(c__[], complex1[], c__[]);   # c = 1/c
+    return;
+  }
+  if(n==0)return( cassign(c__[],one[]) ) ; # c = 1
+  if(n==1)return( cassign(c__[],  z[]) ) ; # c = z^1 == z
+  if(n==2)return( csquare(c__[],  z[]) ) ; # c = z^2
+  .= cassign(c__[],complex1[]) ; # c = 1
+  while(n) { 
+    if(mod(n,2)) {
+      .= cmulassign(c__[], z[]) # c *= z
+      n -= 1
+    } else {
+      .= csquareself(z[])
+      n = int(n/2)
+    }
+  }
+}
+
+define cintpowassign(*c__[],n) { # c ^= n
+  auto a__[];
+  return cassign(a__[],c__[])+cintpow(c__[],a__[],n) # a = c; c = sqrt(a)
+}
+
+## Other
+
+# find the sign; c = sgn(x) = x/|x|
+define csgn(*c__[],x__[]) {
+  auto aa;
+  if(x__[0]==0&&x__[1]==0) return c__[0]=c__[1]=0;
+  aa = cabs(x__[]);
+  c__[0]=x__[0]/aa;c__[1]=x__[1]/aa
+}
+
+define csgnself(*x__[]) { # x /= |x|
+  auto aa;
+  if(x__[0]==0&&x__[1]==0) return;
+  aa = cabs(x__[]);
+  x__[0]/=aa;x__[1]/=aa
+}
+
+# Arctangent (two real arguments)
+# . borrowed from funcs.bc
+define arctan2(x,y) { 
+  auto p;
+  if(x==0&&y==0)return(0)
+  p=((y<0)+1-(y>0))*2*a(1)*(2*(x>=0)-1)
+  if(x==0||y==0)return(p)
+  return(p+a(x/y))
+}
+
+# Argument of complex number; returns standard bc number
+define carg(c__[]) {
+  return arctan2(c__[1],c__[0])
+}
+
+# cos + i sin -> cis; x is a standard bc number
+# . for complex x see ccis()
+define cis(*c__[],x) {
+  c__[0] = c(x)
+  c__[1] = s(x)
+}
+
+## Exponentials
+
+define cln(*c__[],x__[]) { # c = ln(x) == l(x)
+  c__[0] = l(cabs(x__[]))
+  c__[1] = carg(x__[])
+}
+
+define clnself(*c__[]) { # c = ln(x) == l(x)
+  auto t;
+  t = carg(c__[])
+  c__[0] = l(cabs(c__[]))
+  c__[1] = t
+}
+
+define cexp(*c__[],x__[]) { # c = exp(x) == e(x)
+  auto e;
+  e = e(x__[0])
+  c__[0] = e*c(x__[1])
+  c__[1] = e*s(x__[1])
+}
+
+define cexpself(*c__[]) { # c = exp(c) == e(c)
+  auto e;
+  e = e(c__[0])
+  c__[0] = e*c(c__[1])
+  c__[1] = e*s(c__[1])
+}
+
+define cpow(*c__[],a__[],b__[]) { # c = a^b
+  .= printc
+  .= clnself(a__[])          # a = ln(a)
+  .= cmulassign(a__[],b__[]) # a *= b
+  .= cexp(c__[],a__[])       # c = exp(a) == e(a)
+}
+
+define cpowassign(*c__[],b__[]) { # c ^= b
+  .= clnself(c__[])          # c = ln(c)
+  .= cmulassign(c__[],b__[]) # c *= b
+  .= cexpself(c__[])         # c = exp(c) == e(c)
+}
+
+## Trig
+
+define csin(*c__[],x__[]) {
+  auto e,em;
+  e=e(x__[1]);em=1/e
+  c__[0]=(e+em)/2*s(x__[0])
+  c__[1]=(e-em)/2*c(x__[0])
+}
+
+define ccos(*c__[],x__[]) {
+  auto e,em;
+  e=e(x__[1]);em=1/e
+  c__[0]=(em+e)/2*c(x__[0])
+  c__[1]=(em-e)/2*s(x__[0])
+}
+
+define ctan(*c__[],x__[]) {
+  auto e,em,d;
+  x__[0]+=x__[0];x__[1]+=x__[1]
+  e=e(x__[1]);em=1/e
+  d=c(x__[0])+(e+em)/2
+  c__[0]=s(x__[0])/d
+  c__[1]=(e-em)/(d+d)
+}
+
+define ccis(*c__[],x__[]) {
+  auto e;
+  e = e(-x__[1])
+  c__[0]=c(x__[0])*e
+  c__[1]=s(x__[0])*e
+}
+
+define ccosec(*c__[],x__[]) {
+  return csin(c__[],x__[]) + cdiv(c__[],complex1[],c__[]) # c = sin(x); c = 1/c
+}
+
+define csec(*c__[],x__[]) {
+  return ccos(c__[],x__[]) + cdiv(c__[],complex1[],c__[]) # c = cos(x); c = 1/c
+}
+
+define ccotan(*c__[],x__[]) {
+  return ctan(c__[],x__[]) + cdiv(c__[],complex1[],c__[]) # c = tan(x); c = 1/c
+}
+
+define csinh(*c__[],x__[]) {
+  auto e,em;
+  e = e(x__[0]);em=1/e
+  c__[0]=(e-em)/2*c(x__[1])
+  c__[1]=(e+em)/2*s(x__[1])
+}
+
+define ccosh(*c__[],x__[]) {
+  auto e,em;
+  e = e(x__[0]);em=1/e
+  c__[0]=(em-e)/2*c(x__[1])
+  c__[1]=(em+e)/2*s(x__[1])
+}
+
+define ctanh(*c__[],x__[]) {
+  auto e,em,d;
+  x__[0]+=x__[0];x__[1]+=x__[1]
+  e=e(x__[0]);em=1/e
+  d=c(x__[1])+(e+em)/2
+  c__[0]=(e-em)/(d+d)
+  c__[1]=s(x__[1])/d
+}
+
+define ccosech(*c__[],x__[]) {
+  return csinh(c__[],x__[]) + cdiv(c__[],complex1[],c__[]) # c = sinh(x); c = 1/c
+}
+
+define csech(*c__[],x__[]) {
+  return ccosh(c__[],x__[]) + cdiv(c__[],complex1[],c__[]) # c = cosh(x); c = 1/c
+}
+
+define ccotanh(*c__[],x__[]) {
+  return ctanh(c__[],x__[]) + cdiv(c__[],complex1[],c__[]) # c = tanh(x); c = 1/c
+}
+
+# Inverse Trig
+
+define carcsin(*c__[],x__[]) {
+  .= cmul(c__[],complexi[],x__[]) # c = i*x
+  .= csquareself(x__[])           # x = x^2
+  .= csub(x__[],complex1[],x__[]) # x = 1-x
+  .= csqrtself(x__[])             # x = sqrt(x)
+  .= caddassign(c__[],x__[])      # c += x
+  .= clnself(c__[])               # c = ln(c)
+  .= cmulassign(c__[],complexi[]) # c *= i
+  .= cnegself(c__[])              # c = -c
+}
+
+define carccos(*c__[],x__[]) {
+  .= cmul(c__[],complexi[],x__[]) # c = i*x
+  .= csquareself(x__[])           # x = x^2
+  .= csub(x__[],complex1[],x__[]) # x = 1-x
+  .= csqrtself(x__[])             # x = sqrt(x)
+  .= caddassign(c__[],x__[])      # c += x
+  .= clnself(c__[])               # c = ln(c)
+  .= cmulassign(c__[],complexi[]) # c *= i
+     c__[0] += 2*a(1)             # c += pi/2
+}
+
+define carctan(*c__[],x__[]) {
+  .= cmulassign(x__[],complexi[]) # x *= i
+  .= csub(c__[],complex1[],x__[]) # c = 1-x
+  .= caddassign(x__[],complex1[]) # x += 1
+  .= clnself(c__[])               # c = ln(c)
+  .= clnself(x__[])               # x = ln(x)
+  .= csubassign(c__[],x__[])      # c -= x
+  .= cmulassign(c__[],complexi[]) # c *= i
+     c__[0]/=2;c__[1]/=2          # c /= 2
+}
+
+define carccis(*c__[],x__[]) {
+  .= cassign(c__[],x__[])    # c = x
+  .= csquareself(c__[])      # c ^= 2
+     c__[0] += 1             # c += 1
+  .= caddassign(x__[],x__[]) # x += x == x *= 2
+  .= cdivassign(c__[],x__[]) # c /= x
+  .= carccos(c__[],c__[])    # c = arccos(c)
+}
+
+define carccosec(*c__[],x__[]){
+  .= cdiv(x__[],complex1[],x__[]) # x = 1/x
+  .= carcsin(c__[],x__[])         # c = arcsin(x)
+}
+
+define carcsec(*c__[],x__[]){
+  .= cdiv(x__[],complex1[],x__[]) # x = 1/x
+  .= carccos(c__[],x__[])         # c = arccos(x)
+}
+
+define carccotan(*c__[],x__[]){
+  .= cdiv(x__[],complex1[],x__[]) # x = 1/x
+  .= carctan(c__[],x__[])         # c = arctan(x)
+}
+
+define carcsinh(*c__[],x__[]) {
+  .= cassign(c__[],x__[])    # c = x
+  .= csquareself(x__[])      # x = x^2
+     x__[0] += 1             # x += 1
+  .= csqrtself(x__[])        # x = sqrt(x)
+  .= caddassign(c__[],x__[]) # c += x
+  .= clnself(c__[])          # c = ln(c)
+}
+
+define carccosh(*c__[],x__[]) {
+  .= cassign(c__[],x__[])    # c = x
+  .= csquareself(x__[])      # x = x^2
+     x__[0] -= 1             # x -= 1
+  .= csqrtself(x__[])        # x = sqrt(x)
+  .= caddassign(c__[],x__[]) # c += x
+  .= clnself(c__[])          # c = ln(c)
+}
+
+define carctanh(*c__[],x__[]) {
+  .= cassign(c__[],x__[])         # c = x
+     c__[0] += 1                  # c += 1
+  .= csub(x__[],complex1[],x__[]) # x = 1-x
+  .= clnself(c__[])               # c = ln(c)
+  .= clnself(x__[])               # x = ln(x)
+  .= csubassign(c__[],x__[])      # c -= x
+     c__[0]/=2;c__[1]/=2          # c /= 2
+}
+
+define carccosech(*c__[],x__[]){
+  .= cdiv(x__[],complex1[],x__[]) # x = 1/x
+  .= carcsinh(c__[],x__[])        # c = arcsinh(x)
+}
+
+define carcsech(*c__[],x__[]){
+  .= cdiv(x__[],complex1[],x__[]) # x = 1/x
+  .= carccosh(c__[],x__[])        # c = arccosh(x)
+}
+
+define carccotanh(*c__[],x__[]){
+  .= cdiv(x__[],complex1[],x__[]) # x = 1/x
+  .= carctanh(c__[],x__[])        # c = arctanh(x)
+}

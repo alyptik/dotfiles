@@ -1,0 +1,23 @@
+[connection]
+id=Arch PPTP
+uuid=bd518d8a-d5f8-4fd7-b63c-a0c2af664806
+type=vpn
+permissions=
+secondaries=
+
+[vpn]
+gateway=alyptik.xyz
+lcp-echo-failure=5
+user=alyptik
+lcp-echo-interval=30
+password-flags=1
+require-mppe-128=yes
+service-type=org.freedesktop.NetworkManager.pptp
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+dns-search=
+method=auto

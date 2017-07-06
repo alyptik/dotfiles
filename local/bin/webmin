@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo /etc/webmin/restart 2>/dev/null || \
+sudo /etc/webmin/start && \
+sudo /etc/webmin/reload

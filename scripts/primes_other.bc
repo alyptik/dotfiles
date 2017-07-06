@@ -1,0 +1,117 @@
+#!/usr/bin/bc -l primes.bc
+
+### Primes-Other.BC - Extra functions to go along with Primes.BC
+
+# Both Funcs.BC and Primes.BC are required to use functions herein
+
+# Returns 2, 3, or number of form 6n[+-]1
+define aq(x) {
+ if(x<0)return(-aq(-x))
+ if(x<3)return(x+1)
+ x-=3;x+=int(x/2)
+ return(x+x+5)
+}
+
+# Inverse of the above
+define iaq(x) {
+ if(x<0)return(-iaq(-x))
+ if(x<4)return(x-1)
+ return((remainder(x+3,6)+x+x)/6+1)
+}
+
+# Returns 2, 3, 5 or number of form 30n[+-]{1,7,11,13}
+define aq30(x) {
+ auto os, e, r, rh, s
+ os=scale;scale=0;x/=1
+ if(x<0){x=-aq30(-x);scale=os;return(x)}
+ if(x<4){x=x+1+x/3  ;scale=os;return(x)}
+ x-=3     ; e=x/8
+ r=x%8    ; rh=r/4
+ s=1-2*rh ; r=s*r+7*rh
+ scale=os;return( 3*A*(e+rh)-s*(r*(r-7)-1) )
+}
+ 
+# Inverse of the above
+define iaq30(x) {
+ auto os, e, r
+ os=scale;scale=0;x/=1
+ if(x<0){x=-iaq30(-x);scale=os;return(x)}
+ if(x<7){x=x-1-x/5   ;scale=os;return(x)}
+ e=x/30;r=x%30
+ r=r/6+(r-2)/7
+ scale=os;return(8*e+r +3)
+}
+
+# Cyrek's Approximation to the Prime Counting Function pi(x)
+define aprimepi(x) { 
+ auto la,b,lx,k,oib;
+ if(x<=0)return 0
+ if(x<A){return x*aprimepi(A)/A}
+ oib=ibase;ibase=A;scale+=4
+ lx=l(x)/2.3026 #l(10)
+ la=2*l(lx)/(3*lx)
+ #b=1+2/(17*pow(cosh(lx-e(2)),1/32))
+ b=e(lx-e(2))
+ b=(b+1/b)/2 #cosh b
+ b=17*sqrt(sqrt(sqrt(sqrt(sqrt(b))))) #17.b^(1/32)
+ b=2/b+1
+ k=1+la-l(b)
+ ibase=oib;scale-=4
+ return(x*k/l(x))
+}
+
+# Use the above approximation to find a
+# number close to the nth prime
+define fastguessprime(n) {
+  auto os,l,x,ox,i;
+  os=scale;scale=10
+  s=1;if(n<0)n*=(s=-1)
+  n+=.5;l=l(n);x=n*l
+  ox=1
+  while(ox!=i){
+    ox=i;x+=l*(n-aprimepi(x))
+    scale=0;i=x/1;scale=10
+  }
+  scale=os;return ox
+}
+
+# Use the above to find a prime close to the nth prime
+# (is almost always wrong, but is generally within 0.5%)
+define guessprime(n) {
+  n=fastguessprime(n)
+  return nearestprime(n)
+}
+
+# Sum of prime factors of a number
+# . e.g. 150 = 2*3*5^2 -> 2+3+5*2 = 15
+define sum_of_factors(x) {
+  auto i,c,fp[];
+  if(x<0)return sum_of_factors(-x)-1;
+  if(x==0||x==1)return 0;
+  .=fac_store(fp[],x)
+  for(i=0;fp[i];i++)c+=fp[i]*fp[++i]
+  return c;
+}
+
+# As above but with no splitting of powers into multiplies
+# . e.g. 150 = 2*3*5^2 -> 2+3+5^2 = 30
+define sum_of_factor_terms(x) {
+  auto i,c,fp[];
+  if(x<0)return sum_of_factor_terms(-x)-1;
+  if(x==0||x==1)return 0;
+  .=fac_store(fp[],x)
+  for(i=0;fp[i];i++)c+=fp[i]^fp[++i]
+  return c;
+}
+
+# Raise the powers of the prime factors to the
+# power of their primes and multiply
+# . e.g. 150 = 2*3*5^2 -> 1^2*1^3*2^5 = 1*1*32 = 32
+define factor_invert(x) {
+  auto i,c,fp[];
+  if(x<0)return factor_invert(-x)+1;
+  if(x==0||x==1)return 0;
+  .=fac_store(fp[],x)
+  c=1;for(i=0;fp[i];i+=2)c*=fp[i+1]^fp[i]
+  return c;
+}

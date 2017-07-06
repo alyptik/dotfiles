@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Mostly works with all git things
+_tag="$(git describe --long --tags  2>/dev/null | sed 's/^v//; s/\([^-]*-g\)/r\1/; s/-/./g')"
+
+if [[ -n "$_tag" ]]; then
+	printf "%s" "$_tag"
+else
+	# If repo has divergent tags so that git describe cannot reach it, manually
+	# construct the output.
+	_tag="$(git tag --sort=v:refname | sed -n '$p')"
+
+	if [[ -n "$_tag" ]]; then
+		printf '%s.r%s.g%s' "${_tag#v}" "$(git rev-list "$_tag"..HEAD --count)" "$(git rev-parse --short HEAD 2>/dev/null)"
+	else
+		# Fallback if no tags.
+		printf 'r%s.g%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	fi
+fi
+
+unset _tag
