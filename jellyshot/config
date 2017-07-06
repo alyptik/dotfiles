@@ -1,0 +1,11 @@
+#!/bin/bash
+# Config file for jellyshot
+
+SERVER='alyp.tk'
+# SERVER_PATH='/srv/http/uhr'
+SERVER_PATH='uhr'
+SUFFIX='uhr'
+
+# Used if no SERVER_PATH
+USER=http
+

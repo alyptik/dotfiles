@@ -1,0 +1,27 @@
+#!/usr/bin/bc -l
+
+### Thermometer.BC - Conversions of temperature scales to other scales
+
+# Caution: These functions will not operate correctly if ibase is not
+# set to base ten (A) nor if scale is set too low
+
+define   celcius_to_farenheit( c ) { return (c * 1.8 + 32)           }
+define   celcius_to_kelvin(    c ) { return (c + 273.15)             }
+define   celcius_to_reamur(    c ) { return (c * 0.8)                }
+define   celcius_to_rankine(   c ) { return (c * 1.8 + 491.67)       }
+define farenheit_to_celcius(   f ) { return ((f - 32)/1.8)           }
+define farenheit_to_kelvin(    f ) { return ((f + 459.67)/1.8)       }
+define farenheit_to_reamur(    f ) { return ((f - 32)/2.25)          }
+define farenheit_to_rankine(   f ) { return (f + 459.67)             }
+define    kelvin_to_celcius(   k ) { return (k - 273.15)             }
+define    kelvin_to_farenheit( k ) { return (k * 1.8 - 459.67)       }
+define    kelvin_to_reamur(    k ) { return ((k - 273.15)*0.8)       }
+define    kelvin_to_rankine(   k ) { return (k * 1.8)                }
+define    reamur_to_celcius(   r ) { return (r / 0.8)                }
+define    reamur_to_farenheit( r ) { return (r * 2.25 + 32)          }
+define    reamur_to_kelvin(    r ) { return (r / 0.8 + 273.15)       }
+define    reamur_to_rankine(   r ) { return (r * 2.25 + 491.67)      }
+define   rankine_to_celcius(   r ) { return (r / 1.8 + 273.15)       }
+define   rankine_to_farenheit( r ) { return (r - 459.67)             }
+define   rankine_to_kelvin(    r ) { return (r / 1.8)                }
+define   rankine_to_reamur(    r ) { return ((r / 1.8 + 273.15)*0.8) }

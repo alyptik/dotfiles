@@ -1,0 +1,1201 @@
+  Linux Shadow Password HOWTO
+  Michael H. Jackson, mhjack@tscnet.com
+  v1.2, 10 January 1996
+
+  This document aims to describe how to obtain, install and configure
+  the Linux password Shadow Suite. It also discusses obtaining, and
+  (re)installing other software and network daemons that require access
+  to user passwords.  This other software is not actually part of the
+  Shadow Suite, but these programs will break as soon as shadow is
+  installed.  This document also contains a programming example for
+  adding shadow support.  Answers to some of the more frequently asked
+  questions will be included in an appendix in a future revision.
+  ______________________________________________________________________
+
+  Table of Contents:
+
+  1.      Introduction.
+
+  1.1.    Changes from the previous release.
+
+  1.2.    New versions of this document.
+
+  1.3.    Feedback.
+
+  2.      Why shadow your passwd file?
+
+  2.1.    Format of the /etc/passwd file
+
+  2.2.    Format of the shadow file
+
+  2.3.    Review of crypt(3).
+
+  3.      Getting the Shadow Suite.
+
+  3.1.    Where to get the Shadow Suite.
+
+  3.2.    What is included with the Shadow Suite.
+
+  4.      Compiling the programs
+
+  4.1.    Unpackaging the archive
+
+  4.2.    Configuring with the config.h file
+
+  4.3.    Making backup copies of your original programs.
+
+  4.4.    Running make
+
+  5.      Installing
+
+  5.1.    Have a boot disk handy in case you break anything.
+
+  5.2.    Removing duplicate man pages
+
+  5.3.    Running make install
+
+  5.4.    Running pwconv
+
+  5.5.    Renaming npasswd and nshadow
+
+  6.      Other programs you may need to upgrade or patch
+
+  6.1.    Slackware adduser program
+
+  6.2.    The wu_ftpd Server
+
+  6.3.    Standard ftpd
+
+  6.4.    pop3d (Post Office Protocol 3)
+
+  6.5.    xlock
+
+  6.6.    sudo
+
+  6.7.    imapd (E-Mail
+
+  6.8.    pppd (Point-to-Point Protocol Server)
+
+  7.      Adding shadow support to a C program
+
+  7.1.    Header files
+
+  7.2.    libshadow.a library
+
+  7.3.    Shadow Structure
+
+  7.4.    Shadow Functions
+
+  7.5.    Example
+
+  8.      Copyright Message.
+
+  9.      Miscellaneous and Acknowledgments.
+  ______________________________________________________________________
+
+  1.  Introduction.
+
+  This is the Linux Shadow Password HOWTO.  This document describes why
+  and how to add shadow password support on a Linux system.
+
+  1.1.  Changes from the previous release.
+
+  Additions:
+          NONE
+
+  Corrections/Updates:
+          NONE
+
+  1.2.  New versions of this document.
+
+  The latest released version of this document can always be retrieved
+  by anonymous FTP from:
+
+  sunsite.unc.edu
+
+  /pub/Linux/docs/HOWTO/SHADOW-HOWTO
+
+  or:
+
+  /pub/Linux/docs/HOWTO/other-formats/SHADOW-HOWTO{-html.tar,ps,dvi}.gz
+
+  or via the World Wide Web from the Linux Documentation Project Web
+  Server <http://sunsite.unc.edu/mdw/linux.html>, at page: SHADOW-HOWTO
+  <http://sunsite.unc.edu/mdw/HOWTO/SHADOW.html> or directly from me,
+  <mhjack@tscnet.com>. It will also be posted to the newsgroup:
+  comp.os.linux.answers
+
+  1.3.  Feedback.
+
+  Please send any comments, updates, or suggestions to me: Michael H.
+  Jackson <mhjack@tscnet.com>  The sooner I get feedback, the sooner I
+  can update and correct this document.  If you find any problems with
+  it, please mail me directly as I very rarely stay up-to-date on the
+  newsgroups.
+
+  2.  Why shadow your passwd file?
+
+  By default, most current Linux distributions do not contain the Shadow
+  Suite installed.  This includes Slackware 2.3, Slackware 3.0, and
+  other popular distributions.
+
+  If you installed a distribution from a CD-ROM, you may find that, even
+  though the distribution did not have the Shadow Suite installed, the
+  files you need to install the Shadow Suite are also on the CD-ROM.
+  This is especially true if you have a Sunsite Mirror CD-ROM.
+
+  The needed files may also be obtained via anonymous FTP or through the
+  World Wide Web.
+
+  On a Linux system without the Shadow Suite installed, user information
+  including the passwords are stored in the /etc/passwd file.  The
+  password is stored in an encrypted format.  If you ask a cryptography
+  expert; however, he or she will tell you that the password is actually
+  in an encoded rather than encrypted format because when using
+  crypt(3), the text is set to null and the password is the key.
+  Therefore, from here on, I will use the term encoded in this document.
+
+  The algorithm used to encode the password field is technically
+  referred to as a one way hash function.  This is an algorithm that is
+  easy to compute in one direction, but very difficult to calculate in
+  the reverse direction.  More about the actual algroithim used can be
+  found in the section on the crypt(3) algorithm or your crypt(3) manual
+  page.
+
+  When a user picks a password, it is encoded with a randomly generated
+  value called the salt.  This means that any particular password, could
+  be stored in 4096 different ways.  The salt value is then stored with
+  the encoded password.
+
+  When a user logs in and supplies a password, the salt is first
+  retrieved from the stored encoded password.  Then the supplied
+  password is encoded with the salt value, and then compared with the
+  encoded password.  If there is a match, then the user is
+  authenticated.
+
+  It is computationally difficult (but not impossible) to take a
+  randomly encoded password and recover the original password.  However,
+  on any system with more than just a few users, at least some of the
+  passwords will be common words (or simple variations of common words).
+
+  But the system cracker knows all this, and will simply encrypt a
+  dictionary of words and common passwords using the all possible 4096
+  salt values.  Then they will compare the encoded passwords in the
+  /etc/passwd file with their database.  Once he/she has found a match,
+  they have the password for another account.  This is referred to as a
+  dictionary attack, and is one of the most common methods for gaining
+  or expanding unauthorized access to a system.
+
+  If you think about it, an 8 character password encodes to 4096-13
+  character strings.  So a dictionary of say 400,000 common words,
+  names, passwords, and simple variations would easily fit on a 4GB hard
+  drive.  The attacker need only sort them, and then check for matches.
+  Since a 4GB hard drive can be had for under $1000.00, this is well
+  within the means of most system crackers.
+
+  Even without lots of drive space, utilities like crack(1) can usually
+  break at least a couple of passwords on a system with enough users
+  (assuming the users of the system are allowed to pick their own
+  passwords).
+
+  The /etc/password file also contains information like user ID's and
+  group ID's that are used by many system programs.  Therefore, the
+  passwd file must remain world readable.  If you were to change the
+  /etc/passwd file so that everyone can't read it, the first thing that
+  you would notice is that the ls -l command now displays user ID's
+  instead of names!
+
+  The Shadow Suite solves the problem by relocating the passwords to
+  another file (usually /etc/shadow).  The shadow file is set so that it
+  cannot be read by just anyone.  Only root will be able to read and
+  write to the /etc/shadow file.  Some programs (like xlock) require
+  that the group shadow be allowed to read the /etc/shadow file.  This
+  is actually a good idea as programs that only need to read and verify
+  passwords can be run SGID shadow rather than SUID root.
+
+  By moving the passwords to the /etc/shadow file, we are effectively
+  keeping the attacker from having access to the encoded passwords with
+  which to perform a dictionary attack.
+
+  Additionally, the Shadow Suite adds lots of other nice features:
+
+  o  A configuration file to set login defaults (/etc/login.defs)
+
+  o  Utilities for adding, modifying, and deleting user accounts
+
+  o  Password aging and expiration
+
+  o  Account expiration and locking
+
+  o  Shadowed group passwords (optional)
+
+  o  Double length passwords (16 character passwords)
+
+  o  Better control over user's password selection
+
+  o  Dial-up passwords
+
+  o  Secondary authentication programs
+
+  Installing the Shadow Suite helps to contribute toward a more secure
+  system, but there are many other things that can also be done to
+  improve the security of a Linux system, and there will eventually be a
+  series of Linux Security HOWTO's that will discuss other security
+  measures and related issues.
+
+  For current information on other Linux security issues, including
+  warnings on known vulnerabilities see the Linux Security home page.
+  <http://bach.cis.temple.edu/linux/linux-security/>
+
+  2.1.  Format of the /etc/passwd file
+
+  A non-shadowed /etc/passwd file has the following format:
+
+  username:passwd:UID:GID:full_name:directory:shell
+
+  Where:
+
+     username
+        The user (login) name
+
+     passwd
+        The encoded passwd
+
+     UID
+        Numerical user ID
+
+     GID
+        Numerical default group ID
+
+     full_name
+        The user's full name - Actually this field is called the GECOS
+        (General Electric Comprehensive Operating System) field and can
+        store information other than just the full name.
+
+     directory
+        User's home directory
+
+     shell
+        User's login shell
+
+  For example:
+
+       username:Npge08pfz4wuk:503:100:Full Name:/home/username:/bin/sh
+
+  Where Np is the salt and ge08pfz4wuk is the encoded password.  The
+  encoded salt/password could just as easily have been kbeMVnZM0oL7I and
+  the two are exactly the same password.  There are 4096 possible encod-
+  ings for the same password.  (The example password in this case is
+  'password', a really bad password).
+
+  Once the shadow suite is installed, the passwd file would instead
+  contain:
+
+       username:x:503:100:Full Name:/home/username:/bin/sh
+
+  The x in the second field in this case is now just a place holder.
+  The format of the /etc/passwd file really didn't change, it just no
+  longer contains the encoded password.  This means that any program
+  that reads the /etc/passwd file but does not actually need to verify
+  passwords will still operate correctly.
+
+  The passwords are now relocated to the shadow file (usually
+  /etc/shadow file).
+
+  2.2.  Format of the shadow file
+
+  The /etc/shadow file contains the following information:
+
+       username:passwd:last:may:must:warn:expire:disable:reserved
+
+  Where:
+
+     username
+        The User Name
+
+     passwd
+        The Encoded password
+
+     last
+        Days since Jan 1, 1970 that password was last changed
+
+     may
+        Days before password may be changed
+
+     must
+        Days after which password must be changed
+
+     warn
+        Days before password is to expire that user is warned
+
+     expire
+        Days after password expires that account is disabled
+
+     disable
+        Days since Jan 1, 1970 that account is disabled
+
+     reserved
+        A reserved field
+
+  The previous example might then be:
+
+       username:Npge08pfz4wuk:9479:0:10000::::
+
+  2.3.  Review of crypt(3).
+
+  >From the crypt(3) manual page:
+
+  "crypt is the password encryption function.  It is based on the Data
+  Encryption Standard algorithm with variations intended (among other
+  things) to discourage use of hardware implementations of a key search.
+
+  The key is a user's typed password.
+
+  The salt is a two-character string chosen from the set a-zA-Z0-9./.
+  This string is used to perturb the algorithm in one of 4096 different
+  ways.
+
+  By taking the lowest 7 bit of each character of the key, a 56-bit key
+  is obtained.  This 56-bit key is used to encrypt repeatedly a constant
+  string (usually a string consisting of all zeros).  The returned value
+  points to the encrypted password, a series of 13 printable ASCII
+  characters (the first two characters represent the salt itself).  The
+  return value points to static data whose content is overwritten by
+  each call.
+
+  Warning: The key space consists of 2**56 equal 7.2e16 possible values.
+  Exhaustive searches of this key space are possible using massively
+  parallel computers.  Software, such as crack(1), is available which
+  will search the portion of this key space that is generally used by
+  humans for passwords.  Hence, password selection should, at minimum,
+  avoid common words and names.  The use of a passwd(1) program that
+  checks for crackable passwords during the selection process is
+  recommended.
+
+  The DES algorithm itself has a few quirks which make the use of the
+  crypt(3) interface a very poor choice for anything other than password
+  authentication.  If you are planning on using the crypt(3) interface
+  for a cryptography project, don't do it: get a good book on encryption
+  and one of the widely available DES libraries."
+
+  If you are looking for a good book on encryption, I recommend:
+
+          "Applied Cryptography: Protocols, Algorithms, and Source Code in C"
+          by Bruce Schneier <schneier@chinet.com>
+          ISBN: 0-471-59756-2
+
+  3.  Getting the Shadow Suite.
+
+  3.1.  Where to get the Shadow Suite.
+
+  The original Shadow Suite was written by John F. Haugh II.
+
+  There are several versions that can be used on a Linux system:
+
+  o  shadow-3.3.1 is the original
+
+  o  shadow-3.3.1-2 is Linux specific patch made by Florian La Roche
+     (flla@stud.uni-sb.de) and contains some further enhancements
+
+  o  shadow-mk is specifically packaged for Linux and is the recommended
+     package.
+
+  The shadow-mk package contains the shadow-3.3.1 package distributed by
+  John F. Haugh II with the shadow-3.3.1-2 patch installed, a few fixes
+  made by Mohan Kokal <magnus@texas.net> that make installation a lot
+  easier, a patch by Joseph R.M. Zbiciak for login1.c (login.secure)
+  that eliminates the -f, -h security holes in /bin/login, and some
+  other miscellaneous patches.
+
+  The shadow.mk package may be obtained from:
+  <ftp://sunsite.unc.edu/pub/Linux/system/Admin/shadow-mk1.tar.gz>
+
+  When this document refers to the Shadow Suite I am refering to the
+  shadow-mk package.  It is also assumed that this is the package used.
+  The Shadow-3.3.1-2 can be used, but there are a lot more steps to
+  correctly configure it for Linux.
+
+  3.2.  What is included with the Shadow Suite.
+
+  The shadow package contains replacement programs for:
+
+  su, login, passwd, newgrp, chfn, chsh, and id
+
+  The package also contains the new programs:
+
+  chage, newusers, dpasswd, gpasswd, useradd, userdel, usermod,
+  groupadd, groupdel, groupmod, groups, pwck, grpck, lastlog, pwconv,
+  and pwunconv
+
+  Additionally, the library: libshadow.a is included for writing and/or
+  compiling programs that need to access user passwords.
+
+  Also, manual pages for the programs are also included.
+
+  4.  Compiling the programs
+
+  4.1.  Unpackaging the archive
+
+  The first step after retrieving the package is unpacking it.  The
+  package is in the tar (tape archive) format and compressed using gzip,
+  so first move it to /usr/src, then type:
+
+       # tar -xzvf shadow-mk1.tar.gz
+
+  This will unpack it into the directory: /usr/src/shadow-mk
+
+  4.2.  Configuring with the config.h file
+
+  You should take a look at the config.h file.  This file contains
+  definitions for some of the configuration options.  If you are using
+  the recommended shadow-mk package, you don't actually need to change
+  any of the options.
+
+  By default shadowed group passwords and long (16 character) passwords
+  are disabled.  To enable these edit the config.h file, and change the
+  #undef to #define.
+
+  Do NOT change the setting: #undef AUTOSHADOW
+
+  The AUTOSHADOW option was designed so that programs that were shadow
+  ignorant would still function.  This sounds good in theory, and if you
+  enable this option, they will.  But so will any program that calls the
+  getpwuid() and getpwnam() functions.  So enabling this option, means
+  that a simple program will read all your encoded passwords.  Anyone
+  who can compile programs or move a compiled program to your system and
+  run it will be able to 'unshadow' your shadow file.
+
+  4.3.  Making backup copies of your original programs.
+
+  It would also be a good idea to track down and make backup copies of
+  the programs that the shadow suite will replace.  On a Slackware
+  system these are:
+
+  o  /bin/su
+
+  o  /bin/login
+
+  o  /usr/bin/passwd
+
+  o  /usr/bin/newgrp
+
+  o  /usr/bin/chfn
+
+  o  /usr/bin/chsh
+
+  o  /bin/id
+
+  Fortunately, the shadow-mk package has a save target in the Makefile,
+  so you can make backup copies of these programs by going to the
+  /usr/src/shadow-mk directory and typing:
+
+       # make save
+
+  When you do this, you see error messages.  The errors are because the
+  save target is trying to save things that you won't have on your sys-
+  tem yet (the programs that the Shadow Suite adds).  You can safely
+  ignore the errors.  You should now have a /usr/src/shadow-mk/save
+  directory that contains the programs listed above.  You may also have
+  copies of the original pwd.h and shadow.h that came with your system.
+
+  If you need to restore the original programs, you would use:
+
+       # make restore
+
+  If you run make save after installing the suite, it will save all the
+  programs listed above, and all the ones that shadow installs as well.
+  These would be the shadow versions of the programs and of course you
+  would lose your originals.
+
+  Different distributions may have the locations of these system
+  utilities in locations that differ slightly from the locations
+  specified in the Makefile.  If you don't have the 7 programs listed
+  above in the /usr/src/shadow-mk/save directory, then you should
+  determine the locations and edit the Makefile or copy the files
+  manually.
+
+  4.4.  Running make
+
+  Run make to compile the executables in the package:
+
+       # make all
+
+  5.  Installing
+
+  5.1.  Have a boot disk handy in case you break anything.
+
+  If something goes terribly wrong, it would be handy to have a boot
+  disk.  If you have a boot/root combination from your installation,
+  that will work, otherwise see the Bootdisk-HOWTO
+  <http://sunsite.unc.edu/mdw/HOWTO/Bootdisk-HOWTO.html>, which
+  describes how to make a bootable disk.
+
+  5.2.  Removing duplicate man pages
+
+  You should also move the manual pages that are about to be replaced.
+  Even if you are brave enough install the Shadow Suite without making
+  backups, you will still want to remove the old manual pages.  The new
+  manual pages won't normall overwrite the old ones because the old ones
+  are probably compressed.
+
+  You can use a combination of: man -aW command and locate command to
+  locate the manual pages that need to be (re)moved.  It's generally
+  easier to figure out which are the older pages before you run make
+  install.
+
+  If you used the slackware distribution, then the manual pages you want
+  to remove are:
+
+  o  /usr/man/man1/chfn.1.gz
+
+  o  /usr/man/man1/chsh.1.gz
+
+  o  /usr/man/man1/id.1.gz
+
+  o  /usr/man/man1/login.1.gz
+
+  o  /usr/man/man1/passwd.1.gz
+
+  o  /usr/man/man1/su.1.gz
+
+  o  /usr/man/man5/passwd.5.gz
+
+  There may also be man pages of the same name in the /var/man/cat[1-9]
+  subdirectories that should also be deleted.
+
+  5.3.  Running make install
+
+  You are now ready to type: (do this is root)
+
+       # make install
+
+  This will install the new and replacement programs and fix-up the file
+  permissions.  It will also install the man pages.
+
+  This also takes care of installing the Shadow Suite include files in
+  the correct places in /usr/include/shadow.  If you install the
+  shadow-3.3.1-2 package instead of the shadow-mk package, you would
+  have to do this manually.
+
+  5.4.  Running pwconv
+
+  The next step is to run pwconv.  This must also be done as root, and
+  is best done from the /etc subdirectory:
+
+       # cd /etc
+       # /usr/sbin/pwconv
+
+  pwconv takes your /etc/passwd file and strips out the fields to create
+  two files: /etc/npasswd and /etc/nshadow.
+
+  A pwunconv program is also provided if you need to make a normal
+  /etc/passwd file out of an /etc/passwd and /etc/shadow conbination.
+
+  5.5.  Renaming npasswd and nshadow
+
+  Now that you have run pwconv you have created the files: /etc/npasswd
+  and /etc/nshadow.  These need to be copied over to /etc/passwd and
+  /etc/shadow.  We also want to make a backup copy of the original
+  /etc/passwd file, and make sure only root can read it.  We'll put the
+  backup in root's home directory:
+
+       # cd /etc
+       # cp passwd ~passwd
+       # chmod 600 ~passwd
+       # mv npasswd passwd
+       # mv nshadow shadow
+
+  You should also ensure that the file ownerships and permissions are
+  correct.  If you are going to be using X-Windows, the xlock program
+  needs to be able to read the shadow file (but not write it).  This is
+  best done by making the shadow file owned by root with a group of
+  shadow.  Before you do this, make sure that you have a shadow group
+  (look in /etc/group).  None of the users on the system should actually
+  be in the shadow group.
+
+       # chown root.root passwd
+       # chown root.shadow shadow
+       # chmod 0644 passwd
+       # chmod 0640 shadow
+
+  Your system now has the password file shadowed.  You should now pop
+  over to another virtual terminal and verify that you can login.
+
+  If you can't, then something is wrong!  To get back to a non-shadowed
+  state, do the following the following:
+
+       # cd /etc
+       # cp ~passwd passwd
+       # chmod 644 passwd
+       # cd /usr/src/shadow-mk
+       # make restore
+
+  This will restore the original passwd file, and restore the files that
+  you saved earlier in the /usr/src/shadow-mk/save directory.
+
+  6.  Other programs you may need to upgrade or patch
+
+  Even though the shadow suite contains replacement programs for most
+  programs that need to access passwords, there are a few additional
+  programs on most systems that require access to passwords.
+
+  There is a package of pre-compiled binaries that are compiled for
+  shadow support available on
+  <ftp://ftp.texas.net/pub/unix/linux/shadow/shad-bin.tar.gz>
+
+  This package contains: ftpd, pop2d, pop3d, mesg, wall, finger, and
+  xdm.  I can't imagine why finger, wall, or mesg would ever need access
+  to passwords.  Also, you don't get the source code, so I don't
+  recommend this package, but it's location in included for
+  completeness.
+
+  The remainder of this section discusses how to upgrade adduser,
+  wu_ftpd, ftpd, pop3d, xlock, and sudo so that they support the shadow
+  suite.
+
+  See the section ``Adding Shadow Support to a C program'' for a
+  discussion on how to put shadow support into any other program that
+  needs it (although the program must then be run SUID root or SGID
+  shadow to be able to actually access the shadow file).
+
+  6.1.  Slackware adduser program
+
+  Slackware distributions (and possibly some others) contain a
+  interactive program for adding users called /sbin/adduser.  A shadow
+  version of this program can be obtained from
+  ftp://sunsite.unc.edu/pub/Linux/
+  system/Admin/accounts/adduser.shadow-1.4.tar.gz.
+
+  Installation is simple:
+
+       # tar -xzvf adduser.shadow-1.4.tar.gz
+       # cd adduser.shadow.1.4
+       # make adduser
+       # chmod 700 adduser
+       # make install
+
+  6.2.  The wu_ftpd Server
+
+  Most Linux systems some with the wu_ftpd server.  If your distribution
+  does not come with shadow installed, then your wu_ftpd will not be
+  compiled for shadow.  wu_ftpd is launched from inetd/tcpd as a root
+  process.  If you are running an old wu_ftpd daemon, you will want to
+  upgrade it anyway because older ones had a bug that would allow the
+  root account to be compromised (For more info see the Linux security
+  home page <http://bach.cis.temple.edu/linux/linux-security/Linux-
+  Security-FAQ/Linux-wu.ftpd-2.4-Update.html>).
+
+  Fortunately, you only need to get the source code and recompile it
+  with shadow enabled.
+
+  The wu_ftp server can be found on Sunsite as wu-ftp-2.4-fixed.tar.gz
+  <ftp://sunsite.unc.edu/pub/Linux/system/Network/file-transfer/wu-
+  ftpd-2.4-fixed.tar.gz>
+
+  Once you retrieve the server, put it in /usr/src, then type:
+
+  # cd /usr/src
+  # tar -xzvf wu-ftpd-2.4-fixed.tar.gz
+  # cd wu-ftpd-2.4-fixed
+  # cp ./src/config/config.lnx.shadow ./src/config/config.lnx
+  # ./build lnx
+  # cp /usr/sbin/wu.ftpd /usr/sbin/wu.ftpd.old
+  # cp ./bin/ftpd /usr/sbin/wu.ftpd
+
+  This uses the Linux shadow configuration file, compiles and installs
+  the server.
+
+  On my Slackware 3.0 system I also had to do the following before
+  running build:
+
+       # cd /usr/include/netinet
+       # ln -s in_systm.h in_system.h
+       # cd -
+
+  6.3.  Standard ftpd
+
+  If you are running the standard ftpd server, I would recommend that
+  you upgrade to the wu_ftpd server.  Aside from the known bug discussed
+  above, it's generally thought to be more secure.
+
+  If you insist on the standard one, or you need NIS support, Sunsite
+  has ftpd-shadow-nis.tgz
+  <ftp://sunsite.unc.edu/pub/Linux/system/Network/file-transfer/ftpd-
+  shadow-nis.tgz>
+
+  6.4.  pop3d (Post Office Protocol 3)
+
+  If you need to support the third Post Office Protocol (POP3), you will
+  need to recompile a pop3d program.  pop3d is normally run by
+  inetd/tcpd as root.
+
+  There are two versions available from Sunsite:
+  pop3d-1.00.4.linux.shadow.tar.gz
+  <ftp://sunsite.unc.edu/pub/Linux/system/Mail/pop/
+  pop3d-1.00.4.linux.shadow.tar.gz> and pop3d+shadow+elf.tar.gz
+  <ftp://sunsite.unc.edu/pub/Linux/system/Mail/pop/
+  pop3d+shadow+elf.tar.gz>
+
+  Both of these are fairly straight forward to install.
+
+  6.5.  xlock
+
+  If you install the shadow suite, and then run X-windows and lock the
+  screen without upgrading your xlock, you will have to use CNTL-ALT-Fx
+  to switch to another tty, login, and kill the xlock process (or use
+  CNTL-ALT-BS to kill the X server).  Fortunately it's fairly easy to
+  upgrade your xlock program.
+
+  If you are running XFree86 Versions 3.x.x, you are probably using
+  xlockmore (which is a great screen-saver in addition to a lock).  This
+  package supports shadow with a recompile.  If you have an older xlock,
+  I recommend that you upgrade to this one.
+
+  xlockmore-3.5.tgz is available at:
+  <ftp://sunsite.unc.edu/pub/Linux/X11/xutils/screen-
+  savers/xlockmore-3.5.tgz>
+
+  Basically, this is what you need to do:
+
+  Get the xlockmore-3.5.tgz file and put it in /usr/src unpack it:
+
+       # tar -xzvf xlockmore-3.5.tgz
+
+  Edit the file: /usr/X11R6/lib/X11/config/linux.cf, and change the
+  line:
+
+       #define HasShadowPasswd    NO
+
+       to
+
+       #define HasShadowPasswd    YES
+
+  Then build the executables:
+
+       # cd /usr/src/xlockmore
+       # xmkmf
+       # make depend
+       # make
+
+  Then move everything into place and update file ownerships and
+  permissions:
+
+       # cp xlock /usr/X11R6/bin/
+       # cp XLock /var/X11R6/lib/app-defaults/
+       # chown root.shadow /usr/X11R6/bin/xlock
+       # chmod 2755 /usr/X11R6/bin/xlock
+       # chown root.shadow /etc/shadow
+       # chmod 640 /etc/shadow
+
+  Your xlock will now work correctly.
+
+  6.6.  sudo
+
+  The program sudo allows a system administrator to let users run
+  programs that would normally require root access.  This is handy
+  because it lets the administrator limit access to the root account
+  itself while still allowing users to do things like mounting drives.
+
+  sudo needs to read passwords because it verifies the users password
+  when it's invoked.  sudo already runs SUID root, so accessing the
+  /etc/shadow file is not a problem.
+
+  sudo for the shadow suite, is available as at:
+  <ftp://sunsite.unc.edu/pub/Linux/system/Admin/sudo-1.2-shadow.tgz>
+
+  The package is already setup for shadow, so all that's required is to
+  recompile the package (put it in /usr/src):
+
+       # cd /usr/src
+       # tar -xzvf sudo-1.2-shadow.tgz
+       # cd sudo-1.2-shadow
+       # make all
+       # make install
+
+  6.7.  imapd (E-Mail pine package)
+
+  imapd is an e-mail server similar to pop3d.  imapd comes with the pine
+  e-mail package.  The documentation that comes with the package states
+  that the default for Linux systems is to include support for shadow.
+  However, I have found that this is not true.  Furthermore, the build
+  script / Makefile combination on this package is something that I just
+  haven't figured out yet, so I was unable to add shadow support for
+  imapd.
+
+  If anyone has this figured out, please e-mail me, and I'll include it
+  here.
+
+  6.8.  pppd (Point-to-Point Protocol Server)
+
+  The pppd server can be setup to use several types of authentication:
+  Password Authentication Protocol (PAP) and Cryptographic Handshake
+  Authentication Protocol (CHAP).  The pppd server usually reads the
+  password strings that it uses from /etc/ppp/chap-secrets and/or
+  /etc/ppp/pap-secrets.  If you are using this default behavior of pppd,
+  it is not necessary to reinstall pppd.
+
+  pppd also allows you to use the login parameter (either on the command
+  line, or in the configuration or options file).  If the login option
+  is given, then pppd will use the /etc/passwd file for the username and
+  passwords for the PAP.  This, of course, will no longer work now that
+  our password file is shadowed.  For pppd-1.2.1d this requires adding
+  code for shadow support.
+
+  The example given in the next section is adding shadow support to
+  pppd-1.2.1d (an older version of pppd).
+
+  pppd-2.2.0 already contains shadow support.
+
+  7.  Adding shadow support to a C program
+
+  Adding shadow support to a program is actually fairly straightforward.
+  The only problem is that the program must be run by root (or SUID
+  root) in order for the the program to be able to access the
+  /etc/shadow file.
+
+  This presents one big problem; very careful programming practices must
+  be followed when creating SUID programs.  For instance, if a program
+  has a shell escape, this must not occur as root if the program is SUID
+  root.
+  For adding shadow support to a program so that it can check passwords,
+  but otherwise does need to run as root, it's a lot safer to run the
+  program SUID shadow instead.  The xlock program is an example of this.
+
+  In the example given below, pppd-1.2.1d already runs SUID as root, so
+  adding shadow support should not make the program any more vulnerable.
+
+  7.1.  Header files
+
+  The header files should reside in /usr/include/shadow.  There should
+  also be a /usr/include/shadow.h, but it will be a symbolic link to
+  /usr/include/shadow/shadow.h.
+
+  To add shadow support to a program, you need to include the header
+  files:
+
+  #include <shadow/shadow.h>
+  #include <shadow/pwauth.h>
+
+  It might be a good idea to use compiler directives to conditionally
+  compile the shadow code (I will in the example below).
+
+  7.2.  libshadow.a library
+
+  When you installed the Shadow Suite the libshadow.a file was created
+  and installed in /usr/lib.
+
+  When compiling shadow support into a program, the linker needs to be
+  told to include the libshadow.a library into the link.
+
+  This is done by:
+
+       # gcc program.c -o program -lshadow
+
+  However, as we will see in the example below, most large programs use
+  a Makefile, and usually have a variable called LIBS=... that we will
+  modify.
+
+  7.3.  Shadow Structure
+
+  The libshadow.a library uses a structure called spwd for the
+  information it retrieves from the /etc/shadow file.  This is the
+  definition of the spwd structure from the /usr/include/shadow/shadow.h
+  header file:
+
+  ______________________________________________________________________
+  struct spwd
+  {
+    char *sp_namp;                /* login name */
+    char *sp_pwdp;                /* encrypted password */
+    sptime sp_lstchg;             /* date of last change */
+    sptime sp_min;                /* minimum number of days between changes */
+    sptime sp_max;                /* maximum number of days between changes */
+    sptime sp_warn;               /* number of days of warning before password
+                                     expires */
+    sptime sp_inact;              /* number of days after password expires
+                                     until the account becomes unusable. */
+    sptime sp_expire;             /* days since 1/1/70 until account expires
+  */
+    unsigned long sp_flag;        /* reserved for future use */
+  };
+  ______________________________________________________________________
+
+  The Shadow Suite can put things into the sp_pwdp field besides just
+  the encoded passwd.  The password field could contain:
+
+       username:Npge08pfz4wuk;@/sbin/extra:9479:0:10000::::
+
+  This means that in addition to the password, the program /sbin/extra
+  should be called for further authentiaction.  The program called will
+  get passed a the username and a switch that indicates why it's being
+  called.  See the file /usr/include/shadow/pwauth.h and the source code
+  for pwauth.c for more information.
+
+  What this means is that we should use the function pwauth to perform
+  the actual authentiaction, as it will take care of the secondary
+  authentiaction as well.  The example below does this.
+
+  7.4.  Shadow Functions
+
+  The shadow.h file also contains the function prototypes for the
+  functions contained in the libshadow.a library:
+
+  ______________________________________________________________________
+  extern void setspent __P ((void));
+  extern void endspent __P ((void));
+  extern struct spwd *sgetspent __P ((__const char *__string));
+  extern struct spwd *fgetspent __P ((FILE *__fp));
+  extern struct spwd *getspent __P ((void));
+  extern struct spwd *getspnam __P ((__const char *__name));
+  extern int putspent __P ((__const struct spwd *__sp, FILE *__fp));
+  ______________________________________________________________________
+
+  The function that we are going to use in the example is: getspnam
+  which will retrieve for us a spwd structure for the supplied name.
+
+  7.5.  Example
+
+  This is an example of adding shadow support to a program that needs
+  it, but does not have it by default.
+  This example uses the Point-to-Point Protocol Server (pppd-1.2.1d),
+  which has a mode in which it performs PAP authentication using
+  usernames and passwords from the /etc/passwd file instead of the PAP
+  or CHAP files.  You would not need to add this code to pppd-2.2.0
+  because it's already there.
+
+  This feature of pppd probably isn't used very much, but if you
+  installed the Shadow Suite, it won't work anymore because the
+  passwords are no longer stored in /etc/passwd.
+
+  The code for authenticating users under pppd-1.2.1d is located in the
+  /usr/src/pppd-1.2.1d/pppd/auth.c file.
+
+  The following code needs to be added to the top of the file where all
+  the other #include directives.  We have surrounded the #includes with
+  conditional directives (i.e. only include if we are compiling for
+  shadow support).
+
+  ______________________________________________________________________
+  #ifdef HAS_SHADOW
+  #include <shadow.h>
+  #include <shadow/pwauth.h>
+  #endif
+  ______________________________________________________________________
+
+  The next thing to do is to modify the actual code.  We are still
+  making changes to the auth.c file.
+
+  Function auth.c before modifications:
+
+  ______________________________________________________________________
+  /*
+   * login - Check the user name and password against the system
+   * password database, and login the user if OK.
+   *
+   * returns:
+   *      UPAP_AUTHNAK: Login failed.
+   *      UPAP_AUTHACK: Login succeeded.
+   * In either case, msg points to an appropriate message.
+   */
+  static int
+  login(user, passwd, msg, msglen)
+      char *user;
+      char *passwd;
+      char **msg;
+      int *msglen;
+  {
+      struct passwd *pw;
+      char *epasswd;
+      char *tty;
+
+      if ((pw = getpwnam(user)) == NULL) {
+          return (UPAP_AUTHNAK);
+      }
+       /*
+       * XXX If no passwd, let them login without one.
+       */
+      if (pw->pw_passwd == '\0') {
+          return (UPAP_AUTHACK);
+      }
+
+      epasswd = crypt(passwd, pw->pw_passwd);
+      if (strcmp(epasswd, pw->pw_passwd)) {
+          return (UPAP_AUTHNAK);
+      }
+
+      syslog(LOG_INFO, "user %s logged in", user);
+
+      /*
+       * Write a wtmp entry for this user.
+       */
+      tty = strrchr(devname, '/');
+      if (tty == NULL)
+          tty = devname;
+      else
+          tty++;
+      logwtmp(tty, user, "");             /* Add wtmp login entry */
+      logged_in = TRUE;
+
+      return (UPAP_AUTHACK);
+  }
+  ______________________________________________________________________
+
+  The user's password is placed into pw->pw_passwd, so all we really
+  need to do is add the function getspnam.  This will put the password
+  into spwd->sp_pwdp.
+
+  We will add the function pwauth to perform the actual authentiaction.
+  This will automatically perform secondary authentication if the shadow
+  file is setup for it.
+
+  Function auth.c after modifications to support shadow:
+
+  ______________________________________________________________________
+  /*
+   * login - Check the user name and password against the system
+   * password database, and login the user if OK.
+   *
+   * This function has been modified to support the Linux Shadow Password
+   * Suite if USE_SHADOW is defined.
+   *
+   * returns:
+   *      UPAP_AUTHNAK: Login failed.
+   *      UPAP_AUTHACK: Login succeeded.
+   * In either case, msg points to an appropriate message.
+   */
+  static int
+  login(user, passwd, msg, msglen)
+      char *user;
+      char *passwd;
+      char **msg;
+      int *msglen;
+  {
+      struct passwd *pw;
+      char *epasswd;
+      char *tty;
+
+  #ifdef USE_SHADOW
+      struct spwd *spwd;
+      struct spwd *getspnam();
+  #endif
+
+      if ((pw = getpwnam(user)) == NULL) {
+          return (UPAP_AUTHNAK);
+      }
+
+  #ifdef USE_SHADOW
+      if ((spwd = getspnam(user)) == NULL) {
+             pw->pw_passwd = "";
+      } else {
+      pw->pw_passwd = spwd->sp_pwdp;
+      }
+  #endif
+
+       /*
+       * XXX If no passwd, let NOT them login without one.
+       */
+      if (pw->pw_passwd == '\0') {
+          return (UPAP_AUTHNAK);
+      }
+  #ifdef HAS_SHADOW
+      if ((pw->pw_passwd && pw->pw_passwd[0] == '@'
+           && pw_auth (pw->pw_passwd+1, pw->pw_name, PW_LOGIN, NULL))
+          || !valid (passwd, pw)) {
+          return (UPAP_AUTHNAK);
+      }
+  #else
+      epasswd = crypt(passwd, pw->pw_passwd);
+      if (strcmp(epasswd, pw->pw_passwd)) {
+          return (UPAP_AUTHNAK);
+      }
+  #endif
+
+      syslog(LOG_INFO, "user %s logged in", user);
+
+      /*
+       * Write a wtmp entry for this user.
+       */
+      tty = strrchr(devname, '/');
+      if (tty == NULL)
+          tty = devname;
+      else
+          tty++;
+      logwtmp(tty, user, "");             /* Add wtmp login entry */
+      logged_in = TRUE;
+
+      return (UPAP_AUTHACK);
+  }
+  ______________________________________________________________________
+
+  Careful examination will reveal that we made another change as well.
+  The original version allowed access (returned UPAP_AUTHACK if there
+  was NO password in the passwd file.  This is not good, because a
+  common use of this login feature is to use one account to allow access
+  to the PPP process and then check the username and password supplied
+  by PAP with the username in the /etc/passwd file and the password in
+  the /etc/shadow file.
+
+  So if we had set the original version up to run as the shell for a
+  user i.e.  ppp, then anyone could get a ppp connection by setting
+  their PAP to user ppp and a password of null.
+
+  We fixed this also by returning UPAP_AUTHNAK instead of UPAP_AUTHACK
+  if the password field was empty.
+
+  Interestly enough, pppd-2.2.0 has the same problem.
+
+  Next we need to modify the Makefile so that two things occur:
+  USE_SHADOW must be defined, and libshadow.a needs to be added to the
+  linking process.
+
+  Edit the Makefile, and add:
+
+       LIBS = -lshadow
+
+  Then we find the line:
+
+       COMPILE_FLAGS = -I.. -D_linux_=1 -DGIDSET_TYPE=gid_t
+
+  And change it to:
+
+       COMPILE_FLAGS = -I.. -D_linux_=1 -DGIDSET_TYPE=gid_t -DUSE_SHADOW
+
+  Now make and install.
+
+  8.  Copyright Message.
+
+  The Linux Shadow Password HOWTO is Copyright (c) 1996 Michael H.
+  Jackson.
+
+  Permission is granted to make and distribute verbatim copies of this
+  document provided the copyright notice and this permission notice are
+  preserved on all copies.
+
+  Permission is granted to copy and distribute modified versions of this
+  document under the conditions for verbatim copies above, provided a
+  notice clearly stating that the document is a modified version is also
+  included in the modified document.
+
+  Permission is granted to copy and distribute translations of this
+  document into another language, under the conditions specified above
+  for modified versions.
+
+  Permission is granted to convert this document into another media
+  under the conditions specified above for modified versions provided
+  the requirement to acknowledge the source document is fulfilled by
+  inclusion of an obvious reference to the source document in the new
+  media. Where there is any doubt as to what defines 'obvious' the
+  copyright owner reserves the right to decide.
+
+  9.  Miscellaneous and Acknowledgments.
+
+  The code examples for auth.c are taken from pppd-1.2.1d and
+  ppp-2.1.0e, Copyright (c) 1993 and The Australian National University
+  and Copyright (c) 1989 Carnegie Mellon University.
+
+  Please, if you have any comments or suggestions then mail them to me.
+
+  regards
+
+  Michael H. Jackson <mhjack@tscnet.com>
+

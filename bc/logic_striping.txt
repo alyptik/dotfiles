@@ -1,0 +1,114 @@
+Of two boolean variables (say a and b), there are sixteen possible functions;
+
+If we restrict our interest to those non trivial, symmetric, boolean functions where [false F false] = false, there are only three functions. These are known as AND (a&&b), OR (a||b) and eXclusive-OR (a!=b).
+
+  a      b    a && b
+false  false   false
+false  true    false
+true   false   false
+true   true    true
+
+  a      b    a || b
+false  false   false
+false  true    true
+true   false   true
+true   true    true
+
+  a      b    a != b
+false  false   false
+false  true    true
+true   false   true
+true   true    false
+
+Each of these functions can, be scaled up to perform on binary numbers, treating 0 as false, 1 as true, and then comparing bitwise.
+
+e.g. taking a = 37 (decimal) = 100101 (binary) and b = 57 (decimal) = 111001 (binary), we have:
+
+100101
+111001 and()
+------
+100001
+ therefore and(37,57) = 33 (decimal)
+
+100101
+111001 or()
+------
+111101
+ therefore or(37,57) = 61 (decimal)
+
+100101
+111001 xor()
+------
+011100
+ therefore xor(37,57) = 28 (decimal)
+
+Under boolean AND and OR, [x F x] = x regardless of the value of x; this is not true for XOR. In comparison, eXclusive OR gives a 50/50 chance of returning false or true given unknown inputs.
+
+The lack of 'balance' in AND and OR is down to the fact that symmetry dictates that [false F true] and [true F false] must have the same value:
+
+  a      b    a F b
+false  false   false
+false  true    false/true? ambiguous
+true   false   true/false? ambiguous
+true   true    true
+
+Any attempt to redress the balance would cause the resulting boolean function to become one of the trivial states discounted earlier.
+
+In the bitwise realm there is a way to at least approach this imbalance. It requires the consideration of an extra piece of information not supplied by the two variables: The position of a bit within a binary number.
+
+One might say that for all even numbered bits in the parameters, it will be that ambiguous states ([false F true], [true F false]) become false, and for all odd numbered bits ambiguous states are set as true.
+
+One could also decide the opposite: that ambiguous even numbered bits should be true, and odd false. Either way, over the course of the bitwise combination of two numbers the ratio of ones to zeroes will be as close to 50/50 as possible.
+
+In the degenerate case of a single bit, the former of these is effectively the same as a bitwise and() (the rightmost bit is considered as bit 0 and thus even); the latter being equivalent to or(). What is happening, in fact, is that half of each of the resultant bits from bitwise and() and bitwise or() are being interspersed, alternating from one to the other when passing through odd and even numbered bits. Here, this effect is called 'striping'.
+
+Returning to the useful examples 37 and 57, new bitwise functions can be seen in action:
+
+543210 <- bit positions
+
+100101
+111001 striped_and()
+------
+1???01 <- three ambiguous bits
+101001 <- odd bits become 1, even 0
+ therefore striped_and(37,57) = 41 (decimal)
+
+100101
+111001 striped_or()
+------
+1???01 <- three ambiguous bits as before
+110101 <- odd bits become 0, even 1
+ therefore striped_or(37,57) = 53 (decimal)
+
+Hopefully it should be obvious as to why the concept of striped_xor() is nonsensical.
+
+----------
+Extensions
+----------
+
+To look at the striped bitwise functions another way, the periodic bit patterns ...10101010 or ...01010101 are being placed 'underneath' the bitwise combination so that those patterns show through where there is an ambiguity. The first pattern being for striped_and(), the latter for striped_or().
+
+This leads to the concept that _any_ bit pattern could be set to show through where ambiguities lie.
+
+Some of these will necessarily break the balance originally sought, others, such as ...011001100110 for instance, will not. Indeed, any pattern with the same number of zeroes as ones will retain the same balance aimed for by striped_and() and striped_or().
+
+Interestingly perhaps, patterns ...00000 and ...11111 are degenerate cases representing the original, imbalanced, bitwise and() and or() functions.
+
+There is also the possibility that an aperiodic underlying pattern could be used, or even a combination of the two.
+
+This generalised striping indicates an infinite class of bitwise functions of form genstripe(aps, pps, a, b), aps being an aperiodic pattern specification which overrides pps, a periodic pattern specification.
+
+For instance, choosing aperiodic overriding pattern {001100010111010010111} and repeating pattern {0110}, the underlying pattern is defined thus: ...01100110011001][00101100010111010010111].
+
+For the sake of a way to encode patterns (repeating or otherwise) as integers, it is suggested that a leading bit be set before the actual pattern bits begin; Without this, some patterns are ambiguous. e.g. a pattern of 0110 when represented as an integer is indistinguishable from the patterns 00110 and simply 110, as they all have a value of six. 1110, 10110 and 100110 on the other hand are quite obviously unique (as 14, 22 and 38 decimal respectively).
+
+It can be easily shown that the repeating patterns specified by 2, 3, 5 and 6, (10, 11, 101 and 110) represent the underlying patterns for and(), or(), striped_or() and striped_and() respectively.
+
+Where repeating patterns are concerned, some integer encodings are duplicates of shorter encodings, e.g. 1110110 serves the same purpose as 1110, 101 is the same as 10101, etc.
+
+Repeating pattern 4 (100) is a duplicate of pattern 2, as are all even powers of two, and every one of these specifies the bitwise and() function. Patterns 7, 15 and all those one less than powers of two are duplicates of pattern 3, and specify bitwise or().
+
+Patterns 0 and 1 make no sense in this context.
+
+Overriding patterns change the interpretation completely, and indeed the bitwise functions there created are largely unique, except in those cases where the overriding pattern happens to completely match the repeating pattern.
+

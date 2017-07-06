@@ -1,0 +1,28 @@
+#!/usr/bin/bc -l
+
+## Calculate the hyper-exponential Ackermann function
+
+# There's not much point to this function as it's pretty much
+# incalculable for most values... and burns CPU while it tries
+
+define ack(x,y) {
+  if (x==0)return(y+1)
+  if (x==1)return(y+2)
+  if (x==2)return(y+y+3)
+  if (x==3)return(2^(y+3)-3)
+
+  if (y==0)return(ack(x-1,1))
+  return(ack(x-1,ack(x,y-1)))
+}
+
+k_l2 = l(2);
+define ackz(x,y) {
+  if (x<=0)return(y+1)
+  if (x<=1)return(y+2)
+  if (x<=2)return(y+y+3)
+  if (x<=3)return(e(l2*(y+3))-3)
+
+  if (y<=0)return(ack(x-1,1))
+  return(ack(x-1,ack(x,y-1)))
+}
+

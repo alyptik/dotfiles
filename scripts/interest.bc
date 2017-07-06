@@ -1,0 +1,337 @@
+#!/usr/bin/bc -l funcs.bc
+
+### Interest.BC - Compound interest, loan amortisation and compound savings
+
+# requires funcs.bc for pow, root, lambertw*
+
+## Conventions in this library
+
+#* ic = initial capital
+#* rate = interest rate in form 1+fraction where 0<fraction<1;#
+#         Conversions are provided for percent and 'fraction' itself
+#* nt = number of terms
+#* fc = final capital
+#* spt = subterms per term;
+#        e.g. one might have nt=25 and spt=12 for a 25-year debt paid monthly
+#* paym = payment to make to reduce debt to zero OR additional periodic savings capital
+#* tpaym = total of all payments to reduce debt to zero given the above
+#* *a__[] = an array parameter passed by reference to return an array of numbers
+
+## Acknowledgement goes to Randy Rysavy for the suggestion to create this
+#  library of functions, and who also provided some example code, which
+#  - with my apologies to Randy - has not been used here.
+#  All code has been derived from first principles in order to make sure
+#  I was able to understand the underlying mathematics and to create and
+#  manipulate the necessary formulae.
+
+### Conversions for various interest rate formats
+
+define percentage_to_rate(percent) {
+  if(0>=percent||percent>=100){
+    print "warning: given percentage is outside ]0..100[\n";
+  }
+  return 1+percent/100;
+}
+define fraction_to_rate(fraction) {
+  if(0>=percent||percent>=100){
+    print "warning: given fraction is outside ]0..1[\n";
+  }
+  return 1+fraction;
+}
+define rate_to_fraction(rate) {
+  if(1>=rate||rate>=2){
+    print "warning: given rate is outside ]1..2[\n";
+  }
+  return rate-1;
+}
+define rate_to_percentage(rate) {
+  return rate_to_fraction(rate)*100;
+}
+
+### Compound Interest
+
+# Parameters always given in order:
+#   (fc, ic, rate, nt)
+# although one or more will be missing
+
+# Find final capital from initial at given rate and number of terms
+define compound_fc(ic,rate,nt){
+  return ic*pow(rate,nt)
+}
+
+# Find initial capital from final at given rate and number of terms
+define compound_ic_from_fc(fc,rate,nt){
+  return fc/pow(rate,nt)
+}
+
+# Find number of terms given rate and final and initial capital
+define compound_nt_from_fc(fc,ic,rate){
+  return l(fc/ic)/l(rate)
+}
+
+# Find rate given number of terms and final and initial capital
+define compound_rate_from_fc(fc,ic,nt){
+  return root(fc/ic,nt)
+}
+
+### Loan Amortisation - Assume payment occurs immediately after interest is added
+
+# Parameters are always given in the order:
+#   (*a__[], tpaym, paym, ic, rate, nt, spt)
+# although one or more will be missing
+# e.g. tpaym and paym never happen together
+#
+# N.B. ic/fc occur AFTER tpaym/paym here
+
+## Basic Calculations
+
+# Determine payment; +Interest-Payment, Once per term
+define loan_paym(ic,rate,nt) {
+  auto rn;
+  rn = pow(rate, nt)
+  return ic*rn*(rate-1)/(rn-1)
+}
+
+# Total payment over all terms based on interest and payment once per term
+define loan_tpaym(ic,rate,nt) {
+  auto rn;
+  rn = pow(rate, nt)
+  return nt*ic*rn*(rate-1)/(rn-1)
+}
+
+# Determine payment; +Interest-Payment, Multiple times per term
+define loan_paym_split(ic,rate,nt,spt) {
+  return loan_paym(ic,root(rate,spt),nt*spt)
+}
+
+# Total payment over all terms based on interest and payment multiple times per term
+define loan_tpaym_split(ic,rate,nt,spt) {
+  return loan_tpaym(ic,root(rate,spt),nt*spt)
+}
+
+# Generate an array of owed capital at each term
+define loan_apaym(*a__[],ic,rate,nt){
+  auto i,paym;
+  paym = loan_paym(ic,rate,nt);
+  a__[0]=ic;for(i=1;i<=nt;i++)a__[i]=a__[i-1]*rate-paym;
+  a__[i]=0;
+  return nt;
+}
+
+# Generate an array of owed capital at each subterm
+define loan_apaym_split(*a__[],ic,rate,nt,spt) {
+  auto i,paym;
+  rate = root(rate, spt)
+  nt *= spt;
+  paym = loan_paym(ic,rate,nt);
+  a__[0]=ic;for(i=1;i<=nt;i++)a__[i]=a__[i-1]*rate-paym;
+  a__[i]=0;
+  return nt;
+}
+
+## Reverse calculations
+
+# Given the once-per-term payment, find the initial capital
+define loan_ic_from_paym(paym,rate,nt) {
+  auto rn;
+  rn = pow(rate, nt)
+  return paym*(rn-1)/((rate-1)*rn)
+}
+
+# Given the total of all once-per-term payments, find the initial capital
+define loan_ic_from_tpaym(tpaym,rate,nt) {
+  auto rn;
+  rn = pow(rate, nt)
+  return tpaym*(rn-1)/((rate-1)*rn*nt)
+}
+
+# Given the multiple-per-term payment, find the initial capital
+define loan_ic_from_paym_split(paym,rate,nt,spt) {
+  return loan_ic_from_paym(paym,root(rate,spt),nt*spt)
+}
+
+# Given the total of all multiple-per-term payments, find the initial capital
+define loan_ic_from_tpaym_split(tpaym,rate,nt,spt) {
+  return loan_ic_from_tpaym(tpaym,root(rate,spt),nt*spt)
+}
+
+# Given the once-per-term payment, find the interest rate
+define loan_rate_from_paym(paym,ic,nt){
+  auto os,i,k,rate,ratf,ratg,ratd;
+  if(paym*nt==ic)return 1/1;
+  k=paym/ic;
+  rate=root(k*nt,nt/2); # good initial guess
+  os=scale;scale+=scale
+  for(i=scale;i>1;i/=2){
+    # use of rat plus d, (e,) f, and g is a deliberate pun on 'rate'
+    ratf=1+k*(1-pow(rate,-nt));# f and g are iterated approximants
+    ratg=1+k*(1-pow(ratf,-nt));
+    ratd=(ratf+ratf-rate-ratg);# d is a divisor that could end up as 0
+    if(ratd==0){rate=1;break}  # so escape if that happens
+    rate=(ratf*ratf-rate*ratg)/ratd;# glai(rate,ratf,ratg)
+    # this trick causes the iteration to converge exponentially rather
+    # than geometrically as found by repeating ratf=...;rate=ratf
+  }
+  scale=os;return rate/1
+}
+
+# Given the total of all once-per-term payments, find the interest rate
+define loan_rate_from_tpaym(tpaym,ic,nt) {
+  return loan_rate_from_paym(tpaym/nt,ic,nt);
+}
+
+# Given the multiple-per-term payment, find the interest rate
+define loan_rate_from_paym_split(paym,ic,nt,spt) {
+  return pow(loan_rate_from_paym(paym,ic,nt*spt),spt);
+}
+
+# Given the total of all multiple-per-term payments, find the interest rate
+define loan_rate_from_tpaym_split(tpaym,ic,nt,spt) {
+  return pow(loan_rate_from_tpaym(tpaym,ic,nt*spt),spt);
+}
+
+# Given the once-per-term payment, find the number of terms
+define loan_nt_from_paym(paym,ic,rate) {
+  auto d;
+  d=paym-ic*(rate-1);
+  return l(paym/d)/l(rate)
+}
+
+# Given the total of all once-per-term payments, find the number of terms
+define loan_nt_from_tpaym(tpaym,ic,rate) {
+  auto q,l;
+  q = tpaym/(ic*(rate-1));
+  l = l(rate);
+  return q + lambertw0(-q*l/pow(rate,q))/l
+}
+
+# Given the multiple-per-term payment, find the number of terms
+define loan_nt_from_paym_split(paym,ic,rate,spt) {
+  return loan_nt_from_paym(paym,ic,root(rate,spt))/spt
+}
+
+# Given the total of all multiple-per-term payments, find the number of terms
+define loan_nt_from_tpaym_split(tpaym,ic,rate,spt) {
+  return loan_nt_from_tpaym(tpaym,ic,root(rate,spt))/spt
+}
+
+# Given the payment, determine the number of subterms within the term
+define loan_spt_from_paym(paym,ic,rate,nt) {
+  auto rn;
+  rn = pow(rate, nt)
+  return l(rate)/l(1+paym*(rn-1)/(ic*rn));  
+}
+
+# Given the total of all payments, determine the number of subterms within the term
+define loan_spt_from_tpaym(tpaym,ic,rate,nt) {
+  auto q,l,rn,temp;
+  rn = pow(rate, nt)
+  l = l(rate);
+  q = nt*ic*rn/(tpaym*(rn-1));
+  return -1/(q + lambertw_1(-q*l/pow(rate,q))/l);
+}
+
+### Savings - Assume interest is added before extra payment is added
+
+# Parameters here are always given in the order:
+#   (*a__[], fc, ic, tpaym, paym, rate, nt, spt)
+# although one or more will be missing
+# e.g. ic and fc never happen together
+#
+# N.B. ic/fc occur BEFORE tpaym/paym here
+
+# Determine final captial savings given initial lump sum, regular payment,
+# . interest rate and number of terms (+Interest+Payment)
+define saving_fc(ic,paym,rate,nt){
+  auto rn;
+  rn = pow(rate,nt);
+  return ic*rn+paym*(rn-1)/(rate-1)
+}
+
+# As above but assumes terms are split into subterms
+define saving_fc_split(ic,paym,rate,nt,spt){
+  return saving_fc(ic,paym,root(rate,spt),nt*spt)
+}
+
+# Generate an array of current capital at each term
+define saving_afc(*a__[],ic,paym,rate,nt){
+  auto i;
+  a__[0]=ic;for(i=1;i<=nt;i++)a__[i]=a__[i-1]*rate+paym;
+  a__[i]=0;
+  return nt;
+}
+
+# Generate an array of current capital at each subterm
+define saving_afc_split(*a__[],ic,paym,rate,nt,spt) {
+  auto i;
+  rate = root(rate, spt);
+  nt *= spt;
+  #paym = loan_paym(ic,rate,nt);
+  a__[0]=ic;for(i=1;i<=nt;i++)a__[i]=a__[i-1]*rate+paym;
+  a__[i]=0;
+  return nt;
+}
+
+## Reverse calculations - given final capital and all but one of the others,
+##                        determine the value of the missing parameter
+
+# Determine initial capital (savings starter lump sum) based on final capital
+define saving_ic_from_fc(fc,paym,rate,nt) {
+  auto rn;
+  rn = pow(rate,nt);
+  return (fc-paym*(rn-1)/(rate-1))/rn;
+}
+
+# as above only with specified number of subterms per term
+define saving_ic_from_fc_split(fc,paym,rate,nt,spt) {
+  return saving_ic_from_fc(fc,paym,root(rate,spt),nt*spt)
+}
+
+# Determine regular payment based on desired final capital and initial lump sum
+define saving_paym_from_fc(fc,ic,rate,nt) {
+  auto rn;
+  rn = pow(rate,nt);
+  return (fc-ic*rn)*(rate-1)/(rn-1)
+}
+
+# as above only with specified number of subterms per term
+define saving_paym_from_fc_split(fc,ic,rate,nt,spt){
+  return saving_paym_from_fc(fc,ic,root(rate,spt),nt*spt)
+}
+
+# Determine ideal interest rate for given initial and final conditions
+define saving_rate_from_fc(fc,ic,paym,nt) {
+  auto os,i,ratd,rate,ratf,ratg;
+  rate = root(fc/(ic+nt*paym),nt) # good initial guess
+  os=scale;scale+=scale
+  for(i=scale;i>1;i/=2){
+    ratf=root((fc*(rate-1)+paym)/(ic*(rate-1)+paym),nt)
+    ratg=root((fc*(ratf-1)+paym)/(ic*(ratf-1)+paym),nt)
+    ratd=(ratf+ratf-rate-ratg);# d is a divisor that could end up as 0
+    if(ratd==0){rate=1;break}  # so escape if that happens
+    rate=(ratf*ratf-rate*ratg)/ratd;# glai(rate,ratf,ratg)
+  }
+  scale=os;return rate/1
+}
+
+# as above only with specified number of subterms per term
+define saving_rate_from_fc_split(fc,ic,paym,nt,spt) {
+  return pow(saving_rate_from_fc(fc,ic,paym,nt*spt),spt)
+}
+
+# Determine number of compounding terms required for desired final capital
+define saving_nt_from_fc(fc,ic,paym,rate){
+  return l( (fc*(rate-1)+paym)/(ic*(rate-1)+paym) )/l(rate)
+}
+
+# as above only with specified number of subterms per term
+define saving_nt_from_fc_split(fc,ic,paym,rate,spt) {
+  return saving_nt_from_fc(fc,ic,paym,root(rate,spt))/spt
+}
+
+# Determine number of subterms per term based on other details
+define saving_spt_from_fc(fc,ic,paym,rate,nt) {
+  auto rn;
+  rn = pow(rate,nt);
+  return l(rate)/l(1+paym*(rn-1)/(fc-ic*rn));
+}

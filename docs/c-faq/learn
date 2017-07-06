@@ -1,0 +1,910 @@
+Path: senator-bedfellow.mit.edu!dreaderd!not-for-mail
+Message-ID: <C-faq/learn_973504065@rtfm.mit.edu>
+Supersedes: <C-faq/learn_970824110@rtfm.mit.edu>
+Expires: 20 Dec 2000 09:47:45 GMT
+X-Last-Updated: 1999/08/26
+Organization: none
+From: Sunil Rao <sunil.rao@ic.ac.uk>
+Newsgroups: alt.comp.lang.learn.c-c++,comp.lang.c,comp.lang.c++,comp.lang.c.moderated,alt.answers,comp.answers,news.answers
+Followup-To: poster
+Approved: news-answers-request@MIT.EDU
+Organisation: ISE @ ic.ac.uk
+Subject: [alt.comp.lang.learn.c-c++] - FAQ list
+Summary: This post contains useful information for anyone wishing to
+          learn C and C++, listing online tutorials and resources,
+          giving book recommendations and helping clear some common
+          misconceptions.
+ 
+Originator: faqserv@penguin-lust.MIT.EDU
+Date: 06 Nov 2000 09:49:59 GMT
+Lines: 887
+NNTP-Posting-Host: penguin-lust.mit.edu
+X-Trace: dreaderd 973504199 5711 18.181.0.29
+Xref: senator-bedfellow.mit.edu alt.comp.lang.learn.c-c++:67556 comp.lang.c:460439 comp.lang.c++:514152 comp.lang.c.moderated:17039 alt.answers:52234 comp.answers:43028 news.answers:195539
+
+Archive-name: C-faq/learn
+Posting-Frequency: monthly
+Last-modified: 23 August 1999
+URL: http://www.raos.demon.co.uk/acllc-c++/faq.html
+
+This document is a FAQ list for the newsgroup alt.comp.lang.learn.c-c++.
+It provides readers with a framework and a set of guidelines for posting
+here, in addition to answering a number of questions newcomers here tend
+to ask.
+
+This FAQ is meant to be read in its entirety. It is posted monthly to
+alt.comp.lang.learn.c-c++, comp.lang.c, comp.lang.c++, 
+comp.lang.c.moderated, comp.answers, alt.answers and news.answers.
+
+This is the plaintext version of this list. An HTML version can be
+located at
+ http://www.raos.demon.co.uk/acllc-c++/faq.html
+
+
+Compiled by Sunil Rao <sunil.rao@ic.ac.uk>.
+Comments, suggestions, corrections, constructive criticism and requests
+ for clarification will be gratefully acknowledged.
+
+
+Last update: 23 August 1999
+
+Last changes made: Updated and expanded the answers to questions 6,
+ 10, 15, 16, 17, 18 and 19.
+To do list: To add answers to a number of questions and to update
+ information regarding compilers.
+
+
+
+Special Thanks to...
+ Dennis Swanson, Jim Gewin, Billy Chambless, Mark Brown, Dave Dunfield,
+ Jack Klein, Steve Summit, Steve Clamage, Dennis Ritchie, Kaz Kylheku,
+ Lars Hecking, Pablo Halpern, Jerry Coffin, Stuart Hall, Dann Corbit,
+ Michael McGoldrick, Cameron Foster, Brody Hurst, Jabari Adisa,
+ Wieland Stübinger, Chris Newton and Bernd Luevelsmeyer
+for their helpful comments, suggestions, advice, corrections and
+constructive criticism, and (in the case of some) for permitting me to
+quote from their papers/posts.
+
+
+
+1: What is the purpose of this newsgroup?
+
+    alt.comp.lang.learn.c-c++ is an unmoderated newsgroup for the
+    discussion of issues that concern novice and non-expert programmers
+    in C and C++ who wish to *LEARN* more about one or both of these
+    languages.
+
+    That probably looks scary. Basically, anybody can post to the
+    group. Provided the questions you post are on-topic and the answers
+    you provide are accurate, you should not have a problem. If your
+    question is off-topic, you will typically be redirected to a
+    newsgroup that is more appropriate; if your answers are
+    inaccurate, you risk being corrected with a flame.
+
+
+2: What is C/C++?
+
+    First of all, C and C++ are different languages. C was created by
+    Dennis Ritchie as an efficient language for systems programming.
+    Bjarne Stroustrup then extended C by adding features to support
+    object-oriented programming. C++ can be considered to be a
+    superset of C, but there are real differences between them.
+
+    It can usually (though not always) be assumed that anybody who
+    talks about "C/C++" as one language is no expert - this extends
+    to book authors too. It is normally unclear whether somebody is
+    referring to "C OR C++" or "C AND C++" when using this expression,
+    so it is probably best avoided.
+
+
+3: So, are C and C++ not so similar after all?
+
+    They are indeed similar to a great extent. Incompatibilities do
+    exist, though, and many idiomatic constructs used in C are frowned
+    upon by C++ experts. C++ programmers generally consider code that
+    does not exploit those features of C++ that make it possible to
+    write better programs - programs that are more readable and easier
+    to write and maintain - to be in poor style. The differences
+    between the two languages are significant enough to ensure that
+    one has to be clear about the language being used. However, it
+    must not be forgotten that C++ is a largely a superset of C, and
+    that it is possible (though perhaps not desirable) to write code
+    that works correctly in both languages.
+
+    A lot of people incorrectly believe that object-oriented
+    programs cannot be written in C; this is not true. What is true
+    is that C++ provides features that make it easier to write in a
+    style that is object-oriented; in other words, C++ supports
+    programming in an object-oriented style.
+
+
+4: What is the difference between this newsgroup and comp.lang.c or
+comp.lang.c++?
+
+    This newsgroup is primarily intended for discussion related to the
+    LEARNING of C and C++. The other two groups are primarily intended
+    for discussion of the features of the respective languages
+    themselves. Naturally, some overlap does occur. This group does tend
+    to be slightly (perhaps excessively so) more informal, though. Most
+    regulars on this group show great patience with many common
+    beginners' questions and will willingly expound on many topics of
+    interest or particular difficulty, referring to appropriate
+    reference material, either in printed or in electronic form, as
+    necessary.
+
+
+5: What kind of questions may be asked here?
+
+    Any question relating to any aspect of C or C++ that you're having
+    trouble understanding is on topic here. By C, what is meant is the
+    language PROPER and its standard library as defined by ANSI and ISO.
+    C++ discussions are about the proposed language standard (that
+    recently passed its formal vote) and the library it defines. Any
+    questions relating to specific compilers, third-party or non-
+    standard libraries, compiler extensions etc are unwelcome here, and
+    will probably be answered with a redirection to a more appropriate
+    newsgroup.
+
+    If you've been thus redirected, do not get miffed or upset and post
+    an angry response - it will cut no ice with the regulars and will
+    only label you as an unwilling learner. What's discussed in this
+    group is rigidly defined to limit the traffic and make the group
+    useful to as wide a possible audience as possible.
+ 
+
+6: I have a burning question about XXX. What should I do first?
+
+    First of all, do check to see if your question has not been been
+    answered before. Look up any of the standard references on the
+    language. If you can't find the answer, browse the group, lurk here
+    for a few days, search the archives at Deja.com, read the relevant
+    FAQs (including those of comp.lang.c and comp.lang.c++), and if you
+    STILL can't find the answer, post by all means.
+
+    Note that you might not be the first ever learner to have run into
+    your problems. There is a good chance that your question has been
+    answered before.
+
+     Deja.com: http://www.deja.com/
+     C FAQ:    http://www.eskimo.com/~scs/C-faq/top.html
+     C++ FAQ:  http://www.cerfnet.com/~mpcline/c++-faq-lite/
+
+
+7: What other points should I make note of BEFORE posting here?
+
+     Please observe basic Netiquette guidelines. If you're not sure of
+     what these are, subscribe to news.announce.newusers, and read *ALL*
+     of the posts there. A good reference is
+       http://www.ezine.com/netiquette.html
+
+     To summarise these points very briefly - ensure that your post is
+     on topic. Do your homework before posting. Don't post the same
+     question one hundred times. Don't troll. Don't post homework
+     questions without anything to show your effort. Don't ask for
+     replies to be sent by email. Don't post binaries. Make sure that
+     your subject line is an accurate description of the problem/topic.
+
+     Please do not ask for replies by email. If you haven't got the time
+     or patience to read the newsgroup, that's tough. The answers you
+     receive might benefit other readers of the newsgroup as well, and
+     you yourself might learn more from the discussions your question
+     might generate.
+
+     If you have to reply, be accurate and precise - your reply is being
+     read by LEARNERS, remember. If you are unsure or have nothing new
+     to add, don't bother.
+
+     For heaven's sake, don't get abusive when you are corrected or
+     redirected. If you are unsure as to why you have been redirected,
+     ask the person who did so *PRIVATELY* by email. There usually is
+     a good reason - see question 9.
+
+     Do not take any answers on trust. Sadly, many of those who post
+     answers here know even less than the interested learner who posted
+     the original question. Wait for a few days before relying on any
+     posted code or answers, just in case they might be corrected by
+     others. This is also why it is a very bad idea to email your
+     questions directly to regulars; you have no insurance against
+     any potential mistakes - remember that nobody is infallible.
+
+     Please do not make any MIME or UUENCODED posts (this includes
+     HTML). Many newsreaders cannot handle such posts correctly. You
+     will only make it impossible for many to read your posts.
+
+     And please try not to flame. This is a learners' group. Not
+     everyone who posts here is aware of all the issues involved. A
+     grumpy attitude only makes things difficult for everyone
+     concerned.
+
+     It usually helps if you indicate in somewhere in your post if
+     you're expecting a C or a C++ answer - several techniques
+     appropriate to C++ will not work in C, and some C programs will
+     not work or are considered bad style under C++. It also makes it
+     easier for other readers - they can then safely ignore your post
+     if they cannot help you with it. If you're not sure as to which
+     language you're learning, you probably need to get better
+     resources to learn from.
+
+
+8: I posted a homework question, but got no help; only sarcastic
+responses. Why?
+     
+     Homework questions are in general not welcome here - most attempts
+     to disguise one usually do not work particularly well. You will
+     typically receive no help unless you can demonstrate that you have
+     made an honest attempt to solve the problem yourself, by posting
+     some code you have trouble with, for instance.
+
+     There is little point in a regular supplying you with code to
+     fulfil an assignment if you are going to pass the course and come
+     out and work on real-world projects without knowing how to even
+     tackle a basic homework problem. See also
+      http://home.att.net/~jackklein/ctips01.html#homework
+      http://members.xoom.com/jshiva/hw.txt
+
+
+9: Why are questions relating to Windows, Graphics, Sockets etc. off-
+topic here?
+
+     Questions on these topics come up every so often here. C and C++
+     are languages, not operating systems. They come with limited,
+     though highly useful, standard libraries. While any question
+     relating to these libraries is relevant and most certainly on
+     topic, a question relating to MFCs, for instance, is of absolutely
+     no interest to a Unix expert, and vice-versa. There exist
+     newsgroups DEVOTED to these non-standard additions. It certainly
+     makes more sense to post a question in a place where there is a
+     greater chance of it being answered, and answered correctly. As
+     a beginner, it probably makes more sense to concentrate on the
+     core language itself and master that before branching off to
+     learn system-specific tricks.
+
+     See also http://members.xoom.com/jshiva/offtopic.txt
+
+
+10: What are some other related groups where I might post questions?
+
+     (Answer adapted from the regular "Welcome to comp.lang.c" post
+     by Billy Chambless and Tim Behrendsen)
+
+     You *really* ought to be able to work out where to post by
+     yourself. Please, please, please, for heavens' sake read the
+     FAQs and lurk for a while before posting your questions.
+
+     Please do not post to more groups than are necessary. Think
+     carefully about the relevance of your post before you post to any
+     of the newsgroups mentioned below. If you decide that your question
+     is indeed relevant to more than one newsgroup and is not a FAQ,
+     please cross-post rather than multi-post. Remember that many
+     regular readers of this newsgroup also follow several of the other
+     groups mentioned below.
+
+     Note: if your news server does not carry the borland, microsoft or
+     watcom newsgroups, you might find it necessary to connect
+     to forums.borland.com, msnews.microsoft.com or forums.sybase.com
+     instead. See also
+      http://www.borland.com/newsgroups/
+      http://sdn.sybase.com/sdn/appdev/newsgroups.stm
+
+     * Language Issues
+
+      C                         comp.lang.c, comp.lang.c.moderated
+      C++                       comp.lang.c++.moderated, comp.lang.c++
+      x86 assembly              comp.lang.asm.x86
+
+     * Non-language-specific Issues
+
+      Algorithms                comp.programming
+      Graphics                  comp.graphics.algorithms
+
+      Another avenue worth exploring for general algorithms questions
+      might be the bulletin board at the Analysis of Algorithms
+      homepage based at http://pauillac.inria.fr/algo/AofA/ and
+      mirrored at http://www.cecm.sfu.ca/mirror/INRIA/algo/AofA/.
+
+      There is a real difference between an algorithm and an
+      implementation thereof. A question regarding an algorithm itself
+      is, strictly speaking, off-topic though issues do get raised here
+      in the absence of any good newsgroup to discuss them in.
+      Questions relating to implementations are of course on-topic
+      here.
+
+     * Compilers/Libraries
+
+      The gcc compiler          gnu.gcc
+      DJGPP (gcc for DOS)       comp.os.msdos.djgpp
+      Borland C++               borland.public.cpp
+                                borland.public.cpp.language
+      Borland C++Builder        borland.public.cppbuilder
+                                borland.public.cppbuilder.language
+      Visual C++                microsoft.public.vc.ide_general
+                                microsoft.public.vc.language
+      Watcom C/C++              powersoft.public.watcom_c_c++.general
+      CodeWarrior               comp.sys.mac.programmer.codewarrior
+
+      MFC                       microsoft.public.vc.mfc
+                                comp.os.ms-windows.programmer.tools.mfc
+      OWL                       borland.public.cpp.owl
+                                comp.os.ms-windows.programmer.tools.owl
+      VCL                       borland.public.cppbuilder.vcl
+
+     * Operating Systems/System Specifics
+
+      DOS issues                comp.os.msdos.programmer
+      MS Windows                comp.os.ms-windows.programmer.misc
+                                microsoft.public.win16.programmer.*
+                                microsoft.public.win32.programmer.*
+      OS/2                      comp.os.os2.programmer.misc
+      Macintosh                 comp.sys.mac.programmer.misc
+      General UNIX              comp.unix.programmer
+      Amiga                     comp.sys.amiga.programmer
+
+
+11: HELP! My program does not work correctly. What do I do now?
+
+     Before posting code here, try and make sure that it at least
+     compiles correctly, even if it does not quite behave the way you
+     intended it to. Try and localise your error to a particular
+     function or section of code - most readers have no time to wade
+     through pages of code (If you are unable to do this, you probably
+     need to start again from scratch anyway.). Do NOT under any
+     circumstances post all of your code as an attachment - many will
+     simply ignore your post. Please also specify if your code is C
+     or C++.
+     
+     Essentially, post the smallest complete program that manifests the
+     problem. This makes it easier for the reader to answer your
+     question. You might find that doing this enables you to answer
+     your question yourself!
+
+     Read the answer to the above question as well. And do learn how to
+     use the debugger that came with your compiler. It usually helps if
+     you set the warning levels to the highest possible for your
+     compiler - let the compiler pick out any errors and warn you of
+     any potential problems. And if you post any errors or warning
+     messages with your code, it makes it that much easier for a
+     regular to see what's wrong with your code - any need to compile
+     it yet again will be minimised, especially if the error is a
+     common one.
+
+
+12: What online tutorials exist for learning C and C++?
+
+     The best online tutorial for C I have come across has got to be
+     Steve Summit's class notes for the C courses he teaches.
+      http://www.eskimo.com/~scs/cclass/cclass.html
+
+     There are references to other C tutorials in his C FAQ as well.
+
+     Vinit Carpenter maintains a list of resources for learning C
+     and C++. Do note, however, that a fair number of the tutorials
+     placed online contain mistakes and/or are out of date.
+      http://www.cyberdiem.com/vin/learn.html
+
+     Ted Jensen's tutorial on pointers and arrays in C can be found
+     at http://pweb.netcom.com/~tjensen/ptr/cpoint.htm
+
+     Tom Torfs has written an excellent, complete tutorial, meant
+     to complement a good introduction to C. It's not primarily
+     intended for the complete beginner to the language, though.
+      http://members.xoom.com/tomtorfs/cintro.html      
+
+     See also the answer to question 18.
+      
+
+13: What should I look for when picking a book to learn from?
+
+     Opinions vary widely. Most readers recommend the book(s) they
+     learnt from, regardless of whether or not they might actually be
+     suitable for the learner. The fact that many commonly recommended
+     books are either full of errors or hopelessly out of date (or
+     even both!) makes matters worse.
+
+     Beware of books that claim to teach you both C and C++ - they might
+     end up teaching you a horrible hybrid instead. It is also probably
+     better to stick to books that conform to the C and C++ standards,
+     at least while beginning. Many compiler-specific books do not go
+     into sufficient depth regarding important language issues and
+     usually fail to be clear as to whether something is specific to the
+     compiler under consideration or not.
+
+     Some texts come bundled with compilers - it's usually worth
+     checking to see how out-of-date the compiler actually is. For C,
+     this is probably less of an issue than it is for C++, simply
+     because compiler writers have had over a decade to catch up with
+     the standard.
+
+     It pays to keep more than one good book handy; many books known for
+     their technical accuracy can seem dense and unreadable in places,
+     and you might at times need to back up a primer with a reference.
+
+     Do make sure that you get the latest edition of any of these books
+     you decide to purchase. Also please check to see if there is an
+     errata list available online for any book you decide on; this is
+     particularly important for programming language texts. It pays to
+     be suspicious of books for which such lists cannot be located
+     online for whatever reason.
+
+     The Association of C and C++ Users maintains a collection of book
+     reviews taken from its journals. Many of the reviews are fair and
+     excellent in their criticism, though there are a few minor
+     inconsistencies and a number of truly awful books have escaped
+     with favourable reviews. It's a useful starting-point, though.
+      http://www.accu.org/bookreviews/public/
+
+     Many C and C++ experts recommend against using ANY book written by
+     a certain Herbert Schildt. To see why, read the answer to question
+     16. The "Dummies" series of books is not particularly
+     well-regarded either in general.
+
+
+14: What are the best books I can learn C from?
+
+     If you wish to learn C, the classic text - the "Bible" - is "The C
+     Programming Language", 2nd Edition, by Brian Kernighan and Dennis
+     Ritchie. This hallowed text describes and explains ANSI C. K&R2 is
+     renowned for its brevity, clarity, elegance and completeness; but
+     these very factors can make it heavy going for the beginner.
+      http://cm.bell-labs.com/cm/cs/cbook/
+
+     K N King's "C Programming: A Modern Approach" is another text
+     frequently recommended on comp.lang.c. This book is a good,
+     thorough introduction to C that is a lot easier to work with
+     from a beginner's perspective.
+      http://knking.com/books/c/
+
+     Another frequently recommended book on C is "C - How to
+     Program", 2nd Edition, by H M Deitel and P J Deitel. Please note
+     that I have not had a chance to read this book, and include the
+     reference on the strength of the the recommendation of a number
+     of regular posters to comp.lang.c.
+      http://www.deitel.com/products_and_services/publications/chtp2.htm
+
+
+15: What are the best books I can learn C++ from?
+
+     Before going further, I should mention that I am not a C++
+     programmer myself, and the recommendations listed here are based on
+     positive comments I have heard from others.
+
+     The C++ equivalent of K&R2 is "The C++ Programming Language", 3rd
+     Edition, by Bjarne Stroustrup. Experienced C++ programmers love it;
+     however, many beginners seem to find it very hard going indeed.
+     Like K&R2, it assumes basic familiarity with programming concepts
+     and is not really intended for the absolute beginner. It does not 
+     assume any previous knowledge of C.
+      http://www.research.att.com/~bs/about_3rd.html
+
+     A more accessible book that is intended for beginners is "C++
+     Primer", 3rd Edition, by Stanley Lippman and Josée Lajoie. This
+     book is thorough, and conforms to the C++ standard. It is
+     reportedly extremely clear and detailed, and, again, does not
+     assume any previous knowledge of C.
+      http://cseng.aw.com/bookdetail.qry?ISBN=0-201-82470-1&ptype=0
+
+     Another text I've seen seen particularly recommended is "C++ - How
+     to Program", 2nd Edition, by H M Deitel and P J Deitel. Again, this
+     text does not assume prior knowledge of C.
+      http://www.deitel.com/products_and_services/publications
+                                                            /cpphtp2.htm
+
+     Other texts I have seen recommended a number of times on the C++
+     newsgroups include the badly-named-though-often-recommended "Teach
+     Yourself C++ in 21 days" by Jesse Liberty, "C++ Primer Plus" by
+     Stephen Prata, and "Thinking in C++" by Bruce Eckel.
+      http://www.libertyassociates.com/book_edit.htm#21 Days
+      http://www.bruceeckel.com/books.html#ThinkingInCPlusPlus
+
+     Bruce Eckel has also placed a "beta" of the second edition of his
+     "Thinking in C++" online as well. Do remember that it isn't the
+     final version and that there might remain some as-yet undetected
+     errors.
+      http://www.eckelobjects.com/ThinkingInCPP2e.html
+     
+     The C++ FAQ contains some recommendations for C++ books as well.
+
+
+16: Why do many experts not think very highly of Herbert Schildt's
+books?
+
+     A good answer to this question could fill a book by itself. While
+     no book is perfect, Schildt's books, in the opinion of many
+     gurus, seem to positively aim to mislead learners and encourage
+     bad habits. Schildt's beautifully clear writing style only makes
+     things worse by causing many "satisfied" learners to recommend his
+     books to other learners.
+
+     Do take a look at the following scathing articles before deciding
+     to buy a Schildt text.
+      http://www.lysator.liu.se/c/schildt.html
+      http://herd.plethora.net/~seebs/c/c_tcr.html
+
+     The above reviews are admittedly based on two of Schildt's older
+     books. However, the language they describe has not changed in the
+     intervening period, and several books written at around the same
+     time remain highly regarded.
+     
+     The following humorous post also illustrates the general feeling
+     towards Schildt and his books.
+      http://www.qnx.com/~glen/deadbeef/2764.html
+
+     There is exactly one and ONLY one C book bearing Schildt's name on
+     its cover that is at all recommended by many C experts - see Q 25.
+
+
+17: Where can I get a free C or C++ compiler?
+
+     (Answer adapted from Joe Buck's FAQ for g++ and libg++.)
+  
+     * gcc
+
+      gcc is a free C and C++ compiler from the Free Software
+      Foundation available for many Unix-based systems. Its ports for
+      other systems are also freely available.
+       http://www.fsf.org/software/gcc/gcc.html
+       ftp://prep.ai.mit.edu/pub/gnu/
+
+      egcs (the experimental gnu compiler system) is another free
+      project (based on gcc). Check out
+       http://www.cygnus.com/egcs/
+     
+      The MS-DOS port (DJGPP) of gcc runs on a 386 or higher, and is a
+      full 32-bit compiler. Make sure you read the FAQ thoroughly
+      first, however, and post any questions you have regarding its
+      setup to comp.os.msdos.djgpp, not here.
+       http://www.delorie.com/djgpp/
+
+      For a port of gcc that works on 32-bit Windows, look at
+       http://www.cygnus.com/misc/gnu-win32/
+      Also, for another port, see
+       http://www.xraylith.wisc.edu/~khan/software/
+                                           gnu-win32/egcs-mingw32.html
+
+      You could also get hold of Bloodshed Dev-C++, which is
+      essentially Mingw32 bundled with an editor, packaged in an
+      easier-to-use form.
+       http://www.bloodshed.nu/devc.html
+
+      For the Amiga, BeOS, and pOS, look at the GG port of gcc at
+       http://www.ninemoons.com/GG/
+
+      EMX is a port of gcc to OS/2 that also works on DOS.
+       http://www.os2ss.com/unix/emx09c/
+
+
+     * lcc
+
+      lcc-win32 is a free C compiler available for 32-bit Windows.
+       http://www.cs.virginia.edu/~lcc-win32/
+
+      It is based on the retargettable lcc system.
+       http://www.cs.princeton.edu/software/lcc/
+
+
+     * Pacific C
+
+      The Pacific C compiler is available for free for personal use.
+      You can download it from
+       http://www.hitech.com.au/products/pacific.html
+
+
+     * MPW
+
+     If you're programming under the Apple Macintosh, you can obtain
+     the Macintosh Programmers' workshop for free.
+      http://developer.apple.com/tools/mpw-tools/
+
+
+     * Turbo C
+
+     Inprise (formerly known as Borland) have commenced making older
+     versions of their software available for free download. This
+     includes older (possibly pre-standard) versions of their Turbo C
+     compiler.
+      http://community.borland.com/museum/
+
+
+     * Micro-C
+
+      If you are looking for a free C compiler for MS-DOS that is easy
+      to install and use, take a look at Micro-C, available from
+       http://www.dunfield.com/
+
+      Do bear in mind that it is not wholly compatible with
+      the standard. The incompatibilites are well-documented, however.
+
+
+18: What good websites/online references exist for C and C++?
+
+     http://www.lysator.liu.se/c/ is an excellent resource for C,
+     containing a number of extremely useful links and pointers.
+
+     For beginners to C (and C++), Jack Klein has put up an excellent
+     page with tips, suggestions and expanded answers to a number of
+     commonly asked beginners' questions.
+      http://home.att.net/~jackklein/c/c_main.html
+
+     The Comeau Computing web site features several highly informative
+     and useful resource pages, including
+      http://www.comeaucomputing.com/resources/litsuggs.html
+      http://www.comeaucomputing.com/faqs/cppfaq.html
+
+     Steve Summit has archived some of his longer and more informative
+     Usenet posts at
+      http://www.eskimo.com/~scs/readings/index2.html
+
+     Check out the C++ Virtual Library for some useful C++ links.
+      http://www.desy.de/user/projects/C++.html
+
+     You may wish to look at the C Language Online Journal at
+      http://www.cs.wustl.edu/~jxh/CLOJ/
+
+     For some useful code snippets (some portable; others not),
+     check out Bob Stout's SNIPPETS archive at
+      http://www.snippets.org/
+
+     Karim Ratib's well-indexed code page has links to many useful
+     resources.
+      http://www.iro.umontreal.ca/~ratib/code
+     
+     Martin Leslie's C Programming reference site is at
+      http://www.gator.net/~garyg/C/c.html
+
+     Jamie Blustein's C Programming Language resources are at
+      http://www.csd.uwo.ca/~jamie/.Refs/C-refs.html
+
+     Scott McMahan's C Programmer's Notebook, which discusses a
+     number of issues C programmers encounter as their experience
+     grows, is at
+      http://www.skwc.com/essent/prognotebook.html
+
+     Some questions relating to what standard C is all about are
+     answered at
+      http://lglwww.epfl.ch/~wolf/c/
+
+     Also, check out
+ 
+     The Mining Company's C/C++ site,
+      http://cplus.miningco.com/
+     
+     Jon Morris Smith's C++ resources directory,
+      http://www.cs.bham.ac.uk/~jdm/cpp.html
+
+     Robert Davies' list of online C++ references,
+      http://nz.com/webnz/robert/cpp_site.html
+
+     The #C++ site,
+      http://www.cl.ais.net/morph/c++/main.html
+
+     and Simo Salminen's Programmers' Oasis C and C++ page.
+      http://www.utu.fi/~sisasa/oasis/oasis-cc++.html
+
+
+19: Should I learn C before learning C++?
+
+     According to a number of C++ experts, including its creator Bjarne
+     Stroustrup, and Marshall Cline (the author of the C++ FAQ), the
+     answer is a firm no.
+
+     Look up the C++ FAQ to see why Cline thinks you do not need to
+     learn C before C++. A post by Bjarne Stroustrup to comp.lang.c++
+     addresses this point too.
+       http://www.research.att.com/~bs/learn.html
+
+     "Learning Standard C++ as a New Language" - a paper by Stroustrup
+     available from http://www.research.att.com/~bs/papers.html -
+     examines this much-debated issue in great depth, but the paper is
+     aimed more at educators than at beginners.
+
+
+20: What is the difference between C++ and Visual C++?
+
+     C++ is a programming language. Visual C++ is Microsoft's
+     implementation of it. When people talk about learning Visual C++,
+     it usually has more to do with learning how to use the programming
+     environment, and how to use the Microsoft Foundation Classes (MFCs)
+     for Windows rather than any language issues. Visual C++ can and
+     will compile straight C and C++.
+
+     
+21: What is portability? Why are so many people concerned about it?
+
+    C and C++ are languages that are not tied down to a particular
+    platform. This means that, with care, it is possible to write useful
+    code in either of these languages that will run on different
+    platforms without modification.
+
+    That is not to say that ALL code written in these languages must
+    conform strictly to the standards - in practice it is sometimes
+    neither possible nor desirable to achieve this aim. However, the job
+    of porting code is made easier when any system-specific stuff is
+    carefully packaged or abstracted away, so that it is clear and
+    straightforward to make the necessary changes during a port.
+
+    In order to be able to do this effectively, it is important to be
+    aware of what can and can not be done within the realms of the
+    standards set by these languages. That is why a lot of importance is
+    placed on adhering strictly to the standards, at least while
+    learning.
+
+
+22: How do I BEGIN to write C or C++ under Visual or Borland C++?
+
+     This question is, strictly speaking, off-topic, but is answered
+     here since it's one that seems to plague many beginners.
+
+     To start with, you need to make sure that you are not writing a
+     Windows application. Try creating a new project or application
+     to target MS-DOS, QuickWin or Win32 Console depending on your
+     compiler version. You can then use the Standard C and C++
+     libraries to write strictly conforming programs. It's best to
+     learn to write standard-conforming programs first before
+     branching off into writing Windows programs.
+
+     If you find that you are having a lot of trouble setting up your
+     compiler, a good place to ask questions is a newsgroup devoted to
+     your compiler. See Question 10 for a list of such groups.
+
+
+23: HELP! My program seems to compile correctly, but when it runs, a DOS
+window flashes and then vanishes.
+
+     This can sometimes occur when you are developing programs using an
+     IDE. A command prompt window opens and displays the output, and
+     control is passed back immediately to the IDE.
+
+     To get around this, you can look through the various menus to find
+     a "View Output Screen" option. Alternatively, you could open a
+     command prompt window and change directory to the one your
+     executable is going to end up in and run your executable directly
+     from there.
+
+     The solution of using a non-standard function to keep the
+     executable running until a key is pressed is not a very good idea -
+     especially if you are going to run your program outside of the
+     development environment.
+
+
+24: Why doesn't this FAQ cover language issues?
+
+     This is because other better, more comprehensive resources exist
+     for this purpose. See the answers to questions 12 and 18.
+
+
+25: Where can I obtain a copy of the standards for C and C++?
+
+     You cannot obtain copies of the standards for free. This is because
+     the standards organisations earn a large part of their revenue from
+     selling printed copies.
+
+     The C FAQ tells you how you can obtain copies of the C standard.
+     You could also buy "The Annotated ANSI C Standard", by the
+     afore-mentioned Herbert Schildt (question 16). Make sure that you
+     ignore the annotations completely, however.
+
+     The C++ standard can be obtained online directly from the ANSI
+     Electronic Standards store . After registering yourself for free,
+     you can download the document in Adobe PDF format on payment of
+     $18.00 (US) by credit card.
+      http://webstore.ansi.org/ansidocstore/default.asp
+
+     The standards documents can be daunting at first sight; meant, as
+     they are, to be as formal and precise as possible. They are NOT
+     suitable for learning from, but are intended rather to be used as
+     the ultimate authority to check with on any language issue.
+
+     Also, check the comp.std.c++ FAQ.
+      http://reality.sgi.com/austern_mti/std-c++/faq.html
+
+
+26: HELP! I get errors when I try to compile "hello, world"!
+
+     Check your source to make sure you haven't missed any semi-colons
+     or braces. Also remember that C and C++ are case-sensitive - Main()
+     and main() are completely different, for instance. If you are
+     satisfied that the program source is all right, then you probably
+     have not set your compiler up properly. You might need to ask one
+     of the experts in a newsgroup devoted to your compiler about this -
+     see the answer to question 10.
+
+     The sole reason for redirecting compiler setup questions to other
+     groups is to reinforce the point that a language is inherently
+     separate from an implementation of one. There are simply too
+     many different implementations of C and C++, and too many
+     subtleties involved in the actual learning of C and C++ for all
+     of them to come under the banner of this newsgroup.
+
+
+27: Which language should I learn first then - C or C++?
+
+     The answer to this depends on your own inclinations. C is a
+     smaller, less complex language than C++, and is consequently easier
+     to master. However, it is probably easier to get up to speed with
+     C++, if you make effective use of the standard library. Some find C
+     to be more elegant than C++, others think it to be too "unsafe".
+     C++ programmers generally feel that it has features that make it
+     easier to write good, robust, readable and maintainable code in
+     than in C.
+
+     If you do decide to learn C++, there is little point in learning
+     C itself first. See also question 19.
+
+     If you have little or no programming experience, be prepared to
+     face a real challenge. C and C++ have enough quirks and subtleties
+     to catch out even expert programmers in other languages. It's not
+     impossible to learn to program with C or C++ as a first language,
+     just more difficult than with Turing, Pascal or a structured
+     BASIC, for instance. Programming in C or in C++ is generally
+     considered to be a more pleasureable experience than doing so
+     in beginners' languages by those experienced in either, but the
+     very fact that your freedom is limited and restricted by these
+     languages makes them easier to learn.
+
+
+28: Why are C and C++ so popular and widely-used?
+
+     (First part of answer adapted from a March 1998 comp.lang.c post
+     by Kaz Kylheku on "Why Has C Proved To Be Such A Succesful
+     Language")
+
+     C has always been a language that never attempts to tie a
+     programmer down - it allows for easy implementation, it comes with
+     a genuinely useful standard library that can itself be implemented
+     in C, and it is both efficient and portable. C has always appealed
+     to systems programmers who like the terse, concise manner in which
+     powerful expressions can be coded. C was widely distributed with an
+     Operating System (Unix) that was actually largely written in C
+     itself. Also, C allowed programmers to (while sacrificing
+     portability) have direct access to many machine-level features that
+     would otherwise require the use of Assembly Language.
+
+     As Dennis Ritchie writes in his paper, "The Development of the C
+     Language",
+
+         C is quirky, flawed, and an enormous success. While accidents
+         of history surely helped, it evidently satisfied a need for a
+         system implementation language efficient enough to displace
+         assembly language, yet sufficiently abstract and fluent to
+         describe algorithms and interactions in a wide variety of
+         environments.
+
+     C++ has its basis in C - extending it by supporting features meant
+     to encourage and support the development of large programs. Perhaps
+     most importantly, it supports object-oriented programming in a
+     familiar setting and framework (that of C). When C++ was created,
+     one of the initial aims was to retain compatibility with C to as
+     large an extent as possible, and retain its spirit and efficiency.
+     It was possible to convert from C to C++ gradually, thus making use
+     of C++ (initally, at least) as a "better C", and moving on to
+     using other features. This allowed many C programmers to learn C++
+     quickly (though using C++ effectively requires a major mind-shift
+     for many C programmers).
+
+
+29: Why is this FAQ so grumpy/terse/curt/unfriendly?
+
+     A lot of questions posted in alt.comp.lang.learn.c-c++ are posted 
+     by people who are generally unsure about what they are learning.
+     Many beginners fail to appreciate that C and C++ are used on a
+     number of platforms, and that what works with a particular compiler
+     is not necessarily going to work with another, even on the same
+     platform. It is important that a learner be clear about the
+     differences between programming in standard C or C++, and
+     programming using platform- and compiler-specific extensions. In
+     the long run, this approach - that of separating the idea of
+     "language" and "platform" - leads to a better understanding of both
+     the language and the platform. It is generally accepted that the
+     sooner this is appreciated by the learner, the better. Usenet style
+     in general tends to be terse and to-the-point and this FAQ reflects
+     that, while attempting to be as fully informative as possible.
+
+     This is the only reason for grumpiness - most interested learners
+     find alt.comp.lang.learn.c-c++ a very pleasant and helpful place
+     once they understand this. The newsgroup is nowhere near as grumpy
+     as this FAQ might suggest - certainly not towards someone who has
+     read and understood all it has to say!
+-- 
+{ Sunil Rao }
+"...certainly no beast has essayed the boundless, infinitely 
+ inventive art of human hatred. No beast can match its range and
+ power." - Arundhati Roy, "The God of Small Things", 1997.

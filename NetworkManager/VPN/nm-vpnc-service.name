@@ -1,0 +1,15 @@
+# This file is obsoleted by a file in /usr/lib/NetworkManager/VPN
+
+[VPN Connection]
+name=vpnc
+service=org.freedesktop.NetworkManager.vpnc
+program=/usr/lib/networkmanager/nm-vpnc-service
+
+[libnm]
+plugin=/usr/lib/NetworkManager/libnm-vpn-plugin-vpnc.so
+
+[GNOME]
+auth-dialog=/usr/lib/networkmanager/nm-vpnc-auth-dialog
+properties=/usr/lib/NetworkManager/libnm-vpnc-properties
+supports-external-ui-mode=true
+supports-hints=true

@@ -1,0 +1,136 @@
+#!/usr/bin/gawk -f
+# MOHAWK IRC "BOT"
+# Written in GNU/Awk. Why? You mean 'Why not'?
+# You'll want to supply options using Gawk's -v flag.
+# Invoke as follows:
+# ./mohawk.awk -v nick=MyNick -v server=irc.server.net -v port=6667 etc...
+#
+# Expected options are:
+# server= IRC server to connect go
+# port= Port to use. Defaults to 6667
+# nick= Nickname to use.
+# user= Username to use. Defaults to nick
+# realname= Realname to use. Defaults to nick
+# nickserv= Set to a non-zero value to authenticate using nickserv
+# nspass= Nickserv password to use to authenticate
+# channels= Comma-separated list of channels to join upon login.
+#
+# Everything is outputted to stdout or stderr, prepended by a 'header'. The header is one of:
+# [<] Message received from server
+# [>] Message sent to server
+# [#] Warning or non-fatal error
+# [!] Fatal error; program will exit (error printed to stderr)
+
+# 'send' function: does nothing but append a carriage return/line feed to the message, and then send it to the socket.
+function send ( body )
+{
+    print body "\r\n" |& IRC_SOCK
+    # Also print our message to stdout. Y'know, for convenience.
+    print "[>] " body
+}
+
+# Login function. Run by BEGIN upon receiving a PING
+function login ()
+{
+    # If nickserv is nonzero, then send our password and wait for a +r reply.
+    if (nickserv) {
+        send("PRIVMSG nickserv :identify " nspass)
+        waitfor="MODE " nick " :\\+r"
+
+    # If nickserv is disabled, then just wait for any 'ol MODE reply.
+    } else {
+        waitfor="MODE " nick " :.+$"
+    }
+
+    # Loop, waiting until we receive something matching waitfor.
+    while ((IRC_SOCK |& getline) > 0) {
+        print "[<] " $0
+        if ($0 ~ waitfor) { break }
+    }
+
+    # Join all our channels.
+    send("JOIN :" channels)
+
+    # Set it so that we've logged in.
+    logged_in=1
+}
+
+# Getmessage take a regular IRC input string (with $1 cut off) and deduces the location of the message.
+# The message (as specified by RFC 2812) is anything between the first colon ':' (not counting the heading colon) and the end.
+# We match the colon (get it's location, referred to as 'l') and then do some fancy as fuck arithmetic where we receive everything from string indices
+# 'l' to 'L' (where 'L' is the full string length) is the message. Essentially L - l is the length of the message.
+function getmessage ( fullbody ) {
+    # Look for a colon.
+    message_start = match( fullbody , ":" )
+
+    # If there is no colon... then just return an empty string.
+    if ( !message_start )
+        return ""
+
+    # Get the length of the message.
+    message_length = length(fullbody) - message_start
+
+    # Return the appropriate substring
+    return substr( fullbody , message_start+1 , message_length )
+}
+
+
+# BEGIN... uh, BEGINs here.
+BEGIN {
+    # Verify that necessary arguments have been supplied:
+    if ( !(server && nick) ) {
+        print "[!] Must at least specify server and nick fields!" > "/dev/stderr"; exit 1
+    }; if ( !channels ) {
+        print "[#] No channels specified to join!"
+    }; if ( (nickserv && !nspass) ) {
+        print "[!] Nickserv enabled, but no password supplied." > "/dev/stderr"; exit 2
+    }; if ( !user ) {
+        user = nick
+    }; if ( !realname ) {
+        realname = nick
+    }; if ( !port ) {
+        port = 6667
+    }
+
+    # Initialise our socket and some other variables:
+    IRC_SOCK = "/inet/tcp/0/" server "/" port
+
+    # Send our NICK and USER messages:
+    send("NICK " nick)
+    # Now send our USER message:
+    send("USER " user " 0 * :" realname)
+
+    # Start our read-loop, the real 'program' starts here.
+    while ((IRC_SOCK |& getline) > 0) {
+        print "[<] " $0
+        # Handle pings accordingly; if the first (and only) word is PING, then:
+        if ($0 ~ /^PING/) {
+            # Set the command from PING to PONG. It's cheating, I know ;)
+            $1 = "PONG"
+            send($0)
+            # If not logged in yet, then start the login process.
+            if ( !logged_in ) { login() }
+            continue
+        }
+        
+        # Take note that anything past this point won't be executed if the message was a PING (note the continue)
+        # Split the contents of the host of the sender into the 'userhost' array: userhost[1]!userhost[2]@userhost[3]
+        # e.g. Fiesta!That@Big.Bastard => userhost[1] = Fiesta, userhost[2] = That, userhost[3] = Big.Bastard
+        # Furthermore, if the sender was only a server, then:
+        # services.ircnetwork.net => userhost[1] = services.ircnetwork.net, userhost[2] = ""
+        patsplit( $1 , userhost , "([^@!]+)" )
+        # Remove '$1', we don't need it. We may now re-use the message sent to us.
+        $1 = ""
+
+        # Retrieve the message:
+        message = getmessage( $0 )
+        
+        if (($2 ~ /PRIVMSG/) && (message ~ nick)) {
+            message = "Hey, that's me you fuck"
+            send($2 " " $3 " :" message)
+        }
+    }
+
+    # Neatly close our connection.
+    close(IRC_SOCK)
+}

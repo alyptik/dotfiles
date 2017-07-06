@@ -1,0 +1,10 @@
+#!/bin/sh --
+
+# Cheapo url spawner for st using https://github.com/mvdan/xurls and https://github.com/halfwit/plumber
+
+## Split into two streams, remove control characters in one, then filter
+## This allows us to get multiline links in curses programs
+
+{ { tee /dev/fd/3 | tr -d "[:cntrl:]" >&9; } \
+	3>&1 >&9; } \
+	9>&1 | xurls | sed 's/^.*\(http.*$\)/\1/;s|file://||' | uniq | tac | dmenu -p URLs | xe -s 'plumber.sh $1'

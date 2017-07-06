@@ -1,0 +1,131 @@
+#!/bin/sh
+
+shopt -s nullglob
+shopt -s extglob
+
+## Directory to copy the kernel, the initramfs...
+ESP_DIR="/boot/efi/EFI/arch"
+
+build() {
+	[[ ! -f /boot/intel-ucode.img ]] && {
+		echo -en "\n"'No intel-ucode.img found!'"\n"; } || {
+		echo -en "\n"'Copying /boot/intel-ucode.img to '${ESP_DIR}'/...'"\n"
+		cp -v "/boot/intel-ucode.img" "${ESP_DIR}/"; }; echo
+	find "/boot" -maxdepth 1 -name "initramfs*.img" \! -name "*fallback*" \
+		-exec printf '%s\n' 'Copying '{}' to '${ESP_DIR}'/...' \; \
+		-exec cp -v "{}" "${ESP_DIR}/" \;
+	echo
+	find "/boot" -maxdepth 1 -name "vmlinuz*" \! -name "*.efi" \
+		-exec printf '%s\n' 'Copying '{}' to '${ESP_DIR}'/...' \; \
+		-exec cp -v "{}" "${ESP_DIR}/" \;
+	echo
+
+	#find "${ESP_DIR}" -maxdepth 1 -name "*vmlinuz*" ! -name "*.efi" \
+	#-exec printf '%s\n' 'Moving '{}' to '{}'.efi...' \; \
+	#-exec mv -v "{}" "{}.efi" \; \
+	#-exec printf '%b' "\n" \;
+
+	#find "/boot" -maxdepth 1 -name "*vmlinuz*" ! -name "*.efi" -print0 | \
+	#while IFS= read -r -d '' file; do
+	 #echo 'Copying '${file}' to '${ESP_DIR}'/...'
+	 #cp -v "${file}" "${ESP_DIR}/`<<<${file} sed 's_\(.*\)\(vmlinuz.*\)_\2.efi_'`"
+	 #echo -en "\n"
+	#done	
+
+	#-exec mv -v $ESP_DIR}/vmlinuz*{,.efi} \; \
+	#$(echo {} | sed 's_[^[:alnum:]*]\(vmlinuz.*\)_\1.efi_')" \; \
+	## If ucode is used uncomment this line
+	#cp -v "/boot/intel-ucode.img" "${ESP_DIR}/"
+
+	#find "/boot" -maxdepth 1 -name "*vmlinuz*" ! -name "*efi" -exec cp -v {} "{}.efi" \;
+	#find "/boot" -maxdepth 1 -name "*.efi" ! -name "*.efi.*" \
+	#-exec cp -v "{}" "/@efi/" \;
+
+	#df -h '/@efi/'
+	#ls -lahS '/@efi/'
+
+        #find "/boot" -maxdepth 1 -name "*vmlinuz*" \
+	#-exec printf '%s\n' "{}" \; \
+	#-print0 | while IFS= read -r -d '' file; do
+         #efiname=$(printf '%s' "${file}.efi" | sed "s:\/boot\/v:v:")
+	 #printf '%s\n' "${file}"
+         #printf '%s\n' "${efiname}"
+	 ## Copy default kernel normally and as *.efi to EFI
+         #cp -v "${file}" "${ESP_DIR}/"
+         #cp -v "${file}" "${ESP_DIR}/${efiname}"
+	#done
+
+
+	#find /boot -maxdepth 1 -name "*linux.img" \
+	#! -name "*linux.img" ! -name "*lqx.img" ! -name "*fallback*" \
+	#-print0 | while IFS= read -r -d '' file; do
+	 #printf '%s\n' "${file}"
+	 #cp -v "${file}" "${ESP_DIR}/"
+	#done
+
+        #find /boot -maxdepth 1 -name "*vmlinuz*" \
+	#-exec efiname=$(printf '%s' "${file}.efi" | sed "s:\/boot\/v:v:") {} \; \
+	#-exec cp -v "${file}" "${ESP_DIR}/{,/${efiname}" {} \;
+        #find /boot -maxdepth 1 -name "*sp3.img" \
+	#-exec printf '%s\n' "${file}" {} \; \
+	#-exec cp -v "${file}" "${ESP_DIR}/" {} \;
+	## Execute for all kernel files and non-fallback ramdisks
+        #for file in /boot/* ; do
+         #if [[  "${file}" == *vmlinuz* && "${file}" != *sp3* ]] ; then
+         #if [[  "${file}" == *vmlinuz* ]] ; then
+	 ## Store filename plus .efi in $efiname
+	  #efiname=$(printf '%s' "${file}.efi" | sed "s:\/boot\/v:v:")
+          #printf '%s\n' "${file}"
+          #printf '%s\n' "${efiname}"
+	 ## Copy default kernel normally and as *.efi to EFI
+          #cp -v "${file}" "${ESP_DIR}/"
+          #cp -v "${file}" "${ESP_DIR}/${efiname}"
+	 #else
+	  #[[ "${file}" == *initramfs-linux* && "${file}" != *fallback* && "${file}" != *sp3* ]] || continue
+	   #printf '%s\n' "${file}"
+	   #cp -v "${file}" "${ESP_DIR}/"
+	 #fi
+	#done
+
+	## Old commands
+	#cp -v "/boot/refind_linux.conf" "${ESP_DIR}/"
+	#for file in /boot/initramfs-linux*.* ; do
+	#cp /boot/vmlinuz-linux "${ESP_DIR}/vmlinuz-linux.efi"
+	#[[ ! -e /boot/vmlinuz-linux-sp3 ]] || cp /boot/vmlinuz-linux-sp3 "${ESP_DIR}/vmlinuz-linux-sp3.efi"
+        #[[ ! -e /boot/vmlinuz-linux-mainline ]] || cp /boot/vmlinuz-linux-mainline "${ESP_DIR}/vmlinuz-linux-mainline.efi"
+	#cp /boot/vmlinuz-linux "${ESP_DIR}/"
+	#[[ ! -e /boot/vmlinuz-linux-sp3 ]] || cp /boot/vmlinuz-linux-sp3 "${ESP_DIR}/"
+        #[[ ! -e /boot/vmlinuz-linux-mainline ]] || cp /boot/vmlinuz-linux-mainline "${ESP_DIR}/"
+	#for file in /boot/initramfs-linux*.* ; do
+	#for file in /boot/* ; do
+	#	[[  "$file" == *fallback* || "$file" != *initramfs-linux* ]] && continue
+	#	printf '%s\n' "${file}/"
+	#	#cp -v "${file}/" "${ESP_DIR}/"
+	#done
+	#find /boot -type f -print0 | while IFS= read -r -d '' file; do
+    	#	mv "$file" "${file// /_}"
+	#done
+	#ls -f "/boot" | while IFS= read -r file; do
+	#	[[  "$file" == *fallback* || "$file" != *initramfs* ]] && continue
+	#	printf '%s\n' "/boot/${file}"
+	#	cp -v "/boot/${file}" "${ESP_DIR}/"
+	#done
+	#ls -l $ESP_DIR/$( printf "${file}" | sed "s/\/boot\///" )
+	#ls -l ${file}
+	#ls -l ${ESP_DIR}/vmlinuz@(-|.)*
+	#ls "${ESP_DIR}/" | grep vmlinuz@(-|.)*
+	#for file in /boot/vmlinuz-linux(-|.)*
+	#for file in /boot/initramfs-linux*.*
+	#do
+	#	cp ${file} "${ESP_DIR}/"
+	#	ls -l $ESP_DIR/$( printf "${file}" | sed "s/\/boot\///" )
+	#	ls -l ${file}
+	#done
+}
+
+help() {
+	cat <<HELPEOF
+This hook copies the kernel to the ESP partition
+HELPEOF
+}
+

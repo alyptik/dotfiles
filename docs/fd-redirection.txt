@@ -1,0 +1,1 @@
+testfile=$(mktemp); exec 9<>$testfile; echo "sup phillid" >&9; rm $testfle; (exec </dev/stdid; cat) <&9

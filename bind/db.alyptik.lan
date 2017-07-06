@@ -1,0 +1,27 @@
+; alyptik.lan.
+$TTL    3600
+@	IN      SOA ( ; Start of Authority Record
+			ns1.alyptik.lan. ; Authoritative Nameserver
+			postmaster.alyptik.xyz ; Responsible Person
+			2016010202; Serial - INCREMENT ON EDIT
+			3600 ; Refresh
+			600 ; Retry
+			2419200 ; Expire 
+			3600) ; Negative Cache TTL
+;
+$INCLUDE /etc/bind/db.alyptik.xyz
+;
+ns1		IN	NS	192.168.1.99
+ns2		IN	NS	192.168.1.1
+ns3		IN	NS	192.168.1.2
+ns4		IN	NS	76.173.136.206
+@		IN	A	192.168.1.99
+surface		IN	A	192.168.1.98
+arch		IN	A	192.168.1.99
+;
+;_http._tcp.i2p.alyptik.xyz. IN SRV 0 5 7657 i2p.alyptik.xyz.
+;_http._tcp.tor.alyptik.xyz. IN SRV 0 5 9050 tor.alyptik.xyz.
+;_http._tcp.i2p.alyptik.xyz. IN SRV 10 0 7657 local.alyptik.xyz.
+;_http._tcp.tor.alyptik.xyz. IN SRV 10 0 9050 local.alyptik.xyz.
+
+

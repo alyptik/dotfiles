@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head><title>
+  :: phodd.net :: GNU bc FAQ ::
+ </title>
+ <xlink rel="shortcut icon" href="../favicon.ico">
+ <link rel="stylesheet" href="./bc.css">
+</head>
+
+<body>
+
+  <div id="watermark"></div>
+  <a id="go-home" href="/"></a>
+
+    <h1>
+     GNU bc FAQ
+    </h1>
+
+    <p>
+     Looking through my site logs, I realise that many people who find the
+     <a href="./index.html">GNU bc</a> page are looking for something that isn't there, or
+     they don't see it immediately when the page loads, so they think it's not there.
+     The purpose of this page, despite it being practically verbatim from its predecessor,
+     is here to help rectify that.
+    </p><p>
+     Without further ado,and in no particular order, here are some of the questions asked
+     of search engines that people haven't found the answer to on the
+     <a href="./index.php">GNU bc</a> page:
+     <ol type="1">
+      <li> <a href="#bashsqrt"> Finding square roots in bash         </a> </li>
+      <li> <a href="#bcsqrt">   Finding square roots in GNU bc       </a> </li>
+      <li> <a href="#bcfp">     Managing floating point in GNU bc    </a> </li>
+      <li> <a href="#bashlog">  Logarithms in bash                   </a> </li>
+      <li> <a href="#bclog">    Logarithms in GNU bc                 </a> </li>
+      <li> <a href="#bccbrt">   Function for cube roots in GNU bc    </a> </li>
+      <li> <a href="#bcxor">    Exclusive-or (XOR) for GNU bc        </a> </li>
+      <li> <a href="#bczeroes"> Remove trailing zeroes in GNU bc     </a> </li>
+      <li> <a href="#bashlist"> Adding a list of numbers in bash     </a> </li>
+      <li> <a href="#bclist">   Adding a list of numbers with GNU bc </a> </li>
+      <li> <a href="#bcround">  Rounding numbers in GNU bc           </a> </li>
+      <li> <a href="#bcarinit"> Initialising arrays in GNU bc        </a> </li>
+      <li> <a href="#bcnoput">  Suppressing output in GNU bc         </a> </li>
+      <li> <a href="#bcfuncin"> Functions as parameters in GNU bc    </a> </li>
+     </ol>
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bashsqrt"></a>Finding square roots in bash</h2>
+
+    <p>
+     I reckon this is a trick question - do you guys want to use bc or not? :)
+     Okay... Lets assume both and work from there:
+    </p>
+    <h3> bash square roots - the hard way - no bc! </h3>
+    <p>
+     You really honestly and truthfully don't want to do this, surely? The bash
+     shell is only capable of integer arithmetic, so even if you could take a square root,
+     you'll only get the integer portion of the answer... i.e. sqrt(10) = 3 to the nearest
+     whole number. If that's all you need, then this shell function is for you:
+    </p><blockquote><code>
+       sqrt() { local x=$1 s=$1 os=0;while ((s!=os));do os=$s;s=$(((s+x/s)/2));if((s>os));then s=$os;fi;done;echo $s; }
+    </code></blockquote><p>
+     That's all on one line.
+    </p><p>
+     Once you've entered the above into a script or your interactive session, the command
+     <code>sqrt <i>{number}</i></code> will output the square root of <i>{number}</i>. e.g.
+     <code>sqrt 123456</code> will print 351. 
+    </p><p>
+     Be warned though, the above contains no checking for negative numbers, and so the function
+     just returns the same negative number!
+    </p>
+    <h3> bash square roots - the easy way - using bc </h3>
+    <p>
+     The simplest way to do this is to pipe some bc syntax to <code>bc -l</code>:
+    </p><blockquote><code>
+     echo 'sqrt(<i>{number}</i>)' | bc -l
+    </code></blockquote><p>
+     ...making the obvious replacement of <i>{number}</i>. Yes. It's that simple!
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bcsqrt"></a>Finding square roots in GNU bc</h2> 
+    <p>
+     If you've been paying attention class, the answer to this has already been used in the
+     previous answer!
+    </p><p>
+     bc has its own built in <code>sqrt()</code> function. You don't even need to
+     include the standard library - it's right there when you run the program... Which leads
+     us on to the next question...
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bcfp"></a>Managing floating point in GNU bc</h2>
+
+    <p>
+     It concerns me greatly the number of people who don't know about the <code>scale</code>
+     variable in bc. With <code>scale</code>, the number of decimal places of
+     floating point precision can be set. Including the standard library (with the
+     <code>-l</code> flag) automatically sets the <code>scale</code> to 20. This site's
+     <a href="./code/funcs.bc">funcs.bc</a> library sets the same to 50 for increased accuracy.
+    </p><p>
+     For instance; The example from the question before last might have been written:
+    </p><blockquote><code>
+     echo 'scale=20;sqrt(<i>{number}</i>)' | bc
+    </code></blockquote><p>
+     Note the lack of the <code>-l</code> flag this time. Also; Changing that 20 will change
+     the number of decimal places in the answer printed.
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bashlog"></a>Logarithms in bash</h2>
+    <p>
+      Again... not sure whether the requestor wants bash or bc code, so
+      it's twice the work for me :):
+    </p>
+
+    <h3> bash logarithms - the hard way - no bc! </h3>
+    <p>
+     Bearing in mind that bash is integer-only, this shell function will return the rounded down
+     logarithm in bash:
+    </p><blockquote><code>
+     log(){ local x=$1 n=2 l=-1;if [ "$2" != "" ];then n=$x;x=$2;fi;while((x));do let l+=1 x/=n;done;echo $l; }
+    </code></blockquote><p>
+     As before, it's all on one line.
+    </p><p>
+     Once you've entered the above into a script or your interactive session, the command
+     <code>log <i>{number}</i></code> will output the logarithm of <i>{number}</i> to base 2.
+     e.g. <code>log <i>123456</i></code> will print 16 (even though the log to base 2
+     of 123456 is nearer to 17!)
+    </p><p>
+     The 'clever' bit is that the command <code>log <i>{n1}</i> <i>{n2}</i></code>
+     will output the logarithm of <i>{n2}</i> to base <i>{n1}</i>, so <code>log 10 10000</code>
+     will print 4, and <code>log 3 9923</code> will print 8, etc.
+    </p><p>
+     Beware again - this works only when fed positive integers. Anything else is not checked for
+     and may cause this function to behave bizarrely.
+    </p>
+    <h3> bash logarithms - the easy way - using bc </h3>
+    <p>
+     Guess what? You can pipe some bc syntax to <code>bc -l</code>!:
+    </p><blockquote><code>
+     echo 'l(<i>{number}</i>)' | bc -l
+    </code></blockquote><p>
+     or
+    </p><blockquote><code>
+     echo 'l(<i>{n1}</i>)/l(<i>{n2}</i>)' | bc -l
+    </code></blockquote><p>
+     ...making the obvious replacements.
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bclog"></a>Logarithms in GNU bc</h2>
+    <p>
+     If you've been paying attention class, the answer to this has already been used in the
+     previous answer! (If you're really paying attention you'll also notice I've copied and
+     pasted that sentence from the square root question.)
+    </p><p>
+     bc's standard library, accessible by using the <code>-l</code> commandline switch
+     contains the <code>l()</code> function which returns the natural logarithm of its
+     parameter. The above question shows examples of how to use it to obtain logarithms
+     to other bases.
+    </p><p>
+     This site's <a href="./code/funcs.bc">funcs.bc</a> library contains a more robust
+     <code>log()</code> function which supplements the standard library version.
+    </p>
+    
+    <div class="sectionrule"></div>
+    <h2><a name="bccbrt"></a>Function for cube root in GNU bc</h2>
+    <p>
+     The easiest way to do a cube root in bc is to use the <code>cbrt()</code> function
+     that - due to popular demand - can be found in this site's
+     <a href="./code/funcs.bc">funcs.bc</a> library.
+    </p><p>
+     Also, <code>pow(<i>{number}</i>,1/3)</code> and
+     <code>root(<i>{number}</i>,3)</code> can both be used to achieve the required result.
+    </p>
+
+    </p><p>
+     The above functions are, at least in part, based on the following:
+    </p>
+    
+    <h3>Quick and dirty cube roots using bc and bash</h3>
+    <p>
+     This line should be all you need
+    </p><blockquote><code>
+     echo 'e(l(<i>{number}</i>)/3)' | bc -l
+    </code></blockquote><p>
+     This works on the mathematical principle that:
+    </p><blockquote>
+     <sup><i>n</i></sup>&radic;<i>x</i> =
+     <i>x</i><sup>(1/<i>n</i>)</sup> =
+     <i>e</i><sup>(ln <i>x</i>)/<i>n</i></sup>
+    </blockquote>
+    <h3>Quick and dirty cube root function for bc</h3>
+    <p>
+     The above trick can be included in a function, like so:
+    </p><blockquote><code>
+      define qcbrt(x) { return e(l(x)/3)) }
+    </code></blockquote><p>
+     And then use it as you would the built in <code>sqrt()</code>.
+    </p><p>
+     As you might guess, the <code>e()</code> and <code>l()</code> used above are the
+     GNU bc exponential and natural logarithm functions respectively. Both are only
+     available as part of the standard library, so the <code>-l</code> flag is absolutely
+     essential for them to be usable.
+    </p><p>
+     You should be aware that the accuracy of this quick and dirty cube root function,
+     and indeed many a function written in bc, is directly affected by the value of the
+     <a href="#bcfp"><code>scale</code></a> variable.
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bcxor"></a>Exclusive-or (XOR) for GNU bc</h2>
+    <p>
+     If you've found your way across the internet to this question, chances are you're
+     looking for bc's equivalent of C's <strong><code>^</code></strong> operator.
+    </p><blockquote>
+     Disturbing fact: no such thing exists in bc.
+    </blockquote><p>
+     In bc, the up-arrow operator is used for integer exponentiation, that is, 2^x returns
+     a power of 2 and not x with bit 2 flipped. If you're looking for equivalents to the
+     bitwise operators for XOR as well as AND, OR and a few more exotic relatives, check
+     out this site's <a href="./index.html#logic">logic.bc</a>, and its relatives which
+     contain functions to perform each of these.
+    </p><p>
+     If you're looking for a logical XOR to put in an <code>if</code> statement, like
+     logical <code>&&</code> and <code>||</code>, try using <code>!=</code> and surrounding
+     your conditions with brackets. e.g.:
+    </p><blockquote><code>
+     c=0;if((a==1)!=(b==2)){c=3}
+    </code></blockquote><p>
+     Will set c to 3, if a is 1 <em>or</em> b is 2, <em>but not if a is 1 and b is 2 at
+     the same time</em>
+    </p><p>
+     (Once upon a time, this was the secret to the internals of the
+     <a href="./index.html#logic">logic.bc</a> <code>xor()</code> function,
+     but this has been superseded by a faster algorithm.)
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bczeroes"></a>Remove trailing zeroes in GNU bc</h2>
+    <p>
+     When performing some - usually division-related - calculations in bc, especially
+     with the <a href="#bcfp"><code>scale</code></a> variable set high, the answer returned
+     to the console (or stored in a variable) has many trailing zeroes at the end. e.g.
+     the code <code>scale=20;7/4</code> will cause <code>1.75000000000000000000</code>
+     to be printed as the result.
+    </p><p>
+     Often this is cumbersome and makes 'obvious' numbers harder to read. The solution is
+     the following function:
+    </p><blockquote><code>
+     define trunc(x){auto os;os=scale;for(scale=0;scale<=os;scale++)if(x==x/1){x/=1;scale=os;return x}}
+    </code></blockquote><p>
+     With this function you can say things like <code>scale=20;q=7/4;q=trunc(q);q</code> or
+     simply <code>scale=20;trunc(7/4)</code>, both of which will print <code>1.75</code> as
+     expected.
+    </p><p>
+     An improved version of this, which can also deal with trailing 9's (in decimal) can be
+     found in <a href="./index.html#output_formatting">output_formatting.bc</a>, and this also
+     contains many other output formatting functions, including two similar to C's
+     <code>printf()</code>.
+    </p>
+
+    <div class="sectionrule"></div>
+    <h2><a name="bashlist"></a>Adding a list of numbers in bash</h2>
+    <p>
+      Ouch. There are a number of ways to do this, and for once, bc might not be your best option
+      depending on whether you literally have a list of numbers, or your list of numbers is a
+      column in some larger design.
+    </p>
+    
+    <h3>Adding a list of numbers with bash - the hard way - no bc or anything else!</h3>
+    <p>
+      I had no idea how to do this myself until I looked into it; I usually use the method
+      below this one. Nonetheless this seems to do the trick:
+    </p><blockquote><code>
+     add_col() { local t;while read -a cols; do t=$((t+${cols[$1]%%.*})) ; done ; echo $t; }
+    </code></blockquote><p>
+     You can use this function by saying <code>add_col <i>number</i> &lt; <i>filename</i></code>
+     or <code><i>some_command</i> | add_col <i>number</i></code>, and the function will add the
+     numbers in the specified column <i>number</i>, starting with zero for the leftmost.
+     Examples:
+    </p><blockquote><code>
+     echo -e "1 4\n2 4\n4 44\n5 4" | add_col 0 # prints 12 as this is the sum of 1, 2, 4 and 5
+    </code></blockquote>
+    <blockquote><code>
+     echo -e "1 4\n2 4\n4 44\n5 4" | add_col 1 # prints 56 as this is the sum of 4, 4, 44 and 4
+    </code></blockquote><p>
+     <em>Caveat #1 </em> bash is only capable of integer arithmetic and so this deliberately chops
+     anything off column entries that looks like a decimal point.
+     That's what the funky <code>${ %%.*}</code> business is all about.
+    </p><p>
+     <em>Caveat #2</em> this will choke if your column of numbers contains something that isn't
+     actually a number.
+    </p>
+
+    <h3>Adding a list of numbers with bash - the best way - use something like awk</h3>
+    <p>
+      If your system has bash and bc, you'll probably also have something called awk installed.
+      If so, you can do something like this:
+    </p><blockquote><code>
+     awk '{t+=$<i>number</i>}END{printf"%f\n",t}' &lt; <i>filename</i></code>
+    </code></blockquote><p>
+     This works the same way as the bash-only example above, except it's shorter, neater, and
+     copes better with decimal points and errant data.
+    </p><p>
+     N.B. awk numbers columns from 1 and not 0 like our more home-brewed examples here.
+    </p>
+    
+    <h3>Adding a list of numbers using bash and bc</h3>
+    <p>
+      This is one possible way to do it. Here's a variant of the <code>add_cols</code> command
+      we used above:
+    </p><blockquote><code>
+      add_col() { local t="0";while read -a cols; do t="$t+${cols[$1]}" ; done ; echo $t | bc ; }
+    </code></blockquote><p>
+    </p>
+    
+    <div class="sectionrule"></div>
+    <h2><a name="bclist"></a>Adding a list of numbers with GNU bc</h2>
+    <p>
+      If the above question doesn't give you what you're after, you might want to check out
+      the <a href="http://www.gnu.org/software/bc/manual/html_mono/bc.html#SEC19">official GNU-bc manual</a>'s
+      embedded checkbook program example. The link should take you to that section of the manual.
+    </p>
+    
+    <div class="sectionrule"></div>
+    <h2><a name="bcround"></a>Rounding numbers in GNU bc</h2>
+    <p>
+     If you want to perform <code>int()</code>, <code>floor()</code>, <code>ceil()</code> (or ceiling)
+     functions in bc, then it's completely possible. Check out the first few functions in this site's
+     <a href="./code/funcs.bc">funcs.bc</a> library.
+    </p>
+ 
+    <div class="sectionrule"></div>
+    <h2><a name="bcarinit"></a>Initialising arrays in GNU bc</h2>
+    <p>
+     There is no simple way to initialise an array in bc. For example:
+    </p><blockquote><code>
+     a[] = {14, 14, 21, 35, 17, 32, 5, 8, 8} # ... does not work ...
+    </code></blockquote><p>
+     ... and so each value must be set separately. Loops may be used, of course, but the
+     above line, having no easily programmed pattern (even though there is a pattern there)
+     is best initialised like so:
+    </p><blockquote><code>
+     a[0]=a[1]=14;a[2]=21;a[3]=35;a[4]=17;a[5]=32;a[6]=5;a[7]=a[8]=8
+    </code></blockquote><p>
+     Note that some shorthand can and has been used for matching values.
+    </p><p>
+     There are two functions in this site's <a href="./index.html#array">array.bc</a> which can be
+     used for the purpose if required, <code>aset8()</code> and <code>aset16()</code>, setting 8
+     and 16 elements respectively. e.g. the above example might be written:
+    </p><blockquote><code>
+     .=aset16(a[],0 , 14, 14, 21, 35, 17, 32, 5, 8, 8, 0, 0, 0, 0, 0, 0, 0);
+    </code></blockquote><p>
+      The first 0 represents the first index of <code>a[]</code> that is to be set.
+      The remaining zeroes are there to fill out the required number of parameters of the
+      function.
+    </p>
+    
+   <div class="sectionrule"></div>
+    <h2><a name="bcnoput"></a>Suppressing output in GNU bc</h2>
+    <p>
+     bc always displays the result of a calculation on screen, which can be a problem when
+     calling a function which is to remain silent. The way to do this is to assign the result
+     of whatever is causing output into a dummy variable, or even bc's built in
+     'last calculated value' variable which is the period / full stop character: <code>.</code>
+    </p><blockquote><code>
+     .=<a href="./index.html#output_roman">printroman</a>(x)+newline() # for example
+    </code></blockquote><p>
+     GNU bc also allows the use of the word <code>last</code> for this value, but the
+     <code>.=</code> method is much neater. Much of the printing / output code in these
+     libraries takes advantage of this trick.
+    </p>
+
+   <div class="sectionrule"></div>
+    <h2><a name="bcfuncin"></a>Functions as parameters in GNU bc</h2>
+    <p>
+     At present the only way to do anything like it is to have one function rely on
+     another with a specific name, and then redefine that specifically named function
+     as required. This technique is used by the code in
+     <a href="./index.html#intdiff">intdiff.bc</a> to allow the numerical integration
+     and differentiation to be able to operate on different functions.
+    </p><p>
+     This is useful, but since a function cannot be redefined from within another function,
+     this makes using the generic function as a template somewhat difficult. Only the most
+     recently defined version of the specifically named function would be active.
+     The following, for example, will not work as expected:
+    </p><blockquote><code>
+      define generic_() { return 1/f(x) } # expects f() to exist<br />
+      define f(x) { return sin(x) }<br />
+      define cosec(x) { return generic_(x) }<br />
+      define f(x) { return cos(x) } # redefines f()<br />
+      define sec(x) { return generic_(x) }<br />
+    </code></blockquote><p>
+      Immediately after this code, <code>cosec()</code> will behave identically to
+      <code>sec()</code>, which would be incorrect! Instead it would be nice to say
+      something like:
+    </p><blockquote><code>
+      define generic_(*f()) { return 1/f(x) } # syntax error<br />
+      define cosec(x) { return generic_(*sin()) } # nope <br />
+      define sec(x) { return generic_(*cos()) } # invalid <br />
+    </code></blockquote>
+
+   <div class="sectionrule"></div>
+
+</body>
+</html>

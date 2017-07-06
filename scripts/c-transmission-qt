@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+
+cgexec -g cpu,cpuset,memory,blkio:confine /usr/bin/transmission-qt
+#cgexec -g blkio:confine /usr/bin/transmission-qt

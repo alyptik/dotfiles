@@ -1,0 +1,8 @@
+#!/bin/sh
+pushd / >/dev/null 2>&1
+sudo btrfs balance start /
+sleep 1
+sudo btrfs filesystem defragment -v -r /
+sleep 1
+sudo btrfs scrub start /
+popd >/dev/null 2>&1

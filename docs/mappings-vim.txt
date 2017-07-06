@@ -1,0 +1,76 @@
+
+    nmap <Leader>M <Plug>MarkToggle
+    nmap <Leader>n <Plug>MarkConfirmAllClear
+    nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+    nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+    nmap * <Plug>MarkSearchOrCurNext
+    nmap # <Plug>MarkSearchOrCurPrev
+    nmap <Leader>1  <Plug>MarkSearchGroup1Next
+    nmap <Leader>!  <Plug>MarkSearchGroup1Prev
+    nmap <Leader>2  <Plug>MarkSearchGroup2Next
+    nmap <Leader>3  <Plug>MarkSearchGroup2Next
+    nmap <Leader>4  <Plug>MarkSearchGroup2Next
+    nmap <Leader>5  <Plug>MarkSearchGroup2Next
+    nmap <Leader>6  <Plug>MarkSearchGroup2Next
+    nmap <Leader>7  <Plug>MarkSearchGroup2Next
+    nmap <Leader>8  <Plug>MarkSearchGroup2Next
+    nmap <Leader>9  <Plug>MarkSearchGroup2Next
+    xmap <Leader>* <Plug>MarkIWhiteSet
+    vmap <Plug>IgnoreMarkSet <Plug>MarkSet
+    xmap <Leader>m <Plug>MarkIWhiteSet
+noremap gV `[v`]
+vnoremap < <gv
+vnoremap > >gv
+noremap Y y$
+inoremap <C-e> <C-o>$
+nnoremap <Leader>rc :%s/\<<C-r><C-w>\>/
+nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
+nnoremap <Leader>rts :%s/ /    /g<CR>
+nnoremap <Leader>rac :%s/<C-v><Esc>\[\(\d\{1,2}\(;\d\{1,2}\)\{0,2\}\)\?[m\|K]//g<CR>
+nnoremap <silent> <expr> j (v:count ? 'j' : 'gj')
+nnoremap <silent> <expr> k (v:count ? 'k' : 'gk')
+nnoremap <Leader>[ :q<CR>
+nnoremap <Leader>] :w<CR>
+nnoremap <Leader>; :q!<CR>
+nnoremap <Leader>' :w!<CR>
+nnoremap <Leader>- <Esc>:set nu!<CR>
+nnoremap <Leader>= <Esc>:set rnu!<CR>
+nnoremap <Leader>, :s/ .*:[0-9][0-9]//
+nnoremap <Leader>. :s/[0-9]*\. //
+map [1;5Q <C-F2>
+map [1;5R <C-F3>
+map [1;5S <C-F4>
+map [15;5~ <C-F5>
+map [17;5~ <C-F6>
+map [18;5~ <C-F7>
+map [19;5~ <C-F8>
+map [20;5~ <C-F9>
+map <Esc><F2> <M-F2>
+map <Esc><F3> <M-F3>
+map <Esc><F4> <M-F4>
+map <Esc><F5> <M-F5>
+map <Esc><F6> <M-F6>
+map <Esc><F7> <M-F7>
+map <Esc><F8> <M-F8>
+map <Esc><F9> <M-F9>
+nnoremap <F2> ^
+nnoremap <C-F2> 0dw
+nnoremap <M-F2> <Esc>:set scrollbind<CR>
+nnoremap <F3> $
+nnoremap <C-F3> gi
+nnoremap <M-F3> <Esc>:set noscb<CR>
+nnoremap <F4> <C-u>
+nnoremap <C-F4> <Esc>:tabn<CR>
+nnoremap <F5> <C-d>
+nnoremap <C-F5> <Esc>:tabp<CR>
+vmap <C-F6> <F6>v`>
+vmap <M-F6> :<Esc>`>a<CR><Esc>mx`<i<CR><Esc>my'xk$v'y!xclip -selection c<CR>u
+nmap <C-F7> :set paste<CR>i<CR><CR><Esc>k:.!xclip -o<CR>JxkJx:set nopaste<CR>
+nmap <M-F7> mz:-1r !xclip -o -sel clip<CR>`z
+nmap <F8> <Esc>:verbose map
+nnoremap <C-F8> :call ToggleVerbose()<CR>
+nnoremap <M-F8> :call ToggleHex()<CR>
+nnoremap <F9> :call ToggleFold()<CR>
+nnoremap <C-F9> :call ToggleXXD()<CR>
+nnoremap <M-F9> :call ToggleIndent()<CR>
+

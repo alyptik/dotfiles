@@ -1,0 +1,15 @@
+# mkinitcpio preset file for the 'linux-mainline' package
+
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-linux-mainline"
+
+PRESETS=('default' 'fallback')
+
+#default_config="/etc/mkinitcpio.conf"
+default_image="/boot/initramfs-linux-mainline.img"
+default_options="-A esp-update-linux"
+
+#fallback_config="/etc/mkinitcpio.conf"
+fallback_image="/boot/initramfs-linux-mainline-fallback.img"
+fallback_options="-S autodetect"
+

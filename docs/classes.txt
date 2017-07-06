@@ -1,0 +1,42 @@
+
+MAJOR: Natural Science (AS-NS [Life Science])
+    TOTAL - 36(60)
+
+
+* - FINISHED
+? - PROSPECTIVE
+
+
+	* FOUNDATION - 13(13)
+	    English 100 - A[3]
+	    Math 205 - B[4]
+	    Hist 151 - A[3]
+	    Mus 107 - A[3]
+
+	* DIVERSIFICTAION - 13(13)
+	    Econ 120 - A[3]
+	    Mus 121C - A[3]
+	    Micro 130 - A[3]
+	    Chem 161B - B[3]
+	    Chem 161L - B[1]
+
+	* ADDITIONAL - 7(7)
+	    ICS 101 - A[3]
+	    Chem 161B - C[3]
+	    Chem 161L - C[1]
+
+? CONCENTRATION - 0(5)
+    ? Biol 171L - ?[1]
+    ? Biol 172 - ?[3]
+    ? Biol 171L - ?[1]
+
+? ELECTIVES - 3(22)
+    Bot 101 - A[3]
+
+	* WRITING INTENSIVE - N/A
+	    Soc 250H - A
+	    SP 251 - A
+
+? HAP - N/A
+    ? - ?
+

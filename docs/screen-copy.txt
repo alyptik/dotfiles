@@ -1,0 +1,77 @@
+       copy
+
+       Enter copy/scrollback mode. This allows you to copy text from the current window and its history  into  the  paste
+       buffer. In this mode a vi-like `full screen editor' is active:
+       Movement keys:
+         h, C-h, or left arrow move the cursor left.
+         j, C-n, or down arrow move the cursor down.
+         k, C-p, or up arrow move the cursor up.
+         l ('el') or right arrow move the cursor right.
+         0 (zero) or C-a move to the leftmost column.
+         + and - positions one line up and down.
+         H, M and L move the cursor to the leftmost column of the top, center or bottom line of the window.
+         | moves to the specified absolute column.
+         g or home moves to the beginning of the buffer.
+         G or end moves to the specified absolute line (default: end of buffer).
+         % jumps to the specified percentage of the buffer.
+         ^ or $ move to the leftmost column, to the first or last non-whitespace character on the line.
+         w, b, and e move the cursor word by word.
+         B, E move the cursor WORD by WORD (as in vi).
+         f/F,  t/T  move the cursor forward/backward to the next occurence of the target. (eg, '3fy' will move the cursor
+           to the 3rd 'y' to the right.)
+         ; and , Repeat the last f/F/t/T command in the same/opposite direction.
+         C-e and C-y scroll the display up/down by one line while preserving the cursor position.
+         C-u and C-d scroll the display up/down by the specified amount of lines while preserving  the  cursor  position.
+           (Default: half screen-full).
+         C-b and C-f scroll the display up/down a full screen.
+
+       Note:
+           Emacs style movement keys can be customized by a .screenrc command.  (E.g. markkeys "h=^B:l=^F:$=^E") There is
+           no simple method for a full emacs-style keymap, as this involves multi-character codes.
+
+       Marking:
+           The copy range is specified by setting two marks. The text between these marks will be highlighted. Press:
+         space or enter to set the first or second mark respectively. If mousetrack is set to `on', marks can also be set
+           using left mouse click.
+         Y and y used to mark one whole line or to mark from start of line.
+         W marks exactly one word.
+       Repeat count:
+           Any of these commands can be prefixed with a repeat count number by pressing digits
+         0..9 which is taken as a repeat count.
+           Example: "C-a C-[ H 10 j 5 Y" will copy lines 11 to 15 into the paste buffer.
+       Searching:
+         / Vi-like search forward.
+         ? Vi-like search backward.
+         C-a s Emacs style incremental search forward.
+         C-r Emacs style reverse i-search.
+         n Find next search pattern.
+         N Find previous search pattern.
+       Specials:
+           There are however some keys that act differently than in vi.  Vi does not allow one to yank rectangular blocks
+           of text, but screen does. Press:
+         c or C to set the left or right margin respectively. If no repeat count is given, both default  to  the  current
+           cursor position.
+           Example: Try this on a rather full text screen: "C-a [ M 20 l SPACE c 10 l 5 j C SPACE".
+
+           This  moves  one  to the middle line of the screen, moves in 20 columns left, marks the beginning of the paste
+           buffer, sets the left column, moves 5 columns down, sets the right column, and then marks the end of the paste
+           buffer. Now try:
+           "C-a [ M 20 l SPACE 10 l 5 j SPACE"
+
+           and notice the difference in the amount of text copied.
+         J  joins  lines. It toggles between 4 modes: lines separated by a newline character (012), lines glued seamless,
+           lines separated by a single whitespace and comma separated lines. Note that you can prepend the newline  char-
+           acter with a carriage return character, by issuing a "crlf on".
+         v or V is for all the vi users with ":set numbers" - it toggles the left margin between column 9 and 1. Press
+         a  before  the final space key to toggle in append mode. Thus the contents of the paste buffer will not be over-
+           written, but is appended to.
+         A toggles in append mode and sets a (second) mark.
+         >  sets  the  (second)  mark  and  writes  the  contents  of  the  paste  buffer  to  the  screen-exchange  file
+           (/tmp/screen-exchange per default) once copy-mode is finished.
+           This example demonstrates how to dump the whole scrollback buffer to that file: "C-A [ g SPACE G $ >".
+         C-g gives information about the current line and column.
+         x  or  o  exchanges the first mark and the current cursor position. You can use this to adjust an already placed
+           mark.
+         C-l ('el') will redraw the screen.
+         @ does nothing. Does not even exit copy mode.
+         All keys not described here exit copy mode.

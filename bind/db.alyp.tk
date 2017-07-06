@@ -1,0 +1,77 @@
+; alyp.tk. (Authoritative zone.)
+$TTL    1H ; 3600
+@	IN      SOA ( ; Start of Authority Record
+			ns1.alyp.tk. ; Authoritative Nameserver
+			postmaster.alyp.tk. ; Responsible Person admin.alyp.xyz.
+			2016092203 ; Serial (yyyymmdd##)
+                        1H ; 3600 ; Refresh
+                        10M ; 600 ; Retry
+                        7D ; 2419200 ; Expire
+                        1H ) ; 3600) ; Negative Cache TTL
+;
+$INCLUDE /etc/bind/private/Kalyp.tk.+007+41102.key
+$INCLUDE /etc/bind/private/Kalyp.tk.+007+56016.key
+;@	IN      NS      ns1.alyp.xyz.
+;	IN	NS	ns2.alyp.xyz.
+;	IN	NS	ns3.alyp.xyz. ; ns1.alyp.xyz.
+;	IN	NS	ns4.alyp.xyz. ; ns1.alyp.xyz.
+@	IN      NS      ns1.alyp.tk.
+	IN	NS	ns2.alyp.tk.
+	IN	NS	ns3.alyp.tk. ; ns1.alyp.xyz.
+	IN	NS	ns4.alyp.tk. ; ns1.alyp.xyz.
+;	IN	NS	ns3.alyp.xyz. ; ns3.hostinger.in.
+;	IN	NS	ns4.alyp.xyz. ; ns4.hostinger.in.
+;	IN	NS	ns3.hostinger.in.
+;	IN	NS	ns4.hostinger.in.
+	IN	TXT	"v=spf1 mx a ptr ?include:_spf.google.com. ?include:a._spf.rr.com. ~all"
+	IN	MX	0 mail
+	IN	MX	10 gmail-smtp-msa.l.google.com.
+	IN	MX	20 dnvrco-twc-vip.email.rr.com.
+;	IN	MX	20 mx1.hostinger.in.
+	IN      A       76.173.133.37 ; 98.150.136.0/21
+ns1     IN      A       76.173.133.37
+ns2	IN	A	98.150.136.16
+ns3	IN	A	76.173.133.37 ; redundant NS record
+ns4	IN	A	98.150.136.16 ; redundant NS record
+;ns3	IN	A	173.192.183.247 ; ns3.hostinger.in.
+;ns4	IN	A	31.170.164.249 ; ns4.hostinger.in.
+www	IN	A	76.173.133.37
+mail	IN	A	76.173.133.37 ; Arch mail server
+webmail	IN	A	76.173.133.37 ; Roundcubemail
+stream	IN	A	76.173.133.37 ; Icecast server
+;mpd	IN	A	76.173.133.37 ; MPD server
+mpd	IN	A	98.150.136.16 ; MPD server
+deluge	IN	A	76.173.133.37
+i2p	IN	A	76.173.133.37
+tor	IN	A	76.173.133.37
+web	IN	A       185.28.20.29 ; Hostinger website
+arch	IN	A	192.168.1.99
+surface	IN	A	192.168.1.98
+loop	IN	A	127.0.0.1 ; Loopback interface
+	IN	AAAA	::1
+;@	IN	AAAA	2002:4cad:88ce:0:5e26:aff:fe0b:f7dd ; eth0;
+;@	IN	AAAA	2605:e000:efc0:5f:4e8:e1ef:9271:c330
+;ipv6	IN	AAAA	2002:4cad:88ce:0:5e26:aff:fe0b:f7dd ; eth0;
+ipv6	IN	AAAA	2605:e000:efc0:5f:4e8:e1ef:9271:c330
+;mail	IN	AAAA	2605:e000:efc0:5f:71b3:3302:1be0:5ecf 	
+;webmail	IN	AAAA	2605:e000:efc0:5f:71b3:3302:1be0:5ecf 	
+;;www	IN	AAAA	2605:e000:efc0:5f:71b3:3302:1be0:5ecf 	
+;ns3	IN	CNAME	ns3.hostinger.in. ; try not to use CNAME for NS record
+;ns4	IN	CNAME	ns4.hostinger.in. ; try not to use CNAME for NS record
+mx	IN	CNAME	mail.alyp.tk.
+smtp	IN	CNAME	mail.alyp.tk.
+imap	IN	CNAME	mail.alyp.tk.
+pop	IN	CNAME	mail.alyp.tk.
+cube	IN	CNAME	alyp.xyz.
+pma	IN	CNAME	alyp.xyz.
+ftp	IN	CNAME   web.alyp.tk.
+asus	IN	CNAME	alyp.ddns.net.
+ddns	IN      CNAME   alyp.sytes.net.
+;
+;*	IN	A	76.173.133.37 ; wildcard address breaks everything...
+;
+_http._tcp.mpd.alyp.tk.  IN SRV 0 5 8000 98.150.136.16
+;_http._tcp.i2p.alyp.tk. IN SRV 0 5 7657 i2p.alyp.xyz.
+;_http._tcp.tor.alyp.tk. IN SRV 0 5 9050 tor.alyp.xyz.
+;_http._tcp.i2p.alyp.tk. IN SRV 10 0 80  i2p.alyp.xyz.
+;_http._tcp.tor.alyp.tk. IN SRV 10 0 80  tor.alyp.xyz.

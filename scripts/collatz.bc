@@ -1,0 +1,300 @@
+#!/usr/bin/bc -l
+
+### Collatz.BC - The 3x+1 or hailstones problem
+
+# Global variable
+# The original Collatz iteration has rules:
+#   odd  x -> 3x+1
+#   even x -> x/2
+# The condensed Collatz iteration has rules:
+#   odd  x -> (3x+1)/2
+#   even x -> x/2
+# ...since the usual odd step always produces an even value
+# The odd-only Collatz iteration has rules:
+#   odd  x -> odd part of 3x+1
+#   even x -> odd part of x
+# This var sets the mode of the functions in this library
+#   0 =>  odd-only Collatz
+#   1 =>  original Collatz - note that these two entries ...
+#   2 => condensed Collatz - ... match the divisor on the odd step
+collatz_mode_=1
+
+# sanity check
+define check_collatz_mode_() {
+  auto os;
+  if(collatz_mode_==0||collatz_mode_==1||collatz_mode_==2)return collatz_mode_
+  if(collatz_mode_<0||collatz_mode_>2)collatz_mode_=1
+  if(scale(collatz_mode_)){os=scale;scale=0;collatz_mode_/=1;scale=os}
+  return collatz_mode_
+}
+
+## Step forwards and back
+
+
+# Generate the next hailstone
+define collatz_next_(x) {
+  auto os,t;
+  os=scale;scale=0;x/=1
+  t=x/2;if(x!=t+t)t=3*x+1
+  if(collatz_mode_){
+    if(collatz_mode_==2&&t>x){x=t/2}else{x=t}
+  } else {
+    while(x==t+t||t>x){x=t;t/=2}
+  }
+  scale=os;return x
+}
+
+define collatz_next(x) {
+  .=check_collatz_mode_()
+  return collatz_next_(x)
+}
+
+# Take a guess at the previous hailstone - since in some cases there are
+# two choices, this function always chooses the option of lowest magnitude
+define collatz_prev(x) {
+  auto os,a,b,c;
+  os=scale;scale=0;x/=1
+  if(check_collatz_mode_()){
+    a=collatz_mode_*x-1;b=a/3
+    x+=x
+    if(3*b!=a||b==1||b==-1){scale=os;return x}
+    if((b>0)==(b<x))x=b
+  } else {
+    # oddonly mode shouldn't really return an even number
+    #  but when x is even or divisible by three, there _is_
+    #  no previous odd hailstone, so an even number must suffice.
+    if(!x%2||!x%3){scale=os;return x+x}
+    for(a=1;1;a+=a){
+      b=a*x-1;c=b/3
+      if(3*c==b){b=c/2;if(c!=b+b){scale=os;return c}}
+    }
+  }
+  scale=os;return x
+}
+
+## Chain examination
+
+max_array_ = 4^8
+
+# Determine whether an integer, x, reaches 1 under the Collatz iteration
+# . defined for both positive and negative x, so will
+# . return 0 under some circumstances!
+define is_collatz(x) {
+  auto os,t,i,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(x==0){scale=os;return 0}
+  .=check_collatz_mode_()
+  tapetop=-1
+  while(x!=1&&x!=-1){
+    t = collatz_next_(x)
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){scale=os;return 0}
+    if(tapetop++>max_array_){
+      print "is_collatz: can't calculate; chain too long. assuming true.\n"
+      scale=os;return 1
+    }
+    tape[tapetop]=x=t
+  }
+  return x
+}
+
+# Print the chain of iterations of x until a loop or 1
+# . was cz_chain
+define collatz_print(x) {
+  auto os,t,i,tape[],tapetop
+  os=scale;scale=0;x/=1
+  x;if(x==0){scale=os;return 0}
+  .=check_collatz_mode_()
+  tapetop=-1
+  while(x!=1&&x!=-1){
+    t = collatz_next_(x)
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){scale=os;"looping ";return t}
+    if(tapetop++>max_array_){
+      print "collatz_print: can't calculate; chain too long.\n"
+      scale=os;return t
+    }
+    tape[tapetop]=x=t;t
+  }
+}
+
+# Find the number of smallest magnitude under the Collatz iteration of x
+# . assuming the conjecture is true, this returns 1 for all positive x
+define collatz_root(x) {
+  auto os,t,i,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(x==0){scale=os;return 0}
+  .=check_collatz_mode_()
+  tapetop=-1
+  while(x!=1&&x!=-1){
+    t = collatz_next_(x)
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){
+      #go back the other way looking for the lowest absolute value
+      while(++i<=tapetop)if((tape[i]>0)==(tape[i]<t))t=tape[i]
+      scale=os;return t
+    }
+    if(tapetop++>max_array_){
+      print "collatz_print: can't calculate; chain too long.\n"
+      scale=os;return (x>0)-(x<0)
+    }
+    tape[tapetop]=x=t
+  }
+  return x
+}
+
+# Returns the loopsize should the iteration become stuck in a loop
+# . assuming the conjecture is true, this returns 3 for the
+# . 4,2,1,4,etc. loop for all positive x.
+define collatz_loopsize(x) {
+  auto os,t,i,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(x==0){scale=os;return 1}
+  .=check_collatz_mode_()
+  tapetop=-1
+  while(x!=1&&x!=-1){
+    t = collatz_next_(x)
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){scale=os;return tapetop-i+1}
+    if(tapetop++>max_array_){
+      print "collatz_loopsize: can't calculate; chain too long.\n"
+      scale=os;return 0
+    }
+    tape[tapetop]=x=t
+  }
+  if(collatz_mode_==0)return 1
+  if(collatz_mode_==1)return 3
+  if(collatz_mode_==2)return 2
+}
+
+# How many iterations to 1 (or loop)?
+define collatz_chainlength(x) {
+  auto os,t,i,c,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(x==0){scale=os;return 0}
+  .=check_collatz_mode_()
+  tapetop=-1
+  while(x!=1&&x!=-1){
+    .=c++
+    t = collatz_next_(x)
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){scale=os;return 2-c }# infinity
+    if(tapetop++>max_array_){
+      print "collatz_chainlength: can't calculate; chain too long.\n"
+      scale=os;return -c
+    }
+    tape[tapetop]=x=t
+  }
+  return c
+}
+
+# Highest point on way to 1 or before being stuck in a loop
+define collatz_magnitude(x) {
+  auto os,t,i,m,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(x==0){scale=os;return 0}
+  .=check_collatz_mode_()
+  tapetop=-1
+  m=x
+  while(x!=1&&x!=-1){
+    t = collatz_next_(x)
+    if((t>0)==(t>m))m=t
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){scale=os;return m}
+    if(tapetop++>max_array_){
+      print "collatz_magnitude: can't calculate; chain too long.\n"
+      scale=os;return m
+    }
+    tape[tapetop]=x=t
+  }
+  return m
+}
+
+# Sum of all values in the iteration
+define collatz_sum(x) {
+  auto os,t,i,s,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(x==0){scale=os;return 0}
+  .=check_collatz_mode_()
+  tapetop=-1
+  s=x
+  while(x!=1&&x!=-1){
+    t = collatz_next_(x)
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){scale=os;"infinite ";return 0}
+    if(tapetop++>max_array_){
+      print "collatz_sum: can't calculate; chain too long.\n"
+      scale=os;return s
+    }
+    tape[tapetop]=x=t
+    s+=t
+  }
+  return s
+}
+
+# is_collatz_sg(x) # set globals by name of above functions
+
+# All of the above rolled into one.
+# Global variables are set with the same names as the above functions
+# with the exception of global variable collatz_print, which should be
+# set to non-zero if emulation of the collatz_print() function is required
+define is_collatz_sg(x) {
+  auto os,t,i,s,c,m,tape[],tapetop
+  os=scale;scale=0;x/=1
+  if(collatz_print)x
+  if(x==0){
+    collatz_root        = 0
+    collatz_loopsize    = 1
+    collatz_chainlength = 0
+    collatz_magnitude   = 0
+    collatz_sum         = 0
+    scale=os;return 0
+  }
+  .=check_collatz_mode_()
+  tapetop=-1
+  s=m=x
+  while(x!=1&&x!=-1){
+    .=c++
+    t = collatz_next_(x)
+    if((t>0)==(t>m))m=t
+    # Search backwards for previous occurrence of t (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==t){
+      collatz_loopsize    = tapetop-i+1
+      collatz_chainlength = 2-c # Infinite
+      collatz_magnitude   = m
+      collatz_sum         = 0   # Infinite
+      #go back the other way looking for the lowest absolute value
+      while(++i<=tapetop)if((tape[i]>0)==(tape[i]<t))t=tape[i]
+      collatz_root        = t
+      scale=os;return 0
+    }
+    if(tapetop++>max_array_){
+      print "is_collatz_sg: can't calculate; chain too long.\n"
+      collatz_root        = (x>0)-(x<0)
+      collatz_loopsize    = 0
+      collatz_chainlength = -c
+      collatz_magnitude   = m
+      collatz_sum         = s
+      scale=os;return s
+    }
+    tape[tapetop]=x=t
+    if(collatz_print)x
+    s+=t
+  }
+  collatz_root        = x
+  if(collatz_mode_==0) collatz_loopsize = 1
+  if(collatz_mode_==1) collatz_loopsize = 3
+  if(collatz_mode_==2) collatz_loopsize = 2
+  collatz_chainlength = c
+  collatz_magnitude   = m
+  collatz_sum         = s
+  return x
+}

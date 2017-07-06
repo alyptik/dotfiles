@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# example call: # bash /usr/local/bin/snapshot_current_system_state.sh '/run/btrfs' 'rootfs' '__snapshot/__state_at_last_successful_boot'
+
+#if [ $# -ne 3 ]
+#then
+#  /usr/bin/echo -e "This script requires three parameters:\n1st parameter: The path of the btrfs filesystem root. e. g. /run/btrfs-root\n2nd parameter: The name of the btrfs root volume as specified in /etc/fstab. E. g. __current/ROOT\n3rd parameter: The path where the newly created snapshots will reside without its 1st parameter portion. E. g. __snapshot/__state_at_last_successful_boot\nCAUTION: This script will delete all snapshots of the same name as the regular volume names in the path parameter 3 is pointing to."
+#  exit 0
+#fi
+
+btrfs_root="${1}" # example: '/var/lib/btrfs'
+path_to_root_volume="${2}" # example: '__active/rootfs'
+path_to_snapshots="${3}" # example: '__snapshot/last'
+
+# take no snapshots when booted into a snapshot
+if [ -e '/SNAPSHOT-TIMESTAMP' ]
+then
+  exit 0
+fi
+
+#/usr/bin/btrfs subvolume delete "${btrfs_root}/${path_to_snapshots}/${subvolume}"
+#/usr/bin/btrfs subvolume snapshot "${btrfs_root}/${subvolume}" "${btrfs_root}/${path_to_snapshots}/${subvolume}"
+
+[[ -d /btrfs/__snapshot/rootfs ]] && /usr/bin/btrfs subvolume delete "/btrfs/__snapshot/rootfs" || \
+echo '/btrfs/__snapshot/rootfs missing!' 
+[[ -d /btrfs/__snapshot/home ]] && /usr/bin/btrfs subvolume delete "/btrfs/__snapshot/home" || \
+echo '/btrfs/__snapshot/home missing!' 
+[[ -d /btrfs/__snapshot/store ]] && /usr/bin/btrfs subvolume delete "/btrfs/__snapshot/store" || \
+echo '/btrfs/__snapshot/store missing!' 
+#/usr/bin/btrfs subvolume snapshot "/btrfs/__active/rootfs" "/btrfs/__snapshot/rootfs"
+#/usr/bin/btrfs subvolume snapshot "/btrfs/__active/home" "/btrfs/__snapshot/home"
+#/usr/bin/btrfs subvolume snapshot "/btrfs/__active/store" "/btrfs/__snapshot/store"
+/usr/bin/btrfs filesystem sync "/"
+/usr/bin/btrfs filesystem sync "/home"
+/usr/bin/btrfs filesystem sync "/store"
+/usr/bin/btrfs filesystem sync "/btrfs"
+/usr/bin/sync
+

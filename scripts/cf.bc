@@ -1,0 +1,314 @@
+#!/usr/bin/bc -l
+
+### CF.BC - Continued fraction experimentation using array pass by reference
+
+# Best usage for the output functions in this library:
+#   .=output_function(params)+newline()
+# This suppresses the output and also appends a newline which is not added
+# by default.
+
+## Initialisation / Tools / Workhorses ##
+
+# Borrowed from funcs.bc
+define int(x) { auto os;os=scale;scale=0;x/=1;scale=os;return(x) }
+define abs(x) { if(x<0)return(-x)else return(x) }
+
+# Borrowed from output_formatting.bc
+define newline() { print "\n" }
+
+# sanity check for the below
+define check_cf_max_() {
+  auto maxarray;
+  maxarray = 4^8-4;cf_max=int(cf_max)
+  if(1>cf_max||cf_max>maxarray)cf_max=maxarray
+  return 0;
+}
+
+# global var; set to halt output and calculations at a certain point
+cf_max=-1; # -1 to flag to other libs that cf.bc exists before value is set
+
+# Workhorse function to prepare for and tidy up after CF generation
+define cf_tidy_(){
+  # POSIX scope; expects vars cf__[], max, p and i
+  # Tidy up the end of the CF
+  #  assumes the last element of large CFs to be invalid due to rounding
+  #    and deletes that term.
+  #  for apparently infinite (rather than just long) CFs, uses a bc trick
+  #    to signify special behaviour to the print functions.
+  #  for apparently finite CFs, checks whether the CF ends ..., n, 1]
+  #  which can be simplified further to , n+1]
+  auto j,diff,rl,maxrl,bestdiff
+  cf__[i]=0
+  if(p>max){
+    .=i--;
+    if(p<max*A^5){ # assume infinite
+      cf__[i]=0.0; # bc can tell between 0 and 0.0
+      # Identify repeating CFs and store extra information
+      #  that is used by the print functions.
+      max=i;mrl=0;
+      p=max-1;if((i=p-1)>0)for(i=i;i;i--){
+        if(cf__[i]==cf__[p]){
+          diff=p-i;rl=0
+          for(j=p-1;j>diff;j--){if(cf__[j-diff]!=cf__[j])break;.=rl++}
+          if(j<=i)rl+=diff
+          if(rl>mrl){mrl=rl;bestdiff=diff}
+        }
+      }
+      if(3*mrl>=p){cf__[++max]=p-mrl-1;cf__[++max]=bestdiff;cf__[0]+=0.0}
+      return 0;
+    }
+    cf__[i]=0; # bc can differentiate between 0 and 0.0
+  } 
+  if(i<2)return 0;
+  .=i--;if(abs(cf__[i])==1){cf__[i-1]+=cf__[i];cf__[i]=0}
+  return 0;
+}
+
+# Workhorse function for cf_new and cfn_new
+define cf_new_(near) {
+  # POSIX scope; expects array *cf__[] and var x
+  auto os, i, p, max, h, n, temp;
+  .=check_cf_max_()
+  os=scale;if(scale<scale(x))scale=scale(x)
+  if(scale<6+near){
+    print "cf";if(near)print"n";print"_new: scale is ",scale,". Poor results likely.\n"
+  }
+  max=A^int(scale/2);p=1
+  if(near)h=1/2;
+  for(i=0;i<cf_max&&p<max;i++) {
+    if(near){
+      n=int(temp=x+h);if(n>temp).=n-- # n=floor(x+.5)
+    } else {
+      n=int(x)
+    }
+    p*=1+abs(cf__[i]=n);
+    x-=cf__[i]
+    if(x==0||p==0){.=i++;break}
+    x=1/x
+  }
+  scale=os
+  return cf_tidy_();
+}
+
+## Making/unmaking continued fractions and ordinary fractions ##
+
+# Create a continued fraction representation of x in pbr array cf__[]
+define cf_new(*cf__[],x) {
+  return x+cf_new_(0);
+}
+
+# Create a continued fraction representation of x in pbr array cf__[]
+# using signed terms to guarantee largest magnitude following term
+define cfn_new(*cf__[],x) { 
+  return x+cf_new_(1);
+}
+
+# Copy a continued fraction into pbr array cfnew__[] from pbv array cf__[]
+define cf_copy(*cfnew__[],cf__[]){
+  auto e,i;
+  for(i=0;i<=cf_max&&e=cf__[i];i++)cfnew__[i]=e
+  if(i<=cf_max)cfnew__[i]=cf__[i] # might be 0.0
+  e=cf__[0];if(int(e)==e&&scale(e)){
+    # copy extra info
+    if(++i<=cf_max)cfnew__[i]=cf__[i]
+    if(++i<=cf_max)cfnew__[i]=cf__[i]
+  }
+  return (i>cf_max);
+}
+
+# Convert pbv array cf__[] into a number
+define cf_value(cf__[]) {
+  auto n, d, temp, i;
+  .=check_cf_max_();
+  if(cf__[1]==0)return cf__[0];
+  for(i=1;i<cf_max&&cf__[i];i++){}
+  n=cf__[--i];d=1
+  for(i--;i>=0;i--){temp=d;d=n;n=temp+cf__[i]*d}
+  return(n/d);
+}
+
+# Convert pbv array cf__[] into a new cf of the other type
+# . with respect to nearness.
+define cf_toggle(*cf__[],cf2__[]){
+  auto os,p,i,x,zero,sign,near;
+  sign=1;if(cf2__[0]<0)sign=-1
+  near=0
+  for(i=1;x=cf2__[i];i++){
+    p*=1+abs(x)
+    if(x*sign<0)near=1
+  }
+  zero=x;
+  os=scale;scale=0
+   for(i=2;p;i++)p/=A
+   if(i<os)i=os
+  scale=i
+   x=cf_value(cf2__[])
+   .=cf_new_(1-near)
+  scale=os
+  for(i=0;cf__[i];i++){}
+  cf__[i]=zero;
+  return 0
+}
+
+# Return the value of the specified convergent of a CF
+define cf_get_convergent(cf__[],c){
+  auto ocm,v;
+  if(c==0)return cf_value(cf__[]);
+  .=check_cf_max_();ocm=cf_max
+  cf_max=c;v=cf_value(cf[])
+  cf_max=ocm;return v;
+}
+
+# Return the value of the specified convergent of the CF of x
+define get_convergent(x,c){
+  auto cf[];
+  .=cf_new(cf[],x)
+  return cf_get_convergent(cf[],c)
+}
+
+# Create denominator, numerator and optional intpart in
+# . first three elements of pbr array f__[]
+# . from CF in pbv array cf[]()
+# NB: returned elements are in reverse of the expected order!
+define frac_from_cf(*f__[],cf__[],improper) {
+  auto n,d,i,temp;
+  .=check_cf_max_();
+  improper=!!improper;
+  if(cf__[0]==(i=int(cf__[0])))cf__[0]=i
+  if(cf__[1]==0){f__[0]=1;f__[1]=0;return f__[2]=cf__[0]}
+  for(i=1;i<cf_max&&cf__[i];i++){}
+  n=cf__[--i];d=1
+  for(i--;i>=!improper;i--){
+    temp=n;n=d;d=temp # reciprocal = swap numerator and denominator
+    n+=cf__[i]*d
+  }
+  temp=0
+  if(!improper){temp=n;n=d;d=temp}#correct for having stopped early
+  if(d<0){n=-n;d=-d} # denominator always +ve
+  if(!improper&&cf__[0]!=0){
+    temp=cf__[0]
+  }
+  f__[0]=d;f__[1]=n;f__[2]=temp
+  return temp+n/d;
+}
+
+# Upscale an allegedly rational number to the current scale
+define upscale_rational(x) {
+  auto os,f[],cf[];
+  if(scale<=scale(x))return x
+  os=scale;scale=scale(x)
+  .=cf_new(cf[],x);          # Sneaky trick to upscale (literally)
+  .=frac_from_cf(f[],cf[],1) # any rational value of x
+  scale=os
+  x=f[1]/f[0] # x is now (hopefully) double accuracy!
+  return x;
+}
+
+## Output ##
+
+# Set to 1 to truncate quadratic surd output before repeat occurs
+cf_shortsurd_=0
+
+# Output pbv array cf__[] formatted as a CF
+define cf_print(cf__[]) {
+  auto i,sign,surd,sli,sri;
+  .=check_cf_max_();
+  sign=1;if(cf__[0]<0||(cf__[0]==0&&cf__[1]<0)){sign=-1;print "-"}
+  # Check for surd flag and find lead in and repeat period
+  surd=0;sri=int(i=cf__[0]);if(scale(i)&&sri==i){
+    for(i=1;cf__[i];i++){}
+    sli=cf__[++i]
+    surd=cf__[++i]
+  }
+  print "[", sign*sri;
+  if(cf__[1]==0){print "]";return 0}
+  print "; ";
+  if(surd)if(sli){sri=sli-1}else{sri=surd-1}
+  for(i=2;i<=cf_max&&cf__[i];i++){
+    print sign*cf__[i-1]
+    if(!surd||sri){
+      print ", ";if(surd).=sri--
+    } else {
+      if(sli){
+        sli=0
+      }else if(cf_shortsurd_){print ";...]";return 0}
+      print "; ";sri=surd-1
+    }
+  }
+  print sign*cf__[i-1];
+  # detect a 0.0 which signifies that the cf has been determined
+  # to be infinite (not 100% accurate, but good)
+  if(scale(cf__[i])){
+    if(!surd||sri){print ","}else{print ";"}
+    print "..."
+  }
+  print "]";
+  return (i>cf_max);
+}
+
+# Print a number as a continued fraction
+define print_as_cf(x) {
+  auto cf[];
+  .=cf_new(cf[],x)+cf_print(cf[])
+  return x;
+}
+
+# Print a number as a signed continued fraction
+define print_as_cfn(x) {
+  auto cf[];
+  .=cfn_new(cf[],x)+cf_print(cf[])
+  return x;
+}
+
+# Output pbv array cf__[] as a fraction or combination of int and fraction
+# . the 'improper' parameter makes the choice.
+# . . set to non-zero for top-heavy / improper fractions
+define cf_print_frac(cf__[],improper) {
+  auto f[],v;
+  v=frac_from_cf(f[],cf__[],improper)
+  if(f[1]==0){print f[2];return f[2]}
+  if(!improper&&cf__[0]!=0){
+    print cf__[0]
+    if((f[1]<0)==(f[0]<0)){print"+"} # if n and d have same sign...
+  }
+  print f[1],"/",f[0] # n/d
+  return v;
+}
+
+# Print x as a fraction or combination of int and fraction
+# . the 'improper' parameter makes the choice.
+# . . set to non-zero for top-heavy / improper fractions
+define print_frac(x,improper) {
+  auto cf[]
+  .=cf_new(cf[],x)+cf_print_frac(cf[],improper)
+  return x;
+}
+
+# Print x as a fraction or combination of int and fraction
+# . the 'improper' parameter makes the choice.
+# . . set to non-zero for top-heavy / improper fractions
+# . This alternative function rounds to the nearest integer
+# . . for the integer part and then shows the addition
+# . . or _subtraction_ of the fraction.
+# . . e.g. 1+2/3 is shown as 2-1/3
+define print_frac2(x,improper) {
+  auto cf[];
+  .=cfn_new(cf[],x)+cf_print_frac(cf[],improper)
+  return x;
+}
+
+define cf_print_convergent(cf__[],c){
+  auto ocm,n,v;
+  if(c==0)return cf_print_frac(cf__[],0);
+  if(c<0){n=1;c=-c}else{n=c}
+  .=check_cf_max_();ocm=cf_max;
+  for(n=n;n<=c;n++){cf_max=n;v=cf_print_frac(cf__[],1);if(n!=c)print "\n"}
+  cf_max=ocm;return v;
+}
+
+define print_convergent(x,c){
+  auto cf[],v;
+  v=cf_new(cf[],x)
+  v=cf_print_convergent(cf[],c)
+  return v;
+}

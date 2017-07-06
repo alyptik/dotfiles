@@ -1,0 +1,16 @@
+#!/bin/bash
+
+eurl() {
+    local LC_ALL=C c
+    while IFS= read -r -n1 -d '' c
+    do 
+        if [[ $c = [[:alnum:]] ]]
+        then 
+            printf %s "$c"
+        else
+            printf %%%02x "'$c"
+        fi
+    done
+}
+
+eurl

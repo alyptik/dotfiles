@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cwd="$PWD"
+cd "${HOME}/git" || exit 1
+[ ! -d ./mwifiex-firmware ] || rm -rf ./mwifiex-firmware
+if git clone git://git.marvell.com/mwifiex-firmware.git; then
+	test -d /lib/firmware/mrvl/  || sudo mkdir -p /lib/firmware/mrvl/
+	sudo rsync -avP --info=progress2 --chown=root:root ./mwifiex-firmware/mrvl/ /lib/firmware/mrvl/
+else
+	printf "\n \033[31m %s \n\033[0m" 'Error downloading from git!'
+fi
+cd "$cwd" || exit 1
+unset cwd

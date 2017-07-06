@@ -1,0 +1,11 @@
+sed -r ':space; s_(.*)(;)[ \w	]+_\1\2_; /.*(;)[ ]+/{L;{; t space}')
+echo "$testcase" | sed -r ":space s_(.*)(;)[ \w\t]+_\1\2_; /^.*;.*$/{s_[ \w\t]+(;){2,}_;_;t space}" | tr -s ";" "\n"
+echo "$testcase" | sed -r ":space s_(.*)(;)[ \w\t]+_\1\2_; /^.*;.*$/{s_[ \w\t]+(;){2,}_;_;t space}" | tr -s ";" "\n"
+echo "$testcase" | sed -r ":space s_(.*)(;)[ \s	]+_\1\2_; /^.*;.*$/{s_[ \s	]+(;){2,}_;_;t space}" | tr -s ";" "
+
+"echo "$testcase" | sed -r ":space
+s_([^; \t]*)(;)+[ \t]+_\1;_g]
+s_([ \t]+)(;){2,}_;_g
+t space"
+
+echo "$testcase" | sed -r ':loop s_[; \t]*(;)[; \t]* _\1_; /$/!b  loop'

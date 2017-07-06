@@ -1,0 +1,479 @@
+> When there isn't sufficient virtual memory, the compiler bails out,
+> giving an internal error message. When I kill some processes, the
+> error goes away.
+
+And what is the compiler supposed to do instead? Go shopping for you
+and buy more memory?
+
+	-- Falk Hueffner, on the GNU C++ compiler
+	List-Id: <debian-gcc.lists.debian.org>
+	Message-ID: <877jshoa25.fsf@informatik.uni-tuebingen.de>
+%
+This code passes Torvalds test grades 0, 1 and 2 (it looks ok, it
+compiles and it booted).
+
+	-- Alan Cox, in a LKML post
+	List-Id: <linux-kernel@vger.kernel.org>
+	Message-Id: <1096751613.25752.8.camel@localhost.localdomain>
+%
+If there is any better use for being famous and respected than using that
+status to question orthodoxy, I haven't found it yet.
+
+	-- Eric S. Raymond, in "We Don't Need the GPL Anymore"
+%
+#if _FP_W_TYPE_SIZE < 64
+#error "Only stud muffins allowed, schmuck."
+#endif
+
+	-- linux: arch/sparc64/math-emu/quad.h
+%
+#if _FP_W_TYPE_SIZE < 32
+#error "Here's a nickel kid.  Go buy yourself a real computer."
+#endif
+
+	-- linux: arch/sparc64/math-emu/double.h
+	-- linux: arch/sparc64/math-emu/quad.h
+	-- linux: include/math-emu/single.h
+%
+#ifdef __BIG_ENDIAN
+...
+#elif defined(__LITTLE_ENDIAN)
+...
+#else
+#error I feel sick.
+#endif
+
+	-- linux: arch/microblaze/lib/libgcc.h
+%
+#ifdef TRACE_HOOKS_ARE_NOT_BRAINDEAD_IN_YOUR_OPINION
+#error "You go ahead and fix that mess, then.  Somehow"
+	trace_ocfs2_encode_fh_begin(dentry, dentry->d_name.len,
+				    dentry->d_name.name,
+				    fh, len, connectable);
+#endif
+
+	-- linux: fs/ocfs2/export.c
+%
+/*
+ *     Please skip to the bottom of this file if you ate lunch recently
+ *                             -- Alan
+ */
+
+	-- linux: drivers/nubus/nubus.c 2.1.91pre1
+%
+Win 95 is simplified for the user:
+
+User: What does this configuration thing do?
+You: It allows you to modify you settings, for networking,
+        hardware, protocols, ...
+User: Whoa! Layman's terms, please!
+You:  It changes stuff.
+User: That's what I'm looking for!  What can it change?
+You:  This part change IP forwarding.  It allows ...
+User: Simplify, simplify!  What can it do for ME?
+You:  Nothing, until you understand it.
+User: Well it makes me uncomfortable.  It looks so technical;
+      Get rid of it, I want a system *I* can understand.
+You:  But...
+User: Hey, who's system is this anyway?
+You:  (... rm this, rm that, rm /etc/* ...) "All done."
+
+	-- Kevin M. Bealer <kmb203@psu.edu>
+%
+(Subject: Linux box finds it hard to wake up in the morning)
+
+I've heard of dogs being like their owners, but Linux boxen?
+
+	-- Peter Hunter <peter.hunter@blackfriars.oxford.ac.uk>
+%
+The game, anoraks.2.0.0.tgz, will be available from sunsite until somebody
+responsible notices it and deletes it, and shortly from
+ftp.mee.tcd.ie/pub/Brian, though they don't know that yet.
+
+	-- Brian O'Donnell <odonnllb@tcd.ie>
+%
+panic("Foooooooood fight!");
+
+	-- linux: drivers/scsi/aha1542.c
+	(after detecting a bad segment list)
+%
+As usual, this being a 1.3.x release, I haven't even compiled this
+kernel yet.  So if it works, you should be doubly impressed.
+
+	-- Linus Torvalds
+	(announcing kernel 1.3.3)
+%
+It's now the GNU Emacs of all terminal emulators.
+
+	-- Linus Torvalds
+	(regarding the fact that Linux started off as a terminal emulator)
+%
+quit   When the quit statement is read, the  bc  processor
+       is  terminated, regardless of where the quit state-
+       ment is found.  For example, "if  (0  ==  1)  quit"
+       will cause bc to terminate.
+
+	-- seen in the manpage for "bc"
+	(note the "if" statement's logic)
+%
+How should I know if it works?  That's what beta testers are for.  I only coded it.
+
+	-- attributed to Linus Torvalds, somewhere in a posting (pre-2004-11)
+%
+...I remarked to Dennis that easily half the code I was writing in Multics was
+error recovery code. He said, "We left all that stuff out. If there's an error,
+we have this routine called panic, and when it is called, the machine crashes,
+and you holler down the hall, 'Hey, reboot it.'"
+
+	-- Tom Van Vleck
+%
+IMAP is the worst implementation of NFS I've ever seen.
+
+	-- dagbrown
+	<http://www.jwz.org/blog/2009/12/iphone-gripes/#comment-8448>
+%
+Man, developing software would be great if it wasn't for all the f**ing users.
+
+	-- Frank Farmer, on Stack Overflow
+%
+We had a guy come in and immediately strip out comments and whitespace from our
+code "to make it faster".
+
+	-- Scott Smith, on Stack Overflow
+%
+We all know the definition of a nano-second. An ohno-second is even smaller,
+and is the time between hitting 'enter' and realising your mistake.
+
+	-- Iain, on Stack Overflow
+%
+"File names are infinite in length where infinity is set to 255 characters."
+
+	-- Peter Collinson, "The Unix File System"
+%
+"A bit of tolerance is worth a megabyte of flaming."
+
+	-- Henry Spencer
+%
+The X server has to be the biggest program I've ever seen that doesn't do
+anything for you.
+
+	-- ken
+%
+Not only is UNIX dead, it's starting to smell really bad.
+
+	-- Rob Pike, circa 1991
+%
+* that xchg() in ->kill_sb() is not a bug per se, but it's a plain and simple
+masturbation with fewer excuses than Onan had...
+
+	-- Linux commit log, v3.2-3494-g5b5f956
+%
+Talk is cheap. Show me the code.
+
+	-- Linus Torvalds
+	List-Id: <linux-kernel@vger.kernel.org>
+	Message-Id: <Pine.LNX.4.10.10008251108310.9513-100000@penguin.transmeta.com>
+%
+There are literally several levels of SCO being wrong. And even if we were to
+live in that alternate universe where SCO would be right, they'd still be
+wrong.
+
+	-- Linus Torvalds
+	"Linus Torvalds: SCO Is 'Just Too Wrong'". BusinessWeek Online
+	Kerstetter, Jim (2004-02-02).
+	<http://www.businessweek.com/magazine/content/04_05/b3868110_mz063.htm>
+%
+0.11 (December) had the first floppy driver, and was the point where I
+started doing linux developement under itself.  Quite as well, as I
+trashed my minix386 partition by mistake when trying to autodial
+/dev/hd2.
+
+	-- Linus Torvalds <torvalds@klaava.Helsinki.FI>
+	To: Linux-Activists@BLOOM-PICAYUNE.MIT.EDU
+	Subject: Re: Writing an OS - questions !!
+	Date: 5 May 92 07:58:17 GMT
+%
+mount(8):
+
+Mount options for affs
+       usemp  Set uid and gid of the root of the filesystem to the uid and gid
+              of the mount point upon the first sync or umount, and then clear
+              this option. Strange...
+
+Mount options for hpfs
+       conv={binary|text|auto}
+              For conv=text, delete some random CRs (in particular,  all  fol‐
+              lowed by NL) when reading a file.  For conv=auto, choose more or
+              less  at  random  between  conv=binary   and   conv=text.    For
+              conv=binary, just read what is in the file. This is the default.
+%
+/*
+ * Terminate the loop if iclogs are found in states
+ * which will cause other threads to clean up iclogs.
+ *
+ * SYNCING - i/o completion will go through logs
+ * DONE_SYNC - interrupt thread should be waiting for
+ *              l_icloglock
+ * IOERROR - give up hope all ye who enter here
+ */
+
+	-- linux: fs/xfs/xfs_log.c
+%
+/*
+** "seek and ye shall find"...praying never hurts either...
+** ggg sacrifices another 710 to the computer gods.
+*/
+
+	-- linux: drivers/parisc/ccio-dma.c
+%
+printk(KERN_INFO "%s: transmit timed out, %s?\n", dev->name,
+       (SCB_complete(status)?"lost interrupt":
+	"board on fire"));
+
+	-- linux: drivers/net/ethernet/i825xx/eexpress.c
+%
+printk(KERN_EMERG "CPU#%d: Possible thermal failure (CPU on fire ?).\n", smp_processor_id());
+
+	-- linux: arch/i386/kernel/bluesmoke.c
+	(later arch/i386/kernel/bluesmoke.c)
+%
+printk(KERN_ERR "lp%d on fire\n", minor);
+
+	-- linux: drivers/char/lp.c
+	(also "printer error" and "invalid error status (on fire, eh?)" at various times) 
+%
+panic("I have no root and I want to scream");
+
+	-- linux: fs/super.c (later init/do_mounts.c)
+	-- removed in 50a0d240f4d79e2a903f9fe8c643fac5b7d4aa7d
+%
+/*
+ * XXX: I would expect the following to work for the first descriptor
+ * (tx_fd->state = 0xc0000000)
+ * - Hold=1 (don't try and branch to the next descripto);
+ * - No=0 (I want an empty data section, i.e. size=0);
+ * - Fe=1 (required by No=0 or we got an Err irq and must reset).
+ * Alas, it fails (and locks solid). Thus the introduction of a dummy
+ * skb to avoid No=0 (choose one: Ugly [ ] Tasteless [ ] VMS [ ]).
+ * TODO: fiddle the tx threshold when time permits.
+ * 2002/01: errata sheet acknowledges the problem [X].
+ */
+
+	-- linux: drivers/net/wan/dscc4/dscc4_main.c
+	-- (between 85deddb9471 and 58d82dd136)
+%
+In the early days of Linux, we made a point to not port applications to Linux;
+we ported Linux to applications. When X wouldn't build without sockets, we
+didn't hack X to run without sockets, we added sockets to Linux, and so on.
+Looks like the universe have come full.circle, and now BSD needs to catch up
+with Linux if it wants to remain at all relevant. Of course, there is no hope
+for Hurd. Hurd doesn't follow, it stampedes.
+
+	-- H. Peter Anvin
+	comment on <https://plus.google.com/115547683951727699051/posts/emMS9PCdcZ3>
+%
+/*
+ * Intel provided a special instruction to clear the TS bit for people too cool
+ * to use write_cr0() to do it.  This "clts" instruction is faster, because all
+ * the vowels have been optimized out.
+ */
+
+	-- linux: arch/x86/lguest/boot.c
+%
+/*
+ * Remember that David Wheeler quote about "Any problem in computer science can
+ * be solved with another layer of indirection"?  The rest of that quote is
+ * "... But that usually will create another problem."  This is the first of
+ * those problems.
+ */
+
+	-- linux: arch/x86/lguest/boot.c
+%
+Preparation Preparation!: PREFIX=P
+Guest: PREFIX=G
+Drivers: PREFIX=D
+Launcher: PREFIX=L
+Host: PREFIX=H
+Switcher: PREFIX=S
+Mastery: PREFIX=M
+Beer:
+	@for f in Preparation Guest Drivers Launcher Host Switcher Mastery; do echo "{==- $$f -==}"; make -s $$f; done; echo "{==-==}"
+Preparation Preparation! Guest Drivers Launcher Host Switcher Mastery:
+	@sh ../../tools/lguest/extract $(PREFIX) `find ../../* -name '*.[chS]' -wholename '*lguest*'`
+Puppy:
+	@clear
+	@printf "      __  \n (___()'\`;\n /,    /\`\n \\\\\\\"--\\\\\\   \n"
+	@sleep 2; clear; printf "\n\n   Sit!\n\n"; sleep 1; clear
+	@printf "    __    \n   ()'\`;  \n   /\\|\` \n  /  |  \n(/_)_|_   \n"
+	@sleep 2; clear; printf "\n\n  Stand!\n\n"; sleep 1; clear
+	@printf "    __    \n   ()'\`;  \n   /\\|\` \n  /._.= \n /| /     \n(_\_)_    \n"
+	@sleep 2; clear; printf "\n\n  Good puppy!\n\n"; sleep 1; clear
+
+	-- linux: drivers/lguest/Makefile
+%
+What's the term for the feeling you get when looking at code and wondering "who in the hell wrote this crap, it's all messed up, needs to be fixed, how is it even working in the first place!", so you run 'git blame' and realize it was yourself, over a decade ago?
+
+Then, wondering if you can blame someone else for not fixing it up since then, you run 'scripts/get_maintainer.pl' and realize that you are the maintainer for it as well.
+
+Time to just back away slowly from the keyboard and forget I ever even opened those files...
+
+	-- Greg Kroah-Hartman
+	https://plus.google.com/111049168280159033135/posts/4XbPTUNchDz
+%
+#define SOL_ENOEXEC        8     /* Header of executable was munged  */
+#define SOL_EAGAIN         11    /* beep beep, "try again later"     */
+#define SOL_EPIPE          32    /* Call a plumber                   */
+
+#define SOL_ESRMNT         69    /* Some magic srmount problem       */
+#define SOL_EUSERS         94    /* Over abundance of users for ufs  */
+
+#define SOL_ENETDOWN       127   /* Your subnet is on fire           */
+#define SOL_ENETUNREACH    128   /* Someone playing with gateway and */
+                                 /* did not tell you he was going to */
+#define SOL_ENETRESET      129   /* Buy less-buggy ethernet cards    */
+
+#define SOL_EHOSTDOWN      147   /* Remote host is up in flames      */
+#define SOL_EHOSTUNREACH   148   /* Make a left at Easton Ave.....   */
+
+#define SOL_ESTALE         151   /* Fungus growth on NFS file handle */
+
+	-- include/asm-sparc/solerrno.h
+%
+> Treadwell is now reeling off his Windows credentials, Talking about how he wanted to make Windows Sockets act as native HANDLEs, which meant writing a driver.
+> Their build system didn't support having both a DLL and a driver with the same name, and since winsock.dll existed, Treadwell couldn't make winsock.sys
+> So "another freakin' driver"
+> This is why the winsock driver is called afd.sys
+> But that's not an acceptable name, so it's now the "ancillary function driver"
+
+	-- Peter Bright quoting David Treadwell
+	http://live.arstechnica.com/microsoft-build-2014-day-1-keynote/#post-436785
+%
+[CDT] I'm not sure whether it was Padlipsky or Meyer who was responsible for
+"the World's Most Useless Subroutine Documentation." It was for a networking
+entrypoint named ncp_$croggle_socket. The subroutine description said simply,
+"This entrypoint croggles an NCP socket." End of writeup.
+
+	http://www.multicians.org/mx-net.html
+%
+%
+static void run_workqueue(struct cpu_workqueue_struct *cwq)
+{
+	spin_lock_irq(&cwq->lock);
+	cwq->run_depth++;
+	if (cwq->run_depth > 3) {
+		/* morton gets to eat his hat */
+		printk("%s: recursion depth exceeded: %d\n",
+			__func__, cwq->run_depth);
+		dump_stack();
+	}
+
+That was added five or six years ago, and I never ever got to eat my hat.
+	-- Andrew Morton
+%
+%
+/* Think of SET_MODULE_OWNER like an IBM mainframe: leave it in a dark corner 
+for years, don't break it, but don't ever upgrade it either :) If there is 
+something newer and sexier than the mainframe, it's ok to use that instead. 
+The mainframe won't feel lonely. -- Jeff Garzik */
+%
+Well, you don't get to be a kernel hacker simply by looking good in Speedos.
+	-- Rusty Russell 
+%
+Timothy Miller wrote:
+> While we're on all of this, are we going to change "tainted" to some 
+> other less alarmist word?
+
+"screwed"
+	-- Al Viro
+%
+There was a poetic infection
+Which distorted the kernel's direction,
+The code got no time
+As they all tried to rhyme
+And it shipped needing lots of correction.
+
+	-- Rusty Russel
+%
+There once was a virtualization coder,
+Whose patches kept getting older,
+  Each time upstream would drop,
+  His documentation would slightly rot,
+SO APPLY MY FUCKING PATCHES OR I'LL KEEP WRITING LIMERICKS.
+
+Thanks!
+	-- Rusty Russel
+%
+-	early_printk("Kernel really alive\n");
++	early_printk("Kernel really alive! It's alive! IT'S ALIIIIIIIIIVE!\n");
+
+	-- Bill Nottingham
+%
+On Tue, 14 Oct 2008, Jean Delvare wrote:
+> 
+> Marek Vasut (1):
+>       i2c/tps65010: Vibrator hookup to gpiolib
+
+Guys, I know we geeks aren't known for our sex-life, but do we have to make it
+so obvious?
+	-- Linus Torvalds
+%
+HAHAHAHHAAAA!!!! My evil scheme is working! I post some sub-optimal code, and
+have others do the nasty work for me!!!!
+
+Oh, did I just say that out loud?
+	-- Steven Rostedt
+
+Not only that, I will also sue you for my patent on that algorithm.
+	-- Linus Torvalds
+%
+/* strangest things ever said, #6, to alan cox: "...and remember, alan
+ * - no monkeybusiness.  remember, i sleep nude and we dont want to
+ * give rachel the shock of her life..." */
+
+	- comment in the Crack 5 source, file src/util/kickdict.c
+%
+/* First check any supplied i/o locations. User knows best. <cough> */
+
+	- comment from drivers/net/ne.c
+%
+/* Allow the packet buffer size to be overridden by know-it-alls. */
+
+	- comment from drivers/net/ne.c
+%
+	/* Sun, you just can't beat me, you just can't.  Stop trying,
+	 * give up.  I'm serious, I am going to kick the living shit
+	 * out of you, game over, lights out.
+	 */
+
+	- comment from arch/sparc/lib/checksum.S
+%
+Basically, ioctl's will _never_ be done right, because of the way people
+think about them. They are a back door. They are by design typeless and
+without rules. They are, in fact, the Microsoft of UNIX.
+
+	- Linus Torvalds on linux-kernel
+%
+#define JFFS2_MAGIC_BITMASK 0x1985
+#define KSAMTIB_CIGAM_2SFFJ 0x5981 /* For detecting wrong-endian fs */
+
+	- from include/linux/jffs2.h
+%
+For future reference - don't anybody else try to send patches as vi scripts,
+please. Yes, it's manly, but let's face it, so is bungee-jumping with the
+cord tied to your testicles.
+
+	-- Linus commenting Al Viro's dcache "patch" on lkml.
+	Subject: Re: [Lse-tech] Re: [RFC] dcache scalability patch (2.4.17)
+	Original-Message-ID: <Pine.LNX.4.44.0207141708470.20233-100000@home.transmeta.com>
+	Message-ID: <fa.l4d9mqv.1mhe2hh@ifi.uio.no>
+%
+http://yarchive.net/comp/linux/patches.html
+%
+/*
+ * NOTE: Herein lie back-to-back mb instructions.  They are magic. 
+ * One plausible explanation is that the i/o controller does not properly
+ * handle the system transaction.  Another involves timing.  Ho hum.
+ */
+
+	- comment from arch/alpha/kernel/core_*.c
+

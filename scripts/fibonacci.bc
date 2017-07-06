@@ -1,0 +1,130 @@
+#!/usr/bin/bc -l funcs.bc
+
+### Fibonacci.BC - Fibonacci and Lucas functions
+
+ # Requires funcs.bc
+
+# n-th Fibonacci number over the reals
+define fibonacci(n){
+  auto a,b,c,intn,count,fracn,s5,os
+  if(n==0)return 0
+  os=scale;scale=0;count=intn=n/1
+  if(n<0){
+    scale=os;
+    a=-fibonacci(-n)
+    if(n==intn)return a*(-1)^(-intn)
+    return a*c(pi()*n)
+  }
+  count+=2;
+  a=-1;b=1;c=0
+  while(--count){
+    c=a+b;a=b;b=c
+  }
+  scale=os;
+  if(n==intn)return c
+  
+  fracn=n-intn
+  s5=sqrt(5)
+  a=e(fracn*l( (1+s5)/2 ))
+  a*=(s5*c+sqrt(5*c*c+4*(-1)^intn))/2
+  a=(a-c(pi()*n)/a)/s5
+  return a
+}
+
+# inverse of the above - cannot deal with values below 1 (except 0)
+# but is accurate to within 'scale' decimal places otherwise
+define inverse_fibonacci(f) {
+  auto a,b,c,intn,intf,fracf,s5,phinx2,eps,s5f,z5f2,lph,pi,os
+  if(f==0)return f
+  if(f<1)return 0 # avoid multivalued mess
+  os=scale;scale=0;intf=f/1
+  a=-1;b=1;c=0
+  for(intn=-2;c<=intf;intn++){
+    c=a+b;a=b;b=c
+  }
+  scale=os
+  if(f==a)return intn
+  c=a
+  s5=sqrt(5)
+  phinx2=s5*c+sqrt(5*c*c+4*(-1)^intn)
+  lph=l( (1+s5)/2 )
+  pi=pi()
+  s5f=s5*f
+  z5f2=5*f*f
+  a=0.5 #start guess
+  os+=8
+  for(scale=8;scale<=os;scale+=8){
+    b=0
+    eps=A^(2-scale)
+    while(abs(a-b)>eps){
+      b=a
+      a=s5f+sqrt(z5f2+4*c(pi*(intn+a)))
+      a/=phinx2
+      a=l(a)/lph
+    }
+    a=(a+b)/2
+  }
+  os-=8;scale=os;a/=1
+  return intn+a
+}
+
+# n-th Lucas number over the reals
+define lucas(n){
+  auto a,b,c,intn,count,fracn,os
+  if(n==0)return 2
+  os=scale;scale=0;count=intn=n/1
+  if(n<0){
+    scale=os;
+    a=lucas(-n)
+    if(n==intn)return a*(-1)^(-intn)
+    return a*c(pi()*n)
+  }
+  count+=2;
+  a=3;b=-1;c=2
+  while(--count){
+    c=a+b;a=b;b=c
+  }
+  scale=os;
+  if(n==intn)return c
+  
+  fracn=n-intn
+  a=e(fracn*l( (1+sqrt(5))/2 ))
+  a*=(c+sqrt(c*c-4*(-1)^intn))/2
+  a=a+c(pi()*n)/a
+  return a
+}
+
+# inverse of the above - inaccurate with values below 2 (except -1, 0 and 1)
+# but is accurate to within 'scale' decimal places otherwise
+define inverse_lucas(l) {
+  auto a,b,c,intn,intl,fracl,phinx2,eps,l2,lph,pi,os
+  if(l<-1)return -1
+  if(-1<=l&&l<1)return ((7-3*l)*l-A)/(2*A)
+  if(1<=l&&l<=2)return 2-l # avoid multivalued mess
+  os=scale;scale=0;intl=l/1
+  a=3;b=-1;c=2
+  for(intn=-2;c<=intl;intn++){
+    c=a+b;a=b;b=c
+  }
+  scale=os
+  if(l==a)return intn
+  c=a
+  phinx2=c+sqrt(c*c-4*(-1)^intn)
+  lph=l( (1+sqrt(5))/2 )
+  pi=pi()
+  l2=l*l
+  a=0.5 #start guess
+  os+=8
+  for(scale=8;scale<=os;scale+=8){
+    b=0
+    eps=A^(2-scale)
+    while(abs(a-b)>eps){
+      b=a
+      a=l+sqrt(l2-4*c(pi*(intn+a)))
+      a/=phinx2
+      a=l(a)/lph
+    }
+  }
+  os-=8;scale=os;a/=1
+  return intn+a
+}

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[ -d "${HOME}/.config/autostart" ] || mkdir "${HOME}/.config/autostart"
+cp /etc/xdg/autostart/gnome-keyring-ssh.desktop "${HOME}/.config/autostart/" && \
+	printf '%s\n' 'Hidden=true' >> "${HOME}/.config/autostart/gnome-keyring-ssh.desktop"

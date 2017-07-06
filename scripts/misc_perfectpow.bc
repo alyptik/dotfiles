@@ -1,0 +1,40 @@
+#!/usr/bin/bc -l funcs.bc
+
+## Find the nearest perfect power to a number
+## (picks the lower number in the case of a tie)
+## e.g. 26 -> 25 = 5^2 and not 27 = 3^3
+##      26.01 -> 27 however because it is closer.
+
+#scale=10;sy=0;x=7;x;min=x;for(p=2;int(root(x,p-1))>1;p++){n=int(root(x,p))-1;fo
+#r(m=0;m<2;m++){n+=1;y=n^p;y;diff=abs(x-y);if(diff<min){min=diff;sy=y}}};sy
+
+# Uses array pass by reference to fill the given array
+# with [0] the perfect power
+#      [1] the number which is raised
+#      [2] the power itself
+#      [3] the sign of the original parameter
+# e.g. -124 -> {125,5,3,-1} and returns -125
+define nearest_perfect_power_a(*a__[],x){
+  auto os,s,min,p,n,m,y,diff;
+  s=1;if(x<0){s=-1;x=-x}
+  if(x+x<5){
+    a__[0]=a__[1]=!!x;a__[2]=2;a__[3]=s
+    return s*a__[0]
+  }
+  os=scale;scale=20
+  min=n=x
+  for(p=2;n>2;p++){
+    n=int(root(x,p))-1
+    for(m=0;m<2;m++)if((diff=abs(x-(y=(++n)^p)))<min){
+      a__[0]=y;a__[1]=n;a__[2]=p;
+      if(!min=diff){n=0;break}
+    }
+  }
+  a__[3]=s
+  scale=os;return s*a__[0];
+}
+
+define nearest_perfect_power(x){
+  auto dummy[];
+  return nearest_perfect_power_a(dummy[],x)
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -o errexit
+set -o nounset
+
+active_id=$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)
+active_pid=$(xprop -id $active_id '\t$0' _NET_WM_PID | cut -f 2)
+working_dir=$(readlink -e /proc/$active_pid/cwd)
+#pstree -p  $(xprop -root -id 0xa0000a '\t$0' _NET_WM_PID | cut -f 2)
+
+echo urxvtc -cd "$working_dir"

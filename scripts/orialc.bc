@@ -1,0 +1,187 @@
+#!/usr/bin/bc -l funcs.bc factorial.bc primes.bc
+
+### OrialC.BC - Variants of primorial and lcmultorial
+###             Some extended to be continuous over the positive reals
+
+## N.B. extensions to the reals are not to be considered to be 'correct'
+## in any sense other than the values returned for fractional values of
+## the input are between the values returned for the preceding and
+## succeeding integer input values and that there is some logic to the
+## calculation chosen for that interpolation.
+
+#### requires primes.bc, funcs.bc and factorial.bc
+
+### Primorials
+
+# Use a factorial substrate
+# . Maps the gradient of the logarithm of the factorial function 
+# . (taken here to be continuous, as a shifted Gamma function)
+# . between two primes onto the space between the logarithm of their
+# . primorials and then returning the antilogarithm of the result
+define primorialc_fact(x) {
+  auto p,q,pp,qq,xx
+  if(x<0)return 1
+  if(x<=3)return factorial(x)
+  if(x==int(x)&&is_prime(x))return primorial(x)
+  p=prevprime(x)
+  q=nextprime(x)
+  pp=primorial(p)
+  qq=lnfactorial(q)/l(pp*q) #.../l(primorial(q))
+  pp=lnfactorial(p)/l(pp)
+  xx=(x-p)*(qq-pp)/(q-p)+pp
+  return e(lnfactorial(x)/xx)
+}
+
+## Geometric variants
+
+# Multiply by a fractional power of the next prime
+# (equivalent to dividing by a fractional power of the previous prime)
+# i.e. 6# = 5# * 7^(1/2); (5+1/3)# = 5# * 7^(1/6)
+define primorialc_nextp(x) { # next prime
+  auto p,q,pp,c
+  if(x<0)return 1
+  if(x<=3)return factorial(x)
+  if(x==int(x)&&is_prime(x))return primorial(x)
+  p=prevprime(x)
+  q=nextprime(x)
+  pp=primorial(p)
+  c=(x-p)/(q-p)
+  return pp*e(l(q)*c)
+}
+
+# Multiply by a fractional power of x, which tends to the next prime
+# i.e. 6# = 5# * 6^(1/2); ; (5+1/3)# = 5# * (5+1/3)^(1/6)
+define primorialc_self(x) { # power of self
+  auto p,q,pp,c
+  if(x<0)return 1
+  if(x<=3)return factorial(x)
+  if(x==int(x)&&is_prime(x))return primorial(x)
+  p=prevprime(x)
+  q=nextprime(x)
+  pp=primorial(p)
+  c=(x-p)/(q-p)
+  return pp*e(l(x)*c)
+}
+
+# Backstepping
+# as x moves from p to q, c moves from 0 to 1 and p*q/x moves backward(!) from q to p
+# by taking the (1-c) power of p*q/x and dividing qq by it, we arrive at a value
+# between pp and qq
+define primorialc_backstep(x) {
+  auto p,q,qq,c
+  if(x<0)return 1
+  if(x<=3)return factorial(x)
+  if(x==int(x)&&is_prime(x))return primorial(x)
+  p=prevprime(x)
+  q=nextprime(x)
+  qq=primorial(q)
+  c=(x-p)/(q-p)
+  return qq*e( (l(p)+l(q)-l(x)) *(c-1)) # qq/[p*q/x]^(1-c)
+}
+
+# as above but the logarithm of p*q/x has been miscalculated
+# ... by chance this provides rational values for some non-prime x
+# ... and is actually nearer the factorial substrate approximation
+# 4 -> 15; 9 -> 770; 14 -> 63813.75; 25 -> 718854803+1/3
+# 64 -> 982290193885033381984886.25
+# 81 -> 29673835076586205706180446443643+1/3
+# 144 -> 124348529244939943338239644717986755712298655277238710867.5
+# 225 -> 5554080608320289669170856425325402549408978069390687643641198516538486176108852697155674
+# 249 -> 21422110305969548290776878409368904436960062197203069371414919560299383455960234384175066914411473410
+# 324 -> 356034387670665137061613427387632108186745506097843755843955808839176060801252605904504975998092127868894051024069337085229799569148+1/3
+# 441 -> 5085683323024301173004199827150236333411871189788725295515084157086768337985718219869705458593441981460396117256011585703398191894858977077274060373508432687656189696902577543317890
+define primorialc_accident(x) {
+  auto p,q,qq,c
+  if(x<0)return 1
+  if(x<=3)return factorial(x)
+  if(x==int(x)&&is_prime(x))return primorial(x)
+  p=prevprime(x)
+  q=nextprime(x)
+  qq=primorial(q)
+  c=(x-p)/(q-p)
+  return qq*e(l(p+q-x)*(c-1)) # not qq/[p*q/x]^(1-c)
+}
+
+define primorialc(x) {
+  print "Please use one of:\n"
+  print "* primorialc_fact(",    x,")\n"
+  print "* primorialc_nextp(",   x,")\n"
+  print "* primorialc_self(",    x,")\n"
+  print "* primorialc_backstep(",x,")\n"
+  print "* primorialc_accident(",x,")\n"
+  return primorial(int(x))
+}
+
+## Submodulus
+
+# submodulus superprimorial/factorial
+#  = product of x mod k for all 2 <= k < x
+define submodorial(x) {
+  # is zero for composite x, < factorial(x) and > primorial(x) for prime x
+  auto os,i,p;
+  os=scale;scale=0;x/=1;scale=os
+  if(x==0||x==1)return 1
+  if(x<0||!is_prime(x))return 0
+  if(x<4)return 1
+  scale= 0;p=1;for(i=2;i<x;i++)p*=x%i
+  scale=os;return p
+}
+
+# generalised submodulus superprimorial / factorial
+# = product of n+(x mod k) for all 2 <= k < x
+# . equal to the above for n==0
+# ? possibly only interesting for n==1
+#   since submodprimorialg(1,x-1) == submodprimorial(x) for x prime
+#   [for 1 <= k < x, multiply the result by n]
+define submodorialg(n,x) {
+  auto os,i,p;
+  if(n==0)return submodprimorial(x)
+  n/=1
+  os=scale;scale=0;x/=1;if((p=n/1)==n)n=p
+  p=1;for(i=2;i<x&&p;i++)p*=n+(x%i)
+  scale=os;return p
+}
+
+### LCMultorials
+
+# Multiply by a fractional power of the next step up
+define lcmultorialc(x) {
+  auto ix,l,m
+  if(x<=1)return 1
+  l=lcmultorial(ix=int(x))
+  if(x==ix)return l;
+  m=int_lcm(l,ix+1)
+  if(m==l)return l;
+  return l*e(l(m/l)*(x-ix))
+}
+
+# Subprimorial using LCM of terms rather than multiplying
+define lcmsubprimorial(n) {
+  auto i,pm,p;
+  pm=1;p=2
+  if(prime[max_array_])for(i=2;i<=max_array_&&p=prime[i]<=n;i++)pm=int_lcm(pm,p-1)
+  for(.=.;p<=n;p=nextprime(p))pm=int_lcm(pm,p-1)
+  return pm
+}
+
+# Submodulus product using lcm rather than multiplication
+define lcmsubmodorial(x) {
+  # is zero for composite x, < factorial(x) and > primorial(x) for prime x
+  auto os,i,p;
+  os=scale;scale=0;x/=1;scale=os
+  if(x==0||x==1)return 1
+  if(x<0||!is_prime(x))return 0
+  if(x<4)return 1
+  scale= 0;p=1;for(i=2;i<x;i++)p=int_lcm(p,x%i)
+  scale=os;return p
+}
+
+# Generalisation of the above
+define lcmsubmodorialg(n,x) {
+  auto os,i,p;
+  if(n==0)return lcmsubmodorial(x)
+  n/=1
+  os=scale;scale=0;x/=1;if((p=n/1)==n)n=p
+  p=1;for(i=2;i<x&&p;i++)p=int_lcm(p,n+(x%i))
+  scale=os;return p
+}

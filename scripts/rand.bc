@@ -1,0 +1,68 @@
+#!/usr/bin/bc -l
+
+### Rand.BC - Random number generator for GNU BC
+
+# Random number generator algorithm and code
+# Not guaranteed for any purpose
+# Chi-square tests prove this algorithm to be favourable
+
+# ********************************************************
+# ******************  IMPORTANT NOTICE  ******************
+# ********************************************************
+# An external seed source is required to start this library!
+# See the bash randbc script for an example of how to do this.
+# (It's available from the same website you found this file)
+
+scale=50;ibase=A
+# Global variables. Not to be changed in code without really good reason
+rand_seed_ = 3482.2023+sqrt(8)
+rand_mult_ = sqrt(2)+sqrt(3)
+rand_smax_ = 2^32
+rand_last_ = 0
+
+define srand(x) {
+  auto os,z,f,i;
+  if(x<0){
+    .=srand(x=-x);z=rand_seed_
+    .=srand(sqrt(x)+x)
+    rand_seed_=(z+rand_seed_)/2
+    return 0
+  }
+  os=scale
+  z=x+=sqrt(5);x+=sqrt(x);x-=sqrt(x)
+  x+=1/2;x*=20/13
+  scale=0
+   f=(x-(i=x/1))
+  scale=os
+  z-=f*i;if(z<0)z=-z
+  rand_seed_=z
+  scale=os;return 0
+}
+
+define rand(x) {
+  auto i, f, os;
+
+  if(x<0)return srand(x)
+  if(x<1)return(rand_last_)
+
+  os = scale + 10
+  scale = 0  ; i = rand_seed_ / 1
+  scale = os ; f = rand_seed_ - i
+
+  rand_seed_ = rand_mult_ * (1+i) * (1+f)
+
+  while(rand_seed_>rand_smax_)rand_seed_-=rand_smax_
+
+  scale = 0  ; i = rand_seed_ / 1
+  scale = os ; f = rand_seed_ - i
+
+  rand_last_ = f
+  if(x==1){scale=os-10;return(rand_last_/=1)}
+
+  rand_last_ = f * x + 1
+  scale = 0        ; rand_last_ /= 1
+  scale = scale(x) ; rand_last_ /= 1
+  scale = os - 10
+  
+  return(rand_last_)
+}

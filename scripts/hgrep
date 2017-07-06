@@ -1,0 +1,94 @@
+#!/bin/perl -s
+
+use strict;
+use warnings;
+use File::Grep qw( fgrep fmap fdo );
+use File::Find ();
+# Set the variable $File::Find::dont_use_nlink if you're using AFS,
+# since AFS cheats.
+# for the convenience of &wanted calls, including -eval statements:
+use vars qw/*name *dir *prune/;
+*name   = *File::Find::name;
+*dir    = *File::Find::dir;
+*prune  = *File::Find::prune;
+
+sub wanted;
+
+my (@files, $color, $context, $idx, $num);
+my $usage = "
+Usage: hgrep -hrv -c=\"(y|n)\" -C=\"#\" -n=\"#\" <query>
+  -h:		Print help
+  -r:		Parse query as a regular expression
+  -v:		Show version
+  -c=\"(y|n)\":	Colorize output (default: enabled)
+  -C=\"#\":	Number of after-context lines (default: 1)
+  -n=\"#\":	Number of matches to print (default: 10)
+";
+my $version = v0.1.2;
+my @query = @ARGV;
+my $flag = 0;
+
+# Parse command line switches
+{
+	no strict;
+	no warnings;
+
+	# print "$usage\n" if $h;
+	# printf "hgrep v%vd\n", $version if $v;
+	# exit if ($h || $v);
+
+	print "$usage\n" if ($h || ${-help});
+	printf "hgrep v%vd\n", $version if ($v || ${-version});
+	exit if ($h || $v || ${-help} || ${-version});
+
+	map { $_ = qr/$_/ } @query if $r;
+	map { $_ = quotemeta $_ } @query unless $r;
+
+	$num = $n // 10;
+	$num = 10 if ($num =~ m/[^0-9]/ || $num < 0);
+
+	$color = $c // 1;
+	$color = 0 if $color =~ m/^(?:0|no?|false|never)$/i;
+
+	$context = $idx = $C // 1;
+	$context = $idx = 1 if ($context =~ m/[^0-9]/ || $context < 0);
+}
+
+print "\n"."Searching for: \"".join("\" \"", @query)."\"\n";
+print "# of matches that will be printed: $num\n";
+print "# of after-context lines that will be printed: $context\n\n";
+
+# Traverse desired filesystems
+File::Find::find({wanted => \&wanted}, '/usr/include');
+
+exit;
+
+sub wanted {
+	my ($dev, $ino, $mode, $nlink, $uid, $gid);
+	(($dev, $ino, $mode, $nlink, $uid, $gid) = lstat($_)) &&
+		-f _ && /^.*\.h\z/s &&
+		# TODO: Add before-context line handling
+		map {
+			my $cur = $_;
+			fdo {
+				if (m/$cur/ || $flag) {
+					# Don't count blank lines
+					$idx-- unless m/^$/;
+					# Handle variable-length look behind error
+					eval { s/(?<=$cur)/`tput sgr0`/eg &&
+						s/(?=$cur)/`tput setaf 9 && tput bold`/eg if $color; };
+					print;
+					if ($flag && $idx < 1) {
+						$num--;
+						$idx = $context;
+						$flag = 0;
+					} elsif (!$flag) {
+						$idx = $context;
+						$flag = 1;
+					}
+				}
+				exit if $num < 1;
+			} $name;
+		} @query;
+}
+

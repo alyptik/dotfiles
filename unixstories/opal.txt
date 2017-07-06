@@ -1,0 +1,486 @@
+#chat/2015-11-17.log:[08:34:49] <MeowBot> voidead: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2015-11-17.log:[08:36:12] <MeowBot> decrepit: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-09-11.log:[01:29:18] <voidead> yeah I'm sure that will come out at some point.. who knows she might put two phrases opal said together 
+#chat/2015-10-31.log:[19:00:37] <MeowBot> cirkit: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-09-15.log:[01:55:15] <voidead> alyptik› anyways... opal the one you were talking to?
+#chat/2015-10-14.log:[01:06:06] *** Joins: opal (~wow@185.62.189.52)
+#chat/2015-10-14.log:[01:07:05] <opal> so dead
+#chat/2015-10-14.log:[01:07:07] <opal> shame
+#chat/2015-10-14.log:[01:07:11] <opal> hi
+#chat/2015-10-14.log:[01:07:28] <opal> im not coming here to bot you guys
+#chat/2015-10-14.log:[01:07:31] <opal> too few people
+#chat/2015-10-14.log:[01:07:32] <opal> lol
+#chat/2015-10-14.log:[01:07:37] <opal> plus i dont care
+#chat/2015-10-14.log:[01:07:48] <opal> oh right thats why i did it
+#chat/2015-10-14.log:[01:07:49] <opal> cus
+#chat/2015-10-14.log:[01:07:54] <opal> you all ask dumbass questions
+#chat/2015-10-14.log:[01:07:54] <opal> right
+#chat/2015-10-14.log:[01:08:06] <opal> 14╓13 opal@weechat
+#chat/2015-10-14.log:[01:08:06] <opal> 14╙─╴ $ nmap 185.62.189.52
+#chat/2015-10-14.log:[01:08:06] <opal>  
+#chat/2015-10-14.log:[01:08:06] <opal> Starting Nmap 6.47 ( http://nmap.org ) at 2015-10-14 05:08 UTC
+#chat/2015-10-14.log:[01:08:09] <opal> Nmap scan report for hosted-by.blazingfast.io (185.62.189.52)
+#chat/2015-10-14.log:[01:08:09] <opal> Host is up (0.011s latency).
+#chat/2015-10-14.log:[01:08:09] <opal> Not shown: 995 closed ports
+#chat/2015-10-14.log:[01:08:09] <opal> PORT     STATE    SERVICE
+#chat/2015-10-14.log:[01:08:09] <opal> 22/tcp   open     ssh
+#chat/2015-10-14.log:[01:08:09] <opal> 445/tcp  filtered microsoft-ds
+#chat/2015-10-14.log:[01:08:09] <opal> 6667/tcp open     irc
+#chat/2015-10-14.log:[01:08:10] <opal> 7777/tcp open     cbt
+#chat/2015-10-14.log:[01:08:10] <opal> 9999/tcp open     abyss
+#chat/2015-10-14.log:[01:08:11] <opal>  
+#chat/2015-10-14.log:[01:08:11] <opal> Nmap done: 1 IP address (1 host up) scanned in 3.10 seconds
+#chat/2015-10-14.log:[01:08:23] <opal> other people's boxes are fun
+#chat/2015-10-14.log:[01:08:53] <opal> the owner gave me permission to proxy with his box tho
+#chat/2015-10-14.log:[01:09:02] <opal> he doesnt use it for much
+#chat/2015-10-14.log:[01:09:14] <opal> 14╓13 opal@weechat
+#chat/2015-10-14.log:[01:09:14] <opal> 14╙─╴ $ host irc.dreamstar.co.vu
+#chat/2015-10-14.log:[01:09:15] <opal> irc.dreamstar.co.vu has address 185.62.189.52
+#chat/2015-10-14.log:[01:09:17] <opal> ya
+#chat/2015-10-14.log:[01:10:46] <opal> port scanning?
+#chat/2015-10-14.log:[01:10:51] <opal> lol i knew what ports were open on that server
+#chat/2015-10-14.log:[01:10:57] <opal> i set up the ircd on there
+#chat/2015-10-14.log:[01:11:01] <opal> or upgraded it anyway
+#chat/2015-10-14.log:[01:43:13] <opal> i can teach you how to spell names right
+#chat/2015-10-14.log:[01:49:20] <opal> lol nigger
+#chat/2015-10-14.log:[01:49:35] <opal> that's racist, nigger
+#chat/2015-10-14.log:[01:50:27] <nigger> opal: You must be a goddamned nigger.
+#chat/2015-10-14.log:[01:50:33] <opal> ;-; caught
+#chat/2015-10-14.log:[01:50:57] <opal> why do you have a .biz
+#chat/2015-10-14.log:[01:51:02] <opal> loll
+#chat/2015-10-14.log:[01:51:05] <opal> are you selling drugs
+#chat/2015-10-14.log:[01:51:10] <opal> are you moon man
+#chat/2015-10-14.log:[01:51:35] <nigger> opal: It's called a compromised host. Ever heard of a botnet?
+#chat/2015-10-14.log:[01:51:57] <opal> stop being a fag and show us how many open proxies you got a hold of
+#chat/2015-10-14.log:[01:53:57] <nigger> Looks like opal will be the first victim in this place to get DDoS'd and a buffer overflow. Good luck, nigger.
+#chat/2015-10-14.log:[01:54:03] <opal> ddos?
+#chat/2015-10-14.log:[01:54:04] <opal> lol
+#chat/2015-10-14.log:[01:54:11] <opal> have fun ddosing a box that isnt mine
+#chat/2015-10-14.log:[01:54:22] <opal> gurutek.biz is prolly hsi
+#chat/2015-10-14.log:[01:54:45] <opal> yeah it was an open proxy
+#chat/2015-10-14.log:[01:54:46] <opal> he's a liar
+#chat/2015-10-14.log:[01:54:50] <opal> well
+#chat/2015-10-14.log:[01:54:52] <opal> 8080 is open
+#chat/2015-10-14.log:[01:54:54] <opal> so im assuming
+#chat/2015-10-14.log:[01:54:58] <opal> is there a bopm on here
+#chat/2015-10-14.log:[01:55:32] <opal> hm 8080 is mix
+#chat/2015-10-14.log:[01:55:45] <opal> so it isnt a proxy
+#chat/2015-10-14.log:[01:55:46] <opal> shrug
+#chat/2015-10-14.log:[02:10:27] *** Quits: opal (~wow@185.62.189.52) (K-Lined)
+#chat/2015-10-14.log:[02:47:41] <cirkit> opal didn't answer my question when i asked how he found this place
+#chat/2015-10-14.log:[16:22:42] <cirkit> not sure who opal was
+#chat/2015-10-14.log:[16:23:39] <voidead> if its opal its anything
+#chat/2016-10-01.log:[10:55:04] <voidead> VoidGuest› wowaname/opal
+#chat/2016-04-09.log:[09:58:35] <Anna> voidead: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-04-09.log:[11:17:04] <Anna> voidead: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-09-08.log:[15:06:26] <opal> 5🍁 08,05 well i dont do heroin08,05 5 🍂
+#chat/2016-09-08.log:[15:09:21] <PotLord> hi opal. what do you do?
+#chat/2016-09-08.log:[15:10:12] <opal> 5🍁 08,05 hey faglord08,05 5 🍂
+#chat/2016-09-08.log:[15:10:41] <opal> 5🍁 08,05 im not here to write an autobiograpphy for you08,05 5 🍂
+#chat/2016-09-08.log:[15:11:32] <opal> 5🍁 08,05 ignored08,05 5 🍂
+#chat/2016-09-08.log:[19:27:41] <MHD> i wonder if opal is invovled in this retarded piece of shit
+#chat/2016-09-05.log:[02:29:21] *** Joins: opal (h@wowana.me)
+#chat/2016-09-05.log:[02:30:11] <opal> 5🍁 08,05 "oh shit wowaname's here now she's going to 13dd0$08,05 everyone"08,05 5 🍂
+#chat/2016-09-05.log:[02:30:13] <opal> 5🍁 08,05 fuck off08,05 5 🍂
+#chat/2016-09-05.log:[02:30:57] <opal> 5🍁 08,05 voidead op up08,05 5 🍂
+#chat/2016-09-05.log:[02:32:32] <cirkit> opal: yes?
+#chat/2016-09-05.log:[02:33:21] <opal> 5🍁 08,05 i think i was clear08,05 5 🍂
+#chat/2016-09-05.log:[02:34:17] <opal> 5🍁 08,05 Max`P is spooked for no reason08,05 5 🍂
+#chat/2016-09-05.log:[02:34:17] <opal> 5🍁 08,05 but i can easily give him something to be spooked about08,05 5 🍂
+#chat/2016-09-05.log:[02:34:18] <opal> 5🍁 08,05 or08,05 5 🍂
+#chat/2016-09-05.log:[02:34:25] <opal> 5🍁 08,05 you could stop talking behind my fucking back08,05 5 🍂
+#chat/2016-09-05.log:[02:34:30] <opal> 5🍁 08,05 thats always an option08,05 5 🍂
+#chat/2016-09-05.log:[02:34:55] <opal> 5🍁 08,05 again, i think i was clear08,05 5 🍂
+#chat/2016-09-05.log:[02:35:26] <opal> 5🍁 08,05 lets do that fuzzing thing now08,05 5 🍂
+#chat/2016-09-05.log:[02:37:38] <halfwit> opal: You should probably find a new way to spend your life. You are the epitome of a fucking waste of intelligence.
+#chat/2016-09-05.log:[02:37:41] <opal> 5🍁 08,05 ya keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:53] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:53] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:53] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:53] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:54] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:54] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:54] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:54] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:55] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:55] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:55] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:55] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:37:55] <opal> 5🍁 08,05 keep talking like a badass08,05 5 🍂
+#chat/2016-09-05.log:[02:38:01] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:01] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:01] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:01] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:01] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:01] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:02] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:03] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:04] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:05] <opal> 5🍁 08,05 i wanaa hear it08,05 5 🍂
+#chat/2016-09-05.log:[02:38:09] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:09] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:09] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:09] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:09] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:11] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:12] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:13] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:14] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:15] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:16] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:17] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:18] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:19] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:20] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:21] <opal> 5🍁 08,05 keepp talking bad about me08,05 5 🍂
+#chat/2016-09-05.log:[02:38:22] <opal> 5🍁 08,05 skope SeferYetzirah VoidGuest bridgesfreezefirst prg voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD lounge-user Forsaken cheap IRwave jamel enterdef xxguest gremoz boyarin Union Grigor what GNG mrdred vickiefirst maux Dookie Maksimys Verono NeoGame marvins08,05 5 🍂
+#chat/2016-09-05.log:[02:38:23] <opal> 5🍁 08,05 PrinceR frankonero Marks Qroot spheere papaboba Romezzz Stic caat rashn snowhill ViSound Burunduk operaxp Lukaviy resident krev waer gostNEW Gnux balaganov Neo parovos wildspy silikon spec Koshka Paradise rumii logitech Papajoe poru kopernick Teo ONYX spastanec newtown Wolfgang JeIbi retor UndeFineD08,05 5 🍂
+#chat/2016-09-05.log:[02:38:24] <opal> 5🍁 08,05 delicious biznesman eridan neVer espa mngr Romeo Drunker kennysart Kritik Porter DRED press lorenzo QuickeneR08,05 5 🍂
+#chat/2016-09-05.log:[02:38:24] *** Quits: opal (h@wowana.me) (RecvQ exceeded)
+#chat/2016-09-05.log:[02:38:27] *** Joins: opal (h@wowana.me)
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:31] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:32] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:33] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:34] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:35] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:36] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:37] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:38] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:39] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:40] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:41] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:42] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:43] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Dookie Marks ONYX vickiefirst marvins maux Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious08,05 5 🍂
+#chat/2016-09-05.log:[02:38:44] <opal> 5🍁 08,05 Forsaken cheap rashn UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident08,05 5 🍂
+#chat/2016-09-05.log:[02:38:45] <opal> 5🍁 08,05 Burunduk gostNEW kennysart JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo08,05 5 🍂
+#chat/2016-09-05.log:[02:38:49] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Marks ONYX marvins Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious Forsaken cheap rashn08,05 5 🍂
+#chat/2016-09-05.log:[02:38:50] <opal> 5🍁 08,05 UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident Burunduk gostNEW kennysart08,05 5 🍂
+#chat/2016-09-05.log:[02:38:51] <opal> 5🍁 08,05 JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo carderenok rapa wildscm08,05 5 🍂
+#chat/2016-09-05.log:[02:38:52] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Marks ONYX marvins Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious Forsaken cheap rashn08,05 5 🍂
+#chat/2016-09-05.log:[02:38:53] <opal> 5🍁 08,05 UndeFineD spastanec Qroot ViSound espa press QuickeneR mngr Koshka Kritik Stic newtown spheere xxguest frankonero Paradise Drunker Romezzz snowhill DRED operaxp neVer PrinceR eridan Papajoe logitech gremoz papaboba caat parovos boyarin lorenzo Lukaviy wildspy resident Burunduk gostNEW kennysart08,05 5 🍂
+#chat/2016-09-05.log:[02:38:54] <opal> 5🍁 08,05 JeIbi Porter Gnux krev waer spec balaganov retor kopernick Teo silikon rumii Neo carderenok rapa wildscm08,05 5 🍂
+#chat/2016-09-05.log:[02:38:55] <opal> 5🍁 08,05 lounge-user SeferYetzirah VoidGuest bridgesfreezefirst prg Marks ONYX marvins Wolfgang mrdred poru voidead cirkit blackbeard420 Anna Max`P pickfire herring kennae haavard halfwit MHD Romeo enterdef biznesman Grigor Union what Maksimys GNG Verono jamel NeoGame IRwave delicious Forsaken cheap rashn08,05 5 🍂
+#chat/2016-09-05.log:[02:47:17] <opal> 5🍁 08,05 that isnt 13dd0$08,05 5 🍂
+#chat/2016-09-05.log:[02:47:25] <opal> 5🍁 08,05 i suggest you read up on what that is08,05 5 🍂
+#chat/2016-09-05.log:[02:47:41] <opal> 5🍁 08,05 or net i will have hacked the internet just by saying "hi" in a channel08,05 5 🍂
+#chat/2016-09-05.log:[02:47:45] <opal> 5🍁 08,05 next☆08,05 5 🍂
+#chat/2016-09-05.log:[02:47:59] <haavard> opal can u teach me how u do this?
+#chat/2016-09-05.log:[02:48:12] <opal> 5🍁 08,05 you have to install gentoo08,05 5 🍂
+#chat/2016-09-05.log:[02:49:11] <opal> 5🍁 08,05 ew, computers08,05 5 🍂
+#chat/2016-09-05.log:[02:49:37] <opal> 5🍁 08,05 but anyway08,05 5 🍂
+#chat/2016-09-05.log:[02:49:55] <opal> 5🍁 08,05 that wasnt exactly the hello i wanted to deliver when coming in here08,05 5 🍂
+#chat/2016-09-05.log:[02:49:57] <opal> 5🍁 08,05 but ok08,05 5 🍂
+#chat/2016-09-05.log:[02:50:33] <opal> 5🍁 08,05 im not offended but apparently several people here are08,05 5 🍂
+#chat/2016-09-05.log:[02:50:54] <opal> 5🍁 08,05 lmfao08,05 5 🍂
+#chat/2016-09-05.log:[02:50:55] <opal> 5🍁 08,05 see08,05 5 🍂
+#chat/2016-09-05.log:[02:50:58] <opal> 5🍁 08,05 thats the kind of08,05 5 🍂
+#chat/2016-09-05.log:[02:51:00] <opal> 5🍁 08,05 thing08,05 5 🍂
+#chat/2016-09-05.log:[02:51:06] <opal> 5🍁 08,05 that triggers this response08,05 5 🍂
+#chat/2016-09-05.log:[02:51:08] <opal> 5🍁 08,05 cirkit08,05 5 🍂
+#chat/2016-09-05.log:[02:51:22] <opal> 5🍁 08,05 no08,05 5 🍂
+#chat/2016-09-05.log:[02:52:57] <MHD> opal what is ur preferred pronoun?
+#chat/2016-09-05.log:[02:53:19] <opal> 5🍁 08,05 MHD im surprised you care since you already chose one for me08,05 5 🍂
+#chat/2016-09-05.log:[02:53:58] <haavard> opal: how feminine is your penis?
+#chat/2016-09-05.log:[02:54:04] <opal> 5🍁 08,05 you seem like that type of nerd who laughs at their own jokes08,05 5 🍂
+#chat/2016-09-05.log:[02:54:10] <opal> 5🍁 08,05 "jokes"08,05 5 🍂
+#chat/2016-09-05.log:[02:54:21] <opal> 5🍁 08,05 who else08,05 5 🍂
+#chat/2016-09-05.log:[02:54:24] <opal> 5🍁 08,05 do i gotta roast08,05 5 🍂
+#chat/2016-09-05.log:[02:54:25] <opal> 5🍁 08,05 in here08,05 5 🍂
+#chat/2016-09-05.log:[02:54:40] <haavard> opal: you seem like the kind of nerd who tells your mom about your "hacks"
+#chat/2016-09-05.log:[02:54:52] <opal> 5🍁 08,05 i ran over my mom08,05 5 🍂
+#chat/2016-09-05.log:[02:54:57] <opal> 5🍁 08,05 and strapped a bomb to her chest08,05 5 🍂
+#chat/2016-09-05.log:[02:55:00] <opal> 5🍁 08,05 dont talk about my mom08,05 5 🍂
+#chat/2016-09-05.log:[02:55:01] <opal> 5🍁 08,05 like that08,05 5 🍂
+#chat/2016-09-05.log:[02:55:04] <cirkit> opal: chill https://nigge.rs
+#chat/2016-09-05.log:[02:55:12] <opal> 5🍁 08,05 no im 708,05 5 🍂
+#chat/2016-09-05.log:[02:55:57] <cirkit> opal: that bitch probably deserved it
+#chat/2016-09-05.log:[02:56:07] <opal> 5🍁 08,05 it had to be done08,05 5 🍂
+#chat/2016-09-05.log:[02:57:18] <bridgesfreezefirst> opal: don't you have anything better to do with your time?
+#chat/2016-09-05.log:[02:57:25] <opal> 5🍁 08,05 bridgesfreezefirst dont you08,05 5 🍂
+#chat/2016-09-05.log:[02:57:33] <opal> 5🍁 08,05 bridgesfreezefirst dont you08,05 5 🍂
+#chat/2016-09-05.log:[02:57:45] <opal> 5🍁 08,05 sitting around irc all day arguing down trolls08,05 5 🍂
+#chat/2016-09-05.log:[02:57:47] <opal> 5🍁 08,05 lol08,05 5 🍂
+#chat/2016-09-05.log:[02:57:50] <opal> 5🍁 08,05 bitch doesnt have08,05 5 🍂
+#chat/2016-09-05.log:[02:57:52] <opal> 5🍁 08,05 irl friends08,05 5 🍂
+#chat/2016-09-05.log:[02:58:17] <halfwit> opal: I have a few good friends, they love me even though I'm flawed. It's nice.
+#chat/2016-09-05.log:[03:00:13] <cirkit> opal: https://dank.space take a toke
+#chat/2016-09-05.log:[03:00:38] <opal> 5🍁 08,05 smoke 2 joints08,05 5 🍂
+#chat/2016-09-05.log:[03:33:20] <opal> 5🍁 08,05 didnt know this was08,05 5 🍂
+#chat/2016-09-05.log:[03:33:23] <opal> 5🍁 08,05 a degenerate channel08,05 5 🍂
+#chat/2016-09-05.log:[03:35:11] <bridgesfreezefirst> opal, what is it that you expect to accomplish in here?
+#chat/2016-09-05.log:[03:35:45] <opal> 5🍁 08,05 why must i have to accomplish something to be here08,05 5 🍂
+#chat/2016-09-05.log:[03:35:57] <cirkit> opal: what's up with those 04f08a09g11g12o13t font 04c08o09l11o12r13s u reppin'
+#chat/2016-09-05.log:[03:36:09] <opal> 5🍁 08,05 heroin is some bullshit08,05 5 🍂
+#chat/2016-09-05.log:[03:36:23] <bridgesfreezefirst> opal, surely you came here to make some kind of statement
+#chat/2016-09-05.log:[03:36:37] <opal> 5🍁 08,05 you seem like the one with the statement08,05 5 🍂
+#chat/2016-09-05.log:[03:36:38] <opal> 5🍁 08,05 not me08,05 5 🍂
+#chat/2016-09-06.log:[19:21:25] <PotLord> opal: hi
+#chat/2016-09-06.log:[19:21:31] <opal> 5🍁 08,05 h08,05 5 🍂
+#chat/2016-09-06.log:[19:22:29] <opal> 5🍁 08,05 how is that good08,05 5 🍂
+#chat/2016-09-10.log:[13:38:45] *** voidead sets mode: +b opal!*@*
+#chat/2016-09-10.log:[13:38:49] *** opal was kicked by voidead (voidead)
+#chat/2016-09-10.log:[16:48:39] <PotLord> wowaname aka opal Fuck u FAGGOT
+#chat/2016-04-13.log:[01:07:32] <Anna> voidead: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-01-24.log:[12:19:35] <Anna> voidead: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-04-10.log:[14:08:39] <Anna> voidead: (lastfm <method> [<id>]) -- Lists LastFM info where <method> is in [friends, neighbours, profile, recenttracks, tags, topalbums, topartists, toptracks]. Set your LastFM ID with the set method (default is your current nick) or specify <id> to switch for one call. 
+#chat/2016-09-25.log:[21:23:42] <cirkit> opal is fucking hacking!!!!
+#test/2016-09-24.log:[21:48:48] *** Quits: opal (h@wowana.me) (Ping timeout: 121 seconds)
+#test/2016-09-24.log:[21:50:00] *** Joins: opal (h@wowana.me)
+#test/2016-09-21.log:[17:00:03] <opal> /!\ upgrade irssi if youre using 0.8.17 through 0.8.19 https://irssi.org/security/irssi_sa_2016.txt /!\
+#test/2016-09-12.log:[01:03:29] *** Quits: opal (h@wowana.me) (Ping timeout: 121 seconds)
+#test/2016-09-12.log:[01:05:23] *** Joins: opal (h@wowana.me)
+#test/2016-09-12.log:[01:07:44] <opal> 5🍁 08,05 ygjg08,05 5 🍂
+#test/2016-09-12.log:[18:21:23] <dickhead> opal is that you
+#test/2016-09-13.log:[08:18:12] <opal> 5🍁 08,05 all the webapps look the same08,05 5 🍂
+#test/2016-09-13.log:[09:35:27] <MaxLeiter_demo> opal: just a fun fact, were a fork of shout
+#test/2016-09-13.log:[10:40:03] <opal> 5🍁 08,05 ah08,05 5 🍂
+#test/2016-09-13.log:[10:47:30] <opal> 5🍁 08,05 I am using WeeChat on 1 core, 272 irc channels, 49 irc servers, 6 irc queries!08,05 5 🍂
+#test/2016-09-13.log:[10:47:44] <opal> 5🍁 08,05 idk who dickhead is because theyre probably using another nick08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 25            ▷ Daniel_Carver [Daniel_Carver] (unknown) (dethwish@smoke420.net) has joined #/server08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 26       <@kk_> Hey Daniel_Carver are you lost?08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 30            - #/server: You're not a channel operator08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 30 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 34 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 34 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 34 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 35 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 35 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 38 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:55] <opal> 5🍁 08,05 06 18 40 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:56] <opal> 5🍁 08,05 06 18 43 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-15.log:[02:18:58] <opal> 5🍁 08,05 who is this asshole08,05 5 🍂
+#test/2016-09-09.log:[12:58:34] <opal> 5🍁 08,05 Max`P what is potlord's deal with me08,05 5 🍂
+#test/2016-09-09.log:[12:58:53] <opal> 5🍁 08,05 he's followed me around on freenode asking for an unban in my channel08,05 5 🍂
+#test/2016-10-20.log:[11:38:53] *** Joins: opal (h@wowana.me)
+#test/2016-09-07.log:[16:51:47] <opal> 5🍁 08,05 kasjdaksdj08,05 5 🍂
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠀⠀⠀⢀⡠⠒⠢⠤⣀⡀⢀⡠⠤⠖⠉⠉⢒⣒⣲⠤⣄⠀⠀⠀
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠀⠀⡠⠃⢠⠊⠉⣉⣁⣛⡳⠤⠤⠔⠒⢈⣩⠖⠒⠦⠤⠽⣄⠀
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠀⡰⠃⠀⠀⠀⠼⠁⠀⠀⠈⠑⠢⠤⠋⠉⠀⠀⠀⠀⠀⠀⠘⡄
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⢰⠃⠀⠀⠀⠀⠀⠀⠀⢠⣤⢄⠀⠀⠀⠀⠀⡤⢤⣤⠀⠀⠀⡇
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⡎⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠛⠂⠀⠀⠀⠈⠛⠛⠃⠀⠀⣠⠃
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⢠⠃⠀
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⡇⠀⠀⠀⠀⠀⢀⡤⠴⠲⠶⢤⣤⠤⣼⣿⣷⠀⠀⠀⠀⢸⣀⠀
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⡇⠀⠀⠀⠀⠀⡏⠀⠀⠀⠀⠀⠀⠀⢀⣸⡈⠉⠉⠉⠉⠉⠉⡆
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠸⡀⠀⠀⠀⠀⠉⠉⠉⠉⠉⢹⠒⠒⠋⠁⢷⣄⣀⣀⣀⡀⢰⠃
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠀⠱⡄⠀⠀⠀⠀⠀⠀⠀⠀⢸⡀⠀⠀⢀⡴⠃⣠⠞⠀⠛⠁⠀
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠀⠀⠈⠑⢄⣀⠀⠀⠀⠀⠀⠀⠉⠉⢉⣉⠔⠉⠀⠀⠀⠀⠀⠀
+#test/2016-09-05.log:[00:24:08] <opal>  ⠀⠀⠀⠀⠀⠀⠀⠑⠢⠤⠤⠤⠤⠔⠒⠊⠀⠀⠀⠀benis
+#test/2016-09-05.log:[00:24:08] <opal>  2,2...................................1,1...............2,2..............................
+#test/2016-09-05.log:[00:24:08] <opal>  2,2............................1,1..........7,7..........1,1......2,2..........................
+#test/2016-09-05.log:[00:24:08] <opal>  2,2........................1,1......7,7.......................1,1....2,2.......................
+#test/2016-09-05.log:[00:24:08] <opal>  2,2......................1,1....7,7...1,1.7,7..........................1,1....2,2....................
+#test/2016-09-05.log:[00:24:08] <opal>  2,2...................1,1....7,7............0,0.7,7.........0,0.7,7.............1,1...2,2..................
+#test/2016-09-05.log:[00:24:08] <opal>  2,2.................1,1...7,7.........................................1,1...2,2................
+#test/2016-09-05.log:[00:24:08] <opal>  2,2...............1,1...7,7...........0,0.7,7........0,0.7,7..8,8....7,7.......0,0.7,7..........1,1..2,2...............
+#test/2016-09-05.log:[00:24:08] <opal>  2,2..............1,1..7,7..15,15.0,0.....14,14.7,7................8,8.4,4..8,8.7,7....................1,1.2,2..............
+#test/2016-09-05.log:[00:24:08] <opal>  2,2............1,1...7,7..15,15.0,0.......14,14.7,7...............8,8.4,4..8,8.7,7.....................1,1.2,2.............
+#test/2016-09-05.log:[00:24:08] <opal>  2,2...........1,1...7,7..15,15.0,0.........14,14.7,7...8,8...............7,7.8,8.....7,7.8,8......7,7..8,8....7,7..1,1..2,2............
+#test/2016-09-05.log:[00:24:08] <opal>  2,2..........1,1...7,7...15,15.0,0.........14,14.7,7...8,8.4,4....8,8..4,4....8,8.4,4..8,8.7,7.8,8.4,4...8,8.7,7.8,8.4,4....8,8....4,4..8,8..7,7..1,1..2,2...........
+#test/2016-09-05.log:[00:29:16] *** Parts: opal (h@wowana.me) ("Have you eaten ground beef recently? Ground beef is the result of everything outside of the cow's bones (including nerves) being ground up. Ground beef often contains prions (misfolded proteins) which due to mammalic protein metabolism act virally and will cause you to come down with Creutzfeldt-Jakob Disease (CJD) where your brain slowly decays due to holes forming in your brain,")
+#test/2016-09-05.log:[00:29:19] *** Joins: opal (h@wowana.me)
+#test/2016-09-05.log:[02:38:24] *** Quits: opal (h@wowana.me) (RecvQ exceeded)
+#test/2016-09-05.log:[02:38:27] *** Joins: opal (h@wowana.me)
+#test/2016-09-05.log:[15:14:32] <opal> 5🍁 08,05 h08,05 5 🍂
+#test/2016-10-10.log:[15:44:53] <Anna> 5🍁 08,05 06 18 38 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-10-21.log:[18:17:55] *** Quits: opal (h@wowana.me) (Ping timeout: 121 seconds)
+#test/2017-03-18.log:[04:30:28] <Cuntanna> 5🍁 08,05 06 18 43 < Daniel_Ca>…opal: fuck off faggot08,05 5 🍂
+#test/2016-09-25.log:[16:07:42] *** opal is now known as wowaname
+#thelounge/2016-09-04.log:[22:55:38] *** Joins: opal (h@wowana.me)
+#thelounge/2016-09-04.log:[22:55:41] <opal> 5🍁 08,05 holy fuck08,05 5 🍂
+#thelounge/2016-09-04.log:[22:56:51] *** Quits: opal (h@wowana.me) (RecvQ exceeded)
+#thelounge/2016-09-04.log:[22:56:56] *** Joins: opal (h@wowana.me)
+#thelounge/2016-09-04.log:[22:58:41] * demo-relay 3opal15 has joined
+#thelounge/2016-09-04.log:[22:58:43] <demo-relay> 3<opal> 5🍁 08,05 test08,05 5 🍂
+#thelounge/2016-09-04.log:[22:58:45] <opal> 5🍁 08,05 test08,05 5 🍂
+#thelounge/2016-09-04.log:[22:58:48] <demo-relay> 3<opal> 5🍁 08,05 cool08,05 5 🍂
+#thelounge/2016-09-04.log:[22:59:39] <demo-relay> 3<opal> 5🍁 08,05 lmao ya someone was just talking about it on my network08,05 5 🍂
+#thelounge/2016-09-04.log:[22:59:55] <demo-relay> 3<opal> 5🍁 08,05 i havent found it until now because i dont actively seek webirc clients08,05 5 🍂
+#thelounge/2016-09-04.log:[23:00:04] <demo-relay> 3<opal> 5🍁 08,05 im gonna keep the other side of the relay warm08,05 5 🍂
+#thelounge/2016-09-04.log:[23:00:06] * demo-relay 3opal15 has left
+#thelounge/2016-09-04.log:[23:00:22] <opal> 5🍁 08,05 ya im sticking with weechat :^)08,05 5 🍂
+#thelounge/2016-09-04.log:[23:01:14] <opal> 5🍁 08,05 i was trying to check how it handles floods, but apparently thats harder to do on this network08,05 5 🍂
+#thelounge/2016-09-04.log:[23:01:20] <opal> 5🍁 08,05 with one client anyway08,05 5 🍂
+#thelounge/2016-09-04.log:[23:01:55] <opal> 5🍁 08,05 well i cant /fuckyou on this network08,05 5 🍂
+#thelounge/2016-09-04.log:[23:02:17] <opal> 5🍁 08,05 lol im having dumb crazy thoughts08,05 5 🍂
+#thelounge/2016-09-04.log:[23:02:20] <opal> 5🍁 08,05 connect it to ircfuzz.c08,05 5 🍂
+#thelounge/2016-09-04.log:[23:02:54] <opal> 5🍁 08,05 im too lazyt o set up a test instance08,05 5 🍂
+#thelounge/2016-09-04.log:[23:04:55] <opal> 5🍁 08,05 wait08,05 5 🍂
+#thelounge/2016-09-04.log:[23:05:30] <opal> 5🍁 08,05 Hostname you specified is not allowed.08,05 5 🍂
+#thelounge/2016-09-04.log:[23:05:30] <opal> 5🍁 08,05 wew08,05 5 🍂
+#thelounge/2016-09-04.log:[23:40:58] <demo-relay> 3<vectr0n> and i think opal might be a her *shrug*
+#thelounge/2016-09-04.log:[23:41:11] <opal> 5🍁 08,05 yep08,05 5 🍂
+#thelounge/2016-09-04.log:[23:41:27] <opal> 5🍁 08,05 so do you08,05 5 🍂
+#thelounge/2016-09-04.log:[23:41:56] <opal> 5🍁 08,05 aw sweet08,05 5 🍂
+#thelounge/2016-09-04.log:[23:42:04] <opal> 5🍁 08,05 your friends lie to you to make you feel better torriz08,05 5 🍂
+#thelounge/2016-09-04.log:[23:42:15] <opal> 5🍁 08,05 :^308,05 5 🍂
+#thelounge/2016-09-04.log:[23:42:26] <opal> 5🍁 08,05 lol08,05 5 🍂
+#thelounge/2016-09-04.log:[23:42:29] <opal> 5🍁 08,05 +c08,05 5 🍂
+#thelounge/2016-09-04.log:[23:42:30] <opal> 5🍁 08,05 or08,05 5 🍂
+#thelounge/2016-09-04.log:[23:42:36] <opal> 5🍁 08,05 block colours in your client08,05 5 🍂
+#thelounge/2016-09-04.log:[23:44:07] <demo-relay> 3<torriz> opal: Okay? You're a girl on irc
+#thelounge/2016-09-04.log:[23:44:17] <opal> 5🍁 08,05 ok08,05 5 🍂
+#thelounge/2016-09-04.log:[23:44:52] <opal> 5🍁 08,05 lol08,05 5 🍂
+#thelounge/2016-09-04.log:[23:44:55] <opal> 5🍁 08,05 np08,05 5 🍂
+#thelounge/2016-12-09.log:[00:12:01] <demo-relay> 3<JacobEdelman> by opal
+#thelounge/2016-12-09.log:[00:46:22] <demo-relay> 3<JacobEdelman> any chance somebody could explain to me who wowaname/opal is?
+#thelounge/2016-09-24.log:[21:48:48] *** Quits: opal (h@wowana.me) (Ping timeout: 121 seconds)
+#thelounge/2016-09-24.log:[21:50:00] *** Joins: opal (h@wowana.me)
+#thelounge/2016-09-21.log:[17:00:03] <opal> /!\ upgrade irssi if youre using 0.8.17 through 0.8.19 https://irssi.org/security/irssi_sa_2016.txt /!\
+#thelounge/2016-09-21.log:[17:02:43] <opal> 11卐 00h 11卐
+#thelounge/2016-09-21.log:[17:02:49] <opal> 11卐 00and people said amsg was useless 11卐
+#thelounge/2016-09-21.log:[17:02:49] <opal> 08卐 04:> 08卐
+#thelounge/2016-09-12.log:[01:03:29] *** Quits: opal (h@wowana.me) (Ping timeout: 121 seconds)
+#thelounge/2016-09-12.log:[01:05:23] *** Joins: opal (h@wowana.me)
+#thelounge/2016-09-11.log:[17:46:40] <hey_bitches> oh herro opal
+#thelounge/2016-09-11.log:[21:47:03] <opal> 5🍁 08,05 21 58 45 <+demo-rela>…<vectr0n|cloud> why are you writing a client? or helping to?08,05 5 🍂
+#thelounge/2016-09-11.log:[21:47:03] <opal> 5🍁 08,05 21 58 50 <+demo-rela>…<vectr0n|cloud> you dont even know the damn basics.. banning08,05 5 🍂
+#thelounge/2016-09-11.log:[21:47:03] <opal> 5🍁 08,05 21 59 15 <+demo-rela>…<Max-P> sigh, can we all stop acting like children please?08,05 5 🍂
+#thelounge/2016-09-11.log:[21:47:04] <opal> 5🍁 08,05 kek08,05 5 🍂
+#thelounge/2016-09-11.log:[21:47:46] <opal> 5🍁 08,05 1) try banning08,05 5 🍂
+#thelounge/2016-09-11.log:[21:47:51] <opal> 5🍁 08,05 2) try +k on channel08,05 5 🍂
+#thelounge/2016-09-11.log:[21:47:57] <opal> 5🍁 08,05 :>08,05 5 🍂
+#thelounge/2016-09-11.log:[22:14:17] <opal> 5🍁 08,05 wait hostmask isnt based off ident onn irccloud?08,05 5 🍂
+#thelounge/2016-09-11.log:[22:14:19] <opal> 5🍁 08,05 what the fuck08,05 5 🍂
+#thelounge/2016-09-11.log:[22:14:33] <opal> 5🍁 08,05 freenode sucks shit08,05 5 🍂
+#thelounge/2016-09-11.log:[22:14:35] <opal> 5🍁 08,05 cloaks for everything08,05 5 🍂
+#thelounge/2016-11-04.log:[14:41:36] <demo-relay> 3<MaxLeiter> I don't miss opal at all: https://sr.ht/4KiL.png
+#thelounge/2016-09-09.log:[12:58:08] *** Joins: opal (h@wowana.me)
+#thelounge/2016-09-09.log:[12:58:50] <demo-relay> 3<goopy>  hi opal
+#thelounge/2016-09-09.log:[13:02:53] <opal> 5🍁 08,05 goopy do i fucking know you08,05 5 🍂
+#thelounge/2016-09-09.log:[13:03:22] <opal> 5🍁 08,05 rotfl nick protection08,05 5 🍂
+#thelounge/2016-10-20.log:[11:38:53] *** Joins: opal (h@wowana.me)
+#thelounge/2016-09-08.log:[11:08:11] * demo-relay 3opal15 has quit
+#thelounge/2016-09-08.log:[11:08:18] * demo-relay 3opal15 has joined
+#thelounge/2016-09-08.log:[22:48:24] * demo-relay 3opal15 has left
+#thelounge/2016-09-07.log:[12:46:47] <demo-relay> 3<vectr0n> bitching whining complaing, yet of course the devs are affraid of opal
+#thelounge/2016-09-07.log:[12:47:15] <demo-relay> 3<opal> 5🍁 08,05 ll08,05 5 🍂
+#thelounge/2016-09-07.log:[12:47:20] <demo-relay> 3<opal> 5🍁 08,05 this still going on?08,05 5 🍂
+#thelounge/2016-09-07.log:[20:39:31] <demo-relay> 3<DSKrepps> opal has colors
+#thelounge/2016-09-07.log:[20:39:44] <demo-relay> 3<opal> 5🍁 08,05 huh08,05 5 🍂
+#thelounge/2016-09-07.log:[20:39:57] <demo-relay> 3<opal> 5🍁 08,05 its character \x0308,05 5 🍂
+#thelounge/2016-09-07.log:[20:40:00] <demo-relay> 3<opal> 5🍁 08,05 its not unicode rotfl08,05 5 🍂
+#thelounge/2016-09-07.log:[20:40:19] <demo-relay> 3<opal> 5🍁 08,05 oh jesus08,05 5 🍂
+#thelounge/2016-09-07.log:[20:40:50] <demo-relay> 3<opal> 5🍁 08,05 gonna try it one sec08,05 5 🍂
+#thelounge/2016-09-07.log:[20:40:51] <demo-relay> 3<opal> 5🍁 08,05 no08,05 5 🍂
+#thelounge/2016-09-07.log:[20:42:02] <demo-relay> 3<DSKrepps> Well how is opal doing it, pasting codes every message?
+#thelounge/2016-09-07.log:[20:42:53] <demo-relay> 3<opal> 5🍁 08,05 you look like shit08,05 5 🍂
+#thelounge/2016-09-07.log:[20:43:35] <demo-relay> 3<opal> 5🍁 08,05 once you have the character you have to put a two digit number after it08,05 5 🍂
+#thelounge/2016-09-07.log:[20:44:14] <demo-relay> 3<opal> 5🍁 08,05 0,0 0 0,1 1 0,2 2 0,3 3 0,4 4 0,5 5 0,6 6 0,7 7 0,8 8 0,9 9 0,10 10 0,11 11 0,12 12 0,13 13 0,14 14 0,15 1508,05 5 🍂
+#thelounge/2016-09-07.log:[20:44:44] <demo-relay> 3<opal> 5🍁 08,05 oh wait i already had an alias for that08,05 5 🍂
+#thelounge/2016-09-07.log:[20:44:45] <demo-relay> 3<opal> 0000010102020303040405050606070708080909101011111212131314141515
+#thelounge/2016-09-07.log:[20:48:07] <demo-relay> 3<opal> 5🍁 08,05 (((08,05 5 🍂
+#thelounge/2016-09-07.log:[20:50:45] * demo-relay 3opal15 has quit
+#thelounge/2016-09-07.log:[20:50:59] * demo-relay 3opal15 has joined
+#thelounge/2016-09-07.log:[23:10:39] <demo-relay> 3<opal> 5🍁 08,05 uk08,05 5 🍂
+#thelounge/2016-09-07.log:[23:10:41] <demo-relay> 3<opal> 5🍁 08,05 fuck☆08,05 5 🍂
+#thelounge/2016-09-07.log:[23:10:42] * demo-relay 3opal15 has quit
+#thelounge/2016-09-07.log:[23:10:50] * demo-relay 3opal15 has joined
+#thelounge/2016-09-07.log:[23:10:56] <demo-relay> 3<opal> 5🍁 08,05 03 10 43   freenode            - morgan.freenode.net: ☆☆☆ Couldn't look up your hostname08,05 5 🍂
+#thelounge/2016-09-07.log:[23:11:01] <demo-relay> 3<opal> 5🍁 08,05 what the literal horse shit is this08,05 5 🍂
+#thelounge/2016-09-07.log:[23:11:32] <demo-relay> 3<opal> 5🍁 08,05 ugh my resolution is broke08,05 5 🍂
+#thelounge/2016-09-05.log:[00:27:28] <demo-relay> 3<opal> 5🍁 08,05 of course it did...08,05 5 🍂
+#thelounge/2016-09-05.log:[00:27:39] <demo-relay> 3<opal> 5🍁 08,05 idk what youre surprised by08,05 5 🍂
+#thelounge/2016-09-05.log:[00:28:08] <demo-relay> 3<opal> 5🍁 08,05 :v08,05 5 🍂
+#thelounge/2016-09-05.log:[00:28:36] <demo-relay> 3<opal> 5🍁 08,05 ye08,05 5 🍂
+#thelounge/2016-09-05.log:[00:29:15] <demo-relay> 3<opal> 5🍁 08,05 im just an asshole dont mind me08,05 5 🍂
+#thelounge/2016-09-05.log:[00:29:25] *** Parts: opal (h@wowana.me) ("Have you eaten ground beef recently? Ground beef is the result of everything outside of the cow's bones (including nerves) being ground up. Ground beef often contains prions (misfolded proteins) which due to mammalic protein metabolism act virally and will cause you to come down with Creutzfeldt-Jakob Disease (CJD) where your brain slowly decays due to holes forming in your brain,")
+#thelounge/2016-09-05.log:[00:30:33] <demo-relay> 3<opal> 5🍁 08,05 Max-P have you tried fuzzing thelounge much08,05 5 🍂
+#thelounge/2016-09-05.log:[00:33:33] <demo-relay> 3<opal> 5🍁 08,05 i wonder if its even worth messing aorund with08,05 5 🍂
+#thelounge/2016-09-05.log:[00:33:42] <demo-relay> 3<opal> 5🍁 08,05 i bet my browser would lag out before i could do much08,05 5 🍂
+#thelounge/2016-09-05.log:[00:34:34] <demo-relay> 3<opal> 5🍁 08,05 gonna try it in edge08,05 5 🍂
+#thelounge/2016-09-05.log:[00:34:38] <demo-relay> 3<opal> 5🍁 08,05 something else i dont have08,05 5 🍂
+#thelounge/2016-09-05.log:[00:35:56] <demo-relay> 3<opal> 5🍁 08,05 that would be interesting i guess08,05 5 🍂
+#thelounge/2016-09-05.log:[00:36:06] <demo-relay> 3<opal> 5🍁 08,05 get another client to try to talk with the server and then test that way08,05 5 🍂
+#thelounge/2016-09-05.log:[01:31:54] <demo-relay> 3<opal> 5🍁 08,05 inb4 me08,05 5 🍂
+#thelounge/2016-09-05.log:[01:31:58] <demo-relay> 3<opal> 5🍁 08,05 if it's me don't pm08,05 5 🍂
+#thelounge/2016-09-05.log:[01:32:21] <demo-relay> 3<opal> 5🍁 08,05 but idk who you are anyway08,05 5 🍂
+#thelounge/2016-09-05.log:[01:32:54] <demo-relay> 3<KDDLB> opal, I know who you are
+#thelounge/2016-09-05.log:[01:33:06] <demo-relay> 3<opal> 5🍁 08,05 figures08,05 5 🍂
+#thelounge/2016-09-05.log:[01:33:30] <demo-relay> 3<vectr0n> everyone knows opal, dont feel special KDDLB
+#thelounge/2016-09-05.log:[01:33:33] <demo-relay> 3<opal> 5🍁 08,05 i've come here to fumigate the moose toe08,05 5 🍂
+#thelounge/2016-09-05.log:[01:33:51] <demo-relay> 3<opal> 5🍁 08,05 why do you have an all caps nick08,05 5 🍂
+#thelounge/2016-09-05.log:[01:34:05] <demo-relay> 3<opal> 5🍁 08,05 wew08,05 5 🍂
+#thelounge/2016-09-05.log:[01:34:14] <demo-relay> 3<opal> 5🍁 08,05 oh i see that now08,05 5 🍂
+#thelounge/2016-09-05.log:[01:34:21] <demo-relay> 3<opal> 5🍁 08,05 didnt really pay attention to your whois08,05 5 🍂
+#thelounge/2016-09-05.log:[01:35:09] <demo-relay> 3<opal> 5🍁 08,05 back to fixing ssl socket08,05 5 🍂
+#thelounge/2016-09-05.log:[01:35:11] <demo-relay> 3<opal> 5🍁 08,05 socket08,05 5 🍂
+#thelounge/2016-09-05.log:[01:35:12] <demo-relay> 3<opal> 5🍁 08,05 fuck08,05 5 🍂
+#thelounge/2016-09-05.log:[01:35:14] <demo-relay> 3<opal> 5🍁 08,05 soockets☆08,05 5 🍂
+#thelounge/2016-09-05.log:[01:35:18] <demo-relay> 3<opal> 5🍁 08,05 i give up, bbl08,05 5 🍂
+#thelounge/2016-09-05.log:[16:10:13] * demo-relay 3opal15 has quit
+#thelounge/2016-09-05.log:[16:11:53] * demo-relay 3opal15 has joined
+#thelounge/2016-09-06.log:[14:56:40] <demo-relay> 3<opal> 5🍁 08,05 imo the read marker shouldnt disappear08,05 5 🍂
+#thelounge/2016-09-06.log:[14:56:48] <demo-relay> 3<opal> 5🍁 08,05 until you switch to another window08,05 5 🍂
+#thelounge/2016-09-06.log:[14:56:50] <demo-relay> 3<opal> 5🍁 08,05 er08,05 5 🍂
+#thelounge/2016-09-06.log:[14:56:53] <demo-relay> 3<opal> 5🍁 08,05 another channel/query08,05 5 🍂
+#thelounge/2016-09-06.log:[14:57:17] <demo-relay> 3<opal> 5🍁 08,05 also Max-P for someone who doesnt like colours, your bot looks epileptic08,05 5 🍂
+#thelounge/2016-09-06.log:[14:57:39] <demo-relay> 3<Max-P> opal: Wendy is actually xPaw's bot :P
+#thelounge/2016-09-06.log:[14:58:21] <demo-relay> 3<Impaloo> opal: it's not supposed to disappear
+#thelounge/2016-09-06.log:[14:58:30] <demo-relay> 3<opal> 5🍁 08,05 oh ok08,05 5 🍂
+#thelounge/2016-09-06.log:[14:58:53] <demo-relay> 3<opal> 5🍁 08,05 i'd rather see emoji than red purple blue08,05 5 🍂
+#thelounge/2016-09-06.log:[14:59:00] <demo-relay> 3<opal> 5🍁 08,05 may as well just feed through gay.pl08,05 5 🍂
+#thelounge/2016-09-06.log:[14:59:15] <demo-relay> 3<opal> 5🍁 08,05 my git script just does bold for stuff08,05 5 🍂
+#thelounge/2016-09-06.log:[14:59:16] <demo-relay> 3<opal> 5🍁 08,05 lol08,05 5 🍂
+#thelounge/2016-09-06.log:[14:59:47] <demo-relay> 3<opal> 5🍁 08,05 despite how i type, im actually pretty conservative with my bots08,05 5 🍂
+#thelounge/2016-09-06.log:[15:01:30] <demo-relay> 3<opal> 5🍁 08,05 im using gogs for my git08,05 5 🍂
+#thelounge/2016-09-06.log:[15:01:33] <demo-relay> 3<opal> 5🍁 08,05 sure is buggy08,05 5 🍂
+#thelounge/2016-09-06.log:[15:01:45] * demo-relay * 3opal 5🍁 08,05 shrugs08,05 5 🍂
+#thelounge/2016-09-06.log:[15:01:56] <demo-relay> 3<opal> 5🍁 08,05 i'd use girocco if i could wrap my head around installation08,05 5 🍂
+#thelounge/2016-09-06.log:[17:23:53] <demo-relay> 3<vectr0n> but everyone wants to bitch and complain about opal's colors, yet there is solutions to resolve the issue and its really easy :P
+#thelounge/2016-09-06.log:[17:25:30] <demo-relay> 3<MaxLeiter> because opals colors don't do anything useful d;
+#thelounge/2016-09-06.log:[17:26:00] <demo-relay> 3<opal> 5🍁 08,05 nobody's colours do anything useful08,05 5 🍂
+#thelounge/2016-09-06.log:[17:26:17] <demo-relay> 3<opal> 5🍁 08,05 i just like getting a quick rise out of people over something so petty08,05 5 🍂
+#thelounge/2016-09-06.log:[17:26:33] <demo-relay> 3<opal> 5🍁 08,05 bold and underline do that fine08,05 5 🍂
+#thelounge/2016-09-06.log:[17:26:45] <demo-relay> 3<vectr0n> well then someone needs to put their lady balls away and get man balls and +q/+b opal lol
+#thelounge/2016-09-06.log:[17:26:46] <demo-relay> 3<opal> 5🍁 08,05 lmao08,05 5 🍂
+#thelounge/2016-09-06.log:[17:26:57] <demo-relay> 3<opal> 5🍁 08,05 why08,05 5 🍂
+#thelounge/2016-09-06.log:[17:27:00] <demo-relay> 3<opal> 5🍁 08,05 so i can evade?08,05 5 🍂
+#thelounge/2016-09-06.log:[17:27:14] <demo-relay> 3<opal> 5🍁 08,05 may as well set +i08,05 5 🍂
+#thelounge/2016-09-06.log:[17:27:34] <demo-relay> 3<opal> 5🍁 08,05 heh08,05 5 🍂
+#thelounge/2016-09-06.log:[17:27:41] <demo-relay> 3<opal> 5🍁 08,05 well the opers are doing shit now08,05 5 🍂
+#thelounge/2016-09-06.log:[17:27:49] <demo-relay> 3<opal> 5🍁 08,05 like tor-sasl is coming back from the looks of it08,05 5 🍂
+#thelounge/2016-09-06.log:[17:28:02] <demo-relay> 3<opal> 5🍁 08,05 so i think theres just better opers in rotation now08,05 5 🍂
+#thelounge/2016-09-06.log:[17:28:09] <demo-relay> 3<opal> 5🍁 08,05 kloeri's given up on me surely08,05 5 🍂
+#thelounge/2016-09-06.log:[17:28:53] <demo-relay> 3<opal> 5🍁 08,05 ya thats why i like himi08,05 5 🍂
+#thelounge/2016-09-06.log:[17:29:40] <demo-relay> 3<opal> 5🍁 08,05 never heard much about spb08,05 5 🍂
+#thelounge/2016-09-06.log:[17:48:08] <demo-relay> 3<vectr0n> i have a history with opal, quit making assumptions as always.
+#thelounge/2016-09-06.log:[17:54:38] <demo-relay> 3<opal> 5🍁 08,05 21 49 53   < Impaloo> misogynistic balls something something08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:40] <demo-relay> 3<opal> 5🍁 08,05 this isnt08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:42] <demo-relay> 3<opal> 5🍁 08,05 fucking08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:42] <demo-relay> 3<opal> 5🍁 08,05 ##feminism08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:45] <demo-relay> 3<opal> 5🍁 08,05 lmfao08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:50] <demo-relay> 3<opal> 5🍁 08,05 dude08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:52] <demo-relay> 3<opal> 5🍁 08,05 im a tranny08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:56] <demo-relay> 3<opal> 5🍁 08,05 and im still going to say this08,05 5 🍂
+#thelounge/2016-09-06.log:[17:54:59] <demo-relay> 3<opal> 5🍁 08,05 this isnt your fucking safe space08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:03] <demo-relay> 3<opal> 5🍁 08,05 grow a pair08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:21] <demo-relay> 3<opal> 5🍁 08,05 i have a safe space08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:25] <demo-relay> 3<opal> 5🍁 08,05 its called my irc network08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:26] <demo-relay> 3<opal> 5🍁 08,05 and event hat08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:29] <demo-relay> 3<opal> 5🍁 08,05 isnt fully safe08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:36] <demo-relay> 3<opal> 5🍁 08,05 i just ban the dumbest of the fucks from there08,05 5 🍂
+#thelounge/2016-09-06.log:[17:55:52] <demo-relay> 3<opal> 5🍁 08,05 i try not to give a shit 99% of the time08,05 5 🍂
+#thelounge/2016-09-06.log:[17:56:07] <demo-relay> 3<opal> 5🍁 08,05 the other 1% you must really be trying to piss me off08,05 5 🍂
+#thelounge/2016-09-06.log:[17:57:16] <demo-relay> 3<opal> 5🍁 08,05 vectr0n what history do we have then08,05 5 🍂
+#thelounge/2016-09-06.log:[17:57:25] <demo-relay> 3<opal> 5🍁 08,05 i dont remember you too well08,05 5 🍂
+#thelounge/2016-09-06.log:[17:57:30] <demo-relay> 3<opal> 5🍁 08,05 i /accepted you tho08,05 5 🍂
+#thelounge/2016-09-06.log:[17:59:55] <demo-relay> 3<opal> 5🍁 08,05 oh youre in +g too08,05 5 🍂
+#thelounge/2016-09-06.log:[18:00:20] <demo-relay> 3<opal> 5🍁 08,05 i would like to shat in your pm please08,05 5 🍂
+#thelounge/2016-09-06.log:[21:02:38] <demo-relay> 3<opal> 5🍁 08,05 if you set up your own server, you'll stay connected08,05 5 🍂
+#thelounge/2016-09-06.log:[21:02:55] <demo-relay> 3<opal> 5🍁 08,05 wait are you using the test instance online08,05 5 🍂
+#thelounge/2016-09-06.log:[21:03:02] <demo-relay> 3<opal> 5🍁 08,05 or did you set up your own servver already08,05 5 🍂
+#thelounge/2016-09-06.log:[21:03:20] <demo-relay> 3<opal> 5🍁 08,05 ah there you go08,05 5 🍂
+#thelounge/2016-09-06.log:[21:04:11] <demo-relay> 3<orpl> opal: your name confused me, making me think i wrote all that ;)
+#thelounge/2016-09-06.log:[21:04:24] <demo-relay> 3<opal> 5🍁 08,05 lmao08,05 5 🍂
+#thelounge/2016-10-21.log:[18:17:55] *** Quits: opal (h@wowana.me) (Ping timeout: 121 seconds)
+#thelounge/2016-12-08.log:[22:55:44] <demo-relay> 3<KDDLB> I mean… opal
+#thelounge/2016-09-25.log:[16:07:42] *** opal is now known as wowaname

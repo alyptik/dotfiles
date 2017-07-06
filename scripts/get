@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+ curl "https://www.google.fr/search?output=search&sclient=psy-ab&q=${*// /+}&oq=${*// /+}&gs_l=hp.3..0i13l4.13206.14011.0.14218.11.9.0.0.0.1.1028.3522.2-1j4j2j7-1.8.0.msedr...0...1c.1.60.psy-ab..6.5.1648.0.p-NBGOvtAKI&pbx=1&bav=on.2,or.r_cp.r_qf.s&fp=8542eedd016ee8c9&biw=1243&bih=426&dpr=1&tch=1&ech=1" -H 'Host: www.google.fr' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/20100101 Firefox/32.0 Iceweasel/32.0'

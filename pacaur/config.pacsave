@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#
+# /etc/xdg/pacaur/config
+#
+
+# The following options are commented out with their default values listed.
+# If you wish to use different values, uncomment and update the values.
+# The Color and VerbosePkgLists options can be enabled in /etc/pacman.conf.
+#clonedir="${AURDEST:-$tmpdir}"        # clone directory
+#editor="${EDITOR:-vi}"                # build files editor
+#displaybuildfiles=full                # display build files (none|diff|full)
+#fallback=true                         # pacman fallback to the AUR
+#silent=false                          # silence output
+#sortby=popularity                     # sort method (name|votes|popularity)
+#sudoloop=false                        # prevent sudo timeout
+
+displaybuildfiles=none                 # display build files (none|diff|full)
+sortby=votes          	               # sort method (name|votes|popularity)
+sudoloop=true                          # prevent sudo timeout

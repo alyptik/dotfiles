@@ -1,0 +1,37 @@
+#!/usr/bin/bc -l funcs.bc
+
+### AnglePow.BC - exponentional functions that are semi-linear,
+#   changing gradient at each power of the base.
+
+# run with funcs.bc
+
+## Specific functions for base 10
+
+# Generate the x-th number in the sequence:
+# 1,2,3,4,5,6,7,8,9,10,20,30,...,90,100,200,300,...,900,1000,2000,...
+# e.g. anglepow10(0) = 1 ; anglepow10(11) = 30
+define anglepow10(x) {
+  return( (remainder(x,9)+1) * A^int(x/9) )
+}
+
+# Invert the above
+# e.g. anglelog10(50) = 13 ; ial10(1) = 0
+define anglelog10(x) {
+  auto k;
+  k = int_log(A,x)
+  return( 9*k + x/A^k - 1 )
+}
+
+## Generalised functions for any base b
+
+# anglepow(10,x) is equivalent to the above anglepow10(x)
+define anglepow(b,x) {
+  return( (remainder(x,b-1)+1) * b^int(x/(b-1)) )
+}
+
+# Invert the previous function
+define anglelog(b,x) {
+  auto k
+  k = int_log(b,x)
+  return( (b-1)*k + x/b^k - 1)
+}

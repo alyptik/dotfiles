@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# Use git to push to deploy (aka git push to prod)
+# Use 'git push remote master' to push to deploy
+# This script only deploys on pushes to master.  
+#
+# HOWTO:
+# On your server to deploy, create a bare git directory 
+# (somewhere like /var/git/<gitProject>)
+# Your depoly directory (like /var/www) should be somewhere other than your git repo.  
+#
+#     git --bare init
+#
+# Put this script into <gitProject>/hooks/post-receive on the deploy server
+# Make sure this script has execute permissions (chmod +x post-receive)
+# Then add this remote repo as a remote in git.  
+#
+#     git remote add deployServer ssh://example.com/var/git/<gitProject>
+#
+# Then use ssh to push to production.
+#
+#     git push deployServer master
+# 
+# You can create a group (like "git"), make it owner of this file 
+# Then add every user that needs to push to the that group.
+# See http://security.stackexchange.com/a/72951/17878 for more background.  
+ 
+echo 'start repo to prod'
+ 
+PROJPATH="PushDirectoryLocationHere"
+GITPATH="LocationOfYourBareGitDirectoryHere"
+OWNER="OwnerOfTheProject example: www:www"
+ 
+function push(){
+        git --work-tree=$PROJPATH --git-dir=$GITPATH checkout -f master
+        find $PROJPATH/* -type d -exec chmod 775 {} \;
+        find $PROJPATH/* -type f -exec chmod 664 {} \;
+        chown -R $OWNER $PROJPATH/*
+        echo 'push complete'
+}
+ 
+#If executed from shell, push latest master commit regardless.  
+#This allows you to re-push by entering "./post-receive" from the command line.  
+if [ -t 0 ]; then
+    push
+else
+    #Determine the branch, only push to prod on master.
+    while read oldrev newrev refname 
+    do
+        branch=$(git rev-parse --symbolic --abbrev-ref $refname)
+        if [ "master" == "$branch" ]; then
+            echo 'Master branch.  Pushing to prod'
+            push
+        else
+            echo 'Not on master.  Not pushing to prod'
+        fi
+    done
+fi
+ 
+echo 'End repo to prod'
