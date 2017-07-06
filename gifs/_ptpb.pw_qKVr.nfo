@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<movie>
+  <plot />
+  <outline />
+  <lockdata>false</lockdata>
+  <dateadded>2017-03-03 01:36:48</dateadded>
+  <title>_ptpb.pw_qKVr</title>
+  <runtime>0</runtime>
+  <art>
+    <poster>/run/media/alyptik/microSDXC/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/e:/todo/dosdevices/z:/store/config/gifs/_ptpb.pw_qKVr-poster.jpg</poster>
+  </art>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <codec>h264</codec>
+        <micodec>h264</micodec>
+        <bitrate>20022039</bitrate>
+        <width>1920</width>
+        <height>1080</height>
+        <aspect>16:9</aspect>
+        <aspectratio>16:9</aspectratio>
+        <framerate>24.65093</framerate>
+        <language>eng</language>
+        <scantype>progressive</scantype>
+        <default>True</default>
+        <forced>False</forced>
+        <duration>0</duration>
+        <durationinseconds>20</durationinseconds>
+      </video>
+      <audio>
+        <codec>aac</codec>
+        <micodec>aac</micodec>
+        <bitrate>192000</bitrate>
+        <language>eng</language>
+        <scantype>progressive</scantype>
+        <channels>2</channels>
+        <samplingrate>48000</samplingrate>
+        <default>True</default>
+        <forced>False</forced>
+      </audio>
+    </streamdetails>
+  </fileinfo>
+</movie>

@@ -1,0 +1,38 @@
+diff --git a/jellyshot b/jellyshot
+old mode 100755
+new mode 100644
+index f8a6c07..746c723
+--- a/jellyshot
++++ b/jellyshot
+@@ -1,13 +1,25 @@
+ #!/bin/bash
+ 
+-# XXX: XDG_CONFIG_HOME
+-config="${HOME}/.config/jellyshot/config"
++# Let trap catch non-zero exit status
++set -E -o pipefail
+ 
+-if [[ -f ${config} ]];
+-then
+-  . "${config}"
++# Traps for cleanup
++trap '{ [[ -f "$file" ]] && rm -v "$file"; }' EXIT
++trap '{ [[ -f "$file" ]] && rm -v "$file"; exit 1; }' ERR
++trap '{ [[ -f "$file" ]] && rm -v "$file"; trap - INT; kill -INT $$; }' INT
++
++function rand_element () {
++  local -a arr
++  arr=("${!1}")
++  echo "${arr["$[RANDOM % ${#arr[@]}]"]}"
++}
++
++config="${XDG_CONFIG_HOME:-${HOME}/.config}/jellyshot/config"
++
++if [[ -f "$config" ]]; then
++  . "$config"
+ else
+-  echo "No configuration available at ${config}"
++  printf "%s: %s\n" "No configuration available at" "$config"
+   exit 1
+ fi
+ 

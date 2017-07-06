@@ -1,0 +1,67 @@
+diff --git a/config.example b/config.example
+index 942e1d3..98fdc4d 100644
+--- a/config.example
++++ b/config.example
+@@ -2,7 +2,9 @@
+ # Config file for jellyshot
+ 
+ 
+-SERVER=server.domain
++SERVER='server.domain'
+ SERVER_PATH=''
++# Becomes: https://server.doman/tmp/<name>
++SUFFIX='tmp'
+ # SSH user
+-USER=user
++USER='user'
+diff --git a/jellyshot b/jellyshot
+index 1939b5f..cee169b 100644
+--- a/jellyshot
++++ b/jellyshot
+@@ -34,19 +34,37 @@ animal="$(rand_element "ANIMALS[@]")"
+ name="${vowel}${colors}${animal}.png"
+ file="/tmp/$name"
+ 
+-import "$file"
+-if [[ -f /usr/bin/optipng ]]; then
++if type import &>/dev/null; then
++  import "$file"
++else
++  printf "%s\n" '"import" not found in $PATH'
++  exit 1
++fi
++
++if type optipng &>/dev/null; then
+   optipng "$file" &>/dev/null
+ fi
+ 
+-if [[ -z $SERVER_PATH ]]; then
+-  scp $file $SERVER:/home/$USER/public_html/dump/
+-  url="https://$SERVER/~$USER/dump/$name"
++# Add single / prefix if SUFFIX is set
++case "$SUFFIX" in
++  (/*) SUFFIX="/${SUFFIX//\/}" ;;
++  (?*) SUFFIX="/${SUFFIX%/*}" ;;
++esac
++
++if [[ -z "$SERVER_PATH" ]]; then
++  scp "$file" "$SERVER:/home/$USER/public_html/dump/"
++  url="https://$SERVER$SUFFIX/~$USER/dump/$name"
+ else
+-  scp $file $SERVER:$SERVER_PATH/
+-  url="https://$SERVER/$name"
++  scp "$file" "$SERVER:$SERVER_PATH/"
++  url="https://$SERVER$SUFFIX/$name"
+ fi
+ 
+-echo $url;
++if type xclip &>/dev/null; then
++  echo "$url" && printf "$url" | xclip -i -selection clipboard
++elif type xsel &>/dev/null; then
++  echo "$url" && printf "$url" | xsel -ib
++else
++  printf "%s\n" "$url"
++fi
+ 
+-echo "$url" | xclip -i
++unset config vowel animal colors name file url ANIMALS COLORS VOWELS &>/dev/null
