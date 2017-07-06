@@ -1,0 +1,13 @@
+{
+  "menu": [
+    {
+      "label": "View",
+      "submenu": [
+        {
+          "label": "Toggle Context View",
+          "command": "nuclide-context-view:toggle"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+# Conky settings #
+background no
+update_interval 1
+
+cpu_avg_samples 8
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+#temperature_unit fahrenheit
+
+# Window specifications #
+
+own_window yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_argb_visual yes
+#own_window_transparent yes
+own_window_argb_value 00000000
+own_window_class conky-semi
+override_utf8_locale yes
+background yes
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 200 250
+maximum_width 250
+
+alignment tr
+gap_x 35
+gap_y 55
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+
+uppercase no
+
+#temperature_unit fahrenheit
+
+
+default_color FFFFFF
+
+# Lua Load  #
+lua_load /usr/share/conky-lua-arch/clock_rings.lua
+lua_draw_hook_pre clock_rings
+
+TEXT
+${voffset 8}${color 0066FF}${font caviar dreams:size=16}${time %A}${font}${voffset -8}${alignr 50}${color FFFFFF}${font caviar dreams:size=38}${time %e}${font}
+${color FFFFFF}${voffset -30}${color FFFFFF}${font caviar dreams:size=18}${time %b}${font}${voffset -3} ${color FFFFFF}${font caviar dreams:size=20}${time %Y}${font}${color 0066FF}${hr}
+${voffset 100}${font caviar dreams:size=10}${alignr}$USER${font}
+${image /usr/share/conky-lua-arch/arch-logo.png -p 64,100 -s 80x75}
+
+${color FFFFFF}${goto 5}${voffset 25}${cpu cpu0}%
+${color 0066FF}${goto 5}  CPU
+${color FFFFFF}${goto 25}${voffset 15}${memperc}%
+${color 0066FF}${goto 25}  RAM
+${color FFFFFF}${goto 45}${voffset 5}${swapperc}%
+${color 0066FF}${goto 45}  Swap
+${color FFFFFF}${goto 55}${voffset 10}${downspeed eth0}
+${color FFFFFF}${goto 55}${upspeed eth0}
+${color 0066FF}${goto 55}      Eth0
+${color FFFFFF}${goto 90}${voffset 0}${downspeed mlan0}
+${color FFFFFF}${goto 90}${upspeed mlan0}
+${color 0066FF}${goto 90}  Wlan0
+
+${color 0066FF}Lan ${color white}${addr eth0}
+${color 0066FF}WiFi ${color white}${addr mlan0}
+${color 0066FF}PPP ${color white}${addr ppp0}
+
+${color 0066FF}ArchLinux ${color white} ${alignc} ${fs_bar 8,75 /}  ${alignr}${fs_free /}${color white}
+
+${color 0066FF}${font caviar dreams:size=8}Hostname:${color white} ${nodename}
+${color 0066FF}${font caviar dreams:size=8}Kernel:${color white} ${kernel}

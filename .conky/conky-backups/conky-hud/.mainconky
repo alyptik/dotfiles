@@ -1,0 +1,80 @@
+# [Configuration Section]
+alignment bottom_right
+background no
+out_to_console no
+double_buffer yes
+
+draw_shades no
+draw_outline no
+draw_borders no
+stippled_borders no
+
+#border_width 0
+border_inner_margin 0
+border_outer_margin 0
+
+#max_text_width = 75
+minimum_size 460 385
+maximum_width 460
+
+gap_x 0
+gap_y 33
+
+override_utf8_locale yes
+
+background yes
+own_window yes
+own_window_type normal
+own_window_argb_visual true
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+on_bottom yes
+
+use_spacer right
+use_xft yes
+xftfont Terminus:size=8
+xftalpha 1
+
+no_buffers yes
+net_avg_samples 1
+cpu_avg_samples 1
+update_interval 1
+
+lua_load /home/alyptik/.conky/lua/mainrings.lua
+lua_draw_hook_pre ring_stats
+
+top_cpu_separate no
+format_human_readable yes
+pad_percents 1
+
+color1 5A5A5A
+color2 989898
+
+# [Content Section]
+TEXT
+${color1}${voffset 15} ${goto 325} system
+${color2}${voffset 5} ${goto 325} ${kernel}${color1}  
+${color2}${voffset 3} ${goto 325} ${execi 3600 (echo $USER)}@${nodename}${color1}  
+${color2}${voffset 4} ${color1} ${goto 325} volumes
+${color2}${voffset 1} ${goto 325} ${fs_used_perc /}%${color1}$alignr /      
+${color2}${voffset 3} ${goto 325} ${fs_used_perc /home}%${color1}$alignr /home  
+${color2}${voffset 0} ${color1} ${goto 325} memory
+${color2}${voffset 0} ${goto 325} ${swapperc}%${color1}$alignr swap  
+${color2}${voffset 0} ${goto 325} ${memperc}%${color1}$alignr ram  
+${color2}${voffset 5} ${color1} ${goto 325} processor
+${color2}${voffset 0} ${goto 325} ${freq_g}GHz${color1}$alignr freq  
+${color2}${voffset 0} ${goto 325} ${cpu cpu1}%${color1}$alignr core1  
+${color2}${voffset 3} ${goto 325} ${cpu cpu2}%${color1}$alignr core2  
+${color2}${voffset 2} ${goto 325} ${cpu cpu3}%${color1}$alignr core3  
+${color2}${voffset 0} ${goto 325} ${cpu cpu4}%${color1}$alignr core4  
+${color2}${voffset 3} ${color1} ${goto 325} temperatures
+${color2}${voffset 0} ${goto 325} ${hwmon 1 temp 3}°C${color1}$alignr mb  
+${color2}${voffset 3} ${goto 325} ${hwmon 1 temp 2}°C${color1}$alignr cpu  
+${color2}${voffset 1} ${goto 325} ${hwmon 1 temp 1}°C${color1}$alignr gpu  
+${color2}${voffset 2} ${goto 325} ${execi 300 nc localhost 7634 | cut -c54-55} °C${color1}${alignr} /dev/sda  
+${color2}${voffset 3} ${color1} ${goto 325} time
+${color2}${voffset 0} ${goto 325} ${time %I} (${time %P})${color1}$alignr hours  
+${color2}${voffset 0} ${goto 325} ${time %M}${color1}$alignr minutes  
+${color2}${voffset 0} ${goto 325} ${time %S}${color1}$alignr seconds  
+#${color2}${voffset 0} ${goto 325} ${time %P}${color1}$alignr period  

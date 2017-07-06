@@ -1,0 +1,101 @@
+####Text color:
+default_color white
+color1 0ABFFF
+color2 DD4814
+
+####Choose one of the following: Either window is transparent, or it has a background color:
+#own_window_transparent yes
+own_window_argb_visual yes
+own_window yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+override_utf8_locale yes
+background yes
+
+####Background color:
+own_window_colour black
+
+####Background transparency (0..255):
+own_window_argb_value 75
+
+draw_shades no
+draw_outline no
+draw_borders no
+
+total_run_times 0
+
+use_xft yes
+
+no_buffers yes
+
+short_units yes
+
+update_interval 1
+
+double_buffer yes
+
+alignment top_right
+gap_x 18
+gap_y 20
+
+maximum_width 300
+
+
+
+TEXT
+${font DejaVuSansCondensed-Bold:size=26}${color1}$alignr${time %H:%M}$font
+${font DejaVuSansCondensed-Bold:size=11}${color1}$alignr${time %A, %d.%B %Y}
+
+${voffset 15}${font DejaVuSansCondensed-Bold:size=9}${color}CPU0:${color1}${font DejaVuSansCondensed-Bold:size=9}${execi 5 sensors | grep "Core 0" | awk '{print $3}' | cut -c2-3}°C ${goto 100}${color2}${cpubar cpu0 9,140} ${font DejaVuSansCondensed-Bold:size=7}${alignr}${color1}${freq_g cpu1} GHz
+ ${goto 100}${color2}${cpubar cpu4 9,140}  ${color1}
+${font DejaVuSansCondensed-Bold:size=9}${color}CPU1:${color1}${font DejaVuSansCondensed-Bold:size=9}${execi 5 sensors | grep "Core 1" | awk '{print $3}' | cut -c2-3}°C ${goto 100}${color2}${cpubar cpu1 9,140} ${font DejaVuSansCondensed-Bold:size=7}${alignr}${color1}${freq_g cpu1} GHz
+ ${goto 100}${color2}${cpubar cpu3 9,140}  ${color1}
+${font DejaVuSansCondensed-Bold:size=9}${color}CPU2:${color1}${font DejaVuSansCondensed-Bold:size=9}${execi 5 sensors | grep "Core 0" | awk '{print $3}' | cut -c2-3}°C ${goto 100}${color2}${cpubar cpu2 9,140} ${font DejaVuSansCondensed-Bold:size=7}${alignr}${color1}${freq_g cpu1} GHz
+ ${goto 100}${color2}${cpubar cpu1 9,140}  ${color1}
+${font DejaVuSansCondensed-Bold:size=9}${color}CPU3:${color1}${font DejaVuSansCondensed-Bold:size=9}${execi 5 sensors | grep "Core 1" | awk '{print $3}' | cut -c2-3}°C ${goto 100}${color2}${cpubar cpu3 9,140} ${font DejaVuSansCondensed-Bold:size=7}${alignr}${color1}${freq_g cpu1} GHz
+ ${goto 100}${color2}${cpubar cpu2 9,140}  ${color1} ${font DejaVuSansCondensed-Bold:size=11}
+ 
+${voffset 0}${color}Hostname:${color1}$alignr$nodename
+${color}Uptime:${color1}$alignr$uptime
+#${voffset 5}${color}Kernel:${color1}$alignr$kernel / $machine
+#${voffset 5}${color}Kernel:${color1}$alignr${execi 3600 uname -r} / $machine
+#${voffset 5}${color}${sysname}:${color1}$alignr${kernel} / ${machine}
+${voffset 5}${color}Kernel:${color1}$alignr${sysname} ${execi 3600 uname -r}
+${color}GPU Temp.:${color1}${font DejaVuSansCondensed-Bold:size=10}${alignr}${execi 5 sensors | grep "Physical id 0: " | awk '{print $4}'  | cut -c2-3}°C
+#${voffset 5}${color}CPU Temp.:${alignr}${alignr}Core 1: ${color1}${execi 5 sensors | grep "Core 0" | awk '{print $3}' | cut -c2-3}°C
+#${alignr}${voffset 5}${color}Core 2: ${color1}${execi 5 sensors | grep "Core 1" | awk '{print $3}' | cut -c2-3}°C
+
+#${voffset 10}${color2}${memgraph 80,300}${color1}
+${voffset 10}${color}RAM: ${color1} $alignr${mem} / ${memmax}
+${color2}${membar 12,300}${color1}
+${color}Swap:${color1}$alignr${swap} / ${swapmax}
+${color2}${swapbar 12,300}${color1}
+
+#${alignr}
+#${voffset 5}${color}Processes: ${color1}$processes ($running_processes active)    
+#${color}PROCESSES ${color1}${font DejaVuSansCondensed-Bold:size=9}($running_processes active): ${font DejaVuSansCondensed-Bold:size=9}
+${voffset 10}${color}Processes:${color1}$processes($running_processes active) ${color}${alignr}${font DejaVuSansCondensed-Bold:size=10}ID\#  %(M)  ${font DejaVuSansCondensed-Bold:size=9}
+    ${voffset 15}${color1}${top name 1} ${goto 205}${top pid 1} ${goto 255}${top cpu 1}
+    ${top name 2} ${goto 205}${top pid 2} ${goto 255}${top cpu 2}
+    ${top name 3} ${goto 205}${top pid 3} ${goto 255}${top cpu 3}
+    ${top name 4} ${goto 205}${top pid 4} ${goto 255}${top cpu 4}
+#
+#    ${top_io name 1} ${goto 205}${top_io pid 1} ${goto 255}${top_io io_perc 1}
+#    ${top_io name 2} ${goto 205}${top_io pid 2} ${goto 255}${top_io io_perc 2}
+#    ${top_io name 3} ${goto 205}${top_io pid 3} ${goto 255}${top_io io_perc 3}
+
+    ${top_mem name 1} ${goto 195}${top_mem pid 1} ${goto 255}${top_mem mem_res 1}
+    ${top_mem name 2} ${goto 195}${top_mem pid 2} ${goto 255}${top_mem mem_res 2}
+    ${top_mem name 3} ${goto 195}${top_mem pid 3} ${goto 255}${top_mem mem_res 3}
+    ${top_mem name 4} ${goto 195}${top_mem pid 4} ${goto 255}${top_mem mem_res 4}${font DejaVuSansCondensed-Bold:size=11}
+        
+${voffset 10}${color}Root Partition: ${color1} ${alignr}${fs_used /} / ${fs_size /}
+${color2}${fs_bar 12,300 /}${color1}
+${voffset 10}${color}EFI Partition: ${color1} ${alignr}${fs_used /boot} / ${fs_size /boot}
+${color2}${fs_bar 12,300 /boot}${color1}
+
+${voffset 10}${if_existing /proc/net/route eth0}${color}Down: ${color1}${downspeed eth0}/s ${alignr} ${color}Up: ${color1}${upspeed eth0}/s
+${color2}${downspeedgraph eth0 9,135 -t} ${alignr}${upspeedgraph eth0 9,135 -t} ${color1}
+Total: ${totaldown eth0}  ${alignr} Total: ${totalup eth0}
+${voffset 20}${color}NET IP: ${color1}${alignr}${execi 3605 wget http://v4.ipv6-test.com/api/myip.php -q -O -}
+${color}LAN IP: ${color1}${alignr}${addr eth0}

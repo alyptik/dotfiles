@@ -1,0 +1,29 @@
+function TRAPINT () {
+	(( nopopd )) || popd >/dev/null 2>&1
+	trap - INT
+	return "$(( 128 + $1 ))"
+}
+
+local nopopd orig
+orig="$PWD"
+[[ "$orig" != "${CONF:-/store/config}" ]] && pushd "${CONF:-/store/config}" >/dev/null 2>&1 || nopopd=1
+git add .
+if [[ -z "$*" ]]; then
+	if git commit -a -S; then
+		git push && \
+			printf '\n \033[32m %s \n\033[0m' "Commit successful!" || \
+			printf '\n \033[31m %s \n\033[0m' "Error during push..."
+	else
+		printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+	fi
+else
+	if git commit -a -S -m "$*"; then
+		git push && \
+			printf '\n \033[32m %s \n\033[0m' "Commit successful!" || \
+			printf '\n \033[31m %s \n\033[0m' "Error during push..."
+	else
+		printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+	fi
+fi
+(( nopopd )) || popd >/dev/null 2>&1
+trap - INT

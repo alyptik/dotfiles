@@ -1,0 +1,50 @@
+#!/usr/bin/env zsh
+
+# Path to the fasd data file, default "$HOME/.fasd".
+# _FASD_DATA=
+
+# List of blacklisted strings. Commands matching them will not be processed.
+# Default is "--help".
+# _FASD_BLACKLIST=
+
+# List of all commands that needs to be shifted, defaults to "sudo busybox".
+_FASD_SHIFT="sudo busybox ip perlbrew"
+
+# List of all commands that will be ignored, defaults to "fasd ls echo".
+# _FASD_IGNORE==
+
+# Fasd defaults to track your "$PWD". Set this to 0 to disable this behavior.
+# _FASD_TRACK_PWD=
+
+# Which awk to use. Fasd can detect and use a compatible awk.
+# _FASD_AWK=
+
+# File to log all STDERR to, defaults to "/dev/null".
+_FASD_SINK="${HOME}/.fasd.log"
+
+# Max total score / weight, defaults to 2000.
+# _FASD_MAX=
+
+# Which shell to execute. Some shells will run faster than others. fasd
+# runs faster with dash and ksh variants.
+# _FASD_SHELL=
+
+# Default backends.
+# _FASD_BACKENDS=
+
+# If set to any non-empty string, fasd will not add or delete entries from
+# database. You can set and export this variable from command line.
+# _FASD_RO=
+
+# Level of "fuzziness" when doing fuzzy matching. More precisely, the number of
+# characters that can be skipped to generate a match. Set to empty or 0 to
+# disable fuzzy matching. Default value is 2.
+# _FASD_FUZZY=
+
+# Path to .viminfo file for viminfo backend, defaults to "$HOME/.viminfo"
+# _FASD_VIMINFO=
+
+# Path to XDG recently-used.xbel file for recently-used backend, defaults to
+# "$HOME/.local/share/recently-used.xbel"
+# _FASD_RECENTLY_USED_XBEL=
+

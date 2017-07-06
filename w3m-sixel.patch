@@ -1,0 +1,199 @@
+--- terms.c.orig	2014-09-23 21:36:24.992432936 +0900
++++ terms.c	2014-09-23 21:51:16.598842197 +0900
+@@ -463,6 +463,80 @@
+ 
+ #define MOVE(line,column)       writestr(tgoto(T_cm,column,line));
+ 
++int output_sixel_fp(char *file, int x, int y)
++{
++    int length;
++    long size, rsize, count = 0;
++    char *sixel_file, *buf;
++    FILE *fp;
++
++    length = strlen(file) + 7; /* ".sixel" + '\0' */
++    sixel_file = alloca(sizeof(char) * length);
++    snprintf(sixel_file, length, "%s%s", file, ".sixel");
++
++    if ((fp = fopen(sixel_file, "r")) == NULL) {
++        //fprintf(stderr, "file: %s\n", sixel_file);
++        //fprintf(stderr, "fopen: %s\n", strerror(errno));
++        return FALSE;
++    }
++
++    if (fseek(fp, 0, SEEK_END) < 0
++        || (size = ftell(fp)) < 0
++        || fseek(fp, 0, SEEK_SET) < 0) {
++		//fprintf(stderr, "couldn't get file size\n");
++        return FALSE;
++	}
++    buf = alloca(size);
++
++    MOVE(y, x);
++    flush_tty();
++
++	while ((rsize = fread(buf, 1, size, fp)) > 0) {
++    	fwrite(buf, 1, rsize, stdout);
++		fflush(fp);
++		count += rsize;
++	}
++	fclose(fp);
++
++    if (count != size)
++		;//fprintf(stderr, "file size != read size\n");
++
++    MOVE(Currentbuf->cursorY, Currentbuf->cursorX);
++	flush_tty();
++
++	return TRUE;
++}
++
++int output_sixel_fd(char *file, int x, int y)
++{
++    int fd, length;
++    long size, rsize;
++    char *sixel_file, buf[1024];
++
++    length = strlen(file) + 7; /* file + ".sixel" + '\0' */
++    sixel_file = alloca(sizeof(char) * length);
++    snprintf(sixel_file, length, "%s%s", file, ".sixel");
++
++	if ((fd = open(sixel_file, O_RDONLY)) < 0) {
++        //fprintf(stderr, "file: %s\n", sixel_file);
++        //fprintf(stderr, "open: %s\n", strerror(errno));
++        return FALSE;
++	}
++
++    MOVE(y, x);
++    flush_tty();
++
++	while ((rsize = read(fd, buf, 1024)) > 0)
++		//write(STDOUT_FILENO, buf, rsize);
++		write(tty, buf, rsize);
++	close(fd);
++
++    MOVE(Currentbuf->cursorY, Currentbuf->cursorX);
++	flush_tty();
++
++	return TRUE;
++}
++
+ #ifdef USE_MOUSE
+ #define W3M_TERM_INFO(name, title, mouse)	name, title, mouse
+ #define NEED_XTERM_ON   (1)
+--- image.c.orig	2014-09-23 21:36:09.062489059 +0900
++++ image.c	2014-09-23 21:51:50.648716545 +0900
+@@ -24,6 +24,7 @@
+     short sy;
+     short width;
+     short height;
++	int already_drew;
+ } TerminalImage;
+ 
+ static TerminalImage *terminal_image = NULL;
+@@ -149,6 +150,7 @@
+     i->sy = sy;
+     i->width = w;
+     i->height = h;
++	i->already_drew = FALSE;
+     n_terminal_image++;
+ }
+ 
+@@ -170,47 +172,60 @@
+     n_terminal_image = 0;
+ }
+ 
++/* XXX: this function defined in term.c */
++static void output_sixel(char *file, int x, int y);
++
+ void
+ drawImage()
+ {
+-    static char buf[64];
+-    int j, draw = FALSE;
+-    TerminalImage *i;
+-
+-    if (!activeImage)
+-	return;
+-    if (!n_terminal_image)
+-	return;
+-    for (j = 0; j < n_terminal_image; j++) {
+-	i = &terminal_image[j];
+-	if (!(i->cache->loaded & IMG_FLAG_LOADED &&
+-	      i->width > 0 && i->height > 0))
+-	    continue;
+-	if (!(Imgdisplay_rf && Imgdisplay_wf)) {
+-	    if (!openImgdisplay())
+-		return;
+-	}
+-	if (i->cache->index > 0) {
+-	    i->cache->index *= -1;
+-	    fputs("0;", Imgdisplay_wf);	/* DrawImage() */
++	static char buf[64];
++	int j, draw = FALSE;
++	TerminalImage *i;
++
++	if (!activeImage)
++	return;
++	if (!n_terminal_image)
++	return;
++	for (j = 0; j < n_terminal_image; j++) {
++		i = &terminal_image[j];
++
++		if (!(i->cache->loaded & IMG_FLAG_LOADED &&
++			  i->width > 0 && i->height > 0))
++			continue;
++		if (!(Imgdisplay_rf && Imgdisplay_wf)) {
++			if (!openImgdisplay())
++			return;
++		}
++		if (i->cache->index > 0) {
++			i->cache->index *= -1;
++			fputs("0;", Imgdisplay_wf);	/* DrawImage() */
++			sprintf(buf, "%d;%d;%d;%d;%d;%d;%d;%d;%d;",
++				(-i->cache->index - 1) % MAX_IMAGE + 1, i->x, i->y,
++				(i->cache->width > 0) ? i->cache->width : 0,
++				(i->cache->height > 0) ? i->cache->height : 0,
++				i->sx, i->sy, i->width, i->height);
++			fputs(buf, Imgdisplay_wf);
++			fputs(i->cache->file, Imgdisplay_wf);
++			fputs("\n", Imgdisplay_wf);
++			fflush(Imgdisplay_wf);
++		} else {
++			/* XXX: image drawing by sixel */
++			//usleep(100000); /* wait for conver image to sixel... */
++			//fprintf(stderr, "x:%d y:%d cell_width:%d cell_height:%d\n",
++				//i->x, i->y, i->x / (int) pixel_per_char, i->y / (int) pixel_per_line);
++			if (!i->already_drew && output_sixel_fd(i->cache->file, i->x / (int) pixel_per_char, i->y / (int) pixel_per_line)) {
++				i->already_drew = TRUE;
++			}
++		}
++		draw = TRUE;
+ 	}
+-	else
+-	    fputs("1;", Imgdisplay_wf);	/* DrawImage(redraw) */
+-	sprintf(buf, "%d;%d;%d;%d;%d;%d;%d;%d;%d;",
+-		(-i->cache->index - 1) % MAX_IMAGE + 1, i->x, i->y,
+-		(i->cache->width > 0) ? i->cache->width : 0,
+-		(i->cache->height > 0) ? i->cache->height : 0,
+-		i->sx, i->sy, i->width, i->height);
+-	fputs(buf, Imgdisplay_wf);
+-	fputs(i->cache->file, Imgdisplay_wf);
+-	fputs("\n", Imgdisplay_wf);
+-	draw = TRUE;
+-    }
+-    if (!draw)
+-	return;
+-    syncImage();
+-    touch_cursor();
+-    refresh();
++	/*
++	if (!draw)
++		return;
++	//syncImage();
++	*/
++	touch_cursor();
++	refresh();
+ }
+ 
+ void

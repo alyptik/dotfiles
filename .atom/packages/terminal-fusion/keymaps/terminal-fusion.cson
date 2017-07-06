@@ -1,0 +1,10 @@
+'.platform-linux atom-text-editor':
+  'alt-shift-t':   'terminal-fusion:new'
+  'alt-shift-j':   'terminal-fusion:prev'
+  'alt-shift-k':   'terminal-fusion:next'
+  'alt-shift-x':   'terminal-fusion:close'
+  'ctrl-shift-E':  'terminal-fusion:insert-selected-text'
+  'ctrl-`':        'terminal-fusion:toggle'
+'.platform-linux .terminal-fusion .terminal':
+  'alt-v':         'terminal-fusion:paste'
+  'alt-c':         'terminal-fusion:copy'

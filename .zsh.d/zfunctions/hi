@@ -1,0 +1,10 @@
+local file
+if [[ ! -t 0 || "$*" =~ - ]]; then
+	file="/dev/stdin"
+else
+	file="$1"
+	shift
+fi
+
+# highlight --out-format="truecolor" --syntax="${1:-conf}" --style=anotherdark "$file" | less -JRMXs
+highlight --out-format=truecolor --syntax="${1:-conf}" --style=xoria256 "$file" | less -JRMXs

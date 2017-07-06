@@ -1,0 +1,8 @@
+{
+  ".platform-darwin atom-workspace": {
+    "cmd-i": "nuclide-context-view:toggle"
+  },
+  ".platform-win32 atom-workspace, .platform-linux atom-workspace": {
+    "ctrl-i": "nuclide-context-view:toggle"
+  }
+}

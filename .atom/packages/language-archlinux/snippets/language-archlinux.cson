@@ -1,0 +1,17 @@
+'.source.shell.pkgbuild':
+  'Default PKGBUILD Template':
+    'prefix': 'pkgd'
+    'body': '# Maintainer ${1}\n\npkgname=${2}\npkgver=${3}\npkgrel=${4}\npkgdesc="${5}"\narch=(\'i686\' \'x86_64\')\nlicense=(${7})\n\ndepends=(${8})\nmakedepends=(${9})\noptdepends=(${10})\nurl="${11}"\ninstall=${12}.install\nsource=(${13})\nsha256sums=(${14})\n\nprepare() {\n cd $srcdir/$pkgname ${15}\n}\n\nbuild() {\n cd $srcdir/$pkgname ${16}\n}\n\npackage() {\n cd $srcdir/$pkgname ${17}\n}'
+  'Default pkgver Template':
+    'prefix': 'pkgver'
+    'body': 'pkgver() {\n  cd "${srcdir}/${pkgname}"\n  git describe --tags `git rev-list --tags --max-count=1`\n}'
+  'git pkgver Template':
+    'prefix': 'pkgverg'
+    'body': 'pkgver() {\n  cd ${srcdir}/${_pkgname}\n  git rev-parse --short=7 HEAD\n}'
+  'Default sourcegit Template':
+    'prefix': 'source=(git'
+    'body': 'source=("git+${url}.git#tag=${pkgver}")\nsha512sums=(\'SKIP\')'
+'.source.shell.install':
+  'Default Install Template':
+    'prefix': 'post'
+    'body': 'post_install() {\n update-desktop-database -q\n}\n\npost_upgrade() {\n  post_install\n}\n\npost_remove() {\npost_install\n}'

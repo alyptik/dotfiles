@@ -1,0 +1,4 @@
+e scr.color=1    ; enable color screen
+e file.id=1      ; identify files when opened
+e file.flag=1    ; automatically add bookmarks (flags) to syms, strings..
+e file.analyze=1 ; perform basic code analysis

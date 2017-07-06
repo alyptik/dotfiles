@@ -1,0 +1,62 @@
+'context-menu':
+  '.terminal-fusion .fusion-terminal-status-icon': [
+    {label: 'Red', command: 'terminal-fusion:status-red'},
+    {label: 'Orange', command: 'terminal-fusion:status-orange'},
+    {label: 'Yellow', command: 'terminal-fusion:status-yellow'},
+    {label: 'Green', command: 'terminal-fusion:status-green'},
+    {label: 'Blue', command: 'terminal-fusion:status-blue'},
+    {label: 'Purple', command: 'terminal-fusion:status-purple'},
+    {label: 'Pink', command: 'terminal-fusion:status-pink'},
+    {label: 'Cyan', command: 'terminal-fusion:status-cyan'},
+    {label: 'Magenta', command: 'terminal-fusion:status-magenta'},
+    {label: 'Default', command: 'terminal-fusion:status-default'},
+    {type: 'separator'},
+    {label: 'Hide', command: 'terminal-fusion:context-hide'},
+    {label: 'Rename', command: 'terminal-fusion:context-rename'},
+    {label: 'Close', command: 'terminal-fusion:context-close'}
+  ]
+  '.terminal-fusion .terminal': [
+    {label: 'Copy', command: 'terminal-fusion:copy'},
+    {label: 'Paste', command: 'terminal-fusion:paste'},
+    {type: 'separator'},
+    {label: 'Hide', command: 'terminal-fusion:hide'},
+    {label: 'Close', command: 'terminal-fusion:close'}
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'terminal-fusion'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'terminal-fusion:toggle'
+        },
+        {
+          'label': 'New Terminal'
+          'command': 'terminal-fusion:new'
+        },
+        {
+          'label': 'Previous Terminal'
+          'command': 'terminal-fusion:prev'
+        },
+        {
+          'label': 'Next Terminal'
+          'command': 'terminal-fusion:next'
+        },
+        {
+          'label': 'Toggle Fullscreen'
+          'command': 'terminal-fusion:fullscreen'
+        },
+        {
+          'label': 'Close Terminal'
+          'command': 'terminal-fusion:close'
+        },
+        {
+          'label': 'Close All Terminals'
+          'command': 'terminal-fusion:close-all'
+        }
+      ]
+    ]
+  }
+]

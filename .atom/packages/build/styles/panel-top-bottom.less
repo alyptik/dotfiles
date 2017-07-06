@@ -1,0 +1,25 @@
+@import "ui-variables";
+
+atom-panel.top .build,
+atom-panel.bottom .build {
+  .resizer {
+    cursor: row-resize;
+    width: 100%;
+  }
+
+  .terminal {
+    height: 150px;
+  }
+}
+
+atom-panel.top .build {
+  .resizer {
+    bottom: 0;
+  }
+}
+
+atom-panel.bottom .build {
+  .resizer {
+    top: 0;
+  }
+}

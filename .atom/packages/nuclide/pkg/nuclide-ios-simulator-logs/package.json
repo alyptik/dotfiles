@@ -1,0 +1,56 @@
+{
+  "name": "nuclide-ios-simulator-logs",
+  "repository": "https://github.com/facebook/nuclide",
+  "main": "./lib/main.js",
+  "version": "0.0.0",
+  "description": "A nuclide-output provider for iOS Simulator logs",
+  "atomTestRunner": "../../lib/test-runner-entry.js",
+  "nuclide": {
+    "packageType": "Atom",
+    "testRunner": "apm",
+    "configMetadata": {
+      "pathComponents": [
+        "IDE",
+        "iOS Simulator Logs"
+      ]
+    },
+    "config": {
+      "senderBlacklist": {
+        "title": "Sender Blacklist",
+        "type": "array",
+        "default": [
+          "assertiond",
+          "routined",
+          "syslogd",
+          "SpringBoard",
+          "installd",
+          "pkd",
+          "lsd",
+          "searchd",
+          "itunesstored",
+          "backboardd"
+        ],
+        "description": "Exclude messages sent by these senders from the output window"
+      },
+      "pathToSyslog": {
+        "title": "Path to syslog executable",
+        "type": "string",
+        "default": "syslog",
+        "description": "Absolute path to the syslog executable on your system."
+      },
+      "whitelistedTags": {
+        "title": "Tags to include",
+        "description": "Messages that don't have tags that match this pattern will be ignored.",
+        "default": "^(core\\.react|tid:com\\.facebook\\.react\\.JavaScript)$",
+        "type": "string"
+      }
+    }
+  },
+  "consumedServices": {
+    "nuclide-output": {
+      "versions": {
+        "0.0.0": "consumeOutputService"
+      }
+    }
+  }
+}

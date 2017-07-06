@@ -1,0 +1,76 @@
+# (+) The sting to display for vi insert mode
+# set vi-mode-str1 ->
+# (:) The sting to display for vi command mode
+# set vi-mode-str2 !]
+# The following line may also be placed in bashrc to set the mode string
+# #bind "set vi-mode-str1 $(echo -e 001033[37m002+001033[0m002)"
+
+# I prefer vi-style editing:
+# set editing-mode vi
+# set editing-mode emacs
+#
+# # Edit using a single line:
+# # set horizontal-scroll-mode on
+# set horizontal-scroll-mode off
+#
+# # Rebind some keys:
+# "\eh": tilde-expand
+# "\eu": undo
+# # "\C-u": universal-argument
+# "\C-x\C-r": re-read-init-file
+# "\e[1;5C": forward-word
+# "\e[1;5D": backward-word
+
+# do not bell on tab-completion
+
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
+
+set bell-style none
+#set bell-style visible
+set colored-stats on
+#set completion-ignore-case on
+set completion-ignore-case off
+set expand-tilde on
+set show-mode-in-prompt on
+set visible-stats off
+set bind-tty-special-chars off
+set enable-bracketed-paste on
+
+$if mode=emacs
+
+"\eh": tilde-expand
+"\eu": undo
+# "\C-u": universal-argument
+"\C-x\C-r": re-read-init-file
+
+"\C-k": kill-whole-line
+# for linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+"\e[7~": beginning-of-line
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# for rxvt
+"\e[8~": end-of-line
+
+# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# for freebsd console
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+
+$endif

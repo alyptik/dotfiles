@@ -1,0 +1,105 @@
+# Conky settings #
+# background no
+background yes
+update_interval 1
+
+cpu_avg_samples 8
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+imlib_cache_size 0
+
+#temperature_unit fahrenheit
+
+# Window specifications #
+
+own_window yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_argb_visual yes
+own_window_transparent yes
+own_window_argb_value 00000000
+override_utf8_locale yes
+
+own_window_type desktop
+# own_window_class conky-semi
+own_window_class conky
+# own_window_class override
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 200 750
+maximum_width 250
+
+# alignment tr
+# gap_x 35
+# gap_y 185
+
+alignment br
+gap_x 45
+gap_y 185
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftfont FuraCode Nerd Font:size=5
+xftalpha 0.75
+
+uppercase no
+
+# temperature_unit fahrenheit
+
+default_color FFFFFF
+
+# Lua Load  #
+# lua_load /home/alyptik/.conky/lua/draw_bg.lua
+# lua_draw_hook_pre draw_bg
+lua_load /home/alyptik/.conky/lua/clock_rings.lua
+lua_draw_hook_pre clock_rings
+
+TEXT
+${voffset 8}${color 0066FF}${font FuraCode Nerd Font:size=10}${time %A}${font}${voffset -8}${alignr 50}${color FFFFFF}${font FuraCode Nerd Font:size=14}${time %e}${font}
+${color FFFFFF}${voffset -30}${color FFFFFF}${font FuraCode Nerd Font:size=18}${time %b}${font}${voffset -3} ${color FFFFFF}${font FuraCode Nerd Font:size=14}${time %Y}${font}${color 0066FF}${hr}
+${voffset 25}${font FuraCode Nerd Font:size=10}${alignr}$USER${font}
+${image /store/config/arch-logo.png -p 64,100 -s 80x75}
+
+
+
+
+
+
+
+${color FFFFFF}${goto 10}${voffset -10}${cpu cpu0}%
+${color 0066FF}${goto 10}  CPU
+${color FFFFFF}${goto 35}${voffset 5}${memperc}%
+${color 0066FF}${goto 35}  RAM
+
+${color FFFFFF}${goto 45}${voffset -15}${swapperc}%
+${color 0066FF}${goto 45}  Swap
+
+${color FFFFFF}${goto 40}${voffset -15}${downspeed eth0}
+${color FFFFFF}${goto 40}${upspeed eth0}
+${color 0066FF}${goto 40}      eth0
+${color FFFFFF}${goto 80}${voffset -5}${downspeed mlan0}
+${color FFFFFF}${goto 80}${upspeed mlan0}
+${color 0066FF}${goto 80}  mlan0
+
+${color 0066FF}eth0 ${color white}${addr eth0}
+${color 0066FF}mlan0 ${color white}${addr mlan0}
+${color 0066FF}virtbr0 ${color white}${addr virbr0}
+
+${color 0066FF}ArchLinux ${color white} ${alignc} ${fs_bar 8,50 /}  ${alignr}${fs_free /}${color white}
+
+${color 0066FF}${font FuraCode Nerd Font:size=6}Hostname:${color white} ${nodename}
+${color 0066FF}${font FuraCode Nerd Font:size=6}Kernel:${color white} ${kernel}

@@ -1,0 +1,2 @@
+cat <(printf '%s ' '$ ' "$@" $'\n\n') <(eval "$@" 2>&1) | \
+	tee >(curl -sF'c=@-' 'https://pb.gehidore.net/?u=1' | xsel -ib) >&2

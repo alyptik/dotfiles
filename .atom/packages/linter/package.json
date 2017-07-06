@@ -1,0 +1,521 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+        "spec": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+        "type": "local"
+      },
+      "/tmp/apm-install-dir-11752-13776-188f29u.b0qv4vaemi"
+    ]
+  ],
+  "_from": "../d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+  "_id": "linter@2.1.4",
+  "_inCache": true,
+  "_location": "/linter",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+    "spec": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+  "_shasum": "b54cca4da4749a4eac08368a886d9519004097a8",
+  "_shrinkwrap": null,
+  "_spec": "/tmp/d-11752-13776-1r0kdzk.cens3gzaor/package.tgz",
+  "_where": "/tmp/apm-install-dir-11752-13776-188f29u.b0qv4vaemi",
+  "author": {
+    "name": "steelbrain"
+  },
+  "bugs": {
+    "url": "https://github.com/steelbrain/linter/issues"
+  },
+  "configSchema": {
+    "lintPreviewTabs": {
+      "type": "boolean",
+      "description": "Lint tabs while they are still in preview status",
+      "default": true,
+      "order": 1
+    },
+    "lintOnOpen": {
+      "title": "Lint on Open",
+      "description": "Lint files automatically when they are opened",
+      "type": "boolean",
+      "default": true,
+      "order": 2
+    },
+    "lintOnChange": {
+      "title": "Lint on Change",
+      "description": "Lint files while typing, without the need to save (only for supported providers)",
+      "type": "boolean",
+      "default": true,
+      "order": 3
+    },
+    "lintOnChangeInterval": {
+      "title": "Lint on Change Interval",
+      "description": "Interval at which linting is done as you type (in ms)",
+      "type": "integer",
+      "default": 300,
+      "order": 4
+    },
+    "ignoreGlob": {
+      "title": "Ignore files matching this Glob",
+      "type": "string",
+      "default": "**/*.min.{js,css}",
+      "order": 5
+    },
+    "disabledProviders": {
+      "title": "Disabled providers",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Names of disabled linter providers",
+      "default": [],
+      "order": 6
+    }
+  },
+  "consumedServices": {
+    "linter": {
+      "versions": {
+        "^1.0.0": "consumeLinterLegacy",
+        "2.0.0": "consumeLinter"
+      }
+    },
+    "linter-ui": {
+      "versions": {
+        "1.0.0": "consumeUI"
+      }
+    }
+  },
+  "dependencies": {
+    "atom-package-deps": "^4.4.1",
+    "atom-select-list": "0.2.0",
+    "cool-trim": "^1.1.1",
+    "lodash.uniq": "^4.5.0",
+    "minimatch": "^3.0.3",
+    "sb-debounce": "^1.0.1",
+    "sb-fs": "^3.0.0"
+  },
+  "description": "A Base Linter with Cow Powers",
+  "devDependencies": {
+    "eslint-config-steelbrain": "^3.0.0",
+    "flow-bin": "^0.44.0",
+    "jasmine-fix": "^1.0.0"
+  },
+  "engines": {
+    "atom": ">=1.14.0 <2.0.0"
+  },
+  "homepage": "https://github.com/steelbrain/linter#readme",
+  "keywords": [
+    "linter"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "name": "linter",
+  "optionalDependencies": {},
+  "package-deps": [
+    "linter-ui-default"
+  ],
+  "private": true,
+  "providedServices": {
+    "linter-indie": {
+      "versions": {
+        "1.0.0": "provideIndieLegacy",
+        "2.0.0": "provideIndie"
+      }
+    }
+  },
+  "readme": "./README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steelbrain/linter.git"
+  },
+  "scripts": {
+    "test": "(apm test) && (flow check) && (eslint . )"
+  },
+  "version": "2.1.4",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "atom-package-deps",
+        "version": "4.6.0",
+        "path": "node_modules/atom-package-deps/lib/index.js"
+      },
+      {
+        "name": "atom-package-path",
+        "version": "1.1.0",
+        "path": "node_modules/atom-package-path/lib/index.js"
+      },
+      {
+        "name": "atom-select-list",
+        "version": "0.2.0",
+        "path": "node_modules/atom-select-list/src/select-list-view.js"
+      },
+      {
+        "name": "balanced-match",
+        "version": "0.4.2",
+        "path": "node_modules/balanced-match/index.js"
+      },
+      {
+        "name": "brace-expansion",
+        "version": "1.1.7",
+        "path": "node_modules/brace-expansion/index.js"
+      },
+      {
+        "name": "concat-map",
+        "version": "0.0.1",
+        "path": "node_modules/concat-map/index.js"
+      },
+      {
+        "name": "consistent-env",
+        "version": "1.3.1",
+        "path": "node_modules/consistent-env/lib/index.js"
+      },
+      {
+        "name": "cool-trim",
+        "version": "1.1.1",
+        "path": "node_modules/cool-trim/lib/index.js"
+      },
+      {
+        "name": "etch",
+        "version": "0.9.5",
+        "path": "node_modules/etch/lib/index.js"
+      },
+      {
+        "name": "fuzzaldrin",
+        "version": "2.1.0",
+        "path": "node_modules/fuzzaldrin/lib/fuzzaldrin.js"
+      },
+      {
+        "name": "is-utf8",
+        "version": "0.2.1",
+        "path": "node_modules/is-utf8/is-utf8.js"
+      },
+      {
+        "name": "lodash.uniq",
+        "version": "4.5.0",
+        "path": "node_modules/lodash.uniq/index.js"
+      },
+      {
+        "name": "minimatch",
+        "version": "3.0.4",
+        "path": "node_modules/minimatch/minimatch.js"
+      },
+      {
+        "name": "sb-callsite",
+        "version": "1.1.2",
+        "path": "node_modules/sb-callsite/lib/main.js"
+      },
+      {
+        "name": "sb-debounce",
+        "version": "1.0.2",
+        "path": "node_modules/sb-debounce/index.js"
+      },
+      {
+        "name": "sb-exec",
+        "version": "3.1.0",
+        "path": "node_modules/sb-exec/lib/index.js"
+      },
+      {
+        "name": "sb-fs",
+        "version": "3.0.0",
+        "path": "node_modules/sb-fs/lib/index.js"
+      },
+      {
+        "name": "sb-memoize",
+        "version": "1.0.2",
+        "path": "node_modules/sb-memoize/lib/index.js"
+      },
+      {
+        "name": "sb-npm-path",
+        "version": "2.0.0",
+        "path": "node_modules/sb-npm-path/lib/index.js"
+      },
+      {
+        "name": "sb-promisify",
+        "version": "2.0.2",
+        "path": "node_modules/sb-promisify/lib/index.js"
+      },
+      {
+        "name": "semver",
+        "version": "5.3.0",
+        "path": "node_modules/semver/semver.js"
+      },
+      {
+        "name": "strip-bom-buf",
+        "version": "1.0.0",
+        "path": "node_modules/strip-bom-buf/index.js"
+      },
+      {
+        "name": "tagged-template-literals",
+        "version": "1.0.1",
+        "path": "node_modules/tagged-template-literals/lib/index.js"
+      },
+      {
+        "name": "trim-newlines",
+        "version": "1.0.0",
+        "path": "node_modules/trim-newlines/index.js"
+      }
+    ],
+    "extensions": {
+      ".json": [
+        ".eslintrc.json",
+        "node_modules/atom-package-deps/.eslintrc.json",
+        "node_modules/atom-package-deps/package.json",
+        "node_modules/atom-package-path/package.json",
+        "node_modules/atom-select-list/package.json",
+        "node_modules/balanced-match/package.json",
+        "node_modules/brace-expansion/package.json",
+        "node_modules/concat-map/package.json",
+        "node_modules/consistent-env/.eslintrc.json",
+        "node_modules/consistent-env/package.json",
+        "node_modules/cool-trim/package.json",
+        "node_modules/etch/package.json",
+        "node_modules/fuzzaldrin/package.json",
+        "node_modules/is-utf8/package.json",
+        "node_modules/lodash.uniq/package.json",
+        "node_modules/minimatch/package.json",
+        "node_modules/sb-callsite/package.json",
+        "node_modules/sb-debounce/package.json",
+        "node_modules/sb-exec/.eslintrc.json",
+        "node_modules/sb-exec/package.json",
+        "node_modules/sb-fs/package.json",
+        "node_modules/sb-memoize/.eslintrc.json",
+        "node_modules/sb-memoize/package.json",
+        "node_modules/sb-npm-path/.eslintrc.json",
+        "node_modules/sb-npm-path/package.json",
+        "node_modules/sb-promisify/package.json",
+        "node_modules/semver/package.json",
+        "node_modules/strip-bom-buf/package.json",
+        "node_modules/tagged-template-literals/package.json",
+        "node_modules/trim-newlines/package.json",
+        "package.json"
+      ],
+      ".js": [
+        "lib/commands.js",
+        "lib/editor-linter.js",
+        "lib/editor-registry.js",
+        "lib/greeter/greet-v2-welcome.js",
+        "lib/greeter/index.js",
+        "lib/helpers.js",
+        "lib/index.js",
+        "lib/indie-delegate.js",
+        "lib/indie-registry.js",
+        "lib/linter-registry.js",
+        "lib/main.js",
+        "lib/message-registry.js",
+        "lib/toggle-view.js",
+        "lib/types.js",
+        "lib/ui-registry.js",
+        "lib/validate/helpers.js",
+        "lib/validate/index.js",
+        "node_modules/atom-package-deps/lib/helpers.js",
+        "node_modules/atom-package-deps/lib/index.js",
+        "node_modules/atom-package-deps/lib/types.js",
+        "node_modules/atom-package-deps/lib/view.js",
+        "node_modules/atom-package-path/lib/index.js",
+        "node_modules/atom-select-list/src/select-list-view.js",
+        "node_modules/balanced-match/index.js",
+        "node_modules/brace-expansion/index.js",
+        "node_modules/concat-map/example/map.js",
+        "node_modules/concat-map/index.js",
+        "node_modules/consistent-env/lib/helpers.js",
+        "node_modules/consistent-env/lib/index.js",
+        "node_modules/cool-trim/decls/jasmine.js",
+        "node_modules/cool-trim/lib/index.js",
+        "node_modules/etch/dist/component-helpers.js",
+        "node_modules/etch/dist/default-scheduler.js",
+        "node_modules/etch/dist/dom.js",
+        "node_modules/etch/dist/event-listener-props.js",
+        "node_modules/etch/dist/index.js",
+        "node_modules/etch/dist/patch.js",
+        "node_modules/etch/dist/render.js",
+        "node_modules/etch/dist/scheduler-assignment.js",
+        "node_modules/etch/dist/svg-attribute-translations.js",
+        "node_modules/etch/dist/svg-tags.js",
+        "node_modules/etch/dist/update-props.js",
+        "node_modules/etch/lib/component-helpers.js",
+        "node_modules/etch/lib/default-scheduler.js",
+        "node_modules/etch/lib/dom.js",
+        "node_modules/etch/lib/event-listener-props.js",
+        "node_modules/etch/lib/index.js",
+        "node_modules/etch/lib/patch.js",
+        "node_modules/etch/lib/render.js",
+        "node_modules/etch/lib/scheduler-assignment.js",
+        "node_modules/etch/lib/svg-attribute-translations.js",
+        "node_modules/etch/lib/svg-tags.js",
+        "node_modules/etch/lib/update-props.js",
+        "node_modules/fuzzaldrin/lib/filter.js",
+        "node_modules/fuzzaldrin/lib/fuzzaldrin.js",
+        "node_modules/fuzzaldrin/lib/matcher.js",
+        "node_modules/fuzzaldrin/lib/scorer.js",
+        "node_modules/is-utf8/is-utf8.js",
+        "node_modules/lodash.uniq/index.js",
+        "node_modules/minimatch/minimatch.js",
+        "node_modules/sb-callsite/lib/main.js",
+        "node_modules/sb-debounce/index.js",
+        "node_modules/sb-debounce/test.js",
+        "node_modules/sb-exec/decls/jasmine.js",
+        "node_modules/sb-exec/lib/helpers.js",
+        "node_modules/sb-exec/lib/index.js",
+        "node_modules/sb-exec/lib/types.js",
+        "node_modules/sb-fs/lib/index.js",
+        "node_modules/sb-memoize/lib/index.js",
+        "node_modules/sb-npm-path/decls/jasmine.js",
+        "node_modules/sb-npm-path/lib/helpers.js",
+        "node_modules/sb-npm-path/lib/index.js",
+        "node_modules/sb-promisify/lib/index.js",
+        "node_modules/semver/semver.js",
+        "node_modules/strip-bom-buf/index.js",
+        "node_modules/tagged-template-literals/lib/index.js",
+        "node_modules/trim-newlines/index.js"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "",
+          "decls",
+          "lib",
+          "lib/greeter",
+          "lib/validate",
+          "spec"
+        ],
+        "dependencies": {
+          "atom-package-deps": "^4.4.1",
+          "atom-select-list": "0.2.0",
+          "cool-trim": "^1.1.1",
+          "lodash.uniq": "^4.5.0",
+          "minimatch": "^3.0.3",
+          "sb-debounce": "^1.0.1",
+          "sb-fs": "^3.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-deps",
+          "node_modules/atom-package-deps/lib"
+        ],
+        "dependencies": {
+          "atom-package-path": "^1.1.0",
+          "sb-exec": "^3.0.1",
+          "sb-fs": "^3.0.0",
+          "semver": "^5.3.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-path/lib",
+          "node_modules/atom-package-path",
+          "node_modules/atom-package-path/spec"
+        ],
+        "dependencies": {
+          "sb-callsite": "^1.1.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-select-list",
+          "node_modules/atom-select-list/src",
+          "node_modules/atom-select-list/test"
+        ],
+        "dependencies": {
+          "etch": "^0.9.5",
+          "fuzzaldrin": "^2.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/brace-expansion"
+        ],
+        "dependencies": {
+          "balanced-match": "^0.4.1",
+          "concat-map": "0.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/consistent-env",
+          "node_modules/consistent-env/lib"
+        ],
+        "dependencies": {
+          "lodash.uniq": "^4.5.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cool-trim/decls",
+          "node_modules/cool-trim/lib",
+          "node_modules/cool-trim",
+          "node_modules/cool-trim/spec"
+        ],
+        "dependencies": {
+          "tagged-template-literals": "^1.0.1",
+          "trim-newlines": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/minimatch"
+        ],
+        "dependencies": {
+          "brace-expansion": "^1.1.7"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sb-exec",
+          "node_modules/sb-exec/decls",
+          "node_modules/sb-exec/lib"
+        ],
+        "dependencies": {
+          "consistent-env": "^1.2.0",
+          "lodash.uniq": "^4.5.0",
+          "sb-npm-path": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sb-fs/lib",
+          "node_modules/sb-fs"
+        ],
+        "dependencies": {
+          "sb-promisify": "^2.0.1",
+          "strip-bom-buf": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sb-npm-path",
+          "node_modules/sb-npm-path/decls",
+          "node_modules/sb-npm-path/lib"
+        ],
+        "dependencies": {
+          "sb-memoize": "^1.0.2",
+          "sb-promisify": "^2.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/strip-bom-buf"
+        ],
+        "dependencies": {
+          "is-utf8": "^0.2.1"
+        }
+      }
+    ]
+  }
+}

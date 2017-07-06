@@ -1,0 +1,102 @@
+fileTypes: [
+  "flow"
+]
+name: "flow file"
+patterns: [
+  {
+    include: "#keyword_objects"
+  }
+  {
+    include: "#keyword_roots"
+  }
+  {
+    include: "#keyword_arrays"
+  }
+  {
+    include: "#keyword_string"
+  }
+  {
+    include: "#numeric_values"
+  }
+  {
+    include: "#bool_values"
+  }
+  {
+    include: "#string_values"
+  }
+  {
+    include: "#normal_objects"
+  }
+  {
+    include: "#normal_numeric"
+  }
+  {
+    include: "#comments"
+  }
+]
+repository:
+  bool_values:
+    match: "\\\"?\\b(true|false)\\b\\\"?"
+    name: "constant.numeric.flow"
+  comments:
+    patterns: [
+      {
+        captures:
+          "1":
+            name: "punctuation.definition.comment.flow"
+        match: "(//).*$\\n?"
+        name: "comment.line.double-slash.flow"
+      }
+    ]
+  keyword_arrays:
+    captures:
+      "1":
+        name: "keyword.control.definition.keyword_arrays.flow"
+    match: "\\\"?\\b(flags|defines|codepaths)\\b\\\"?(?:.*[:]\\s*[\\[])"
+    name: "meta.keyword_arrays.flow"
+  keyword_objects:
+    captures:
+      "1":
+        name: "keyword.control.definition.keyword_objects.flow"
+    match: "\\\"?\\b(dependencies|flags|defines|web|mobile|ios|android|libs|native)\\b\\\"?(?:.*[:]\\s*[{])"
+    name: "meta.keyword_objects.flow"
+  keyword_roots:
+    captures:
+      "1":
+        name: "support.type.keyword_roots.flow"
+    match: "\\\"?\\b(project|flow|app|build|files|if)\\\"?\\b\\\"?(?:.*[:]\\s*[{])"
+    name: "meta.keyword_roots.flow"
+  keyword_string:
+    captures:
+      "1":
+        name: "keyword.control.definition.keyword_string.flow"
+      "2":
+        name: "string.quoted.keyword_string.flow"
+    match: "\\\"?\\b(name|version|author|package|icon|main|output)\\b\\\"?\\s*[:]\\s*(['].*[']|[\"].*[\"])"
+    name: "meta.keyword_string.flow"
+  normal_numeric:
+    captures:
+      "1":
+        name: "entity.name.identifier.normal_numeric.flow"
+      "2":
+        name: "constant.numeric.normal_numeric.flow"
+    match: "\\\"?\\b(.*)\\b\\\"?\\s*[:]\\s*(\\d+)"
+    name: "meta.normal_numeric.flow"
+  normal_objects:
+    captures:
+      "1":
+        name: "entity.name.function.normal_objects.flow"
+    match: "\\\"?\\b(.*)\\b\\\"?(?:.*[:]\\s*[{])"
+    name: "meta.normal_objects.flow"
+  numeric_values:
+    match: "\\\"?\\b(\\d+)\\b\\\"?"
+    name: "constant.numeric.flow"
+  string_values:
+    patterns: [
+      {
+        begin: "(\"|')"
+        end: "(\"|')"
+        name: "string.quoted.flow"
+      }
+    ]
+scopeName: "source.flow"

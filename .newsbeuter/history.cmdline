@@ -1,0 +1,9 @@
+next
+macro j
+config macro j
+config macro j next
+macro j next
+macro "j" next
+macro "j" n"ext"
+macro "j" :next"
+macro "j" ":next"

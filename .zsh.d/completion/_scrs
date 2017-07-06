@@ -1,0 +1,7 @@
+#compdef scrs
+
+_scrs () {
+	local _sys_restartable_units
+	_systemctl_restartable_units
+	_wanted systemd-units expl 'restartable unit' compadd "$@" - ${_sys_restartable_units[*]} $(_systemctl_get_template_names)
+}

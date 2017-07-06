@@ -1,0 +1,45 @@
+{
+  "name": "nuclide-notifications",
+  "repository": "https://github.com/facebook/nuclide",
+  "main": "./lib/main.js",
+  "version": "0.0.0",
+  "description": "Provides native notification support for Nuclide & Atom",
+  "atomTestRunner": "../../lib/test-runner-entry.js",
+  "nuclide": {
+    "configMetadata": {
+      "pathComponents": [
+        "IDE",
+        "Notifications"
+      ]
+    },
+    "config": {
+      "whenFocused": {
+        "order": 0,
+        "title": "Show notifications when in focus",
+        "type": "boolean",
+        "default": false,
+        "description": "Display native notifications even when Nuclide is in focus."
+      },
+      "onlyNativeFriendly": {
+        "order": 1,
+        "title": "Show 'native friendly' notifications only.",
+        "type": "boolean",
+        "default": true,
+        "description": "Only display certain important Atom alerts (such as those relating to long-running jobs) as native notifications. Leave this checked if you want to reduce your notification frequency."
+      }
+    },
+    "packageType": "Atom",
+    "testRunner": "apm"
+  },
+  "activationHooks": [
+    "nuclide_native_notifications:gk:nuclide"
+  ],
+  "providedServices": {
+    "nuclide-notifications.provideRaiseNativeNotification": {
+      "versions": {
+        "description": "A function for raising native notifications.",
+        "0.0.0": "provideRaiseNativeNotification"
+      }
+    }
+  }
+}

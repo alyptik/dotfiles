@@ -1,0 +1,19 @@
+function TRAPINT () {
+	(( nopopd )) || popd >/dev/null 2>&1
+	trap - INT
+	return "$(( 128 + $1 ))"
+}
+
+local nopopd orig
+orig="$PWD"
+[[ "$orig" != "${CONF:-/store/config}" ]] && pushd "${CONF:-/store/config}" >/dev/null 2>&1 || nopopd=1
+if git pull 2>/dev/null; then
+	printf '\n \033[32m %s \n\033[0m' "Pull successful!"
+else
+	git stash
+	git pull && \
+		printf '\n \033[32m %s \n\033[0m' "Stash and pull successful!" || \
+		printf '\n \033[31m %s \n\033[0m' "Error during pull..."
+fi
+(( nopopd )) || popd >/dev/null 2>&1
+trap - INT

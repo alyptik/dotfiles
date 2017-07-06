@@ -1,0 +1,1243 @@
+'scopeName': 'source.shell'
+'name': 'Unix Shell'
+'fileTypes': [
+  'sh'
+  'bash'
+  'ksh'
+  'zsh'
+  'zsh-theme'
+  'zshenv'
+  'zlogin'
+  'zlogout'
+  'zprofile'
+  'zshrc'
+  'bashrc'
+  'bash_aliases'
+  'bash_profile'
+  'bash_login'
+  'profile'
+  'bash_logout'
+  '.textmate_init'
+  'npmrc'
+  'cygport'
+  'bats'
+  'ebuild'
+]
+'firstLineMatch': '''(?x)
+  # Hashbang
+  ^\\#!.*(?:\\s|\\/)
+    (?:bash|zsh|sh|tcsh|ksh|dash|ash|csh|rc)
+  (?:$|\\s)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
+      (?:shell-script|sh)
+    (?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
+    |
+    # Vim
+    (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s* set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+      sh
+    (?=\\s|:|$)
+  )
+'''
+'patterns': [
+  {
+    'include': '#comment'
+  }
+  {
+    'include': '#pipeline'
+  }
+  {
+    'include': '#list'
+  }
+  {
+    'include': '#compound-command'
+  }
+  {
+    'include': '#loop'
+  }
+  {
+    'include': '#function-definition'
+  }
+  {
+    'include': '#string'
+  }
+  {
+    'include': '#variable'
+  }
+  {
+    'include': '#interpolation'
+  }
+  {
+    'include': '#heredoc'
+  }
+  {
+    'include': '#herestring'
+  }
+  {
+    'include': '#redirection'
+  }
+  {
+    'include': '#pathname'
+  }
+  {
+    'include': '#keyword'
+  }
+  {
+    'include': '#support'
+  }
+]
+'repository':
+  'case-clause':
+    'patterns': [
+      {
+        'begin': '(?=\\S)'
+        'end': ';;'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.terminator.case-clause.shell'
+        'name': 'meta.scope.case-clause.shell'
+        'patterns': [
+          {
+            'begin': '(\\(|(?=\\S))'
+            'captures':
+              '0':
+                'name': 'punctuation.definition.case-pattern.shell'
+            'end': '\\)'
+            'name': 'meta.scope.case-pattern.shell'
+            'patterns': [
+              {
+                'match': '\\|'
+                'name': 'punctuation.separator.pipe-sign.shell'
+              }
+              {
+                'include': '#string'
+              }
+              {
+                'include': '#variable'
+              }
+              {
+                'include': '#interpolation'
+              }
+              {
+                'include': '#pathname'
+              }
+            ]
+          }
+          {
+            'begin': '(?<=\\))'
+            'end': '(?=;;)'
+            'name': 'meta.scope.case-clause-body.shell'
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'comment':
+    'patterns': [
+      {
+        'begin': '(^\\s+)?(?<=^|\\W)(?=#)(?!#{)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.whitespace.comment.leading.shell'
+        'end': '(?!\\G)'
+        'patterns': [
+          {
+            'begin': '#!'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.comment.shebang.shell'
+            'end': '$'
+            'name': 'comment.line.number-sign.shebang.shell'
+          }
+          {
+            'begin': '#'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.comment.shell'
+            'end': '$'
+            'name': 'comment.line.number-sign.shell'
+          }
+        ]
+      }
+      {
+        'match': '\\\\.'
+        'name': 'constant.character.escape.shell'
+      }
+      {
+        'begin': '\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '\''
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.quoted.single.shell'
+      }
+      {
+        'begin': '\\$?"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.quoted.double.shell'
+        'patterns': [
+          {
+            'match': '\\\\[\\$`"\\\\\\n]'
+            'name': 'constant.character.escape.shell'
+          }
+          {
+            'include': '#variable'
+          }
+          {
+            'include': '#interpolation'
+          }
+        ]
+      }
+      {
+        'begin': '\\$\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '\''
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.quoted.single.dollar.shell'
+        'patterns': [
+          {
+            'match': '\\\\(a|b|e|f|n|r|t|v|\\\\|\')'
+            'name': 'constant.character.escape.ansi-c.shell'
+          }
+          {
+            'match': '\\\\[0-9]{3}'
+            'name': 'constant.character.escape.octal.shell'
+          }
+          {
+            'match': '\\\\x[0-9a-fA-F]{2}'
+            'name': 'constant.character.escape.hex.shell'
+          }
+          {
+            'match': '\\\\c.'
+            'name': 'constant.character.escape.control-char.shell'
+          }
+        ]
+      }
+    ]
+  'compound-command':
+    'patterns': [
+      {
+        'begin': '(\\[{1,2})'
+        'captures':
+          '1':
+            'name': 'punctuation.definition.logical-expression.shell'
+        'end': '(\\]{1,2})'
+        'name': 'meta.scope.logical-expression.shell'
+        'patterns': [
+          {
+            'include': '#logical-expression'
+          }
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '(\\({2})'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '(\\){2})'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.other.math.shell'
+        'patterns': [
+          {
+            'include': '#math'
+          }
+        ]
+      }
+      {
+        'begin': '(\\()'
+        'captures':
+          '1':
+            'name': 'punctuation.definition.subshell.shell'
+        'end': '(\\))'
+        'name': 'meta.scope.subshell.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\s|^)(\\{)(?=\\s|$)'
+        'captures':
+          '1':
+            'name': 'punctuation.definition.group.shell'
+        'end': '(?<=^|;)\\s*(\\})'
+        'name': 'meta.scope.group.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'function-definition':
+    'patterns': [
+      {
+        'begin': '\\b(function)\\s+([^\\s\\\\]+)(?:\\s*(\\(\\)))?'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.function.shell'
+          '2':
+            'name': 'entity.name.function.shell'
+          '3':
+            'name': 'punctuation.definition.arguments.shell'
+        'end': '(\\||;|&|$|\")'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+        'name': 'meta.function.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\b(export)\\s(-f)\\s([a-zA-Z_]+)'
+        'beginCaptures':
+          '1':
+            'name': 'storage.modifier.shell'
+          '2':
+            'name': 'support.function.options.shell'
+          '3':
+            'name': 'entity.name.function.shell'
+        'end': '(\\||;|&|$|\")'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+        'name': 'meta.function.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\b([^\\s\\\\=]+)\\s*(\\(\\))'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.shell'
+          '2':
+            'name': 'punctuation.definition.arguments.shell'
+        'end': '(\\||;|&|$|\")'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+        'name': 'meta.function.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'heredoc':
+    'patterns': [
+      {
+        'begin': '(<<)-("|\'|)(RUBY)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.ruby.embedded.shell'
+        'end': '^\\t*(RUBY)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.ruby.shell'
+        'patterns': [
+          {
+            'include': 'source.ruby'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(RUBY)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.ruby.embedded.shell'
+        'end': '^(RUBY)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.ruby.shell'
+        'patterns': [
+          {
+            'include': 'source.ruby'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)(PYTHON)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.python.embedded.shell'
+        'end': '^\\t*(PYTHON)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.python.shell'
+        'patterns': [
+          {
+            'include': 'source.python'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(PYTHON)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.python.embedded.shell'
+        'end': '^(PYTHON)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.python.shell'
+        'patterns': [
+          {
+            'include': 'source.python'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)(APPLESCRIPT)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.applescript.embedded.shell'
+        'end': '^\\t*(APPLESCRIPT)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.applescript.shell'
+        'patterns': [
+          {
+            'include': 'source.applescript'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(APPLESCRIPT)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.applescript.embedded.shell'
+        'end': '^(APPLESCRIPT)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.applescript.shell'
+        'patterns': [
+          {
+            'include': 'source.applescript'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)(HTML)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'text.html.embedded.shell'
+        'end': '^\\t*(HTML)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.html.shell'
+        'patterns': [
+          {
+            'include': 'text.html.basic'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(HTML)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'text.html.embedded.shell'
+        'end': '^(HTML)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.html.shell'
+        'patterns': [
+          {
+            'include': 'text.html.basic'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)(MARKDOWN)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'text.html.markdown.embedded.shell'
+        'end': '^\\t*(MARKDOWN)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.markdown.shell'
+        'patterns': [
+          {
+            'include': 'text.html.markdown'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(MARKDOWN)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'text.html.markdown.embedded.shell'
+        'end': '^(MARKDOWN)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.markdown.shell'
+        'patterns': [
+          {
+            'include': 'text.html.markdown'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)(TEXTILE)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'text.html.textile.embedded.shell'
+        'end': '^\\t*(TEXTILE)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.textile.shell'
+        'patterns': [
+          {
+            'include': 'text.html.textile'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(TEXTILE)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'text.html.textile.embedded.shell'
+        'end': '^(TEXTILE)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.textile.shell'
+        'patterns': [
+          {
+            'include': 'text.html.textile'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)(SHELL)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.shell.embedded.shell'
+        'end': '^\\t*(\\3)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.shell.shell'
+        'patterns': [
+          {
+            'include': 'source.shell'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)("|\'|)(SHELL)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'contentName': 'source.shell.embedded.shell'
+        'end': '^(\\3)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.shell.shell'
+        'patterns': [
+          {
+            'include': 'source.shell'
+          }
+        ]
+      }
+      {
+        'begin': '(<<)-("|\'|)\\\\?(\\w+)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'end': '^\\t*(\\3)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.no-indent.shell'
+      }
+      {
+        'begin': '(<<)("|\'|)\\\\?(\\w+)\\2'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.heredoc.shell'
+          '3':
+            'name': 'keyword.control.heredoc-token.shell'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.shell'
+        'end': '^(\\3)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.heredoc-token.shell'
+        'name': 'string.unquoted.heredoc.shell'
+      }
+    ]
+  'herestring':
+    'patterns': [
+      {
+        'begin': '(<<<)\s*((\'))'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.herestring.shell'
+          '2':
+            'name': 'string.quoted.single.shell'
+          '3':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '(\')'
+        'endCaptures':
+          '0':
+            'name': 'string.quoted.single.shell'
+          '1':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'meta.herestring.shell'
+        'contentName': 'string.quoted.single.shell'
+      }
+      {
+        'begin': '(<<<)\s*(("))'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.herestring.shell'
+          '2':
+            'name': 'string.quoted.double.shell'
+          '3':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '(")'
+        'endCaptures':
+          '0':
+            'name': 'string.quoted.double.shell'
+          '1':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'meta.herestring.shell'
+        'contentName': 'string.quoted.double.shell'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'keyword.operator.herestring.shell'
+          '2':
+            'name': 'string.unquoted.herestring.shell'
+        'match': '(<<<)(([^\\s\\\\]|\\\\.)+)'
+        'name': 'meta.herestring.shell'
+      }
+    ]
+  'interpolation':
+    'patterns': [
+      {
+        'begin': '\\$\\({2}'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '\\){2}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.other.math.shell'
+        'patterns': [
+          {
+            'include': '#math'
+          }
+        ]
+      }
+      {
+        'begin': '`'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.interpolated.backtick.shell'
+        'patterns': [
+          {
+            'match': '\\\\[`\\\\$]'
+            'name': 'constant.character.escape.shell'
+          }
+          {
+            # Lifted from the #comment section to handle ending on ` instead of $
+            'begin': '(?<=\\W)(?=#)(?!#{)'
+            'beginCaptures':
+              '1':
+                'name': 'punctuation.whitespace.comment.leading.shell'
+            'end': '(?!\\G)'
+            'patterns': [
+              {
+                'begin': '#'
+                'beginCaptures':
+                  '0':
+                    'name': 'punctuation.definition.comment.shell'
+                'end': '(?=`)'
+                'name': 'comment.line.number-sign.shell'
+              }
+            ]
+          }
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\$\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.interpolated.dollar.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'keyword':
+    'patterns': [
+      {
+        'match': '(?<!-)\\b(then|else|elif|fi|for|in|do|done|select|case|continue|esac|while|until|return)\\b(?!-)'
+        'name': 'keyword.control.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./_/])\\b(?:export|declare|typeset|local|readonly)\\b'
+        'name': 'storage.modifier.shell'
+      }
+    ]
+  'list':
+    'patterns': [
+      {
+        'match': ';|&&|&|\\|'
+        'name': 'keyword.operator.list.shell'
+      }
+    ]
+  'logical-expression':
+    'patterns': [
+      {
+        'comment': 'do we want a special rule for ( expr )?'
+        'match': '=[=~]?|!=?|<|>|&&|\\|'
+        'name': 'keyword.operator.logical.shell'
+      }
+      {
+        'match': '(?<!\\S)-(nt|ot|ef|eq|ne|l[te]|g[te]|[a-hknoprstuwxzOGLSN])'
+        'name': 'keyword.operator.logical.shell'
+      }
+    ]
+  'loop':
+    'patterns': [
+      {
+        'begin': '\\b(for)\\s+(?=\\({2})'
+        'captures':
+          '1':
+            'name': 'keyword.control.shell'
+        'end': '\\b(done)\\b'
+        'name': 'meta.scope.for-loop.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\b(for)\\b\\s+(.+)\\s+\\b(in)\\b'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.control.shell'
+          '2':
+            'name': 'variable.other.loop.shell'
+            'patterns': [
+              {
+                'include': '#string'
+              }
+            ]
+          '3':
+            'name': 'keyword.control.shell'
+        'end': '(?<![\\-])\\bdone\\b(?![\\-])'
+        'endCaptures':
+          '0':
+            'name': 'keyword.control.shell'
+        'name': 'meta.scope.for-in-loop.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\b(while|until)\\b'
+        'captures':
+          '1':
+            'name': 'keyword.control.shell'
+        'end': '\\b(done)\\b'
+        'name': 'meta.scope.while-loop.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '\\b(select)\\s+((?:[^\\s\\\\]|\\\\.)+)\\b'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.control.shell'
+          '2':
+            'name': 'variable.other.loop.shell'
+        'end': '\\b(done)\\b'
+        'endCaptures':
+          '1':
+            'name': 'keyword.control.shell'
+        'name': 'meta.scope.select-block.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '(?<!-)\\b(case)\\b(?!-)'
+        'captures':
+          '1':
+            'name': 'keyword.control.shell'
+        'end': '\\b(esac)\\b'
+        'name': 'meta.scope.case-block.shell'
+        'patterns': [
+          {
+            'begin': '\\b(?:in)\\b'
+            'beginCaptures':
+              '1':
+                'name': 'keyword.control.shell'
+            'end': '(?=\\b(?:esac)\\b)'
+            'name': 'meta.scope.case-body.shell'
+            'patterns': [
+              {
+                'include': '#comment'
+              }
+              {
+                'include': '#case-clause'
+              }
+              {
+                'include': '$self'
+              }
+            ]
+          }
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '(?<!-)\\b(if)\\b(?!-|\\s*=)'
+        'captures':
+          '1':
+            'name': 'keyword.control.shell'
+        'end': '\\b(fi)\\b'
+        'name': 'meta.scope.if-block.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'math':
+    'patterns': [
+      {
+        'include': '#variable'
+      }
+      {
+        'match': '\\+{1,2}|-{1,2}|!|~|\\*{1,2}|/|%|<[<=]?|>[>=]?|==|!=|^|\\|{1,2}|&{1,2}|\\?|\\:|,|=|[*/%+\\-&^|]=|<<=|>>='
+        'name': 'keyword.operator.arithmetic.shell'
+      }
+      {
+        'match': '0[xX]\\h+'
+        'name': 'constant.numeric.hex.shell'
+      }
+      {
+        'match': '0\\d+'
+        'name': 'constant.numeric.octal.shell'
+      }
+      {
+        'match': '\\d{1,2}#[0-9a-zA-Z@_]+'
+        'name': 'constant.numeric.other.shell'
+      }
+      {
+        'match': '\\d+'
+        'name': 'constant.numeric.integer.shell'
+      }
+    ]
+  'pathname':
+    'patterns': [
+      {
+        'match': '(?<=\\s|:|=|^)~'
+        'name': 'keyword.operator.tilde.shell'
+      }
+      {
+        'match': '\\*|\\?'
+        'name': 'keyword.operator.glob.shell'
+      }
+      {
+        'begin': '([?*+@!])(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.operator.extglob.shell'
+          '2':
+            'name': 'punctuation.definition.extglob.shell'
+        'end': '(\\))'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.extglob.shell'
+        'name': 'meta.structure.extglob.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  'pipeline':
+    'patterns': [
+      {
+        'match': '(<![-/[a-zA-Z0-9]/./])\\b(time)\\b(?![-/[a-zA-Z0-9]/./])'
+        'name': 'keyword.other.shell'
+      }
+      {
+        'match': '[|!]'
+        'name': 'keyword.operator.pipe.shell'
+      }
+    ]
+  'redirection':
+    'patterns': [
+      {
+        'begin': '[><]\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.shell'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.shell'
+        'name': 'string.interpolated.process-substitution.shell'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'comment': 'valid: &>word >&word >word [n]>&[n] [n]<word [n]>word [n]>>word [n]<&word (last one is duplicate)'
+        'match': '&>|\\d*>&\\d*|\\d*(>>|>|<)|\\d*<&|\\d*<>'
+        'name': 'keyword.operator.redirect.shell'
+      }
+    ]
+  'support':
+    'patterns': [
+      {
+        'match': ' -[a-zA-Z0-9-]+(?![\\$|$|@|\\|])'
+        'name': 'support.function.options.shell'
+      }
+      {
+        'match': ' --[a-zA-Z0-9-]+(?![\\$|$|@|\\|])'
+        'name': 'support.function.options.shell'
+      }
+      {
+        'match': '(?<=^|\\s)(?::|\\.)(?=\\s|(\\||;|&|$))'
+        'name': 'support.function.builtin.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./=/[a-zA-Z0-9_]/])\\b(?:alias|autoload|bg|bind|bindkey|break|builtin|caller|cd|command|compgen|complete|dirs|disown|echo|enable|error|eval|exec|exit|false|fc|fg|getopts|hash|help|history|jobs|kill|let|logout|msg|msg2|popd|printf|pushd|pwd|read|readonly|set|shift|shopt|source|suspend|test|times|trap|true|type|ulimit|umask|unalias|unset|wait|warning|zmodload)\\b(?![\\./\\-/=/`/[a-zA-Z0-9_]/])'
+        'name': 'support.function.builtin.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])((?<![a-zA-Z0-9_]\\s))(?:atom|atom-beta|atom-git|atom-bleeding|awk|brackets|code|code-git|code-oss|ed|emacs|gvim|komodo|lighttable|nano|pico|sed|vi|vim)\\b(?![\\-/\\./\'/\"/=/`/[a-zA-Z0-9_]/])'
+        'name':  'support.function.editors.shell'
+      }
+      {
+        'begin': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])((?<![a-zA-Z0-9_]\\s))(sudo)\\s(?:atom|atom-beta|atom-git|atom-bleeding|awk|brackets|code|code-git|code-oss|ed|emacs|gvim|komodo|lighttable|nano|pico|sed|vi|vim)\\b(?![\\-/\\./\'/\"/=/`/[a-zA-Z0-9_]/])'
+        'beginCaptures':
+          '1':
+            'name': 'support.function.extras.shell'
+          '2':
+            'name':  'support.function.editors.shell'
+        'end': '(\\||;|&|$)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])\\b(?:chsh|gpasswd|mkpasswd|passwd|useradd|usermod)\\b(?![\\-/\\./\'/\"/=/`/[a-zA-Z0-9_]/])'
+        'name':  'support.function.users.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])\\b(?:mkfs\.*|mkinitcpio|mksquashfs)\\b(?![\\-/\\./\'/\"/=/[a-zA-Z0-9_]/])'
+        'name':  'support.function.fs.shell'
+      }
+      {
+        'match': '(?<![a-zA-Z0-9.-:="])(?<![a-zA-Z0-9.-:="]\\s)(?<![\'])(?:aria2c|curl|wget)\\b(?![\\-/\\./\'/\"/=/`/;/[a-zA-Z0-9_]/])'
+        'name':  'support.function.download.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/@/[a-zA-Z0-9_]/])\\b(?:bzr|cvs|hg|svn)\\b(?![\\-/\\./=/\'/\"/+/@/`/;/])'
+        'name':  'support.function.vcs.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/@/[a-zA-Z0-9_]/])\\b(git)\\s(add|bisect|branch|checkout|clone|commit|describe|diff|fetch|fork|grep|init|log|merge|mv|pull|push|rebase|release|remote|reset|rm|show|status|submodule|tag)\\b(?![\\-/\\./=/\'/\"/+/@/`/;/])'
+        'name':  'support.function.vcs.shell'
+      }
+      {
+        'begin': '(git)\\s(-[a-zA-Z0-9-_]*)\\s([a-zA-Z0-9/$_]*)\\s(add|bisect|branch|checkout|clone|commit|describe|diff|fetch|fork|grep|init|log|merge|mv|pull|push|rebase|release|reset|rm|show|status|submodule|remote|tag)'
+        'beginCaptures':
+          '1':
+            'name':  'support.function.vcs.shell'
+          '2':
+            'name':  'support.function.options.shell'
+          '3':
+            'name':  ''
+          '4':
+            'name':  'support.function.vcs.shell'
+        'end': ';|&|\\||$'
+      }
+      {
+        'begin': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])(sudo)\\s(antigen|apacman|apm|apm-bleeding|apm-beta|apm-git|apt|apt-cache|apt-fast|apt-get|apt-key|add-apt-repository|apt-add-repository|apt-config|apt-mark|aptitude|bacman|bauerbill|Bauerbill.py|bundle|checkupdates|cleanupdelta|composer|conary|cower|dpkg|dpkg-architecture|dpkg-buildflags|dpkg-buildpackage|dpkg-checkbuilddeps|dpkg-deb|dpkg-distaddfile|dpkg-divert|dpkg-genchanges|dpkg-gencontrol|dpkg-gensymbols|dpkg-log-summary|dpkg-maintscript-helper|dpkg-mergechangelogs|dpkg-name|dpkg-parsechangelog|dpkg-query|dpkg-scanpackages|dpkg-scansources|dpkg-shlibdeps|dpkg-source|dpkg-split|dpkg-statoverride|dpkg-trigger|dpkg-vendor|dnf|ebuild|emerge|eopkg|equery|equo|etc-update|explodepkg|gem|installpkg|lein|makechrootpkg|makepkg|makepkg-template|mkarchiso|mkarchroot|npm|osc|paccache|pacdiff|paclist|paclog-pkglist|pacaur|packer|pacman|pacman-db-upgrade|pacman-key|pacman-optimize|pacscripts|pacsearch|pacsort|pactree|pbget|pet2tgz|pkg|pkg\_add|pkg\_check|pkg\_create|pkg\_delete|pkg\_info|pkg\_mklocatedb|pkg\_sign|pkgdelta|pip|pip3|pkgtool|powerpill|Powerpill.py|rankmirrors|removepkg|repo-add|repo-elephant|repo-remove|repoquery|testpkg|revdep-rebuild|rpm|rpm2archive|rpm2cpio|rpmargs|rpmbuild|mock|rpmdb|rpmdev-bumpspec|rpmdev-checksig|rpmdev-cksum|rpmdev-diff|rpmdev-extract|rpmdev-md5|rpmdev-newinit|rpmdev-newspec|rpmdev-packager|rpmdev-rmdevelrpms|rpmdev-setuptree|rpmdev-sha1|rpmdev-sha224|rpmdev-sha256|rpmdev-sha384|rpmdev-sha512|rpmdev-sort|rpmdev-sum|rpmdev-vercmp|rpmdev-wipetree|rpmdiff|rpmdrake|rpmelfsym|rpmfile|rpm-find-leaves|rpmgraph|rpminfo|rpmkeys|rpmlint|rpmls|rpmpeek|rpmquery|rpmsodiff|rpmsoname|rpmspec|rpmverify|slackpkg|slapt-get|snap|snapcraft|snapcraft-parser|trizen|updpkgsums|namcap|mksrcinfo|upgradepkg|urpmi|urpme|urpmq|urpmf|urpmi.update|vercmp|yaourt|yum|yum-builddep|zypper)(?![\\|/;/&/$/[a-zA-Z0-9_-]//\"/\'/./])'
+        'beginCaptures':
+          '1':
+            'name': 'support.function.extras.shell'
+          '2':
+            'name': 'support.function.packages.shell'
+        'end': '(\\||;|&|$|[a-zA-Z0-9_-]|\"|\'|\\.)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])((?<![a-zA-Z0-9_]\\s))(\\.\/autogen.sh|\\.\/configure|antigen|apacman|apm|apm-bleeding|apm-beta|apm-git|apt|apt-cache|apt-fast|apt-get|apt-key|add-apt-repository|apt-add-repository|apt-config|apt-mark|aptitude|bacman|bauerbill|Bauerbill.py|bundle|checkupdates|cleanupdelta|composer|conary|cower|dpkg|dpkg-architecture|dpkg-buildflags|dpkg-buildpackage|dpkg-checkbuilddeps|dpkg-deb|dpkg-distaddfile|dpkg-divert|dpkg-genchanges|dpkg-gencontrol|dpkg-gensymbols|dpkg-log-summary|dpkg-maintscript-helper|dpkg-mergechangelogs|dpkg-name|dpkg-parsechangelog|dpkg-query|dpkg-scanpackages|dpkg-scansources|dpkg-shlibdeps|dpkg-source|dpkg-split|dpkg-statoverride|dpkg-trigger|dpkg-vendor|dnf|ebuild|emerge|eopkg|equery|equo|etc-update|explodepkg|gem|installpkg|lein|makechrootpkg|makepkg|makepkg-template|mkarchiso|mkarchroot|npm|osc|paccache|pacdiff|paclist|paclog-pkglist|pacaur|packer|pacman|pacman-db-upgrade|pacman-key|pacman-optimize|pacscripts|pacsearch|pacsort|pactree|pbget|pet2tgz|pkg|pkg\_add|pkg\_check|pkg\_create|pkg\_delete|pkg\_info|pkg\_mklocatedb|pkg\_sign|pkgdelta|pip|pip3|pkgtool|powerpill|Powerpill.py|rankmirrors|removepkg|repoquery|repo-add|repo-elephant|repo-remove|testpkg|revdep-rebuild|rpm|rpm2archive|rpm2cpio|rpmargs|rpmbuild|mock|rpmdb|rpmdev-bumpspec|rpmdev-checksig|rpmdev-cksum|rpmdev-diff|rpmdev-extract|rpmdev-md5|rpmdev-newinit|rpmdev-newspec|rpmdev-packager|rpmdev-rmdevelrpms|rpmdev-setuptree|rpmdev-sha1|rpmdev-sha224|rpmdev-sha256|rpmdev-sha384|rpmdev-sha512|rpmdev-sort|rpmdev-sum|rpmdev-vercmp|rpmdev-wipetree|rpmdiff|rpmdrake|rpmelfsym|rpmfile|rpm-find-leaves|rpmgraph|rpminfo|rpmkeys|rpmlint|rpmls|rpmpeek|rpmquery|rpmsodiff|rpmsoname|rpmspec|rpmverify|slackpkg|slapt-get|snap|snapcraft|snapcraft-parser|trizen|updpkgsums|namcap|mksrcinfo|upgradepkg|urpmi|urpmf|urpmq|urpme|urpmi.update|vercmp|yaourt|yum|yum-builddep|zypper)(?![\\|/;/&/$/[a-zA-Z0-9_-]//\"/\'/./])'
+        'name': 'support.function.packages.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9]/_/])(?:docker|find|g\+\+|gcc|grep|grub|make|mount|node|nodejs|packer|patch|perl|php|php5|php6|php7|python|python2|python3|python3.4|python3.5|python2.7|script/build|script/grunt|strings|su|sudo|umount)\\b(?![\\-/\\./\'/\"/=/[a-zA-Z0-9_]/])'
+        'name':  'support.function.extras.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9]/_/])(?:go)\\s(build|clean|doc|env|fix|fmt|generate|get|install|list|run|test|tool|version|vet)\\b(?![\\-/\\./\'/\"/=/[a-zA-Z0-9_]/])'
+        'name':  'support.function.extras.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9]/])(?:grub-[a-zA-Z0-9]+)\\b(?![\\-/\\./\'/\"/=/])'
+        'name':  'support.function.extras.shell'
+      }
+      {
+        'match': '(?<![a-zA-Z0-9./]\\s)(?<!-[a-zA-Z0-9./]\\s)(?<![a-zA-Z0-9./])(?<!-[a-zA-Z0-9./])(?<![\\-{/])(?<![\\-{/}]\\s)(ar|bsdtar|bzcat|bzip2|gzip|lz4|lz4c|lzcat|lz4cat|lzma|p7zip|tar|unzip|unzzipcat|xz|xzcat|zcat)\\b(?![a-zA-Z0-9/\\-/_/./])'
+        'name':  'support.function.archives.shell'
+      }
+      {
+        'match': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])((?<![a-zA-Z0-9_]\\s))\\b(?:base32|base64|basename|cat|chcon|chgrp|chmod|chown|chroot|cksum|comm|cp|csplit|cut|date|dd|df|dir|dircolors|dirname|du|echo|env|expand|expr|factor|false|fmt|fold|head|hostid|id|install|join|link|ln|logname|ls|md5sum|mkdir|mkfifo|mknod|mktemp|mv|nice|nl|nohup|nproc|numfmt|od|paste|pathchk|pinky|pr|printenv|printf|ptx|pwd|readlink|realpath|rm|rmdir|runcon|seq|sha1sum|sha224sum|sha256sum|sha384sum|sha512sum|shred|shuf|sleep|sort|split|stat|stdbuf|stty|sum|sync|tac|tail|tee|test|timeout|touch|tr|true|truncate|tsort|tty|uname|unexpand|uniq|unlink|users|vdir|wc|who|whoami|yes)\\b(?![\\-\'/\"/=/`/_/])'
+        'name': 'support.function.coreutils.shell'
+      }
+      {
+        'begin': '(?<![\\-/\\./\'/\"/=/:/[a-zA-Z0-9_]/])((?<![a-zA-Z0-9_]\\s))(sudo)\\s(?:base32|base64|basename|cat|chcon|chgrp|chmod|chown|chroot|cksum|comm|cp|csplit|cut|date|dd|df|dir|dircolors|dirname|du|echo|env|expand|expr|factor|false|fmt|fold|head|hostid|id|install|join|link|ln|logname|ls|md5sum|mkdir|mkfifo|mknod|mktemp|mv|nice|nl|nohup|nproc|numfmt|od|paste|pathchk|pinky|pr|printenv|printf|ptx|pwd|readlink|realpath|rm|rmdir|runcon|seq|sha1sum|sha224sum|sha256sum|sha384sum|sha512sum|shred|shuf|sleep|sort|split|stat|stdbuf|stty|sum|sync|tac|tail|tee|test|timeout|touch|tr|true|truncate|tsort|tty|uname|unexpand|uniq|unlink|users|vdir|wc|who|whoami|yes)\\b(?![\\-\'/\"/=/`/_/])'
+        'beginCaptures':
+          '1':
+            'name': 'support.function.extras.shell'
+          '2':
+            'name': 'support.function.coreutils.shell'
+        'end': '(\\||;|&|$|[a-zA-Z0-9_-]|\"|\'|\\.)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+      }
+      {
+        'match': '(--noconfirm|--force|--needed)'
+        'name':  'support.function.options.shell'
+      }
+    ]
+  'variable':
+    'patterns': [
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.definition.variable.shell'
+        'match': '(\\$)[a-zA-Z_][a-zA-Z0-9_]*'
+        'name': 'variable.other.normal.shell'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.definition.variable.shell'
+        'match': '(\\$)[-*@#?$!0_]'
+        'name': 'variable.other.special.shell'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.definition.variable.shell'
+        'match': '(\\$)[1-9]'
+        'name': 'variable.other.positional.shell'
+      }
+      {
+        'begin': '\\$\\{'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.variable.shell'
+        'end': '\\}'
+        'name': 'variable.other.bracket.shell'
+        'patterns': [
+          {
+            'match': '!|:[-=?]?|\\*|@|#{1,2}|%{1,2}|/'
+            'name': 'keyword.operator.expansion.shell'
+          }
+          {
+            'captures':
+              '1':
+                'name': 'punctuation.section.array.shell'
+              '3':
+                'name': 'punctuation.section.array.shell'
+            'match': '(\\[)([^\\]]+)(\\])'
+          }
+          {
+            'include': '#variable'
+          }
+          {
+            'include': '#string'
+          }
+        ]
+      }
+      {
+        'begin': '(?<![/$/[a-zA-Z0-9_]/|/\\=/\\//])([a-zA-Z0-9_-]+)(\\+=|=)'
+        'beginCaptures':
+          '1':
+            'name': 'variable.definition.name'
+          '2':
+            'name': 'variable.definition.equal'
+        'end':  ';|&|$|'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.shell'
+      }
+    ]

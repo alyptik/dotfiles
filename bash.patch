@@ -1,0 +1,448 @@
+From cd1d8a15c9731af27f64a42677724e0cee0c7863 Mon Sep 17 00:00:00 2001
+From: Dylan Cali <calid1984@gmail.com>
+Date: Fri, 22 Aug 2014 03:19:13 -0500
+Subject: [PATCH 1/5] fix vi search prompt bug for long prompts
+
+---
+ display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/display.c b/display.c
+index 4df1f73..e575b16 100644
+--- display.c
++++ display.c
+@@ -2259,7 +2259,7 @@ rl_message (va_alist)
+       va_start (args);
+       format = va_arg (args, char *);
+ #endif
+-      vsnprintf (msg_buf, msg_bufsiz - 1, format, args);
++      vsnprintf (msg_buf, msg_bufsiz, format, args);
+     }
+ #else
+   vsprintf (msg_buf, format, args);
+--
+2.1.0
+
+
+From 23fb3ba4df98b7303cfae012bb9a8895f90af9ea Mon Sep 17 00:00:00 2001
+From: Dylan Cali <calid1984@gmail.com>
+Date: Thu, 28 Aug 2014 19:19:50 -0500
+Subject: [PATCH 2/5] add modestr options
+
+---
+ bind.c      | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ readline.c  |  9 +++++++++
+ rlconf.h    |  5 +++++
+ rlprivate.h |  3 +++
+ 4 files changed, 68 insertions(+)
+
+diff --git a/bind.c b/bind.c
+index 8acf4ac..570d44c 100644
+--- bind.c
++++ bind.c
+@@ -1573,6 +1573,9 @@ static int sv_histsize PARAMS((const char *));
+ static int sv_isrchterm PARAMS((const char *));
+ static int sv_keymap PARAMS((const char *));
+ static int sv_seqtimeout PARAMS((const char *));
++static int sv_emacs_modestr PARAMS((const char *));
++static int sv_vi_modestr1 PARAMS((const char *));
++static int sv_vi_modestr2 PARAMS((const char *));
+
+ static const struct {
+   const char * const name;
+@@ -1589,6 +1592,9 @@ static const struct {
+   { "isearch-terminators", V_STRING,	sv_isrchterm },
+   { "keymap",		V_STRING,	sv_keymap },
+   { "keyseq-timeout",	V_INT,		sv_seqtimeout },
++  { "emacs-mode-str",	V_STRING,   sv_emacs_modestr },
++  { "vi-mode-str1",	V_STRING,   sv_vi_modestr1 },
++  { "vi-mode-str2",	V_STRING,   sv_vi_modestr2 },
+   { (char *)NULL,	0, (_rl_sv_func_t *)0 }
+ };
+
+@@ -1698,6 +1704,45 @@ sv_combegin (value)
+ }
+
+ static int
++sv_emacs_modestr (value)
++     const char *value;
++{
++  if (value && *value)
++    {
++      FREE (_rl_emacs_mode_str);
++      _rl_emacs_mode_str = savestring (value);
++      return 0;
++    }
++  return 1;
++}
++
++static int
++sv_vi_modestr1 (value)
++     const char *value;
++{
++  if (value)
++    {
++      FREE (_rl_vi_mode_str1);
++      _rl_vi_mode_str1 = savestring (value);
++      return 0;
++    }
++  return 1;
++}
++
++static int
++sv_vi_modestr2 (value)
++     const char *value;
++{
++  if (value)
++    {
++      FREE (_rl_vi_mode_str2);
++      _rl_vi_mode_str2 = savestring (value);
++      return 0;
++    }
++  return 1;
++}
++
++static int
+ sv_dispprefix (value)
+      const char *value;
+ {
+@@ -2371,6 +2416,12 @@ _rl_get_string_variable_value (name)
+     }
+   else if (_rl_stricmp (name, "comment-begin") == 0)
+     return (_rl_comment_begin ? _rl_comment_begin : RL_COMMENT_BEGIN_DEFAULT);
++  else if (_rl_stricmp (name, "emacs-mode-str") == 0)
++    return (_rl_emacs_mode_str ? _rl_emacs_mode_str : RL_EMACS_MODESTR_DEFAULT);
++  else if (_rl_stricmp (name, "vi-mode-str1") == 0)
++    return (_rl_vi_mode_str1 ? _rl_vi_mode_str1 : RL_VI_MODESTR1_DEFAULT);
++  else if (_rl_stricmp (name, "vi-mode-str2") == 0)
++    return (_rl_vi_mode_str2 ? _rl_vi_mode_str2 : RL_VI_MODESTR2_DEFAULT);
+   else if (_rl_stricmp (name, "completion-display-width") == 0)
+     {
+       sprintf (numbuf, "%d", _rl_completion_columns);
+diff --git a/readline.c b/readline.c
+index abb29a0..f7a56bb 100644
+--- readline.c
++++ readline.c
+@@ -229,6 +229,15 @@ int _rl_bell_preference = AUDIBLE_BELL;
+ /* String inserted into the line by rl_insert_comment (). */
+ char *_rl_comment_begin;
+
++/* String to indicate prompt is in emacs mode */
++char *_rl_emacs_mode_str;
++
++/* String to indicate prompt is in vi insert mode */
++char *_rl_vi_mode_str1;
++
++/* String to indicate prompt is in vi command mode */
++char *_rl_vi_mode_str2;
++
+ /* Keymap holding the function currently being executed. */
+ Keymap rl_executing_keymap;
+
+diff --git a/rlconf.h b/rlconf.h
+index 1a40afc..add3e46 100644
+--- rlconf.h
++++ rlconf.h
+@@ -55,6 +55,11 @@
+ /* The string inserted by the `insert comment' command. */
+ #define RL_COMMENT_BEGIN_DEFAULT "#"
+
++/* Default strings to indicate prompt mode */
++#define RL_EMACS_MODESTR_DEFAULT "(emacs)"
++#define RL_VI_MODESTR1_DEFAULT   "(ins)"
++#define RL_VI_MODESTR2_DEFAULT   "(cmd)"
++
+ /* Define this if you want code that allows readline to be used in an
+    X `callback' style. */
+ #define READLINE_CALLBACKS
+diff --git a/rlprivate.h b/rlprivate.h
+index 14a370d..68fe876 100644
+--- rlprivate.h
++++ rlprivate.h
+@@ -476,6 +476,9 @@ extern int _rl_revert_all_at_newline;
+ extern int _rl_echo_control_chars;
+ extern int _rl_show_mode_in_prompt;
+ extern char *_rl_comment_begin;
++extern char *_rl_emacs_mode_str;
++extern char *_rl_vi_mode_str1;
++extern char *_rl_vi_mode_str2;
+ extern unsigned char _rl_parsing_conditionalized_out;
+ extern Keymap _rl_keymap;
+ extern FILE *_rl_in_stream;
+--
+2.1.0
+
+
+From 19ac19c92b4ee6f191d49fae4397163c0b7a7695 Mon Sep 17 00:00:00 2001
+From: Dylan Cali <calid1984@gmail.com>
+Date: Thu, 28 Aug 2014 19:20:06 -0500
+Subject: [PATCH 3/5] add modestr expansion logic
+
+support dynamic positioning of mode strings using '\m' escape. if used
+in the prompt it will be replaced with the current mode string.  if not
+used mode is just prefixed to the beginning as usual
+---
+ display.c | 93 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ rlconf.h  |  1 +
+ 2 files changed, 71 insertions(+), 23 deletions(-)
+
+diff --git a/display.c b/display.c
+index e575b16..327810a 100644
+--- display.c
++++ display.c
+@@ -240,15 +240,75 @@ static int saved_invis_chars_first_line;
+ static int saved_physical_chars;
+
+ /* Return a character indicating the editing mode, for use in the prompt. */
+-static int
+-prompt_modechar ()
++static char*
++prompt_modestr ()
+ {
+   if (rl_editing_mode == emacs_mode)
+-    return '@';
++    {
++      return _rl_emacs_mode_str ? _rl_emacs_mode_str : RL_EMACS_MODESTR_DEFAULT;
++    }
+   else if (_rl_keymap == vi_insertion_keymap)
+-    return '+';		/* vi insert mode */
++    {
++      return _rl_vi_mode_str1 ? _rl_vi_mode_str1 : RL_VI_MODESTR1_DEFAULT;
++    }
++  else
++    {
++      return _rl_vi_mode_str2 ? _rl_vi_mode_str2 : RL_VI_MODESTR2_DEFAULT;
++    }
++}
++
++static char*
++expand_modestr (pmt)
++     char* pmt;
++{
++  char *mode_str, *ph_start, *p, *r, *ret;
++  int   mode_len, ph_len, pmt_len, n;
++
++  pmt_len  = strlen(pmt);
++  ph_start = strstr(pmt, RL_MODE_PLACEHOLDER);
++
++  if (ph_start)
++    {
++      /* expand mode placeholder */
++      mode_str = prompt_modestr();
++      mode_len = strlen(mode_str);
++      ph_len   = strlen(RL_MODE_PLACEHOLDER);
++
++      /* alloc final prompt len after modestr expansion */
++      r = ret = (char*)xmalloc (pmt_len - ph_len + mode_len + 1);
++
++      /* fill before placeholder with existing prompt */
++      p = pmt;
++      while (p != ph_start)
++        {
++          *r++ = *p++;
++        }
++
++      /* fill expanded mode str */
++      n = 0;
++      while (n < mode_len)
++        {
++          *r++ = mode_str[n++];
++        }
++
++      /* fill after placeholder with existing prompt */
++      p += ph_len;
++      strcpy(r, p);
++    }
+   else
+-    return ':';		/* vi command mode */
++    {
++      /* no placeholder, so just prefix mode */
++      mode_str = prompt_modestr ();
++      mode_len = strlen (mode_str);
++
++      r = ret = (char *)xmalloc (pmt_len + mode_len + 1);
++      memcpy (r, mode_str, mode_len);
++
++      r += mode_len;
++      strcpy(r, pmt);
++    }
++
++  return ret;
+ }
+
+ /* Expand the prompt string S and return the number of visible
+@@ -274,19 +334,14 @@ expand_prompt (pmt, lp, lip, niflp, vlp)
+   char *r, *ret, *p, *igstart;
+   int l, rl, last, ignoring, ninvis, invfl, invflset, ind, pind, physchars;
+
++  if (_rl_show_mode_in_prompt)
++    r = ret = pmt = expand_modestr(pmt);
++  else
++    r = ret = savestring (pmt);
++
+   /* Short-circuit if we can. */
+   if ((MB_CUR_MAX <= 1 || rl_byte_oriented) && strchr (pmt, RL_PROMPT_START_IGNORE) == 0)
+     {
+-      if (pmt == rl_prompt && _rl_show_mode_in_prompt)
+-        {
+-          l = strlen (pmt);
+-          r = (char *)xmalloc (l + 2);
+-          r[0] = prompt_modechar ();
+-          strcpy (r + 1, pmt);
+-        }
+-      else
+-	r = savestring (pmt);
+-
+       if (lp)
+ 	*lp = strlen (r);
+       if (lip)
+@@ -298,15 +353,7 @@ expand_prompt (pmt, lp, lip, niflp, vlp)
+       return r;
+     }
+
+-  l = strlen (pmt);
+-  r = ret = (char *)xmalloc (l + 2);
+-
+   rl = physchars = 0;	/* move up here so mode show can set them */
+-  if (pmt == rl_prompt && _rl_show_mode_in_prompt)
+-    {
+-      *r++ = prompt_modechar ();
+-      rl = physchars = 1;
+-    }
+
+   invfl = 0;	/* invisible chars in first line of prompt */
+   invflset = 0;	/* we only want to set invfl once */
+diff --git a/rlconf.h b/rlconf.h
+index add3e46..d1ea97b 100644
+--- rlconf.h
++++ rlconf.h
+@@ -55,6 +55,7 @@
+ /* The string inserted by the `insert comment' command. */
+ #define RL_COMMENT_BEGIN_DEFAULT "#"
+
++#define RL_MODE_PLACEHOLDER "\\m"
+ /* Default strings to indicate prompt mode */
+ #define RL_EMACS_MODESTR_DEFAULT "(emacs)"
+ #define RL_VI_MODESTR1_DEFAULT   "(ins)"
+--
+2.1.0
+
+
+From 2efd9bfdf7b3820f77d740a948fd0b44680f65bc Mon Sep 17 00:00:00 2001
+From: Dylan Cali <calid1984@gmail.com>
+Date: Tue, 19 Aug 2014 06:51:01 -0500
+Subject: [PATCH 4/5] fix reprinting prompts with invisible chars
+
+the relative cursor movement and reprint logic currently breaks when
+using dynamic mode strings with prompts that have invisible characters.
+To work around this just do a full reprint of the prompt line if it has
+invisible characters and skip the existing invisible char
+counting/relative movement logic.
+---
+ display.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
+
+diff --git a/display.c b/display.c
+index 327810a..682ea28 100644
+--- display.c
++++ display.c
+@@ -1062,6 +1062,10 @@ rl_redisplay ()
+ 	      update_line (VIS_LINE(linenum), INV_LINE(linenum), linenum,
+ 			   VIS_LLEN(linenum), INV_LLEN(linenum), inv_botlin);
+
++	      /* The following logic did not work correctly and was not
++		 necessary after changes made to add the mode strings
++		 feature, and so has been commented out for now */
++
+ 	      /* update_line potentially changes _rl_last_c_pos, but doesn't
+ 		 take invisible characters into account, since _rl_last_c_pos
+ 		 is an absolute cursor position in a multibyte locale.  See
+@@ -1074,14 +1078,14 @@ rl_redisplay ()
+ 		 time update_line is called, then we can assume in our
+ 		 calculations that o_cpos does not need to be adjusted by
+ 		 wrap_offset. */
+-	      if (linenum == 0 && (MB_CUR_MAX > 1 && rl_byte_oriented == 0) && OLD_CPOS_IN_PROMPT())
+-		_rl_last_c_pos -= prompt_invis_chars_first_line;	/* XXX - was wrap_offset */
+-	      else if (linenum == prompt_last_screen_line && prompt_physical_chars > _rl_screenwidth &&
++	      /* if (linenum == 0 && (MB_CUR_MAX > 1 && rl_byte_oriented == 0) && OLD_CPOS_IN_PROMPT())
++		_rl_last_c_pos -= prompt_invis_chars_first_line;	*//* XXX - was wrap_offset */
++	      /*else if (linenum == prompt_last_screen_line && prompt_physical_chars > _rl_screenwidth &&
+ 			(MB_CUR_MAX > 1 && rl_byte_oriented == 0) &&
+ 			cpos_adjusted == 0 &&
+ 			_rl_last_c_pos != o_cpos &&
+ 			_rl_last_c_pos > (prompt_last_invisible - _rl_screenwidth - prompt_invis_chars_first_line))
+-		_rl_last_c_pos -= (wrap_offset-prompt_invis_chars_first_line);
++		_rl_last_c_pos -= (wrap_offset-prompt_invis_chars_first_line); */
+
+ 	      /* If this is the line with the prompt, we might need to
+ 		 compensate for invisible characters in the new line. Do
+@@ -1617,6 +1621,22 @@ update_line (old, new, current_line, omax, nmax, inv_botlin)
+ 	_rl_last_c_pos += visible_wrap_offset;
+     }
+
++  /* The relative movement logic currently has trouble when using mode strings
++     and the prompt has invisible characters. Take the easy way out and just do
++     a full reprint of the line if the prompt has invis chars */
++  if (current_line == 0 && prompt_last_invisible)
++    {
++#if defined (__MSDOS__)
++      putc ('\r', rl_outstream);
++#else
++      tputs (_rl_term_cr, 1, _rl_output_character_function);
++#endif
++      _rl_output_some_chars (new, nd);
++      _rl_last_c_pos = _rl_col_width (new, 0, nd, 1) - wrap_offset;
++      goto clear_rest_of_line;
++    }
++
++
+   /* If this is the first line and there are invisible characters in the
+      prompt string, and the prompt string has not changed, and the current
+      cursor position is before the last invisible character in the prompt,
+--
+2.1.0
+
+
+From 559c78d90f4d978fd23b281570f4815f0a290dea Mon Sep 17 00:00:00 2001
+From: Dylan Cali <calid1984@gmail.com>
+Date: Thu, 28 Aug 2014 19:48:05 -0500
+Subject: [PATCH 5/5] fix duplicate print of mode in multiline prompts
+
+for multiline prompts don't print the mode when expanding the prefix
+component, only the prompt component
+---
+ display.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/display.c b/display.c
+index 682ea28..7b40a8e 100644
+--- display.c
++++ display.c
+@@ -476,7 +476,7 @@ rl_expand_prompt (prompt)
+      char *prompt;
+ {
+   char *p, *t;
+-  int c;
++  int c, saved_mode;
+
+   /* Clear out any saved values. */
+   FREE (local_prompt);
+@@ -513,10 +513,15 @@ rl_expand_prompt (prompt)
+       c = *t; *t = '\0';
+       /* The portion of the prompt string up to and including the
+ 	 final newline is now null-terminated. */
++
++      /* ensure we don't duplicate print the mode */
++      saved_mode = _rl_show_mode_in_prompt;
++      _rl_show_mode_in_prompt = 0;
+       local_prompt_prefix = expand_prompt (prompt, &prompt_prefix_length,
+ 						   (int *)NULL,
+ 						   (int *)NULL,
+ 						   (int *)NULL);
++      _rl_show_mode_in_prompt = saved_mode;
+       *t = c;
+       local_prompt_len = local_prompt ? strlen (local_prompt) : 0;
+       return (prompt_prefix_length);
+--
+2.1.0
+

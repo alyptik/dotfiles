@@ -1,0 +1,6 @@
+tags
+*.swn
+*.swo
+*.swp
+*\~
+a.out

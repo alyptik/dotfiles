@@ -1,0 +1,63 @@
+# do not bell on tab-completion
+
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
+
+# set bell-style none
+set bell-style visible
+set bind-tty-special-chars on
+set blink-matching-paren off
+set colored-completion-prefix on
+set colored-stats on
+#set completion-ignore-case on
+set completion-ignore-case off
+set enable-bracketed-paste off
+set expand-tilde on
+set history-preserve-point on
+set menu-complete-display-prefix on
+set show-all-if-ambiguous on
+set show-mode-in-prompt on
+set visible-stats on
+
+$if mode=emacs
+
+# custom bindings
+"\C-k": kill-whole-line
+"\C-u": universal-argument
+"\C-w": backward-kill-word
+"\C-x\C-r": re-read-init-file
+"\eh": tilde-expand
+"\eu": undo
+"\e[": start-kbd-macro
+"\e]": end-kbd-macro
+"\e\\": call-last-kbd-macro
+
+# for linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+"\e[7~": beginning-of-line
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# for rxvt
+"\e[8~": end-of-line
+
+# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# for freebsd console
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+
+$endif

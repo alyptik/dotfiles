@@ -1,0 +1,318 @@
+*open-pdf.txt*
+
+Author : rhysd <lin90162@yahoo.co.jp>
+
+CONTENTS          *open-pdf.vim-contents*
+
+Introduction      |open-pdf.vim-introduction|
+Usage             |open-pdf.vim-usage|
+Install           |open-pdf.vim-install|
+Dependency        |open-pdf.vim-dependency|
+Commands          |open-pdf.vim-commands|
+Auto Conversion   |open-pdf.vim-auto-conversion|
+Variables         |open-pdf.vim-variables|
+Hooks             |open-pdf.vim-hooks|
+Unite Action      |open-pdf.vim-unite-action|
+Unite Source      |open-pdf.vim-unite-source|
+Setup Example     |open-pdf.vim-setup-example|
+License           |open-pdf.vim-license|
+
+==============================================================================
+INTRODUCTION                                       *open-pdf.vim-introduction*
+
+*open-pdf.vim* is plugin to open pdf files in vim. This plugin enables to
+access pdf files and yank in the files quickly. Conversion from pdf to txt
+takes seconds, however, the conversion only occurs at first time because this
+plugin cache txt files. If you use |unite.vim|, you can access the cache files
+using unite interface.
+
+==============================================================================
+USAGE                                                     *open-pdf.vim-usage*
+
+  Open pdf file with a Pdf command.
+>
+  :Pdf path/to/hoge.pdf
+<
+
+  If something goes wrong, you can remove cache.
+>
+  :PdfCacheClean
+<
+
+  Select cache with |unite.vim| interface.
+>
+  :Unite pdf/history
+<
+
+==============================================================================
+INSTALL                                                 *open-pdf.vim-install*
+
+Install the distributed files into Vim script directory which is usually
+~/.vim/, or $HOME/vimfiles on Windows.
+
+If you use |vundle|,
+>
+  :Bundle 'rhysd/open-pdf.vim'
+<
+
+If you use |neobundle.vim|,
+>
+  :NeoBundle 'rhysd/open-pdf.vim'
+<
+
+==============================================================================
+DEPENDENCY                                           *open-pdf.vim-dependency*
+
+Conversion from pdf to txt depends on |pdftotext| command. You must install
+this before using this plugin. This is one of the commands in poppler package.
+
+Using Apt package manager in some Linux distributions,
+>
+  sudo aptitude install poppler-utils
+<
+
+Using Homebrew in MacOS X,
+>
+  brew install poppler
+<
+
+Using ports in FreeBSD,
+>
+  sudo portinstall graphics/xpdf
+<
+
+In Windows, build poppler source in MinGW or install XPdf which includes
+|pdftotext| command.
+
+
+Additional, |unite.vim| is optional to show list of cache files in unite
+interface.
+
+==============================================================================
+COMMANDS                                               *open-pdf.vim-commands*
+
+:Pdf[!] {path}                            *:Pdf*
+    Convert pdf file to txt file and open it with read only. If {file} has
+    been opened at first time, this plugin convert it with |pdftotext| and
+    cache it. Conversion is executed with |vimproc| if available. {path} must
+    be string of path to the pdf file and the extension must be '.pdf'. When
+    [!] is included, the conversion is always executed.
+    |g:pdf_open_cmd| is used to open.
+
+:PdfRead[!] {path}                        *:PdfRead*
+    Convert pdf file to txt file and read it to a buffer. If {file} has been
+    specified at first time, this plugin convert it with |pdftotext| and cache
+    it.  Conversion is executed with |vimproc| if available. {path} must be
+    string of path to the pdf file and the extension must be '.pdf'. When [!]
+    is included, the conversion is always executed.
+    |g:pdf_read_cmd| is used to read.
+
+:PdfEdit[!] {path}                        *:PdfEdit*
+    Convert pdf file to txt file and open it to edit. If {file} has been
+    opened at first time,this plugin convert it with |pdftotext| and cache it.
+    Conversion is executed with |vimproc| if available. {path} must be string
+    of path to the pdf file and the extension must be '.pdf'.  When [!] is
+    included, the conversion is always executed.
+    |g:pdf_edit_cmd| is used to edit.
+
+:PdfCacheClean [{files}]                  *:PdfCacheClean*
+    Remove cache file from |g:pdf_cache_dir|. {file} is the pdf name, pdf path
+    or cache-name of the pdf file to remove. If {file} omitted, all cache
+    files have been removed.
+
+:PdfCacheReload {files}                   *:PdfCacheReload*
+    Reconvert cache file from |g:pdf_cache_dir|. {file} is the pdf name, pdf
+    path or cache-name of the pdf file to reconvert.
+
+==============================================================================
+AUTO CONVERSION                                 *open-pdf.vim-auto-conversion*
+
+When a pdf file is loaded by , for example, |:edit| or |:read| and so on,
+|open-pdf.vim| converts it automatically before read it to the buffer.
+
+If you want to make these features enable, set |g:pdf_convert_on_edit| and
+|g:pdf_convert_on_read| to 1. When you |:edit| a pdf file, |:PdfEdit| is used
+instead of a original |:edit| command. And, when you |:read| a pdf file,
+|:PdfRead| is used instead of a original |:read| command.
+
+==============================================================================
+VARIABLES                                             *open-pdf.vim-variables*
+
+g:pdf_cache_dir                        *g:pdf_cache_dir*
+    String of a path to cache directory which |open-pdf.vim| uses. If this
+    directory doesn't exist, the directory is made with |mkdir|.
+
+    The default value is $HOME.'/.open-pdf.vim.cache'
+
+g:pdf_open_cmd                         *g:pdf_open_cmd*
+    String of a command to open converted files.
+    This variable is used at |:Pdf|.
+
+    The default value is 'vsplit | view'
+
+g:pdf_edit_cmd                         *g:pdf_edit_cmd*
+    String of a command to edit converted files.
+    This variable is used at |:PdfEdit|.
+
+    The default value is 'edit'
+
+g:pdf_read_cmd                         *g:pdf_read_cmd*
+    String of a command to read converted files.
+    This variable is used at |:PdfRead|.
+
+    The default value is 'read'
+
+g:pdf_pdftotext_path                   *g:pdf_pdftotext_path*
+    String of a path to pdftotext. If pdftotext doesn't exist in $PATH, you
+    should set an absolute path.
+
+    The default value is 'pdftotext' (relative).
+
+    For example, when pdftotext exists in ~/bin
+>
+    let g:pdf_pdftotext_path = expand('~/bin')
+<
+
+g:pdf_convert_on_edit                  *g:pdf_convert_on_edit*
+    If the value equals 1, conversion from pdf to txt is executed at
+    |BufReadCmd| event. You can pdf file in plain-text format even if you type
+    |:edit| command.
+
+    The default value is 0.
+
+g:pdf_convert_on_read                  *g:pdf_convert_on_read*
+    If the value equals 1, conversion from pdf to txt is executed at
+    |FileReadCmd| event. You can pdf file in plain-text format even if you
+    type |:read| command.
+
+    The default value is 0.
+
+g:pdf_hooks                            *g:pdf_hooks*
+    Dictionary of |Funcref|. The key is name of hook and the value is
+    function.
+    See |open-pdf.vim-hooks| to get more information.
+
+g:unite_pdf_search_cmd                 *g:unite_pdf_search_cmd*
+    Command to search in pdf/search unite source. It this variable is empty
+    string, pdf/search source uses a default command.
+    The default value is ''.
+
+    For example, if you want to use /usr/local/bin/locate, write as below.
+>
+    let g:unite_pdf_search_cmd = '/usr/local/bin/locate -l 30 "*%s*.pdf"'
+<
+    See also: |unite-source-pdf/search|
+
+==============================================================================
+HOOKS                                                     *open-pdf.vim-hooks*
+
+You can put hook functions in |g:pdf_hooks| dictionary. Now, on_opened hook is
+only available.
+
+on_opened                              *g:pdf_hooks.on_opened*
+    This hook is called after a pdf file has been opened by |:Pdf|.
+
+on_read                                *g:pdf_hooks.on_read*
+    This hook is called after a pdf file has been read by |:PdfRead|.
+
+on_edited                              *g:pdf_hooks.on_edited*
+    This hook is called after a pdf file has been edited by |:PdfEdit|.
+
+==============================================================================
+UNITE ACTION                                       *open-pdf.vim-unite-action*
+
+pdf
+    This action is defined in file kind. So, you can choose this action in the
+    unite sources which select and open files. Check |unite-kinds| to know
+    more about unite kinds.
+
+    For example, type a following command,
+>
+    :Unite file
+<
+    and type <Tab>. Then, you find 'pdf' action in candidates. If you do 'pdf'
+    action and candidate is pdf file, the pdf file will open like |:Pdf|
+    command.
+
+==============================================================================
+UNITE SOURCE                                       *open-pdf.vim-unite-source*
+
+pdf/history                            *unite-source-pdf/history*
+    You can choose cache files cached by |open-pdf.vim|.
+
+>
+    :Unite pdf/history
+<
+
+    In this source, below actions are available.
+
+    - *view_pdf*
+    - *delete_pdf_cache*
+    - *reload_pdf*
+
+    Please see the description of these actions to get more information.
+    Default action is |view_pdf|.
+
+pdf/search                             *unite-source-pdf/search*
+    This source searches pdf file in your filesystem with
+    |g:unite_pdf_search_cmd|.  If |g:unite_pdf_search_cmd| is omitted, a
+    command for search depends on your platform.
+
+    When MacOS,   'mdfind *%s*.pdf' is used.
+    When *nix,    'locate -l {max_candidates} "*%s*.pdf"' is used.
+    When Windows, 'es -i -r -n {max_candidates} %s.pdf' is used.
+
+    In these strings, '%s' means input value by |unite.vim|.
+
+==============================================================================
+SETUP EXAMPLE                                     *open-pdf.vim-setup-example*
+
+Write your favorite setting in your vimrc.
+
+Example:
+>
+  " a cache files' location
+  let g:pdf_cache_dir = $HOME.'/.cache/pdf'
+  " open with tab
+  let g:pdf_open_cmd = 'tabnew | view'
+  " auto conversion at :edit and :read
+  let g:pdf_convert_on_edit = 1
+  let g:pdf_convert_on_read = 1
+
+  if !exists('g:pdf_hooks')
+    let g:pdf_hooks = {}
+  endif
+
+  " set flags when a pdf file is opened
+  function! g:pdf_hooks.on_opened()
+    setl nowrap nonumber nolist
+  endfunction
+<
+
+==============================================================================
+LICENSE                                                 *open-pdf.vim-license*
+
+|open-pdf.vim| is distributed under MIT license.
+
+  Copyright (c) 2012 rhysd
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+vim:tw=78:colorcolumn=78:ts=8:ft=help:norl:noet:fen:fdl=0:

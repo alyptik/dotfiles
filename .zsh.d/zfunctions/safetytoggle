@@ -1,0 +1,51 @@
+## Safety nets - originally commented out to build good habits
+
+## usage variable containing help/command usage
+usagedoc='Usage: safetytoggle [option(s)]
+Toggle or set/unset "safety" aliases (toggle by default)
+Options:
+-s --safe		Force enable all safety aliases.
+-n --notsafe		Force disnable all safety aliases.
+-h --help -u --usage	View this help/usage examples (overrides other options.)
+Examples:
+safetytoggle
+safetytoggle -s|--set
+safetytoggle -n|--noset
+safetytoggle -h|--help|-u|--usage
+List of aliases toggled: [rm,wget,mv,cp,ln,chown,chmod,chgrp]
+rm -I --preserve-root
+wget -c
+mv -i
+cp -i
+ln -i
+chown --preserve-root
+chmod --preserve-root
+chgrp --preserve-root'
+## Parse options
+[[ "$*" =~ ^([\-]$|\-[0-9]+|\-[hu]+[snhu]*|\-\-help|\-\-usage)+.*$ ]] && { printf "$usagedoc"; return 0; }
+[[ "$*" =~ ^(\-s[snhu]*|\-\-set)+.*$ ]] && { unalias rm wget mv cp ln chown chmod chgrp &>/dev/null; }
+[[ "$*" =~ ^(\-n[snhu]*|\-\-noset)+.*$ ]] && { alias rm='rm -I ' &>/dev/null; }
+## Set/unset aliases
+(( `(alias; declare -f) | egrep -q '^rm=.*$'`$? )) && {
+	## start from scratch
+	unalias rm wget mv cp ln chown chmod chgrp &>/dev/null
+	## do not delete / or prompt if deleting more than 3 files at a time
+	alias rm='rm -I --preserve-root '
+	## this one saved by butt so many times
+	alias wget='wget -c '
+	## confirmatiob
+	alias mv='mv -i '
+	alias cp='cp -i '
+	alias cp='cp -i --reflink=auto '
+	alias ln='ln -i '
+	## Parenting changing permissions on root
+	alias chown='chown --preserve-root '
+	alias chmod='chmod --preserve-root '
+	alias chgrp='chgrp --preserve-root '
+	printf "\n \033[31m %s \033[0m\n" 'Safety aliases: [Enabled]'
+} || {
+	unalias rm wget mv cp ln chown chmod chgrp &>/dev/null
+	alias cp='cp --reflink=auto '
+	printf "\n \033[32m %s \033[0m\n" 'Safety aliases: [Disabled]'
+}
+

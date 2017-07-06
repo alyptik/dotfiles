@@ -1,0 +1,37 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+@spinTime: 1.5s;
+
+.busy {
+  display: inline-block;
+  padding-top: 1px;
+
+  span.icon-gear {
+    text-align: center;
+    color: @text-color-subtle;
+
+    &.is-busy::before {
+      animation: spin @spinTime linear infinite;
+      color: @text-color-info;
+    }
+  }
+}
+
+
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin::before {
+  animation: spin @spinTime linear infinite;
+  text-align: center;
+}

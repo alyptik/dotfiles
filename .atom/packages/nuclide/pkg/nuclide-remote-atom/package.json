@@ -1,0 +1,20 @@
+{
+  "name": "nuclide-remote-atom",
+  "repository": "https://github.com/facebook/nuclide",
+  "main": "./lib/main.js",
+  "version": "0.0.0",
+  "description": "Client side of command-line interface for communicating with nuclide-server",
+  "atomTestRunner": "../../lib/test-runner-entry.js",
+  "nuclide": {
+    "packageType": "Atom",
+    "testRunner": "apm",
+    "config": {
+      "shouldNotifyWhenCommandLineIsWaitingOnFile": {
+        "title": "Notify when the command line is waiting on an open file.",
+        "type": "boolean",
+        "default": true,
+        "description": "Show a notification when a file is opened locally and the command line is waiting for the file to be closed."
+      }
+    }
+  }
+}

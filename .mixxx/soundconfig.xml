@@ -1,0 +1,16 @@
+<!DOCTYPE SoundManagerConfig>
+<SoundManagerConfig latency="5" deck_count="4" api="ALSA" samplerate="48000" sync_buffers="0">
+ <SoundDevice name="4, USB Audio CODEC: - (hw:2,0)">
+  <input channel="0" type="Vinyl Control" index="0" channel_count="2"/>
+  <input channel="0" type="Vinyl Control" index="2" channel_count="2"/>
+  <output channel="0" type="Deck" index="0" channel_count="2"/>
+ </SoundDevice>
+ <SoundDevice name="5, USB Audio CODEC: - (hw:3,0)">
+  <input channel="0" type="Vinyl Control" index="1" channel_count="2"/>
+  <input channel="0" type="Vinyl Control" index="3" channel_count="2"/>
+  <output channel="0" type="Deck" index="1" channel_count="2"/>
+ </SoundDevice>
+ <SoundDevice name="6, USB Audio CODEC: - (hw:4,0)">
+  <output channel="0" type="Headphones" index="0" channel_count="2"/>
+ </SoundDevice>
+</SoundManagerConfig>

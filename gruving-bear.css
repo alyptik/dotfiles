@@ -1,0 +1,31 @@
+body {
+  background: #282828;
+}
+
+.nav-pills li {
+  background: #1d2021;
+}
+
+.nav-pills li.active:hover,
+.nav-pills li.active:hover * {
+  background: #fbf1c7
+}
+
+.cwf-lightcyan { color: #8ec07c }
+.cwf-magenta { color: #b16286 }
+.cwf-lightmagenta { color: #d3869b  }
+.cwf-cyan { color: #458588 }
+.cof-red, .cof-chat_prefix_quit { color: #cc241d }
+.cwf-default { color: #f2e5bc }
+.cof-chat_nick_self { color: #fbf1c7 }
+.cwf-green { color: #98971a }
+.cwf-lightgreen { color: #b8bb26 }
+a, .cwf-blue { color: #458588 }
+.cwf-lightblue { color: #83a598 }
+.date { color: #7c6f64 }
+
+#sendMessage, .input-group {
+  background: #282828;
+  color: #fbf1c7;
+}
+

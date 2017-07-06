@@ -1,0 +1,77 @@
+diff --git a/PKGBUILD b/PKGBUILD
+index 3ac5c8e..50be437 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -8,7 +8,7 @@
+ # Contributor: Ben <ben@benmazer.net>
+ 
+ pkgname=mpd-git
+-pkgver=0.19.9.r485.gcd1148c
++pkgver=0.20.4.r99.g6636c69a1
+ pkgrel=1
+ pkgdesc='Flexible, powerful, server-side application for playing music'
+ url='http://www.musicpd.org/'
+@@ -53,7 +53,62 @@ build() {
+       --enable-opus \
+       --disable-lsr \
+       --enable-soxr \
+-      --disable-aac
++      --disable-aac \
++      --enable-opus \
++      --enable-soxr \
++      --enable-documentation \
++      --enable-dsd \
++      --enable-httpd-output \
++      --enable-soundcloud \
++      --enable-libwrap \
++      --enable-mikmod \
++      --enable-openal \
++      --enable-pipe-output \
++      --enable-recorder-output \
++      --enable-shout \
++      --enable-vorbis \
++      --enable-wave-encoder \
++      --enable-werror \
++      --enable-icu \
++      --enable-iconv \
++      --enable-libmpdclient \
++      --enable-expat \
++      --enable-id3 \
++      --enable-sqlite \
++      --enable-curl \
++      --enable-smbclient \
++      --enable-nfs \
++      --enable-cdio-paranoia \
++      --enable-mms \
++      --enable-webdav \
++      --enable-cue \
++      --enable-neighbor-plugins \
++      --enable-iso9660 \
++      --enable-zlib \
++      --enable-bzip2 \
++      --enable-upnp \
++      --enable-zzip \
++      --enable-adplug \
++      --enable-audiofile \
++      --enable-aac \
++      --enable-ffmpeg \
++      --enable-flac \
++      --enable-fluidsynth \
++      --enable-gme \
++      --enable-mad \
++      --enable-mpg123 \
++      --enable-modplug \
++      --enable-opus \
++      --enable-sndfile \
++      --enable-mpc \
++      --enable-wavpack \
++      --enable-wildmidi \
++      --enable-shine-encoder \
++      --enable-vorbis-encoder \
++      --enable-lame-encoder \
++      --enable-twolame-encoder
++
++  sed -i '/C[X]*FLAGS =/ s/-Werror //' Makefile
+ 
+   make
+ }

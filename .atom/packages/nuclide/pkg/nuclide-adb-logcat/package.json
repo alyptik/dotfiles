@@ -1,0 +1,39 @@
+{
+  "name": "nuclide-adb-logcat",
+  "repository": "https://github.com/facebook/nuclide",
+  "main": "./lib/main.js",
+  "version": "0.0.0",
+  "description": "A nuclide-output provider for adb logcat",
+  "atomTestRunner": "../../lib/test-runner-entry.js",
+  "nuclide": {
+    "packageType": "Atom",
+    "testRunner": "apm",
+    "configMetadata": {
+      "pathComponents": [
+        "IDE",
+        "Android"
+      ]
+    },
+    "config": {
+      "pathToAdb": {
+        "title": "Path to adb (Android Debug Bridge) executable",
+        "type": "string",
+        "default": "adb",
+        "description": "Absolute path to the adb executable on your system."
+      },
+      "whitelistedTags": {
+        "title": "Tags to include",
+        "description": "Messages that don't have tags that match this pattern will be ignored.",
+        "default": "^((unknown:|)React|ReactNativeJS|ACRA|AndroidRuntime|TTI|BuckReporting|unknown)$",
+        "type": "string"
+      }
+    }
+  },
+  "consumedServices": {
+    "nuclide-output": {
+      "versions": {
+        "0.0.0": "consumeOutputService"
+      }
+    }
+  }
+}

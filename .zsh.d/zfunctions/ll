@@ -1,0 +1,10 @@
+
+	local -a args=( ${@:-.} )
+	if [[ "$#args" -gt 1 ]]; then
+		local -a dirs=( ${(@f)"$(file -L $args[@] | sed '/directory$/ !d; s/\(^.*\)\/: .*/\1/')"} )
+		local -a files=( ${(@f)"$(file -L $args[@] | sed '/directory$/ d; :l; s/\(.*\): .*/\1/; t l')"} )
+	else
+		local -a files=( ${args[@]} )
+	fi
+	[[ "$#dirs" -ne 0 ]] && \ls --color=auto -d $dirs[@]
+	[[ "$#files" -ne 0 ]] && \ls --color=auto $files[@]

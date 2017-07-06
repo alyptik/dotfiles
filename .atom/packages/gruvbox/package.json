@@ -1,0 +1,75 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+        "spec": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+        "type": "local"
+      },
+      "/tmp/apm-install-dir-117419-5803-1maizkn.d8oos9k9"
+    ]
+  ],
+  "_from": "../d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+  "_id": "gruvbox@1.0.7",
+  "_inCache": true,
+  "_location": "/gruvbox",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+    "spec": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+  "_shasum": "ac7ba1b09656b19e86839a432fea3f5d7f58adc5",
+  "_shrinkwrap": null,
+  "_spec": "/tmp/d-117419-5803-1tpypew.tl1v7snhfr/package.tgz",
+  "_where": "/tmp/apm-install-dir-117419-5803-1maizkn.d8oos9k9",
+  "bugs": {
+    "url": "https://github.com/caleb/gruvbox-syntax-atom/issues"
+  },
+  "dependencies": {},
+  "description": "A Gruvbox theme for Atom that aims to be just a little groovier",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "homepage": "https://github.com/caleb/gruvbox-syntax-atom#readme",
+  "keywords": [
+    "dark",
+    "green",
+    "orange",
+    "syntax"
+  ],
+  "license": "MIT",
+  "name": "gruvbox",
+  "optionalDependencies": {},
+  "readme": "# Gruvbox Syntax Theme for Atom 1.0\n\nA Gruvbox theme for Atom that adheres to the vim theme. Easy on the eyes, beautiful theme.\n\nA big thanks to Isaac Hess for creating the [original Gruvbox theme for Atom](https://github.com/isaachess/gruvbox-atom) on which this is based.\n\nBased on [https://github.com/morhetz/gruvbox](https://github.com/morhetz/gruvbox).\n\n![Screenshot](https://raw.githubusercontent.com/caleb/gruvbox-syntax-atom/master/gruvbox.png)\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caleb/gruvbox-syntax-atom.git"
+  },
+  "theme": "syntax",
+  "version": "1.0.7",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

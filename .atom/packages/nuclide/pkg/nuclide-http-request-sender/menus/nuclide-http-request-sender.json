@@ -1,0 +1,22 @@
+{
+  "menu": [
+    {
+      "label": "Nuclide",
+      "submenu": [
+        {
+          "label": "HTTP Request Sender",
+          "submenu": [
+            {
+              "label": "Send HTTP Request",
+              "command": "nuclide-http-request-sender:send-http-request"
+            },
+            {
+              "label": "Toggle HTTP Request Edit Dialog",
+              "command": "nuclide-http-request-sender:toggle-http-request-edit-dialog"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

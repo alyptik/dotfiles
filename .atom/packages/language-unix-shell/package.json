@@ -1,0 +1,91 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+        "spec": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+        "type": "local"
+      },
+      "/tmp/apm-install-dir-117419-8053-1ogaj1c.w3lodjwcdi"
+    ]
+  ],
+  "_from": "../d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+  "_id": "language-unix-shell@0.40.1",
+  "_inCache": true,
+  "_location": "/language-unix-shell",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+    "spec": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+  "_shasum": "c1fd7a64399fe2e6841e7c945ffb28869b3716b7",
+  "_shrinkwrap": null,
+  "_spec": "/tmp/d-117419-8053-1a8i0v.7oztowdn29/package.tgz",
+  "_where": "/tmp/apm-install-dir-117419-8053-1ogaj1c.w3lodjwcdi",
+  "author": {
+    "name": "GitHub, Inc."
+  },
+  "bugs": {
+    "url": "https://github.com/fusion809/language-shellscript/issues"
+  },
+  "contributor": "Brenton Horne <brentonhorne77@gmail.com>",
+  "dependencies": {},
+  "description": "Shell script language support in Atom. Fork of language-shellscript, with extra support for common Unix commands. Designed to be used with the dark-bint-syntax theme.",
+  "devDependencies": {
+    "coffee-script": "^1.8.0",
+    "coffeelint": "^1.10.1"
+  },
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "homepage": "http://atom.io/packages/language-unix-shell",
+  "keywords": [
+    "shell",
+    "grammar",
+    "language",
+    "fusion809"
+  ],
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "name": "language-unix-shell",
+  "optionalDependencies": {},
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provide"
+      }
+    }
+  },
+  "readme": "# Shell script language support in Atom\n\n<img src=\"http://i.imgur.com/lM2L75I.png\"><caption><b>Figure 1: A PKGBUILD being syntax-highlighted with version v0.32.0 of this package, along with the dark-bint-syntax theme.</b></caption></img>\n\nAdds syntax highlighting and snippets to shell scripts in Atom, originally forked from the official [`language-shellscript`](https://atom.io/packages/language-shellscript) package on 2 June 2016. As such it conflicts with this package so it is necessary to add this to your `config.cson` if the core `language-shellscript` package is installed:\n\n```coffee\n  disabledPackages: [\n  \"language-shellscript\"\n  ]\n```\n\nin order to use it. It has a number of improvements over the original, namely:\n\n* It has syntax-highlighting for common Unix commands, along with syntax-highlighting for several popular &#42;nix package managers like APT, DNF, pacman, Portage, *etc.*\n* Syntax-highlighting for variable definitions\n\nIf you use this package it is recommended you use the [`dark-bint-syntax`](https://github.com/Murriouz/dark-bint-syntax) theme of Murriouz.\n\nContributions are greatly appreciated. Please fork this repository and open a pull request to add snippets, make grammar tweaks, *etc.*\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fusion809/language-shellscript.git"
+  },
+  "version": "0.40.1",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "coffeelint.json",
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

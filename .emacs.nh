@@ -1,0 +1,180 @@
+
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+;;;; NextHendrix init.el
+;;;; Restarted 2017-04-17 `No Evil Edition` -- scary
+
+;; First let's set up the basic interface
+(when (display-graphic-p)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+(menu-bar-mode -1)
+(display-time-mode 1)
+
+;; Load a tasty theme
+(load-theme 'leuven)
+
+;; And a tasty font
+(add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono-12"))
+(set-frame-font "Dejavu Sans Mono-12" nil t)
+;; And enable based IDO mode
+(ido-mode t)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
+(package-initialize)
+;; Nice, now some initial package bollocks
+(setq package-list '(magit
+                     helm
+                     auctex
+                     unicode-fonts
+                     latex-preview-pane
+                     gnuplot
+                     gnuplot-mode
+                     auctex-lua
+                     auctex-latexmk))
+
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("marmalade" . "https://marmalade-repo.org/packages/")
+			 ("melpa" . "http://melpa.org/packages/")))
+
+(package-refresh-contents)
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+;; And move those pesky autosave files to /tmp instead of cluttering up the filesystem
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; A few general layout things
+(setq-default indent-tabs-mode nil)
+
+(require 'helm)
+(require 'helm-config)
+(helm-mode 1)
+
+;; AUCTeX settings
+
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+;; And based org
+;; make things actually readable
+(require 'org)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+(add-to-list 'org-latex-packages-alist
+             '("" "tikz" t))
+(add-to-list 'org-latex-packages-alist
+             '("" "pgfplots" t))
+(eval-after-load "preview"
+  '(add-to-list 'preview-default-preamble "\\PreviewEnvironment{tikzpicture}" t))
+(setq org-latex-create-formula-image-program 'imagemagick)
+
+(setq org-latex-pdf-process '("pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f" "pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f" "pdflatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-to-pdf-process '("texi2dvi --pdf %f" ))
+(setenv "PDFLATEX" "pdflatex --shell-escape")
+;; docview
+(when (display-graphic-p)
+  (setq doc-view-continuous t))
+
+;; fix unicode
+(when (display-graphic-p)
+  (set-fontset-font "fontset-default" nil 
+                    (font-spec :size 12 :name "Symbola")))
+
+;; based pdf-tools
+;(require 'pdf-tools)
+;(pdf-tools-install)
+
+;; and stop asking me if I want to follow fucking symlinks
+(setq vc-follow-symlinks t)

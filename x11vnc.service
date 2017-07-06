@@ -1,0 +1,19 @@
+# /etc/systemd/system/x11vnc.service
+[Unit]
+Description="x11vnc"
+Requires=display-manager.service
+After=display-manager.service network-online.target
+
+[Service]
+User=alyptik
+Type=simple
+# Restart=on-failure
+# Restart=always
+# RestartSec=30
+# ExecStop=/bin/true
+ExecStart=/usr/bin/x11vnc -noxrecord -forever -shared -display :0 -autoport -6 -rfbauth /etc/x11vnc.pass -ncache 10 -ncache_cr -ssldir /home/alyptik/certs/vnc -ssl /home/alyptik/certs/irc/relay.pem -vencrypt support:nox509 -anontls support:nox509 -dhparams /home/alyptik/certs/vnc/dh.pem -noxdamage -noxkb -noxfixes
+#ExecStart=/usr/bin/x11vnc -noxrecord -env FD_SDDM=1 -auth guess -forever -shared -display :0 -autoport -6 -rfbauth /etc/x11vnc.pass -ncache 10 -ncache_cr -ssldir /home/alyptik/certs/vnc -ssl /home/alyptik/certs/vnc/server-vencrypt.pem -vencrypt support:nox509 -anontls support:nox509 -dhparams /home/alyptik/certs/vnc/dh.pem -noxdamage -noxkb -noxfixes -rmflag /tmp/x11vnc-alyptik.pid
+#ExecStart=/usr/bin/x11vnc -env FD_SDDM=1 -auth /tmp/xauth-1000-_0 -forever -shared -display :0 -autoport -6 -rfbauth /etc/x11vnc.pass -ncache 10 -ncache_cr -ssldir /home/alyptik/certs/vnc -ssl /home/alyptik/certs/vnc/server-vencrypt.pem -vencrypt support:nox509 -anontls support:nox509 -dhparams /home/alyptik/certs/vnc/dh.pem -noxdamage -noxkb -noxfixes -rmflag /tmp/x11vnc-alyptik.pid
+
+[Install]
+WantedBy=multi-user.target

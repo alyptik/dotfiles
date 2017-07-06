@@ -1,0 +1,28 @@
+#
+# /etc/hosts: static lookup table for host names
+#
+
+#
+# /etc/hosts: static lookup table for host names
+#
+
+#<ip-address>   <hostname.domain.org>   <hostname>
+127.0.0.1       localhost.alyptik.lan	localhost
+::1             localhost.alyptik.lan	localhost
+
+#192.168.1.1	linksys.alyptik.lan	linksys
+#192.168.1.2	asus.alyptik.lan	asus
+#192.168.1.5	epson.alyptik.lan	epson
+
+#192.168.1.98    surface.alyptik.lan     surface
+#192.168.1.99    arch.alyptik.lan        arch
+
+#192.168.1.3	setup.ampedwireless.com
+#192.168.1.3	setup.ampedwireless.com	ampedwireless
+
+#76.173.133.37	alyptik.xyz
+#76.173.133.37	www.alyptik.xyz		www
+#76.173.133.37	ns1.alyptik.xyz		ns1
+#76.173.133.37	mail.alyptik.xyz	mail
+
+# End of file

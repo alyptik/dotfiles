@@ -1,0 +1,8 @@
+'scopeName': 'source.shell.ebuild'
+'name':      'ebuild'
+'fileTypes': [
+  'ebuild'
+]
+'patterns': [
+  { 'include': 'source.shell' }
+]

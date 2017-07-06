@@ -1,0 +1,5 @@
+{
+  "cmd": "dd",
+  "args": [ "if=.atom-build.json" ],
+  "name": "Fly to moon"
+}

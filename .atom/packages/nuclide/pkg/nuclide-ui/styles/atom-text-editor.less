@@ -1,0 +1,38 @@
+@import "ui-variables";
+
+/* ANSI Grammar */
+
+atom-text-editor {
+  .ansi-escape-code {
+  // Ideally we'd like to just set this to `display:none`. But, unfortunately, having a display:none
+  // content in Atom's text editor messes with its internal size measurement logic.
+  // As a result it sometimes decides that on a horizontal resize of the containing panel
+  // to resize the editor contents as well. This effectively prevents any horizontal scrolling.
+  // As there's no overflown content after the resize.
+  //
+  // So, instead of display:none we set the text font size to 1px (0 didn't work) and color to
+  // transparent, which visually make it almost invisible.
+    font-size: 1px;
+    color: rgba(0, 0, 0, 0);
+  }
+
+  .ansi.green {
+    color: rgb(103, 248, 111);
+  }
+
+  .ansi.purple {
+    color: magenta;
+  }
+
+  .ansi.red {
+    color: rgb(205, 0, 0);
+  }
+
+  .ansi.yellow {
+    color: rgb(255, 250, 114);
+  }
+
+  .ansi.intensive {
+    font-weight: bold;
+  }
+}

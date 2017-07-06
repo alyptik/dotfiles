@@ -1,0 +1,39 @@
+@import "ui-variables";
+
+.select-list.popover-list.popover-list-subtle {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+
+  /*
+   * Beat specificity of `.select-list.popover-list atom-text-editor` to ensure subtle dropdowns
+   * have no bottom margin.
+   */
+  atom-text-editor[mini] {
+    margin-bottom: 0;
+  }
+}
+
+.nuclide-combobox-options {
+  position: absolute;
+  z-index: 999;
+
+  .nuclide-combobox-list-group.list-group {
+
+    background: @base-background-color;
+    border: 1px solid @overlay-border-color;
+    border-top: none;
+    margin-top: 0;
+
+    li {
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+  }
+}

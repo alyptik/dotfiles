@@ -1,0 +1,34 @@
+"*":
+  "autocomplete-flow": {}
+  core:
+    customFileTypes:
+      "source.ini": [
+        ".buckconfig"
+        ".hgrc"
+      ]
+      "source.json": [
+        "BUCK.autodeps"
+      ]
+      "source.python": [
+        "BUCK"
+      ]
+    disabledPackages: [
+      "tree-view"
+    ]
+    projectHome: "/store/config/code/projects"
+    telemetryConsent: "no"
+    themes: [
+      "gruvbox-dark-ui"
+      "gruvbox-plus-syntax"
+    ]
+  editor:
+    fontFamily: "FuraCode Nerd Font"
+    showIndentGuide: true
+    softTabs: false
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+    tabLength: 8
+    tabType: "hard"
+  "exception-reporting":
+    userId: "4ced45b7-e570-447a-a28b-59dc65d1692b"
+  "gruvbox-plus-syntax": {}

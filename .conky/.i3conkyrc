@@ -1,0 +1,16 @@
+background no
+use_xft yes
+xftfont Terminus:size=9
+update_interval 1
+total_run_times 0
+own_window yes
+own_window_type dock
+own_window_transparent yes
+double_buffer yes
+border_inner_margin 0
+border_outer_margin 0
+use_spacer left
+if_up_strictness address
+
+TEXT
+blablabla

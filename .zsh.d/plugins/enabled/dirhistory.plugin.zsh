@@ -1,0 +1,1 @@
+../dirhistory.plugin.zsh

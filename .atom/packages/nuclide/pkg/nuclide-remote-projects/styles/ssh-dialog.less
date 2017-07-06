@@ -1,0 +1,81 @@
+@import "ui-variables";
+
+.nuclide-ok-cancel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nuclide-password {
+  background-color: @input-background-color;
+  border: 1px solid @input-border-color;
+  border-radius: 2px;
+  color: @text-color;
+  line-height: @component-line-height;
+  padding: 0 0.5em;
+  resize: none;
+  width: 100%;
+}
+
+.nuclide-auth-method {
+  align-items: center;
+  display: flex;
+  height: 30px;
+}
+
+.nuclide-auth-method-input,
+.nuclide-auth-method-label {
+  display: inline-block;
+}
+
+.nuclide-auth-method-input {
+  margin-left: 1em;
+}
+
+.nuclide-auth-method-label {
+  min-width: 8em;
+}
+
+.nuclide-auth-server-group {
+  display: flex;
+}
+
+.nuclide-auth-server {
+  flex: 1;
+  margin-right: 1em;
+}
+
+.nuclide-auth-method-password,
+.nuclide-auth-method-privatekey {
+  width: 250px;
+}
+
+atom-panel.modal .nuclide-connections-dialog-input-unstyled[mini] {
+  /*
+   * When wrapping <atom-input> elements in .row/.col, their margin-bottom no longer collapses with
+   * the margin-bottom of .block. Ensure the margin is set to 0 so margins don't stack.
+   */
+  margin: 0;
+}
+
+/* Prefix with `.list-group` to match specificity from themes */
+.list-group .connection-details-icon-info:before {
+  cursor: help;
+  margin-right: 0;
+}
+
+.nuclide-remote-projects-connection-dialog {
+  display: flex;
+}
+
+.nuclide-remote-projects-connection-profiles {
+  background-color: @inset-panel-background-color;
+  border-radius: @component-border-radius;
+  flex-grow: 1;
+  padding: @component-padding;
+}
+
+.nuclide-remote-projects-connection-details {
+  flex-grow: 3;
+  padding: @component-padding;
+}

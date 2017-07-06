@@ -1,0 +1,29 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+
+## UUID=c56a80cb-c40b-47b4-a9f7-2b06d9d07000
+/dev/mapper/vg-arch	/		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvol=rootfs			0 0
+/dev/mapper/vg-arch	/home		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvol=home			0 0
+/dev/mapper/vg-arch	/store		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvol=store			0 0
+/dev/mapper/vg-arch	/btrfs		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvolid=0			0 0
+#/run/btrfs/empty	/run/btrfs/rootfs	none	rw,defaults,bind							0 0
+
+## LABEL="Windows" UUID="8AFC51B7FC519DEF" TYPE="ntfs" PARTUUID="e7ace552-02"
+#/dev/sda2		/mnt/windows	ntfs-3g	ro,relatime,users,exec								0 0
+
+/dev/sda2		/mnt/windows	ntfs-3g	auto,defaults,rw,x-systemd.automount,x-systemd.device-timeout=1,timeo=15,x-systemd.idle-timeout=1min,nofail,nosuid,nodev,relatime,default_permissions,allow_other,users,exec,locale=en_US.UTF-8,uhelper=udisks2		0 0
+
+## UUID=6ec7889f-b1d0-40f1-ac3e-17bc9ed3a3d0 LABEL=swap
+/dev/mapper/vg-swap	none		swap     defaults,pri=10							0 0
+## ZRAM
+#/dev/zram		none		swap     defaults,pri=100								0 0
+
+## MySQL tmpfs
+tmpfs			/var/lib/mysqltmp	tmpfs	rw,gid=89,uid=89,size=100M,mode=0750,relatime				0 0
+
+## NFS
+#/run/btrfs		/srv/nfs/btrfs		none    defaults,bind								0 0
+#surface.alyptik.lan:/srv/nfs			/mnt/nfs	nfs	auto,x-systemd.automount,x-systemd.device-timeout=1,timeo=14,x-systemd.idle-timeout=1min	0 0
+#surface.alyptik.lan:/srv/nfs			/mnt/nfs	nfs	rsize=8192,wsize=8192,timeo=14,_netdev			0 0

@@ -1,0 +1,138 @@
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 0.1.3
+#
+# If you edit this, do not forget to uncomment any lines that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier (on my keyboard):
+#   Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+# Another way to specifie a key is to use 'xev' and set the
+# keycode with c:nnn or the modifier with m:nnn where nnn is
+# the keycode or the state returned by xev
+#
+# This file is created by xbindkey_config
+# The structure is :
+# # Remark
+# "command"
+# m:xxx + c:xxx
+# Shift+...
+
+#keystate_numlock = enable
+#keystate_scrolllock = enable
+#keystate_capslock = enable
+
+## tdrop on F12 (c:96) or F9 (c:75)
+"tdrop chromium"
+    m:0x0 + c:75
+    #m:0x0 + c:96
+
+## tdrop on F10 (c:76)
+"tdrop st"
+    m:0x0 + c:76
+    #m:0x0 + c:96
+
+## Show XBindKeys
+"xbindkeys_show"
+    m:0xc + c:24
+    Control+Alt + q
+
+## Toggle Touchpad
+# "t-xinput.sh"
+"[[ $(xinput list-props $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}') | grep '\bDevice Enabled\b'|sed 's/.*\(.\)$/\1/') -eq 0 ]] && xinput enable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}') || xinput disable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
+    m:0xc + c:61
+    Control+Alt + slash
+
+## Disable Touchpad
+"xinput disable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
+    m:0xc + c:60
+    Control+Alt + period
+
+## Enable Touchpad
+"xinput enable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
+    m:0xc + c:59
+    Control+Alt + comma
+
+## Derease Brightness
+"xbacklight -dec 10"
+    m:0xc + c:20
+    Control+Alt + minus
+
+## Increase Brightness
+"xbacklight -inc 10"
+    m:0xc + c:21
+    Control+Alt + equal
+
+## VolUp
+#"amixer set Master 5%+"
+"pactl set-sink-volume @DEFAULT_SINK@ +5%"
+    m:0x0 + c:123
+    XF86AudioRaiseVolume
+
+## VolDown
+#"amixer set Master 5%-"
+"pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    m:0x0 + c:122
+    XF86AudioLowerVolume
+
+## Mute
+#"amixer set Master 0%"
+"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    m:0x0 + c:121
+    XF86AudioMute
+
+## Mouse PageDown
+#"xdotool key 'Shift+Page_Up'"
+"xdotool key 'Page_Up'"
+   m:0x0 + b:9
+
+## Mouse PageUp
+#"xdotool key 'Shift+Page_Down'"
+"xdotool key 'Page_Down'"
+   m:0x0 + b:8
+
+#"xdotool key 'Shift+Page_Down'"
+#"xdotool --clearmodifiers keydown 'Control_L' key 'f' keyup 'Control_L'"
+#"xdotool --clearmodifiers key 'ctrl+f'"
+#   m:0x8 + c:59
+#   Alt + comma
+
+#"xdotool key 'Shift+Page_Down'"
+#"xdotool --clearmodifiers keydown 'Control_L' key 'BackSpace' keyup 'Control_L'"
+#"xdotool --clearmodifiers key 'ctrl+BackSpace'"
+#   m:0x8 + c:60
+#   Alt + period
+
+## xclip paste
+#"xclip -o -sel clip"
+#  m:0x5 + b:2
+
+## xclip copy
+#"xclip -f -sel clip"
+#  m:0x0 + b:2
+
+## Restart KWin
+#"kwin_x11 --replace"
+#   m:0xc + c:45
+#   Control+Alt + k
+
+## Openbox WM
+#"openbox-session"
+#   m:0xc + c:32
+#   Control+Alt + o
+
+## Plasmashell
+#"plasmashell"
+#   m:0xc + c:33
+#   Control+Alt + p
+
+#
+# End of xbindkeys configuration

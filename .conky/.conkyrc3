@@ -1,0 +1,80 @@
+alignment tr
+own_window_argb_value 128
+own_window_argb_visual yes
+stippled_borders 1
+update_interval 2
+uppercase no
+use_spacer left
+show_graph_scale no
+show_graph_range no
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color gray
+default_shade_color 000000
+default_outline_color d9d7d6
+gap_x 10
+gap_y 10
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale no
+color1 red
+color2 gray
+use_xft yes
+xftfont Bitstream Vera Sans Mono:size=8
+background no
+own_window yes
+own_window_type normal
+own_window_argb_visual true
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+override_utf8_locale yes
+##############################################
+#  Output
+##############################################
+TEXT
+CPU: $alignr${cpu cpu0}%
+${cpubar cpu0}
+
+RAM: $alignr$mem/$memmax
+$membar
+
+SYSTEM ${hr 2}
+
+$sysname $kernel $alignr $machine
+Host:$alignr$nodename
+Uptime:$alignr$uptime
+Temperatures: ${alignr}GPU ${nvidia temp}°C
+${alignr}Core0 ${execi 5 sensors | grep "Core 0" | awk '{print $3}' | cut -c2-3}°C
+${alignr}Core1 ${execi 5 sensors | grep "Core 1" | awk '{print $3}' | cut -c2-3}°C
+
+TOP PROCESSES ${hr 2}
+
+${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+${top_mem name 4}${alignr}${top mem 4} %
+
+SHORTCUT KEYS ${hr 2}
+
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize
+
+
+
+
+

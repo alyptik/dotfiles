@@ -1,0 +1,4 @@
+'use strict';
+/* @flow */
+
+declare export default function nullthrows<T>(x: ?T): T;

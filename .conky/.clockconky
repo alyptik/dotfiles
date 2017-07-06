@@ -1,0 +1,72 @@
+# [Configuration Section]
+alignment bottom_middle
+background no
+out_to_console no
+double_buffer yes
+
+draw_shades no
+draw_outline no
+draw_borders no
+stippled_borders no
+
+#border_width 0
+border_inner_margin 0
+border_outer_margin 0
+
+#max_text_width = 75
+minimum_size 150 75
+maximum_width 150
+
+gap_x 0
+gap_y 31
+
+background yes
+own_window yes
+own_window_type normal
+own_window_argb_visual true
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+on_bottom yes
+
+override_utf8_locale yes
+use_spacer left
+use_xft yes
+xftfont Terminus:size=8
+xftalpha 1
+
+no_buffers yes
+net_avg_samples 1
+cpu_avg_samples 1
+update_interval 1
+
+lua_load /home/alyptik/.conky/lua/circular_rings.lua
+lua_draw_hook_pre ring_stats
+
+top_cpu_separate no
+format_human_readable yes
+pad_percents 1
+
+color1 5A5A5A
+color2 989898
+# 3600 = 1hour
+# 1D1C1B dark grey
+# 504C4A light grey
+#
+# 35BF5C light green
+# 3EF740 manjaro green
+# [Content Section]
+TEXT
+
+
+
+$alignc${color2}${time %I:%M:%S %P}
+$alignc${color2}${time %a,%b} ${time %-e}\
+${if_match 4 <= ${time %e}}th\
+${else}\
+${if_match 1 == ${time %e}}st${endif}\
+${if_match 2 == ${time %e}}nd${endif}\
+${if_match 3 == ${time %e}}rd${endif}\
+${endif}	
+$alignc${color2}${time %Y}
+#$alignc${color2}${time %a,%b %d}

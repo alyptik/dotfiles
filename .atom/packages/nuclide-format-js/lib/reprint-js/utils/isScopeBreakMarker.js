@@ -1,0 +1,24 @@
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ *
+ * 
+ */
+
+var _constantsMarkers = require('../constants/markers');
+
+var _constantsMarkers2 = _interopRequireDefault(_constantsMarkers);
+
+var SCOPE_BREAK_MARKERS = new Set([_constantsMarkers2['default'].scopeBreak, _constantsMarkers2['default'].scopeSpaceBreak]);
+
+function isScopeBreakMarker(marker) {
+  return SCOPE_BREAK_MARKERS.has(marker);
+}
+
+module.exports = isScopeBreakMarker;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9yZXByaW50LWpzL3V0aWxzL2lzU2NvcGVCcmVha01hcmtlci5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Z0NBVW9CLHNCQUFzQjs7OztBQUUxQyxJQUFNLG1CQUFtQixHQUFHLElBQUksR0FBRyxDQUFDLENBQ2xDLDhCQUFRLFVBQVUsRUFDbEIsOEJBQVEsZUFBZSxDQUN4QixDQUFDLENBQUM7O0FBRUgsU0FBUyxrQkFBa0IsQ0FBQyxNQUFXLEVBQVc7QUFDaEQsU0FBTyxtQkFBbUIsQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7Q0FDeEM7O0FBRUQsTUFBTSxDQUFDLE9BQU8sR0FBRyxrQkFBa0IsQ0FBQyIsImZpbGUiOiJpc1Njb3BlQnJlYWtNYXJrZXIuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuICogQ29weXJpZ2h0IChjKSAyMDE1LXByZXNlbnQsIEZhY2Vib29rLCBJbmMuXG4gKiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICpcbiAqIFRoaXMgc291cmNlIGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIGxpY2Vuc2UgZm91bmQgaW4gdGhlIExJQ0VOU0UgZmlsZSBpblxuICogdGhlIHJvb3QgZGlyZWN0b3J5IG9mIHRoaXMgc291cmNlIHRyZWUuXG4gKlxuICogQGZsb3dcbiAqL1xuXG5pbXBvcnQgbWFya2VycyBmcm9tICcuLi9jb25zdGFudHMvbWFya2Vycyc7XG5cbmNvbnN0IFNDT1BFX0JSRUFLX01BUktFUlMgPSBuZXcgU2V0KFtcbiAgbWFya2Vycy5zY29wZUJyZWFrLFxuICBtYXJrZXJzLnNjb3BlU3BhY2VCcmVhayxcbl0pO1xuXG5mdW5jdGlvbiBpc1Njb3BlQnJlYWtNYXJrZXIobWFya2VyOiBhbnkpOiBib29sZWFuIHtcbiAgcmV0dXJuIFNDT1BFX0JSRUFLX01BUktFUlMuaGFzKG1hcmtlcik7XG59XG5cbm1vZHVsZS5leHBvcnRzID0gaXNTY29wZUJyZWFrTWFya2VyO1xuIl19

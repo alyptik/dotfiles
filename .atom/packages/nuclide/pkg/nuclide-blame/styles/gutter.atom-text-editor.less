@@ -1,0 +1,155 @@
+@import 'syntax-variables';
+@import 'ui-variables';
+@import '../../nuclide-ui/styles/dashed-background-mixin';
+
+@age-width: 3px;
+
+.gutter.nuclide-blame {
+  display: flex;
+  width: 170px;
+  font-family: @font-family;
+  font-size: 11px;
+  text-align: left;
+
+  .nuclide-ui-dashed-background();
+
+  &.nuclide-blame-loading {
+    background: none;
+  }
+}
+
+
+.nuclide-blame-row {
+  box-sizing: border-box;
+  width: 170px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: @syntax-background-color;
+}
+
+.nuclide-blame-vertical-bar {
+  width: 1px;
+  background-color: @text-color-highlight;
+  left: 14px;
+  position: absolute;
+
+  &.nuclide-blame-vertical-bar-first,
+  &.nuclide-blame-vertical-bar-middle {
+    top: 0;
+    bottom: 0;
+  }
+
+  &.nuclide-blame-vertical-bar-last {
+    top: 0;
+    height: 50%;
+
+    &:before {
+      content: '';
+      background-color: @text-color-highlight;
+      position: absolute;
+      bottom: 0;
+      left: -2px;
+      width: 5px;
+      height: 5px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.nuclide-blame-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: @component-padding / 2 + @age-width;
+  padding-left: @component-padding / 2;
+  vertical-align: bottom;
+
+  &:hover {
+    color: @text-color-highlight;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.nuclide-blame-border-age {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: @age-width;
+  background-color: @text-color-info;
+}
+
+.nuclide-blame {
+  .nuclide-ui-fb-avatar {
+    border: 1px solid;
+    margin-right: @component-padding / 2;
+    position: relative;
+  }
+}
+
+/*
+ * Progress spinner mostly taken from [progress.less in one-light-ui][1] and the same file in
+ * one-dark-ui. "progress.less" can not be imported because it is not guaranteed to be defined by
+ * all themes. Copy the styles here to use in the blame gutter
+ *
+ * [1]: https://github.com/atom/one-light-ui/blob/fa2e7e73c0301f3dad4b17d94bb4ce68d5c21b2d/styles/progress.less
+ */
+
+.ui-syntax-color() { @syntax-background-color: hsl(220,1%,98%); } .ui-syntax-color(); // fallback color
+@ui-syntax-color: @syntax-background-color;
+
+// Color guards -----------------
+@ui-s-h: hue(@ui-syntax-color);
+.ui-hue() when (@ui-s-h = 0) { @ui-hue: 220; } // Use blue hue when no saturation
+.ui-hue() when (@ui-s-h > 0) { @ui-hue: @ui-s-h; }
+.ui-hue();
+
+// Base (Custom) -----------------
+@base-accent-color: hsl(@ui-hue, 64%, 56%);
+
+// Spinner ----------------------
+
+@spinner-duration: 1.2s;
+
+.nuclide-blame-spinner {
+  align-self: center;
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  width: 1em;
+  height: 1em;
+  font-size: 16px;
+  background: radial-gradient(@base-accent-color .1em, transparent .11em);
+
+  &::before,
+  &::after {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    z-index: 10; // prevent sibling elements from getting their own layers
+    top: 0;
+    left: 0;
+    border-radius: 1em;
+    width: inherit;
+    height: inherit;
+    border-radius: 1em;
+    border: 1px solid;
+    animation: spinner-animation @spinner-duration infinite;
+    animation-fill-mode: backwards;
+  }
+  &::before {
+    border-color: @base-accent-color transparent transparent transparent;
+  }
+  &::after {
+    border-color: transparent lighten(@base-accent-color, 15%) transparent transparent;
+    animation-delay: @spinner-duration/2;
+  }
+}
+
+@keyframes spinner-animation {
+    0% { transform: rotateZ(  0deg); animation-timing-function: cubic-bezier(0, 0, .8, .2); }
+   50% { transform: rotateZ(180deg); animation-timing-function: cubic-bezier(.2, .8, 1, 1); }
+  100% { transform: rotateZ(360deg); }
+}

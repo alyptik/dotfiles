@@ -1,0 +1,6 @@
+#set font "Fira Code Light-9"
+set guioptions cshv
+set selection-clipboard clipboard
+map - zoom out
+map = zoom in
+map + zoom default

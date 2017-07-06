@@ -1,0 +1,44 @@
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ *
+ * 
+ */
+
+var _getDeclaredIdentifiers = require('./getDeclaredIdentifiers');
+
+var _getDeclaredIdentifiers2 = _interopRequireDefault(_getDeclaredIdentifiers);
+
+var _getDeclaredTypes = require('./getDeclaredTypes');
+
+var _getDeclaredTypes2 = _interopRequireDefault(_getDeclaredTypes);
+
+var _getNonDeclarationTypes = require('./getNonDeclarationTypes');
+
+var _getNonDeclarationTypes2 = _interopRequireDefault(_getNonDeclarationTypes);
+
+/**
+ * This will get a list of all types that are used but undeclared.
+ */
+function getUndeclaredTypes(root, options) {
+  var declaredIdentifiers = (0, _getDeclaredIdentifiers2['default'])(root, options);
+  var declaredTypes = (0, _getDeclaredTypes2['default'])(root, options);
+
+  var undeclared = (0, _getNonDeclarationTypes2['default'])(root);
+  // now remove anything that was declared
+  for (var _name of declaredIdentifiers) {
+    undeclared['delete'](_name);
+  }
+  for (var _name2 of declaredTypes) {
+    undeclared['delete'](_name2);
+  }
+  return undeclared;
+}
+
+module.exports = getUndeclaredTypes;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9jb21tb24vdXRpbHMvZ2V0VW5kZWNsYXJlZFR5cGVzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7OztzQ0FhbUMsMEJBQTBCOzs7O2dDQUNoQyxvQkFBb0I7Ozs7c0NBQ2QsMEJBQTBCOzs7Ozs7O0FBSzdELFNBQVMsa0JBQWtCLENBQ3pCLElBQWdCLEVBQ2hCLE9BQXNCLEVBQ1Q7QUFDYixNQUFNLG1CQUFtQixHQUFHLHlDQUF1QixJQUFJLEVBQUUsT0FBTyxDQUFDLENBQUM7QUFDbEUsTUFBTSxhQUFhLEdBQUcsbUNBQWlCLElBQUksRUFBRSxPQUFPLENBQUMsQ0FBQzs7QUFFdEQsTUFBTSxVQUFVLEdBQUcseUNBQXVCLElBQUksQ0FBQyxDQUFDOztBQUVoRCxPQUFLLElBQU0sS0FBSSxJQUFJLG1CQUFtQixFQUFFO0FBQ3RDLGNBQVUsVUFBTyxDQUFDLEtBQUksQ0FBQyxDQUFDO0dBQ3pCO0FBQ0QsT0FBSyxJQUFNLE1BQUksSUFBSSxhQUFhLEVBQUU7QUFDaEMsY0FBVSxVQUFPLENBQUMsTUFBSSxDQUFDLENBQUM7R0FDekI7QUFDRCxTQUFPLFVBQVUsQ0FBQztDQUNuQjs7QUFFRCxNQUFNLENBQUMsT0FBTyxHQUFHLGtCQUFrQixDQUFDIiwiZmlsZSI6ImdldFVuZGVjbGFyZWRUeXBlcy5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBDb3B5cmlnaHQgKGMpIDIwMTUtcHJlc2VudCwgRmFjZWJvb2ssIEluYy5cbiAqIEFsbCByaWdodHMgcmVzZXJ2ZWQuXG4gKlxuICogVGhpcyBzb3VyY2UgY29kZSBpcyBsaWNlbnNlZCB1bmRlciB0aGUgbGljZW5zZSBmb3VuZCBpbiB0aGUgTElDRU5TRSBmaWxlIGluXG4gKiB0aGUgcm9vdCBkaXJlY3Rvcnkgb2YgdGhpcyBzb3VyY2UgdHJlZS5cbiAqXG4gKiBAZmxvd1xuICovXG5cbmltcG9ydCB0eXBlIHtDb2xsZWN0aW9ufSBmcm9tICcuLi90eXBlcy9hc3QnO1xuaW1wb3J0IHR5cGUge1NvdXJjZU9wdGlvbnN9IGZyb20gJy4uL29wdGlvbnMvU291cmNlT3B0aW9ucyc7XG5cbmltcG9ydCBnZXREZWNsYXJlZElkZW50aWZpZXJzIGZyb20gJy4vZ2V0RGVjbGFyZWRJZGVudGlmaWVycyc7XG5pbXBvcnQgZ2V0RGVjbGFyZWRUeXBlcyBmcm9tICcuL2dldERlY2xhcmVkVHlwZXMnO1xuaW1wb3J0IGdldE5vbkRlY2xhcmF0aW9uVHlwZXMgZnJvbSAnLi9nZXROb25EZWNsYXJhdGlvblR5cGVzJztcblxuLyoqXG4gKiBUaGlzIHdpbGwgZ2V0IGEgbGlzdCBvZiBhbGwgdHlwZXMgdGhhdCBhcmUgdXNlZCBidXQgdW5kZWNsYXJlZC5cbiAqL1xuZnVuY3Rpb24gZ2V0VW5kZWNsYXJlZFR5cGVzKFxuICByb290OiBDb2xsZWN0aW9uLFxuICBvcHRpb25zOiBTb3VyY2VPcHRpb25zLFxuKTogU2V0PHN0cmluZz4ge1xuICBjb25zdCBkZWNsYXJlZElkZW50aWZpZXJzID0gZ2V0RGVjbGFyZWRJZGVudGlmaWVycyhyb290LCBvcHRpb25zKTtcbiAgY29uc3QgZGVjbGFyZWRUeXBlcyA9IGdldERlY2xhcmVkVHlwZXMocm9vdCwgb3B0aW9ucyk7XG5cbiAgY29uc3QgdW5kZWNsYXJlZCA9IGdldE5vbkRlY2xhcmF0aW9uVHlwZXMocm9vdCk7XG4gIC8vIG5vdyByZW1vdmUgYW55dGhpbmcgdGhhdCB3YXMgZGVjbGFyZWRcbiAgZm9yIChjb25zdCBuYW1lIG9mIGRlY2xhcmVkSWRlbnRpZmllcnMpIHtcbiAgICB1bmRlY2xhcmVkLmRlbGV0ZShuYW1lKTtcbiAgfVxuICBmb3IgKGNvbnN0IG5hbWUgb2YgZGVjbGFyZWRUeXBlcykge1xuICAgIHVuZGVjbGFyZWQuZGVsZXRlKG5hbWUpO1xuICB9XG4gIHJldHVybiB1bmRlY2xhcmVkO1xufVxuXG5tb2R1bGUuZXhwb3J0cyA9IGdldFVuZGVjbGFyZWRUeXBlcztcbiJdfQ==

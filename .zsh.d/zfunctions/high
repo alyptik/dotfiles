@@ -1,0 +1,25 @@
+local theme syn out file
+
+if (( $# > 1 )); then theme="$1"; shift; fi
+if (( $# > 1 )); then syn="$1"; shift; fi
+if (( $# > 1 )); then out="$1"; shift; fi
+
+if [[ ! -t 0 || "$*" =~ - ]]; then
+	file="/dev/stdin"
+else
+	file="$1"
+	shift
+fi
+
+highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style="${theme:-xoria256}" "$file" | \
+	less -JRMXs
+
+# if [[ -t 0 ]]; then
+#         file="/dev/stdin"
+# else
+#         for i; do if [[ "$i" == - ]]; then
+#                 file="/dev/stdin"
+#                 break
+#         fi; done
+# fi
+# highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style=anotherdark "$file"

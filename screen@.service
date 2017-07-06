@@ -1,0 +1,12 @@
+[Unit]
+Description=screen
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/usr/bin/screen -dmS autoscreen
+ExecStop=/usr/bin/screen -S autoscreen -X quit
+
+[Install]
+WantedBy=multi-user.target

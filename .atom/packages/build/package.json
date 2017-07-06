@@ -1,0 +1,1645 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+        "spec": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+        "type": "local"
+      },
+      "/tmp/apm-install-dir-117419-8053-1b6dvdt.yze7ajdcxr"
+    ]
+  ],
+  "_from": "../d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+  "_id": "build@0.67.0",
+  "_inCache": true,
+  "_location": "/build",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+    "spec": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+  "_shasum": "5859204ff5e78c817935727b488d8c0c5d5270a3",
+  "_shrinkwrap": null,
+  "_spec": "/tmp/d-117419-8053-1vjygdb.4fhzjmj9k9/package.tgz",
+  "_where": "/tmp/apm-install-dir-117419-8053-1b6dvdt.yze7ajdcxr",
+  "bugs": {
+    "url": "https://github.com/noseglid/atom-build/issues"
+  },
+  "consumedServices": {
+    "builder": {
+      "versions": {
+        "^2.0.0": "consumeBuilder"
+      }
+    },
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    },
+    "busy": {
+      "versions": {
+        "^1.0.0": "consumeBusy"
+      }
+    },
+    "linter-indie": {
+      "versions": {
+        "1.0.0": "consumeLinterRegistry"
+      }
+    }
+  },
+  "dependencies": {
+    "atom-package-deps": "^4.0.1",
+    "atom-space-pen-views": "^2.0.3",
+    "cross-spawn": "^4.0.2",
+    "cson-parser": "^1.3.0",
+    "getmac": "^1.0.7",
+    "js-yaml": "^3.4.6",
+    "term.js": "https://github.com/jeremyramin/term.js/tarball/de1635fc2695e7d8165012d3b1d007d7ce60eea2",
+    "tree-kill": "^1.0.0",
+    "xregexp": "^3.1.0"
+  },
+  "description": "Build your current project, directly from Atom",
+  "devDependencies": {
+    "atom-build-spec-helpers": "^0.4.0",
+    "babel-eslint": "^6.0.0",
+    "eslint": "^2.10.1",
+    "eslint-config-atom-build": "^3.0.0",
+    "fs-extra": "^0.26.7",
+    "temp": "^0.8.1"
+  },
+  "engines": {
+    "atom": ">=1.0.0"
+  },
+  "homepage": "https://github.com/noseglid/atom-build#readme",
+  "keywords": [
+    "build",
+    "compile",
+    "gulp",
+    "make",
+    "productivity"
+  ],
+  "license": "MIT",
+  "main": "./lib/build",
+  "name": "build",
+  "optionalDependencies": {},
+  "package-deps": [
+    "busy"
+  ],
+  "readme": "# Atom Build package\n\n[Release notes](https://github.com/noseglid/atom-build/releases)\n\n[![Plugin installs](https://img.shields.io/apm/dm/build.svg?style=flat-square)](https://atom.io/packages/build)\n[![Package version](https://img.shields.io/apm/v/build.svg?style=flat-square)](https://atom.io/packages/build)\n\n[![Travis.ci Shield](https://img.shields.io/travis/noseglid/atom-build/master.svg?style=flat-square&label=travis%20ci)](https://travis-ci.org/noseglid/atom-build)\n[![AppVeyor Shield](https://img.shields.io/appveyor/ci/noseglid/atom-build/master.svg?style=flat-square&label=appveyor )](https://ci.appveyor.com/project/noseglid/atom-build)\n\n[![Gitter chat](https://img.shields.io/badge/gitter-noseglid%2Fatom--build-24CE66.svg?style=flat-square)](https://gitter.im/noseglid/atom-build)\n[![Slack Badge](https://img.shields.io/badge/chat-atom.io%20slack-ff69b4.svg?style=flat-square)](http://atom-slack.herokuapp.com/)\n\n\nAutomatically build your project inside your new favorite editor, Atom.\n\n  * <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>B</kbd> / <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>B</kbd> / <kbd>F9</kbd> builds your project.\n  * <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>G</kbd> / <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>G</kbd> / <kbd>F4</kbd> cycles through causes of build error. See [Error Matching](#error-match).\n  * <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>G</kbd> / <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>H</kbd> / <kbd>Shift</kbd> <kbd>F4</kbd> goes to the first build error. See [Error Matching](#error-match).\n  * <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>V</kbd> / <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>V</kbd> / <kbd>F8</kbd> Toggles the build panel.\n  * <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>T</kbd> / <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>T</kbd> / <kbd>F7</kbd> Displays the available build targets.\n  * <kbd>Esc</kbd> terminates build / closes the build window.\n\n#### Builds your project - configure it your way\n![work work](https://noseglid.github.io/build.gif)\n\n#### Automatically extract targets - here with [build-make](https://github.com/AtomBuild/atom-build-make).\n![targets](https://noseglid.github.io/targets-make.gif)\n\n#### Match errors and go directly to offending code - with [Atom Linter](https://atom.io/packages/linter).\n![error matching](https://noseglid.github.io/error-match.gif)\n\n(You can also use keyboard shortcuts to go to errors if you don't like Atom Linter, or want to keep package dependencies to a minimum).\n\n### Quick start\n\nCreate a file called `.atom-build.yml` (note the inital dot):\n```yml\ncmd: echo Hello world\n```\n\nSave it, and press <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>B</kbd> (OS X) / <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>B</kbd> (Linux/Windows)\nand you should see the output of `echo Hello world`, which should be `Hello world` if all is correct.\n\n## Build providers\n\nInstead of specifying commands manually, you can use a build provider. They often include functionality such as parsing\ntargets (for instance all tasks from `gulpfile.js` or `Makefile`).\n\n**[Full list of build providers](https://atombuild.github.io)**\n\n<a name=\"build-command\"></a>\n### Specify a custom build command\n\nIf no build provider is enough to suit your needs, you can configure the custom build command extensively.\n\nSupported formats and the name of the configuration file is\n\n  * JSON: `.atom-build.json`\n  * CSON: `.atom-build.cson`\n  * YAML: `.atom-build.yml`\n  * JS: `.atom-build.js`\n\nPick your favorite format, save that file in your project root, and specify exactly\nhow your project is built (example in `yml`)\n\n```yml\ncmd: \"<command to execute>\"\nname: \"<name of target>\"\nargs:\n  - <argument1>\n  - <argument2>\nsh: true,\ncwd: <current working directory for `cmd`>\nenv:\n  VARIABLE1: \"VALUE1\"\n  VARIABLE2: \"VALUE2\"\nerrorMatch:\n  - ^regexp1$\n  - ^regexp2$\nwarningMatch:\n  - ^regexp1$\n  - ^regexp2$\nkeymap: <keymap string>\natomCommandName: namespace:command\ntargets:\n  extraTargetName:\n      cmd: \"<command to execute>\"\n      args:\n      # (any previous options are viable here except `targets` itself)\n```\n\nNote that if `sh` is false `cmd` must only be the executable - no arguments here.  If the\nexecutable is not in your path, either fully qualify it or specify the path\nin you environment (e.g. by setting the `PATH` var appropriately on UNIX-like\nsystems).\n\nIf `sh` is true, it will use a shell (e.g. `/bin/sh -c`) on unix/linux, and command (`cmd /S /C`)\non windows.\n\n#### Programmatic Build commands (Javascript)\n\nUsing a JavaScript (JS) file gives you the additional benefit of being able to specify `preBuild` and `postBuild` and being able to run arbitrary match functions instead of regex-matching. The\njavascript function needs to return an array of matches. The fields of the matches must be the same\nas those that the regex can set.\n\nKeep in mind that the JavaScript file must `export` the configuration\n\n```javascript\nmodule.exports = {\n  cmd: \"myCommand\",\n  preBuild: function () {\n    console.log('This is run **before** the build command');\n  },\n  postBuild: function () {\n    console.log('This is run **after** the build command');\n  },\n  functionMatch: function (terminal_output) {\n    // this is the array of matches that we create\n    var matches = [];\n    terminal_output.split(/\\n/).forEach(function (line, line_number, terminal_output) {\n      // all lines starting with a slash\n      if line[0] == '/' {\n        this.push({\n          file: 'x.txt',\n          line: line_number.toString(),\n          message: line\n        });\n      }\n    }.bind(matches));\n    return matches;\n  }\n};\n```\n\nA major advantage of the `functionMatch` method is that you can keep state while\nparsing the output. For example, if you have a `Makefile` output like this:\n\n```terminal\nmake[1]: Entering directory 'foo'\nmake[2]: Entering directory 'foo/src'\ntestmake.c: In function 'main':\ntestmake.c:3:5: error: unknown type name 'error'\n```\n\nthen you can't use a regex to match the filename, because the regex doesn't have\nthe information about the directory changes. The following `functionMatch` can\nhandle this case. Explanations are in the comments:\n\n```js\nmodule.exports = {\n  cmd: 'make',\n  name: 'Makefile',\n  sh: true,\n  functionMatch: function (output) {\n    const enterDir = /^make\\[\\d+\\]: Entering directory '([^']+)'$/;\n    const error = /^([^:]+):(\\d+):(\\d+): error: (.+)$/;\n    // this is the list of error matches that atom-build will process\n    const array = [];\n    // stores the current directory\n    var dir = null;\n    // iterate over the output by lines\n    output.split(/\\r?\\n/).forEach(line => {\n      // update the current directory on lines with `Entering directory`\n      const dir_match = enterDir.exec(line);\n      if (dir_match) {\n        dir = dir_match[1];\n      } else {\n        // process possible error messages\n        const error_match = error.exec(line);\n        if (error_match) {\n          // map the regex match to the error object that atom-build expects\n          array.push({\n            file: dir ? dir + '/' + error_match[1] : error_match[1],\n            line: error_match[2],\n            col: error_match[3],\n            message: error_match[4]\n          });\n        }\n      }\n    });\n    return array;\n  }\n};\n```\n\nAnother feature of `functionMatch` is that you can attach informational messages\nto the error messages:\n\n![pic of traces and custom error types](https://cloud.githubusercontent.com/assets/332036/15097688/ddfc170c-1523-11e6-8394-d24a79d125ea.png)\n\nYou can add these additional messages by setting the trace field of the error\nobject. It needs to be an array of objects with the same fields as the error.\nInstead of adding squiggly lines at the location given by the `file`, `line` and\n`col` fields, a link is added to the popup message, so you can conveniently jump\nto the location given in the trace.\n\nOne more feature provided by `functionMatch` is the ability to use HTML in\nthe message text by setting `html_message` instead of `message`. If both\n`html_message` and `message` are set, the latter takes priority.\n\n<a name=\"custom-build-config\"></a>\n#### Configuration options\n\nOption            | Required       | Description\n------------------|----------------|-----------------------\n`cmd`             | **[required]** | The executable command\n`name`            | *[optional]*   | The name of the target. Viewed in the targets list (toggled by `build:select-active-target`).\n`args`            | *[optional]*   | An array of arguments for the command\n`sh`              | *[optional]*   | If `true`, the combined command and arguments will be passed to `/bin/sh`. Default `true`.\n`cwd`             | *[optional]*   | The working directory for the command. E.g. what `.` resolves to.\n`env`             | *[optional]*   | An object of environment variables and their values to set\n`errorMatch`      | *[optional]*   | A (list of) regular expressions to match output to a file, row and col. See [Error matching](#error-match) for details.\n`warningMatch`    | *[optional]*   | Like `errorMatch`, but is reported as just a warning\n`functionMatch`   | *[optional]*   | A (list of) javascript functions that return a list of match objects\n`keymap`          | *[optional]*   | A keymap string as defined by [`Atom`](https://atom.io/docs/latest/behind-atom-keymaps-in-depth). Pressing this key combination will trigger the target. Examples: `ctrl-alt-k` or `cmd-U`.\n`killSignals`     | *[optional]*   | An array of signals. The signals will be sent, one after each time `Escape` is pressed until the process has been terminated. The default value is `SIGINT` -> `SIGTERM` -> `SIGKILL`. The only signal which is guaranteed to terminate the process is `SIGKILL` so it is recommended to include that in the list.\n`atomCommandName` | *[optional]*   | Command name to register which should be on the form of `namespace:command`. Read more about [Atom CommandRegistry](https://atom.io/docs/api/v1.4.1/CommandRegistry). The command will be available in the command palette and can be trigger from there. If this is returned by a build provider, the command can programatically be triggered by [dispatching](https://atom.io/docs/api/v1.4.1/CommandRegistry#instance-dispatch).\n`targets`         | *[optional]*   | Additional targets which can be used to build variations of your project.\n`preBuild`        | *[optional]*   | **JS only**. A function which will be called *before* executing `cmd`. No arguments. `this` will be the build configuration.\n`postBuild`       | *[optional]*   | **JS only**. A function which will be called *after* executing `cmd`. It will be passed 3 arguments: `bool buildOutcome` indicating outcome of the running `cmd`, `string stdout` containing the contents of `stdout`, and `string stderr` containing the contents of `stderr`. `this` will be the build configuration.\n\n#### Replacements\n\nThe following parameters will be replaced in `cmd`, any entry in `args`, `cwd` and\nvalues of `env`. They should all be enclosed in curly brackets `{}`\n\n  * `{FILE_ACTIVE}` - Full path to the currently active file in Atom. E.g. `/home/noseglid/github/atom-build/lib/build.js`\n  * `{FILE_ACTIVE_PATH}` - Full path to the folder where the currently active file is. E.g. `/home/noseglid/github/atom-build/lib`\n  * `{FILE_ACTIVE_NAME}` - Full name and extension of active file. E.g., `build.js`\n  * `{FILE_ACTIVE_NAME_BASE}` - Name of active file WITHOUT extension. E.g., `build`\n  * `{PROJECT_PATH}` - Full path to the root of the project. This is normally the path Atom has as root. E.g `/home/noseglid/github/atom-build`\n  * `{REPO_BRANCH_SHORT}` - Short name of the current active branch (if project is backed by git). E.g `master` or `v0.9.1`\n  * `{SELECTION}` - Selected text.\n\n### Creating a build provider\nCreating a build provider require very little code in the easiest case, and can\nbe as complicated as necessary to achieve the correct functionality.\nRead more about building your own provider in [the create provider documentation](create-provider.md).\n\n<a name=\"error-match\"></a>\n## Error matching\n\nError matching lets you specify a single regular expression or a list of\nregular expressions, which capture the output of your build command and open the\ncorrect file, row and column of the error. For instance:\n\n```bash\n../foo/bar/a.c:4:26: error: expected ';' after expression\n  printf(\"hello world\\n\")\n                         ^\n                         ;\n1 error generated.\n```\n\nWould be matched with the regular expression: `(?<file>[\\\\/0-9a-zA-Z\\\\._]+):(?<line>\\\\d+):(?<col>\\\\d+):\\\\s+(?<message>.+)`.\nAfter the build has failed, pressing <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>G</kbd> (OS X) or <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>G</kbd> (Linux/Windows)\n(or <kbd>F4</kbd> on either platform), `a.c` would be opened and the cursor would be placed at row 4, column 26.\n\nNote the syntax for match groups. This is from the [XRegExp](http://xregexp.com/) package\nand has the syntax for named groups: `(?<name> RE )` where `name` would be the name of the group\nmatched by the regular expression `RE`.\n\nThe following named groups can be matched from the output:\n  * `file` - **[required]** the file to open. May be relative `cwd` or absolute. `(?<file> RE)`.\n  * `line` - *[optional]* the line the error starts on. `(?<line> RE)`.\n  * `col` - *[optional]* the column the error starts on. `(?<col> RE)`.\n  * `line_end` - *[optional]* the line the error ends on. `(?<line_end> RE)`.\n  * `col_end` - *[optional]* the column the error ends on. `(?<col_end> RE)`.\n  * `message` - *[optional]* Catch the humanized error message. `(?<message> RE)`.\n\nThe `file` should be relative the `cwd` specified. If no `cwd` has been specified, then\nthe `file` should be relative the project root (e.g. the top most directory shown in the\nAtom Editor).\n\nIf your build outputs multiple errors, all will be matched. Press <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>G</kbd> (OS X) or <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>G</kbd> (Linux/Windows)\nto cycle through the errors (in the order they appear, first on stderr then on stdout), or you can use the\nAtom Linter integration discussed in the next section.\n\nOften, the first error is the most interesting since other errors tend to be secondary faults caused by that first one.\nTo jump to the first error you can use <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>H</kbd> (OS X) or <kbd>Shift</kbd> <kbd>F4</kbd> (Linux/Windows) at any point to go to the first error.\n\n### Error matching and Atom Linter\n\nInstall [Atom Linter](https://atom.io/packages/linter) and all your matched errors will listed in a neat panel.\n\n![Linter integration](https://noseglid.github.io/build-linter.png)\n\n## Analytics\n\nThe `atom-build` package uses google analytics to keep track of which features are in use\nand at what frequency. This gives the maintainers a sense of what parts of the\npackage is most important and what parts can be removed.\n\nThe data is fully anonymous and can not be tracked back to you in any way.\nThis is what is collected\n\n  * Version of package used.\n  * Build triggered, succeeded or failed.\n  * Which build tool was used.\n  * Visibility of UI components.\n\nIf you really do not want to share this information, you can opt out by disabling\nthe [metrics package](https://atom.io/packages/metrics). This will disable all analytics\ncollection, including the one from `atom-build`.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noseglid/atom-build.git"
+  },
+  "scripts": {
+    "test": "eslint ."
+  },
+  "version": "0.67.0",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "argparse",
+        "version": "1.0.9",
+        "path": "node_modules/argparse/index.js"
+      },
+      {
+        "name": "atom-package-deps",
+        "version": "4.6.0",
+        "path": "node_modules/atom-package-deps/lib/index.js"
+      },
+      {
+        "name": "atom-package-path",
+        "version": "1.1.0",
+        "path": "node_modules/atom-package-path/lib/index.js"
+      },
+      {
+        "name": "atom-space-pen-views",
+        "version": "2.2.0",
+        "path": "node_modules/atom-space-pen-views/lib/main.js"
+      },
+      {
+        "name": "coffee-script",
+        "version": "1.12.6",
+        "path": "node_modules/coffee-script/lib/coffee-script/coffee-script.js"
+      },
+      {
+        "name": "consistent-env",
+        "version": "1.3.0",
+        "path": "node_modules/consistent-env/lib/index.js"
+      },
+      {
+        "name": "cross-spawn",
+        "version": "4.0.2",
+        "path": "node_modules/cross-spawn/index.js"
+      },
+      {
+        "name": "cson-parser",
+        "version": "1.3.5",
+        "path": "node_modules/cson-parser/lib/cson-parser.js"
+      },
+      {
+        "name": "d",
+        "version": "0.1.1",
+        "path": "node_modules/d/index.js"
+      },
+      {
+        "name": "eachr",
+        "version": "3.2.0",
+        "path": "node_modules/eachr/index.js"
+      },
+      {
+        "name": "editions",
+        "version": "1.3.3",
+        "path": "node_modules/editions/es2015/index.js"
+      },
+      {
+        "name": "emissary",
+        "version": "1.3.3",
+        "path": "node_modules/emissary/lib/emissary.js"
+      },
+      {
+        "name": "es5-ext",
+        "version": "0.10.20",
+        "path": "node_modules/es5-ext/index.js"
+      },
+      {
+        "name": "d",
+        "version": "1.0.0",
+        "path": "node_modules/es5-ext/node_modules/d/index.js"
+      },
+      {
+        "name": "es6-iterator",
+        "version": "2.0.1",
+        "path": "node_modules/es5-ext/node_modules/es6-iterator/index.js"
+      },
+      {
+        "name": "es6-symbol",
+        "version": "3.1.1",
+        "path": "node_modules/es5-ext/node_modules/es6-symbol/index.js"
+      },
+      {
+        "name": "es6-iterator",
+        "version": "0.1.3",
+        "path": "node_modules/es6-iterator/index.js"
+      },
+      {
+        "name": "es6-symbol",
+        "version": "2.0.1",
+        "path": "node_modules/es6-symbol/index.js"
+      },
+      {
+        "name": "es6-weak-map",
+        "version": "0.1.4",
+        "path": "node_modules/es6-weak-map/index.js"
+      },
+      {
+        "name": "esprima",
+        "version": "3.1.3",
+        "path": "node_modules/esprima/dist/esprima.js"
+      },
+      {
+        "name": "extract-opts",
+        "version": "3.3.1",
+        "path": "node_modules/extract-opts/index.js"
+      },
+      {
+        "name": "fuzzaldrin",
+        "version": "2.1.0",
+        "path": "node_modules/fuzzaldrin/lib/fuzzaldrin.js"
+      },
+      {
+        "name": "getmac",
+        "version": "1.2.1",
+        "path": "node_modules/getmac/es5/lib/getmac.js"
+      },
+      {
+        "name": "grim",
+        "version": "1.5.0",
+        "path": "node_modules/grim/lib/grim.js"
+      },
+      {
+        "name": "is-utf8",
+        "version": "0.2.1",
+        "path": "node_modules/is-utf8/is-utf8.js"
+      },
+      {
+        "name": "isexe",
+        "version": "2.0.0",
+        "path": "node_modules/isexe/index.js"
+      },
+      {
+        "name": "jquery",
+        "version": "2.1.4",
+        "path": "node_modules/jquery/dist/jquery.js"
+      },
+      {
+        "name": "js-yaml",
+        "version": "3.8.4",
+        "path": "node_modules/js-yaml/index.js"
+      },
+      {
+        "name": "lodash.uniq",
+        "version": "4.5.0",
+        "path": "node_modules/lodash.uniq/index.js"
+      },
+      {
+        "name": "lru-cache",
+        "version": "4.0.2",
+        "path": "node_modules/lru-cache/lib/lru-cache.js"
+      },
+      {
+        "name": "mixto",
+        "version": "1.0.0",
+        "path": "node_modules/mixto/lib/mixin.js"
+      },
+      {
+        "name": "property-accessors",
+        "version": "1.1.3",
+        "path": "node_modules/property-accessors/lib/property-accessors.js"
+      },
+      {
+        "name": "pseudomap",
+        "version": "1.0.2",
+        "path": "node_modules/pseudomap/map.js"
+      },
+      {
+        "name": "sb-callsite",
+        "version": "1.1.2",
+        "path": "node_modules/sb-callsite/lib/main.js"
+      },
+      {
+        "name": "sb-exec",
+        "version": "3.1.0",
+        "path": "node_modules/sb-exec/lib/index.js"
+      },
+      {
+        "name": "sb-fs",
+        "version": "3.0.0",
+        "path": "node_modules/sb-fs/lib/index.js"
+      },
+      {
+        "name": "sb-memoize",
+        "version": "1.0.2",
+        "path": "node_modules/sb-memoize/lib/index.js"
+      },
+      {
+        "name": "sb-npm-path",
+        "version": "2.0.0",
+        "path": "node_modules/sb-npm-path/lib/index.js"
+      },
+      {
+        "name": "sb-promisify",
+        "version": "2.0.2",
+        "path": "node_modules/sb-promisify/lib/index.js"
+      },
+      {
+        "name": "semver",
+        "version": "5.3.0",
+        "path": "node_modules/semver/semver.js"
+      },
+      {
+        "name": "space-pen",
+        "version": "5.1.2",
+        "path": "node_modules/space-pen/lib/space-pen.js"
+      },
+      {
+        "name": "sprintf-js",
+        "version": "1.0.3",
+        "path": "node_modules/sprintf-js/src/sprintf.js"
+      },
+      {
+        "name": "strip-bom-buf",
+        "version": "1.0.0",
+        "path": "node_modules/strip-bom-buf/index.js"
+      },
+      {
+        "name": "term.js",
+        "version": "0.0.7",
+        "path": "node_modules/term.js/index.js"
+      },
+      {
+        "name": "tree-kill",
+        "version": "1.1.0",
+        "path": "node_modules/tree-kill/index.js"
+      },
+      {
+        "name": "typechecker",
+        "version": "4.4.1",
+        "path": "node_modules/typechecker/index.js"
+      },
+      {
+        "name": "underscore",
+        "version": "1.6.0",
+        "path": "node_modules/underscore/underscore.js"
+      },
+      {
+        "name": "underscore-plus",
+        "version": "1.6.6",
+        "path": "node_modules/underscore-plus/lib/underscore-plus.js"
+      },
+      {
+        "name": "which",
+        "version": "1.2.14",
+        "path": "node_modules/which/which.js"
+      },
+      {
+        "name": "xregexp",
+        "version": "3.2.0",
+        "path": "node_modules/xregexp/xregexp-all.js"
+      },
+      {
+        "name": "yallist",
+        "version": "2.1.2",
+        "path": "node_modules/yallist/yallist.js"
+      }
+    ],
+    "extensions": {
+      ".js": [
+        "lib/atom-build.js",
+        "lib/build-error.js",
+        "lib/build-view.js",
+        "lib/build.js",
+        "lib/config.js",
+        "lib/error-matcher.js",
+        "lib/google-analytics.js",
+        "lib/linter-integration.js",
+        "lib/save-confirm-view.js",
+        "lib/status-bar-view.js",
+        "lib/target-manager.js",
+        "lib/targets-view.js",
+        "lib/utils.js",
+        "node_modules/argparse/index.js",
+        "node_modules/argparse/lib/action/append/constant.js",
+        "node_modules/argparse/lib/action/append.js",
+        "node_modules/argparse/lib/action/count.js",
+        "node_modules/argparse/lib/action/help.js",
+        "node_modules/argparse/lib/action/store/constant.js",
+        "node_modules/argparse/lib/action/store/false.js",
+        "node_modules/argparse/lib/action/store/true.js",
+        "node_modules/argparse/lib/action/store.js",
+        "node_modules/argparse/lib/action/subparsers.js",
+        "node_modules/argparse/lib/action/version.js",
+        "node_modules/argparse/lib/action.js",
+        "node_modules/argparse/lib/action_container.js",
+        "node_modules/argparse/lib/argparse.js",
+        "node_modules/argparse/lib/argument/error.js",
+        "node_modules/argparse/lib/argument/exclusive.js",
+        "node_modules/argparse/lib/argument/group.js",
+        "node_modules/argparse/lib/argument_parser.js",
+        "node_modules/argparse/lib/const.js",
+        "node_modules/argparse/lib/help/added_formatters.js",
+        "node_modules/argparse/lib/help/formatter.js",
+        "node_modules/argparse/lib/namespace.js",
+        "node_modules/argparse/lib/utils.js",
+        "node_modules/atom-package-deps/lib/helpers.js",
+        "node_modules/atom-package-deps/lib/index.js",
+        "node_modules/atom-package-deps/lib/types.js",
+        "node_modules/atom-package-deps/lib/view.js",
+        "node_modules/atom-package-path/lib/index.js",
+        "node_modules/atom-space-pen-views/lib/main.js",
+        "node_modules/atom-space-pen-views/lib/scroll-view.js",
+        "node_modules/atom-space-pen-views/lib/select-list-view.js",
+        "node_modules/atom-space-pen-views/lib/text-editor-view.js",
+        "node_modules/coffee-script/lib/coffee-script/browser.js",
+        "node_modules/coffee-script/lib/coffee-script/cake.js",
+        "node_modules/coffee-script/lib/coffee-script/coffee-script.js",
+        "node_modules/coffee-script/lib/coffee-script/command.js",
+        "node_modules/coffee-script/lib/coffee-script/grammar.js",
+        "node_modules/coffee-script/lib/coffee-script/helpers.js",
+        "node_modules/coffee-script/lib/coffee-script/index.js",
+        "node_modules/coffee-script/lib/coffee-script/lexer.js",
+        "node_modules/coffee-script/lib/coffee-script/nodes.js",
+        "node_modules/coffee-script/lib/coffee-script/optparse.js",
+        "node_modules/coffee-script/lib/coffee-script/parser.js",
+        "node_modules/coffee-script/lib/coffee-script/register.js",
+        "node_modules/coffee-script/lib/coffee-script/repl.js",
+        "node_modules/coffee-script/lib/coffee-script/rewriter.js",
+        "node_modules/coffee-script/lib/coffee-script/scope.js",
+        "node_modules/coffee-script/lib/coffee-script/sourcemap.js",
+        "node_modules/coffee-script/register.js",
+        "node_modules/coffee-script/repl.js",
+        "node_modules/consistent-env/decls/jasmine.js",
+        "node_modules/consistent-env/lib/helpers.js",
+        "node_modules/consistent-env/lib/index.js",
+        "node_modules/cross-spawn/index.js",
+        "node_modules/cross-spawn/lib/enoent.js",
+        "node_modules/cross-spawn/lib/hasBrokenSpawn.js",
+        "node_modules/cross-spawn/lib/parse.js",
+        "node_modules/cross-spawn/lib/resolveCommand.js",
+        "node_modules/cson-parser/lib/cson-parser.js",
+        "node_modules/cson-parser/lib/parse.js",
+        "node_modules/cson-parser/lib/stringify.js",
+        "node_modules/d/auto-bind.js",
+        "node_modules/d/index.js",
+        "node_modules/d/lazy.js",
+        "node_modules/eachr/es2015/index.js",
+        "node_modules/eachr/example.js",
+        "node_modules/eachr/index.js",
+        "node_modules/eachr/source/index.js",
+        "node_modules/editions/es2015/index.js",
+        "node_modules/editions/source/index.js",
+        "node_modules/emissary/lib/behavior.js",
+        "node_modules/emissary/lib/emissary.js",
+        "node_modules/emissary/lib/emitter.js",
+        "node_modules/emissary/lib/helpers.js",
+        "node_modules/emissary/lib/signal.js",
+        "node_modules/emissary/lib/subscriber.js",
+        "node_modules/emissary/lib/subscription.js",
+        "node_modules/es5-ext/array/#/@@iterator/implement.js",
+        "node_modules/es5-ext/array/#/@@iterator/index.js",
+        "node_modules/es5-ext/array/#/@@iterator/is-implemented.js",
+        "node_modules/es5-ext/array/#/@@iterator/shim.js",
+        "node_modules/es5-ext/array/#/_compare-by-length.js",
+        "node_modules/es5-ext/array/#/binary-search.js",
+        "node_modules/es5-ext/array/#/clear.js",
+        "node_modules/es5-ext/array/#/compact.js",
+        "node_modules/es5-ext/array/#/concat/implement.js",
+        "node_modules/es5-ext/array/#/concat/index.js",
+        "node_modules/es5-ext/array/#/concat/is-implemented.js",
+        "node_modules/es5-ext/array/#/concat/shim.js",
+        "node_modules/es5-ext/array/#/contains.js",
+        "node_modules/es5-ext/array/#/copy-within/implement.js",
+        "node_modules/es5-ext/array/#/copy-within/index.js",
+        "node_modules/es5-ext/array/#/copy-within/is-implemented.js",
+        "node_modules/es5-ext/array/#/copy-within/shim.js",
+        "node_modules/es5-ext/array/#/diff.js",
+        "node_modules/es5-ext/array/#/e-index-of.js",
+        "node_modules/es5-ext/array/#/e-last-index-of.js",
+        "node_modules/es5-ext/array/#/entries/implement.js",
+        "node_modules/es5-ext/array/#/entries/index.js",
+        "node_modules/es5-ext/array/#/entries/is-implemented.js",
+        "node_modules/es5-ext/array/#/entries/shim.js",
+        "node_modules/es5-ext/array/#/exclusion.js",
+        "node_modules/es5-ext/array/#/fill/implement.js",
+        "node_modules/es5-ext/array/#/fill/index.js",
+        "node_modules/es5-ext/array/#/fill/is-implemented.js",
+        "node_modules/es5-ext/array/#/fill/shim.js",
+        "node_modules/es5-ext/array/#/filter/implement.js",
+        "node_modules/es5-ext/array/#/filter/index.js",
+        "node_modules/es5-ext/array/#/filter/is-implemented.js",
+        "node_modules/es5-ext/array/#/filter/shim.js",
+        "node_modules/es5-ext/array/#/find/implement.js",
+        "node_modules/es5-ext/array/#/find/index.js",
+        "node_modules/es5-ext/array/#/find/is-implemented.js",
+        "node_modules/es5-ext/array/#/find/shim.js",
+        "node_modules/es5-ext/array/#/find-index/implement.js",
+        "node_modules/es5-ext/array/#/find-index/index.js",
+        "node_modules/es5-ext/array/#/find-index/is-implemented.js",
+        "node_modules/es5-ext/array/#/find-index/shim.js",
+        "node_modules/es5-ext/array/#/first-index.js",
+        "node_modules/es5-ext/array/#/first.js",
+        "node_modules/es5-ext/array/#/flatten.js",
+        "node_modules/es5-ext/array/#/for-each-right.js",
+        "node_modules/es5-ext/array/#/group.js",
+        "node_modules/es5-ext/array/#/index.js",
+        "node_modules/es5-ext/array/#/indexes-of.js",
+        "node_modules/es5-ext/array/#/intersection.js",
+        "node_modules/es5-ext/array/#/is-copy.js",
+        "node_modules/es5-ext/array/#/is-uniq.js",
+        "node_modules/es5-ext/array/#/keys/implement.js",
+        "node_modules/es5-ext/array/#/keys/index.js",
+        "node_modules/es5-ext/array/#/keys/is-implemented.js",
+        "node_modules/es5-ext/array/#/keys/shim.js",
+        "node_modules/es5-ext/array/#/last-index.js",
+        "node_modules/es5-ext/array/#/last.js",
+        "node_modules/es5-ext/array/#/map/implement.js",
+        "node_modules/es5-ext/array/#/map/index.js",
+        "node_modules/es5-ext/array/#/map/is-implemented.js",
+        "node_modules/es5-ext/array/#/map/shim.js",
+        "node_modules/es5-ext/array/#/remove.js",
+        "node_modules/es5-ext/array/#/separate.js",
+        "node_modules/es5-ext/array/#/slice/implement.js",
+        "node_modules/es5-ext/array/#/slice/index.js",
+        "node_modules/es5-ext/array/#/slice/is-implemented.js",
+        "node_modules/es5-ext/array/#/slice/shim.js",
+        "node_modules/es5-ext/array/#/some-right.js",
+        "node_modules/es5-ext/array/#/splice/implement.js",
+        "node_modules/es5-ext/array/#/splice/index.js",
+        "node_modules/es5-ext/array/#/splice/is-implemented.js",
+        "node_modules/es5-ext/array/#/splice/shim.js",
+        "node_modules/es5-ext/array/#/uniq.js",
+        "node_modules/es5-ext/array/#/values/implement.js",
+        "node_modules/es5-ext/array/#/values/index.js",
+        "node_modules/es5-ext/array/#/values/is-implemented.js",
+        "node_modules/es5-ext/array/#/values/shim.js",
+        "node_modules/es5-ext/array/_is-extensible.js",
+        "node_modules/es5-ext/array/_sub-array-dummy-safe.js",
+        "node_modules/es5-ext/array/_sub-array-dummy.js",
+        "node_modules/es5-ext/array/from/implement.js",
+        "node_modules/es5-ext/array/from/index.js",
+        "node_modules/es5-ext/array/from/is-implemented.js",
+        "node_modules/es5-ext/array/from/shim.js",
+        "node_modules/es5-ext/array/generate.js",
+        "node_modules/es5-ext/array/index.js",
+        "node_modules/es5-ext/array/is-plain-array.js",
+        "node_modules/es5-ext/array/of/implement.js",
+        "node_modules/es5-ext/array/of/index.js",
+        "node_modules/es5-ext/array/of/is-implemented.js",
+        "node_modules/es5-ext/array/of/shim.js",
+        "node_modules/es5-ext/array/to-array.js",
+        "node_modules/es5-ext/array/valid-array.js",
+        "node_modules/es5-ext/boolean/index.js",
+        "node_modules/es5-ext/boolean/is-boolean.js",
+        "node_modules/es5-ext/date/#/copy.js",
+        "node_modules/es5-ext/date/#/days-in-month.js",
+        "node_modules/es5-ext/date/#/floor-day.js",
+        "node_modules/es5-ext/date/#/floor-month.js",
+        "node_modules/es5-ext/date/#/floor-year.js",
+        "node_modules/es5-ext/date/#/format.js",
+        "node_modules/es5-ext/date/#/index.js",
+        "node_modules/es5-ext/date/index.js",
+        "node_modules/es5-ext/date/is-date.js",
+        "node_modules/es5-ext/date/valid-date.js",
+        "node_modules/es5-ext/error/#/index.js",
+        "node_modules/es5-ext/error/#/throw.js",
+        "node_modules/es5-ext/error/custom.js",
+        "node_modules/es5-ext/error/index.js",
+        "node_modules/es5-ext/error/is-error.js",
+        "node_modules/es5-ext/error/valid-error.js",
+        "node_modules/es5-ext/function/#/compose.js",
+        "node_modules/es5-ext/function/#/copy.js",
+        "node_modules/es5-ext/function/#/curry.js",
+        "node_modules/es5-ext/function/#/index.js",
+        "node_modules/es5-ext/function/#/lock.js",
+        "node_modules/es5-ext/function/#/not.js",
+        "node_modules/es5-ext/function/#/partial.js",
+        "node_modules/es5-ext/function/#/spread.js",
+        "node_modules/es5-ext/function/#/to-string-tokens.js",
+        "node_modules/es5-ext/function/_define-length.js",
+        "node_modules/es5-ext/function/constant.js",
+        "node_modules/es5-ext/function/identity.js",
+        "node_modules/es5-ext/function/index.js",
+        "node_modules/es5-ext/function/invoke.js",
+        "node_modules/es5-ext/function/is-arguments.js",
+        "node_modules/es5-ext/function/is-function.js",
+        "node_modules/es5-ext/function/noop.js",
+        "node_modules/es5-ext/function/pluck.js",
+        "node_modules/es5-ext/function/valid-function.js",
+        "node_modules/es5-ext/global.js",
+        "node_modules/es5-ext/index.js",
+        "node_modules/es5-ext/iterable/for-each.js",
+        "node_modules/es5-ext/iterable/index.js",
+        "node_modules/es5-ext/iterable/is.js",
+        "node_modules/es5-ext/iterable/validate-object.js",
+        "node_modules/es5-ext/iterable/validate.js",
+        "node_modules/es5-ext/json/index.js",
+        "node_modules/es5-ext/json/safe-stringify.js",
+        "node_modules/es5-ext/math/_pack-ieee754.js",
+        "node_modules/es5-ext/math/_unpack-ieee754.js",
+        "node_modules/es5-ext/math/acosh/implement.js",
+        "node_modules/es5-ext/math/acosh/index.js",
+        "node_modules/es5-ext/math/acosh/is-implemented.js",
+        "node_modules/es5-ext/math/acosh/shim.js",
+        "node_modules/es5-ext/math/asinh/implement.js",
+        "node_modules/es5-ext/math/asinh/index.js",
+        "node_modules/es5-ext/math/asinh/is-implemented.js",
+        "node_modules/es5-ext/math/asinh/shim.js",
+        "node_modules/es5-ext/math/atanh/implement.js",
+        "node_modules/es5-ext/math/atanh/index.js",
+        "node_modules/es5-ext/math/atanh/is-implemented.js",
+        "node_modules/es5-ext/math/atanh/shim.js",
+        "node_modules/es5-ext/math/cbrt/implement.js",
+        "node_modules/es5-ext/math/cbrt/index.js",
+        "node_modules/es5-ext/math/cbrt/is-implemented.js",
+        "node_modules/es5-ext/math/cbrt/shim.js",
+        "node_modules/es5-ext/math/clz32/implement.js",
+        "node_modules/es5-ext/math/clz32/index.js",
+        "node_modules/es5-ext/math/clz32/is-implemented.js",
+        "node_modules/es5-ext/math/clz32/shim.js",
+        "node_modules/es5-ext/math/cosh/implement.js",
+        "node_modules/es5-ext/math/cosh/index.js",
+        "node_modules/es5-ext/math/cosh/is-implemented.js",
+        "node_modules/es5-ext/math/cosh/shim.js",
+        "node_modules/es5-ext/math/expm1/implement.js",
+        "node_modules/es5-ext/math/expm1/index.js",
+        "node_modules/es5-ext/math/expm1/is-implemented.js",
+        "node_modules/es5-ext/math/expm1/shim.js",
+        "node_modules/es5-ext/math/fround/implement.js",
+        "node_modules/es5-ext/math/fround/index.js",
+        "node_modules/es5-ext/math/fround/is-implemented.js",
+        "node_modules/es5-ext/math/fround/shim.js",
+        "node_modules/es5-ext/math/hypot/implement.js",
+        "node_modules/es5-ext/math/hypot/index.js",
+        "node_modules/es5-ext/math/hypot/is-implemented.js",
+        "node_modules/es5-ext/math/hypot/shim.js",
+        "node_modules/es5-ext/math/imul/implement.js",
+        "node_modules/es5-ext/math/imul/index.js",
+        "node_modules/es5-ext/math/imul/is-implemented.js",
+        "node_modules/es5-ext/math/imul/shim.js",
+        "node_modules/es5-ext/math/index.js",
+        "node_modules/es5-ext/math/log10/implement.js",
+        "node_modules/es5-ext/math/log10/index.js",
+        "node_modules/es5-ext/math/log10/is-implemented.js",
+        "node_modules/es5-ext/math/log10/shim.js",
+        "node_modules/es5-ext/math/log1p/implement.js",
+        "node_modules/es5-ext/math/log1p/index.js",
+        "node_modules/es5-ext/math/log1p/is-implemented.js",
+        "node_modules/es5-ext/math/log1p/shim.js",
+        "node_modules/es5-ext/math/log2/implement.js",
+        "node_modules/es5-ext/math/log2/index.js",
+        "node_modules/es5-ext/math/log2/is-implemented.js",
+        "node_modules/es5-ext/math/log2/shim.js",
+        "node_modules/es5-ext/math/sign/implement.js",
+        "node_modules/es5-ext/math/sign/index.js",
+        "node_modules/es5-ext/math/sign/is-implemented.js",
+        "node_modules/es5-ext/math/sign/shim.js",
+        "node_modules/es5-ext/math/sinh/implement.js",
+        "node_modules/es5-ext/math/sinh/index.js",
+        "node_modules/es5-ext/math/sinh/is-implemented.js",
+        "node_modules/es5-ext/math/sinh/shim.js",
+        "node_modules/es5-ext/math/tanh/implement.js",
+        "node_modules/es5-ext/math/tanh/index.js",
+        "node_modules/es5-ext/math/tanh/is-implemented.js",
+        "node_modules/es5-ext/math/tanh/shim.js",
+        "node_modules/es5-ext/math/trunc/implement.js",
+        "node_modules/es5-ext/math/trunc/index.js",
+        "node_modules/es5-ext/math/trunc/is-implemented.js",
+        "node_modules/es5-ext/math/trunc/shim.js",
+        "node_modules/es5-ext/node_modules/d/auto-bind.js",
+        "node_modules/es5-ext/node_modules/d/index.js",
+        "node_modules/es5-ext/node_modules/d/lazy.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/#/chain.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/array.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/for-of.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/get.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/index.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/is-iterable.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/string.js",
+        "node_modules/es5-ext/node_modules/es6-iterator/valid-iterable.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/implement.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/index.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/is-implemented.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/is-native-implemented.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/is-symbol.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/polyfill.js",
+        "node_modules/es5-ext/node_modules/es6-symbol/validate-symbol.js",
+        "node_modules/es5-ext/number/#/index.js",
+        "node_modules/es5-ext/number/#/pad.js",
+        "node_modules/es5-ext/number/epsilon/implement.js",
+        "node_modules/es5-ext/number/epsilon/index.js",
+        "node_modules/es5-ext/number/epsilon/is-implemented.js",
+        "node_modules/es5-ext/number/index.js",
+        "node_modules/es5-ext/number/is-finite/implement.js",
+        "node_modules/es5-ext/number/is-finite/index.js",
+        "node_modules/es5-ext/number/is-finite/is-implemented.js",
+        "node_modules/es5-ext/number/is-finite/shim.js",
+        "node_modules/es5-ext/number/is-integer/implement.js",
+        "node_modules/es5-ext/number/is-integer/index.js",
+        "node_modules/es5-ext/number/is-integer/is-implemented.js",
+        "node_modules/es5-ext/number/is-integer/shim.js",
+        "node_modules/es5-ext/number/is-nan/implement.js",
+        "node_modules/es5-ext/number/is-nan/index.js",
+        "node_modules/es5-ext/number/is-nan/is-implemented.js",
+        "node_modules/es5-ext/number/is-nan/shim.js",
+        "node_modules/es5-ext/number/is-natural.js",
+        "node_modules/es5-ext/number/is-number.js",
+        "node_modules/es5-ext/number/is-safe-integer/implement.js",
+        "node_modules/es5-ext/number/is-safe-integer/index.js",
+        "node_modules/es5-ext/number/is-safe-integer/is-implemented.js",
+        "node_modules/es5-ext/number/is-safe-integer/shim.js",
+        "node_modules/es5-ext/number/max-safe-integer/implement.js",
+        "node_modules/es5-ext/number/max-safe-integer/index.js",
+        "node_modules/es5-ext/number/max-safe-integer/is-implemented.js",
+        "node_modules/es5-ext/number/min-safe-integer/implement.js",
+        "node_modules/es5-ext/number/min-safe-integer/index.js",
+        "node_modules/es5-ext/number/min-safe-integer/is-implemented.js",
+        "node_modules/es5-ext/number/to-integer.js",
+        "node_modules/es5-ext/number/to-pos-integer.js",
+        "node_modules/es5-ext/number/to-uint32.js",
+        "node_modules/es5-ext/object/_iterate.js",
+        "node_modules/es5-ext/object/assign/implement.js",
+        "node_modules/es5-ext/object/assign/index.js",
+        "node_modules/es5-ext/object/assign/is-implemented.js",
+        "node_modules/es5-ext/object/assign/shim.js",
+        "node_modules/es5-ext/object/clear.js",
+        "node_modules/es5-ext/object/compact.js",
+        "node_modules/es5-ext/object/compare.js",
+        "node_modules/es5-ext/object/copy-deep.js",
+        "node_modules/es5-ext/object/copy.js",
+        "node_modules/es5-ext/object/count.js",
+        "node_modules/es5-ext/object/create.js",
+        "node_modules/es5-ext/object/ensure-natural-number-value.js",
+        "node_modules/es5-ext/object/ensure-natural-number.js",
+        "node_modules/es5-ext/object/ensure-promise.js",
+        "node_modules/es5-ext/object/eq.js",
+        "node_modules/es5-ext/object/every.js",
+        "node_modules/es5-ext/object/filter.js",
+        "node_modules/es5-ext/object/find-key.js",
+        "node_modules/es5-ext/object/find.js",
+        "node_modules/es5-ext/object/first-key.js",
+        "node_modules/es5-ext/object/flatten.js",
+        "node_modules/es5-ext/object/for-each.js",
+        "node_modules/es5-ext/object/get-property-names.js",
+        "node_modules/es5-ext/object/index.js",
+        "node_modules/es5-ext/object/is-array-like.js",
+        "node_modules/es5-ext/object/is-callable.js",
+        "node_modules/es5-ext/object/is-copy-deep.js",
+        "node_modules/es5-ext/object/is-copy.js",
+        "node_modules/es5-ext/object/is-empty.js",
+        "node_modules/es5-ext/object/is-number-value.js",
+        "node_modules/es5-ext/object/is-object.js",
+        "node_modules/es5-ext/object/is-plain-object.js",
+        "node_modules/es5-ext/object/is-promise.js",
+        "node_modules/es5-ext/object/is-value.js",
+        "node_modules/es5-ext/object/is.js",
+        "node_modules/es5-ext/object/key-of.js",
+        "node_modules/es5-ext/object/keys/implement.js",
+        "node_modules/es5-ext/object/keys/index.js",
+        "node_modules/es5-ext/object/keys/is-implemented.js",
+        "node_modules/es5-ext/object/keys/shim.js",
+        "node_modules/es5-ext/object/map-keys.js",
+        "node_modules/es5-ext/object/map.js",
+        "node_modules/es5-ext/object/mixin-prototypes.js",
+        "node_modules/es5-ext/object/mixin.js",
+        "node_modules/es5-ext/object/normalize-options.js",
+        "node_modules/es5-ext/object/primitive-set.js",
+        "node_modules/es5-ext/object/safe-traverse.js",
+        "node_modules/es5-ext/object/serialize.js",
+        "node_modules/es5-ext/object/set-prototype-of/implement.js",
+        "node_modules/es5-ext/object/set-prototype-of/index.js",
+        "node_modules/es5-ext/object/set-prototype-of/is-implemented.js",
+        "node_modules/es5-ext/object/set-prototype-of/shim.js",
+        "node_modules/es5-ext/object/some.js",
+        "node_modules/es5-ext/object/to-array.js",
+        "node_modules/es5-ext/object/unserialize.js",
+        "node_modules/es5-ext/object/valid-callable.js",
+        "node_modules/es5-ext/object/valid-object.js",
+        "node_modules/es5-ext/object/valid-value.js",
+        "node_modules/es5-ext/object/validate-array-like-object.js",
+        "node_modules/es5-ext/object/validate-array-like.js",
+        "node_modules/es5-ext/object/validate-stringifiable-value.js",
+        "node_modules/es5-ext/object/validate-stringifiable.js",
+        "node_modules/es5-ext/reg-exp/#/index.js",
+        "node_modules/es5-ext/reg-exp/#/is-sticky.js",
+        "node_modules/es5-ext/reg-exp/#/is-unicode.js",
+        "node_modules/es5-ext/reg-exp/#/match/implement.js",
+        "node_modules/es5-ext/reg-exp/#/match/index.js",
+        "node_modules/es5-ext/reg-exp/#/match/is-implemented.js",
+        "node_modules/es5-ext/reg-exp/#/match/shim.js",
+        "node_modules/es5-ext/reg-exp/#/replace/implement.js",
+        "node_modules/es5-ext/reg-exp/#/replace/index.js",
+        "node_modules/es5-ext/reg-exp/#/replace/is-implemented.js",
+        "node_modules/es5-ext/reg-exp/#/replace/shim.js",
+        "node_modules/es5-ext/reg-exp/#/search/implement.js",
+        "node_modules/es5-ext/reg-exp/#/search/index.js",
+        "node_modules/es5-ext/reg-exp/#/search/is-implemented.js",
+        "node_modules/es5-ext/reg-exp/#/search/shim.js",
+        "node_modules/es5-ext/reg-exp/#/split/implement.js",
+        "node_modules/es5-ext/reg-exp/#/split/index.js",
+        "node_modules/es5-ext/reg-exp/#/split/is-implemented.js",
+        "node_modules/es5-ext/reg-exp/#/split/shim.js",
+        "node_modules/es5-ext/reg-exp/#/sticky/implement.js",
+        "node_modules/es5-ext/reg-exp/#/sticky/is-implemented.js",
+        "node_modules/es5-ext/reg-exp/#/unicode/implement.js",
+        "node_modules/es5-ext/reg-exp/#/unicode/is-implemented.js",
+        "node_modules/es5-ext/reg-exp/escape.js",
+        "node_modules/es5-ext/reg-exp/index.js",
+        "node_modules/es5-ext/reg-exp/is-reg-exp.js",
+        "node_modules/es5-ext/reg-exp/valid-reg-exp.js",
+        "node_modules/es5-ext/safe-to-string.js",
+        "node_modules/es5-ext/string/#/@@iterator/implement.js",
+        "node_modules/es5-ext/string/#/@@iterator/index.js",
+        "node_modules/es5-ext/string/#/@@iterator/is-implemented.js",
+        "node_modules/es5-ext/string/#/@@iterator/shim.js",
+        "node_modules/es5-ext/string/#/at.js",
+        "node_modules/es5-ext/string/#/camel-to-hyphen.js",
+        "node_modules/es5-ext/string/#/capitalize.js",
+        "node_modules/es5-ext/string/#/case-insensitive-compare.js",
+        "node_modules/es5-ext/string/#/code-point-at/implement.js",
+        "node_modules/es5-ext/string/#/code-point-at/index.js",
+        "node_modules/es5-ext/string/#/code-point-at/is-implemented.js",
+        "node_modules/es5-ext/string/#/code-point-at/shim.js",
+        "node_modules/es5-ext/string/#/contains/implement.js",
+        "node_modules/es5-ext/string/#/contains/index.js",
+        "node_modules/es5-ext/string/#/contains/is-implemented.js",
+        "node_modules/es5-ext/string/#/contains/shim.js",
+        "node_modules/es5-ext/string/#/count.js",
+        "node_modules/es5-ext/string/#/ends-with/implement.js",
+        "node_modules/es5-ext/string/#/ends-with/index.js",
+        "node_modules/es5-ext/string/#/ends-with/is-implemented.js",
+        "node_modules/es5-ext/string/#/ends-with/shim.js",
+        "node_modules/es5-ext/string/#/hyphen-to-camel.js",
+        "node_modules/es5-ext/string/#/indent.js",
+        "node_modules/es5-ext/string/#/index.js",
+        "node_modules/es5-ext/string/#/last.js",
+        "node_modules/es5-ext/string/#/normalize/_data.js",
+        "node_modules/es5-ext/string/#/normalize/implement.js",
+        "node_modules/es5-ext/string/#/normalize/index.js",
+        "node_modules/es5-ext/string/#/normalize/is-implemented.js",
+        "node_modules/es5-ext/string/#/normalize/shim.js",
+        "node_modules/es5-ext/string/#/pad.js",
+        "node_modules/es5-ext/string/#/plain-replace-all.js",
+        "node_modules/es5-ext/string/#/plain-replace.js",
+        "node_modules/es5-ext/string/#/repeat/implement.js",
+        "node_modules/es5-ext/string/#/repeat/index.js",
+        "node_modules/es5-ext/string/#/repeat/is-implemented.js",
+        "node_modules/es5-ext/string/#/repeat/shim.js",
+        "node_modules/es5-ext/string/#/starts-with/implement.js",
+        "node_modules/es5-ext/string/#/starts-with/index.js",
+        "node_modules/es5-ext/string/#/starts-with/is-implemented.js",
+        "node_modules/es5-ext/string/#/starts-with/shim.js",
+        "node_modules/es5-ext/string/#/uncapitalize.js",
+        "node_modules/es5-ext/string/format-method.js",
+        "node_modules/es5-ext/string/from-code-point/implement.js",
+        "node_modules/es5-ext/string/from-code-point/index.js",
+        "node_modules/es5-ext/string/from-code-point/is-implemented.js",
+        "node_modules/es5-ext/string/from-code-point/shim.js",
+        "node_modules/es5-ext/string/index.js",
+        "node_modules/es5-ext/string/is-string.js",
+        "node_modules/es5-ext/string/random-uniq.js",
+        "node_modules/es5-ext/string/raw/implement.js",
+        "node_modules/es5-ext/string/raw/index.js",
+        "node_modules/es5-ext/string/raw/is-implemented.js",
+        "node_modules/es5-ext/string/raw/shim.js",
+        "node_modules/es6-iterator/#/chain.js",
+        "node_modules/es6-iterator/array.js",
+        "node_modules/es6-iterator/for-of.js",
+        "node_modules/es6-iterator/get.js",
+        "node_modules/es6-iterator/index.js",
+        "node_modules/es6-iterator/is-iterable.js",
+        "node_modules/es6-iterator/string.js",
+        "node_modules/es6-iterator/valid-iterable.js",
+        "node_modules/es6-symbol/implement.js",
+        "node_modules/es6-symbol/index.js",
+        "node_modules/es6-symbol/is-implemented.js",
+        "node_modules/es6-symbol/is-native-implemented.js",
+        "node_modules/es6-symbol/is-symbol.js",
+        "node_modules/es6-symbol/polyfill.js",
+        "node_modules/es6-symbol/validate-symbol.js",
+        "node_modules/es6-weak-map/implement.js",
+        "node_modules/es6-weak-map/index.js",
+        "node_modules/es6-weak-map/is-implemented.js",
+        "node_modules/es6-weak-map/is-native-implemented.js",
+        "node_modules/es6-weak-map/is-weak-map.js",
+        "node_modules/es6-weak-map/polyfill.js",
+        "node_modules/es6-weak-map/valid-weak-map.js",
+        "node_modules/esprima/bin/esparse.js",
+        "node_modules/esprima/bin/esvalidate.js",
+        "node_modules/esprima/dist/esprima.js",
+        "node_modules/extract-opts/es2015/index.js",
+        "node_modules/extract-opts/index.js",
+        "node_modules/extract-opts/source/index.js",
+        "node_modules/fuzzaldrin/lib/filter.js",
+        "node_modules/fuzzaldrin/lib/fuzzaldrin.js",
+        "node_modules/fuzzaldrin/lib/matcher.js",
+        "node_modules/fuzzaldrin/lib/scorer.js",
+        "node_modules/getmac/es5/lib/getmac.js",
+        "node_modules/grim/lib/deprecation.js",
+        "node_modules/grim/lib/grim.js",
+        "node_modules/is-utf8/is-utf8.js",
+        "node_modules/isexe/index.js",
+        "node_modules/isexe/mode.js",
+        "node_modules/isexe/windows.js",
+        "node_modules/jquery/dist/jquery.js",
+        "node_modules/jquery/dist/jquery.min.js",
+        "node_modules/jquery/src/ajax/jsonp.js",
+        "node_modules/jquery/src/ajax/load.js",
+        "node_modules/jquery/src/ajax/parseJSON.js",
+        "node_modules/jquery/src/ajax/parseXML.js",
+        "node_modules/jquery/src/ajax/script.js",
+        "node_modules/jquery/src/ajax/var/nonce.js",
+        "node_modules/jquery/src/ajax/var/rquery.js",
+        "node_modules/jquery/src/ajax/xhr.js",
+        "node_modules/jquery/src/ajax.js",
+        "node_modules/jquery/src/attributes/attr.js",
+        "node_modules/jquery/src/attributes/classes.js",
+        "node_modules/jquery/src/attributes/prop.js",
+        "node_modules/jquery/src/attributes/support.js",
+        "node_modules/jquery/src/attributes/val.js",
+        "node_modules/jquery/src/attributes.js",
+        "node_modules/jquery/src/callbacks.js",
+        "node_modules/jquery/src/core/access.js",
+        "node_modules/jquery/src/core/init.js",
+        "node_modules/jquery/src/core/parseHTML.js",
+        "node_modules/jquery/src/core/ready.js",
+        "node_modules/jquery/src/core/var/rsingleTag.js",
+        "node_modules/jquery/src/core.js",
+        "node_modules/jquery/src/css/addGetHookIf.js",
+        "node_modules/jquery/src/css/curCSS.js",
+        "node_modules/jquery/src/css/defaultDisplay.js",
+        "node_modules/jquery/src/css/hiddenVisibleSelectors.js",
+        "node_modules/jquery/src/css/support.js",
+        "node_modules/jquery/src/css/swap.js",
+        "node_modules/jquery/src/css/var/cssExpand.js",
+        "node_modules/jquery/src/css/var/getStyles.js",
+        "node_modules/jquery/src/css/var/isHidden.js",
+        "node_modules/jquery/src/css/var/rmargin.js",
+        "node_modules/jquery/src/css/var/rnumnonpx.js",
+        "node_modules/jquery/src/css.js",
+        "node_modules/jquery/src/data/Data.js",
+        "node_modules/jquery/src/data/accepts.js",
+        "node_modules/jquery/src/data/var/data_priv.js",
+        "node_modules/jquery/src/data/var/data_user.js",
+        "node_modules/jquery/src/data.js",
+        "node_modules/jquery/src/deferred.js",
+        "node_modules/jquery/src/deprecated.js",
+        "node_modules/jquery/src/dimensions.js",
+        "node_modules/jquery/src/effects/Tween.js",
+        "node_modules/jquery/src/effects/animatedSelector.js",
+        "node_modules/jquery/src/effects.js",
+        "node_modules/jquery/src/event/ajax.js",
+        "node_modules/jquery/src/event/alias.js",
+        "node_modules/jquery/src/event/support.js",
+        "node_modules/jquery/src/event.js",
+        "node_modules/jquery/src/exports/amd.js",
+        "node_modules/jquery/src/exports/global.js",
+        "node_modules/jquery/src/intro.js",
+        "node_modules/jquery/src/jquery.js",
+        "node_modules/jquery/src/manipulation/_evalUrl.js",
+        "node_modules/jquery/src/manipulation/support.js",
+        "node_modules/jquery/src/manipulation/var/rcheckableType.js",
+        "node_modules/jquery/src/manipulation.js",
+        "node_modules/jquery/src/offset.js",
+        "node_modules/jquery/src/outro.js",
+        "node_modules/jquery/src/queue/delay.js",
+        "node_modules/jquery/src/queue.js",
+        "node_modules/jquery/src/selector-native.js",
+        "node_modules/jquery/src/selector-sizzle.js",
+        "node_modules/jquery/src/selector.js",
+        "node_modules/jquery/src/serialize.js",
+        "node_modules/jquery/src/sizzle/dist/sizzle.js",
+        "node_modules/jquery/src/sizzle/dist/sizzle.min.js",
+        "node_modules/jquery/src/traversing/findFilter.js",
+        "node_modules/jquery/src/traversing/var/rneedsContext.js",
+        "node_modules/jquery/src/traversing.js",
+        "node_modules/jquery/src/var/arr.js",
+        "node_modules/jquery/src/var/class2type.js",
+        "node_modules/jquery/src/var/concat.js",
+        "node_modules/jquery/src/var/hasOwn.js",
+        "node_modules/jquery/src/var/indexOf.js",
+        "node_modules/jquery/src/var/pnum.js",
+        "node_modules/jquery/src/var/push.js",
+        "node_modules/jquery/src/var/rnotwhite.js",
+        "node_modules/jquery/src/var/slice.js",
+        "node_modules/jquery/src/var/strundefined.js",
+        "node_modules/jquery/src/var/support.js",
+        "node_modules/jquery/src/var/toString.js",
+        "node_modules/jquery/src/wrap.js",
+        "node_modules/js-yaml/bin/js-yaml.js",
+        "node_modules/js-yaml/dist/js-yaml.js",
+        "node_modules/js-yaml/dist/js-yaml.min.js",
+        "node_modules/js-yaml/index.js",
+        "node_modules/js-yaml/lib/js-yaml/common.js",
+        "node_modules/js-yaml/lib/js-yaml/dumper.js",
+        "node_modules/js-yaml/lib/js-yaml/exception.js",
+        "node_modules/js-yaml/lib/js-yaml/loader.js",
+        "node_modules/js-yaml/lib/js-yaml/mark.js",
+        "node_modules/js-yaml/lib/js-yaml/schema/core.js",
+        "node_modules/js-yaml/lib/js-yaml/schema/default_full.js",
+        "node_modules/js-yaml/lib/js-yaml/schema/default_safe.js",
+        "node_modules/js-yaml/lib/js-yaml/schema/failsafe.js",
+        "node_modules/js-yaml/lib/js-yaml/schema/json.js",
+        "node_modules/js-yaml/lib/js-yaml/schema.js",
+        "node_modules/js-yaml/lib/js-yaml/type/binary.js",
+        "node_modules/js-yaml/lib/js-yaml/type/bool.js",
+        "node_modules/js-yaml/lib/js-yaml/type/float.js",
+        "node_modules/js-yaml/lib/js-yaml/type/int.js",
+        "node_modules/js-yaml/lib/js-yaml/type/js/function.js",
+        "node_modules/js-yaml/lib/js-yaml/type/js/regexp.js",
+        "node_modules/js-yaml/lib/js-yaml/type/js/undefined.js",
+        "node_modules/js-yaml/lib/js-yaml/type/map.js",
+        "node_modules/js-yaml/lib/js-yaml/type/merge.js",
+        "node_modules/js-yaml/lib/js-yaml/type/null.js",
+        "node_modules/js-yaml/lib/js-yaml/type/omap.js",
+        "node_modules/js-yaml/lib/js-yaml/type/pairs.js",
+        "node_modules/js-yaml/lib/js-yaml/type/seq.js",
+        "node_modules/js-yaml/lib/js-yaml/type/set.js",
+        "node_modules/js-yaml/lib/js-yaml/type/str.js",
+        "node_modules/js-yaml/lib/js-yaml/type/timestamp.js",
+        "node_modules/js-yaml/lib/js-yaml/type.js",
+        "node_modules/js-yaml/lib/js-yaml.js",
+        "node_modules/lodash.uniq/index.js",
+        "node_modules/lru-cache/lib/lru-cache.js",
+        "node_modules/mixto/lib/mixin.js",
+        "node_modules/property-accessors/lib/property-accessors.js",
+        "node_modules/pseudomap/map.js",
+        "node_modules/pseudomap/pseudomap.js",
+        "node_modules/sb-callsite/lib/main.js",
+        "node_modules/sb-exec/decls/jasmine.js",
+        "node_modules/sb-exec/lib/helpers.js",
+        "node_modules/sb-exec/lib/index.js",
+        "node_modules/sb-exec/lib/types.js",
+        "node_modules/sb-fs/lib/index.js",
+        "node_modules/sb-memoize/lib/index.js",
+        "node_modules/sb-npm-path/decls/jasmine.js",
+        "node_modules/sb-npm-path/lib/helpers.js",
+        "node_modules/sb-npm-path/lib/index.js",
+        "node_modules/sb-promisify/lib/index.js",
+        "node_modules/semver/semver.js",
+        "node_modules/space-pen/lib/space-pen.js",
+        "node_modules/sprintf-js/dist/angular-sprintf.min.js",
+        "node_modules/sprintf-js/dist/sprintf.min.js",
+        "node_modules/sprintf-js/gruntfile.js",
+        "node_modules/sprintf-js/src/angular-sprintf.js",
+        "node_modules/sprintf-js/src/sprintf.js",
+        "node_modules/strip-bom-buf/index.js",
+        "node_modules/term.js/example/index.js",
+        "node_modules/term.js/index.js",
+        "node_modules/term.js/lib/index.js",
+        "node_modules/term.js/src/term.js",
+        "node_modules/tree-kill/cli.js",
+        "node_modules/tree-kill/index.js",
+        "node_modules/typechecker/es2015/index.js",
+        "node_modules/typechecker/index.js",
+        "node_modules/typechecker/source/index.js",
+        "node_modules/underscore/underscore-min.js",
+        "node_modules/underscore/underscore.js",
+        "node_modules/underscore-plus/lib/underscore-plus.js",
+        "node_modules/which/which.js",
+        "node_modules/xregexp/src/addons/build.js",
+        "node_modules/xregexp/src/addons/matchrecursive.js",
+        "node_modules/xregexp/src/addons/unicode-base.js",
+        "node_modules/xregexp/src/addons/unicode-blocks.js",
+        "node_modules/xregexp/src/addons/unicode-categories.js",
+        "node_modules/xregexp/src/addons/unicode-properties.js",
+        "node_modules/xregexp/src/addons/unicode-scripts.js",
+        "node_modules/xregexp/src/index.js",
+        "node_modules/xregexp/src/xregexp.js",
+        "node_modules/xregexp/xregexp-all.js",
+        "node_modules/yallist/iterator.js",
+        "node_modules/yallist/yallist.js"
+      ],
+      ".json": [
+        "node_modules/argparse/package.json",
+        "node_modules/atom-package-deps/.eslintrc.json",
+        "node_modules/atom-package-deps/package.json",
+        "node_modules/atom-package-path/package.json",
+        "node_modules/atom-space-pen-views/package.json",
+        "node_modules/coffee-script/package.json",
+        "node_modules/consistent-env/.eslintrc.json",
+        "node_modules/consistent-env/package.json",
+        "node_modules/cross-spawn/package.json",
+        "node_modules/cson-parser/package.json",
+        "node_modules/d/package.json",
+        "node_modules/eachr/package.json",
+        "node_modules/editions/package.json",
+        "node_modules/emissary/package.json",
+        "node_modules/es5-ext/node_modules/d/package.json",
+        "node_modules/es5-ext/node_modules/es6-iterator/package.json",
+        "node_modules/es5-ext/node_modules/es6-symbol/package.json",
+        "node_modules/es5-ext/package.json",
+        "node_modules/es6-iterator/package.json",
+        "node_modules/es6-symbol/package.json",
+        "node_modules/es6-weak-map/package.json",
+        "node_modules/esprima/package.json",
+        "node_modules/extract-opts/package.json",
+        "node_modules/fuzzaldrin/package.json",
+        "node_modules/getmac/package.json",
+        "node_modules/grim/package.json",
+        "node_modules/is-utf8/package.json",
+        "node_modules/isexe/package.json",
+        "node_modules/jquery/bower.json",
+        "node_modules/jquery/package.json",
+        "node_modules/js-yaml/package.json",
+        "node_modules/lodash.uniq/package.json",
+        "node_modules/lru-cache/package.json",
+        "node_modules/mixto/package.json",
+        "node_modules/property-accessors/package.json",
+        "node_modules/pseudomap/package.json",
+        "node_modules/sb-callsite/package.json",
+        "node_modules/sb-exec/.eslintrc.json",
+        "node_modules/sb-exec/package.json",
+        "node_modules/sb-fs/package.json",
+        "node_modules/sb-memoize/.eslintrc.json",
+        "node_modules/sb-memoize/package.json",
+        "node_modules/sb-npm-path/.eslintrc.json",
+        "node_modules/sb-npm-path/package.json",
+        "node_modules/sb-promisify/package.json",
+        "node_modules/semver/package.json",
+        "node_modules/space-pen/api.json",
+        "node_modules/space-pen/package.json",
+        "node_modules/sprintf-js/bower.json",
+        "node_modules/sprintf-js/package.json",
+        "node_modules/strip-bom-buf/package.json",
+        "node_modules/term.js/package.json",
+        "node_modules/tree-kill/package.json",
+        "node_modules/typechecker/package.json",
+        "node_modules/underscore/package.json",
+        "node_modules/underscore-plus/package.json",
+        "node_modules/which/package.json",
+        "node_modules/xregexp/package.json",
+        "node_modules/yallist/package.json",
+        "package.json"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "keymaps",
+          "lib",
+          "menus",
+          "",
+          "spec",
+          "spec/fixture",
+          "spec/fixture/atom-build-hooks-dummy-package",
+          "spec/fixture/atom-build-spec-linter"
+        ],
+        "dependencies": {
+          "atom-package-deps": "^4.0.1",
+          "atom-space-pen-views": "^2.0.3",
+          "cross-spawn": "^4.0.2",
+          "cson-parser": "^1.3.0",
+          "getmac": "^1.0.7",
+          "js-yaml": "^3.4.6",
+          "tree-kill": "^1.0.0",
+          "xregexp": "^3.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/argparse",
+          "node_modules/argparse/lib/action/append",
+          "node_modules/argparse/lib/action",
+          "node_modules/argparse/lib/action/store",
+          "node_modules/argparse/lib",
+          "node_modules/argparse/lib/argument",
+          "node_modules/argparse/lib/help"
+        ],
+        "dependencies": {
+          "sprintf-js": "~1.0.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-deps",
+          "node_modules/atom-package-deps/lib"
+        ],
+        "dependencies": {
+          "atom-package-path": "^1.1.0",
+          "sb-exec": "^3.0.1",
+          "sb-fs": "^3.0.0",
+          "semver": "^5.3.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-path/lib",
+          "node_modules/atom-package-path",
+          "node_modules/atom-package-path/spec"
+        ],
+        "dependencies": {
+          "sb-callsite": "^1.1.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-space-pen-views/lib",
+          "node_modules/atom-space-pen-views"
+        ],
+        "dependencies": {
+          "fuzzaldrin": "^2.1.0",
+          "space-pen": "^5.1.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/consistent-env",
+          "node_modules/consistent-env/decls",
+          "node_modules/consistent-env/lib"
+        ],
+        "dependencies": {
+          "lodash.uniq": "^4.5.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cross-spawn",
+          "node_modules/cross-spawn/lib"
+        ],
+        "dependencies": {
+          "lru-cache": "^4.0.1",
+          "which": "^1.2.9"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/cson-parser/lib",
+          "node_modules/cson-parser"
+        ],
+        "dependencies": {
+          "coffee-script": "^1.10.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/d",
+          "node_modules/d/test"
+        ],
+        "dependencies": {
+          "es5-ext": "~0.10.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/eachr/es2015",
+          "node_modules/eachr",
+          "node_modules/eachr/source"
+        ],
+        "dependencies": {
+          "editions": "^1.1.1",
+          "typechecker": "^4.3.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/emissary/lib",
+          "node_modules/emissary"
+        ],
+        "dependencies": {
+          "es6-weak-map": "^0.1.2",
+          "mixto": "1.x",
+          "property-accessors": "^1.1",
+          "underscore-plus": "1.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es5-ext/array/#/@@iterator",
+          "node_modules/es5-ext/array/#",
+          "node_modules/es5-ext/array/#/concat",
+          "node_modules/es5-ext/array/#/copy-within",
+          "node_modules/es5-ext/array/#/entries",
+          "node_modules/es5-ext/array/#/fill",
+          "node_modules/es5-ext/array/#/filter",
+          "node_modules/es5-ext/array/#/find",
+          "node_modules/es5-ext/array/#/find-index",
+          "node_modules/es5-ext/array/#/keys",
+          "node_modules/es5-ext/array/#/map",
+          "node_modules/es5-ext/array/#/slice",
+          "node_modules/es5-ext/array/#/splice",
+          "node_modules/es5-ext/array/#/values",
+          "node_modules/es5-ext/array",
+          "node_modules/es5-ext/array/from",
+          "node_modules/es5-ext/array/of",
+          "node_modules/es5-ext/boolean",
+          "node_modules/es5-ext/date/#",
+          "node_modules/es5-ext/date",
+          "node_modules/es5-ext/error/#",
+          "node_modules/es5-ext/error",
+          "node_modules/es5-ext/function/#",
+          "node_modules/es5-ext/function",
+          "node_modules/es5-ext",
+          "node_modules/es5-ext/iterable",
+          "node_modules/es5-ext/json",
+          "node_modules/es5-ext/math",
+          "node_modules/es5-ext/math/acosh",
+          "node_modules/es5-ext/math/asinh",
+          "node_modules/es5-ext/math/atanh",
+          "node_modules/es5-ext/math/cbrt",
+          "node_modules/es5-ext/math/clz32",
+          "node_modules/es5-ext/math/cosh",
+          "node_modules/es5-ext/math/expm1",
+          "node_modules/es5-ext/math/fround",
+          "node_modules/es5-ext/math/hypot",
+          "node_modules/es5-ext/math/imul",
+          "node_modules/es5-ext/math/log10",
+          "node_modules/es5-ext/math/log1p",
+          "node_modules/es5-ext/math/log2",
+          "node_modules/es5-ext/math/sign",
+          "node_modules/es5-ext/math/sinh",
+          "node_modules/es5-ext/math/tanh",
+          "node_modules/es5-ext/math/trunc",
+          "node_modules/es5-ext/number/#",
+          "node_modules/es5-ext/number/epsilon",
+          "node_modules/es5-ext/number",
+          "node_modules/es5-ext/number/is-finite",
+          "node_modules/es5-ext/number/is-integer",
+          "node_modules/es5-ext/number/is-nan",
+          "node_modules/es5-ext/number/is-safe-integer",
+          "node_modules/es5-ext/number/max-safe-integer",
+          "node_modules/es5-ext/number/min-safe-integer",
+          "node_modules/es5-ext/object",
+          "node_modules/es5-ext/object/assign",
+          "node_modules/es5-ext/object/keys",
+          "node_modules/es5-ext/object/set-prototype-of",
+          "node_modules/es5-ext/reg-exp/#",
+          "node_modules/es5-ext/reg-exp/#/match",
+          "node_modules/es5-ext/reg-exp/#/replace",
+          "node_modules/es5-ext/reg-exp/#/search",
+          "node_modules/es5-ext/reg-exp/#/split",
+          "node_modules/es5-ext/reg-exp/#/sticky",
+          "node_modules/es5-ext/reg-exp/#/unicode",
+          "node_modules/es5-ext/reg-exp",
+          "node_modules/es5-ext/string/#/@@iterator",
+          "node_modules/es5-ext/string/#",
+          "node_modules/es5-ext/string/#/code-point-at",
+          "node_modules/es5-ext/string/#/contains",
+          "node_modules/es5-ext/string/#/ends-with",
+          "node_modules/es5-ext/string/#/normalize",
+          "node_modules/es5-ext/string/#/repeat",
+          "node_modules/es5-ext/string/#/starts-with",
+          "node_modules/es5-ext/string",
+          "node_modules/es5-ext/string/from-code-point",
+          "node_modules/es5-ext/string/raw",
+          "node_modules/es5-ext/test",
+          "node_modules/es5-ext/test/array/#/@@iterator",
+          "node_modules/es5-ext/test/array/#",
+          "node_modules/es5-ext/test/array/#/concat",
+          "node_modules/es5-ext/test/array/#/copy-within",
+          "node_modules/es5-ext/test/array/#/entries",
+          "node_modules/es5-ext/test/array/#/fill",
+          "node_modules/es5-ext/test/array/#/filter",
+          "node_modules/es5-ext/test/array/#/find",
+          "node_modules/es5-ext/test/array/#/find-index",
+          "node_modules/es5-ext/test/array/#/keys",
+          "node_modules/es5-ext/test/array/#/map",
+          "node_modules/es5-ext/test/array/#/slice",
+          "node_modules/es5-ext/test/array/#/splice",
+          "node_modules/es5-ext/test/array/#/values",
+          "node_modules/es5-ext/test/array",
+          "node_modules/es5-ext/test/array/from",
+          "node_modules/es5-ext/test/array/of",
+          "node_modules/es5-ext/test/boolean",
+          "node_modules/es5-ext/test/date/#",
+          "node_modules/es5-ext/test/date",
+          "node_modules/es5-ext/test/error/#",
+          "node_modules/es5-ext/test/error",
+          "node_modules/es5-ext/test/function/#",
+          "node_modules/es5-ext/test/function",
+          "node_modules/es5-ext/test/iterable",
+          "node_modules/es5-ext/test/json",
+          "node_modules/es5-ext/test/math",
+          "node_modules/es5-ext/test/math/acosh",
+          "node_modules/es5-ext/test/math/asinh",
+          "node_modules/es5-ext/test/math/atanh",
+          "node_modules/es5-ext/test/math/cbrt",
+          "node_modules/es5-ext/test/math/clz32",
+          "node_modules/es5-ext/test/math/cosh",
+          "node_modules/es5-ext/test/math/expm1",
+          "node_modules/es5-ext/test/math/fround",
+          "node_modules/es5-ext/test/math/hypot",
+          "node_modules/es5-ext/test/math/imul",
+          "node_modules/es5-ext/test/math/log10",
+          "node_modules/es5-ext/test/math/log1p",
+          "node_modules/es5-ext/test/math/log2",
+          "node_modules/es5-ext/test/math/sign",
+          "node_modules/es5-ext/test/math/sinh",
+          "node_modules/es5-ext/test/math/tanh",
+          "node_modules/es5-ext/test/math/trunc",
+          "node_modules/es5-ext/test/number/#",
+          "node_modules/es5-ext/test/number/epsilon",
+          "node_modules/es5-ext/test/number/is-finite",
+          "node_modules/es5-ext/test/number/is-integer",
+          "node_modules/es5-ext/test/number/is-nan",
+          "node_modules/es5-ext/test/number",
+          "node_modules/es5-ext/test/number/is-safe-integer",
+          "node_modules/es5-ext/test/number/max-safe-integer",
+          "node_modules/es5-ext/test/number/min-safe-integer",
+          "node_modules/es5-ext/test/object",
+          "node_modules/es5-ext/test/object/assign",
+          "node_modules/es5-ext/test/object/keys",
+          "node_modules/es5-ext/test/object/set-prototype-of",
+          "node_modules/es5-ext/test/reg-exp/#",
+          "node_modules/es5-ext/test/reg-exp/#/match",
+          "node_modules/es5-ext/test/reg-exp/#/replace",
+          "node_modules/es5-ext/test/reg-exp/#/search",
+          "node_modules/es5-ext/test/reg-exp/#/split",
+          "node_modules/es5-ext/test/reg-exp/#/sticky",
+          "node_modules/es5-ext/test/reg-exp/#/unicode",
+          "node_modules/es5-ext/test/reg-exp",
+          "node_modules/es5-ext/test/string/#/@@iterator",
+          "node_modules/es5-ext/test/string/#",
+          "node_modules/es5-ext/test/string/#/code-point-at",
+          "node_modules/es5-ext/test/string/#/contains",
+          "node_modules/es5-ext/test/string/#/ends-with",
+          "node_modules/es5-ext/test/string/#/normalize",
+          "node_modules/es5-ext/test/string/#/repeat",
+          "node_modules/es5-ext/test/string/#/starts-with",
+          "node_modules/es5-ext/test/string",
+          "node_modules/es5-ext/test/string/from-code-point",
+          "node_modules/es5-ext/test/string/raw"
+        ],
+        "dependencies": {
+          "es6-iterator": "2",
+          "es6-symbol": "~3.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es5-ext/node_modules/d",
+          "node_modules/es5-ext/node_modules/d/test"
+        ],
+        "dependencies": {
+          "es5-ext": "^0.10.9"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es5-ext/node_modules/es6-iterator/#",
+          "node_modules/es5-ext/node_modules/es6-iterator",
+          "node_modules/es5-ext/node_modules/es6-iterator/test/#",
+          "node_modules/es5-ext/node_modules/es6-iterator/test"
+        ],
+        "dependencies": {
+          "d": "1",
+          "es5-ext": "^0.10.14",
+          "es6-symbol": "^3.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es5-ext/node_modules/es6-symbol",
+          "node_modules/es5-ext/node_modules/es6-symbol/test"
+        ],
+        "dependencies": {
+          "d": "1",
+          "es5-ext": "~0.10.14"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es6-iterator/#",
+          "node_modules/es6-iterator",
+          "node_modules/es6-iterator/test/#",
+          "node_modules/es6-iterator/test"
+        ],
+        "dependencies": {
+          "d": "~0.1.1",
+          "es5-ext": "~0.10.5",
+          "es6-symbol": "~2.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es6-symbol",
+          "node_modules/es6-symbol/test"
+        ],
+        "dependencies": {
+          "d": "~0.1.1",
+          "es5-ext": "~0.10.5"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/es6-weak-map",
+          "node_modules/es6-weak-map/test"
+        ],
+        "dependencies": {
+          "d": "~0.1.1",
+          "es5-ext": "~0.10.6",
+          "es6-iterator": "~0.1.3",
+          "es6-symbol": "~2.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/extract-opts/es2015",
+          "node_modules/extract-opts",
+          "node_modules/extract-opts/source"
+        ],
+        "dependencies": {
+          "eachr": "^3.2.0",
+          "editions": "^1.1.1",
+          "typechecker": "^4.3.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/getmac/es5/lib",
+          "node_modules/getmac"
+        ],
+        "dependencies": {
+          "extract-opts": "^3.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/grim/lib",
+          "node_modules/grim"
+        ],
+        "dependencies": {
+          "emissary": "^1.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/js-yaml/bin",
+          "node_modules/js-yaml/dist",
+          "node_modules/js-yaml",
+          "node_modules/js-yaml/lib/js-yaml",
+          "node_modules/js-yaml/lib/js-yaml/schema",
+          "node_modules/js-yaml/lib/js-yaml/type",
+          "node_modules/js-yaml/lib/js-yaml/type/js",
+          "node_modules/js-yaml/lib"
+        ],
+        "dependencies": {
+          "argparse": "^1.0.7",
+          "esprima": "^3.1.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/lru-cache/lib",
+          "node_modules/lru-cache"
+        ],
+        "dependencies": {
+          "pseudomap": "^1.0.1",
+          "yallist": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/property-accessors/lib",
+          "node_modules/property-accessors"
+        ],
+        "dependencies": {
+          "es6-weak-map": "^0.1.2",
+          "mixto": "1.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sb-exec",
+          "node_modules/sb-exec/decls",
+          "node_modules/sb-exec/lib"
+        ],
+        "dependencies": {
+          "consistent-env": "^1.2.0",
+          "lodash.uniq": "^4.5.0",
+          "sb-npm-path": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sb-fs/lib",
+          "node_modules/sb-fs"
+        ],
+        "dependencies": {
+          "sb-promisify": "^2.0.1",
+          "strip-bom-buf": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/sb-npm-path",
+          "node_modules/sb-npm-path/decls",
+          "node_modules/sb-npm-path/lib"
+        ],
+        "dependencies": {
+          "sb-memoize": "^1.0.2",
+          "sb-promisify": "^2.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/space-pen",
+          "node_modules/space-pen/lib"
+        ],
+        "dependencies": {
+          "grim": "^1.0.0",
+          "jquery": "2.1.4",
+          "underscore-plus": "1.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/strip-bom-buf"
+        ],
+        "dependencies": {
+          "is-utf8": "^0.2.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/typechecker/es2015",
+          "node_modules/typechecker",
+          "node_modules/typechecker/source"
+        ],
+        "dependencies": {
+          "editions": "^1.3.3"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/underscore-plus/lib",
+          "node_modules/underscore-plus"
+        ],
+        "dependencies": {
+          "underscore": "~1.6.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/which"
+        ],
+        "dependencies": {
+          "isexe": "^2.0.0"
+        }
+      }
+    ]
+  }
+}

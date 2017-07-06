@@ -1,0 +1,37 @@
+#
+# Alternate manpage search function
+
+local width pager query page section
+
+case "$1" in
+([0-9lnpx]|3p|3pe|3per|3perl)
+	section="$1"
+	shift ;;
+(*)
+	section="$(man -w "$1" 2>/dev/null | sed -r 's@^.*/man([^/])/[^/]*$@\1@')" ;;
+esac
+
+width="$(tput cols)"
+pager="less"
+page="$1"
+shift
+
+[[ -z "$1" ]] && \
+	query= || \
+	query="p$(<<<"$*" tr '[[:upper:]]' '[[:lower:]]' | \
+		tr -d '\n' | \
+		od -tx1 | \
+		sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g; s/^ //; s/\\x20/&\*/g')"
+
+env \
+	PAGER="$pager" \
+	MANWIDTH="$width" \
+	LESS="JMRXs${query}" \
+	GROFF_NO_SGR=1 \
+	LESS_TERMCAP_se=$'\E[0m' \
+	LESS_TERMCAP_me=$'\E[0m' \
+	LESS_TERMCAP_us=$'\E[4;32;4;132m' \
+	LESS_TERMCAP_ue=$'\E[0m' \
+	LESS_TERMCAP_so=$'\E[30;43m' \
+	LESS_TERMCAP_md=$'\E[1;31m' \
+	man "$section" "$page"

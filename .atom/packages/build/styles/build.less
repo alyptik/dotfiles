@@ -1,0 +1,116 @@
+@import "ui-variables";
+@import "animations";
+
+.build {
+
+  min-width: 250px;
+  font-family: Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-weight: 600;
+  font-size: @font-size;
+
+  .resizer {
+    opacity: 0.0;
+    position: absolute;
+    border: solid 4px @base-border-color;
+  }
+
+  .heading {
+    -webkit-user-select: none;
+    line-height: 3.0em;
+    padding: 0 3px;
+
+    &.success {
+      animation: flash-background-success linear 1.2s;
+    }
+
+    &.error {
+      animation: flash-background-error linear 1.2s;
+    }
+
+    .heading-text {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &::before {
+        margin-right: 5px;
+        color: @text-color-error;
+        animation: flash linear infinite 1.0s;
+      }
+    }
+
+    .control-container {
+      float: right;
+      margin-left: @component-padding;
+
+      .btn {
+        color: @text-color-info;
+        margin: 0 1px;
+      }
+
+      .title {
+        float: left;
+
+        .build-timer {
+          margin-right: @component-padding;
+        }
+
+        &.error {
+          color: @text-color-error;
+        }
+
+        &.success {
+          color: @text-color-success;
+        }
+      }
+    }
+  }
+
+  .output {
+    &.override-theme {
+      color: #fff;
+      background-color: #000;
+    }
+
+    .terminal {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      font-weight: normal;
+      > div {
+        white-space: nowrap;
+        font-size: inherit;
+      }
+    }
+
+    .terminal-test {
+      background-color:none;
+      position: absolute;
+      float: left;
+      visibility: hidden;
+      height: auto !important;
+      width: auto !important;
+      white-space: nowrap;
+      border: none;
+    }
+  }
+}
+
+.opaque-hover {
+  transition: opacity 0.2s linear;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1.0;
+  }
+}
+
+#build-status-bar {
+  &.status-success > a {
+    color: @text-color-success;
+  }
+
+  &.status-error > a {
+    color: @text-color-error;
+  }
+}

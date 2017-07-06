@@ -1,0 +1,44 @@
+script_line1 = use strict
+script_line2 = use warnings
+script_line3 = use feature qw/say current_sub/
+; script_line3 = use 5.10.0
+script_line4 = use Data::Dump qw/dump pp dd ddx/
+script_line5 = use Data::Dumper
+script_line6 = ($Data::Dumper::Deepcopy, $Data::Dumper::Deparse, $Data::Dumper::Indent, $Data::Dumper::Purity) = (1, 1, 3, 1)
+
+
+[Nopaste]
+service = Gist
+[Editor]
+; editor = vim
+editor = emacs
+[Interrupt]
+[FancyPrompt]
+; [DataDump]
+; [DataDumper]
+[DataPrinter]
+[Colors]
+error   = bright_red
+warning = bright_yellow
+result  = bright_green
+[ReadLine]
+history_file = .reply_history
+history_length = 10000
+[Hints]
+[Packages]
+[LexicalPersistence]
+[Pager]
+pager = less
+[ResultCache]
+[Timer]
+mintime = 0.01
+[LoadClass]
+[Autocomplete::Commands]
+[Autocomplete::Functions]
+[Autocomplete::Globals]
+[Autocomplete::Keywords]
+[Autocomplete::Lexicals]
+[Autocomplete::Methods]
+[Autocomplete::Packages]
+
+; vi: set filetype=perl:

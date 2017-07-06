@@ -1,0 +1,55 @@
+# Maintainer <NAME> <<EMAIL>>
+# The maintainer's email address should be encoded appropriately,
+# with @ replaced with "at" and . replaced with "dot", for example
+
+
+# Variables other than the ones mentioned below (e.g., some PKGBUILDs
+# include a _pkgname variable) should have an underscore (_) before them
+
+pkgname=<PKG>                # This is the name of the package. It can be an array of multiple pkgnames,
+                                 # but for each pkgname a separate package() function should be defined.
+_pkgname=<_PKG>                  # pkgname without -git
+pkgver=                          # This is the package version of the PKGBUILD
+pkgrel=1                         # This is the revision number of the PKGBUILD. If this PKGBUILD is new it should be 1
+pkgdesc=""                       # Here you need to place a description of the package
+arch=('i686' 'x86_64')           # The supported architectures of this package
+url="<URL>"                      # URL to homepage.
+license=()                       # License of the package. Check /usr/share/licenses/common for the name of recognized licenses
+depends=()                       # Dependencies of the package. These packages are runtime dependencies for the package.
+makedepends=()                   # Build dependencies of the package. These are not required to use the package once installed
+optdepends=()                    # Optional (recommended) dependencies
+#install=<PKG>.install       # Install file, which is not absolutely necessary.
+source=("git+${url}.git")        # Source file(s), like patches and the upstream package source. If your upstream source is a git
+                                 # repository you may wish to include a pkgver() function before the prepare() function
+sha256sums=('SKIP')              # checksums, permissible alternative checksum variables include md5sums, sha1sums and sha512sums
+
+pkgver() {
+  cd "${srcdir}/${_pkgname}"
+  git describe --long | sed 's/-[0-9]*-//g' | sed 's/g/.g/g' | sed 's/^v//g'
+}
+
+# This function prepares the source, applying any necessary patches to the upstream source.
+prepare() {
+ cd $srcdir/${_pkgname}    # This should be adjusted (in all three of these functions), according
+                           # to where the upstream source code for the package is stored in $srcdir
+}
+
+# Compile the source code. Usually commands like python setup.py, make or npm install appear in this function
+build() {
+ cd $srcdir/${_pkgname}
+
+ #./configure --prefix=/usr
+ #make
+ #script/build
+ #python setup.py build
+ #scripts/npm.sh install
+}
+
+# Build the package. This involves moving the package contents to the $pkgdir directory
+package() {
+ cd $srcdir/$_pkgname
+
+ #make install DESTDIR=${pkgdir}
+ #script/grunt install --install-dir ${pkgdir}
+ #python setup.py install
+}

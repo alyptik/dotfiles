@@ -1,0 +1,73 @@
+[user]
+	email = alyptik@protonmail.com
+	name = alyptik
+	signingkey = AEEBCB7D68725419
+[diff]
+	tool = vimdiff2
+	renameLimit = 24167
+[difftool]
+	prompt = false
+[merge]
+	tool = vimdiff2
+[imap]
+	folder = "[Gmail]/Drafts"
+	host = imaps://imap.google.com
+	user = alyptik@gmail.com
+	port = 993
+	sslverify = false
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = alyptik@gmail.com
+	smtpServerPort = 587
+[push]
+	default = simple
+	followTags = true
+[alias]
+	br = branch
+	co = commit
+	st = status
+	l = log --show-signature --stat
+	lu = log --show-signature -u
+	lg = log --graph --oneline --decorate --boundary
+	lga = log --graph --oneline --decorate --all
+	lgs = log --graph --oneline --decorate --boundary --stat
+	graph = log --graph --stat --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+	unstage = reset HEAD --
+	cfg = config
+	cfgg = config --global
+	rv = remote -v
+	rvv = remote -vv
+	bv = branch -v
+	bvv = branch -vv
+	re = remote
+	squash = rebase -i origin/master
+	mail = send-email outgoing/*
+	patch = format-patch --cover-letter -M origin/master -o outgoing/
+	ch = checkout
+	t = tag
+	bi = bisect
+	cl = clone
+	r = rm --cached
+	cached = diff --cached
+	stat = status -sb
+	d = diff --patience
+	dr = diff --patience --patch --relative --no-index
+	fa = fetch --all --jobs=4 --recurse-submodules=on-demand
+	reb = rebase -S --autostash
+	lgp = log --graph --oneline --decorate --boundary --first-parent
+[web]
+	browser = w3m
+[instaweb]
+	browser = w3m
+[color]
+	ui = auto
+[core]
+	pager = less
+	excludesfile = ~/.cvsignore
+[credential]
+	helper = /usr/lib/git-core/git-credential-gnome-keyring
+[commit]
+	gpgsign = true
+[rerere]
+	enabled = true

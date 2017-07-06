@@ -1,0 +1,75 @@
+# [Configuration Section]
+alignment bottom_left
+background no
+out_to_console no
+double_buffer yes
+
+draw_shades no
+draw_outline no
+draw_borders no
+stippled_borders no
+
+#border_width 0
+border_inner_margin 0
+border_outer_margin 0
+
+#max_text_width = 75
+minimum_size 380 240    
+maximum_width 380
+
+gap_x 0
+gap_y 31
+
+background yes
+own_window yes
+own_window_type normal
+own_window_argb_visual true
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+on_bottom yes
+
+
+override_utf8_locale yes
+use_spacer none
+use_xft yes
+xftfont Terminus:size=8
+xftalpha 1
+
+no_buffers yes
+net_avg_samples 1
+cpu_avg_samples 1
+update_interval 1
+
+lua_load /home/alyptik/.conky/lua/netRing.lua
+lua_draw_hook_pre ring_stats
+
+top_cpu_separate no
+format_human_readable yes
+pad_percents 1
+
+color1 5A5A5A
+color2 989898
+# 3600 = 1hour
+# 1D1C1B dark grey
+# 504C4A light grey
+#
+# 35BF5C light green
+# 3EF740 manjaro green
+# [Content Section]
+TEXT
+${color1}${voffset 6} network
+#${color2}${voffset 5} ${if_up eth0}online${else}offline${endif}${color1}${alignr 245}status
+#${color2}${voffset 3} ${addr eth0}${color1}${alignr 245}addr
+#${color2}${voffset 3} ${downspeed eth0}${color1}${alignr 245}down
+#${color2}${voffset 3} ${upspeed eth0}${color1}${alignr 245}up
+${color2}${voffset 5} ${if_up mlan0}online${else}offline${endif}${color1}${alignr 245}status
+${color2}${voffset 3} ${addr mlan0}${color1}${alignr 245}addr
+${color2}${voffset 3} ${downspeed mlan0}${color1}${alignr 245}down
+${color2}${voffset 3} ${upspeed mlan0}${color1}${alignr 245}up
+${color1}${voffset 0} top
+${color2}${voffset 0} ${top name 1}  
+${color2}${voffset 0} ${top name 2}  
+${color2}${voffset 1} ${top name 3}  
+${color2}${voffset 1} ${top name 4}  
+${color2}${voffset 0} ${top name 5}  

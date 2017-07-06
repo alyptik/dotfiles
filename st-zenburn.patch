@@ -1,0 +1,136 @@
+diff --git a/Makefile b/Makefile
+index 6158ab2..3c2f224 100644
+--- a/Makefile
++++ b/Makefile
+@@ -49,7 +49,6 @@ install: all
+ 	@sed "s/VERSION/${VERSION}/g" < st.1 > ${DESTDIR}${MANPREFIX}/man1/st.1
+ 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/st.1
+ 	@echo Please see the README file regarding the terminfo entry of st.
+-	@tic -s st.info
+ 
+ uninstall:
+ 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
+diff --git a/config.def.h b/config.def.h
+index 83c00c7..466e49d 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -5,7 +5,7 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Office Code Pro Medium:pixelsize=13:antialias=true:autohint=true";
++static char *font = "FuraCode Nerd Font-Retina:pixelsize=24:antialias=true:autohint=true";
+ static int bold_font = 0;
+ static int borderpx = 2;
+ #define histsize 2000
+@@ -89,32 +89,51 @@ static int alpha = 0xFF;
+ 
+ /* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+-	/* 8 normal colors */
+-	"#3a3a3a",
+-	"#cc9393",
+-	"#7f9f7f",
+-	"#d0bf8f",
+-	"#6ca0a3",
+-	"#dc8cc3",
+-	"#93e0e3",
+-	"#dcdccc",
+ 
+-	/* 8 bright colors */
+-	"#7f9f7f",
+-	"#d78787",
+-	"#bfebbf",
+-	"#f0dfaf",
+-	"#8cd0d3",
+-	"#dc8cc3",
+-	"#93e0e3",
+-	"#ffffff",
++	"#282828",
++	"#cc241d",
++	"#98971a",
++	"#d79921",
++	"#458588",
++	"#b16286",
++	"#689d6a",
++	"#ebdbb2",
++
++	"#928374",
++	"#fb4934",
++	"#b8bb26",
++	"#fabd2f",
++	"#83a598",
++	"#d3869b",
++	"#8ec07c",
++	"#ebdbb",
++
++	// 8 normal colors ,
++	// "#3a3a3a",
++	// "#cc9393",
++	// "#7f9f7f",
++	// "#d0bf8f",
++	// "#6ca0a3",
++	// "#dc8cc3",
++	// "#93e0e3",
++	// "#dcdccc",
++        //
++	// 8 bright colors
++	// "#7f9f7f",
++	// "#d78787",
++	// "#bfebbf",
++	// "#f0dfaf",
++	// "#8cd0d3",
++	// "#dc8cc3",
++	// "#93e0e3",
++	// "#ffffff",
+ 
+ 	[255] = 0,
+ 
+ 	/* more colors can be added after 255 to use with DefaultXX */
+-	"#dcdccc",
+-	"#dcdccc",
+-	"#3a3a3a",
++	"#32302f",
++	"#32302f",
++	"#ebdbb2",
+ };
+ 
+ 
+@@ -181,8 +200,10 @@ static Shortcut shortcuts[] = {
+ 	{ MODKEY|ShiftMask,     XK_Home,        xzoomreset,     {.f =  0} },
+ 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+ 	{ MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
+-	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
+-	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
++	{ MODKEY|ShiftMask,     XK_C,           clipcopy,	{.i =  0} },
++	{ MODKEY|ShiftMask,     XK_V,           clippaste,	{.i =  0} },
++	{ ControlMask|ShiftMask,	XK_C,	clipcopy,	{.i =  0} },
++	{ ControlMask|ShiftMask,	XK_V,	clippaste,	{.i =  0} },
+ 	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
+ 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+ 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+diff --git a/st.c b/st.c
+index acf874f..a1cbbc1 100644
+--- a/st.c
++++ b/st.c
+@@ -986,13 +986,14 @@ bpress(XEvent *e)
+ 		return;
+ 	}
+ 
+-	for (ms = mshortcuts; ms < mshortcuts + LEN(mshortcuts); ms++) {
+-		if (e->xbutton.button == ms->b
+-				&& match(ms->mask, e->xbutton.state)) {
+-			ttysend(ms->s, strlen(ms->s));
+-			return;
++	if (IS_SET(MODE_ALTSCREEN))
++		for (ms = mshortcuts; ms < mshortcuts + LEN(mshortcuts); ms++) {
++			if (e->xbutton.button == ms->b
++					&& match(ms->mask, e->xbutton.state)) {
++				ttysend(ms->s, strlen(ms->s));
++				return;
++			}
+ 		}
+-	}
+ 
+ 	for (mk = mkeys; mk < mkeys + LEN(mkeys); mk++) {
+ 		if (e->xbutton.button == mk->b

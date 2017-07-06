@@ -1,0 +1,27 @@
+{
+  "menu": [
+    {
+      "label": "View",
+      "submenu": [
+        {
+          "command": "nuclide-test-runner:toggle-panel",
+          "label": "Toggle Test Runner"
+        }
+      ]
+    },
+    {
+      "label": "Nuclide",
+      "submenu": [
+        {
+          "label": "Test Runner",
+          "submenu": [
+            {
+              "command": "nuclide-test-runner:run-tests",
+              "label": "Run tests"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

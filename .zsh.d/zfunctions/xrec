@@ -1,0 +1,11 @@
+
+	local comp
+	comp=1
+	pidof compton >/dev/null && killall compton || comp=0
+	ffmpeg -probesize 512M -s 2160x1440 -r "${2:-25}" \
+		-f x11grab -i :0.0 \
+		-an -framerate "${2:-25}" -video_size cif \
+		-c:v libx264 -crf 0 -preset ultrafast -pix_fmt yuv420p -y "${1:-/tmp/out.mkv}"
+		# -c:v libx265 -crf 0 -preset ultrafast -pix_fmt yuv420p -y "${1:-/tmp/out.mkv}"
+	# [[ "$comp" -ne 0 ]] && compton -cCGfF -b -i 0.85
+	[[ "$comp" -ne 0 ]] && compton -b

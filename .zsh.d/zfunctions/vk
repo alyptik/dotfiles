@@ -1,0 +1,6 @@
+
+	local search="$1"
+	while [[ ! -z "$2" ]]; do shift && search="$search+$1"; done
+	local vkurl='http://vk.com/audios361427414?act=popular&q='"$search"
+	#xdg-open "$vkurl"
+	open_command "$vkurl"
