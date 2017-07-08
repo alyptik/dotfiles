@@ -5,7 +5,7 @@ unset -f bfg define defrag fc h wd which 2>/dev/null
 unalias {1..9} c f gbr gco gcs gg gm h history l md o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
-
+alias rman=$'zsh -c \'man "$(<<<${(F@)${(f@)$(print -l /usr/share/man/man{2,3}/*.[0-9].gz):t}/.[0-9].gz/} shuf -n1)"\''
 alias bar='bsdtar'
 alias ty='type'
 alias whe='whence'

@@ -56,6 +56,7 @@
 	fa = fetch --all --jobs=4 --recurse-submodules=on-demand
 	reb = rebase -S --autostash
 	lgp = log --graph --oneline --decorate --boundary --first-parent
+	s = diff --patience --cached
 [web]
 	browser = w3m
 [instaweb]
