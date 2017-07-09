@@ -580,8 +580,7 @@ fi
 
 # --help generated compdefs
 () {
-	local -a gnuarr
-	gnuarr=(
+	local -a gnuarr=(
 		as autopep8 autopep8-python2 bash bsdtar calcc canto-curses
 		canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao
 		cd-read cdu cgasm chromium colordiff compton configure conky
@@ -599,23 +598,163 @@ fi
 		transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen
 		vimpager x11vnc xbindkeys xsel
 	)
-	for i in "${gnuarr[@]}"; do compdef _gnu_generic "$i"; done
-}
 
-compdef $'_arguments
-	"*:arg:_default"
-	"1:assembly instruction:_files -W \'${ZDOTDIR:-$HOME/.zsh.d}/completion/cgasm\' -g \'*(:r:t)\'" -- '
-	cgasm
-compdef $'_arguments
-	"*:arg:_default"
-	"1:syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r:t)\'" -- '
-	hi
-compdef $'_arguments
-	"*:arg:_default"
-	"1:theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r:t)\'"
-	"2:syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r:t)\'"
-	"3:out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- '
-	high
+	local -a asmarr=(
+		aaa aad aam aas adc add addpd addps addsd addss addsubpd
+		addsubps aesdec aesdeclast aesenc aesenclast aesimc
+		aeskeygenassist and andn andnpd andnps andpd andps
+		arpl bextr blendpd blendps blendvpd blendvps blsi
+		blsmsk blsr bound bsf bsr bswap bt btc btr bts bzhi
+		call cbw cdq cdqe clc cld clflush cli clts cmc cmova
+		cmovae cmovb cmovbe cmovc cmovcc cmove cmovg cmovge
+		cmovl cmovle cmovna cmovnae cmovnb cmovnbe cmovnc
+		cmovne cmovng cmovnge cmovnl cmovnle cmovno cmovnp
+		cmovns cmovnz cmovo cmovp cmovpe cmovpo cmovs cmovz
+		cmp cmppd cmpps cmps cmpsb cmpsd cmpsq cmpss cmpsw
+		cmpxchg cmpxchg16b cmpxchg8b comisd comiss cpuid cqo
+		crc32 cvtdq2pd cvtdq2ps cvtpd2dq cvtpd2pi cvtpd2ps
+		cvtpi2pd cvtpi2ps cvtps2dq cvtps2pd cvtps2pi cvtsd2si
+		cvtsd2ss cvtsi2sd cvtsi2ss cvtss2sd cvtss2si cvttpd2dq
+		cvttpd2pi cvttps2dq cvttps2pi cvttsd2si cvttss2si
+		cwd cwde daa das dec div divpd divps divsd divss dppd
+		dpps emms enter extractps f2xm1 fabs fadd faddp fbld
+		fbstp fchs fclex fcmovb fcmovbe fcmovcc fcmove fcmovnb
+		fcmovnbe fcmovne fcmovnu fcmovu fcom fcomi fcomip
+		fcomp fcompp fcos fdecstp fdiv fdivp fdivr fdivrp
+		ffree fiadd ficom ficomp fidiv fidivr fild fimul fincstp
+		finit fist fistp fisttp fisub fisubr fld fld1 fldcw
+		fldenv fldl2e fldl2t fldlg2 fldln2 fldpi fldz fmul
+		fmulp fnclex fninit fnop fnsave fnstcw fnstenv fnstsw
+		fpatan fprem fprem1 fptan frndint frstor fsave fscale
+		fsin fsincos fsqrt fst fstcw fstenv fstp fstsw fsub
+		fsubp fsubr fsubrp ftst fucom fucomi fucomip fucomp
+		fucompp fuzzy fwait fxam fxch fxrstor fxrstor64 fxsave
+		fxsave64 fxtract fyl2x fyl2xp1 haddpd haddps hlt hsubpd
+		hsubps idiv imul in inc ins insb insd insertps insw
+		int into invd invlpg invpcid iret iretd iretq ja jae
+		jb jbe jc jcc jcxz je jecxz jg jge jl jle jmp jna
+		jnae jnb jnbe jnc jne jng jnge jnl jnle jno jnp jns
+		jnz jo jp jpe jpo jrcxz js jz lahf lar lddqu ldmxcsr
+		lds lea leave les lfence lfs lgdt lgs lidt lldt lmsw
+		lock lods lodsb lodsd lodsq lodsw loop loopcc loope
+		loopne lsl lss ltr lzcnt maskmovdqu maskmovq maxpd
+		maxps maxsd maxss mfence minpd minps minsd minss monitor
+		mov movapd movaps movbe movcr movd movddup movdq2q
+		movdqa movdqu movdr movhlps movhpd movhps movlhps
+		movlpd movlps movmskpd movmskps movntdq movntdqa movnti
+		movntpd movntps movntq movq movq2dq movs movsb movsd
+		movshdup movsldup movsq movss movsw movsx movsxd movupd
+		movups movzx mpsadbw mul mulpd mulps mulsd mulss mulx
+		mwait neg nop not or orpd orps out outs outsb outsd
+		outsw pabsb pabsd pabsw packssdw packsswb packusdw
+		packuswb paddb paddd paddq paddsb paddsw paddusb paddusw
+		paddw palignr pand pandn pause pavgb pavgw pblendvb
+		pblendw pclmulqdq pcmpeqb pcmpeqd pcmpeqq pcmpeqw
+		pcmpestri pcmpestrm pcmpgtb pcmpgtd pcmpgtq pcmpgtw
+		pcmpistri pcmpistrm pdep pext pextrb pextrd pextrq
+		pextrw phaddd phaddsw phaddw phminposuw phsubd phsubsw
+		phsubw pinsrb pinsrd pinsrq pinsrw pmaddubsw pmaddwd
+		pmaxsb pmaxsd pmaxsw pmaxub pmaxud pmaxuw pminsb pminsd
+		pminsw pminub pminud pminuw pmovmskb pmovsx pmovsxbd
+		pmovsxbq pmovsxbw pmovsxdq pmovsxwd pmovsxwq pmovzx
+		pmovzxbd pmovzxbq pmovzxbw pmovzxdq pmovzxwd pmovzxwq
+		pmuldq pmulhrsw pmulhuw pmulhw pmulld pmullw pmuludq
+		pop popa popad popcnt popf popfd popfq por prefetchh
+		prefetchnta prefetcht0 prefetcht1 prefetcht2 prefetchw
+		psadbw pshufb pshufd pshufhw pshuflw pshufw psignb
+		psignd psignw pslld pslldq psllq psllw psrad psraw
+		psrld psrldq psrlq psrlw psubb psubd psubq psubsb
+		psubsw psubusb psubusw psubw ptest punpckhbw punpckhdq
+		punpckhqdq punpckhwd punpcklbw punpckldq punpcklqdq
+		punpcklwd push pusha pushad pushf pushfd pushfq pxor
+		rcl rcpps rcpss rcr rdfsbase rdgsbase rdmsr rdpmc
+		rdrand rdtsc rdtscp rep repe repne repnz repz ret
+		rol ror rorx roundpd roundps roundsd roundss rsm rsqrtps
+		rsqrtss sahf sal sar sarx sbb scas scasb scasd scasq
+		scasw seta setae setb setbe setc setcc sete setg setge
+		setl setle setna setnae setnb setnbe setnc setne setng
+		setnge setnl setnle setno setnp setns setnz seto setp
+		setpe setpo sets setz sfence sgdt shl shld shlx shr
+		shrd shrx shufpd shufps sidt sldt smsw sqrtpd sqrtps
+		sqrtsd sqrtss stc std sti stmxcsr stos stosb stosd
+		stosq stosw str sub subpd subps subsd subss swapgs
+		syscall sysenter sysexit sysret test tzcnt ucomisd
+		ucomiss ud2 unpckhpd unpckhps unpcklpd unpcklps vaddpd
+		vaddps vaddsd vaddss vaddsubpd vaddsubps vaesdec vaesdeclast
+		vaesenc vaesenclast vaesimc vaeskeygenassist vandnpd
+		vandnps vandpd vandps vblendpd vblendps vblendvpd
+		vblendvps vbroadcast vbroadcastf128 vbroadcasti128
+		vbroadcastsd vbroadcastss vcmppd vcmpps vcmpsd vcmpss
+		vcomisd vcomiss vcvtdq2pd vcvtdq2ps vcvtpd2dq vcvtpd2ps
+		vcvtph2ps vcvtps2dq vcvtps2pd vcvtps2ph vcvtsd2si
+		vcvtsd2ss vcvtsi2sd vcvtsi2ss vcvtss2sd vcvtss2si
+		vcvttpd2dq vcvttps2dq vcvttsd2si vcvttss2si vdivpd
+		vdivps vdivsd vdivss vdppd vdpps verr verw vextractf128
+		vextracti128 vextractps vfmadd132pd vfmadd132ps vfmadd132sd
+		vfmadd132ss vfmadd213pd vfmadd213ps vfmadd213sd vfmadd213ss
+		vfmadd231pd vfmadd231ps vfmadd231sd vfmadd231ss vfmaddsub132pd
+		vfmaddsub132ps vfmaddsub213pd vfmaddsub213ps vfmaddsub231pd
+		vfmaddsub231ps vfmsub132pd vfmsub132ps vfmsub132sd
+		vfmsub132ss vfmsub213pd vfmsub213ps vfmsub213sd vfmsub213ss
+		vfmsub231pd vfmsub231ps vfmsub231sd vfmsub231ss vfmsubadd132pd
+		vfmsubadd132ps vfmsubadd213pd vfmsubadd213ps vfmsubadd231pd
+		vfmsubadd231ps vfnmadd132pd vfnmadd132ps vfnmadd132sd
+		vfnmadd132ss vfnmadd213pd vfnmadd213ps vfnmadd213sd
+		vfnmadd213ss vfnmadd231pd vfnmadd231ps vfnmadd231sd
+		vfnmadd231ss vfnmsub132pd vfnmsub132ps vfnmsub132sd
+		vfnmsub132ss vfnmsub213pd vfnmsub213ps vfnmsub213sd
+		vfnmsub213ss vfnmsub231pd vfnmsub231ps vfnmsub231sd
+		vfnmsub231ss vgatherdpd vgatherdps vgatherqpd vgatherqps
+		vhaddpd vhaddps vhsubpd vhsubps vinsertf128 vinserti128
+		vinsertps vlddqu vldmxcsr vmaskmov vmaskmovdqu vmaskmovpd
+		vmaskmovps vmaxpd vmaxps vmaxsd vmaxss vminpd vminps
+		vminsd vminss vmovapd vmovaps vmovd vmovddup vmovdqa
+		vmovdqu vmovhlps vmovhpd vmovhps vmovlhps vmovlpd
+		vmovlps vmovmskpd vmovmskps vmovntdq vmovntdqa vmovntpd
+		vmovntps vmovq vmovsd vmovshdup vmovsldup vmovss vmovupd
+		vmovups vmpsadbw vmulpd vmulps vmulsd vmulss vorpd
+		vorps vpabsb vpabsd vpabsw vpackssdw vpacksswb vpackusdw
+		vpackuswb vpaddb vpaddd vpaddq vpaddsb vpaddsw vpaddusb
+		vpaddusw vpaddw vpalignr vpand vpandn vpavgb vpavgw
+		vpblendd vpblendvb vpblendw vpbroadcast vpbroadcastb
+		vpbroadcastd vpbroadcastq vpbroadcastw vpclmulqdq
+		vpcmpeqb vpcmpeqd vpcmpeqq vpcmpeqw vpcmpestri vpcmpestrm
+		vpcmpgtb vpcmpgtd vpcmpgtq vpcmpgtw vpcmpistri vpcmpistrm
+		vperm2f128 vperm2i128 vpermd vpermilpd vpermilps vpermpd
+		vpermps vpermq vpextrb vpextrd vpextrq vpextrw vpgatherdd
+		vpgatherdq vpgatherqd vpgatherqq vphaddd vphaddsw
+		vphaddw vphminposuw vphsubd vphsubsw vphsubw vpinsrb
+		vpinsrd vpinsrq vpinsrw vpmaddubsw vpmaddwd vpmaskmov
+		vpmaskmovd vpmaskmovq vpmaxsb vpmaxsd vpmaxsw vpmaxub
+		vpmaxud vpmaxuw vpminsb vpminsd vpminsw vpminub vpminud
+		vpminuw vpmovmskb vpmovsxbd vpmovsxbq vpmovsxbw vpmovsxdq
+		vpmovsxwd vpmovsxwq vpmovzxbd vpmovzxbq vpmovzxbw
+		vpmovzxdq vpmovzxwd vpmovzxwq vpmuldq vpmulhrsw vpmulhuw
+		vpmulhw vpmulld vpmullw vpmuludq vpor vpsadbw vpshufb
+		vpshufd vpshufhw vpshuflw vpsignb vpsignd vpsignw
+		vpslld vpslldq vpsllq vpsllvd vpsllvq vpsllw vpsrad
+		vpsravd vpsraw vpsrld vpsrldq vpsrlq vpsrlvd vpsrlvq
+		vpsrlw vpsubb vpsubd vpsubq vpsubsb vpsubsw vpsubusb
+		vpsubusw vpsubw vptest vpunpckhbw vpunpckhdq vpunpckhqdq
+		vpunpckhwd vpunpcklbw vpunpckldq vpunpcklqdq vpunpcklwd
+		vpxor vrcpps vrcpss vroundpd vroundps vroundsd vroundss
+		vrsqrtps vrsqrtss vshufpd vshufps vsqrtpd vsqrtps
+		vsqrtsd vsqrtss vstmxcsr vsubpd vsubps vsubsd vsubss
+		vtestpd vtestps vucomisd vucomiss vunpckhpd vunpckhps
+		vunpcklpd vunpcklps vxorpd vxorps vzeroall vzeroupper
+		wait wbinvd wrfsbase wrgsbase wrmsr xabort xacquire
+		xadd xbegin xchg xend xgetbv xlat xlatb xor xorpd
+		xorps xrelease xrstor xrstor64 xrstors xrstors64 xsave
+		xsave64 xsavec xsavec64 xsaveopt xsaveopt64 xsaves
+		xsaves64 xsetbv xtest
+	)
+
+	for i in "${gnuarr[@]}"; do compdef _gnu_generic "$i"; done
+
+	compdef $'_arguments "*:arg:_default" "1:assembly instruction:('"${asmarr[*]}"')" -- ' cgasm
+	compdef $'_arguments "*:arg:_default" "1:syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r)\'" -- ' hi
+	compdef $'_arguments "*:arg:_default" "1:theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r)\'" "2:syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r)\'" "3:out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- ' high
+}
 
 compdef _git fshow
 compdef _man cppman
@@ -722,9 +861,9 @@ zstyle ':completion:*:history-words'	stop yes
 # 2 -- word flex completion (abc => A-big-Car)
 # 3 -- full flex completion (abc => ABraCadabra)
 zstyle ':completion:*' matcher-list '' \
-  'm:{a-z\-}={A-Z\_}' \
-  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-  'r:|?=** m:{a-z\-}={A-Z\_}'
+	'm:{a-z\-}={A-Z\_}' \
+	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+	'r:|?=** m:{a-z\-}={A-Z\_}'
 # match uppercase from lowercase
 # zstyle ':completion:*'			matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # zstyle ':completion:*'			matcher-list 'm:{a-z}={A-Z}'
