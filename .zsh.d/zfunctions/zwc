@@ -1,6 +1,7 @@
-(
-	cd "${ZDOTDIR:-$HOME/.zsh.d}/completion/enabled" || return 1
-	rm -fv ../../zcomps.zwc && zcompile -MUz ../../zcomps.zwc *
-	cd "${ZDOTDIR:-$HOME/.zsh.d}/zfunctions" || return 1
-	rm -fv ../zfuncs.zwc && zcompile -MUz ../zfuncs.zwc *
-)
+( cd "${ZDOTDIR:-$HOME/.zsh.d}/zfunctions" && \
+	rm -fv ../zfuncs.zwc && zcompile -MUz ../zfuncs.zwc * || \
+	return 1 )
+
+( cd "${ZDOTDIR:-$HOME/.zsh.d}/completion/enabled" && \
+	rm -fv ../../zcomps.zwc && zcompile -MUz ../../zcomps.zwc * || \
+	return 1 )

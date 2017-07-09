@@ -7,4 +7,5 @@ else
 fi
 
 # highlight --out-format="truecolor" --syntax="${1:-conf}" --style=anotherdark "$file" | less -JRMXs
-highlight --out-format=truecolor --syntax="${1:-conf}" --style=xoria256 "$file" | less -JRMXs
+highlight --out-format=truecolor --syntax="${1:-conf}" --style=xoria256 "$file" | \
+	less -CJRMXs
