@@ -1,5 +1,11 @@
 ## fshow - git commit browser
+
 git log --graph --boundary --all --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" | \
-	fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind "ctrl-m:execute:
-	(grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -JRMXs') \
-	< <(printf '\n%s\n' {})"
+	fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind \
+	"ctrl-m:execute: (grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always %') < <(printf '\n%s\n' {})"
+
+# git log --graph --boundary --all --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" | \
+#         fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind "ctrl-m:execute:
+#         (grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -CJRMXs') \
+#         < <(printf '\n%s\n' {})"
+

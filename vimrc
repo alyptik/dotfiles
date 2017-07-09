@@ -211,6 +211,7 @@ let &colorcolumn=join(range(81,250), ',')
 highlight ColorColumn guibg=#282828
 " so listchars are only visible on the current line
 highlight SpecialKey guifg=#282828
+set shell=/bin/zsh
 set background=dark
 set keywordprg=man\ -s
 set nopaste noshowcmd
@@ -524,6 +525,7 @@ au BufNewFile,BufRead *named.conf* set filetype=named
 au BufNewFile,BufRead */*conf setf cfg
 au BufNewFile,BufRead *.log setf irc
 au BufNewFile,BufRead */*conf setf cfg
+au BufNewFile,BufRead *torrc* setf cfg
 au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
 au BufNewFile,BufRead */.zsh.d/zfunctions/* setf zsh
 au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72

@@ -1,7 +1,12 @@
 [[ -z "$*" ]] && return 1
-autoload -Uz +X "$@"
-# builtin which "$@" 2>/dev/null | less -JRMXs "$@"
-{
-	(alias; declare -f) | \
-	/usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
-} 2>/dev/null | less -JRMXs
+
+for i; do
+	case "$(type $i)" in
+	*autoload*)
+		autoload -Uz +X "$i" ;;
+	esac
+done
+
+{ (alias; declare -f) | \
+	command which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
+} 2>/dev/null | less -CJRMXs
