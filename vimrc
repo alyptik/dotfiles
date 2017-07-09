@@ -101,9 +101,9 @@ call plug#begin(g:plugdir)
 	Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 	" Plug 'FredKSchott/CoVim'
 	Plug 'ctrlpvim/ctrlp.vim'
+	Plug 'Rykka/riv.vim'
 	Plug 'Rykka/InstantRst'
 	Plug 'scrooloose/nerdcommenter'
-	Plug 'Rykka/riv.vim'
 	Plug 'jreybert/vimagit'
 	Plug 'vim-ctrlspace/vim-ctrlspace'
 	Plug 'jungomi/vim-mdnquery'

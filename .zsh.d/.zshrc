@@ -581,23 +581,41 @@ fi
 # --help generated compdefs
 () {
 	local -a gnuarr
-	gnuarr=( cower pactree ctags sox hping mv bash rmlint maim netstat
-	kid3-cli kid3-qt expac ln as ld curl paste seq stat file gpg-agent
-	lighttpd2 newsbeuter canto-curses canto-daemon canto-remote configure
-	stjerm xsel install transset-df cgasm objdump objconv
-	transmission-remote-cli bsdtar xbindkeys reptyr chromium lz4 lrz
-	shred vimpager rmdir crontab x11vnc rfc muttprint autopep8-python2
-	autopep8 termite mpd fzf node highlight vanitygen cdu cpulimit
-	netstat test catdoc lua keyring gnome-keyring-daemon tic resolvconf
-	pstree urxvtc urxvtd urxvtcd swapon saldl dmidecode colordiff conky
-	hsetroot help2man compton rg qemu-nbd calcc more cdcd cdrdao cd2raw
-	cdr2raw cd-read transmission-cli transmission-create
-	transmission-daemon transmission-edit transmission-get
-	transmission-gtk transmission-qt transmission-remote
-	transmission-remote-cli transmission-remote-gtk
-	transmission-show fasd cpanm rst2man rst2man2 )
+	gnuarr=(
+		as autopep8 autopep8-python2 bash bsdtar calcc canto-curses
+		canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao
+		cd-read cdu cgasm chromium colordiff compton configure conky
+		cower cpanm cpulimit crontab ctags curl dmidecode expac fasd
+		file fzf gnome-keyring-daemon gpg-agent help2man highlight
+		highlight hping hsetroot install keyring kid3-cli kid3-qt ld
+		lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv netstat
+		netstat newsbeuter node objconv objdump pactree paste pstree
+		qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2
+		saldl seq shred sox stat stjerm swapon termite test tic
+		transmission-cli transmission-create transmission-daemon
+		transmission-edit transmission-get transmission-gtk
+		transmission-qt transmission-remote transmission-remote-cli
+		transmission-remote-cli transmission-remote-gtk
+		transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen
+		vimpager x11vnc xbindkeys xsel
+	)
 	for i in "${gnuarr[@]}"; do compdef _gnu_generic "$i"; done
 }
+
+compdef $'_arguments
+	"*:arg:_default"
+	"1:assembly instruction:_files -W \'${ZDOTDIR:-$HOME/.zsh.d}/completion/cgasm\' -g \'*(:r:t)\'" -- '
+	cgasm
+compdef $'_arguments
+	"*:arg:_default"
+	"1:syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r:t)\'" -- '
+	hi
+compdef $'_arguments
+	"*:arg:_default"
+	"1:theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r:t)\'"
+	"2:syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r:t)\'"
+	"3:out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- '
+	high
 
 compdef _git fshow
 compdef _man cppman
