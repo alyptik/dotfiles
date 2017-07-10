@@ -522,9 +522,8 @@ au BufNewFile,BufRead *.txt setf erlang
 au BufNewFile,BufRead *.log setf irc
 au BufNewFile,BufRead /etc/X11/xorg.conf.d/* setf xf86conf
 au BufNewFile,BufRead *named.conf* set filetype=named
-au BufNewFile,BufRead */*conf setf cfg
 au BufNewFile,BufRead *.log setf irc
-au BufNewFile,BufRead */*conf setf cfg
+au BufNewFile,BufRead *conf set filetype=cfg
 au BufNewFile,BufRead *torrc* setf cfg
 au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
 au BufNewFile,BufRead */.zsh.d/zfunctions/* setf zsh
