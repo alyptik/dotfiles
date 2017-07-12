@@ -1,0 +1,4 @@
+[[ -z "$*" ]] && return 1
+for i; do
+	gpg2 --armor --export "$i" | gpg2 --list-packets --verbose
+done
