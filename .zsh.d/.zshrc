@@ -672,7 +672,7 @@ hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
 hash -d tt="/run/media/alyptik/toshiba1TB/torrents"
 hash -d vim="${HOME}/.vim"
-hash -d wanderlust="/run/media/alyptik/microSDXC/wanderlust"
+hash -d wanderlust="/hdd/wanderlust"
 hash -d words="/store/config/unixstories"
 hash -d zdot="${ZDOTDIR:-$HOME/.zsh.d}"
 hash -d znc="/var/lib/znc/.znc/moddata/log/alyptik/freenode/"
@@ -692,7 +692,8 @@ zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z)${${(f)"$(<${HOME}/.ss
 # zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z)${${${(f)"$(<${HOME}/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*}"
 zstyle ':acceptline'			nocompwarn true
 # allow one error for every two characters typed in approximate completer
-zstyle ':completion:*:approximate:'	max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+# zstyle ':completion:*:approximate:'	max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+zstyle ':completion:*:approximate:'	max-errors 5 numeric
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
 # start menu completion only if it could find no unambiguous initial string
@@ -774,7 +775,7 @@ zstyle -e ':completion:*' completer '
 		_last_try="$HISTNO$BUFFER$CURSOR"
 		reply=(_complete _correct _approximate _expand _match _ignored _prefix _files)
 	else
-		if [[ $words[1] == (rm|mv) ]] ; then
+		if [[ $words[1] == (rm|mv|cp) ]] ; then
 			reply=(_complete _files)
 		else
 			reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
