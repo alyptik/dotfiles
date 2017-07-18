@@ -1,0 +1,19 @@
+diff --git a/mdv/markdownviewer.py b/mdv/markdownviewer.py
+index aaf562a..8a5f22f 100755
+--- a/mdv/markdownviewer.py
++++ b/mdv/markdownviewer.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2.7
+ # coding: utf-8
+ """_
+ # Usage:
+@@ -151,7 +151,7 @@ import markdown.util
+ from markdown.util import etree
+ from markdown.extensions.tables import TableExtension
+ from random import randint
+-from .tabulate import tabulate
++from tabulate import tabulate
+ from json import loads
+ from markdown.treeprocessors import Treeprocessor
+ from markdown.extensions import Extension, fenced_code

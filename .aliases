@@ -5,6 +5,8 @@ unset -f bfg define defrag fc h wd which 2>/dev/null
 unalias {1..9} c f gbr gco gcs gg gm h history l md o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
+
+alias sw='wine "${HOME}/.local/share/steam-wine/WINE.win32/drive_c/Program Files/Steam/Steam.exe" -no-cef-sandbox -no-dwrite'
 alias rman=$'zsh -c \'man "$(<<<${(F@)${(f@)$(print -l /usr/share/man/man{2,3}/*.[0-9].gz):t}/.[0-9].gz/} shuf -n1)"\''
 alias bar='bsdtar'
 alias ty='type'
@@ -124,7 +126,6 @@ alias zspace='printf "\uFEFF" | xsel -ib'
 alias zspace2='printf "\u200B" | xsel-ib'
 #alias lptpb='printf "\n\033[32m%s\033[0m " "ptpb.pw /* lexers:" && find /usr/lib/python3.5/site-packages/pygments/lexers -maxdepth 1 -execdir echo {} \; | sed "s:^\./::;s:\.py::" | paste -s -d " " && echo'
 alias lptpb='gvim -p https://ptpb.pw/l'
-alias xc='xclip'
 alias xi="perl -pe 'chomp if eof' | tee >(xsel -ib)"
 # alias xn="perl -pe 's/\n/ /g; s/[[:space:]]+/ /g; END { s/[[:space:]]*$//; chomp; }' | tee >(xsel -ib)"
 alias xn="paste -sd' ' | perl -pe 's/[[:space:]]*$//; s/[[:space:]]+/ /g; chomp' | tee >(xsel -ib)"
