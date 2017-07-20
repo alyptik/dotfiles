@@ -12,36 +12,36 @@ index 4defff9..3502c60 100644
  ## Nothing works, and nothing is said about an unknown terminal!
  
 diff --git a/Makefile b/Makefile
-index d8595fe..3c2f224 100644
+index 128ee9d..dac731e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3,7 +3,7 @@
+@@ -4,7 +4,7 @@
  
  include config.mk
  
 -SRC = st.c x.c
 +SRC = st.c
- OBJ = ${SRC:.c=.o}
+ OBJ = $(SRC:.c=.o)
  
  all: options st
 @@ -21,9 +21,6 @@ config.h:
- 	@echo CC $<
- 	@${CC} -c ${CFLAGS} $<
+ .c.o:
+ 	$(CC) $(STCFLAGS) -c $<
  
 -st.o: config.h st.h win.h
 -x.o: arg.h st.h win.h
 -
- ${OBJ}: config.h config.mk
+ $(OBJ): config.h config.mk
  
- st: ${OBJ}
-@@ -52,7 +49,6 @@ install: all
- 	@sed "s/VERSION/${VERSION}/g" < st.1 > ${DESTDIR}${MANPREFIX}/man1/st.1
- 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/st.1
+ st: $(OBJ)
+@@ -45,7 +42,6 @@ install: st
+ 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
+ 	sed "s/VERSION/$(VERSION)/g" < st.1 > $(DESTDIR)$(MANPREFIX)/man1/st.1
+ 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
+-	tic -sx st.info
  	@echo Please see the README file regarding the terminfo entry of st.
--	@tic -sx st.info
  
  uninstall:
- 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
 diff --git a/README b/README
 index 6a846ed..1591b5c 100644
 --- a/README
@@ -357,13 +357,17 @@ diff --git a/config.mk b/config.mk
 index c84c5ee..19a03bb 100644
 --- a/config.mk
 +++ b/config.mk
-@@ -14,7 +14,7 @@ X11LIB = /usr/X11R6/lib
- INCS = -I. -I/usr/include -I${X11INC} \
+@@ -11,10 +11,10 @@
+ X11LIB = /usr/X11R6/lib
+ 
+ # includes and libs
+-INCS = -I$(X11INC) \
++INCS = -L/usr/lib -I$(X11INC) \
         `pkg-config --cflags fontconfig` \
         `pkg-config --cflags freetype2`
--LIBS = -L/usr/lib -lc -L${X11LIB} -lm -lrt -lX11 -lutil -lXft \
+-LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
 +LIBS = -L/usr/lib -lc -L${X11LIB} -lm -lrt -lX11 -lutil -lXext -lXft -lXrender\
-        `pkg-config --libs fontconfig`  \
+        `pkg-config --libs fontconfig` \
         `pkg-config --libs freetype2`
  
 diff --git a/st.1 b/st.1
