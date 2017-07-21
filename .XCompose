@@ -2,6 +2,9 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 
 ## start alyptik
 
+<Multi_key> <k> <t> <r> <e> <e>		: "🐨" UFf428 # KOALA
+<Multi_key> <o> <c> <t> <o>		: "🐙" U1F419 # OCTOPUS
+<Multi_key> <s> <a> <x>			: "🎷" U1F3b7 # SAX
 <Multi_key> <h> <h> <e> <y> <e> <s>	: "❤.❤" # HEART EYES
 <Multi_key> <h> <e> <y> <e> <s>		: "😍" U1F60D # HEART EYES SMILEY
 <Multi_key> <p> <s> <u> <b>		: "⊂" U2282 # PROPER SUBSET
