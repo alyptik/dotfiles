@@ -181,11 +181,11 @@ chgrep() {
 		less -FJMRXs
 }
 
-# chr() {
-#         { for i in "$@"; print -n -- "${(#)i}" ' '; } | \
-#         sed 's/ *$//' | \
-#         tee >(xsel -ib)
-# }
+chr() {
+	{ for i in "$@"; do printf \\"$(printf '%03o' "$1")" ' '; done } | \
+	sed 's/ *$//' | \
+	tee >(xsel -ib)
+}
 
 chud() {
 	#killall conky && sleep 2
@@ -1420,11 +1420,12 @@ open_command() {
 	"$0" "$@"
 }
 
-# ord() {
-#         { for i in "${(s::)@}"; print -n -- "$((#i [#16]))" ' '; } | \
-#         sed 's/ *$//' | \
-#         tee >(xsel -ib)
-# }
+ord() {
+	{ for i; do printf '%d' "'$1" ' '; done } | \
+	sed 's/ *$//' | \
+	tee >(xsel -ib)
+}
+
 par() {
 	pulseaudio --check && pulseaudio --kill
 	sleep 1
