@@ -26,11 +26,6 @@ bind "set menu-complete-display-prefix on"
 # Append new history items to .bash_history
 shopt -s expand_aliases autocd hostcomplete histappend
 
-# [[ -d /usr/share/fzf ]] && \
-#         . /usr/share/fzf/*.bash
-# [[ -f /etc/profile.d/fzf-extras.bash ]] && \
-#	. /etc/profile.d/fzf-extras.bash
-
 [[ -f /usr/share/doc/find-the-command/ftc.bash ]] && \
 	. /usr/share/doc/find-the-command/ftc.bash
 [[ -f /usr/share/bash-completion/completions/dkms ]] && \
@@ -67,16 +62,11 @@ bind '"\e[B": history-search-forward'
 HISTIGNORE='history*'
 # get more colors
 HH_CONFIG=hicolor
-# [[ -f "${CONF:-/store/config}/.zsh_history" ]] && \
-#         HISTFILE="${CONF:-/store/config}/.zsh_history" || \
-#         HISTFILE="${HOME}/.bash_history"
 HISTFILE="${HOME}/.bash_history"
 HISTCONTROL='ignoreboth:erasedups'
 HTSTFILESIZE=10000000        # increase history file size (default is 500)
 HISTSIZE=20000000 # increase history size (default is 500)
 
-# export PROMPT_COMMAND='printf "\e[0;93m%s" "${PIPESTATUS[0]}"; printf "|%d" "${PIPESTATUS[@]:1}"; echo ; printf "\033[0m\033[38;5;2m"$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo`/1024))"\033[38;5;09m/"$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo`/1024 ))MB"\t\033[m\033[36;11m$(</proc/loadavg)	\033[0m"; history -a'
-# export PROMPT_COMMAND='(( ${#PIPESTATUS[@]} > 1 )) && __statstr=":${PIPESTATUS[0]}$(printf "|%d" "${PIPESTATUS[@]:1}")"; printf "\033[0m\033[38;5;2m"$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo`/1024))"\033[38;5;09m/"$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo`/1024 ))MB"\t\033[m\033[36;11m$(</proc/loadavg)	\033[0m"; history -a'
 export PROMPT_COMMAND='__statstr="$( tmp=("${PIPESTATUS[@]}"); ((tmp)) && printf "|%d" "${tmp[@]}" || :)"; printf "\033[0m\033[38;5;2m"$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo`/1024))"\033[38;5;09m/"$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo`/1024 ))MB"\t\033[m\033[36;11m$(</proc/loadavg)	\033[0m"; history -a'
 
 # If root, print the host in red. Otherwise, print the current user and host in green.
@@ -86,13 +76,11 @@ export PROMPT_COMMAND='__statstr="$( tmp=("${PIPESTATUS[@]}"); ((tmp)) && printf
 
 if [[ -f /usr/lib/bash-git-prompt/gitprompt.sh ]]; then
    # To only show the git prompt in or under a repository directory
-   # GIT_PROMPT_ONLY_IN_REPO=
-   # To use upstream's default theme
-   # GIT_PROMPT_THEME=Default
+   GIT_PROMPT_ONLY_IN_REPO=1
    # To use upstream's default theme, modified by arch maintainer
    GIT_PROMPT_THEME=Default_Arch
-   # . /usr/lib/bash-git-prompt/gitprompt.sh
-   #. /usr/lib/bash-git-prompt/git-prompt-help.sh
+   . /usr/lib/bash-git-prompt/gitprompt.sh
+   . /usr/lib/bash-git-prompt/git-prompt-help.sh
 fi
 
 ## The following line may also be placed in bashrc to set the mode string

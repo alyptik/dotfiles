@@ -246,8 +246,15 @@ fi
 
 autoload -U promptinit && promptinit
 autoload -U +X compinit && compinit -u
-# autoload -U +X bashcompinit && bashcompinit -u
+autoload -U +X bashcompinit && bashcompinit -u
 
+# bash specific
+[[ -f /etc/profile.d/cnf.sh ]] && \
+	. /etc/profile.d/cnf.sh
+[[ -f /usr/share/bash-completion/completions/dkms ]] && \
+	. /usr/share/bash-completion/completions/dkms
+
+# zsh specific
 [[ -d "${ZDOTDIR:-$HOME/.zsh.d}/plugins" ]] && \
 	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}/plugins/enabled"/*.zsh; do . "$i"; done; }
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
