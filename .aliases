@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history l md o rd ru s sd sf si u v z zz 
 
 ## Custom aliases
 
+alias i686-qemu='qemu-system-i386 -m 2048 -smp 2 -vga virtio -boot order=d -enable-kvm -machine type=pc,accel=kvm -show-cursor -usbdevice tablet -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time -soundhw hda -net nic -net bridge,br=virbr0 -monitor stdio -monitor pty'
 alias sw='wine "${HOME}/.local/share/steam-wine/WINE.win32/drive_c/Program Files/Steam/Steam.exe" -no-cef-sandbox -no-dwrite'
 alias rman=$'zsh -c \'man "$(<<<${(F@)${(f@)$(print -l /usr/share/man/man{2,3}/*.[0-9].gz):t}/.[0-9].gz/} shuf -n1)"\''
 alias bar='bsdtar'
