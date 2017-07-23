@@ -588,21 +588,25 @@ fi
 # --help generated compdefs
 () {
 	local -a gnuarr=(
-		as autopep8 autopep8-python2 bash bsdtar calcc canto-curses
-		canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao
-		cd-read cdu cgasm chromium colordiff compton configure conky
-		cower cpanm cpulimit crontab ctags curl dmidecode expac fasd
-		file fzf gnome-keyring-daemon gpg-agent help2man highlight
-		highlight hping hsetroot install keyring kid3-cli kid3-qt ld
-		lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv netstat
-		netstat newsbeuter node objconv objdump pactree paste pstree
-		qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2
-		saldl seq shred sox stat stjerm swapon termite test tic
-		transmission-cli transmission-create transmission-daemon
+		as autopep8 autopep8-python2 bash bsdtar calcc
+		canto-curses canto-daemon canto-remote catdoc
+		cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl
+		cgasm chromium col colordiff compton configure
+		conky cower cpanm cpulimit crontab ctags curl
+		dmidecode expac fasd file fzf gnome-keyring-daemon
+		gpg-agent help2man highlight highlight hping hsetroot
+		install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz
+		lua lz4 maim more mpd muttprint mv netstat netstat
+		newsbeuter node objconv objdump pactree paste pstree
+		qemu-nbd reptyr resolvconf rfc rg rmdir rmlint
+		rst2man rst2man2 saldl seq shred sox stat stjerm
+		strings swapon termite test tic transmission-cli
+		transmission-create transmission-daemon
 		transmission-edit transmission-get transmission-gtk
-		transmission-qt transmission-remote transmission-remote-cli
-		transmission-remote-cli transmission-remote-gtk
-		transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen
+		transmission-qt transmission-remote
+		transmission-remote-cli transmission-remote-cli
+		transmission-remote-gtk transmission-show
+		transset-df urxvtc urxvtcd urxvtd vanitygen
 		vimpager x11vnc xbindkeys xsel
 	)
 
@@ -650,11 +654,11 @@ compdef xs=xsel
 # Named directories
 hash -d audio="/run/media/alyptik/microSDXC/audio"
 hash -d aur="${HOME}/code/aur"
-hash -d calibre="/run/media/alyptik/microSDXC/calibre"
+hash -d calibre="/media/microSDXC/calibre"
 hash -d code="${HOME}/code"
 hash -d comp="${HOME}/bin/completions"
 hash -d conf="${CONF:-/store/config}"
-hash -d djzomg="/run/media/alyptik/microSDXC/Music/djzomg"
+hash -d djzomg="/media/microSDXC/Music/djzomg"
 hash -d docs="/store/config/docs"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
