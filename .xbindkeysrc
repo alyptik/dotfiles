@@ -40,10 +40,10 @@
     m:0x0 + c:76
     #m:0x0 + c:96
 
-## Show XBindKeys
-"xbindkeys_show"
-    m:0xc + c:24
-    Control+Alt + q
+## Show xbindkeys bindings
+# "xbindkeys_show"
+#     m:0xc + c:24
+#     Control+Alt + q
 
 ## Toggle Touchpad
 # "t-xinput.sh"
@@ -136,3 +136,5 @@
 
 #
 # End of xbindkeys configuration
+
+# vi:filetype=cfg:
