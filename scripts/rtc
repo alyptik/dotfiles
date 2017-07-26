@@ -14,7 +14,8 @@ setpci -v -s "$SOUND_CARD_PCI_ID" latency_timer=ff
 printf "performance\nperformance\nperformance\nperformance\n" | \
 	tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 
-printf "kyber\n" | tee /sys/block/sd*/queue/scheduler
+printf "mq-deadline\n" | tee /sys/block/sd*/queue/scheduler
+# printf "kyber\n" | tee /sys/block/sd*/queue/scheduler
 # printf "bfq\n" | tee /sys/block/sd*/queue/scheduler
 
 printf "2048\n" | tee /sys/class/rtc/rtc0/max_user_freq

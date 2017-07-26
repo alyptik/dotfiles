@@ -379,36 +379,36 @@ bindkey -M viins '^[[B' down-line-or-beginning-search
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
-bindkey -M emacs "\eOD" backward-word
-bindkey -M vicmd "\eOD" backward-word
-bindkey -M viins "\eOD" backward-word
-bindkey -M emacs "\e\e[D" backward-word
-bindkey -M vicmd "\e\e[D" backward-word
-bindkey -M viins "\e\e[D" backward-word
-bindkey -M emacs "\e[1;5D" backward-word
-bindkey -M vicmd "\e[1;5D" backward-word
-bindkey -M viins "\e[1;5D" backward-word
-bindkey -M emacs "\e[1;3D" backward-word
-bindkey -M vicmd "\e[1;3D" backward-word
-bindkey -M viins "\e[1;3D" backward-word
-bindkey -M emacs "\e[1;2D" backward-word
-bindkey -M vicmd "\e[1;2D" backward-word
-bindkey -M viins "\e[1;2D" backward-word
-bindkey -M emacs "\eOC" forward-word
-bindkey -M vicmd "\eOC" forward-word
-bindkey -M viins "\eOC" forward-word
-bindkey -M emacs "\e\e[C" forward-word
-bindkey -M vicmd "\e\e[C" forward-word
-bindkey -M viins "\e\e[C" forward-word
-bindkey -M emacs "\e[1;5C" forward-word
-bindkey -M vicmd "\e[1;5C" forward-word
-bindkey -M viins "\e[1;5C" forward-word
-bindkey -M emacs "\e[1;3C" forward-word
-bindkey -M vicmd "\e[1;3C" forward-word
-bindkey -M viins "\e[1;3C" forward-word
-bindkey -M emacs "\e[1;2C" forward-word
-bindkey -M vicmd "\e[1;2C" forward-word
-bindkey -M viins "\e[1;2C" forward-word
+bindkey -M emacs "\eOD" emacs-backward-word
+bindkey -M vicmd "\eOD" emacs-backward-word
+bindkey -M viins "\eOD" emacs-backward-word
+bindkey -M emacs "\e\e[D" emacs-backward-word
+bindkey -M vicmd "\e\e[D" emacs-backward-word
+bindkey -M viins "\e\e[D" emacs-backward-word
+bindkey -M emacs "\e[1;5D" emacs-backward-word
+bindkey -M vicmd "\e[1;5D" emacs-backward-word
+bindkey -M viins "\e[1;5D" emacs-backward-word
+bindkey -M emacs "\e[1;3D" emacs-backward-word
+bindkey -M vicmd "\e[1;3D" emacs-backward-word
+bindkey -M viins "\e[1;3D" emacs-backward-word
+bindkey -M emacs "\e[1;2D" emacs-backward-word
+bindkey -M vicmd "\e[1;2D" emacs-backward-word
+bindkey -M viins "\e[1;2D" emacs-backward-word
+bindkey -M emacs "\eOC" emacs-forward-word
+bindkey -M vicmd "\eOC" emacs-forward-word
+bindkey -M viins "\eOC" emacs-forward-word
+bindkey -M emacs "\e\e[C" emacs-forward-word
+bindkey -M vicmd "\e\e[C" emacs-forward-word
+bindkey -M viins "\e\e[C" emacs-forward-word
+bindkey -M emacs "\e[1;5C" emacs-forward-word
+bindkey -M vicmd "\e[1;5C" emacs-forward-word
+bindkey -M viins "\e[1;5C" emacs-forward-word
+bindkey -M emacs "\e[1;3C" emacs-forward-word
+bindkey -M vicmd "\e[1;3C" emacs-forward-word
+bindkey -M viins "\e[1;3C" emacs-forward-word
+bindkey -M emacs "\e[1;2C" emacs-forward-word
+bindkey -M vicmd "\e[1;2C" emacs-forward-word
+bindkey -M viins "\e[1;2C" emacs-forward-word
 
 bindkey -M emacs "\e[7~" beginning-of-line
 bindkey -M vicmd "\e[7~" beginning-of-line
@@ -621,8 +621,8 @@ fi
 	# compdef $'_arguments "*:arg:_default" ":secret keys:('"${seckeys[*]}"')" -- ' dgpg
 	compdef $'_arguments "*:arg:_default" ":public key:('"${pubkeys[*]}"')" -- ' dgpg
 	# compdef $'_arguments "*:arg:_default" "::section:('"${sections[*]}"')" ":man page:_man" -- ' fman
-	compdef $'_arguments "*:arg:_default" ":syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r)\'" -- ' hi
-	compdef $'_arguments "*:arg:_default" ":theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r)\'" ":syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r)\'" ":out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- ' high
+	compdef $'_arguments "*:file:_files" ":syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r)\'" -- ' hi
+	compdef $'_arguments "*:file:_files" ":theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r)\'" ":syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r)\'" ":out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- ' high
 	compdef $'_arguments "*:arg:_default" ":info page:_texinfo" -- ' pinfo
 	compdef $'_arguments "*:arg:_default" ":processe:_pids" -- ' reptyr
 }
