@@ -42,12 +42,13 @@ map <Leader>. :file$ /home/alyptik/git/chromium-vim/README.md<CR>
 
 map <A-w> closeTab
 map R reloadAllTabs
-map ` %
+map ` percentScroll
 map <A-,> editWithVim
-map <A-.> openLinkSearchBar
-map vc <C-c>
+" map <A-.> openLinkSearchBar
+map <A-.> :source ~/cvimrc.vim<CR>
+map gb :buffer<Space>
 map <A-/> lastUsedTab
-map vv toggleVisualMode
+" map vv toggleVisualMode
 map vy yankHighlight
 map vu clearSearchHighlight
 map ' nextTab
