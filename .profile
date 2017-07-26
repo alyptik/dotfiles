@@ -80,6 +80,7 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME="i965"
 # export VDPAU_DRIVER="va_gl"
+export MAKEFLAGS="-j -l5 -w -Orecurse"
 export MANPATH="${CONF:-/store/config}/man:/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man"
 export MANSECT="3:2:0:9:5:4:1:n:l:8:6:7"
 export npm_config_prefix="${HOME}/.node_modules"
