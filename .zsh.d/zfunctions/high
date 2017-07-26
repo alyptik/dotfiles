@@ -13,13 +13,3 @@ fi
 
 highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style="${theme:-xoria256}" "$file" | \
 	less -CJRMXs
-
-# if [[ -t 0 ]]; then
-#         file="/dev/stdin"
-# else
-#         for i; do if [[ "$i" == - ]]; then
-#                 file="/dev/stdin"
-#                 break
-#         fi; done
-# fi
-# highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style=anotherdark "$file"

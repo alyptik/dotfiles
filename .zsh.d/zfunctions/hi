@@ -1,4 +1,7 @@
-local file
+local syn file
+
+if (( $# > 1 )); then syn="$1"; shift; fi
+
 if [[ ! -t 0 || "$*" =~ - ]]; then
 	file="/dev/stdin"
 else
@@ -6,6 +9,5 @@ else
 	shift
 fi
 
-# highlight --out-format="truecolor" --syntax="${1:-conf}" --style=anotherdark "$file" | less -JRMXs
-highlight --out-format=truecolor --syntax="${1:-conf}" --style=xoria256 "$file" | \
+highlight --out-format=truecolor --syntax="${syn:-conf}" --style=xoria256 "$file" | \
 	less -CJRMXs
