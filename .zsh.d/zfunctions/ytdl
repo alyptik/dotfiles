@@ -1,5 +1,5 @@
 if [[ "$#" -eq 0 ]]; then
-	youtube-dl --help | less -CJRMXs
+	youtube-dl --help | less -CJRMXis
 	return 1
 fi
 youtube-dl --get-url "$@" | paste -sd' ' | perl -pe 'chomp if eof' | tee >(xsel -ib)
