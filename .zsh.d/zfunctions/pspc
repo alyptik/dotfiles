@@ -1,1 +1,1 @@
- pacaur -Ss --color="always" "${@/-S/-}" 2>&1 | less -CJRMXs
+ pacaur -Ss --color="always" "${@/-S/-}" 2>&1 | less -CJRMXis

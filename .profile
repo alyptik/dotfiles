@@ -73,7 +73,7 @@ export LD_LIBRARY_PATH="/usr/lib64:/usr/lib:/usr/lib32:/home/alyptik/GNUstep/Lib
 export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:${HOME}/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:${HOME}/lxvst:/store/audio/lxvst"
-export GROFF_NO_SGR=1 LESS='CJMRXs' LESS='CJMRXs' man man git
+export GROFF_NO_SGR=1 LESS='CJMRXis' LESS='CJMRXis' man man git
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43;5m' LESS_TERMCAP_md=$'\E[1;31m'
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
@@ -98,7 +98,7 @@ export PERL_MB_OPT="--install_base \"${HOME}/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"
 export PERLDOC="-i -oman"
 # export PERLDOC_PAGER="less -+C -JMRXs"
-export PERLDOC_PAGER="less -CJMRXs"
+export PERLDOC_PAGER="less -CJMRXis"
 # export PERLDOC_PAGER="most -+C -E"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH}:${PLAN9}/bin"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Libraries/pkgconfig:/usr/lib/pkgconfig"
@@ -121,7 +121,7 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 export SDL_AUDIODRIVER=alsa
 export SSH_KEY_PATH="${HOME}/.ssh/id_gpg"
 export SURF_USERAGENT="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MOB3OD) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.105 Mobile Safari/537.36"
-export SYSTEMD_LESS="CFJKMRX" journalctl
+export SYSTEMD_LESS="CFJKMRiX" journalctl
 export TERMINAL=st
 export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:${HOME}/vst:/store/audio/vst"
 # Set X cursor theme

@@ -4,7 +4,7 @@ for i in "$@"; do
 		pushd "${ZSH:-/usr/share/oh-my-zsh}/plugins/${i}/" >/dev/null 2>&1 || \
 		return 2
 	[[ -r README* ]] && \
-		less -CJRMXs ./README* 2>/dev/null || \
+		less -CJRMXis ./README* 2>/dev/null || \
 		{ vim -p --servername VIM "${i}.plugin.zsh" 2>/dev/null || \
 			vim -p --servername VIM ./*; }
 	popd >/dev/null 2>&1
