@@ -403,6 +403,7 @@ inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
 inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
 "let g:slime_paste_file=tempname()
 let g:slime_paste_file='~/.slime_paste'
+let g:ale_asm_gcc_options='-m32'
 let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warnings'
 let g:instant_markdown_autostart=0
 let g:instant_markdown_slow=1
@@ -421,6 +422,7 @@ let g:NERDTrimTrailingWhitespace=1
 " Allows multipart alternative delimiters to be used when commenting in visual/visual-block mode.
 let g:NERDAllowAnyVisualDelims=1
 " Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_asm=1
 let g:NERDAltDelims_java=1
 let g:NERDAltDelims_c=0
 let g:NERDAltDelims_cpp=0

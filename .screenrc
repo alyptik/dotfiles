@@ -111,8 +111,8 @@ msgminwait 2
 msgwait 2
 truecolor on
 defautonuke off
-defbce on
-# defbce off
+# defbce on
+defbce off
 defencoding utf8
 defflow auto
 # defflow off
