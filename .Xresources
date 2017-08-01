@@ -194,6 +194,7 @@ URxvt*font:		xft:FuraCode Nerd Font:style=Retina:pixelsize=26:antialias=true:hin
 ! st.font:		xft:FuraCode Nerd Font:style=Regular:pixelsize=26:antialias=true:autohint=true,\
 ! st.font:		Fura Code Nerd Font:style=Light:pixelsize=26:antialias=true,\
 
+! st.font:		SauceCodePro Nerd Font:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 st.font:		FuraCode Nerd Font:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 				Noto Emoji:style=Regular:pixelsize=26:antialias=true:hinting=true,\
 				Symbola:style=Regular:pixelsize=26:antialias=true:hinting=true,\
