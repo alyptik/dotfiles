@@ -854,6 +854,9 @@ au Syntax * RainbowParenthesesLoadBraces
 ":RainbowParenthesesLoadBraces   " {}
 ":RainbowParenthesesLoadChevrons " <>
 
+" Set this. Airline will handle the rest. (ALE)
+let g:airline#extensions#ale#enabled=1
+
 "let g:promptline_preset='clear'
 " or
 let g:promptline_preset='full'
@@ -1127,6 +1130,9 @@ nnoremap <C-]> g<C-]>
 vnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 vnoremap g<C-]> <C-]>
+
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
