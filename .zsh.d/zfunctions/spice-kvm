@@ -2,7 +2,7 @@
 
 local -a args
 args=("$1" "$1" "${@:3}")
-[[ "$(file -Lb "${args[2]}")" == data ]] && \
+[[ "$(file -Lb "${args[2]}")" =~ '(^data$|^DOS/MBR boot sector)' ]] && \
 	args[2]="raw" || \
 	args[2]="qcow2,l2-cache-size=4M"
 [[ -z "$2" || "$2" =~ '^(-|[Nn]|[Nn][Uu][Ll][Ll])$' ]] && \
@@ -31,4 +31,3 @@ qemu-system-x86_64 \
 	-device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \
 	-chardev spicevmc,id=spicechannel0,name=vdagent
 	# -net nic -net bridge,br=virbr0,smb=/mnt/shared -device intel-iommu -monitor stdio -monitor pty \
-
