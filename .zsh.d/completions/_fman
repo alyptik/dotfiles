@@ -1,0 +1,28 @@
+#compdef fman
+
+local -A opt_args
+local -a sections
+
+sections=( ${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//} )
+
+_arguments -C \
+	"1:sections:->section" \
+	"2:manpages:->page" \
+	"*:query: " \
+	&& ret=0
+
+case "$state" in
+(section)
+	local -a sects
+	sects=($sections)
+	_describe -t sects "sections" sects && ret=0 ;;
+
+(page)
+	local -a manpgs
+	for i in $manpath; do
+		manpgs+=( ${(f@)$(print ${i}/man${line[1]}/*(:t))%%.${line[1]}*.*} )
+	done
+	_describe -t manpgs "manpages" manpgs && ret=0 ;;
+esac
+
+return 1
