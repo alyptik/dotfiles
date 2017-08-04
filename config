@@ -4,7 +4,7 @@ Host *
     VisualHostKey yes
     ForwardAgent no
     ForwardX11 no
-    KexAlgorithms +diffie-hellman-group1-sha1
+    KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
     #LocalForward localhost:8888 127.0.0.1:80
     #RhostsRSAAuthentication yes
     #RSAAuthentication yes
