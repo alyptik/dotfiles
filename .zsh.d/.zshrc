@@ -41,7 +41,7 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 zle -N zle-line-finish
 
-# Theme: 0 = Clint / 1 = PS1 / 2 = None
+# theme: 0 = clint / 1 = custom PS1 / * = wtf are u doing
 _theme=1
 # Initialize _km for ZLE widgets and set initial cursor color
 _km=emacs
@@ -177,47 +177,44 @@ case "$_theme" in
 	type prompt_clint_setup >/dev/null 2>&1 && \
 		prompt_clint_setup || \
 		_theme=1
-	;|
+	;| # continue scanning
+
 (1)
+	# common PS1 section
+	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(($(:
+		)$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))"$(:
+		)$reset_color$fg[yellow]/"$(($(:
+		)$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))MB$(:
+		)"		$reset_color$fg[magenta]$(</proc/loadavg)")$(:
+		)$prompt_newline$bold_color$fg[grey]%}[%{$(:
+		)$reset_color$fg[white]%}$$:$PPID %j:%l%{$(:
+		)$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	%D{%a %d %b %I:%M:%S%P}'
+	# fallback theme if no /proc
 	if [[ ! -d /proc ]]; then
-		_theme=2
-	elif [[ "$EUID" -eq 0 ]]; then
-		## If root, print the prompt character in red. Otherwise, print the prompt in cyan.
-		PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(($(:
-			)$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))"$(:
-			)$reset_color$fg[yellow]/"$(($(:
-			)$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))MB$(:
-			)"		$reset_color$fg[magenta]$(</proc/loadavg)")$(:
-			)$prompt_newline$bold_color$fg[grey]%}[%{$(:
-			)$reset_color$fg[white]%}$$:$PPID %j:%l%{$(:
-			)$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	%D{%a %d %b %I:%M:%S%P} %{$(:
-			)$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
-			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[green]%}+${SHLVL}%{$(:
-			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
-			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
-			)$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
-	else
-		PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(($(:
-			)$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))"$(:
-			)$reset_color$fg[yellow]/"$(($(:
-			)$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))MB$(:
-			)"		$reset_color$fg[magenta]$(</proc/loadavg)")$(:
-			)$prompt_newline$bold_color$fg[grey]%}[%{$(:
-			)$reset_color$fg[white]%}$$:$PPID %j:%l%{$(:
-			)$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	%D{%a %d %b %I:%M:%S%P} %{$(:
-			)$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
+		type prompt_clint_setup >/dev/null 2>&1 && \
+			prompt_clint_setup
+		break
+	elif (( EUID != 0 )); then
+		# normal colors
+		PS1="$PS1"'$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
 			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[red]%}+${SHLVL}%{$(:
 			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
 			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
 			)$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
+	else
+		# If root, print the prompt character in red. Otherwise, print the prompt in cyan.
+		PS1="$PS1"'$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
+			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[green]%}+${SHLVL}%{$(:
+			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
+			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
+			)$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
 	fi
-	;|
-(2)
+	;;
+
+(*)
+	# ??????????
 	type prompt_clint_setup >/dev/null 2>&1 && \
 		prompt_clint_setup
-	;;
-(*)
-	: # XXX: Handle fallback theme
 	;;
 esac
 
@@ -275,7 +272,9 @@ news_short
 host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f moose -W 50
 safetytoggle -n
 
-if type fasd >/dev/null 2>&1; then eval "$(fasd --init auto)"; fi
+if type fasd >/dev/null 2>&1; then
+	eval "$(fasd --init auto)"
+fi
 
 if type zplug >/dev/null 2>&1; then
 	# zplug "hlissner/zsh-autopair"
@@ -294,7 +293,9 @@ if type zplug >/dev/null 2>&1; then
 fi
 
 # autoload completion for systemctl subcommand compdefs
-if [[ "$(type _systemctl)" =~ "autoload" ]]; then autoload -Uz +X _systemctl; fi
+if [[ "$(type _systemctl)" =~ "autoload" ]]; then
+	autoload -Uz +X _systemctl
+fi
 
 zle -N zle-youtube-helper
 zle -N zle-fman
@@ -319,7 +320,9 @@ bindkey -sM emacs "\e[23~" "*"
 bindkey -sM vicmd "\e[23~" "*"
 bindkey -sM viins "\e[23~" "*"
 
-## Custom bindings
+# oh god prepare yourself
+#
+# custom bindkey commands
 bindkey -M emacs "\ep" expand-absolute-path
 bindkey -M viins "\ep" expand-absolute-path
 bindkey -M vicmd "\ep" expand-absolute-path
@@ -602,13 +605,14 @@ if zle -la | grep -q dwim; then
 	bindkey -M viins "\e[19~" dwim
 fi
 
+# more uglyness soz
+#
 # custom compdefs
 () {
 	local -a defargcmds=( as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl seq shred sox split stat st stjerm strings swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel )
 	local -a asmcmds=( ${(o)$(cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split / /, lc $F[0] =~ y|/| |r; END{ print join " ", sort @cmds; };' 2>/dev/null)} )
 	local -a seckeys=( ${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/} )
 	local -a pubkeys=( ${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/} )
-	# local -a sections=( ${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//} )
 	local -a pkgs=( ${(of@)$(pacman -Qq 2>/dev/null)} )
 
 	for i in "${defargcmds[@]}"; do compdef _gnu_generic "$i"; done
@@ -648,7 +652,7 @@ compdef p=perl
 compdef run=gcc
 compdef xs=xsel
 
-# Named directories
+# named directories
 hash -d audio="/run/media/alyptik/microSDXC/audio"
 hash -d aur="${HOME}/code/aur"
 hash -d calibre="/media/microSDXC/calibre"
@@ -739,8 +743,7 @@ zstyle ':completion:*' matcher-list '' \
 # separate matches into groups
 zstyle ':completion:*:matches'		group 'yes'
 zstyle ':completion:*'			group-name ''
-# if there are more than 2 options allow selecting from a menu
-zstyle ':completion:*'			menu select=2
+zstyle ':completion:*'			menu select
 zstyle ':completion:*:messages'		format '%d'
 zstyle ':completion:*:options'		auto-description '%d'
 # describe options in full
@@ -811,11 +814,9 @@ zstyle ':filter-select' hist-find-no-dups yes
 # display literal newlines, not \n, etc
 zstyle ':filter-select' escape-descriptions no
 
-# Cleanup
+# cleanup
 kill -TRAP $$
 
-# End configuration file
+# end of .zshrc config
 #
-# .zshrc
-#
-# All dankness must come to an end :(
+# all dankness must come to an end :(
