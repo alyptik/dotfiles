@@ -79,6 +79,8 @@ type zshreadhist >/dev/null 2>&1 && \
 	precmd_functions=( zshreadhist $precmd_functions )
 
 # History search
+# autoload -Uz bracketed-paste-magic
+autoload -Uz expand-absolute-path
 autoload -Uz up-line-or-beginning-search
 autoload -Uz down-line-or-beginning-search
 autoload -Uz run-help
@@ -91,7 +93,9 @@ autoload -Uz tetris
 autoload -Uz zargs
 autoload -Uz zed
 autoload -Uz zmv
+# zle -N bracketed-paste bracketed-paste-magic
 zle -N edit-command-line
+zle -N expand-absolute-path
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 zle -N znt-history-widget
@@ -316,6 +320,13 @@ bindkey -sM vicmd "\e[23~" "*"
 bindkey -sM viins "\e[23~" "*"
 
 ## Custom bindings
+bindkey -M emacs "\ep" expand-absolute-path
+bindkey -M viins "\ep" expand-absolute-path
+bindkey -M vicmd "\ep" expand-absolute-path
+# insert the last word from the previous history event at the cursor position
+bindkey -M emacs "\e\\" insert-last-word
+bindkey -M viins "\e\\" insert-last-word
+bindkey -M vicmd "\e\\" insert-last-word
 bindkey -M emacs "\eE" tetris
 bindkey -M viins "\eE" tetris
 bindkey -M vicmd "\eE" tetris
@@ -350,6 +361,12 @@ bindkey -M viins "\e[5~" history-substring-search-up
 bindkey -M emacs "\e[6~" history-substring-search-down
 bindkey -M vicmd "\e[6~" history-substring-search-down
 bindkey -M viins "\e[6~" history-substring-search-down
+bindkey -M emacs "\e-" history-substring-search-up
+bindkey -M viins "\e-" history-substring-search-up
+bindkey -M vicmd "\e-" history-substring-search-up
+bindkey -M emacs "\e=" history-substring-search-down
+bindkey -M viins "\e=" history-substring-search-down
+bindkey -M vicmd "\e=" history-substring-search-down
 
 # Fixes from http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
 bindkey -M emacs "$(echotc kl)" backward-char
@@ -459,9 +476,6 @@ bindkey -M viins "\e[3~" delete-char
 bindkey -M emacs "\ek" describe-key-briefly
 bindkey -M viins "\ek" describe-key-briefly
 bindkey -M vicmd "\ek" describe-key-briefly
-# bindkey -M emacs "\ek" edit-command-line
-# bindkey -M vicmd "\ek" edit-command-line
-# bindkey -M viins "\ek" edit-command-line
 bindkey -M emacs "\C-xe" edit-command-line
 bindkey -M vicmd "\C-xe" edit-command-line
 bindkey -M viins "\C-xe" edit-command-line
@@ -475,9 +489,12 @@ bindkey -M viins "\e\ey" zle-youtube-helper
 bindkey -M emacs "\eU" up-case-word
 bindkey -M vicmd "\eU" up-case-word
 bindkey -M viins "\eU" up-case-word
-bindkey -M emacs "\e\e\e" zaw
-bindkey -M vicmd "\e\e\e" zaw
-bindkey -M viins "\e\e\e" zaw
+bindkey -M emacs "\e\e\e" _history-complete-newer
+bindkey -M vicmd "\e\e\e" _history-complete-newer
+bindkey -M viins "\e\e\e" _history-complete-newer
+bindkey -M emacs "\e," zaw
+bindkey -M vicmd "\e," zaw
+bindkey -M viins "\e," zaw
 bindkey -M emacs "\e<" zle-zaw-help
 bindkey -M vicmd "\e<" zle-zaw-help
 bindkey -M viins "\e<" zle-zaw-help
@@ -587,41 +604,18 @@ fi
 
 # custom compdefs
 () {
-	local -a gnuarr=(
-		as autopep8 autopep8-python2 bash bsdtar calcc
-		canto-curses canto-daemon canto-remote catdoc
-		cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl
-		cgasm chromium col colordiff compton configure
-		conky cower cpanm cpulimit crontab ctags curl
-		dmidecode expac fasd file fzf gnome-keyring-daemon
-		gpg-agent help2man highlight highlight hping hsetroot
-		install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz
-		lua lz4 maim more mpd muttprint mv netstat netstat
-		newsbeuter node objconv objdump pactree paste pstree
-		qemu-nbd reptyr resolvconf rfc rg rmdir rmlint
-		rst2man rst2man2 saldl seq shred sox stat stjerm
-		strings swapon termite test tic transmission-cli
-		transmission-create transmission-daemon
-		transmission-edit transmission-get transmission-gtk
-		transmission-qt transmission-remote
-		transmission-remote-cli transmission-remote-cli
-		transmission-remote-gtk transmission-show
-		transset-df urxvtc urxvtcd urxvtd vanitygen
-		vimpager x11vnc xbindkeys xsel
-	)
-
-	local -a asmarr=( ${(o)$(cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split / /, lc $F[0] =~ y|/| |r; END{ print join " ", sort {$a cmp $b} @cmds; };' 2>/dev/null)} )
+	local -a defargcmds=( as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl seq shred sox split stat st stjerm strings swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel )
+	local -a asmcmds=( ${(o)$(cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split / /, lc $F[0] =~ y|/| |r; END{ print join " ", sort @cmds; };' 2>/dev/null)} )
 	local -a seckeys=( ${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/} )
 	local -a pubkeys=( ${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/} )
-	local -a sections=( ${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//} )
+	# local -a sections=( ${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//} )
 	local -a pkgs=( ${(of@)$(pacman -Qq 2>/dev/null)} )
 
-	for i in "${gnuarr[@]}"; do compdef _gnu_generic "$i"; done
+	for i in "${defargcmds[@]}"; do compdef _gnu_generic "$i"; done
 
-	compdef $'_arguments "*:arg:_default" ":assembly instruction:('"${asmarr[*]}"')" -- ' cgasm
+	compdef $'_arguments "*:arg:_default" ":assembly instruction:('"${asmcmds[*]}"')" -- ' cgasm
 	# compdef $'_arguments "*:arg:_default" ":secret keys:('"${seckeys[*]}"')" -- ' dgpg
 	compdef $'_arguments "*:arg:_default" ":public key:('"${pubkeys[*]}"')" -- ' dgpg
-	# compdef $'_arguments "*:arg:_default" "::section:('"${sections[*]}"')" ":man page:_man" -- ' fman
 	compdef $'_arguments "*:file:_files" ":syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r)\'" -- ' hi
 	compdef $'_arguments "*:file:_files" ":theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r)\'" ":syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r)\'" ":out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- ' high
 	compdef $'_arguments "*:arg:_default" ":info page:_texinfo" -- ' pinfo
@@ -629,6 +623,7 @@ fi
 	compdef $'_arguments "*:arg:_default" ":processe:_pids" -- ' reptyr
 }
 
+compdef _fman fman
 compdef _git fshow
 compdef _man cppman
 compdef _man tldr
@@ -647,7 +642,7 @@ compdef _au au
 compdef _au wau
 compdef _pwns pwns
 
-compdef fman=man
+compdef azle=autoload
 compdef gnpm=npm
 compdef p=perl
 compdef run=gcc
@@ -687,7 +682,10 @@ hash -d tt="/run/media/alyptik/toshiba1TB/torrents"
 hash -d vim="${HOME}/.vim"
 hash -d wanderlust="/hdd/wanderlust"
 hash -d words="/store/config/unixstories"
-hash -d zdot="${ZDOTDIR:-$HOME/.zsh.d}"
+hash -d z="${ZDOTDIR:-$HOME/.zsh.d}"
+hash -d zf="${ZDOTDIR:-$HOME/.zsh.d}/zfunctions"
+hash -d zc="${ZDOTDIR:-$HOME/.zsh.d}/completions"
+hash -d zp="${ZDOTDIR:-$HOME/.zsh.d}/plugins"
 hash -d znc="/var/lib/znc/.znc/moddata/log/alyptik/freenode/"
 hash -d zsh="$ZSH"
 
