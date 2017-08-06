@@ -137,6 +137,20 @@ Host arch
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
+Host arch
+    HostName 192.168.1.99
+    Port 22
+    User alyptik
+    CheckHostIP no
+    IdentityFile ~/.ssh/id_gpg
+
+Host http
+    HostName 192.168.1.99
+    Port 22
+    User http
+    CheckHostIP no
+    IdentityFile ~/.ssh/id_gpg
+
 Host alyp.tk
     HostName alyp.tk
     Port 22

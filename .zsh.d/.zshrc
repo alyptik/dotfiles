@@ -268,9 +268,12 @@ autoload -U +X bashcompinit && bashcompinit -u
 	autoload -Uz "${(f@)${(f@)$(zcompile -t "${${(M@z)fpath[@]%%*.zwc}[2]}")}[2,-1]}"
 
 news_short
-# "Is the internet on fire?" status reports
-host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f moose -W 50
 safetytoggle -n
+# "Is the internet on fire?" status reports
+host -t txt istheinternetonfire.com | cut -f 2 -d '"' | \
+	cowsay -f "$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)" -W 50
+# muhcow="$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)"
+# host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
 
 if type fasd >/dev/null 2>&1; then
 	eval "$(fasd --init auto)"
@@ -660,7 +663,7 @@ hash -d code="${HOME}/code"
 hash -d comp="${HOME}/bin/completions"
 hash -d conf="${CONF:-/store/config}"
 hash -d djzomg="/media/microSDXC/Music/djzomg"
-hash -d docs="/store/config/docs"
+hash -d d="/store/config/docs"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
 hash -d g="${HOME}/git"
@@ -678,7 +681,6 @@ hash -d rfc="/usr/share/doc/rfc"
 hash -d school="/run/media/alyptik/microSDXC/school"
 hash -d scripts="/store/config/scripts"
 hash -d sr="/usr/lib/surfraw"
-hash -d srv="/srv/http"
 hash -d stuff="/run/media/alyptik/toshiba1TB"
 hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
@@ -686,6 +688,7 @@ hash -d tt="/run/media/alyptik/toshiba1TB/torrents"
 hash -d vim="${HOME}/.vim"
 hash -d wanderlust="/hdd/wanderlust"
 hash -d words="/store/config/unixstories"
+hash -d www="/srv/http"
 hash -d z="${ZDOTDIR:-$HOME/.zsh.d}"
 hash -d zf="${ZDOTDIR:-$HOME/.zsh.d}/zfunctions"
 hash -d zc="${ZDOTDIR:-$HOME/.zsh.d}/completions"
@@ -694,7 +697,7 @@ hash -d znc="/var/lib/znc/.znc/moddata/log/alyptik/freenode/"
 hash -d zsh="$ZSH"
 
 # Define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
-WORDCHARS=''
+WORDCHARS=
 # WORDCHARS='.'
 # WORDCHARS='*?_[]~=&;!#$%^ (){}'
 # WORDCHARS='*?_[]~=&;!#$%^ (){}<>'
@@ -707,8 +710,8 @@ zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z)${${(f)"$(<${HOME}/.ss
 # zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z)${${${(f)"$(<${HOME}/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*}"
 zstyle ':acceptline'			nocompwarn true
 # allow one error for every two characters typed in approximate completer
-# zstyle ':completion:*:approximate:'	max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
-zstyle ':completion:*:approximate:'	max-errors 5 numeric
+zstyle ':completion:*:approximate:'	max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+# zstyle ':completion:*:approximate:'	max-errors 5 numeric
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
 # start menu completion only if it could find no unambiguous initial string
