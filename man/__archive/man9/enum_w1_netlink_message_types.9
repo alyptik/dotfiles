@@ -1,0 +1,88 @@
+'\" t
+.\"     Title: enum w1_netlink_message_types
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ENUM W1_NETLINK_MESS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+enum_w1_netlink_message_types \- message type
+.SH "SYNOPSIS"
+.sp
+.nf
+enum w1_netlink_message_types {
+  W1_SLAVE_ADD,
+  W1_SLAVE_REMOVE,
+  W1_MASTER_ADD,
+  W1_MASTER_REMOVE,
+  W1_MASTER_CMD,
+  W1_SLAVE_CMD,
+  W1_LIST_MASTERS
+};  
+.fi
+.SH "CONSTANTS"
+.PP
+W1_SLAVE_ADD
+.RS 4
+notification that a slave device was added
+.RE
+.PP
+W1_SLAVE_REMOVE
+.RS 4
+notification that a slave device was removed
+.RE
+.PP
+W1_MASTER_ADD
+.RS 4
+notification that a new bus master was added
+.RE
+.PP
+W1_MASTER_REMOVE
+.RS 4
+notification that a bus masterwas removed
+.RE
+.PP
+W1_MASTER_CMD
+.RS 4
+initiate operations on a specific master
+.RE
+.PP
+W1_SLAVE_CMD
+.RS 4
+sends reset, selects the slave, then does a read/write/touch operation
+.RE
+.PP
+W1_LIST_MASTERS
+.RS 4
+used to determine the bus master identifiers
+.RE
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

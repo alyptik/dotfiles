@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: wimax_dev_rm
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_DEV_RM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_dev_rm \- Unregister an existing WiMAX device
+.SH "SYNOPSIS"
+.HP \w'void\ wimax_dev_rm('u
+.BI "void wimax_dev_rm(struct\ wimax_dev\ *\ " "wimax_dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor
+.RE
+.SH "DESCRIPTION"
+.PP
+Unregisters a WiMAX device previously registered for use with
+\fBwimax_add_rm\fR\&.
+.PP
+IMPORTANT! Must call before calling
+\fBunregister_netdev\fR\&.
+.PP
+After this function returns, you will not get any more user space control requests (via netlink or debugfs) and thus to wimax_dev\->ops\&.
+.PP
+Reentrancy control is ensured by setting the state to
+\fB__WIMAX_ST_QUIESCING\fR\&. rfkill operations coming through wimax_*rfkill*() will be stopped by the quiescing state; ops coming from the rfkill subsystem will be stopped by the support being removed by
+\fBwimax_rfkill_rm\fR\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: nand_command_lp
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_COMMAND_LP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_command_lp \- [DEFAULT] Send command to NAND large page device
+.SH "SYNOPSIS"
+.HP \w'void\ nand_command_lp('u
+.BI "void nand_command_lp(struct\ mtd_info\ *\ " "mtd" ", unsigned\ int\ " "command" ", int\ " "column" ", int\ " "page_addr" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIcommand\fR
+.RS 4
+the command to be sent
+.RE
+.PP
+\fIcolumn\fR
+.RS 4
+the column address for this command, \-1 if none
+.RE
+.PP
+\fIpage_addr\fR
+.RS 4
+the page address for this command, \-1 if none
+.RE
+.SH "DESCRIPTION"
+.PP
+Send command to NAND device\&. This is the version for the new large page devices\&. We don\*(Aqt have the separate regions as we have in the small page devices\&. We must emulate NAND_CMD_READOOB to keep the code compatible\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

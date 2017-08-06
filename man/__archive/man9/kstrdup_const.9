@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: kstrdup_const
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KSTRDUP_CONST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kstrdup_const \- conditionally duplicate an existing const string
+.SH "SYNOPSIS"
+.HP \w'const\ char\ *\ kstrdup_const('u
+.BI "const char * kstrdup_const(const\ char\ *\ " "s" ", gfp_t\ " "gfp" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+the string to duplicate
+.RE
+.PP
+\fIgfp\fR
+.RS 4
+the GFP mask used in the
+\fBkmalloc\fR
+call when allocating memory
+.RE
+.SH "DESCRIPTION"
+.PP
+Function returns source string if it is in \&.rodata section otherwise it fallbacks to kstrdup\&. Strings allocated by kstrdup_const should be freed by kfree_const\&.
+.SH "COPYRIGHT"
+.br

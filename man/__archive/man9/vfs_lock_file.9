@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: vfs_lock_file
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VFS_LOCK_FILE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vfs_lock_file \- file byte range lock
+.SH "SYNOPSIS"
+.HP \w'int\ vfs_lock_file('u
+.BI "int vfs_lock_file(struct\ file\ *\ " "filp" ", unsigned\ int\ " "cmd" ", struct\ file_lock\ *\ " "fl" ", struct\ file_lock\ *\ " "conf" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfilp\fR
+.RS 4
+The file to apply the lock to
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+type of locking operation (F_SETLK, F_GETLK, etc\&.)
+.RE
+.PP
+\fIfl\fR
+.RS 4
+The lock to be applied
+.RE
+.PP
+\fIconf\fR
+.RS 4
+Place to return a copy of the conflicting lock, if found\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+A caller that doesn\*(Aqt care about the conflicting lock may pass NULL as the final argument\&.
+.PP
+If the filesystem defines a private \->\fBlock\fR
+method, then
+\fIconf\fR
+will be left unchanged; so a caller that cares should initialize it to some acceptable default\&.
+.PP
+To avoid blocking kernel daemons, such as lockd, that need to acquire POSIX locks, the \->\fBlock\fR
+interface may return asynchronously, before the lock has been granted or denied by the underlying filesystem, if (and only if) lm_grant is set\&. Callers expecting \->\fBlock\fR
+to return asynchronously will only use F_SETLK, not F_SETLKW; they will set FL_SLEEP if (and only if) the request is for a blocking lock\&. When \->\fBlock\fR
+does return asynchronously, it must return FILE_LOCK_DEFERRED, and call \->\fBlm_grant\fR
+when the lock request completes\&. If the request is for non\-blocking lock the file system should return FILE_LOCK_DEFERRED then try to get the lock and call the callback routine with the result\&. If the request timed out the callback routine will return a nonzero return code and the file system should release the lock\&. The file system is also responsible to keep a corresponding posix lock when it grants a lock so the VFS can find out which locks are locally held and do the correct lock cleanup when required\&. The underlying filesystem must not drop the kernel lock or call \->\fBlm_grant\fR
+before returning to the caller with a FILE_LOCK_DEFERRED return code\&.
+.SH "COPYRIGHT"
+.br

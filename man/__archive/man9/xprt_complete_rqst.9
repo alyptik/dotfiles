@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: xprt_complete_rqst
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XPRT_COMPLETE_RQST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xprt_complete_rqst \- called when reply processing is complete
+.SH "SYNOPSIS"
+.HP \w'void\ xprt_complete_rqst('u
+.BI "void xprt_complete_rqst(struct\ rpc_task\ *\ " "task" ", int\ " "copied" ");"
+.SH "ARGUMENTS"
+.PP
+\fItask\fR
+.RS 4
+RPC request that recently completed
+.RE
+.PP
+\fIcopied\fR
+.RS 4
+actual number of bytes received from the transport
+.RE
+.SH "DESCRIPTION"
+.PP
+Caller holds transport lock\&.
+.SH "COPYRIGHT"
+.br

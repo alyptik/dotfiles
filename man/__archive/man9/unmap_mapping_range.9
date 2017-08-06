@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: unmap_mapping_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "UNMAP_MAPPING_RANGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+unmap_mapping_range \- unmap the portion of all mmaps in the specified address_space corresponding to the specified page range in the underlying file\&.
+.SH "SYNOPSIS"
+.HP \w'void\ unmap_mapping_range('u
+.BI "void unmap_mapping_range(struct\ address_space\ *\ " "mapping" ", loff_t\ const\ " "holebegin" ", loff_t\ const\ " "holelen" ", int\ " "even_cows" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the address space containing mmaps to be unmapped\&.
+.RE
+.PP
+\fIholebegin\fR
+.RS 4
+byte in first page to unmap, relative to the start of the underlying file\&. This will be rounded down to a PAGE_SIZE boundary\&. Note that this is different from
+\fBtruncate_pagecache\fR, which must keep the partial page\&. In contrast, we must get rid of partial pages\&.
+.RE
+.PP
+\fIholelen\fR
+.RS 4
+size of prospective hole in bytes\&. This will be rounded up to a PAGE_SIZE boundary\&. A holelen of zero truncates to the end of the file\&.
+.RE
+.PP
+\fIeven_cows\fR
+.RS 4
+1 when truncating a file, unmap even private COWed pages; but 0 when invalidating pagecache, don\*(Aqt throw away private data\&.
+.RE
+.SH "COPYRIGHT"
+.br

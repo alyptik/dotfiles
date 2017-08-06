@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: seq_read
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SEQ_READ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+seq_read \- \->\fBread\fR method for sequential files\&.
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ seq_read('u
+.BI "ssize_t seq_read(struct\ file\ *\ " "file" ", char\ __user\ *\ " "buf" ", size_t\ " "size" ", loff_t\ *\ " "ppos" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfile\fR
+.RS 4
+the file to read from
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+the buffer to read to
+.RE
+.PP
+\fIsize\fR
+.RS 4
+the maximum number of bytes to read
+.RE
+.PP
+\fIppos\fR
+.RS 4
+the current position in the file
+.RE
+.SH "DESCRIPTION"
+.PP
+Ready\-made \->f_op\->\fBread\fR
+.SH "COPYRIGHT"
+.br

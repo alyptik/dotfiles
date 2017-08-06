@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: z8530_read_port
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_READ_PORT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_read_port \- Architecture specific interface function
+.SH "SYNOPSIS"
+.HP \w'int\ z8530_read_port('u
+.BI "int z8530_read_port(unsigned\ long\ " "p" ");"
+.SH "ARGUMENTS"
+.PP
+\fIp\fR
+.RS 4
+port to read
+.RE
+.SH "DESCRIPTION"
+.PP
+Provided port access methods\&. The Comtrol SV11 requires no delays between accesses and uses PC I/O\&. Some drivers may need a 5uS delay
+.PP
+In the longer term this should become an architecture specific section so that this can become a generic driver interface for all platforms\&. For now we only handle PC I/O ports with or without the dread 5uS sanity delay\&.
+.PP
+The caller must hold sufficient locks to avoid violating the horrible 5uS delay rule\&.
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

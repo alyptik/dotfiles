@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: blkdev_issue_discard
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLKDEV_ISSUE_DISCARD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blkdev_issue_discard \- queue a discard
+.SH "SYNOPSIS"
+.HP \w'int\ blkdev_issue_discard('u
+.BI "int blkdev_issue_discard(struct\ block_device\ *\ " "bdev" ", sector_t\ " "sector" ", sector_t\ " "nr_sects" ", gfp_t\ " "gfp_mask" ", unsigned\ long\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+blockdev to issue discard for
+.RE
+.PP
+\fIsector\fR
+.RS 4
+start sector
+.RE
+.PP
+\fInr_sects\fR
+.RS 4
+number of sectors to discard
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation flags (for bio_alloc)
+.RE
+.PP
+\fIflags\fR
+.RS 4
+BLKDEV_IFL_* flags to control behaviour
+.RE
+.SH "DESCRIPTION"
+.PP
+Issue a discard request for the sectors in question\&.
+.SH "COPYRIGHT"
+.br

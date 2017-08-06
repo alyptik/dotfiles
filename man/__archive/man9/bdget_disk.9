@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: bdget_disk
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BDGET_DISK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bdget_disk \- do \fBbdget\fR by gendisk and partition number
+.SH "SYNOPSIS"
+.HP \w'struct\ block_device\ *\ bdget_disk('u
+.BI "struct block_device * bdget_disk(struct\ gendisk\ *\ " "disk" ", int\ " "partno" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdisk\fR
+.RS 4
+gendisk of interest
+.RE
+.PP
+\fIpartno\fR
+.RS 4
+partition number
+.RE
+.SH "DESCRIPTION"
+.PP
+Find partition
+\fIpartno\fR
+from
+\fIdisk\fR, do
+\fBbdget\fR
+on it\&.
+.SH "CONTEXT"
+.PP
+Don\*(Aqt care\&.
+.SH "RETURN"
+.PP
+Resulting block_device on success, NULL on failure\&.
+.SH "COPYRIGHT"
+.br

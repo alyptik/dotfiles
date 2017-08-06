@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: alloc_netdev_mqs
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ALLOC_NETDEV_MQS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+alloc_netdev_mqs \- allocate network device
+.SH "SYNOPSIS"
+.HP \w'struct\ net_device\ *\ alloc_netdev_mqs('u
+.BI "struct net_device * alloc_netdev_mqs(int\ " "sizeof_priv" ", const\ char\ *\ " "name" ", unsigned\ char\ " "name_assign_type" ", void\ (*" "setup" ")\ (struct\ net_device\ *), unsigned\ int\ " "txqs" ", unsigned\ int\ " "rxqs" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsizeof_priv\fR
+.RS 4
+size of private data to allocate space for
+.RE
+.PP
+\fIname\fR
+.RS 4
+device name format string
+.RE
+.PP
+\fIname_assign_type\fR
+.RS 4
+origin of device name
+.RE
+.PP
+\fIsetup\fR
+.RS 4
+callback to initialize device
+.RE
+.PP
+\fItxqs\fR
+.RS 4
+the number of TX subqueues to allocate
+.RE
+.PP
+\fIrxqs\fR
+.RS 4
+the number of RX subqueues to allocate
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocates a struct net_device with private data area for driver use and performs basic initialization\&. Also allocates subqueue structs for each queue on the device\&.
+.SH "COPYRIGHT"
+.br

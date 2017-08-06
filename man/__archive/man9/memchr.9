@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: memchr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMCHR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+memchr \- Find a character in an area of memory\&.
+.SH "SYNOPSIS"
+.HP \w'void\ *\ memchr('u
+.BI "void * memchr(const\ void\ *\ " "s" ", int\ " "c" ", size_t\ " "n" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+The memory area
+.RE
+.PP
+\fIc\fR
+.RS 4
+The byte to search for
+.RE
+.PP
+\fIn\fR
+.RS 4
+The size of the area\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+returns the address of the first occurrence of
+\fIc\fR, or
+\fBNULL\fR
+if
+\fIc\fR
+is not found
+.SH "COPYRIGHT"
+.br

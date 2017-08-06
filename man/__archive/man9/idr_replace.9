@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: idr_replace
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IDR_REPLACE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+idr_replace \- replace pointer for given id
+.SH "SYNOPSIS"
+.HP \w'void\ *\ idr_replace('u
+.BI "void * idr_replace(struct\ idr\ *\ " "idp" ", void\ *\ " "ptr" ", int\ " "id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIidp\fR
+.RS 4
+idr handle
+.RE
+.PP
+\fIptr\fR
+.RS 4
+pointer you want associated with the id
+.RE
+.PP
+\fIid\fR
+.RS 4
+lookup key
+.RE
+.SH "DESCRIPTION"
+.PP
+Replace the pointer registered with an id and return the old value\&. A
+\fB\-ENOENT\fR
+return indicates that
+\fIid\fR
+was not found\&. A
+\fB\-EINVAL\fR
+return indicates that
+\fIid\fR
+was not within valid constraints\&.
+.PP
+The caller must serialize with writers\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: struct ccw_dev_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT CCW_DEV_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_ccw_dev_id \- unique identifier for ccw devices
+.SH "SYNOPSIS"
+.sp
+.nf
+struct ccw_dev_id {
+  u8 ssid;
+  u16 devno;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+ssid
+.RS 4
+subchannel set id
+.RE
+.PP
+devno
+.RS 4
+device number
+.RE
+.SH "DESCRIPTION"
+.PP
+This structure is not directly based on any hardware structure\&. The hardware identifies a device by its device number and its subchannel, which is in turn identified by its id\&. In order to get a unique identifier for ccw devices across subchannel sets,
+\fIstruct\fR
+ccw_dev_id has been introduced\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

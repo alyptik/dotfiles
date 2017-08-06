@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: audit_rule_change
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "AUDIT_RULE_CHANGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+audit_rule_change \- apply all rules to the specified message type
+.SH "SYNOPSIS"
+.HP \w'int\ audit_rule_change('u
+.BI "int audit_rule_change(int\ " "type" ", __u32\ " "portid" ", int\ " "seq" ", void\ *\ " "data" ", size_t\ " "datasz" ");"
+.SH "ARGUMENTS"
+.PP
+\fItype\fR
+.RS 4
+audit message type
+.RE
+.PP
+\fIportid\fR
+.RS 4
+target port id for netlink audit messages
+.RE
+.PP
+\fIseq\fR
+.RS 4
+netlink audit message sequence (serial) number
+.RE
+.PP
+\fIdata\fR
+.RS 4
+payload data
+.RE
+.PP
+\fIdatasz\fR
+.RS 4
+size of payload data
+.RE
+.SH "COPYRIGHT"
+.br

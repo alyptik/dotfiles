@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: __splice_from_pipe
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: splice API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__SPLICE_FROM_PIPE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "splice API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__splice_from_pipe \- splice data from a pipe to given actor
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ __splice_from_pipe('u
+.BI "ssize_t __splice_from_pipe(struct\ pipe_inode_info\ *\ " "pipe" ", struct\ splice_desc\ *\ " "sd" ", splice_actor\ *\ " "actor" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpipe\fR
+.RS 4
+pipe to splice from
+.RE
+.PP
+\fIsd\fR
+.RS 4
+information to
+\fIactor\fR
+.RE
+.PP
+\fIactor\fR
+.RS 4
+handler that splices the data
+.RE
+.SH "DESCRIPTION"
+.PP
+This function does little more than loop over the pipe and call
+\fIactor\fR
+to do the actual moving of a single struct pipe_buffer to the desired destination\&. See pipe_to_file, pipe_to_sendpage, or pipe_to_user\&.
+.SH "COPYRIGHT"
+.br

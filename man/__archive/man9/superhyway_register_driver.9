@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: superhyway_register_driver
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Busses
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SUPERHYWAY_REGISTER_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Busses"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+superhyway_register_driver \- Register a new SuperHyway driver
+.SH "SYNOPSIS"
+.HP \w'int\ superhyway_register_driver('u
+.BI "int superhyway_register_driver(struct\ superhyway_driver\ *\ " "drv" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdrv\fR
+.RS 4
+SuperHyway driver to register\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This registers the passed in
+\fIdrv\fR\&. Any devices matching the id table will automatically be populated and handed off to the driver\*(Aqs specified probe routine\&.
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

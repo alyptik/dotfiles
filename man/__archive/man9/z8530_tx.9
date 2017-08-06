@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: z8530_tx
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_TX" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_tx \- Handle a PIO transmit event
+.SH "SYNOPSIS"
+.HP \w'void\ z8530_tx('u
+.BI "void z8530_tx(struct\ z8530_channel\ *\ " "c" ");"
+.SH "ARGUMENTS"
+.PP
+\fIc\fR
+.RS 4
+Z8530 channel to process
+.RE
+.SH "DESCRIPTION"
+.PP
+Z8530 transmit interrupt handler for the PIO mode\&. The basic idea is to attempt to keep the FIFO fed\&. We fill as many bytes in as possible, its quite possible that we won\*(Aqt keep up with the data rate otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

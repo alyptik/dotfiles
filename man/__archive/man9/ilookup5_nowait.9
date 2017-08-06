@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: ilookup5_nowait
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ILOOKUP5_NOWAIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ilookup5_nowait \- search for an inode in the inode cache
+.SH "SYNOPSIS"
+.HP \w'struct\ inode\ *\ ilookup5_nowait('u
+.BI "struct inode * ilookup5_nowait(struct\ super_block\ *\ " "sb" ", unsigned\ long\ " "hashval" ", int\ (*" "test" ")\ (struct\ inode\ *,\ void\ *), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+super block of file system to search
+.RE
+.PP
+\fIhashval\fR
+.RS 4
+hash value (usually inode number) to search for
+.RE
+.PP
+\fItest\fR
+.RS 4
+callback used for comparisons between inodes
+.RE
+.PP
+\fIdata\fR
+.RS 4
+opaque data pointer to pass to
+\fItest\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Search for the inode specified by
+\fIhashval\fR
+and
+\fIdata\fR
+in the inode cache\&. If the inode is in the cache, the inode is returned with an incremented reference count\&.
+.SH "NOTE"
+.PP
+I_NEW is not waited upon so you have to be very careful what you do with the returned inode\&. You probably should be using
+\fBilookup5\fR
+instead\&.
+.PP
+Note2:
+\fItest\fR
+is called with the inode_hash_lock held, so can\*(Aqt sleep\&.
+.SH "COPYRIGHT"
+.br

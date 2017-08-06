@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: pci_adjust_legacy_attr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_ADJUST_LEGACY_AT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_adjust_legacy_attr \- adjustment of legacy file attributes
+.SH "SYNOPSIS"
+.HP \w'void\ pci_adjust_legacy_attr('u
+.BI "void pci_adjust_legacy_attr(struct\ pci_bus\ *\ " "b" ", enum\ pci_mmap_state\ " "mmap_type" ");"
+.SH "ARGUMENTS"
+.PP
+\fIb\fR
+.RS 4
+bus to create files under
+.RE
+.PP
+\fImmap_type\fR
+.RS 4
+I/O port or memory
+.RE
+.SH "DESCRIPTION"
+.PP
+Stub implementation\&. Can be overridden by arch if necessary\&.
+.SH "COPYRIGHT"
+.br

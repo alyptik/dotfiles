@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: phy_register_fixup
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_REGISTER_FIXUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_register_fixup \- creates a new phy_fixup and adds it to the list
+.SH "SYNOPSIS"
+.HP \w'int\ phy_register_fixup('u
+.BI "int phy_register_fixup(const\ char\ *\ " "bus_id" ", u32\ " "phy_uid" ", u32\ " "phy_uid_mask" ", int\ (*" "run" ")\ (struct\ phy_device\ *));"
+.SH "ARGUMENTS"
+.PP
+\fIbus_id\fR
+.RS 4
+A string which matches phydev\->mdio\&.dev\&.bus_id (or PHY_ANY_ID)
+.RE
+.PP
+\fIphy_uid\fR
+.RS 4
+Used to match against phydev\->phy_id (the UID of the PHY) It can also be PHY_ANY_UID
+.RE
+.PP
+\fIphy_uid_mask\fR
+.RS 4
+Applied to phydev\->phy_id and fixup\->phy_uid before comparison
+.RE
+.PP
+\fIrun\fR
+.RS 4
+The actual code to be run when a matching PHY is found
+.RE
+.SH "COPYRIGHT"
+.br

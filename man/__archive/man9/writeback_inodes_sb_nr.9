@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: writeback_inodes_sb_nr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WRITEBACK_INODES_SB_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+writeback_inodes_sb_nr \- writeback dirty inodes from given super_block
+.SH "SYNOPSIS"
+.HP \w'void\ writeback_inodes_sb_nr('u
+.BI "void writeback_inodes_sb_nr(struct\ super_block\ *\ " "sb" ", unsigned\ long\ " "nr" ", enum\ wb_reason\ " "reason" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+the superblock
+.RE
+.PP
+\fInr\fR
+.RS 4
+the number of pages to write
+.RE
+.PP
+\fIreason\fR
+.RS 4
+reason why some writeback work initiated
+.RE
+.SH "DESCRIPTION"
+.PP
+Start writeback on some inodes on this super_block\&. No guarantees are made on how many (if any) will be written, and this function does not wait for IO completion of submitted IO\&.
+.SH "COPYRIGHT"
+.br

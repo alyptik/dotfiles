@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: scsi_check_sense
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_CHECK_SENSE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_check_sense \- Examine scsi cmd sense
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_check_sense('u
+.BI "int scsi_check_sense(struct\ scsi_cmnd\ *\ " "scmd" ");"
+.SH "ARGUMENTS"
+.PP
+\fIscmd\fR
+.RS 4
+Cmd to have sense checked\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Return value: SUCCESS or FAILED or NEEDS_RETRY or ADD_TO_MLQUEUE
+.SH "NOTES"
+.PP
+When a deferred error is detected the current command has not been executed and needs retrying\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,83 @@
+'\" t
+.\"     Title: mpage_readpages
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MPAGE_READPAGES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mpage_readpages \- populate an address space with some pages & start reads against them
+.SH "SYNOPSIS"
+.HP \w'int\ mpage_readpages('u
+.BI "int mpage_readpages(struct\ address_space\ *\ " "mapping" ", struct\ list_head\ *\ " "pages" ", unsigned\ " "nr_pages" ", get_block_t\ " "get_block" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the address_space
+.RE
+.PP
+\fIpages\fR
+.RS 4
+The address of a list_head which contains the target pages\&. These pages have their \->index populated and are otherwise uninitialised\&. The page at
+\fIpages\fR\->prev has the lowest file offset, and reads should be issued in
+\fIpages\fR\->prev to
+\fIpages\fR\->next order\&.
+.RE
+.PP
+\fInr_pages\fR
+.RS 4
+The number of pages at *\fIpages\fR
+.RE
+.PP
+\fIget_block\fR
+.RS 4
+The filesystem\*(Aqs block mapper function\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function walks the pages and the blocks within each page, building and emitting large BIOs\&.
+.PP
+If anything unusual happens, such as:
+.PP
+\- encountering a page which has buffers \- encountering a page which has a non\-hole after a hole \- encountering a page with non\-contiguous blocks
+.PP
+then this code just gives up and calls the buffer_head\-based read function\&. It does handle a page which has holes at the end \- that is a common case: the end\-of\-file on blocksize < PAGE_SIZE setups\&.
+.PP
+BH_Boundary explanation:
+.PP
+There is a problem\&. The mpage read code assembles several pages, gets all their disk mappings, and then submits them all\&. That\*(Aqs fine, but obtaining the disk mappings may require I/O\&. Reads of indirect blocks, for example\&.
+.PP
+So an mpage read of the first 16 blocks of an ext2 file will cause I/O to be submitted in the following order: 12 0 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16
+.PP
+because the indirect block has to be read to get the mappings of blocks 13,14,15,16\&. Obviously, this impacts performance\&.
+.PP
+So what we do it to allow the filesystem\*(Aqs
+\fBget_block\fR
+function to set BH_Boundary when it maps block 11\&. BH_Boundary says: mapping of the block after this one will require I/O against a block which is probably close to this one\&. So you should push what I/O you have currently accumulated\&.
+.PP
+This all causes the disk requests to be issued in the correct order\&.
+.SH "COPYRIGHT"
+.br

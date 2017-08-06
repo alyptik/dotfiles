@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: ipc_addid
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPC_ADDID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipc_addid \- add an ipc identifier
+.SH "SYNOPSIS"
+.HP \w'int\ ipc_addid('u
+.BI "int ipc_addid(struct\ ipc_ids\ *\ " "ids" ", struct\ kern_ipc_perm\ *\ " "new" ", int\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIids\fR
+.RS 4
+ipc identifier set
+.RE
+.PP
+\fInew\fR
+.RS 4
+new ipc permission set
+.RE
+.PP
+\fIsize\fR
+.RS 4
+limit for the number of used ids
+.RE
+.SH "DESCRIPTION"
+.PP
+Add an entry \*(Aqnew\*(Aq to the ipc ids idr\&. The permissions object is initialised and the first free entry is set up and the id assigned is returned\&. The \*(Aqnew\*(Aq entry is returned in a locked state on success\&. On failure the entry is not locked and a negative err\-code is returned\&.
+.PP
+Called with writer ipc_ids\&.rwsem held\&.
+.SH "COPYRIGHT"
+.br

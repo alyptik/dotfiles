@@ -1,0 +1,85 @@
+'\" t
+.\"     Title: scsi_probe_and_add_lun
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_PROBE_AND_ADD_L" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_probe_and_add_lun \- probe a LUN, if a LUN is found add it
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_probe_and_add_lun('u
+.BI "int scsi_probe_and_add_lun(struct\ scsi_target\ *\ " "starget" ", u64\ " "lun" ", int\ *\ " "bflagsp" ", struct\ scsi_device\ **\ " "sdevp" ", enum\ scsi_scan_mode\ " "rescan" ", void\ *\ " "hostdata" ");"
+.SH "ARGUMENTS"
+.PP
+\fIstarget\fR
+.RS 4
+pointer to target device structure
+.RE
+.PP
+\fIlun\fR
+.RS 4
+LUN of target device
+.RE
+.PP
+\fIbflagsp\fR
+.RS 4
+store bflags here if not NULL
+.RE
+.PP
+\fIsdevp\fR
+.RS 4
+probe the LUN corresponding to this scsi_device
+.RE
+.PP
+\fIrescan\fR
+.RS 4
+if not equal to SCSI_SCAN_INITIAL skip some code only needed on first scan
+.RE
+.PP
+\fIhostdata\fR
+.RS 4
+passed to
+\fBscsi_alloc_sdev\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Call scsi_probe_lun, if a LUN with an attached device is found, allocate and set it up by calling scsi_add_lun\&.
+.SH "RETURN"
+.PP
+SCSI_SCAN_NO_RESPONSE: could not allocate or setup a scsi_device SCSI_SCAN_TARGET_PRESENT: target responded, but no device is attached at the LUN SCSI_SCAN_LUN_PRESENT: a new scsi_device was allocated and initialized
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

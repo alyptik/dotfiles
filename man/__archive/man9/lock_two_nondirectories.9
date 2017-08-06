@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: lock_two_nondirectories
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "LOCK_TWO_NONDIRECTOR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+lock_two_nondirectories \- take two i_mutexes on non\-directory objects
+.SH "SYNOPSIS"
+.HP \w'void\ lock_two_nondirectories('u
+.BI "void lock_two_nondirectories(struct\ inode\ *\ " "inode1" ", struct\ inode\ *\ " "inode2" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode1\fR
+.RS 4
+first inode to lock
+.RE
+.PP
+\fIinode2\fR
+.RS 4
+second inode to lock
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Lock any non\-NULL argument that is not a directory\&. Zero, one or two objects may be locked by this function\&.
+.SH "COPYRIGHT"
+.br

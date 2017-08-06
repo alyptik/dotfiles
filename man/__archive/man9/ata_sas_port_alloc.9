@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: ata_sas_port_alloc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SAS_PORT_ALLOC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_sas_port_alloc \- Allocate port for a SAS attached SATA device
+.SH "SYNOPSIS"
+.HP \w'struct\ ata_port\ *\ ata_sas_port_alloc('u
+.BI "struct ata_port * ata_sas_port_alloc(struct\ ata_host\ *\ " "host" ", struct\ ata_port_info\ *\ " "port_info" ", struct\ Scsi_Host\ *\ " "shost" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhost\fR
+.RS 4
+ATA host container for all SAS ports
+.RE
+.PP
+\fIport_info\fR
+.RS 4
+Information from low\-level host driver
+.RE
+.PP
+\fIshost\fR
+.RS 4
+SCSI host that the scsi device is attached to
+.RE
+.SH "DESCRIPTION"
+.PP
+LOCKING: PCI/etc\&. bus probe sem\&.
+.SH "RETURN"
+.PP
+ata_port pointer on success / NULL on failure\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: pcie_set_readrq
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCIE_SET_READRQ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pcie_set_readrq \- set PCI Express maximum memory read request
+.SH "SYNOPSIS"
+.HP \w'int\ pcie_set_readrq('u
+.BI "int pcie_set_readrq(struct\ pci_dev\ *\ " "dev" ", int\ " "rq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device to query
+.RE
+.PP
+\fIrq\fR
+.RS 4
+maximum memory read count in bytes valid values are 128, 256, 512, 1024, 2048, 4096
+.RE
+.SH "DESCRIPTION"
+.PP
+If possible sets maximum memory read request in bytes
+.SH "COPYRIGHT"
+.br

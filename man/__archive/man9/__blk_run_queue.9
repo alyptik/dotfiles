@@ -1,0 +1,46 @@
+'\" t
+.\"     Title: __blk_run_queue
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__BLK_RUN_QUEUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__blk_run_queue \- run a single device queue
+.SH "SYNOPSIS"
+.HP \w'void\ __blk_run_queue('u
+.BI "void __blk_run_queue(struct\ request_queue\ *\ " "q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+The queue to run
+.RE
+.SH "DESCRIPTION"
+.PP
+See
+\fIblk_run_queue\fR\&. This variant must be called with the queue lock held and interrupts disabled\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: jbd2_journal_set_triggers
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2_JOURNAL_SET_TRI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2_journal_set_triggers \- Add triggers for commit writeout
+.SH "SYNOPSIS"
+.HP \w'void\ jbd2_journal_set_triggers('u
+.BI "void jbd2_journal_set_triggers(struct\ buffer_head\ *\ " "bh" ", struct\ jbd2_buffer_trigger_type\ *\ " "type" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbh\fR
+.RS 4
+buffer to trigger on
+.RE
+.PP
+\fItype\fR
+.RS 4
+struct jbd2_buffer_trigger_type containing the trigger(s)\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Set any triggers on this journal_head\&. This is always safe, because triggers for a committing buffer will be saved off, and triggers for a running transaction will match the buffer in that transaction\&.
+.PP
+Call with NULL to clear the triggers\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

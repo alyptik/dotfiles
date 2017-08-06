@@ -1,0 +1,92 @@
+'\" t
+.\"     Title: pci_get_subsys
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_GET_SUBSYS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_get_subsys \- begin or continue searching for a PCI device by vendor/subvendor/device/subdevice id
+.SH "SYNOPSIS"
+.HP \w'struct\ pci_dev\ *\ pci_get_subsys('u
+.BI "struct pci_dev * pci_get_subsys(unsigned\ int\ " "vendor" ", unsigned\ int\ " "device" ", unsigned\ int\ " "ss_vendor" ", unsigned\ int\ " "ss_device" ", struct\ pci_dev\ *\ " "from" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvendor\fR
+.RS 4
+PCI vendor id to match, or
+\fBPCI_ANY_ID\fR
+to match all vendor ids
+.RE
+.PP
+\fIdevice\fR
+.RS 4
+PCI device id to match, or
+\fBPCI_ANY_ID\fR
+to match all device ids
+.RE
+.PP
+\fIss_vendor\fR
+.RS 4
+PCI subsystem vendor id to match, or
+\fBPCI_ANY_ID\fR
+to match all vendor ids
+.RE
+.PP
+\fIss_device\fR
+.RS 4
+PCI subsystem device id to match, or
+\fBPCI_ANY_ID\fR
+to match all device ids
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+Previous PCI device found in search, or
+\fBNULL\fR
+for new search\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Iterates through the list of known PCI devices\&. If a PCI device is found with a matching
+\fIvendor\fR,
+\fIdevice\fR,
+\fIss_vendor\fR
+and
+\fIss_device\fR, a pointer to its device structure is returned, and the reference count to the device is incremented\&. Otherwise,
+\fBNULL\fR
+is returned\&. A new search is initiated by passing
+\fBNULL\fR
+as the
+\fIfrom\fR
+argument\&. Otherwise if
+\fIfrom\fR
+is not
+\fBNULL\fR, searches continue from next device on the global list\&. The reference count for
+\fIfrom\fR
+is always decremented if it is not
+\fBNULL\fR\&.
+.SH "COPYRIGHT"
+.br

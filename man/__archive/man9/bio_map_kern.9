@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: bio_map_kern
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BIO_MAP_KERN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bio_map_kern \- map kernel address into bio
+.SH "SYNOPSIS"
+.HP \w'struct\ bio\ *\ bio_map_kern('u
+.BI "struct bio * bio_map_kern(struct\ request_queue\ *\ " "q" ", void\ *\ " "data" ", unsigned\ int\ " "len" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the struct request_queue for the bio
+.RE
+.PP
+\fIdata\fR
+.RS 4
+pointer to buffer to map
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length in bytes
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation flags for bio allocation
+.RE
+.SH "DESCRIPTION"
+.PP
+Map the kernel address into a bio suitable for io to a block device\&. Returns an error pointer in case of error\&.
+.SH "COPYRIGHT"
+.br

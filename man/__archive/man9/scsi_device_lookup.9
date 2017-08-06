@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: scsi_device_lookup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_DEVICE_LOOKUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_device_lookup \- find a device given the host
+.SH "SYNOPSIS"
+.HP \w'struct\ scsi_device\ *\ scsi_device_lookup('u
+.BI "struct scsi_device * scsi_device_lookup(struct\ Scsi_Host\ *\ " "shost" ", uint\ " "channel" ", uint\ " "id" ", u64\ " "lun" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+SCSI host pointer
+.RE
+.PP
+\fIchannel\fR
+.RS 4
+SCSI channel (zero if only one channel)
+.RE
+.PP
+\fIid\fR
+.RS 4
+SCSI target number (physical unit number)
+.RE
+.PP
+\fIlun\fR
+.RS 4
+SCSI Logical Unit Number
+.RE
+.SH "DESCRIPTION"
+.PP
+Looks up the scsi_device with the specified
+\fIchannel\fR,
+\fIid\fR,
+\fIlun\fR
+for a given host\&. The returned scsi_device has an additional reference that needs to be released with scsi_device_put once you\*(Aqre done with it\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

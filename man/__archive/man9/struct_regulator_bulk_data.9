@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: struct regulator_bulk_data
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_BUL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_bulk_data \- Data used for bulk regulator operations\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_bulk_data {
+  const char * supply;
+  struct regulator * consumer;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+supply
+.RS 4
+The name of the supply\&. Initialised by the user before using the bulk regulator APIs\&.
+.RE
+.PP
+consumer
+.RS 4
+The regulator consumer for the supply\&. This will be managed by the bulk API\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+The regulator APIs provide a series of
+\fBregulator_bulk_\fR
+API calls as a convenience to consumers which require multiple supplies\&. This structure is used to manage data for these calls\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

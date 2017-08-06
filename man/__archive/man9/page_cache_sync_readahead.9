@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: page_cache_sync_readahead
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PAGE_CACHE_SYNC_READ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+page_cache_sync_readahead \- generic file readahead
+.SH "SYNOPSIS"
+.HP \w'void\ page_cache_sync_readahead('u
+.BI "void page_cache_sync_readahead(struct\ address_space\ *\ " "mapping" ", struct\ file_ra_state\ *\ " "ra" ", struct\ file\ *\ " "filp" ", pgoff_t\ " "offset" ", unsigned\ long\ " "req_size" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+address_space which holds the pagecache and I/O vectors
+.RE
+.PP
+\fIra\fR
+.RS 4
+file_ra_state which holds the readahead state
+.RE
+.PP
+\fIfilp\fR
+.RS 4
+passed on to \->\fBreadpage\fR
+and \->\fBreadpages\fR
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+start offset into
+\fImapping\fR, in pagecache page\-sized units
+.RE
+.PP
+\fIreq_size\fR
+.RS 4
+hint: total size of the read which the caller is performing in pagecache pages
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBpage_cache_sync_readahead\fR
+should be called when a cache miss happened: it will submit the read\&. The readahead logic may decide to piggyback more pages onto the read request if access patterns suggest it will improve performance\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: sil_set_mode
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: sata_sil Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SIL_SET_MODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "sata_sil Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sil_set_mode \- wrap set_mode functions
+.SH "SYNOPSIS"
+.HP \w'int\ sil_set_mode('u
+.BI "int sil_set_mode(struct\ ata_link\ *\ " "link" ", struct\ ata_device\ **\ " "r_failed" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+link to set up
+.RE
+.PP
+\fIr_failed\fR
+.RS 4
+returned device when we fail
+.RE
+.SH "DESCRIPTION"
+.PP
+Wrap the libata method for device setup as after the setup we need to inspect the results and do some configuration work
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

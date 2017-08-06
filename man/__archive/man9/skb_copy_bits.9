@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: skb_copy_bits
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_COPY_BITS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_copy_bits \- copy bits from skb to kernel buffer
+.SH "SYNOPSIS"
+.HP \w'int\ skb_copy_bits('u
+.BI "int skb_copy_bits(const\ struct\ sk_buff\ *\ " "skb" ", int\ " "offset" ", void\ *\ " "to" ", int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+source skb
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+offset in source
+.RE
+.PP
+\fIto\fR
+.RS 4
+destination buffer
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of bytes to copy
+.RE
+.SH "DESCRIPTION"
+.PP
+Copy the specified number of bytes from the source skb to the destination buffer\&.
+.PP
+CAUTION ! : If its prototype is ever changed, check arch/{*}/net/{*}\&.S files, since it is called from BPF assembly code\&.
+.SH "COPYRIGHT"
+.br

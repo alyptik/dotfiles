@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: skwq_has_sleeper
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKWQ_HAS_SLEEPER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skwq_has_sleeper \- check if there are any waiting processes
+.SH "SYNOPSIS"
+.HP \w'bool\ skwq_has_sleeper('u
+.BI "bool skwq_has_sleeper(struct\ socket_wq\ *\ " "wq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwq\fR
+.RS 4
+struct socket_wq
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns true if socket_wq has waiting processes
+.PP
+The purpose of the skwq_has_sleeper and sock_poll_wait is to wrap the memory barrier call\&. They were added due to the race found within the tcp code\&.
+.PP
+Consider following tcp code paths:
+.PP
+CPU1 CPU2
+.PP
+sys_select receive packet \&.\&.\&. \&.\&.\&. __add_wait_queue update tp\->rcv_nxt \&.\&.\&. \&.\&.\&. tp\->rcv_nxt check sock_def_readable \&.\&.\&. { schedule
+\fBrcu_read_lock\fR; wq = rcu_dereference(sk\->sk_wq); if (wq && waitqueue_active(wq\->wait)) wake_up_interruptible(wq\->wait) \&.\&.\&. }
+.PP
+The race for tcp fires when the __add_wait_queue changes done by CPU1 stay in its cache, and so does the tp\->rcv_nxt update on CPU2 side\&. The CPU1 could then endup calling schedule and sleep forever if there are no more data on the socket\&.
+.SH "COPYRIGHT"
+.br

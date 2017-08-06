@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: sata_set_spd_needed
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SATA_SET_SPD_NEEDED" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sata_set_spd_needed \- is SATA spd configuration needed
+.SH "SYNOPSIS"
+.HP \w'int\ sata_set_spd_needed('u
+.BI "int sata_set_spd_needed(struct\ ata_link\ *\ " "link" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+Link in question
+.RE
+.SH "DESCRIPTION"
+.PP
+Test whether the spd limit in SControl matches
+\fIlink\fR\->sata_spd_limit\&. This function is used to determine whether hardreset is necessary to apply SATA spd configuration\&.
+.PP
+LOCKING: Inherited from caller\&.
+.SH "RETURN"
+.PP
+1 if SATA spd configuration is needed, 0 otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

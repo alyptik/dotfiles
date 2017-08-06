@@ -1,0 +1,48 @@
+'\" t
+.\"     Title: free_area_init_nodes
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FREE_AREA_INIT_NODES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+free_area_init_nodes \- Initialise all pg_data_t and zone data
+.SH "SYNOPSIS"
+.HP \w'void\ free_area_init_nodes('u
+.BI "void free_area_init_nodes(unsigned\ long\ *\ " "max_zone_pfn" ");"
+.SH "ARGUMENTS"
+.PP
+\fImax_zone_pfn\fR
+.RS 4
+an array of max PFNs for each zone
+.RE
+.SH "DESCRIPTION"
+.PP
+This will call
+\fBfree_area_init_node\fR
+for each active node in the system\&. Using the page ranges provided by
+\fBmemblock_set_node\fR, the size of each zone in each node and their holes is calculated\&. If the maximum PFN between two adjacent zones match, it is assumed that the zone is empty\&. For example, if arch_max_dma_pfn == arch_max_dma32_pfn, it is assumed that arch_max_dma32_pfn has no pages\&. It is also assumed that a zone starts where the previous one ended\&. For example, ZONE_DMA32 starts at arch_max_dma_pfn\&.
+.SH "COPYRIGHT"
+.br

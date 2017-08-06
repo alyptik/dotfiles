@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: blk_init_queue
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_INIT_QUEUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_init_queue \- prepare a request queue for use with a block device
+.SH "SYNOPSIS"
+.HP \w'struct\ request_queue\ *\ blk_init_queue('u
+.BI "struct request_queue * blk_init_queue(request_fn_proc\ *\ " "rfn" ", spinlock_t\ *\ " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrfn\fR
+.RS 4
+The function to be called to process requests that have been placed on the queue\&.
+.RE
+.PP
+\fIlock\fR
+.RS 4
+Request queue spin lock
+.RE
+.SH "DESCRIPTION"
+.PP
+If a block device wishes to use the standard request handling procedures, which sorts requests and coalesces adjacent requests, then it must call
+\fBblk_init_queue\fR\&. The function
+\fIrfn\fR
+will be called when there are requests on the queue that need to be processed\&. If the device supports plugging, then
+\fIrfn\fR
+may not be called immediately when requests are available on the queue, but may be called at some time later instead\&. Plugged queues are generally unplugged when a buffer belonging to one of the requests on the queue is needed, or due to memory pressure\&.
+.PP
+\fIrfn\fR
+is not required, or even expected, to remove all requests off the queue, but only as many as it can handle at a time\&. If it does leave requests on the queue, it is responsible for arranging that the requests get dealt with eventually\&.
+.PP
+The queue spin lock must be held while manipulating the requests on the request queue; this lock will be taken also from interrupt context, so irq disabling is needed for it\&.
+.PP
+Function returns a pointer to the initialized request queue, or
+\fBNULL\fR
+if it didn\*(Aqt succeed\&.
+.SH "NOTE"
+.PP
+\fBblk_init_queue\fR
+must be paired with a
+\fBblk_cleanup_queue\fR
+call when the block device is deactivated (such as at module unload)\&.
+.SH "COPYRIGHT"
+.br

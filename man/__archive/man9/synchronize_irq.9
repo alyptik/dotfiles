@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: synchronize_irq
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYNCHRONIZE_IRQ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+synchronize_irq \- wait for pending IRQ handlers (on other CPUs)
+.SH "SYNOPSIS"
+.HP \w'void\ synchronize_irq('u
+.BI "void synchronize_irq(unsigned\ int\ " "irq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIirq\fR
+.RS 4
+interrupt number to wait for
+.RE
+.SH "DESCRIPTION"
+.PP
+This function waits for any pending IRQ handlers for this interrupt to complete before returning\&. If you use this function while holding a resource the IRQ handler may need you will deadlock\&.
+.PP
+This function may be called \- with care \- from IRQ context\&.
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

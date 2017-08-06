@@ -1,0 +1,114 @@
+'\" t
+.\"     Title: struct w1_slave
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT W1_SLAVE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_w1_slave \- holds a single slave device on the bus
+.SH "SYNOPSIS"
+.sp
+.nf
+struct w1_slave {
+  struct module * owner;
+  unsigned char name[W1_MAXNAMELEN];
+  struct list_head w1_slave_entry;
+  struct w1_reg_num reg_num;
+  atomic_t refcnt;
+  int ttl;
+  unsigned long flags;
+  struct w1_master * master;
+  struct w1_family * family;
+  void * family_data;
+  struct device dev;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+owner
+.RS 4
+Points to the one wire
+\(lqwire\(rq
+kernel module\&.
+.RE
+.PP
+name[W1_MAXNAMELEN]
+.RS 4
+Device id is ascii\&.
+.RE
+.PP
+w1_slave_entry
+.RS 4
+data for the linked list
+.RE
+.PP
+reg_num
+.RS 4
+the slave id in binary
+.RE
+.PP
+refcnt
+.RS 4
+reference count, delete when 0
+.RE
+.PP
+ttl
+.RS 4
+decrement per search this slave isn\*(Aqt found, deatch at 0
+.RE
+.PP
+flags
+.RS 4
+bit flags for W1_SLAVE_ACTIVE W1_SLAVE_DETACH
+.RE
+.PP
+master
+.RS 4
+bus which this slave is on
+.RE
+.PP
+family
+.RS 4
+module for device family type
+.RE
+.PP
+family_data
+.RS 4
+pointer for use by the family module
+.RE
+.PP
+dev
+.RS 4
+kernel device identifier
+.RE
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

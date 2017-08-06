@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: phy_start
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_START" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_start \- start or restart a PHY device
+.SH "SYNOPSIS"
+.HP \w'void\ phy_start('u
+.BI "void phy_start(struct\ phy_device\ *\ " "phydev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+target phy_device struct
+.RE
+.SH "DESCRIPTION"
+.PP
+Indicates the attached device\*(Aqs readiness to handle PHY\-related work\&. Used during startup to start the PHY, and after a call to
+\fBphy_stop\fR
+to resume operation\&. Also used to indicate the MDIO bus has cleared an error condition\&.
+.SH "COPYRIGHT"
+.br

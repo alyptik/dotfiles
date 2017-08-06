@@ -1,0 +1,124 @@
+'\" t
+.\"     Title: struct usb_configuration
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_CONFIGURA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_configuration \- represents one gadget configuration
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_configuration {
+  const char * label;
+  struct usb_gadget_strings ** strings;
+  const struct usb_descriptor_header ** descriptors;
+  void (* unbind) (struct usb_configuration *);
+  int (* setup) (struct usb_configuration *,const struct usb_ctrlrequest *);
+  u8 bConfigurationValue;
+  u8 iConfiguration;
+  u8 bmAttributes;
+  u16 MaxPower;
+  struct usb_composite_dev * cdev;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+label
+.RS 4
+For diagnostics, describes the configuration\&.
+.RE
+.PP
+strings
+.RS 4
+Tables of strings, keyed by identifiers assigned during
+\fIbind\fR() and by language IDs provided in control requests\&.
+.RE
+.PP
+descriptors
+.RS 4
+Table of descriptors preceding all function descriptors\&. Examples include OTG and vendor\-specific descriptors\&.
+.RE
+.PP
+unbind
+.RS 4
+Reverses
+\fIbind\fR; called as a side effect of unregistering the driver which added this configuration\&.
+.RE
+.PP
+setup
+.RS 4
+Used to delegate control requests that aren\*(Aqt handled by standard device infrastructure or directed at a specific interface\&.
+.RE
+.PP
+bConfigurationValue
+.RS 4
+Copied into configuration descriptor\&.
+.RE
+.PP
+iConfiguration
+.RS 4
+Copied into configuration descriptor\&.
+.RE
+.PP
+bmAttributes
+.RS 4
+Copied into configuration descriptor\&.
+.RE
+.PP
+MaxPower
+.RS 4
+Power consumtion in mA\&. Used to compute bMaxPower in the configuration descriptor after considering the bus speed\&.
+.RE
+.PP
+cdev
+.RS 4
+assigned by
+\fIusb_add_config\fR() before calling
+\fIbind\fR(); this is the device associated with this configuration\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Configurations are building blocks for gadget drivers structured around function drivers\&. Simple USB gadgets require only one function and one configuration, and handle dual\-speed hardware by always providing the same functionality\&. Slightly more complex gadgets may have more than one single\-function configuration at a given speed; or have configurations that only work at one speed\&.
+.PP
+Composite devices are, by definition, ones with configurations which include more than one function\&.
+.PP
+The lifecycle of a usb_configuration includes allocation, initialization of the fields described above, and calling
+\fIusb_add_config\fR() to set up internal data and bind it to a specific device\&. The configuration\*(Aqs
+\fIbind\fR() method is then used to initialize all the functions and then call
+\fIusb_add_function\fR() for them\&.
+.PP
+Those functions would normally be independent of each other, but that\*(Aqs not mandatory\&. CDC WMC devices are an example where functions often depend on other functions, with some functions subsidiary to others\&. Such interdependency may be managed in any way, so long as all of the descriptors complete by the time the composite driver returns from its
+\fBbind\fR
+routine\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: ata_scsi_rbuf_fill
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SCSI_RBUF_FILL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_scsi_rbuf_fill \- wrapper for SCSI command simulators
+.SH "SYNOPSIS"
+.HP \w'void\ ata_scsi_rbuf_fill('u
+.BI "void ata_scsi_rbuf_fill(struct\ ata_scsi_args\ *\ " "args" ", unsigned\ int\ (*" "actor" ")\ (struct\ ata_scsi_args\ *args,\ u8\ *rbuf));"
+.SH "ARGUMENTS"
+.PP
+\fIargs\fR
+.RS 4
+device IDENTIFY data / SCSI command of interest\&.
+.RE
+.PP
+\fIactor\fR
+.RS 4
+Callback hook for desired SCSI command simulator
+.RE
+.SH "DESCRIPTION"
+.PP
+Takes care of the hard work of simulating a SCSI command\&.\&.\&. Mapping the response buffer, calling the command\*(Aqs handler, and handling the handler\*(Aqs return value\&. This return value indicates whether the handler wishes the SCSI command to be completed successfully (0), or not (in which case cmd\->result and sense buffer are assumed to be set)\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

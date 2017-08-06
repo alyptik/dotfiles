@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: fc_host_post_event
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FC_HOST_POST_EVENT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fc_host_post_event \- called to post an even on an fc_host\&.
+.SH "SYNOPSIS"
+.HP \w'void\ fc_host_post_event('u
+.BI "void fc_host_post_event(struct\ Scsi_Host\ *\ " "shost" ", u32\ " "event_number" ", enum\ fc_host_event_code\ " "event_code" ", u32\ " "event_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+host the event occurred on
+.RE
+.PP
+\fIevent_number\fR
+.RS 4
+fc event number obtained from
+\fBget_fc_event_number\fR
+.RE
+.PP
+\fIevent_code\fR
+.RS 4
+fc_host event being posted
+.RE
+.PP
+\fIevent_data\fR
+.RS 4
+32bits of data for the event being posted
+.RE
+.SH "NOTES"
+.PP
+This routine assumes no locks are held on entry\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: clk_disable
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Clock Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CLK_DISABLE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Clock Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+clk_disable \- inform the system when the clock source is no longer required\&.
+.SH "SYNOPSIS"
+.HP \w'void\ clk_disable('u
+.BI "void clk_disable(struct\ clk\ *\ " "clk" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclk\fR
+.RS 4
+clock source
+.RE
+.SH "DESCRIPTION"
+.PP
+Inform the system that a clock source is no longer required by a driver and may be shut down\&.
+.PP
+May be called from atomic contexts\&.
+.PP
+Implementation detail: if the clock source is shared between multiple drivers,
+\fBclk_enable\fR
+calls must be balanced by the same number of
+\fBclk_disable\fR
+calls for the clock source to be disabled\&.
+.SH "COPYRIGHT"
+.br

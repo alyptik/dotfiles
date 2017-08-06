@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: unmap_kernel_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "UNMAP_KERNEL_RANGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+unmap_kernel_range \- unmap kernel VM area and flush cache and TLB
+.SH "SYNOPSIS"
+.HP \w'void\ unmap_kernel_range('u
+.BI "void unmap_kernel_range(unsigned\ long\ " "addr" ", unsigned\ long\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIaddr\fR
+.RS 4
+start of the VM area to unmap
+.RE
+.PP
+\fIsize\fR
+.RS 4
+size of the VM area to unmap
+.RE
+.SH "DESCRIPTION"
+.PP
+Similar to
+\fBunmap_kernel_range_noflush\fR
+but flushes vcache before the unmapping and tlb after\&.
+.SH "COPYRIGHT"
+.br

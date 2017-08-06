@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: ata_down_xfermask_limit
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DOWN_XFERMASK_LI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_down_xfermask_limit \- adjust dev xfer masks downward
+.SH "SYNOPSIS"
+.HP \w'int\ ata_down_xfermask_limit('u
+.BI "int ata_down_xfermask_limit(struct\ ata_device\ *\ " "dev" ", unsigned\ int\ " "sel" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device to adjust xfer masks
+.RE
+.PP
+\fIsel\fR
+.RS 4
+ATA_DNXFER_* selector
+.RE
+.SH "DESCRIPTION"
+.PP
+Adjust xfer masks of
+\fIdev\fR
+downward\&. Note that this function does not apply the change\&. Invoking
+\fBata_set_mode\fR
+afterwards will apply the limit\&.
+.PP
+LOCKING: Inherited from caller\&.
+.SH "RETURN"
+.PP
+0 on success, negative errno on failure
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

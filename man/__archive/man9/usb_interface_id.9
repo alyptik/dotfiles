@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: usb_interface_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "USB_INTERFACE_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+usb_interface_id \- allocate an unused interface ID
+.SH "SYNOPSIS"
+.HP \w'int\ usb_interface_id('u
+.BI "int usb_interface_id(struct\ usb_configuration\ *\ " "config" ", struct\ usb_function\ *\ " "function" ");"
+.SH "ARGUMENTS"
+.PP
+\fIconfig\fR
+.RS 4
+configuration associated with the interface
+.RE
+.PP
+\fIfunction\fR
+.RS 4
+function handling the interface
+.RE
+.SH "CONTEXT"
+.PP
+single threaded during gadget setup
+.SH "DESCRIPTION"
+.PP
+\fBusb_interface_id\fR
+is called from usb_function\&.\fBbind\fR
+callbacks to allocate new interface IDs\&. The function driver will then store that ID in interface, association, CDC union, and other descriptors\&. It will also handle any control requests targeted at that interface, particularly changing its altsetting via
+\fBset_alt\fR\&. There may also be class\-specific or vendor\-specific requests to handle\&.
+.PP
+All interface identifier should be allocated using this routine, to ensure that for example different functions don\*(Aqt wrongly assign different meanings to the same identifier\&. Note that since interface identifiers are configuration\-specific, functions used in more than one configuration (or more than once in a given configuration) need multiple versions of the relevant descriptors\&.
+.PP
+Returns the interface ID which was allocated; or \-ENODEV if no more interface IDs can be allocated\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

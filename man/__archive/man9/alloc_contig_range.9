@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: alloc_contig_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ALLOC_CONTIG_RANGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+alloc_contig_range \- \- tries to allocate given range of pages
+.SH "SYNOPSIS"
+.HP \w'int\ alloc_contig_range('u
+.BI "int alloc_contig_range(unsigned\ long\ " "start" ", unsigned\ long\ " "end" ", unsigned\ " "migratetype" ");"
+.SH "ARGUMENTS"
+.PP
+\fIstart\fR
+.RS 4
+start PFN to allocate
+.RE
+.PP
+\fIend\fR
+.RS 4
+one\-past\-the\-last PFN to allocate
+.RE
+.PP
+\fImigratetype\fR
+.RS 4
+migratetype of the underlaying pageblocks (either #MIGRATE_MOVABLE or #MIGRATE_CMA)\&. All pageblocks in range must have the same migratetype and it must be either of the two\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+The PFN range does not have to be pageblock or MAX_ORDER_NR_PAGES aligned, however it\*(Aqs the caller\*(Aqs responsibility to guarantee that we are the only thread that changes migrate type of pageblocks the pages fall in\&.
+.PP
+The PFN range must belong to a single zone\&.
+.PP
+Returns zero on success or negative error code\&. On success all pages which PFN is in [start, end) are allocated for the caller and need to be freed with
+\fBfree_contig_range\fR\&.
+.SH "COPYRIGHT"
+.br

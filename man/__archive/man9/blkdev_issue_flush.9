@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: blkdev_issue_flush
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLKDEV_ISSUE_FLUSH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blkdev_issue_flush \- queue a flush
+.SH "SYNOPSIS"
+.HP \w'int\ blkdev_issue_flush('u
+.BI "int blkdev_issue_flush(struct\ block_device\ *\ " "bdev" ", gfp_t\ " "gfp_mask" ", sector_t\ *\ " "error_sector" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+blockdev to issue flush for
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation flags (for bio_alloc)
+.RE
+.PP
+\fIerror_sector\fR
+.RS 4
+error sector
+.RE
+.SH "DESCRIPTION"
+.PP
+Issue a flush for the block device in question\&. Caller can supply room for storing the error offset in case of a flush error, if they wish to\&. If WAIT flag is not passed then caller may check only what request was pushed in some internal queue for later handling\&.
+.SH "COPYRIGHT"
+.br

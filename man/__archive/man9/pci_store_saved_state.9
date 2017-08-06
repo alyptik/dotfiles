@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: pci_store_saved_state
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_STORE_SAVED_STAT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_store_saved_state \- Allocate and return an opaque struct containing the device saved state\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ pci_saved_state\ *\ pci_store_saved_state('u
+.BI "struct pci_saved_state * pci_store_saved_state(struct\ pci_dev\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device that we\*(Aqre dealing with
+.RE
+.SH "DESCRIPTION"
+.PP
+Return NULL if no state or error\&.
+.SH "COPYRIGHT"
+.br

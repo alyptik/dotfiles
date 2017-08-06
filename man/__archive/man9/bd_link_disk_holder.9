@@ -1,0 +1,84 @@
+'\" t
+.\"     Title: bd_link_disk_holder
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BD_LINK_DISK_HOLDER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bd_link_disk_holder \- create symlinks between holding disk and slave bdev
+.SH "SYNOPSIS"
+.HP \w'int\ bd_link_disk_holder('u
+.BI "int bd_link_disk_holder(struct\ block_device\ *\ " "bdev" ", struct\ gendisk\ *\ " "disk" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+the claimed slave bdev
+.RE
+.PP
+\fIdisk\fR
+.RS 4
+the holding disk
+.RE
+.SH "DESCRIPTION"
+.PP
+DON\*(AqT USE THIS UNLESS YOU\*(AqRE ALREADY USING IT\&.
+.PP
+This functions creates the following sysfs symlinks\&.
+.PP
+\- from
+\(lqslaves\(rq
+directory of the holder
+\fIdisk\fR
+to the claimed
+\fIbdev\fR
+\- from
+\(lqholders\(rq
+directory of the
+\fIbdev\fR
+to the holder
+\fIdisk\fR
+.PP
+For example, if /dev/dm\-0 maps to /dev/sda and disk for dm\-0 is passed to
+\fBbd_link_disk_holder\fR, then:
+.PP
+/sys/block/dm\-0/slaves/sda \-\-> /sys/block/sda /sys/block/sda/holders/dm\-0 \-\-> /sys/block/dm\-0
+.PP
+The caller must have claimed
+\fIbdev\fR
+before calling this function and ensure that both
+\fIbdev\fR
+and
+\fIdisk\fR
+are valid during the creation and lifetime of these symlinks\&.
+.SH "CONTEXT"
+.PP
+Might sleep\&.
+.SH "RETURN"
+.PP
+0 on success, \-errno on failure\&.
+.SH "COPYRIGHT"
+.br

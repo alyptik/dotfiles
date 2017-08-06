@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: sata_link_scr_lpm
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SATA_LINK_SCR_LPM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sata_link_scr_lpm \- manipulate SControl IPM and SPM fields
+.SH "SYNOPSIS"
+.HP \w'int\ sata_link_scr_lpm('u
+.BI "int sata_link_scr_lpm(struct\ ata_link\ *\ " "link" ", enum\ ata_lpm_policy\ " "policy" ", bool\ " "spm_wakeup" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+ATA link to manipulate SControl for
+.RE
+.PP
+\fIpolicy\fR
+.RS 4
+LPM policy to configure
+.RE
+.PP
+\fIspm_wakeup\fR
+.RS 4
+initiate LPM transition to active state
+.RE
+.SH "DESCRIPTION"
+.PP
+Manipulate the IPM field of the SControl register of
+\fIlink\fR
+according to
+\fIpolicy\fR\&. If
+\fIpolicy\fR
+is ATA_LPM_MAX_POWER and
+\fIspm_wakeup\fR
+is
+\fBtrue\fR, the SPM field is manipulated to wake up the link\&. This function also clears PHYRDY_CHG before returning\&.
+.PP
+LOCKING: EH context\&.
+.SH "RETURN"
+.PP
+0 on success, \-errno otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

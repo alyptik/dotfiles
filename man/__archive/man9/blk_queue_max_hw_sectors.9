@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: blk_queue_max_hw_sectors
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_QUEUE_MAX_HW_SEC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_queue_max_hw_sectors \- set max sectors for a request for this queue
+.SH "SYNOPSIS"
+.HP \w'void\ blk_queue_max_hw_sectors('u
+.BI "void blk_queue_max_hw_sectors(struct\ request_queue\ *\ " "q" ", unsigned\ int\ " "max_hw_sectors" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the request queue for the device
+.RE
+.PP
+\fImax_hw_sectors\fR
+.RS 4
+max hardware sectors in the usual 512b unit
+.RE
+.SH "DESCRIPTION"
+.PP
+Enables a low level driver to set a hard upper limit, max_hw_sectors, on the size of requests\&. max_hw_sectors is set by the device driver based upon the capabilities of the I/O controller\&.
+.PP
+max_dev_sectors is a hard limit imposed by the storage device for READ/WRITE requests\&. It is set by the disk driver\&.
+.PP
+max_sectors is a soft limit imposed by the block layer for filesystem type requests\&. This value can be overridden on a per\-device basis in /sys/block/<device>/queue/max_sectors_kb\&. The soft limit can not exceed max_hw_sectors\&.
+.SH "COPYRIGHT"
+.br

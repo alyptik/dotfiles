@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: clk_notifier_register
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Clock Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CLK_NOTIFIER_REGISTE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Clock Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+clk_notifier_register \- change notifier callback
+.SH "SYNOPSIS"
+.HP \w'int\ clk_notifier_register('u
+.BI "int clk_notifier_register(struct\ clk\ *\ " "clk" ", struct\ notifier_block\ *\ " "nb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclk\fR
+.RS 4
+clock whose rate we are interested in
+.RE
+.PP
+\fInb\fR
+.RS 4
+notifier block with callback function pointer
+.RE
+.SH "DESCRIPTION"
+.PP
+ProTip: debugging across notifier chains can be frustrating\&. Make sure that your notifier callback function prints a nice big warning in case of failure\&.
+.SH "COPYRIGHT"
+.br

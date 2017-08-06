@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: write_bbt
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WRITE_BBT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+write_bbt \- [GENERIC] (Re)write the bad block table
+.SH "SYNOPSIS"
+.HP \w'int\ write_bbt('u
+.BI "int write_bbt(struct\ mtd_info\ *\ " "mtd" ", uint8_t\ *\ " "buf" ", struct\ nand_bbt_descr\ *\ " "td" ", struct\ nand_bbt_descr\ *\ " "md" ", int\ " "chipsel" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+temporary buffer
+.RE
+.PP
+\fItd\fR
+.RS 4
+descriptor for the bad block table
+.RE
+.PP
+\fImd\fR
+.RS 4
+descriptor for the bad block table mirror
+.RE
+.PP
+\fIchipsel\fR
+.RS 4
+selector for a specific chip, \-1 for all
+.RE
+.SH "DESCRIPTION"
+.PP
+(Re)write the bad block table\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

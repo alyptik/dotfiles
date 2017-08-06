@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: ata_cmd_ioctl
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_CMD_IOCTL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_cmd_ioctl \- Handler for HDIO_DRIVE_CMD ioctl
+.SH "SYNOPSIS"
+.HP \w'int\ ata_cmd_ioctl('u
+.BI "int ata_cmd_ioctl(struct\ scsi_device\ *\ " "scsidev" ", void\ __user\ *\ " "arg" ");"
+.SH "ARGUMENTS"
+.PP
+\fIscsidev\fR
+.RS 4
+Device to which we are issuing command
+.RE
+.PP
+\fIarg\fR
+.RS 4
+User provided data for issuing command
+.RE
+.SH "DESCRIPTION"
+.PP
+LOCKING: Defined by the SCSI layer\&. We don\*(Aqt really care\&.
+.SH "RETURN"
+.PP
+Zero on success, negative errno on error\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

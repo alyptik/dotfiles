@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: ata_scsi_rw_xlat
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SCSI_RW_XLAT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_scsi_rw_xlat \- Translate SCSI r/w command into an ATA one
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ ata_scsi_rw_xlat('u
+.BI "unsigned int ata_scsi_rw_xlat(struct\ ata_queued_cmd\ *\ " "qc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIqc\fR
+.RS 4
+Storage for translated ATA taskfile
+.RE
+.SH "DESCRIPTION"
+.PP
+Converts any of six SCSI read/write commands into the ATA counterpart, including starting sector (LBA), sector count, and taking into account the device\*(Aqs LBA48 support\&.
+.PP
+Commands
+\fBREAD_6\fR,
+\fBREAD_10\fR,
+\fBREAD_16\fR,
+\fBWRITE_6\fR,
+\fBWRITE_10\fR, and
+\fBWRITE_16\fR
+are currently supported\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "RETURN"
+.PP
+Zero on success, non\-zero on error\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

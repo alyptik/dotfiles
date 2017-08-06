@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: request_resource_conflict
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REQUEST_RESOURCE_CON" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+request_resource_conflict \- request and reserve an I/O or memory resource
+.SH "SYNOPSIS"
+.HP \w'struct\ resource\ *\ request_resource_conflict('u
+.BI "struct resource * request_resource_conflict(struct\ resource\ *\ " "root" ", struct\ resource\ *\ " "new" ");"
+.SH "ARGUMENTS"
+.PP
+\fIroot\fR
+.RS 4
+root resource descriptor
+.RE
+.PP
+\fInew\fR
+.RS 4
+resource descriptor desired by caller
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 for success, conflict resource on error\&.
+.SH "COPYRIGHT"
+.br

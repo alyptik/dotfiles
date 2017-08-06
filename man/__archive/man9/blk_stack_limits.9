@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: blk_stack_limits
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_STACK_LIMITS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_stack_limits \- adjust queue_limits for stacked devices
+.SH "SYNOPSIS"
+.HP \w'int\ blk_stack_limits('u
+.BI "int blk_stack_limits(struct\ queue_limits\ *\ " "t" ", struct\ queue_limits\ *\ " "b" ", sector_t\ " "start" ");"
+.SH "ARGUMENTS"
+.PP
+\fIt\fR
+.RS 4
+the stacking driver limits (top device)
+.RE
+.PP
+\fIb\fR
+.RS 4
+the underlying queue limits (bottom, component device)
+.RE
+.PP
+\fIstart\fR
+.RS 4
+first data sector within component device
+.RE
+.SH "DESCRIPTION"
+.PP
+This function is used by stacking drivers like MD and DM to ensure that all component devices have compatible block sizes and alignments\&. The stacking driver must provide a queue_limits struct (top) and then iteratively call the stacking function for all component (bottom) devices\&. The stacking function will attempt to combine the values and ensure proper alignment\&.
+.PP
+Returns 0 if the top and bottom queue_limits are compatible\&. The top device\*(Aqs block sizes and alignment offsets may be adjusted to ensure alignment with the bottom device\&. If no compatible sizes and alignments exist, \-1 is returned and the resulting top queue_limits will have the misaligned flag set to indicate that the alignment_offset is undefined\&.
+.SH "COPYRIGHT"
+.br

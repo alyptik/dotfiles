@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: dmi_match
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Firmware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMI_MATCH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Firmware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dmi_match \- compare a string to the dmi field (if exists)
+.SH "SYNOPSIS"
+.HP \w'bool\ dmi_match('u
+.BI "bool dmi_match(enum\ dmi_field\ " "f" ", const\ char\ *\ " "str" ");"
+.SH "ARGUMENTS"
+.PP
+\fIf\fR
+.RS 4
+DMI field identifier
+.RE
+.PP
+\fIstr\fR
+.RS 4
+string to compare the DMI field to
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns true if the requested field equals to the str (including NULL)\&.
+.SH "COPYRIGHT"
+.br

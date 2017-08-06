@@ -1,0 +1,89 @@
+'\" t
+.\"     Title: jbd2__journal_start
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2__JOURNAL_START" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2__journal_start \- Obtain a new handle\&.
+.SH "SYNOPSIS"
+.HP \w'handle_t\ *\ jbd2__journal_start('u
+.BI "handle_t * jbd2__journal_start(journal_t\ *\ " "journal" ", int\ " "nblocks" ", int\ " "rsv_blocks" ", gfp_t\ " "gfp_mask" ", unsigned\ int\ " "type" ", unsigned\ int\ " "line_no" ");"
+.SH "ARGUMENTS"
+.PP
+\fIjournal\fR
+.RS 4
+Journal to start transaction on\&.
+.RE
+.PP
+\fInblocks\fR
+.RS 4
+number of block buffer we might modify
+.RE
+.PP
+\fIrsv_blocks\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.PP
+\fItype\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.PP
+\fIline_no\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.SH "DESCRIPTION"
+.PP
+We make sure that the transaction can guarantee at least nblocks of modified buffers in the log\&. We block until the log can guarantee that much space\&. Additionally, if rsv_blocks > 0, we also create another handle with rsv_blocks reserved blocks in the journal\&. This handle is is stored in h_rsv_handle\&. It is not attached to any particular transaction and thus doesn\*(Aqt block transaction commit\&. If the caller uses this reserved handle, it has to set h_rsv_handle to NULL as otherwise
+\fBjbd2_journal_stop\fR
+on the parent handle will dispose the reserved one\&. Reserved handle has to be converted to a normal handle using
+\fBjbd2_journal_start_reserved\fR
+before it can be used\&.
+.PP
+Return a pointer to a newly allocated handle, or an
+\fBERR_PTR\fR
+value on failure\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

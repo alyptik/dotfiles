@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: __pci_register_driver
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__PCI_REGISTER_DRIVE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__pci_register_driver \- register a new pci driver
+.SH "SYNOPSIS"
+.HP \w'int\ __pci_register_driver('u
+.BI "int __pci_register_driver(struct\ pci_driver\ *\ " "drv" ", struct\ module\ *\ " "owner" ", const\ char\ *\ " "mod_name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdrv\fR
+.RS 4
+the driver structure to register
+.RE
+.PP
+\fIowner\fR
+.RS 4
+owner module of drv
+.RE
+.PP
+\fImod_name\fR
+.RS 4
+module name string
+.RE
+.SH "DESCRIPTION"
+.PP
+Adds the driver structure to the list of registered drivers\&. Returns a negative value on error, otherwise 0\&. If no error occurred, the driver remains registered even if no device was claimed during registration\&.
+.SH "COPYRIGHT"
+.br

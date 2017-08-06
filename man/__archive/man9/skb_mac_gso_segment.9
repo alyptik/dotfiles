@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: skb_mac_gso_segment
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_MAC_GSO_SEGMENT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_mac_gso_segment \- mac layer segmentation handler\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_mac_gso_segment('u
+.BI "struct sk_buff * skb_mac_gso_segment(struct\ sk_buff\ *\ " "skb" ", netdev_features_t\ " "features" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to segment
+.RE
+.PP
+\fIfeatures\fR
+.RS 4
+features for the output path (see dev\->features)
+.RE
+.SH "COPYRIGHT"
+.br

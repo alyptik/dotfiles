@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: ata_do_set_mode
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DO_SET_MODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_do_set_mode \- Program timings and issue SET FEATURES \- XFER
+.SH "SYNOPSIS"
+.HP \w'int\ ata_do_set_mode('u
+.BI "int ata_do_set_mode(struct\ ata_link\ *\ " "link" ", struct\ ata_device\ **\ " "r_failed_dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+link on which timings will be programmed
+.RE
+.PP
+\fIr_failed_dev\fR
+.RS 4
+out parameter for failed device
+.RE
+.SH "DESCRIPTION"
+.PP
+Standard implementation of the function used to tune and set ATA device disk transfer mode (PIO3, UDMA6, etc\&.)\&. If
+\fBata_dev_set_mode\fR
+fails, pointer to the failing device is returned in
+\fIr_failed_dev\fR\&.
+.PP
+LOCKING: PCI/etc\&. bus probe sem\&.
+.SH "RETURN"
+.PP
+0 on success, negative errno otherwise
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

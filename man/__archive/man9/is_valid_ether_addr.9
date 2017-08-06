@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: is_valid_ether_addr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IS_VALID_ETHER_ADDR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+is_valid_ether_addr \- Determine if the given Ethernet address is valid
+.SH "SYNOPSIS"
+.HP \w'bool\ is_valid_ether_addr('u
+.BI "bool is_valid_ether_addr(const\ u8\ *\ " "addr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIaddr\fR
+.RS 4
+Pointer to a six\-byte array containing the Ethernet address
+.RE
+.SH "DESCRIPTION"
+.PP
+Check that the Ethernet address (MAC) is not 00:00:00:00:00:00, is not a multicast address, and is not FF:FF:FF:FF:FF:FF\&.
+.PP
+Return true if the address is valid\&.
+.PP
+Please note: addr must be aligned to u16\&.
+.SH "COPYRIGHT"
+.br

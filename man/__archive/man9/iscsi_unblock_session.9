@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: iscsi_unblock_session
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ISCSI_UNBLOCK_SESSIO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+iscsi_unblock_session \- set a session as logged in and start IO\&.
+.SH "SYNOPSIS"
+.HP \w'void\ iscsi_unblock_session('u
+.BI "void iscsi_unblock_session(struct\ iscsi_cls_session\ *\ " "session" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsession\fR
+.RS 4
+iscsi session
+.RE
+.SH "DESCRIPTION"
+.PP
+Mark a session as ready to accept IO\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

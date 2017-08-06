@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: blk_rq_prep_clone
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_RQ_PREP_CLONE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_rq_prep_clone \- Helper function to setup clone request
+.SH "SYNOPSIS"
+.HP \w'int\ blk_rq_prep_clone('u
+.BI "int blk_rq_prep_clone(struct\ request\ *\ " "rq" ", struct\ request\ *\ " "rq_src" ", struct\ bio_set\ *\ " "bs" ", gfp_t\ " "gfp_mask" ", int\ (*" "bio_ctr" ")\ (struct\ bio\ *,\ struct\ bio\ *,\ void\ *), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrq\fR
+.RS 4
+the request to be setup
+.RE
+.PP
+\fIrq_src\fR
+.RS 4
+original request to be cloned
+.RE
+.PP
+\fIbs\fR
+.RS 4
+bio_set that bios for clone are allocated from
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation mask for bio
+.RE
+.PP
+\fIbio_ctr\fR
+.RS 4
+setup function to be called for each clone bio\&. Returns
+\fB0\fR
+for success, non
+\fB0\fR
+for failure\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+private data to be passed to
+\fIbio_ctr\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Clones bios in
+\fIrq_src\fR
+to
+\fIrq\fR, and copies attributes of
+\fIrq_src\fR
+to
+\fIrq\fR\&. The actual data parts of
+\fIrq_src\fR
+(e\&.g\&. \->cmd, \->sense) are not copied, and copying such parts is the caller\*(Aqs responsibility\&. Also, pages which the original bios are pointing to are not copied and the cloned bios just point same pages\&. So cloned bios must be completed before original bios, which means the caller must complete
+\fIrq\fR
+before
+\fIrq_src\fR\&.
+.SH "COPYRIGHT"
+.br

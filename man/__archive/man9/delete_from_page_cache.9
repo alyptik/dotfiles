@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: delete_from_page_cache
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DELETE_FROM_PAGE_CAC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+delete_from_page_cache \- delete page from page cache
+.SH "SYNOPSIS"
+.HP \w'void\ delete_from_page_cache('u
+.BI "void delete_from_page_cache(struct\ page\ *\ " "page" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpage\fR
+.RS 4
+the page which the kernel is trying to remove from page cache
+.RE
+.SH "DESCRIPTION"
+.PP
+This must be called only on pages that have been verified to be in the page cache and locked\&. It will never put the page into the free list, the caller has a reference on the page\&.
+.SH "COPYRIGHT"
+.br

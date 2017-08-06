@@ -1,0 +1,88 @@
+'\" t
+.\"     Title: pci_add_dynid
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_ADD_DYNID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_add_dynid \- add a new PCI device ID to this driver and re\-probe devices
+.SH "SYNOPSIS"
+.HP \w'int\ pci_add_dynid('u
+.BI "int pci_add_dynid(struct\ pci_driver\ *\ " "drv" ", unsigned\ int\ " "vendor" ", unsigned\ int\ " "device" ", unsigned\ int\ " "subvendor" ", unsigned\ int\ " "subdevice" ", unsigned\ int\ " "class" ", unsigned\ int\ " "class_mask" ", unsigned\ long\ " "driver_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdrv\fR
+.RS 4
+target pci driver
+.RE
+.PP
+\fIvendor\fR
+.RS 4
+PCI vendor ID
+.RE
+.PP
+\fIdevice\fR
+.RS 4
+PCI device ID
+.RE
+.PP
+\fIsubvendor\fR
+.RS 4
+PCI subvendor ID
+.RE
+.PP
+\fIsubdevice\fR
+.RS 4
+PCI subdevice ID
+.RE
+.PP
+\fIclass\fR
+.RS 4
+PCI class
+.RE
+.PP
+\fIclass_mask\fR
+.RS 4
+PCI class mask
+.RE
+.PP
+\fIdriver_data\fR
+.RS 4
+private driver data
+.RE
+.SH "DESCRIPTION"
+.PP
+Adds a new dynamic pci device ID to this driver and causes the driver to probe for all devices again\&.
+\fIdrv\fR
+must have been registered prior to calling this function\&.
+.SH "CONTEXT"
+.PP
+Does GFP_KERNEL allocation\&.
+.SH "RETURN"
+.PP
+0 on success, \-errno on failure\&.
+.SH "COPYRIGHT"
+.br

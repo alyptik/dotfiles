@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: phys_to_virt
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHYS_TO_VIRT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phys_to_virt \- map physical address to virtual
+.SH "SYNOPSIS"
+.HP \w'void\ *\ phys_to_virt('u
+.BI "void * phys_to_virt(phys_addr_t\ " "address" ");"
+.SH "ARGUMENTS"
+.PP
+\fIaddress\fR
+.RS 4
+address to remap
+.RE
+.SH "DESCRIPTION"
+.PP
+The returned virtual address is a current CPU mapping for the memory address given\&. It is only valid to use this function on addresses that have a kernel mapping
+.PP
+This function does not handle bus mappings for DMA transfers\&. In almost all conceivable cases a device driver should not be using this function
+.SH "AUTHORS"
+.PP
+\fBMatthew Wilcox\fR <\&matthew@wil.cx\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

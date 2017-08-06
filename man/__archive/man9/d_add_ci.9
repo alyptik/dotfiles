@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: d_add_ci
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "D_ADD_CI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+d_add_ci \- lookup or allocate new dentry with case\-exact name
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ d_add_ci('u
+.BI "struct dentry * d_add_ci(struct\ dentry\ *\ " "dentry" ", struct\ inode\ *\ " "inode" ", struct\ qstr\ *\ " "name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdentry\fR
+.RS 4
+the negative dentry that was passed to the parent\*(Aqs lookup func
+.RE
+.PP
+\fIinode\fR
+.RS 4
+the inode case\-insensitive lookup has found
+.RE
+.PP
+\fIname\fR
+.RS 4
+the case\-exact name to be associated with the returned dentry
+.RE
+.SH "DESCRIPTION"
+.PP
+This is to avoid filling the dcache with case\-insensitive names to the same inode, only the actual correct case is stored in the dcache for case\-insensitive filesystems\&.
+.PP
+For a case\-insensitive lookup match and if the the case\-exact dentry already exists in in the dcache, use it and return it\&.
+.PP
+If no entry exists with the exact case name, allocate new dentry with the exact case, and return the spliced entry\&.
+.SH "COPYRIGHT"
+.br

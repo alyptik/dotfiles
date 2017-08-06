@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: nand_write_byte16
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_WRITE_BYTE16" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_write_byte16 \- [DEFAULT] write single byte to a chip with width 16
+.SH "SYNOPSIS"
+.HP \w'void\ nand_write_byte16('u
+.BI "void nand_write_byte16(struct\ mtd_info\ *\ " "mtd" ", uint8_t\ " "byte" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIbyte\fR
+.RS 4
+value to write
+.RE
+.SH "DESCRIPTION"
+.PP
+Default function to write a byte to I/O[7:0] on a 16\-bit wide chip\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

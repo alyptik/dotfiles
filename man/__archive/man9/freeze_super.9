@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: freeze_super
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FREEZE_SUPER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+freeze_super \- lock the filesystem and force it into a consistent state
+.SH "SYNOPSIS"
+.HP \w'int\ freeze_super('u
+.BI "int freeze_super(struct\ super_block\ *\ " "sb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+the super to lock
+.RE
+.SH "DESCRIPTION"
+.PP
+Syncs the super to make sure the filesystem is consistent and calls the fs\*(Aqs freeze_fs\&. Subsequent calls to this without first thawing the fs will return \-EBUSY\&.
+.PP
+During this function, sb\->s_writers\&.frozen goes through these values:
+.PP
+SB_UNFROZEN: File system is normal, all writes progress as usual\&.
+.PP
+SB_FREEZE_WRITE: The file system is in the process of being frozen\&. New writes should be blocked, though page faults are still allowed\&. We wait for all writes to complete and then proceed to the next stage\&.
+.PP
+SB_FREEZE_PAGEFAULT: Freezing continues\&. Now also page faults are blocked but internal fs threads can still modify the filesystem (although they should not dirty new pages or inodes), writeback can run etc\&. After waiting for all running page faults we sync the filesystem which will clean all dirty pages and inodes (no new dirty pages or inodes can be created when sync is running)\&.
+.PP
+SB_FREEZE_FS: The file system is frozen\&. Now all internal sources of fs modification are blocked (e\&.g\&. XFS preallocation truncation on inode reclaim)\&. This is usually implemented by blocking new transactions for filesystems that have them and need this additional guard\&. After all internal writers are finished we call \->\fBfreeze_fs\fR
+to finish filesystem freezing\&. Then we transition to SB_FREEZE_COMPLETE state\&. This state is mostly auxiliary for filesystems to verify they do not modify frozen fs\&.
+.PP
+sb\->s_writers\&.frozen is protected by sb\->s_umount\&.
+.SH "COPYRIGHT"
+.br

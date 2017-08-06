@@ -57,6 +57,7 @@
 	reb = rebase -S --autostash
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = diff --patience --cached
+	dc = diff --cached --patience
 [web]
 	browser = w3m
 [instaweb]

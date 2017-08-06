@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: scsi_eh_ready_devs
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_EH_READY_DEVS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_eh_ready_devs \- check device ready state and recover if not\&.
+.SH "SYNOPSIS"
+.HP \w'void\ scsi_eh_ready_devs('u
+.BI "void scsi_eh_ready_devs(struct\ Scsi_Host\ *\ " "shost" ", struct\ list_head\ *\ " "work_q" ", struct\ list_head\ *\ " "done_q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+host to be recovered\&.
+.RE
+.PP
+\fIwork_q\fR
+.RS 4
+list_head
+for pending commands\&.
+.RE
+.PP
+\fIdone_q\fR
+.RS 4
+list_head
+for processed commands\&.
+.RE
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

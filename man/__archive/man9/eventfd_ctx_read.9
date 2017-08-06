@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: eventfd_ctx_read
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Events based on file descriptors
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "EVENTFD_CTX_READ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Events based on file descripto"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eventfd_ctx_read \- Reads the eventfd counter or wait if it is zero\&.
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ eventfd_ctx_read('u
+.BI "ssize_t eventfd_ctx_read(struct\ eventfd_ctx\ *\ " "ctx" ", int\ " "no_wait" ", __u64\ *\ " "cnt" ");"
+.SH "ARGUMENTS"
+.PP
+\fIctx\fR
+.RS 4
+[in] Pointer to eventfd context\&.
+.RE
+.PP
+\fIno_wait\fR
+.RS 4
+[in] Different from zero if the operation should not block\&.
+.RE
+.PP
+\fIcnt\fR
+.RS 4
+[out] Pointer to the 64\-bit counter value\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns
+\fB0\fR
+if successful, or the following error codes:
+.PP
+\-EAGAIN : The operation would have blocked but
+\fIno_wait\fR
+was non\-zero\&. \-ERESTARTSYS : A signal interrupted the wait operation\&.
+.PP
+If
+\fIno_wait\fR
+is zero, the function might sleep until the eventfd internal counter becomes greater than zero\&.
+.SH "COPYRIGHT"
+.br

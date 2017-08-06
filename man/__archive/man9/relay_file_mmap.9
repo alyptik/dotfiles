@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: relay_file_mmap
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: relay interface support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RELAY_FILE_MMAP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "relay interface support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+relay_file_mmap \- mmap file op for relay files
+.SH "SYNOPSIS"
+.HP \w'int\ relay_file_mmap('u
+.BI "int relay_file_mmap(struct\ file\ *\ " "filp" ", struct\ vm_area_struct\ *\ " "vma" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfilp\fR
+.RS 4
+the file
+.RE
+.PP
+\fIvma\fR
+.RS 4
+the vma describing what to map
+.RE
+.SH "DESCRIPTION"
+.PP
+Calls upon
+\fBrelay_mmap_buf\fR
+to map the file into user space\&.
+.SH "COPYRIGHT"
+.br

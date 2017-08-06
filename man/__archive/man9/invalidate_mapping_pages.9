@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: invalidate_mapping_pages
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "INVALIDATE_MAPPING_P" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+invalidate_mapping_pages \- Invalidate all the unlocked pages of one inode
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ invalidate_mapping_pages('u
+.BI "unsigned long invalidate_mapping_pages(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "start" ", pgoff_t\ " "end" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the address_space which holds the pages to invalidate
+.RE
+.PP
+\fIstart\fR
+.RS 4
+the offset \*(Aqfrom\*(Aq which to invalidate
+.RE
+.PP
+\fIend\fR
+.RS 4
+the offset \*(Aqto\*(Aq which to invalidate (inclusive)
+.RE
+.SH "DESCRIPTION"
+.PP
+This function only removes the unlocked pages, if you want to remove all the pages of one inode, you must call truncate_inode_pages\&.
+.PP
+\fBinvalidate_mapping_pages\fR
+will not block on IO activity\&. It will not invalidate pages which are dirty, locked, under writeback or mapped into pagetables\&.
+.SH "COPYRIGHT"
+.br

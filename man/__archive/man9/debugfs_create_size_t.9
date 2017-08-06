@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: debugfs_create_size_t
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_CREATE_SIZE_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_create_size_t \- create a debugfs file that is used to read and write an size_t value
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ debugfs_create_size_t('u
+.BI "struct dentry * debugfs_create_size_t(const\ char\ *\ " "name" ", umode_t\ " "mode" ", struct\ dentry\ *\ " "parent" ", size_t\ *\ " "value" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+a pointer to a string containing the name of the file to create\&.
+.RE
+.PP
+\fImode\fR
+.RS 4
+the permission that the file should have
+.RE
+.PP
+\fIparent\fR
+.RS 4
+a pointer to the parent dentry for this file\&. This should be a directory dentry if set\&. If this parameter is
+\fBNULL\fR, then the file will be created in the root of the debugfs filesystem\&.
+.RE
+.PP
+\fIvalue\fR
+.RS 4
+a pointer to the variable that the file should read to and write from\&.
+.RE
+.SH "COPYRIGHT"
+.br

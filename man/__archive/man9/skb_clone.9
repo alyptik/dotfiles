@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: skb_clone
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_CLONE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_clone \- duplicate an sk_buff
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_clone('u
+.BI "struct sk_buff * skb_clone(struct\ sk_buff\ *\ " "skb" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to clone
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation priority
+.RE
+.SH "DESCRIPTION"
+.PP
+Duplicate an
+sk_buff\&. The new one is not owned by a socket\&. Both copies share the same packet data but not structure\&. The new buffer has a reference count of 1\&. If the allocation fails the function returns
+\fBNULL\fR
+otherwise the new buffer is returned\&.
+.PP
+If this function is called from an interrupt
+\fBgfp_mask\fR
+must be
+\fBGFP_ATOMIC\fR\&.
+.SH "COPYRIGHT"
+.br

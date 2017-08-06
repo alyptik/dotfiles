@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: ata_host_init
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_HOST_INIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_host_init \- Initialize a host struct for sas (ipr, libsas)
+.SH "SYNOPSIS"
+.HP \w'void\ ata_host_init('u
+.BI "void ata_host_init(struct\ ata_host\ *\ " "host" ", struct\ device\ *\ " "dev" ", struct\ ata_port_operations\ *\ " "ops" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhost\fR
+.RS 4
+host to initialize
+.RE
+.PP
+\fIdev\fR
+.RS 4
+device host is attached to
+.RE
+.PP
+\fIops\fR
+.RS 4
+port_ops
+.RE
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: eth_header_cache
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ETH_HEADER_CACHE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eth_header_cache \- fill cache entry from neighbour
+.SH "SYNOPSIS"
+.HP \w'int\ eth_header_cache('u
+.BI "int eth_header_cache(const\ struct\ neighbour\ *\ " "neigh" ", struct\ hh_cache\ *\ " "hh" ", __be16\ " "type" ");"
+.SH "ARGUMENTS"
+.PP
+\fIneigh\fR
+.RS 4
+source neighbour
+.RE
+.PP
+\fIhh\fR
+.RS 4
+destination cache entry
+.RE
+.PP
+\fItype\fR
+.RS 4
+Ethernet type field
+.RE
+.SH "DESCRIPTION"
+.PP
+Create an Ethernet header template from the neighbour\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: phy_mii_ioctl
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_MII_IOCTL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_mii_ioctl \- generic PHY MII ioctl interface
+.SH "SYNOPSIS"
+.HP \w'int\ phy_mii_ioctl('u
+.BI "int phy_mii_ioctl(struct\ phy_device\ *\ " "phydev" ", struct\ ifreq\ *\ " "ifr" ", int\ " "cmd" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+the phy_device struct
+.RE
+.PP
+\fIifr\fR
+.RS 4
+struct ifreq
+for socket ioctl\*(Aqs
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+ioctl cmd to execute
+.RE
+.SH "DESCRIPTION"
+.PP
+Note that this function is currently incompatible with the PHYCONTROL layer\&. It changes registers without regard to current state\&. Use at own risk\&.
+.SH "COPYRIGHT"
+.br

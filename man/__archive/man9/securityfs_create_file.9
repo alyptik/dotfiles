@@ -1,0 +1,80 @@
+'\" t
+.\"     Title: securityfs_create_file
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Security Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SECURITYFS_CREATE_FI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Security Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+securityfs_create_file \- create a file in the securityfs filesystem
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ securityfs_create_file('u
+.BI "struct dentry * securityfs_create_file(const\ char\ *\ " "name" ", umode_t\ " "mode" ", struct\ dentry\ *\ " "parent" ", void\ *\ " "data" ", const\ struct\ file_operations\ *\ " "fops" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+a pointer to a string containing the name of the file to create\&.
+.RE
+.PP
+\fImode\fR
+.RS 4
+the permission that the file should have
+.RE
+.PP
+\fIparent\fR
+.RS 4
+a pointer to the parent dentry for this file\&. This should be a directory dentry if set\&. If this parameter is
+\fBNULL\fR, then the file will be created in the root of the securityfs filesystem\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+a pointer to something that the caller will want to get to later on\&. The inode\&.i_private pointer will point to this value on the
+\fBopen\fR
+call\&.
+.RE
+.PP
+\fIfops\fR
+.RS 4
+a pointer to a struct file_operations that should be used for this file\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This is the basic
+\(lqcreate a file\(rq
+function for securityfs\&. It allows for a wide range of flexibility in creating a file, or a directory (if you want to create a directory, the
+\fBsecurityfs_create_dir\fR
+function is recommended to be used instead)\&.
+.PP
+This function returns a pointer to a dentry if it succeeds\&. This pointer must be passed to the
+\fBsecurityfs_remove\fR
+function when the file is to be removed (no automatic cleanup happens if your module is unloaded, you are responsible here)\&. If an error occurs, the function will return the error value (via ERR_PTR)\&.
+.PP
+If securityfs is not enabled in the kernel, the value
+\fB\-ENODEV\fR
+is returned\&.
+.SH "COPYRIGHT"
+.br

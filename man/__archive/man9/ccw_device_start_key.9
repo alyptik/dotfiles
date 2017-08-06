@@ -1,0 +1,85 @@
+'\" t
+.\"     Title: ccw_device_start_key
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CCW_DEVICE_START_KEY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ccw_device_start_key \- start a s390 channel program with key
+.SH "SYNOPSIS"
+.HP \w'int\ ccw_device_start_key('u
+.BI "int ccw_device_start_key(struct\ ccw_device\ *\ " "cdev" ", struct\ ccw1\ *\ " "cpa" ", unsigned\ long\ " "intparm" ", __u8\ " "lpm" ", __u8\ " "key" ", unsigned\ long\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcdev\fR
+.RS 4
+target ccw device
+.RE
+.PP
+\fIcpa\fR
+.RS 4
+logical start address of channel program
+.RE
+.PP
+\fIintparm\fR
+.RS 4
+user specific interruption parameter; will be presented back to
+\fIcdev\fR\*(Aqs interrupt handler\&. Allows a device driver to associate the interrupt with a particular I/O request\&.
+.RE
+.PP
+\fIlpm\fR
+.RS 4
+defines the channel path to be used for a specific I/O request\&. A value of 0 will make cio use the opm\&.
+.RE
+.PP
+\fIkey\fR
+.RS 4
+storage key to be used for the I/O
+.RE
+.PP
+\fIflags\fR
+.RS 4
+additional flags; defines the action to be performed for I/O processing\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Start a S/390 channel program\&. When the interrupt arrives, the IRQ handler is called, either immediately, delayed (dev\-end missing, or sense required) or never (no IRQ handler registered)\&.
+.SH "RETURN"
+.PP
+\fB0\fR, if the operation was successful; \-\fBEBUSY\fR, if the device is busy, or status pending; \-\fBEACCES\fR, if no path specified in
+\fIlpm\fR
+is operational; \-\fBENODEV\fR, if the device is not operational\&.
+.SH "CONTEXT"
+.PP
+Interrupts disabled, ccw device lock held
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

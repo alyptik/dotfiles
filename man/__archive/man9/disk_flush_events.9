@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: disk_flush_events
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DISK_FLUSH_EVENTS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+disk_flush_events \- schedule immediate event checking and flushing
+.SH "SYNOPSIS"
+.HP \w'void\ disk_flush_events('u
+.BI "void disk_flush_events(struct\ gendisk\ *\ " "disk" ", unsigned\ int\ " "mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdisk\fR
+.RS 4
+disk to check and flush events for
+.RE
+.PP
+\fImask\fR
+.RS 4
+events to flush
+.RE
+.SH "DESCRIPTION"
+.PP
+Schedule immediate event checking on
+\fIdisk\fR
+if not blocked\&. Events in
+\fImask\fR
+are scheduled to be cleared from the driver\&. Note that this doesn\*(Aqt clear the events from
+\fIdisk\fR\->ev\&.
+.SH "CONTEXT"
+.PP
+If
+\fImask\fR
+is non\-zero must be called with bdev\->bd_mutex held\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: unqueue_me
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "UNQUEUE_ME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+unqueue_me \- Remove the futex_q from its futex_hash_bucket
+.SH "SYNOPSIS"
+.HP \w'int\ unqueue_me('u
+.BI "int unqueue_me(struct\ futex_q\ *\ " "q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+The futex_q to unqueue
+.RE
+.SH "DESCRIPTION"
+.PP
+The q\->lock_ptr must not be held by the caller\&. A call to
+\fBunqueue_me\fR
+must be paired with exactly one earlier call to
+\fBqueue_me\fR\&.
+.SH "RETURN"
+.PP
+1 \- if the futex_q was still queued (and we removed unqueued it); 0 \- if the futex_q was already removed by the waking thread
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

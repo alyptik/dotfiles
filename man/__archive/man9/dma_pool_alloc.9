@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: dma_pool_alloc
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMA_POOL_ALLOC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dma_pool_alloc \- get a block of consistent memory
+.SH "SYNOPSIS"
+.HP \w'void\ *\ dma_pool_alloc('u
+.BI "void * dma_pool_alloc(struct\ dma_pool\ *\ " "pool" ", gfp_t\ " "mem_flags" ", dma_addr_t\ *\ " "handle" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpool\fR
+.RS 4
+dma pool that will produce the block
+.RE
+.PP
+\fImem_flags\fR
+.RS 4
+GFP_* bitmask
+.RE
+.PP
+\fIhandle\fR
+.RS 4
+pointer to dma address of block
+.RE
+.SH "DESCRIPTION"
+.PP
+This returns the kernel virtual address of a currently unused block, and reports its dma address through the handle\&. If such a memory block can\*(Aqt be allocated,
+\fBNULL\fR
+is returned\&.
+.SH "COPYRIGHT"
+.br

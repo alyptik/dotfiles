@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: ilsel_enable_fixed
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Machine Specific Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ILSEL_ENABLE_FIXED" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Machine Specific Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ilsel_enable_fixed \- Enable an ILSEL set at a fixed interrupt level
+.SH "SYNOPSIS"
+.HP \w'int\ ilsel_enable_fixed('u
+.BI "int ilsel_enable_fixed(ilsel_source_t\ " "set" ", unsigned\ int\ " "level" ");"
+.SH "ARGUMENTS"
+.PP
+\fIset\fR
+.RS 4
+ILSEL source (see ilsel_source_t enum in include/asm\-sh/ilsel\&.h)\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+Interrupt level (1 \- 15)
+.RE
+.SH "DESCRIPTION"
+.PP
+Enables a given ILSEL source at a fixed interrupt level\&. Necessary both for level reservation as well as for aliased sources that only exist on special ILSEL#s\&.
+.PP
+Returns an IRQ number (as
+\fBilsel_enable\fR)\&.
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: atapi_check_dma
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATAPI_CHECK_DMA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+atapi_check_dma \- Check whether ATAPI DMA can be supported
+.SH "SYNOPSIS"
+.HP \w'int\ atapi_check_dma('u
+.BI "int atapi_check_dma(struct\ ata_queued_cmd\ *\ " "qc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIqc\fR
+.RS 4
+Metadata associated with taskfile to check
+.RE
+.SH "DESCRIPTION"
+.PP
+Allow low\-level driver to filter ATA PACKET commands, returning a status indicating whether or not it is OK to use DMA for the supplied PACKET command\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "RETURN"
+.PP
+0 when ATAPI DMA can be used nonzero otherwise
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,46 @@
+'\" t
+.\"     Title: netif_get_num_default_rss_queues
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETIF_GET_NUM_DEFAUL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netif_get_num_default_rss_queues \- default number of RSS queues
+.SH "SYNOPSIS"
+.HP \w'int\ netif_get_num_default_rss_queues('u
+.BI "int netif_get_num_default_rss_queues(" "void" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvoid\fR
+.RS 4
+no arguments
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+This routine should set an upper limit on the number of RSS queues used by default by multiqueue devices\&.
+.SH "COPYRIGHT"
+.br

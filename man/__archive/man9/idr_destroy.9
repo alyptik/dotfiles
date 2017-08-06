@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: idr_destroy
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IDR_DESTROY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+idr_destroy \- release all cached layers within an idr tree
+.SH "SYNOPSIS"
+.HP \w'void\ idr_destroy('u
+.BI "void idr_destroy(struct\ idr\ *\ " "idp" ");"
+.SH "ARGUMENTS"
+.PP
+\fIidp\fR
+.RS 4
+idr handle
+.RE
+.SH "DESCRIPTION"
+.PP
+Free all id mappings and all idp_layers\&. After this function,
+\fIidp\fR
+is completely unused and can be freed / recycled\&. The caller is responsible for ensuring that no one else accesses
+\fIidp\fR
+during or after
+\fBidr_destroy\fR\&.
+.PP
+A typical clean\-up sequence for objects stored in an idr tree will use
+\fBidr_for_each\fR
+to free all objects, if necessary, then
+\fBidr_destroy\fR
+to free up the id mappings and cached idr_layers\&.
+.SH "COPYRIGHT"
+.br

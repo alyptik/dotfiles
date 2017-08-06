@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: alloc_pages_exact_nid
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ALLOC_PAGES_EXACT_NI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+alloc_pages_exact_nid \- allocate an exact number of physically\-contiguous pages on a node\&.
+.SH "SYNOPSIS"
+.HP \w'void\ *\ alloc_pages_exact_nid('u
+.BI "void * alloc_pages_exact_nid(int\ " "nid" ", size_t\ " "size" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fInid\fR
+.RS 4
+the preferred node ID where memory should be allocated
+.RE
+.PP
+\fIsize\fR
+.RS 4
+the number of bytes to allocate
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+GFP flags for the allocation
+.RE
+.SH "DESCRIPTION"
+.PP
+Like
+\fBalloc_pages_exact\fR, but try to allocate on node nid first before falling back\&.
+.SH "COPYRIGHT"
+.br

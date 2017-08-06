@@ -1,0 +1,93 @@
+'\" t
+.\"     Title: struct irq_chip_regs
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IRQ_CHIP_REGS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_irq_chip_regs \- register offsets for struct irq_gci
+.SH "SYNOPSIS"
+.sp
+.nf
+struct irq_chip_regs {
+  unsigned long enable;
+  unsigned long disable;
+  unsigned long mask;
+  unsigned long ack;
+  unsigned long eoi;
+  unsigned long type;
+  unsigned long polarity;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+enable
+.RS 4
+Enable register offset to reg_base
+.RE
+.PP
+disable
+.RS 4
+Disable register offset to reg_base
+.RE
+.PP
+mask
+.RS 4
+Mask register offset to reg_base
+.RE
+.PP
+ack
+.RS 4
+Ack register offset to reg_base
+.RE
+.PP
+eoi
+.RS 4
+Eoi register offset to reg_base
+.RE
+.PP
+type
+.RS 4
+Type configuration register offset to reg_base
+.RE
+.PP
+polarity
+.RS 4
+Polarity configuration register offset to reg_base
+.RE
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

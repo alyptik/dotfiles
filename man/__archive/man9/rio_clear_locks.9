@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: rio_clear_locks
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_CLEAR_LOCKS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_clear_locks \- Release all host locks and signal enumeration complete
+.SH "SYNOPSIS"
+.HP \w'int\ rio_clear_locks('u
+.BI "int rio_clear_locks(struct\ rio_net\ *\ " "net" ");"
+.SH "ARGUMENTS"
+.PP
+\fInet\fR
+.RS 4
+RIO network to run on
+.RE
+.SH "DESCRIPTION"
+.PP
+Marks the component tag CSR on each device with the enumeration complete flag\&. When complete, it then release the host locks on each device\&. Returns 0 on success or
+\fB\-EINVAL\fR
+on failure\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

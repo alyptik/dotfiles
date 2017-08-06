@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: kgdb_arch_set_pc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KGDB_ARCH_SET_PC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kgdb_arch_set_pc \- Generic call back to the program counter
+.SH "SYNOPSIS"
+.HP \w'void\ kgdb_arch_set_pc('u
+.BI "void kgdb_arch_set_pc(struct\ pt_regs\ *\ " "regs" ", unsigned\ long\ " "pc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIregs\fR
+.RS 4
+Current
+struct pt_regs\&.
+.RE
+.PP
+\fIpc\fR
+.RS 4
+The new value for the program counter
+.RE
+.SH "DESCRIPTION"
+.PP
+This function handles updating the program counter and requires an architecture specific implementation\&.
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,88 @@
+'\" t
+.\"     Title: __irq_alloc_domain_generic_chips
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interrupt chip
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__IRQ_ALLOC_DOMAIN_G" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interrupt chip"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__irq_alloc_domain_generic_chips \- Allocate generic chips for an irq domain
+.SH "SYNOPSIS"
+.HP \w'int\ __irq_alloc_domain_generic_chips('u
+.BI "int __irq_alloc_domain_generic_chips(struct\ irq_domain\ *\ " "d" ", int\ " "irqs_per_chip" ", int\ " "num_ct" ", const\ char\ *\ " "name" ", irq_flow_handler_t\ " "handler" ", unsigned\ int\ " "clr" ", unsigned\ int\ " "set" ", enum\ irq_gc_flags\ " "gcflags" ");"
+.SH "ARGUMENTS"
+.PP
+\fId\fR
+.RS 4
+irq domain for which to allocate chips
+.RE
+.PP
+\fIirqs_per_chip\fR
+.RS 4
+Number of interrupts each chip handles (max 32)
+.RE
+.PP
+\fInum_ct\fR
+.RS 4
+Number of irq_chip_type instances associated with this
+.RE
+.PP
+\fIname\fR
+.RS 4
+Name of the irq chip
+.RE
+.PP
+\fIhandler\fR
+.RS 4
+Default flow handler associated with these chips
+.RE
+.PP
+\fIclr\fR
+.RS 4
+IRQ_* bits to clear in the mapping function
+.RE
+.PP
+\fIset\fR
+.RS 4
+IRQ_* bits to set in the mapping function
+.RE
+.PP
+\fIgcflags\fR
+.RS 4
+Generic chip specific setup flags
+.RE
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

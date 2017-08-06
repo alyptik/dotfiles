@@ -13,7 +13,7 @@ function zle-fman {
 		return
 	fi
 	case "${cmdline[1]}" in
-	([0-9lnpx]|3p|3pe|3per|3perl)
+	([0-9lnpx]*)
 		section="${cmdline[1]}"
 		shift cmdline
 		cmd="${cmdline[1]}" ;;

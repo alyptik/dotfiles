@@ -1,0 +1,81 @@
+'\" t
+.\"     Title: find_inode_nowait
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FIND_INODE_NOWAIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+find_inode_nowait \- find an inode in the inode cache
+.SH "SYNOPSIS"
+.HP \w'struct\ inode\ *\ find_inode_nowait('u
+.BI "struct inode * find_inode_nowait(struct\ super_block\ *\ " "sb" ", unsigned\ long\ " "hashval" ", int\ (*" "match" ")\ (struct\ inode\ *,\ unsigned\ long,\ void\ *), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+super block of file system to search
+.RE
+.PP
+\fIhashval\fR
+.RS 4
+hash value (usually inode number) to search for
+.RE
+.PP
+\fImatch\fR
+.RS 4
+callback used for comparisons between inodes
+.RE
+.PP
+\fIdata\fR
+.RS 4
+opaque data pointer to pass to
+\fImatch\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Search for the inode specified by
+\fIhashval\fR
+and
+\fIdata\fR
+in the inode cache, where the helper function
+\fImatch\fR
+will return 0 if the inode does not match, 1 if the inode does match, and \-1 if the search should be stopped\&. The
+\fImatch\fR
+function must be responsible for taking the i_lock spin_lock and checking i_state for an inode being freed or being initialized, and incrementing the reference count before returning 1\&. It also must not sleep, since it is called with the inode_hash_lock spinlock held\&.
+.PP
+This is a even more generalized version of
+\fBilookup5\fR
+when the function must never block \-\-\-
+\fBfind_inode\fR
+can block in
+\fB__wait_on_freeing_inode\fR
+\-\-\- or when the caller can not increment the reference count because the resulting
+\fBiput\fR
+might cause an inode eviction\&. The tradeoff is that the
+\fImatch\fR
+funtion must be very carefully implemented\&.
+.SH "COPYRIGHT"
+.br

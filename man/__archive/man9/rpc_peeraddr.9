@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: rpc_peeraddr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RPC_PEERADDR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rpc_peeraddr \- extract remote peer address from clnt\*(Aqs xprt
+.SH "SYNOPSIS"
+.HP \w'size_t\ rpc_peeraddr('u
+.BI "size_t rpc_peeraddr(struct\ rpc_clnt\ *\ " "clnt" ", struct\ sockaddr\ *\ " "buf" ", size_t\ " "bufsize" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclnt\fR
+.RS 4
+RPC client structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+target buffer
+.RE
+.PP
+\fIbufsize\fR
+.RS 4
+length of target buffer
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns the number of bytes that are actually in the stored address\&.
+.SH "COPYRIGHT"
+.br

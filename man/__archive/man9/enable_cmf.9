@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: enable_cmf
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ENABLE_CMF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+enable_cmf \- switch on the channel measurement for a specific device
+.SH "SYNOPSIS"
+.HP \w'int\ enable_cmf('u
+.BI "int enable_cmf(struct\ ccw_device\ *\ " "cdev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcdev\fR
+.RS 4
+The ccw device to be enabled
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns
+\fB0\fR
+for success or a negative error value\&.
+.SH "NOTE"
+.PP
+If this is called on a device for which channel measurement is already enabled a reset of the measurement data is triggered\&.
+.SH "CONTEXT"
+.PP
+non\-atomic
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

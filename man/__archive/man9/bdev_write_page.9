@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: bdev_write_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BDEV_WRITE_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bdev_write_page \- Start writing a page to a block device
+.SH "SYNOPSIS"
+.HP \w'int\ bdev_write_page('u
+.BI "int bdev_write_page(struct\ block_device\ *\ " "bdev" ", sector_t\ " "sector" ", struct\ page\ *\ " "page" ", struct\ writeback_control\ *\ " "wbc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+The device to write the page to
+.RE
+.PP
+\fIsector\fR
+.RS 4
+The offset on the device to write the page to (need not be aligned)
+.RE
+.PP
+\fIpage\fR
+.RS 4
+The page to write
+.RE
+.PP
+\fIwbc\fR
+.RS 4
+The writeback_control for the write
+.RE
+.SH "DESCRIPTION"
+.PP
+On entry, the page should be locked and not currently under writeback\&. On exit, if the write started successfully, the page will be unlocked and under writeback\&. If the write failed already (eg the driver failed to queue the page to the device), the page will still be locked\&. If the caller is a \->writepage implementation, it will need to unlock the page\&.
+.PP
+Errors returned by this function are usually
+\(lqsoft\(rq, eg out of memory, or queue full; callers should try a different route to write this page rather than propagate an error back up the stack\&.
+.SH "RETURN"
+.PP
+negative errno if an error occurs, 0 if submission was successful\&.
+.SH "COPYRIGHT"
+.br

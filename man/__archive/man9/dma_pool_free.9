@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: dma_pool_free
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMA_POOL_FREE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dma_pool_free \- put block back into dma pool
+.SH "SYNOPSIS"
+.HP \w'void\ dma_pool_free('u
+.BI "void dma_pool_free(struct\ dma_pool\ *\ " "pool" ", void\ *\ " "vaddr" ", dma_addr_t\ " "dma" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpool\fR
+.RS 4
+the dma pool holding the block
+.RE
+.PP
+\fIvaddr\fR
+.RS 4
+virtual address of block
+.RE
+.PP
+\fIdma\fR
+.RS 4
+dma address of block
+.RE
+.SH "DESCRIPTION"
+.PP
+Caller promises neither device nor driver will again touch this block unless it is first re\-allocated\&.
+.SH "COPYRIGHT"
+.br

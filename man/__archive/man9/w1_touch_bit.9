@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: w1_touch_bit
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "W1_TOUCH_BIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+w1_touch_bit \- Generates a write\-0 or write\-1 cycle and samples the level\&.
+.SH "SYNOPSIS"
+.HP \w'u8\ w1_touch_bit('u
+.BI "u8 w1_touch_bit(struct\ w1_master\ *\ " "dev" ", int\ " "bit" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the master device
+.RE
+.PP
+\fIbit\fR
+.RS 4
+0 \- write a 0, 1 \- write a 0 read the level
+.RE
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

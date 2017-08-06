@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: get_ccwdev_by_dev_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GET_CCWDEV_BY_DEV_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+get_ccwdev_by_dev_id \- obtain device from a ccw device id
+.SH "SYNOPSIS"
+.HP \w'struct\ ccw_device\ *\ get_ccwdev_by_dev_id('u
+.BI "struct ccw_device * get_ccwdev_by_dev_id(struct\ ccw_dev_id\ *\ " "dev_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev_id\fR
+.RS 4
+id of the device to be searched
+.RE
+.SH "DESCRIPTION"
+.PP
+This function searches all devices attached to the ccw bus for a device matching
+\fIdev_id\fR\&.
+.SH "RETURN"
+.PP
+If a device is found its reference count is increased and returned; else
+\fBNULL\fR
+is returned\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

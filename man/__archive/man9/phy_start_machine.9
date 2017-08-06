@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: phy_start_machine
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_START_MACHINE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_start_machine \- start PHY state machine tracking
+.SH "SYNOPSIS"
+.HP \w'void\ phy_start_machine('u
+.BI "void phy_start_machine(struct\ phy_device\ *\ " "phydev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+the phy_device struct
+.RE
+.SH "DESCRIPTION"
+.PP
+The PHY infrastructure can run a state machine which tracks whether the PHY is starting up, negotiating, etc\&. This function starts the timer which tracks the state of the PHY\&. If you want to maintain your own state machine, do not call this function\&.
+.SH "COPYRIGHT"
+.br

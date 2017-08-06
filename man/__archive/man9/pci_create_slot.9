@@ -1,0 +1,91 @@
+'\" t
+.\"     Title: pci_create_slot
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_CREATE_SLOT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_create_slot \- create or increment refcount for physical PCI slot
+.SH "SYNOPSIS"
+.HP \w'struct\ pci_slot\ *\ pci_create_slot('u
+.BI "struct pci_slot * pci_create_slot(struct\ pci_bus\ *\ " "parent" ", int\ " "slot_nr" ", const\ char\ *\ " "name" ", struct\ hotplug_slot\ *\ " "hotplug" ");"
+.SH "ARGUMENTS"
+.PP
+\fIparent\fR
+.RS 4
+struct pci_bus of parent bridge
+.RE
+.PP
+\fIslot_nr\fR
+.RS 4
+PCI_SLOT(pci_dev\->devfn) or \-1 for placeholder
+.RE
+.PP
+\fIname\fR
+.RS 4
+user visible string presented in /sys/bus/pci/slots/<name>
+.RE
+.PP
+\fIhotplug\fR
+.RS 4
+set if caller is hotplug driver, NULL otherwise
+.RE
+.SH "DESCRIPTION"
+.PP
+PCI slots have first class attributes such as address, speed, width, and a
+struct pci_slot
+is used to manage them\&. This interface will either return a new
+struct pci_slot
+to the caller, or if the pci_slot already exists, its refcount will be incremented\&.
+.PP
+Slots are uniquely identified by a
+\fIpci_bus\fR,
+\fIslot_nr\fR
+tuple\&.
+.PP
+There are known platforms with broken firmware that assign the same name to multiple slots\&. Workaround these broken platforms by renaming the slots on behalf of the caller\&. If firmware assigns name N to multiple slots:
+.PP
+The first slot is assigned N The second slot is assigned N\-1 The third slot is assigned N\-2 etc\&.
+.PP
+Placeholder slots: In most cases,
+\fIpci_bus\fR,
+\fIslot_nr\fR
+will be sufficient to uniquely identify a slot\&. There is one notable exception \- pSeries (rpaphp), where the
+\fIslot_nr\fR
+cannot be determined until a device is actually inserted into the slot\&. In this scenario, the caller may pass \-1 for
+\fIslot_nr\fR\&.
+.PP
+The following semantics are imposed when the caller passes
+\fIslot_nr\fR
+== \-1\&. First, we no longer check for an existing
+\fBstruct\fR
+pci_slot, as there may be many slots with
+\fIslot_nr\fR
+of \-1\&. The other change in semantics is user\-visible, which is the \*(Aqaddress\*(Aq parameter presented in sysfs will consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
+\fBstruct\fR
+pci_bus and bb is the bus number\&. In other words, the devfn of the \*(Aqplaceholder\*(Aq slot will not be displayed\&.
+.SH "COPYRIGHT"
+.br

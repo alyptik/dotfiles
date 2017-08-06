@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: struct iio_buffer_setup_ops
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Industrial I/O core
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IIO_BUFFER_SE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Industrial I/O core"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_iio_buffer_setup_ops \- buffer setup related callbacks
+.SH "SYNOPSIS"
+.sp
+.nf
+struct iio_buffer_setup_ops {
+  int (* preenable) (struct iio_dev *);
+  int (* postenable) (struct iio_dev *);
+  int (* predisable) (struct iio_dev *);
+  int (* postdisable) (struct iio_dev *);
+  bool (* validate_scan_mask) (struct iio_dev *indio_dev,const unsigned long *scan_mask);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+preenable
+.RS 4
+[DRIVER] function to run prior to marking buffer enabled
+.RE
+.PP
+postenable
+.RS 4
+[DRIVER] function to run after marking buffer enabled
+.RE
+.PP
+predisable
+.RS 4
+[DRIVER] function to run prior to marking buffer disabled
+.RE
+.PP
+postdisable
+.RS 4
+[DRIVER] function to run after marking buffer disabled
+.RE
+.PP
+validate_scan_mask
+.RS 4
+[DRIVER] function callback to check whether a given scan mask is valid for the device\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBDaniel Baluta\fR <\&daniel.baluta@intel.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

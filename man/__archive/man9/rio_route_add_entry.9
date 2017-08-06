@@ -1,0 +1,84 @@
+'\" t
+.\"     Title: rio_route_add_entry
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_ROUTE_ADD_ENTRY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_route_add_entry \- Add a route entry to a switch routing table
+.SH "SYNOPSIS"
+.HP \w'int\ rio_route_add_entry('u
+.BI "int rio_route_add_entry(struct\ rio_dev\ *\ " "rdev" ", u16\ " "table" ", u16\ " "route_destid" ", u8\ " "route_port" ", int\ " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrdev\fR
+.RS 4
+RIO device
+.RE
+.PP
+\fItable\fR
+.RS 4
+Routing table ID
+.RE
+.PP
+\fIroute_destid\fR
+.RS 4
+Destination ID to be routed
+.RE
+.PP
+\fIroute_port\fR
+.RS 4
+Port number to be routed
+.RE
+.PP
+\fIlock\fR
+.RS 4
+apply a hardware lock on switch device flag (1=lock, 0=no_lock)
+.RE
+.SH "DESCRIPTION"
+.PP
+If available calls the switch specific
+\fBadd_entry\fR
+method to add a route entry into a switch routing table\&. Otherwise uses standard RT update method as defined by RapidIO specification\&. A specific routing table can be selected using the
+\fItable\fR
+argument if a switch has per port routing tables or the standard (or global) table may be used by passing
+\fBRIO_GLOBAL_TABLE\fR
+in
+\fItable\fR\&.
+.PP
+Returns
+\fB0\fR
+on success or
+\fB\-EINVAL\fR
+on failure\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

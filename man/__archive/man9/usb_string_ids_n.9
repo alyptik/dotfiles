@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: usb_string_ids_n
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "USB_STRING_IDS_N" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+usb_string_ids_n \- allocate unused string IDs in batch
+.SH "SYNOPSIS"
+.HP \w'int\ usb_string_ids_n('u
+.BI "int usb_string_ids_n(struct\ usb_composite_dev\ *\ " "c" ", unsigned\ " "n" ");"
+.SH "ARGUMENTS"
+.PP
+\fIc\fR
+.RS 4
+the device whose string descriptor IDs are being allocated
+.RE
+.PP
+\fIn\fR
+.RS 4
+number of string IDs to allocate
+.RE
+.SH "CONTEXT"
+.PP
+single threaded during gadget setup
+.SH "DESCRIPTION"
+.PP
+Returns the first requested ID\&. This ID and next
+\fIn\fR\-1 IDs are now valid IDs\&. At least provided that
+\fIn\fR
+is non\-zero because if it is, returns last requested ID which is now very useful information\&.
+.PP
+\fIusb_string_ids_n\fR() is called from
+\fBbind\fR
+callbacks to allocate string IDs\&. Drivers for functions, configurations, or gadgets will then store that ID in the appropriate descriptors and string table\&.
+.PP
+All string identifier should be allocated using this,
+\fIusb_string_id\fR() or
+\fIusb_string_ids_n\fR() routine, to ensure that for example different functions don\*(Aqt wrongly assign different meanings to the same identifier\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

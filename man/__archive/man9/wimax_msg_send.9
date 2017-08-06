@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: wimax_msg_send
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_MSG_SEND" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_msg_send \- Send a pre\-allocated message to user space
+.SH "SYNOPSIS"
+.HP \w'int\ wimax_msg_send('u
+.BI "int wimax_msg_send(struct\ wimax_dev\ *\ " "wimax_dev" ", struct\ sk_buff\ *\ " "skb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor
+.RE
+.PP
+\fIskb\fR
+.RS 4
+struct sk_buff
+returned by
+\fBwimax_msg_alloc\fR\&. Note the ownership of
+\fIskb\fR
+is transferred to this function\&.
+.RE
+.SH "RETURN"
+.PP
+0 if ok, < 0 errno code on error
+.SH "DESCRIPTION"
+.PP
+.PP
+Sends a free\-form message that was preallocated with
+\fBwimax_msg_alloc\fR
+and filled up\&.
+.PP
+Assumes that once you pass an skb to this function for sending, it owns it and will release it when done (on success)\&.
+.PP
+IMPORTANT:
+.PP
+Don\*(Aqt use
+\fBskb_push\fR/\fBskb_pull\fR/\fBskb_reserve\fR
+on the skb, as
+\fBwimax_msg_send\fR
+depends on skb\->data being placed at the beginning of the user message\&.
+.PP
+Unlike other WiMAX stack calls, this call can be used way early, even before
+\fBwimax_dev_add\fR
+is called, as long as the wimax_dev\->net_dev pointer is set to point to a proper net_dev\&. This is so that drivers can use it early in case they need to send stuff around or communicate with user space\&.
+.SH "COPYRIGHT"
+.br

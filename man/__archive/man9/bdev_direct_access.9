@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: bdev_direct_access
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BDEV_DIRECT_ACCESS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bdev_direct_access \- Get the address for directly\-accessibly memory
+.SH "SYNOPSIS"
+.HP \w'long\ bdev_direct_access('u
+.BI "long bdev_direct_access(struct\ block_device\ *\ " "bdev" ", struct\ blk_dax_ctl\ *\ " "dax" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+The device containing the memory
+.RE
+.PP
+\fIdax\fR
+.RS 4
+control and output parameters for \->direct_access
+.RE
+.SH "DESCRIPTION"
+.PP
+If a block device is made up of directly addressable memory, this function will tell the caller the PFN and the address of the memory\&. The address may be directly dereferenced within the kernel without the need to call
+\fBioremap\fR,
+\fBkmap\fR
+or similar\&. The PFN is suitable for inserting into page tables\&.
+.SH "RETURN"
+.PP
+negative errno if an error occurs, otherwise the number of bytes accessible at this address\&.
+.SH "COPYRIGHT"
+.br

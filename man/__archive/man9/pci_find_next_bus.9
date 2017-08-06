@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: pci_find_next_bus
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_FIND_NEXT_BUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_find_next_bus \- begin or continue searching for a PCI bus
+.SH "SYNOPSIS"
+.HP \w'struct\ pci_bus\ *\ pci_find_next_bus('u
+.BI "struct pci_bus * pci_find_next_bus(const\ struct\ pci_bus\ *\ " "from" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfrom\fR
+.RS 4
+Previous PCI bus found, or
+\fBNULL\fR
+for new search\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Iterates through the list of known PCI buses\&. A new search is initiated by passing
+\fBNULL\fR
+as the
+\fIfrom\fR
+argument\&. Otherwise if
+\fIfrom\fR
+is not
+\fBNULL\fR, searches continue from next device on the global list\&.
+.SH "COPYRIGHT"
+.br

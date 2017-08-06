@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: __pci_complete_power_transition
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__PCI_COMPLETE_POWER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__pci_complete_power_transition \- Complete power transition of a PCI device
+.SH "SYNOPSIS"
+.HP \w'int\ __pci_complete_power_transition('u
+.BI "int __pci_complete_power_transition(struct\ pci_dev\ *\ " "dev" ", pci_power_t\ " "state" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device to handle\&.
+.RE
+.PP
+\fIstate\fR
+.RS 4
+State to put the device into\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function should not be called directly by device drivers\&.
+.SH "COPYRIGHT"
+.br

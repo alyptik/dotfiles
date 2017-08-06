@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: find_get_pages_contig
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FIND_GET_PAGES_CONTI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+find_get_pages_contig \- gang contiguous pagecache lookup
+.SH "SYNOPSIS"
+.HP \w'unsigned\ find_get_pages_contig('u
+.BI "unsigned find_get_pages_contig(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "index" ", unsigned\ int\ " "nr_pages" ", struct\ page\ **\ " "pages" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+The address_space to search
+.RE
+.PP
+\fIindex\fR
+.RS 4
+The starting page index
+.RE
+.PP
+\fInr_pages\fR
+.RS 4
+The maximum number of pages
+.RE
+.PP
+\fIpages\fR
+.RS 4
+Where the resulting pages are placed
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBfind_get_pages_contig\fR
+works exactly like
+\fBfind_get_pages\fR, except that the returned number of pages are guaranteed to be contiguous\&.
+.PP
+\fBfind_get_pages_contig\fR
+returns the number of pages which were found\&.
+.SH "COPYRIGHT"
+.br

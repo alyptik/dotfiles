@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: register_adapter_interrupt
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGISTER_ADAPTER_INT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+register_adapter_interrupt \- register adapter interrupt handler
+.SH "SYNOPSIS"
+.HP \w'int\ register_adapter_interrupt('u
+.BI "int register_adapter_interrupt(struct\ airq_struct\ *\ " "airq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIairq\fR
+.RS 4
+pointer to adapter interrupt descriptor
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 on success, or \-EINVAL\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

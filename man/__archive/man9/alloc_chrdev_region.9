@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: alloc_chrdev_region
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Char devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ALLOC_CHRDEV_REGION" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Char devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+alloc_chrdev_region \- register a range of char device numbers
+.SH "SYNOPSIS"
+.HP \w'int\ alloc_chrdev_region('u
+.BI "int alloc_chrdev_region(dev_t\ *\ " "dev" ", unsigned\ " "baseminor" ", unsigned\ " "count" ", const\ char\ *\ " "name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+output parameter for first assigned number
+.RE
+.PP
+\fIbaseminor\fR
+.RS 4
+first of the requested range of minor numbers
+.RE
+.PP
+\fIcount\fR
+.RS 4
+the number of minor numbers required
+.RE
+.PP
+\fIname\fR
+.RS 4
+the name of the associated device or driver
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocates a range of char device numbers\&. The major number will be chosen dynamically, and returned (along with the first minor number) in
+\fIdev\fR\&. Returns zero or a negative error code\&.
+.SH "COPYRIGHT"
+.br

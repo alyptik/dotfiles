@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: kernel_recvmsg
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KERNEL_RECVMSG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kernel_recvmsg \- Receive a message from a socket (kernel space)
+.SH "SYNOPSIS"
+.HP \w'int\ kernel_recvmsg('u
+.BI "int kernel_recvmsg(struct\ socket\ *\ " "sock" ", struct\ msghdr\ *\ " "msg" ", struct\ kvec\ *\ " "vec" ", size_t\ " "num" ", size_t\ " "size" ", int\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsock\fR
+.RS 4
+The socket to receive the message from
+.RE
+.PP
+\fImsg\fR
+.RS 4
+Received message
+.RE
+.PP
+\fIvec\fR
+.RS 4
+Input s/g array for message data
+.RE
+.PP
+\fInum\fR
+.RS 4
+Size of input s/g array
+.RE
+.PP
+\fIsize\fR
+.RS 4
+Number of bytes to read
+.RE
+.PP
+\fIflags\fR
+.RS 4
+Message flags (MSG_DONTWAIT, etc\&.\&.\&.)
+.RE
+.SH "DESCRIPTION"
+.PP
+On return the msg structure contains the scatter/gather array passed in the vec argument\&. The array is modified so that it consists of the unfilled portion of the original array\&.
+.PP
+The returned value is the total number of bytes received, or an error\&.
+.SH "COPYRIGHT"
+.br

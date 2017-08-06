@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: __inode_permission
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__INODE_PERMISSION" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__inode_permission \- Check for access rights to a given inode
+.SH "SYNOPSIS"
+.HP \w'int\ __inode_permission('u
+.BI "int __inode_permission(struct\ inode\ *\ " "inode" ", int\ " "mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+Inode to check permission on
+.RE
+.PP
+\fImask\fR
+.RS 4
+Right to check for (\fBMAY_READ\fR,
+\fBMAY_WRITE\fR,
+\fBMAY_EXEC\fR)
+.RE
+.SH "DESCRIPTION"
+.PP
+Check for read/write/execute permissions on an inode\&.
+.PP
+When checking for MAY_APPEND, MAY_WRITE must also be set in
+\fImask\fR\&.
+.PP
+This does not check for a read\-only file system\&. You probably want
+\fBinode_permission\fR\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: spi_populate_tag_msg
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SPI_POPULATE_TAG_MSG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+spi_populate_tag_msg \- place a tag message in a buffer
+.SH "SYNOPSIS"
+.HP \w'int\ spi_populate_tag_msg('u
+.BI "int spi_populate_tag_msg(unsigned\ char\ *\ " "msg" ", struct\ scsi_cmnd\ *\ " "cmd" ");"
+.SH "ARGUMENTS"
+.PP
+\fImsg\fR
+.RS 4
+pointer to the area to place the tag
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+pointer to the scsi command for the tag
+.RE
+.SH "NOTES"
+.PP
+designed to create the correct type of tag message for the particular request\&. Returns the size of the tag message\&. May return 0 if TCQ is disabled for this device\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

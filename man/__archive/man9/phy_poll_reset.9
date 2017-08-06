@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: phy_poll_reset
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_POLL_RESET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_poll_reset \- Safely wait until a PHY reset has properly completed
+.SH "SYNOPSIS"
+.HP \w'int\ phy_poll_reset('u
+.BI "int phy_poll_reset(struct\ phy_device\ *\ " "phydev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+The PHY device to poll
+.RE
+.SH "DESCRIPTION"
+.PP
+According to IEEE 802\&.3, Section 2, Subsection 22\&.2\&.4\&.1\&.1, as published in 2008, a PHY reset may take up to 0\&.5 seconds\&. The MII BMCR register must be polled until the BMCR_RESET bit clears\&.
+.PP
+Furthermore, any attempts to write to PHY registers may have no effect or even generate MDIO bus errors until this is complete\&.
+.PP
+Some PHYs (such as the Marvell 88E1111) don\*(Aqt entirely conform to the standard and do not fully reset after the BMCR_RESET bit is set, and may even *REQUIRE* a soft\-reset to properly restart autonegotiation\&. In an effort to support such broken PHYs, this function is separate from the standard
+\fBphy_init_hw\fR
+which will zero all the other bits in the BMCR and reapply all driver\-specific and board\-specific fixups\&.
+.SH "COPYRIGHT"
+.br

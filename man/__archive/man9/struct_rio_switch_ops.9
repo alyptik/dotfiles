@@ -1,0 +1,97 @@
+'\" t
+.\"     Title: struct rio_switch_ops
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT RIO_SWITCH_OP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_rio_switch_ops \- Per\-switch operations
+.SH "SYNOPSIS"
+.sp
+.nf
+struct rio_switch_ops {
+  struct module * owner;
+  int (* add_entry) (struct rio_mport *mport, u16 destid, u8 hopcount,u16 table, u16 route_destid, u8 route_port);
+  int (* get_entry) (struct rio_mport *mport, u16 destid, u8 hopcount,u16 table, u16 route_destid, u8 *route_port);
+  int (* clr_table) (struct rio_mport *mport, u16 destid, u8 hopcount,u16 table);
+  int (* set_domain) (struct rio_mport *mport, u16 destid, u8 hopcount,u8 sw_domain);
+  int (* get_domain) (struct rio_mport *mport, u16 destid, u8 hopcount,u8 *sw_domain);
+  int (* em_init) (struct rio_dev *dev);
+  int (* em_handle) (struct rio_dev *dev, u8 swport);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+owner
+.RS 4
+The module owner of this structure
+.RE
+.PP
+add_entry
+.RS 4
+Callback for switch\-specific route add function
+.RE
+.PP
+get_entry
+.RS 4
+Callback for switch\-specific route get function
+.RE
+.PP
+clr_table
+.RS 4
+Callback for switch\-specific clear route table function
+.RE
+.PP
+set_domain
+.RS 4
+Callback for switch\-specific domain setting function
+.RE
+.PP
+get_domain
+.RS 4
+Callback for switch\-specific domain get function
+.RE
+.PP
+em_init
+.RS 4
+Callback for switch\-specific error management init function
+.RE
+.PP
+em_handle
+.RS 4
+Callback for switch\-specific error management handler function
+.RE
+.SH "DESCRIPTION"
+.PP
+Defines the operations that are necessary to initialize/control a particular RIO switch device\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

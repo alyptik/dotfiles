@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: jbd2__journal_restart
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2__JOURNAL_RESTAR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2__journal_restart \- restart a handle \&.
+.SH "SYNOPSIS"
+.HP \w'int\ jbd2__journal_restart('u
+.BI "int jbd2__journal_restart(handle_t\ *\ " "handle" ", int\ " "nblocks" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhandle\fR
+.RS 4
+handle to restart
+.RE
+.PP
+\fInblocks\fR
+.RS 4
+nr credits requested
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.SH "DESCRIPTION"
+.PP
+Restart a handle for a multi\-transaction filesystem operation\&.
+.PP
+If the
+\fBjbd2_journal_extend\fR
+call above fails to grant new buffer credits to a running handle, a call to jbd2_journal_restart will commit the handle\*(Aqs transaction so far and reattach the handle to a new transaction capable of guaranteeing the requested number of credits\&. We preserve reserved handle if there\*(Aqs any attached to the passed in handle\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

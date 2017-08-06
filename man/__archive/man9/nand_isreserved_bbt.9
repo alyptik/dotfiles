@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: nand_isreserved_bbt
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_ISRESERVED_BBT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_isreserved_bbt \- [NAND Interface] Check if a block is reserved
+.SH "SYNOPSIS"
+.HP \w'int\ nand_isreserved_bbt('u
+.BI "int nand_isreserved_bbt(struct\ mtd_info\ *\ " "mtd" ", loff_t\ " "offs" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIoffs\fR
+.RS 4
+offset in the device
+.RE
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

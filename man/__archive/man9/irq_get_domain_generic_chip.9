@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: irq_get_domain_generic_chip
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interrupt chip
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_GET_DOMAIN_GENER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interrupt chip"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_get_domain_generic_chip \- Get a pointer to the generic chip of a hw_irq
+.SH "SYNOPSIS"
+.HP \w'struct\ irq_chip_generic\ *\ irq_get_domain_generic_chip('u
+.BI "struct irq_chip_generic * irq_get_domain_generic_chip(struct\ irq_domain\ *\ " "d" ", unsigned\ int\ " "hw_irq" ");"
+.SH "ARGUMENTS"
+.PP
+\fId\fR
+.RS 4
+irq domain pointer
+.RE
+.PP
+\fIhw_irq\fR
+.RS 4
+Hardware interrupt number
+.RE
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

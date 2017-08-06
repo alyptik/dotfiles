@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: rpc_switch_client_transport
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RPC_SWITCH_CLIENT_TR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rpc_switch_client_transport \- 
+.SH "SYNOPSIS"
+.HP \w'int\ rpc_switch_client_transport('u
+.BI "int rpc_switch_client_transport(struct\ rpc_clnt\ *\ " "clnt" ", struct\ xprt_create\ *\ " "args" ", const\ struct\ rpc_timeout\ *\ " "timeout" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclnt\fR
+.RS 4
+pointer to a struct rpc_clnt
+.RE
+.PP
+\fIargs\fR
+.RS 4
+pointer to the new transport arguments
+.RE
+.PP
+\fItimeout\fR
+.RS 4
+pointer to the new timeout parameters
+.RE
+.SH "DESCRIPTION"
+.PP
+This function allows the caller to switch the RPC transport for the rpc_clnt structure \*(Aqclnt\*(Aq to allow it to connect to a mirrored NFS server, for instance\&. It assumes that the caller has ensured that there are no active RPC tasks by using some form of locking\&.
+.PP
+Returns zero if
+\(lqclnt\(rq
+is now using the new xprt\&. Otherwise a negative errno is returned, and
+\(lqclnt\(rq
+continues to use the old xprt\&.
+.SH "COPYRIGHT"
+.br

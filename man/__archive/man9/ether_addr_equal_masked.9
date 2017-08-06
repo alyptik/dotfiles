@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: ether_addr_equal_masked
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ETHER_ADDR_EQUAL_MAS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ether_addr_equal_masked \- Compare two Ethernet addresses with a mask
+.SH "SYNOPSIS"
+.HP \w'bool\ ether_addr_equal_masked('u
+.BI "bool ether_addr_equal_masked(const\ u8\ *\ " "addr1" ", const\ u8\ *\ " "addr2" ", const\ u8\ *\ " "mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIaddr1\fR
+.RS 4
+Pointer to a six\-byte array containing the 1st Ethernet address
+.RE
+.PP
+\fIaddr2\fR
+.RS 4
+Pointer to a six\-byte array containing the 2nd Ethernet address
+.RE
+.PP
+\fImask\fR
+.RS 4
+Pointer to a six\-byte array containing the Ethernet address bitmask
+.RE
+.SH "DESCRIPTION"
+.PP
+Compare two Ethernet addresses with a mask, returns true if for every bit set in the bitmask the equivalent bits in the ethernet addresses are equal\&. Using a mask with all bits set is a slower ether_addr_equal\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: hash_futex
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "HASH_FUTEX" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+hash_futex \- Return the hash bucket in the global hash
+.SH "SYNOPSIS"
+.HP \w'struct\ futex_hash_bucket\ *\ hash_futex('u
+.BI "struct futex_hash_bucket * hash_futex(union\ futex_key\ *\ " "key" ");"
+.SH "ARGUMENTS"
+.PP
+\fIkey\fR
+.RS 4
+Pointer to the futex key for which the hash is calculated
+.RE
+.SH "DESCRIPTION"
+.PP
+We hash on the keys returned from get_futex_key (see below) and return the corresponding hash bucket in the global hash\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: struct iio_buffer
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Industrial I/O core
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IIO_BUFFER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Industrial I/O core"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_iio_buffer \- general buffer structure
+.SH "SYNOPSIS"
+.sp
+.nf
+struct iio_buffer {
+  int length;
+  int bytes_per_datum;
+  struct attribute_group * scan_el_attrs;
+  long * scan_mask;
+  bool scan_timestamp;
+  const struct iio_buffer_access_funcs * access;
+  struct list_head scan_el_dev_attr_list;
+  struct attribute_group buffer_group;
+  struct attribute_group scan_el_group;
+  wait_queue_head_t pollq;
+  bool stufftoread;
+  const struct attribute ** attrs;
+  struct list_head demux_list;
+  void * demux_bounce;
+  struct list_head buffer_list;
+  struct kref ref;
+  unsigned int watermark;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+length
+.RS 4
+[DEVICE] number of datums in buffer
+.RE
+.PP
+bytes_per_datum
+.RS 4
+[DEVICE] size of individual datum including timestamp
+.RE
+.PP
+scan_el_attrs
+.RS 4
+[DRIVER] control of scan elements if that scan mode control method is used
+.RE
+.PP
+scan_mask
+.RS 4
+[INTERN] bitmask used in masking scan mode elements
+.RE
+.PP
+scan_timestamp
+.RS 4
+[INTERN] does the scan mode include a timestamp
+.RE
+.PP
+access
+.RS 4
+[DRIVER] buffer access functions associated with the implementation\&.
+.RE
+.PP
+scan_el_dev_attr_list
+.RS 4
+[INTERN] list of scan element related attributes\&.
+.RE
+.PP
+buffer_group
+.RS 4
+[INTERN] attributes of the buffer group
+.RE
+.PP
+scan_el_group
+.RS 4
+[DRIVER] attribute group for those attributes not created from the iio_chan_info array\&.
+.RE
+.PP
+pollq
+.RS 4
+[INTERN] wait queue to allow for polling on the buffer\&.
+.RE
+.PP
+stufftoread
+.RS 4
+[INTERN] flag to indicate new data\&.
+.RE
+.PP
+attrs
+.RS 4
+[INTERN] standard attributes of the buffer
+.RE
+.PP
+demux_list
+.RS 4
+[INTERN] list of operations required to demux the scan\&.
+.RE
+.PP
+demux_bounce
+.RS 4
+[INTERN] buffer for doing gather from incoming scan\&.
+.RE
+.PP
+buffer_list
+.RS 4
+[INTERN] entry in the devices list of current buffers\&.
+.RE
+.PP
+ref
+.RS 4
+[INTERN] reference count of the buffer\&.
+.RE
+.PP
+watermark
+.RS 4
+[INTERN] number of datums to wait for poll/read\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBDaniel Baluta\fR <\&daniel.baluta@intel.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

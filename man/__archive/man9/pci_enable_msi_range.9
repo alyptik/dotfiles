@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: pci_enable_msi_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_ENABLE_MSI_RANGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_enable_msi_range \- configure device\*(Aqs MSI capability structure
+.SH "SYNOPSIS"
+.HP \w'int\ pci_enable_msi_range('u
+.BI "int pci_enable_msi_range(struct\ pci_dev\ *\ " "dev" ", int\ " "minvec" ", int\ " "maxvec" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device to configure
+.RE
+.PP
+\fIminvec\fR
+.RS 4
+minimal number of interrupts to configure
+.RE
+.PP
+\fImaxvec\fR
+.RS 4
+maximum number of interrupts to configure
+.RE
+.SH "DESCRIPTION"
+.PP
+This function tries to allocate a maximum possible number of interrupts in a range between
+\fIminvec\fR
+and
+\fImaxvec\fR\&. It returns a negative errno if an error occurs\&. If it succeeds, it returns the actual number of interrupts allocated and updates the
+\fIdev\fR\*(Aqs irq member to the lowest new interrupt number; the other interrupt numbers allocated to this device are consecutive\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: dev_getbyhwaddr_rcu
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEV_GETBYHWADDR_RCU" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dev_getbyhwaddr_rcu \- find a device by its hardware address
+.SH "SYNOPSIS"
+.HP \w'struct\ net_device\ *\ dev_getbyhwaddr_rcu('u
+.BI "struct net_device * dev_getbyhwaddr_rcu(struct\ net\ *\ " "net" ", unsigned\ short\ " "type" ", const\ char\ *\ " "ha" ");"
+.SH "ARGUMENTS"
+.PP
+\fInet\fR
+.RS 4
+the applicable net namespace
+.RE
+.PP
+\fItype\fR
+.RS 4
+media type of device
+.RE
+.PP
+\fIha\fR
+.RS 4
+hardware address
+.RE
+.SH "DESCRIPTION"
+.PP
+Search for an interface by MAC address\&. Returns NULL if the device is not found or a pointer to the device\&. The caller must hold RCU or RTNL\&. The returned device has not had its ref count increased and the caller must therefore be careful about locking
+.SH "COPYRIGHT"
+.br

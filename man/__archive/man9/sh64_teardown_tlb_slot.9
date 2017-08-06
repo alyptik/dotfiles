@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: sh64_teardown_tlb_slot
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SH64_TEARDOWN_TLB_SL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sh64_teardown_tlb_slot \- Teardown a translation\&.
+.SH "SYNOPSIS"
+.HP \w'void\ sh64_teardown_tlb_slot('u
+.BI "void sh64_teardown_tlb_slot(unsigned\ long\ long\ " "config_addr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIconfig_addr\fR
+.RS 4
+Address of TLB slot\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Teardown any existing mapping in the TLB slot
+\fIconfig_addr\fR\&.
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

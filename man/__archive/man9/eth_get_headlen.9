@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: eth_get_headlen
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ETH_GET_HEADLEN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eth_get_headlen \- determine the length of header for an ethernet frame
+.SH "SYNOPSIS"
+.HP \w'u32\ eth_get_headlen('u
+.BI "u32 eth_get_headlen(void\ *\ " "data" ", unsigned\ int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdata\fR
+.RS 4
+pointer to start of frame
+.RE
+.PP
+\fIlen\fR
+.RS 4
+total length of frame
+.RE
+.SH "DESCRIPTION"
+.PP
+Make a best effort attempt to pull the length for all of the headers for a given frame in a linear buffer\&.
+.SH "COPYRIGHT"
+.br

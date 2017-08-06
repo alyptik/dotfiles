@@ -1,0 +1,90 @@
+'\" t
+.\"     Title: struct irq_chip_type
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IRQ_CHIP_TYPE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_irq_chip_type \- Generic interrupt chip instance for a flow type
+.SH "SYNOPSIS"
+.sp
+.nf
+struct irq_chip_type {
+  struct irq_chip chip;
+  struct irq_chip_regs regs;
+  irq_flow_handler_t handler;
+  u32 type;
+  u32 mask_cache_priv;
+  u32 * mask_cache;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+chip
+.RS 4
+The real interrupt chip which provides the callbacks
+.RE
+.PP
+regs
+.RS 4
+Register offsets for this chip
+.RE
+.PP
+handler
+.RS 4
+Flow handler associated with this chip
+.RE
+.PP
+type
+.RS 4
+Chip can handle these flow types
+.RE
+.PP
+mask_cache_priv
+.RS 4
+Cached mask register private to the chip type
+.RE
+.PP
+mask_cache
+.RS 4
+Pointer to cached mask register
+.RE
+.SH "DESCRIPTION"
+.PP
+A irq_generic_chip can have several instances of irq_chip_type when it requires different functions and register offsets for different flow types\&.
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: scsi_internal_device_block
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_INTERNAL_DEVICE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_internal_device_block \- internal function to put a device temporarily into the SDEV_BLOCK state
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_internal_device_block('u
+.BI "int scsi_internal_device_block(struct\ scsi_device\ *\ " "sdev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+device to block
+.RE
+.SH "DESCRIPTION"
+.PP
+Block request made by scsi lld\*(Aqs to temporarily stop all scsi commands on the specified device\&. May sleep\&.
+.PP
+Returns zero if successful or error if not
+.SH "NOTES"
+.PP
+This routine transitions the device to the SDEV_BLOCK state (which must be a legal transition)\&. When the device is in this state, all commands are deferred until the scsi lld reenables the device with scsi_device_unblock or device_block_tmo fires\&.
+.PP
+To do: avoid that
+\fBscsi_send_eh_cmnd\fR
+calls
+\fBqueuecommand\fR
+after
+\fBscsi_internal_device_block\fR
+has blocked a SCSI device and also remove the rport mutex lock and unlock calls from
+\fBsrp_queuecommand\fR\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: __audit_log_bprm_fcaps
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_LOG_BPRM_FCA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_log_bprm_fcaps \- store information about a loading bprm and relevant fcaps
+.SH "SYNOPSIS"
+.HP \w'int\ __audit_log_bprm_fcaps('u
+.BI "int __audit_log_bprm_fcaps(struct\ linux_binprm\ *\ " "bprm" ", const\ struct\ cred\ *\ " "new" ", const\ struct\ cred\ *\ " "old" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbprm\fR
+.RS 4
+pointer to the bprm being processed
+.RE
+.PP
+\fInew\fR
+.RS 4
+the proposed new credentials
+.RE
+.PP
+\fIold\fR
+.RS 4
+the old credentials
+.RE
+.SH "DESCRIPTION"
+.PP
+Simply check if the proc already has the caps given by the file and if not store the priv escalation info for later auditing at the end of the syscall
+.PP
+\-Eric
+.SH "COPYRIGHT"
+.br

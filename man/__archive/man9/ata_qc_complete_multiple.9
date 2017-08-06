@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: ata_qc_complete_multiple
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_QC_COMPLETE_MULT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_qc_complete_multiple \- Complete multiple qcs successfully
+.SH "SYNOPSIS"
+.HP \w'int\ ata_qc_complete_multiple('u
+.BI "int ata_qc_complete_multiple(struct\ ata_port\ *\ " "ap" ", u32\ " "qc_active" ");"
+.SH "ARGUMENTS"
+.PP
+\fIap\fR
+.RS 4
+port in question
+.RE
+.PP
+\fIqc_active\fR
+.RS 4
+new qc_active mask
+.RE
+.SH "DESCRIPTION"
+.PP
+Complete in\-flight commands\&. This functions is meant to be called from low\-level driver\*(Aqs interrupt routine to complete requests normally\&. ap\->qc_active and
+\fIqc_active\fR
+is compared and commands are completed accordingly\&.
+.PP
+Always use this function when completing multiple NCQ commands from IRQ handlers instead of calling
+\fBata_qc_complete\fR
+multiple times to keep IRQ expect status properly in sync\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "RETURN"
+.PP
+Number of completed commands on success, \-errno otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

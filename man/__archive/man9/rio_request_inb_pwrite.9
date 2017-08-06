@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: rio_request_inb_pwrite
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_REQUEST_INB_PWRI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_request_inb_pwrite \- request inbound port\-write message service for specific RapidIO device
+.SH "SYNOPSIS"
+.HP \w'int\ rio_request_inb_pwrite('u
+.BI "int rio_request_inb_pwrite(struct\ rio_dev\ *\ " "rdev" ", int\ (*" "pwcback" ")\ (struct\ rio_dev\ *rdev,\ union\ rio_pw_msg\ *msg,\ int\ step));"
+.SH "ARGUMENTS"
+.PP
+\fIrdev\fR
+.RS 4
+RIO device to which register inbound port\-write callback routine
+.RE
+.PP
+\fIpwcback\fR
+.RS 4
+Callback routine to execute when port\-write is received
+.RE
+.SH "DESCRIPTION"
+.PP
+Binds a port\-write callback function to the RapidIO device\&. Returns 0 if the request has been satisfied\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

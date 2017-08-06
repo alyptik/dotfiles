@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: blk_queue_find_tag
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_QUEUE_FIND_TAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_queue_find_tag \- find a request by its tag and queue
+.SH "SYNOPSIS"
+.HP \w'struct\ request\ *\ blk_queue_find_tag('u
+.BI "struct request * blk_queue_find_tag(struct\ request_queue\ *\ " "q" ", int\ " "tag" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+The request queue for the device
+.RE
+.PP
+\fItag\fR
+.RS 4
+The tag of the request
+.RE
+.SH "NOTES"
+.PP
+Should be used when a device returns a tag and you want to match it with a request\&.
+.PP
+no locks need be held\&.
+.SH "COPYRIGHT"
+.br

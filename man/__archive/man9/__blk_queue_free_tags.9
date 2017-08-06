@@ -1,0 +1,46 @@
+'\" t
+.\"     Title: __blk_queue_free_tags
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__BLK_QUEUE_FREE_TAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__blk_queue_free_tags \- release tag maintenance info
+.SH "SYNOPSIS"
+.HP \w'void\ __blk_queue_free_tags('u
+.BI "void __blk_queue_free_tags(struct\ request_queue\ *\ " "q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the request queue for the device
+.RE
+.SH "NOTES"
+.PP
+\fBblk_cleanup_queue\fR
+will take care of calling this function, if tagging has been used\&. So there\*(Aqs no need to call this directly\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: find_lock_entry
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FIND_LOCK_ENTRY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+find_lock_entry \- locate, pin and lock a page cache entry
+.SH "SYNOPSIS"
+.HP \w'struct\ page\ *\ find_lock_entry('u
+.BI "struct page * find_lock_entry(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "offset" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the address_space to search
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+the page cache index
+.RE
+.SH "DESCRIPTION"
+.PP
+Looks up the page cache slot at
+\fImapping\fR
+&
+\fIoffset\fR\&. If there is a page cache page, it is returned locked and with an increased refcount\&.
+.PP
+If the slot holds a shadow entry of a previously evicted page, or a swap entry from shmem/tmpfs, it is returned\&.
+.PP
+Otherwise,
+\fBNULL\fR
+is returned\&.
+.PP
+\fBfind_lock_entry\fR
+may sleep\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,80 @@
+'\" t
+.\"     Title: futex_lock_pi_atomic
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FUTEX_LOCK_PI_ATOMIC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+futex_lock_pi_atomic \- Atomic work required to acquire a pi aware futex
+.SH "SYNOPSIS"
+.HP \w'int\ futex_lock_pi_atomic('u
+.BI "int futex_lock_pi_atomic(u32\ __user\ *\ " "uaddr" ", struct\ futex_hash_bucket\ *\ " "hb" ", union\ futex_key\ *\ " "key" ", struct\ futex_pi_state\ **\ " "ps" ", struct\ task_struct\ *\ " "task" ", int\ " "set_waiters" ");"
+.SH "ARGUMENTS"
+.PP
+\fIuaddr\fR
+.RS 4
+the pi futex user address
+.RE
+.PP
+\fIhb\fR
+.RS 4
+the pi futex hash bucket
+.RE
+.PP
+\fIkey\fR
+.RS 4
+the futex key associated with uaddr and hb
+.RE
+.PP
+\fIps\fR
+.RS 4
+the pi_state pointer where we store the result of the lookup
+.RE
+.PP
+\fItask\fR
+.RS 4
+the task to perform the atomic lock work for\&. This will be
+\(lqcurrent\(rq
+except in the case of requeue pi\&.
+.RE
+.PP
+\fIset_waiters\fR
+.RS 4
+force setting the FUTEX_WAITERS bit (1) or not (0)
+.RE
+.SH "RETURN"
+.PP
+0 \- ready to wait; 1 \- acquired the lock; <0 \- error
+.PP
+The hb\->lock and futex_key refs shall be held by the caller\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

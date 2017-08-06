@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: bitmap_print_to_pagebuf
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_PRINT_TO_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_print_to_pagebuf \- convert bitmap to list or hex format ASCII string
+.SH "SYNOPSIS"
+.HP \w'int\ bitmap_print_to_pagebuf('u
+.BI "int bitmap_print_to_pagebuf(bool\ " "list" ", char\ *\ " "buf" ", const\ unsigned\ long\ *\ " "maskp" ", int\ " "nmaskbits" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlist\fR
+.RS 4
+indicates whether the bitmap must be list
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+page aligned buffer into which string is placed
+.RE
+.PP
+\fImaskp\fR
+.RS 4
+pointer to bitmap to convert
+.RE
+.PP
+\fInmaskbits\fR
+.RS 4
+size of bitmap, in bits
+.RE
+.SH "DESCRIPTION"
+.PP
+Output format is a comma\-separated list of decimal numbers and ranges if list is specified or hex digits grouped into comma\-separated sets of 8 digits/set\&. Returns the number of characters written to buf\&.
+.PP
+It is assumed that
+\fIbuf\fR
+is a pointer into a PAGE_SIZE area and that sufficient storage remains at
+\fIbuf\fR
+to accommodate the
+\fBbitmap_print_to_pagebuf\fR
+output\&.
+.SH "COPYRIGHT"
+.br

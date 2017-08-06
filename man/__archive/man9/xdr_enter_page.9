@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: xdr_enter_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XDR_ENTER_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xdr_enter_page \- decode data from the XDR page
+.SH "SYNOPSIS"
+.HP \w'void\ xdr_enter_page('u
+.BI "void xdr_enter_page(struct\ xdr_stream\ *\ " "xdr" ", unsigned\ int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIxdr\fR
+.RS 4
+pointer to xdr_stream struct
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of bytes of page data
+.RE
+.SH "DESCRIPTION"
+.PP
+Moves data beyond the current pointer position from the XDR head[] buffer into the page list\&. Any data that lies beyond current position +
+\(lqlen\(rq
+bytes is moved into the XDR tail[]\&. The current pointer is then repositioned at the beginning of the first XDR page\&.
+.SH "COPYRIGHT"
+.br

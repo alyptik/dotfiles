@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: scsi_probe_lun
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_PROBE_LUN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_probe_lun \- probe a single LUN using a SCSI INQUIRY
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_probe_lun('u
+.BI "int scsi_probe_lun(struct\ scsi_device\ *\ " "sdev" ", unsigned\ char\ *\ " "inq_result" ", int\ " "result_len" ", int\ *\ " "bflags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+scsi_device to probe
+.RE
+.PP
+\fIinq_result\fR
+.RS 4
+area to store the INQUIRY result
+.RE
+.PP
+\fIresult_len\fR
+.RS 4
+len of inq_result
+.RE
+.PP
+\fIbflags\fR
+.RS 4
+store any bflags found here
+.RE
+.SH "DESCRIPTION"
+.PP
+Probe the lun associated with
+\fIreq\fR
+using a standard SCSI INQUIRY;
+.PP
+If the INQUIRY is successful, zero is returned and the INQUIRY data is in
+\fIinq_result\fR; the scsi_level and INQUIRY length are copied to the scsi_device any flags value is stored in *\fIbflags\fR\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

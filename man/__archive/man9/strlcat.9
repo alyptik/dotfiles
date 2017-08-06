@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: strlcat
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRLCAT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+strlcat \- Append a length\-limited, C\-string to another
+.SH "SYNOPSIS"
+.HP \w'size_t\ strlcat('u
+.BI "size_t strlcat(char\ *\ " "dest" ", const\ char\ *\ " "src" ", size_t\ " "count" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdest\fR
+.RS 4
+The string to be appended to
+.RE
+.PP
+\fIsrc\fR
+.RS 4
+The string to append to it
+.RE
+.PP
+\fIcount\fR
+.RS 4
+The size of the destination buffer\&.
+.RE
+.SH "COPYRIGHT"
+.br

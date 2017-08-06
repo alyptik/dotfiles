@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: skb_zerocopy
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_ZEROCOPY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_zerocopy \- Zero copy skb to skb
+.SH "SYNOPSIS"
+.HP \w'int\ skb_zerocopy('u
+.BI "int skb_zerocopy(struct\ sk_buff\ *\ " "to" ", struct\ sk_buff\ *\ " "from" ", int\ " "len" ", int\ " "hlen" ");"
+.SH "ARGUMENTS"
+.PP
+\fIto\fR
+.RS 4
+destination buffer
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+source buffer
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of bytes to copy from source buffer
+.RE
+.PP
+\fIhlen\fR
+.RS 4
+size of linear headroom in destination buffer
+.RE
+.SH "DESCRIPTION"
+.PP
+Copies up to `len` bytes from `from` to `to` by creating references to the frags in the source buffer\&.
+.PP
+The `hlen` as calculated by
+\fBskb_zerocopy_headlen\fR
+specifies the headroom in the `to` buffer\&.
+.PP
+Return value: 0: everything is OK \-ENOMEM: couldn\*(Aqt orphan frags of
+\fIfrom\fR
+due to lack of memory \-EFAULT:
+\fBskb_copy_bits\fR
+found some problem with skb geometry
+.SH "COPYRIGHT"
+.br

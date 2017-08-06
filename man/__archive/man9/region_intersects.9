@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: region_intersects
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGION_INTERSECTS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+region_intersects \- determine intersection of region with known resources
+.SH "SYNOPSIS"
+.HP \w'int\ region_intersects('u
+.BI "int region_intersects(resource_size_t\ " "start" ", size_t\ " "size" ", unsigned\ long\ " "flags" ", unsigned\ long\ " "desc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIstart\fR
+.RS 4
+region start address
+.RE
+.PP
+\fIsize\fR
+.RS 4
+size of region
+.RE
+.PP
+\fIflags\fR
+.RS 4
+flags of resource (in iomem_resource)
+.RE
+.PP
+\fIdesc\fR
+.RS 4
+descriptor of resource (in iomem_resource) or IORES_DESC_NONE
+.RE
+.SH "DESCRIPTION"
+.PP
+Check if the specified region partially overlaps or fully eclipses a resource identified by
+\fIflags\fR
+and
+\fIdesc\fR
+(optional with IORES_DESC_NONE)\&. Return REGION_DISJOINT if the region does not overlap
+\fIflags\fR/\fIdesc\fR, return REGION_MIXED if the region overlaps
+\fIflags\fR/\fIdesc\fR
+and another resource, and return REGION_INTERSECTS if the region overlaps
+\fIflags\fR/\fIdesc\fR
+and no other defined resource\&. Note that REGION_INTERSECTS is also returned in the case when the specified region overlaps RAM and undefined memory holes\&.
+.PP
+\fBregion_intersect\fR
+is used by memory remapping functions to ensure the user is not remapping RAM and is a vast speed up over walking through the resource table page by page\&.
+.SH "COPYRIGHT"
+.br

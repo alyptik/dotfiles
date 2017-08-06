@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: __request_module
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Module Support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__REQUEST_MODULE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Module Support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__request_module \- try to load a kernel module
+.SH "SYNOPSIS"
+.HP \w'int\ __request_module('u
+.BI "int __request_module(bool\ " "wait" ", const\ char\ *\ " "fmt" ", " "\&.\&.\&." ");"
+.SH "ARGUMENTS"
+.PP
+\fIwait\fR
+.RS 4
+wait (or not) for the operation to complete
+.RE
+.PP
+\fIfmt\fR
+.RS 4
+printf style format string for the name of the module
+.RE
+.PP
+\fI\&.\&.\&.\fR
+.RS 4
+arguments as specified in the format string
+.RE
+.SH "DESCRIPTION"
+.PP
+Load a module using the user mode module loader\&. The function returns zero on success or a negative errno code or positive exit code from
+\(lqmodprobe\(rq
+on failure\&. Note that a successful module load does not mean the module did not then unload and exit on an error of its own\&. Callers must check that the service they requested is now available not blindly invoke it\&.
+.PP
+If module auto\-loading support is disabled then this function becomes a no\-operation\&.
+.SH "COPYRIGHT"
+.br

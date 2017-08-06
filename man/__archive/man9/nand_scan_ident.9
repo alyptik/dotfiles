@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: nand_scan_ident
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_SCAN_IDENT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_scan_ident \- [NAND Interface] Scan for the NAND device
+.SH "SYNOPSIS"
+.HP \w'int\ nand_scan_ident('u
+.BI "int nand_scan_ident(struct\ mtd_info\ *\ " "mtd" ", int\ " "maxchips" ", struct\ nand_flash_dev\ *\ " "table" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fImaxchips\fR
+.RS 4
+number of chips to scan for
+.RE
+.PP
+\fItable\fR
+.RS 4
+alternative NAND ID table
+.RE
+.SH "DESCRIPTION"
+.PP
+This is the first phase of the normal
+\fBnand_scan\fR
+function\&. It reads the flash ID and sets up MTD fields accordingly\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: regulator_has_full_constraints
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_HAS_FULL_C" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_has_full_constraints \- the system has fully specified constraints
+.SH "SYNOPSIS"
+.HP \w'void\ regulator_has_full_constraints('u
+.BI "void regulator_has_full_constraints(" "void" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvoid\fR
+.RS 4
+no arguments
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Calling this function will cause the regulator API to disable all regulators which have a zero use count and don\*(Aqt have an always_on constraint in a late_initcall\&.
+.PP
+The intention is that this will become the default behaviour in a future kernel release so users are encouraged to use this facility now\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

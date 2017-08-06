@@ -1,0 +1,124 @@
+'\" t
+.\"     Title: struct rs_control
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT RS_CONTROL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_rs_control \- rs control structure
+.SH "SYNOPSIS"
+.sp
+.nf
+struct rs_control {
+  int mm;
+  int nn;
+  uint16_t * alpha_to;
+  uint16_t * index_of;
+  uint16_t * genpoly;
+  int nroots;
+  int fcr;
+  int prim;
+  int iprim;
+  int gfpoly;
+  int (* gffunc) (int);
+  int users;
+  struct list_head list;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+mm
+.RS 4
+Bits per symbol
+.RE
+.PP
+nn
+.RS 4
+Symbols per block (= (1<<mm)\-1)
+.RE
+.PP
+alpha_to
+.RS 4
+log lookup table
+.RE
+.PP
+index_of
+.RS 4
+Antilog lookup table
+.RE
+.PP
+genpoly
+.RS 4
+Generator polynomial
+.RE
+.PP
+nroots
+.RS 4
+Number of generator roots = number of parity symbols
+.RE
+.PP
+fcr
+.RS 4
+First consecutive root, index form
+.RE
+.PP
+prim
+.RS 4
+Primitive element, index form
+.RE
+.PP
+iprim
+.RS 4
+prim\-th root of 1, index form
+.RE
+.PP
+gfpoly
+.RS 4
+The primitive generator polynominal
+.RE
+.PP
+gffunc
+.RS 4
+Function to generate the field, if non\-canonical representation
+.RE
+.PP
+users
+.RS 4
+Users of this structure
+.RE
+.PP
+list
+.RS 4
+List entry for the rs control list
+.RE
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

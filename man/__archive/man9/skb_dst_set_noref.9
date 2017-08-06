@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: skb_dst_set_noref
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_DST_SET_NOREF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_dst_set_noref \- sets skb dst, hopefully, without taking reference
+.SH "SYNOPSIS"
+.HP \w'void\ skb_dst_set_noref('u
+.BI "void skb_dst_set_noref(struct\ sk_buff\ *\ " "skb" ", struct\ dst_entry\ *\ " "dst" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer
+.RE
+.PP
+\fIdst\fR
+.RS 4
+dst entry
+.RE
+.SH "DESCRIPTION"
+.PP
+Sets skb dst, assuming a reference was not taken on dst\&. If dst entry is cached, we do not take reference and dst_release will be avoided by refdst_drop\&. If dst entry is not cached, we take reference, so that last dst_release can destroy the dst immediately\&.
+.SH "COPYRIGHT"
+.br

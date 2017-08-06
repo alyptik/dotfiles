@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: rio_unregister_scan
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_UNREGISTER_SCAN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_unregister_scan \- removes enumeration/discovery method from mport
+.SH "SYNOPSIS"
+.HP \w'int\ rio_unregister_scan('u
+.BI "int rio_unregister_scan(int\ " "mport_id" ", struct\ rio_scan\ *\ " "scan_ops" ");"
+.SH "ARGUMENTS"
+.PP
+\fImport_id\fR
+.RS 4
+mport device ID for which fabric scan routine has to be unregistered (RIO_MPORT_ANY = apply to all mports that use the specified scan_ops)
+.RE
+.PP
+\fIscan_ops\fR
+.RS 4
+enumeration/discovery operations structure
+.RE
+.SH "DESCRIPTION"
+.PP
+Removes enumeration or discovery method assigned to the specified mport device\&. If RIO_MPORT_ANY is specified, removes the specified operations from all mports that have them attached\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

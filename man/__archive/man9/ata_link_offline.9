@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: ata_link_offline
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_LINK_OFFLINE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_link_offline \- test whether the given link is offline
+.SH "SYNOPSIS"
+.HP \w'bool\ ata_link_offline('u
+.BI "bool ata_link_offline(struct\ ata_link\ *\ " "link" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+ATA link to test
+.RE
+.SH "DESCRIPTION"
+.PP
+Test whether
+\fIlink\fR
+is offline\&. This is identical to
+\fBata_phys_link_offline\fR
+when there\*(Aqs no slave link\&. When there\*(Aqs a slave link, this function should only be called on the master link and will return true if both M/S links are offline\&.
+.PP
+LOCKING: None\&.
+.SH "RETURN"
+.PP
+True if the port offline status is available and offline\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

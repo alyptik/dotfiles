@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: ipcget
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPCGET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipcget \- Common sys_*\fBget\fR code
+.SH "SYNOPSIS"
+.HP \w'int\ ipcget('u
+.BI "int ipcget(struct\ ipc_namespace\ *\ " "ns" ", struct\ ipc_ids\ *\ " "ids" ", const\ struct\ ipc_ops\ *\ " "ops" ", struct\ ipc_params\ *\ " "params" ");"
+.SH "ARGUMENTS"
+.PP
+\fIns\fR
+.RS 4
+namespace
+.RE
+.PP
+\fIids\fR
+.RS 4
+ipc identifier set
+.RE
+.PP
+\fIops\fR
+.RS 4
+operations to be called on ipc object creation, permission checks and further checks
+.RE
+.PP
+\fIparams\fR
+.RS 4
+the parameters needed by the previous operations\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Common routine called by
+\fBsys_msgget\fR,
+\fBsys_semget\fR
+and
+\fBsys_shmget\fR\&.
+.SH "COPYRIGHT"
+.br

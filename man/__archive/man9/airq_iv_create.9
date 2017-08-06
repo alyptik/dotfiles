@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: airq_iv_create
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "AIRQ_IV_CREATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+airq_iv_create \- create an interrupt vector
+.SH "SYNOPSIS"
+.HP \w'struct\ airq_iv\ *\ airq_iv_create('u
+.BI "struct airq_iv * airq_iv_create(unsigned\ long\ " "bits" ", unsigned\ long\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbits\fR
+.RS 4
+number of bits in the interrupt vector
+.RE
+.PP
+\fIflags\fR
+.RS 4
+allocation flags
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns a pointer to an interrupt vector structure
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

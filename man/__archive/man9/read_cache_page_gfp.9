@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: read_cache_page_gfp
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "READ_CACHE_PAGE_GFP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+read_cache_page_gfp \- read into page cache, using specified page allocation flags\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ page\ *\ read_cache_page_gfp('u
+.BI "struct page * read_cache_page_gfp(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "index" ", gfp_t\ " "gfp" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the page\*(Aqs address_space
+.RE
+.PP
+\fIindex\fR
+.RS 4
+the page index
+.RE
+.PP
+\fIgfp\fR
+.RS 4
+the page allocator flags to use if allocating
+.RE
+.SH "DESCRIPTION"
+.PP
+This is the same as
+\(lqread_mapping_page(mapping, index, NULL)\(rq, but with any new page allocations done using the specified allocation flags\&.
+.PP
+If the page does not get brought uptodate, return \-EIO\&.
+.SH "COPYRIGHT"
+.br

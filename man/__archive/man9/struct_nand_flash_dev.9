@@ -1,0 +1,69 @@
+'\" t
+.\"     Title: struct nand_flash_dev
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT NAND_FLASH_DE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_nand_flash_dev \- NAND Flash Device ID Structure
+.SH "SYNOPSIS"
+.sp
+.nf
+struct nand_flash_dev {
+  char * name;
+  union ecc;
+  int onfi_timing_mode_default;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+name
+.RS 4
+a human\-readable name of the NAND chip
+.RE
+.PP
+ecc
+.RS 4
+The ECC step required by the
+\fIecc\fR\&.strength_ds, same as the
+\fIecc_step_ds\fR
+in nand_chip{}, also from the datasheet\&. For example, the
+\(lq4bit ECC for each 512Byte\(rq
+can be set with NAND_ECC_INFO(4, 512)\&.
+.RE
+.PP
+onfi_timing_mode_default
+.RS 4
+the default ONFI timing mode entered after a NAND reset\&. Should be deduced from timings described in the datasheet\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

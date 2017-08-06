@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: proc_douintvec
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The proc filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PROC_DOUINTVEC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The proc filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+proc_douintvec \- read a vector of unsigned integers
+.SH "SYNOPSIS"
+.HP \w'int\ proc_douintvec('u
+.BI "int proc_douintvec(struct\ ctl_table\ *\ " "table" ", int\ " "write" ", void\ __user\ *\ " "buffer" ", size_t\ *\ " "lenp" ", loff_t\ *\ " "ppos" ");"
+.SH "ARGUMENTS"
+.PP
+\fItable\fR
+.RS 4
+the sysctl table
+.RE
+.PP
+\fIwrite\fR
+.RS 4
+\fBTRUE\fR
+if this is a write to the sysctl file
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+the user buffer
+.RE
+.PP
+\fIlenp\fR
+.RS 4
+the size of the user buffer
+.RE
+.PP
+\fIppos\fR
+.RS 4
+file position
+.RE
+.SH "DESCRIPTION"
+.PP
+Reads/writes up to table\->maxlen/sizeof(unsigned int) unsigned integer values from/to the user buffer, treated as an ASCII string\&.
+.PP
+Returns 0 on success\&.
+.SH "COPYRIGHT"
+.br

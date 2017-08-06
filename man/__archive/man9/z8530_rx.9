@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: z8530_rx
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_RX" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_rx \- Handle a PIO receive event
+.SH "SYNOPSIS"
+.HP \w'void\ z8530_rx('u
+.BI "void z8530_rx(struct\ z8530_channel\ *\ " "c" ");"
+.SH "ARGUMENTS"
+.PP
+\fIc\fR
+.RS 4
+Z8530 channel to process
+.RE
+.SH "DESCRIPTION"
+.PP
+Receive handler for receiving in PIO mode\&. This is much like the async one but not quite the same or as complex
+.SH "NOTE"
+.PP
+Its intended that this handler can easily be separated from the main code to run realtime\&. That\*(Aqll be needed for some machines (eg to ever clock 64kbits on a sparc ;))\&.
+.PP
+The RT_LOCK macros don\*(Aqt do anything now\&. Keep the code covered by them as short as possible in all circumstances \- clocks cost baud\&. The interrupt handler is assumed to be atomic w\&.r\&.t\&. to other code \- this is true in the RT case too\&.
+.PP
+We only cover the sync cases for this\&. If you want 2Mbit async do it yourself but consider medical assistance first\&. This non DMA synchronous mode is portable code\&. The DMA mode assumes PCI like ISA DMA
+.PP
+Called with the device lock held
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

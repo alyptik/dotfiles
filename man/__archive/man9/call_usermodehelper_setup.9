@@ -1,0 +1,81 @@
+'\" t
+.\"     Title: call_usermodehelper_setup
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Module Support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CALL_USERMODEHELPER_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Module Support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+call_usermodehelper_setup \- prepare to call a usermode helper
+.SH "SYNOPSIS"
+.HP \w'struct\ subprocess_info\ *\ call_usermodehelper_setup('u
+.BI "struct subprocess_info * call_usermodehelper_setup(char\ *\ " "path" ", char\ **\ " "argv" ", char\ **\ " "envp" ", gfp_t\ " "gfp_mask" ", int\ (*" "init" ")\ (struct\ subprocess_info\ *info,\ struct\ cred\ *new), void\ (*" "cleanup" ")\ (struct\ subprocess_info\ *info), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpath\fR
+.RS 4
+path to usermode executable
+.RE
+.PP
+\fIargv\fR
+.RS 4
+arg vector for process
+.RE
+.PP
+\fIenvp\fR
+.RS 4
+environment for process
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+gfp mask for memory allocation
+.RE
+.PP
+\fIinit\fR
+.RS 4
+an init function
+.RE
+.PP
+\fIcleanup\fR
+.RS 4
+a cleanup function
+.RE
+.PP
+\fIdata\fR
+.RS 4
+arbitrary context sensitive data
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns either
+\fBNULL\fR
+on allocation failure, or a subprocess_info structure\&. This should be passed to call_usermodehelper_exec to exec the process and free the structure\&.
+.PP
+The init function is used to customize the helper process prior to exec\&. A non\-zero return code causes the process to error out, exit, and return the failure to the calling process
+.PP
+The cleanup function is just before ethe subprocess_info is about to be freed\&. This can be used for freeing the argv and envp\&. The Function must be runnable in either a process context or the context in which call_usermodehelper_exec is called\&.
+.SH "COPYRIGHT"
+.br

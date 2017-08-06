@@ -1,0 +1,132 @@
+'\" t
+.\"     Title: struct usb_ep
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_EP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_ep \- device side representation of USB endpoint
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_ep {
+  void * driver_data;
+  const char * name;
+  const struct usb_ep_ops * ops;
+  struct list_head ep_list;
+  struct usb_ep_caps caps;
+  unsigned maxpacket:16;
+  unsigned maxpacket_limit:16;
+  unsigned max_streams:16;
+  unsigned mult:2;
+  unsigned maxburst:5;
+  u8 address;
+  const struct usb_endpoint_descriptor * desc;
+  const struct usb_ss_ep_comp_descriptor * comp_desc;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+driver_data
+.RS 4
+for use by the gadget driver\&.
+.RE
+.PP
+name
+.RS 4
+identifier for the endpoint, such as
+\(lqep\-a\(rq
+or
+\(lqep9in\-bulk\(rq
+.RE
+.PP
+ops
+.RS 4
+Function pointers used to access hardware\-specific operations\&.
+.RE
+.PP
+ep_list
+.RS 4
+the gadget\*(Aqs ep_list holds all of its endpoints
+.RE
+.PP
+caps
+.RS 4
+The structure describing types and directions supported by endoint\&.
+.RE
+.PP
+maxpacket
+.RS 4
+The maximum packet size used on this endpoint\&. The initial value can sometimes be reduced (hardware allowing), according to the endpoint descriptor used to configure the endpoint\&.
+.RE
+.PP
+maxpacket_limit
+.RS 4
+The maximum packet size value which can be handled by this endpoint\&. It\*(Aqs set once by UDC driver when endpoint is initialized, and should not be changed\&. Should not be confused with maxpacket\&.
+.RE
+.PP
+max_streams
+.RS 4
+The maximum number of streams supported by this EP (0 \- 16, actual number is 2^n)
+.RE
+.PP
+mult
+.RS 4
+multiplier, \*(Aqmult\*(Aq value for SS Isoc EPs
+.RE
+.PP
+maxburst
+.RS 4
+the maximum number of bursts supported by this EP (for usb3)
+.RE
+.PP
+address
+.RS 4
+used to identify the endpoint when finding descriptor that matches connection speed
+.RE
+.PP
+desc
+.RS 4
+endpoint descriptor\&. This pointer is set before the endpoint is enabled and remains valid until the endpoint is disabled\&.
+.RE
+.PP
+comp_desc
+.RS 4
+In case of SuperSpeed support, this is the endpoint companion descriptor that is used to configure the endpoint
+.RE
+.SH "DESCRIPTION"
+.PP
+the bus controller driver lists all the general purpose endpoints in gadget\->ep_list\&. the control endpoint (gadget\->ep0) is not in that list, and is accessed only in response to a driver
+\fBsetup\fR
+callback\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

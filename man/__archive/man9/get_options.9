@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: get_options
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GET_OPTIONS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+get_options \- Parse a string into a list of integers
+.SH "SYNOPSIS"
+.HP \w'char\ *\ get_options('u
+.BI "char * get_options(const\ char\ *\ " "str" ", int\ " "nints" ", int\ *\ " "ints" ");"
+.SH "ARGUMENTS"
+.PP
+\fIstr\fR
+.RS 4
+String to be parsed
+.RE
+.PP
+\fInints\fR
+.RS 4
+size of integer array
+.RE
+.PP
+\fIints\fR
+.RS 4
+integer array
+.RE
+.SH "DESCRIPTION"
+.PP
+This function parses a string containing a comma\-separated list of integers, a hyphen\-separated range of _positive_ integers, or a combination of both\&. The parse halts when the array is full, or when no more numbers can be retrieved from the string\&.
+.PP
+Return value is the character in the string which caused the parse to end (typically a null terminator, if
+\fIstr\fR
+is completely parseable)\&.
+.SH "COPYRIGHT"
+.br

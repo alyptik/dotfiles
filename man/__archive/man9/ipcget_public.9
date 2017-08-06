@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: ipcget_public
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPCGET_PUBLIC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipcget_public \- get an ipc object or create a new one
+.SH "SYNOPSIS"
+.HP \w'int\ ipcget_public('u
+.BI "int ipcget_public(struct\ ipc_namespace\ *\ " "ns" ", struct\ ipc_ids\ *\ " "ids" ", const\ struct\ ipc_ops\ *\ " "ops" ", struct\ ipc_params\ *\ " "params" ");"
+.SH "ARGUMENTS"
+.PP
+\fIns\fR
+.RS 4
+ipc namespace
+.RE
+.PP
+\fIids\fR
+.RS 4
+ipc identifier set
+.RE
+.PP
+\fIops\fR
+.RS 4
+the actual creation routine to call
+.RE
+.PP
+\fIparams\fR
+.RS 4
+its parameters
+.RE
+.SH "DESCRIPTION"
+.PP
+This routine is called by sys_msgget,
+\fBsys_semget\fR
+and
+\fBsys_shmget\fR
+when the key is not IPC_PRIVATE\&. It adds a new entry if the key is not found and does some permission / security checkings if the key is found\&.
+.PP
+On success, the ipc id is returned\&.
+.SH "COPYRIGHT"
+.br

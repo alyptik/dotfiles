@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: rpc_create
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RPC_CREATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rpc_create \- create an RPC client and transport with one call
+.SH "SYNOPSIS"
+.HP \w'struct\ rpc_clnt\ *\ rpc_create('u
+.BI "struct rpc_clnt * rpc_create(struct\ rpc_create_args\ *\ " "args" ");"
+.SH "ARGUMENTS"
+.PP
+\fIargs\fR
+.RS 4
+rpc_clnt create argument structure
+.RE
+.SH "DESCRIPTION"
+.PP
+Creates and initializes an RPC transport and an RPC client\&.
+.PP
+It can ping the server in order to determine if it is up, and to see if it supports this program and version\&. RPC_CLNT_CREATE_NOPING disables this behavior so asynchronous tasks can also use rpc_create\&.
+.SH "COPYRIGHT"
+.br

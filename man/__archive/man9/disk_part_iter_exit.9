@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: disk_part_iter_exit
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DISK_PART_ITER_EXIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+disk_part_iter_exit \- finish up partition iteration
+.SH "SYNOPSIS"
+.HP \w'void\ disk_part_iter_exit('u
+.BI "void disk_part_iter_exit(struct\ disk_part_iter\ *\ " "piter" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpiter\fR
+.RS 4
+iter of interest
+.RE
+.SH "DESCRIPTION"
+.PP
+Called when iteration is over\&. Cleans up
+\fIpiter\fR\&.
+.SH "CONTEXT"
+.PP
+Don\*(Aqt care\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: register_filesystem
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGISTER_FILESYSTEM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+register_filesystem \- register a new filesystem
+.SH "SYNOPSIS"
+.HP \w'int\ register_filesystem('u
+.BI "int register_filesystem(struct\ file_system_type\ *\ " "fs" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfs\fR
+.RS 4
+the file system structure
+.RE
+.SH "DESCRIPTION"
+.PP
+Adds the file system passed to the list of file systems the kernel is aware of for mount and other syscalls\&. Returns 0 on success, or a negative errno code on an error\&.
+.PP
+The
+struct file_system_type
+that is passed is linked into the kernel structures and must not be freed until the file system has been unregistered\&.
+.SH "COPYRIGHT"
+.br

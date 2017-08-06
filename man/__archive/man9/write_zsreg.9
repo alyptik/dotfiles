@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: write_zsreg
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WRITE_ZSREG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+write_zsreg \- Write to a Z8530 channel register
+.SH "SYNOPSIS"
+.HP \w'void\ write_zsreg('u
+.BI "void write_zsreg(struct\ z8530_channel\ *\ " "c" ", u8\ " "reg" ", u8\ " "val" ");"
+.SH "ARGUMENTS"
+.PP
+\fIc\fR
+.RS 4
+The Z8530 channel
+.RE
+.PP
+\fIreg\fR
+.RS 4
+Register number
+.RE
+.PP
+\fIval\fR
+.RS 4
+Value to write
+.RE
+.SH "DESCRIPTION"
+.PP
+Write a value to an indexed register\&. The caller must hold the lock to honour the irritating delay rules\&. We know about register 0 being fast to access\&.
+.PP
+Assumes c\->lock is held\&.
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

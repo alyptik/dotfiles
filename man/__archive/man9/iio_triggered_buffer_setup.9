@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: iio_triggered_buffer_setup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Industrial I/O core
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IIO_TRIGGERED_BUFFER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Industrial I/O core"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+iio_triggered_buffer_setup \- Setup triggered buffer and pollfunc
+.SH "SYNOPSIS"
+.HP \w'int\ iio_triggered_buffer_setup('u
+.BI "int iio_triggered_buffer_setup(struct\ iio_dev\ *\ " "indio_dev" ", irqreturn_t\ (*" "h" ")\ (int\ irq,\ void\ *p), irqreturn_t\ (*" "thread" ")\ (int\ irq,\ void\ *p), const\ struct\ iio_buffer_setup_ops\ *\ " "setup_ops" ");"
+.SH "ARGUMENTS"
+.PP
+\fIindio_dev\fR
+.RS 4
+IIO device structure
+.RE
+.PP
+\fIh\fR
+.RS 4
+Function which will be used as pollfunc top half
+.RE
+.PP
+\fIthread\fR
+.RS 4
+Function which will be used as pollfunc bottom half
+.RE
+.PP
+\fIsetup_ops\fR
+.RS 4
+Buffer setup functions to use for this device\&. If NULL the default setup functions for triggered buffers will be used\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function combines some common tasks which will normally be performed when setting up a triggered buffer\&. It will allocate the buffer and the pollfunc\&.
+.PP
+Before calling this function the indio_dev structure should already be completely initialized, but not yet registered\&. In practice this means that this function should be called right before
+\fBiio_device_register\fR\&.
+.PP
+To free the resources allocated by this function call
+\fBiio_triggered_buffer_cleanup\fR\&.
+.SH "AUTHOR"
+.PP
+\fBDaniel Baluta\fR <\&daniel.baluta@intel.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

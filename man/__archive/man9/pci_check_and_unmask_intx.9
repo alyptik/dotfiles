@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: pci_check_and_unmask_intx
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_CHECK_AND_UNMASK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_check_and_unmask_intx \- unmask INTx if no interrupt is pending
+.SH "SYNOPSIS"
+.HP \w'bool\ pci_check_and_unmask_intx('u
+.BI "bool pci_check_and_unmask_intx(struct\ pci_dev\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the PCI device to operate on
+.RE
+.SH "DESCRIPTION"
+.PP
+Check if the device dev has its INTx line asserted, unmask it if not and return true\&. False is returned and the mask remains active if there was still an interrupt pending\&.
+.SH "COPYRIGHT"
+.br

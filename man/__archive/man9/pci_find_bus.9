@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: pci_find_bus
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_FIND_BUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_find_bus \- locate PCI bus from a given domain and bus number
+.SH "SYNOPSIS"
+.HP \w'struct\ pci_bus\ *\ pci_find_bus('u
+.BI "struct pci_bus * pci_find_bus(int\ " "domain" ", int\ " "busnr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdomain\fR
+.RS 4
+number of PCI domain to search
+.RE
+.PP
+\fIbusnr\fR
+.RS 4
+number of desired PCI bus
+.RE
+.SH "DESCRIPTION"
+.PP
+Given a PCI bus number and domain number, the desired PCI bus is located in the global list of PCI buses\&. If the bus is found, a pointer to its data structure is returned\&. If no bus is found,
+\fBNULL\fR
+is returned\&.
+.SH "COPYRIGHT"
+.br

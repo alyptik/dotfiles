@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: lookup_one_len_unlocked
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "LOOKUP_ONE_LEN_UNLOC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+lookup_one_len_unlocked \- filesystem helper to lookup single pathname component
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ lookup_one_len_unlocked('u
+.BI "struct dentry * lookup_one_len_unlocked(const\ char\ *\ " "name" ", struct\ dentry\ *\ " "base" ", int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+pathname component to lookup
+.RE
+.PP
+\fIbase\fR
+.RS 4
+base directory to lookup from
+.RE
+.PP
+\fIlen\fR
+.RS 4
+maximum length
+\fIlen\fR
+should be interpreted to
+.RE
+.SH "DESCRIPTION"
+.PP
+Note that this routine is purely a helper for filesystem usage and should not be called by generic code\&.
+.PP
+Unlike lookup_one_len, it should be called without the parent i_mutex held, and will take the i_mutex itself if necessary\&.
+.SH "COPYRIGHT"
+.br

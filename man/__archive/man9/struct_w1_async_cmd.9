@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: struct w1_async_cmd
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT W1_ASYNC_CMD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_w1_async_cmd \- execute callback from the w1_process kthread
+.SH "SYNOPSIS"
+.sp
+.nf
+struct w1_async_cmd {
+  struct list_head async_entry;
+  void (* cb) (struct w1_master *dev, struct w1_async_cmd *async_cmd);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+async_entry
+.RS 4
+link entry
+.RE
+.PP
+cb
+.RS 4
+callback function, must list_del and destroy this list before returning
+.RE
+.SH "DESCRIPTION"
+.PP
+When inserted into the w1_master async_list, w1_process will execute the callback\&. Embed this into the structure with the command details\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

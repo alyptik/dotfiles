@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: ata_do_dev_read_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DO_DEV_READ_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_do_dev_read_id \- default ID read method
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ ata_do_dev_read_id('u
+.BI "unsigned int ata_do_dev_read_id(struct\ ata_device\ *\ " "dev" ", struct\ ata_taskfile\ *\ " "tf" ", u16\ *\ " "id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device
+.RE
+.PP
+\fItf\fR
+.RS 4
+proposed taskfile
+.RE
+.PP
+\fIid\fR
+.RS 4
+data buffer
+.RE
+.SH "DESCRIPTION"
+.PP
+Issue the identify taskfile and hand back the buffer containing identify data\&. For some RAID controllers and for pre ATA devices this function is wrapped or replaced by the driver
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

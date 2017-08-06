@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: new_inode
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NEW_INODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+new_inode \- obtain an inode
+.SH "SYNOPSIS"
+.HP \w'struct\ inode\ *\ new_inode('u
+.BI "struct inode * new_inode(struct\ super_block\ *\ " "sb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+superblock
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocates a new inode for given superblock\&. The default gfp_mask for allocations related to inode\->i_mapping is GFP_HIGHUSER_MOVABLE\&. If HIGHMEM pages are unsuitable or it is known that pages allocated for the page cache are not reclaimable or migratable,
+\fBmapping_set_gfp_mask\fR
+must be called with suitable flags on the newly created inode\*(Aqs mapping
+.SH "COPYRIGHT"
+.br

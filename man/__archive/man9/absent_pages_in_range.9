@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: absent_pages_in_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ABSENT_PAGES_IN_RANG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+absent_pages_in_range \- Return number of page frames in holes within a range
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ absent_pages_in_range('u
+.BI "unsigned long absent_pages_in_range(unsigned\ long\ " "start_pfn" ", unsigned\ long\ " "end_pfn" ");"
+.SH "ARGUMENTS"
+.PP
+\fIstart_pfn\fR
+.RS 4
+The start PFN to start searching for holes
+.RE
+.PP
+\fIend_pfn\fR
+.RS 4
+The end PFN to stop searching for holes
+.RE
+.SH "DESCRIPTION"
+.PP
+It returns the number of pages frames in memory holes within a range\&.
+.SH "COPYRIGHT"
+.br

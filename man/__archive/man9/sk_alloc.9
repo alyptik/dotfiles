@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: sk_alloc
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SK_ALLOC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sk_alloc \- All socket objects are allocated here
+.SH "SYNOPSIS"
+.HP \w'struct\ sock\ *\ sk_alloc('u
+.BI "struct sock * sk_alloc(struct\ net\ *\ " "net" ", int\ " "family" ", gfp_t\ " "priority" ", struct\ proto\ *\ " "prot" ", int\ " "kern" ");"
+.SH "ARGUMENTS"
+.PP
+\fInet\fR
+.RS 4
+the applicable net namespace
+.RE
+.PP
+\fIfamily\fR
+.RS 4
+protocol family
+.RE
+.PP
+\fIpriority\fR
+.RS 4
+for allocation (\fBGFP_KERNEL\fR,
+\fBGFP_ATOMIC\fR, etc)
+.RE
+.PP
+\fIprot\fR
+.RS 4
+struct proto associated with this new sock instance
+.RE
+.PP
+\fIkern\fR
+.RS 4
+is this to be a kernel socket?
+.RE
+.SH "COPYRIGHT"
+.br

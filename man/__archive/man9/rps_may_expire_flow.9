@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: rps_may_expire_flow
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RPS_MAY_EXPIRE_FLOW" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rps_may_expire_flow \- check whether an RFS hardware filter may be removed
+.SH "SYNOPSIS"
+.HP \w'bool\ rps_may_expire_flow('u
+.BI "bool rps_may_expire_flow(struct\ net_device\ *\ " "dev" ", u16\ " "rxq_index" ", u32\ " "flow_id" ", u16\ " "filter_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device on which the filter was set
+.RE
+.PP
+\fIrxq_index\fR
+.RS 4
+RX queue index
+.RE
+.PP
+\fIflow_id\fR
+.RS 4
+Flow ID passed to
+\fBndo_rx_flow_steer\fR
+.RE
+.PP
+\fIfilter_id\fR
+.RS 4
+Filter ID returned by
+\fBndo_rx_flow_steer\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Drivers that implement
+\fBndo_rx_flow_steer\fR
+should periodically call this function for each installed filter and remove the filters for which it returns
+\fBtrue\fR\&.
+.SH "COPYRIGHT"
+.br

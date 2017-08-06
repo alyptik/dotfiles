@@ -1,0 +1,195 @@
+'\" t
+.\"     Title: bitmap_onto
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_ONTO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_onto \- translate one bitmap relative to another
+.SH "SYNOPSIS"
+.HP \w'void\ bitmap_onto('u
+.BI "void bitmap_onto(unsigned\ long\ *\ " "dst" ", const\ unsigned\ long\ *\ " "orig" ", const\ unsigned\ long\ *\ " "relmap" ", unsigned\ int\ " "bits" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdst\fR
+.RS 4
+resulting translated bitmap
+.RE
+.PP
+\fIorig\fR
+.RS 4
+original untranslated bitmap
+.RE
+.PP
+\fIrelmap\fR
+.RS 4
+bitmap relative to which translated
+.RE
+.PP
+\fIbits\fR
+.RS 4
+number of bits in each of these bitmaps
+.RE
+.SH "DESCRIPTION"
+.PP
+Set the n\-th bit of
+\fIdst\fR
+iff there exists some m such that the n\-th bit of
+\fIrelmap\fR
+is set, the m\-th bit of
+\fIorig\fR
+is set, and the n\-th bit of
+\fIrelmap\fR
+is also the m\-th _set_ bit of
+\fIrelmap\fR\&. (If you understood the previous sentence the first time your read it, you\*(Aqre overqualified for your current job\&.)
+.PP
+In other words,
+\fIorig\fR
+is mapped onto (surjectively)
+\fIdst\fR, using the map { <n, m> | the n\-th bit of
+\fIrelmap\fR
+is the m\-th set bit of
+\fIrelmap\fR
+}\&.
+.PP
+Any set bits in
+\fIorig\fR
+above bit number W, where W is the weight of (number of set bits in)
+\fIrelmap\fR
+are mapped nowhere\&. In particular, if for all bits m set in
+\fIorig\fR, m >= W, then
+\fIdst\fR
+will end up empty\&. In situations where the possibility of such an empty result is not desired, one way to avoid it is to use the
+\fBbitmap_fold\fR
+operator, below, to first fold the
+\fIorig\fR
+bitmap over itself so that all its set bits x are in the range 0 <= x < W\&. The
+\fBbitmap_fold\fR
+operator does this by setting the bit (m % W) in
+\fIdst\fR, for each bit (m) set in
+\fIorig\fR\&.
+.PP
+Example [1] for
+\fBbitmap_onto\fR: Let\*(Aqs say
+\fIrelmap\fR
+has bits 30\-39 set, and
+\fIorig\fR
+has bits 1, 3, 5, 7, 9 and 11 set\&. Then on return from this routine,
+\fIdst\fR
+will have bits 31, 33, 35, 37 and 39 set\&.
+.PP
+When bit 0 is set in
+\fIorig\fR, it means turn on the bit in
+\fIdst\fR
+corresponding to whatever is the first bit (if any) that is turned on in
+\fIrelmap\fR\&. Since bit 0 was off in the above example, we leave off that bit (bit 30) in
+\fIdst\fR\&.
+.PP
+When bit 1 is set in
+\fIorig\fR
+(as in the above example), it means turn on the bit in
+\fIdst\fR
+corresponding to whatever is the second bit that is turned on in
+\fIrelmap\fR\&. The second bit in
+\fIrelmap\fR
+that was turned on in the above example was bit 31, so we turned on bit 31 in
+\fIdst\fR\&.
+.PP
+Similarly, we turned on bits 33, 35, 37 and 39 in
+\fIdst\fR, because they were the 4th, 6th, 8th and 10th set bits set in
+\fIrelmap\fR, and the 4th, 6th, 8th and 10th bits of
+\fIorig\fR
+(i\&.e\&. bits 3, 5, 7 and 9) were also set\&.
+.PP
+When bit 11 is set in
+\fIorig\fR, it means turn on the bit in
+\fIdst\fR
+corresponding to whatever is the twelfth bit that is turned on in
+\fIrelmap\fR\&. In the above example, there were only ten bits turned on in
+\fIrelmap\fR
+(30\&.\&.39), so that bit 11 was set in
+\fIorig\fR
+had no affect on
+\fIdst\fR\&.
+.PP
+Example [2] for
+\fBbitmap_fold\fR
++
+\fBbitmap_onto\fR: Let\*(Aqs say
+\fIrelmap\fR
+has these ten bits set: 40 41 42 43 45 48 53 61 74 95 (for the curious, that\*(Aqs 40 plus the first ten terms of the Fibonacci sequence\&.)
+.PP
+Further lets say we use the following code, invoking
+\fBbitmap_fold\fR
+then bitmap_onto, as suggested above to avoid the possibility of an empty
+\fIdst\fR
+result:
+.PP
+unsigned long *tmp; // a temporary bitmap\*(Aqs bits
+.PP
+bitmap_fold(tmp, orig, bitmap_weight(relmap, bits), bits); bitmap_onto(dst, tmp, relmap, bits);
+.PP
+Then this table shows what various values of
+\fIdst\fR
+would be, for various
+\fIorig\fR\*(Aqs\&. I list the zero\-based positions of each set bit\&. The tmp column shows the intermediate result, as computed by using
+\fBbitmap_fold\fR
+to fold the
+\fIorig\fR
+bitmap modulo ten (the weight of
+\fIrelmap\fR)\&.
+.PP
+\fIorig\fR
+tmp
+\fIdst\fR
+0 0 40 1 1 41 9 9 95 10 0 40 (*) 1 3 5 7 1 3 5 7 41 43 48 61 0 1 2 3 4 0 1 2 3 4 40 41 42 43 45 0 9 18 27 0 9 8 7 40 61 74 95 0 10 20 30 0 40 0 11 22 33 0 1 2 3 40 41 42 43 0 12 24 36 0 2 4 6 40 42 45 53 78 102 211 1 2 8 41 42 74 (*)
+.PP
+(*) For these marked lines, if we hadn\*(Aqt first done
+\fBbitmap_fold\fR
+into tmp, then the
+\fIdst\fR
+result would have been empty\&.
+.PP
+If either of
+\fIorig\fR
+or
+\fIrelmap\fR
+is empty (no set bits), then
+\fIdst\fR
+will be returned empty\&.
+.PP
+If (as explained above) the only set bits in
+\fIorig\fR
+are in positions m where m >= W, (where W is the weight of
+\fIrelmap\fR) then
+\fIdst\fR
+will once again be returned empty\&.
+.PP
+All bits in
+\fIdst\fR
+not set by the above rule are cleared\&.
+.SH "COPYRIGHT"
+.br

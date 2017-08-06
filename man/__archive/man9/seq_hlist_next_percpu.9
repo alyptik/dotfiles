@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: seq_hlist_next_percpu
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SEQ_HLIST_NEXT_PERCP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+seq_hlist_next_percpu \- move to the next position of the percpu hlist array
+.SH "SYNOPSIS"
+.HP \w'struct\ hlist_node\ *\ seq_hlist_next_percpu('u
+.BI "struct hlist_node * seq_hlist_next_percpu(void\ *\ " "v" ", struct\ hlist_head\ __percpu\ *\ " "head" ", int\ *\ " "cpu" ", loff_t\ *\ " "pos" ");"
+.SH "ARGUMENTS"
+.PP
+\fIv\fR
+.RS 4
+pointer to current hlist_node
+.RE
+.PP
+\fIhead\fR
+.RS 4
+pointer to percpu array of struct hlist_heads
+.RE
+.PP
+\fIcpu\fR
+.RS 4
+pointer to cpu
+\(lqcursor\(rq
+.RE
+.PP
+\fIpos\fR
+.RS 4
+start position of sequence
+.RE
+.SH "DESCRIPTION"
+.PP
+Called at seq_file\->op\->\fBnext\fR\&.
+.SH "COPYRIGHT"
+.br

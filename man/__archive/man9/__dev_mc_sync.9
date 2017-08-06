@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: __dev_mc_sync
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__DEV_MC_SYNC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__dev_mc_sync \- Synchonize device\*(Aqs multicast list
+.SH "SYNOPSIS"
+.HP \w'int\ __dev_mc_sync('u
+.BI "int __dev_mc_sync(struct\ net_device\ *\ " "dev" ", int\ (*" "sync" ")\ (struct\ net_device\ *,\ const\ unsigned\ char\ *), int\ (*" "unsync" ")\ (struct\ net_device\ *,\ const\ unsigned\ char\ *));"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device to sync
+.RE
+.PP
+\fIsync\fR
+.RS 4
+function to call if address should be added
+.RE
+.PP
+\fIunsync\fR
+.RS 4
+function to call if address should be removed
+.RE
+.SH "DESCRIPTION"
+.PP
+Add newly added addresses to the interface, and release addresses that have been deleted\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,77 @@
+'\" t
+.\"     Title: struct ccwgroup_device
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccwgroup bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT CCWGROUP_DEVI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccwgroup bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_ccwgroup_device \- ccw group device
+.SH "SYNOPSIS"
+.sp
+.nf
+struct ccwgroup_device {
+  enum state;
+  unsigned int count;
+  struct device dev;
+  struct work_struct ungroup_work;
+  struct ccw_device * cdev[0];
+};  
+.fi
+.SH "MEMBERS"
+.PP
+state
+.RS 4
+online/offline state
+.RE
+.PP
+count
+.RS 4
+number of attached slave devices
+.RE
+.PP
+dev
+.RS 4
+embedded device structure
+.RE
+.PP
+ungroup_work
+.RS 4
+work to be done when a ccwgroup notifier has action type
+\fBBUS_NOTIFY_UNBIND_DRIVER\fR
+.RE
+.PP
+cdev[0]
+.RS 4
+variable number of slave devices, allocated as needed
+.RE
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

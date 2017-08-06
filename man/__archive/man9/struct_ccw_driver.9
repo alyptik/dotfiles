@@ -1,0 +1,144 @@
+'\" t
+.\"     Title: struct ccw_driver
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT CCW_DRIVER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_ccw_driver \- device driver for channel attached devices
+.SH "SYNOPSIS"
+.sp
+.nf
+struct ccw_driver {
+  struct ccw_device_id * ids;
+  int (* probe) (struct ccw_device *);
+  void (* remove) (struct ccw_device *);
+  int (* set_online) (struct ccw_device *);
+  int (* set_offline) (struct ccw_device *);
+  int (* notify) (struct ccw_device *, int);
+  void (* path_event) (struct ccw_device *, int *);
+  void (* shutdown) (struct ccw_device *);
+  int (* prepare) (struct ccw_device *);
+  void (* complete) (struct ccw_device *);
+  int (* freeze) (struct ccw_device *);
+  int (* thaw) (struct ccw_device *);
+  int (* restore) (struct ccw_device *);
+  enum uc_todo (* uc_handler) (struct ccw_device *, struct irb *);
+  struct device_driver driver;
+  enum interruption_class int_class;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+ids
+.RS 4
+ids supported by this driver
+.RE
+.PP
+probe
+.RS 4
+function called on probe
+.RE
+.PP
+remove
+.RS 4
+function called on remove
+.RE
+.PP
+set_online
+.RS 4
+called when setting device online
+.RE
+.PP
+set_offline
+.RS 4
+called when setting device offline
+.RE
+.PP
+notify
+.RS 4
+notify driver of device state changes
+.RE
+.PP
+path_event
+.RS 4
+notify driver of channel path events
+.RE
+.PP
+shutdown
+.RS 4
+called at device shutdown
+.RE
+.PP
+prepare
+.RS 4
+prepare for pm state transition
+.RE
+.PP
+complete
+.RS 4
+undo work done in
+\fIprepare\fR
+.RE
+.PP
+freeze
+.RS 4
+callback for freezing during hibernation snapshotting
+.RE
+.PP
+thaw
+.RS 4
+undo work done in
+\fIfreeze\fR
+.RE
+.PP
+restore
+.RS 4
+callback for restoring after hibernation
+.RE
+.PP
+uc_handler
+.RS 4
+callback for unit check handler
+.RE
+.PP
+driver
+.RS 4
+embedded device driver structure
+.RE
+.PP
+int_class
+.RS 4
+interruption class to use for accounting interrupts
+.RE
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

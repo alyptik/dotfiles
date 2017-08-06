@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: skb_checksum_none_assert
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_CHECKSUM_NONE_AS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_checksum_none_assert \- make sure skb ip_summed is CHECKSUM_NONE
+.SH "SYNOPSIS"
+.HP \w'void\ skb_checksum_none_assert('u
+.BI "void skb_checksum_none_assert(const\ struct\ sk_buff\ *\ " "skb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+skb to check
+.RE
+.SH "DESCRIPTION"
+.PP
+fresh skbs have their ip_summed set to CHECKSUM_NONE\&. Instead of forcing ip_summed to CHECKSUM_NONE, we can use this helper, to document places where we make this assertion\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: pci_get_domain_bus_and_slot
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_GET_DOMAIN_BUS_A" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_get_domain_bus_and_slot \- locate PCI device for a given PCI domain (segment), bus, and slot
+.SH "SYNOPSIS"
+.HP \w'struct\ pci_dev\ *\ pci_get_domain_bus_and_slot('u
+.BI "struct pci_dev * pci_get_domain_bus_and_slot(int\ " "domain" ", unsigned\ int\ " "bus" ", unsigned\ int\ " "devfn" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdomain\fR
+.RS 4
+PCI domain/segment on which the PCI device resides\&.
+.RE
+.PP
+\fIbus\fR
+.RS 4
+PCI bus on which desired PCI device resides
+.RE
+.PP
+\fIdevfn\fR
+.RS 4
+encodes number of PCI slot in which the desired PCI device resides and the logical device number within that slot in case of multi\-function devices\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Given a PCI domain, bus, and slot/function number, the desired PCI device is located in the list of PCI devices\&. If the device is found, its reference count is increased and this function returns a pointer to its data structure\&. The caller must decrement the reference count by calling
+\fBpci_dev_put\fR\&. If no device is found,
+\fBNULL\fR
+is returned\&.
+.SH "COPYRIGHT"
+.br

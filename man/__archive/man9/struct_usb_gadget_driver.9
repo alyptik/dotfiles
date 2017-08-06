@@ -1,0 +1,159 @@
+'\" t
+.\"     Title: struct usb_gadget_driver
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_GADGET_DR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_gadget_driver \- driver for usb \*(Aqslave\*(Aq devices
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_gadget_driver {
+  char * function;
+  enum usb_device_speed max_speed;
+  int (* bind) (struct usb_gadget *gadget,struct usb_gadget_driver *driver);
+  void (* unbind) (struct usb_gadget *);
+  int (* setup) (struct usb_gadget *,const struct usb_ctrlrequest *);
+  void (* disconnect) (struct usb_gadget *);
+  void (* suspend) (struct usb_gadget *);
+  void (* resume) (struct usb_gadget *);
+  void (* reset) (struct usb_gadget *);
+  struct device_driver driver;
+  char * udc_name;
+  struct list_head pending;
+  unsigned match_existing_only:1;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+function
+.RS 4
+String describing the gadget\*(Aqs function
+.RE
+.PP
+max_speed
+.RS 4
+Highest speed the driver handles\&.
+.RE
+.PP
+bind
+.RS 4
+the driver\*(Aqs bind callback
+.RE
+.PP
+unbind
+.RS 4
+Invoked when the driver is unbound from a gadget, usually from rmmod (after a disconnect is reported)\&. Called in a context that permits sleeping\&.
+.RE
+.PP
+setup
+.RS 4
+Invoked for ep0 control requests that aren\*(Aqt handled by the hardware level driver\&. Most calls must be handled by the gadget driver, including descriptor and configuration management\&. The 16 bit members of the setup data are in USB byte order\&. Called in_interrupt; this may not sleep\&. Driver queues a response to ep0, or returns negative to stall\&.
+.RE
+.PP
+disconnect
+.RS 4
+Invoked after all transfers have been stopped, when the host is disconnected\&. May be called in_interrupt; this may not sleep\&. Some devices can\*(Aqt detect disconnect, so this might not be called except as part of controller shutdown\&.
+.RE
+.PP
+suspend
+.RS 4
+Invoked on USB suspend\&. May be called in_interrupt\&.
+.RE
+.PP
+resume
+.RS 4
+Invoked on USB resume\&. May be called in_interrupt\&.
+.RE
+.PP
+reset
+.RS 4
+Invoked on USB bus reset\&. It is mandatory for all gadget drivers and should be called in_interrupt\&.
+.RE
+.PP
+driver
+.RS 4
+Driver model state for this driver\&.
+.RE
+.PP
+udc_name
+.RS 4
+A name of UDC this driver should be bound to\&. If udc_name is NULL, this driver will be bound to any available UDC\&.
+.RE
+.PP
+pending
+.RS 4
+UDC core private data used for deferred probe of this driver\&.
+.RE
+.PP
+match_existing_only
+.RS 4
+If udc is not found, return an error and don\*(Aqt add this gadget driver to list of pending driver
+.RE
+.SH "DESCRIPTION"
+.PP
+Devices are disabled till a gadget driver successfully
+\fBbind\fRs, which means the driver will handle
+\fBsetup\fR
+requests needed to enumerate (and meet
+\(lqchapter 9\(rq
+requirements) then do some useful work\&.
+.PP
+If gadget\->is_otg is true, the gadget driver must provide an OTG descriptor during enumeration, or else fail the
+\fBbind\fR
+call\&. In such cases, no USB traffic may flow until both
+\fBbind\fR
+returns without having called
+\fBusb_gadget_disconnect\fR, and the USB host stack has initialized\&.
+.PP
+Drivers use hardware\-specific knowledge to configure the usb hardware\&. endpoint addressing is only one of several hardware characteristics that are in descriptors the ep0 implementation returns from
+\fBsetup\fR
+calls\&.
+.PP
+Except for ep0 implementation, most driver code shouldn\*(Aqt need change to run on top of different usb controllers\&. It\*(Aqll use endpoints set up by that ep0 implementation\&.
+.PP
+The usb controller driver handles a few standard usb requests\&. Those include set_address, and feature flags for devices, interfaces, and endpoints (the get_status, set_feature, and clear_feature requests)\&.
+.PP
+Accordingly, the driver\*(Aqs
+\fBsetup\fR
+callback must always implement all get_descriptor requests, returning at least a device descriptor and a configuration descriptor\&. Drivers must make sure the endpoint descriptors match any hardware constraints\&. Some hardware also constrains other descriptors\&. (The pxa250 allows only configurations 1, 2, or 3)\&.
+.PP
+The driver\*(Aqs
+\fBsetup\fR
+callback must also implement set_configuration, and should also implement set_interface, get_configuration, and get_interface\&. Setting a configuration (or interface) is where endpoints should be activated or (config 0) shut down\&.
+.PP
+(Note that only the default control endpoint is supported\&. Neither hosts nor devices generally support control traffic except to ep0\&.)
+.PP
+Most devices will ignore USB suspend/resume operations, and so will not provide those callbacks\&. However, some may need to change modes when the host is not longer directing those activities\&. For example, local controls (buttons, dials, etc) may need to be re\-enabled since the (remote) host can\*(Aqt do that any longer; or an error state might be cleared, to make the device behave identically whether or not power is maintained\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

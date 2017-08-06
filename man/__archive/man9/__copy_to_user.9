@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: __copy_to_user
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__COPY_TO_USER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__copy_to_user \- Copy a block of data into user space, with less checking\&.
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ __copy_to_user('u
+.BI "unsigned long __copy_to_user(void\ __user\ *\ " "to" ", const\ void\ *\ " "from" ", unsigned\ long\ " "n" ");"
+.SH "ARGUMENTS"
+.PP
+\fIto\fR
+.RS 4
+Destination address, in user space\&.
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+Source address, in kernel space\&.
+.RE
+.PP
+\fIn\fR
+.RS 4
+Number of bytes to copy\&.
+.RE
+.SH "CONTEXT"
+.PP
+User context only\&. This function may sleep if pagefaults are enabled\&.
+.SH "DESCRIPTION"
+.PP
+Copy data from kernel space to user space\&. Caller must check the specified block with
+\fBaccess_ok\fR
+before calling this function\&.
+.PP
+Returns number of bytes that could not be copied\&. On success, this will be zero\&.
+.SH "COPYRIGHT"
+.br

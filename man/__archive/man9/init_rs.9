@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: init_rs
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "INIT_RS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+init_rs \- Find a matching or allocate a new rs control structure
+.SH "SYNOPSIS"
+.HP \w'struct\ rs_control\ *\ init_rs('u
+.BI "struct rs_control * init_rs(int\ " "symsize" ", int\ " "gfpoly" ", int\ " "fcr" ", int\ " "prim" ", int\ " "nroots" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsymsize\fR
+.RS 4
+the symbol size (number of bits)
+.RE
+.PP
+\fIgfpoly\fR
+.RS 4
+the extended Galois field generator polynomial coefficients, with the 0th coefficient in the low order bit\&. The polynomial must be primitive;
+.RE
+.PP
+\fIfcr\fR
+.RS 4
+the first consecutive root of the rs code generator polynomial in index form
+.RE
+.PP
+\fIprim\fR
+.RS 4
+primitive element to generate polynomial roots
+.RE
+.PP
+\fInroots\fR
+.RS 4
+RS code generator polynomial degree (number of roots)
+.RE
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: ipc_init_proc_interface
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPC_INIT_PROC_INTERF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipc_init_proc_interface \- create a proc interface for sysipc types using a seq_file interface\&.
+.SH "SYNOPSIS"
+.HP \w'void\ ipc_init_proc_interface('u
+.BI "void ipc_init_proc_interface(const\ char\ *\ " "path" ", const\ char\ *\ " "header" ", int\ " "ids" ", int\ (*" "show" ")\ (struct\ seq_file\ *,\ void\ *));"
+.SH "ARGUMENTS"
+.PP
+\fIpath\fR
+.RS 4
+Path in procfs
+.RE
+.PP
+\fIheader\fR
+.RS 4
+Banner to be printed at the beginning of the file\&.
+.RE
+.PP
+\fIids\fR
+.RS 4
+ipc id table to iterate\&.
+.RE
+.PP
+\fIshow\fR
+.RS 4
+show routine\&.
+.RE
+.SH "COPYRIGHT"
+.br

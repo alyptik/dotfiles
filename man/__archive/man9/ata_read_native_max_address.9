@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: ata_read_native_max_address
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_READ_NATIVE_MAX_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_read_native_max_address \- Read native max address
+.SH "SYNOPSIS"
+.HP \w'int\ ata_read_native_max_address('u
+.BI "int ata_read_native_max_address(struct\ ata_device\ *\ " "dev" ", u64\ *\ " "max_sectors" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+target device
+.RE
+.PP
+\fImax_sectors\fR
+.RS 4
+out parameter for the result native max address
+.RE
+.SH "DESCRIPTION"
+.PP
+Perform an LBA48 or LBA28 native size query upon the device in question\&.
+.SH "RETURN"
+.PP
+0 on success, \-EACCES if command is aborted by the drive\&. \-EIO on other errors\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

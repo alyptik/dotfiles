@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: relay_open
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: relay interface support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RELAY_OPEN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "relay interface support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+relay_open \- create a new relay channel
+.SH "SYNOPSIS"
+.HP \w'struct\ rchan\ *\ relay_open('u
+.BI "struct rchan * relay_open(const\ char\ *\ " "base_filename" ", struct\ dentry\ *\ " "parent" ", size_t\ " "subbuf_size" ", size_t\ " "n_subbufs" ", struct\ rchan_callbacks\ *\ " "cb" ", void\ *\ " "private_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbase_filename\fR
+.RS 4
+base name of files to create,
+\fBNULL\fR
+for buffering only
+.RE
+.PP
+\fIparent\fR
+.RS 4
+dentry of parent directory,
+\fBNULL\fR
+for root directory or buffer
+.RE
+.PP
+\fIsubbuf_size\fR
+.RS 4
+size of sub\-buffers
+.RE
+.PP
+\fIn_subbufs\fR
+.RS 4
+number of sub\-buffers
+.RE
+.PP
+\fIcb\fR
+.RS 4
+client callback functions
+.RE
+.PP
+\fIprivate_data\fR
+.RS 4
+user\-defined data
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns channel pointer if successful,
+\fBNULL\fR
+otherwise\&.
+.PP
+Creates a channel buffer for each cpu using the sizes and attributes specified\&. The created channel buffer files will be named base_filename0\&.\&.\&.base_filenameN\-1\&. File permissions will be
+\fBS_IRUSR\fR\&.
+.PP
+If opening a buffer (\fIparent\fR
+= NULL) that you later wish to register in a filesystem, call
+\fBrelay_late_setup_files\fR
+once the
+\fIparent\fR
+dentry is available\&.
+.SH "COPYRIGHT"
+.br

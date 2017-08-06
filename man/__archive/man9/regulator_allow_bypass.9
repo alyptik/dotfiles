@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: regulator_allow_bypass
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_ALLOW_BYPA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_allow_bypass \- allow the regulator to go into bypass mode
+.SH "SYNOPSIS"
+.HP \w'int\ regulator_allow_bypass('u
+.BI "int regulator_allow_bypass(struct\ regulator\ *\ " "regulator" ", bool\ " "enable" ");"
+.SH "ARGUMENTS"
+.PP
+\fIregulator\fR
+.RS 4
+Regulator to configure
+.RE
+.PP
+\fIenable\fR
+.RS 4
+enable or disable bypass mode
+.RE
+.SH "DESCRIPTION"
+.PP
+Allow the regulator to go into bypass mode if all other consumers for the regulator also enable bypass mode and the machine constraints allow this\&. Bypass mode means that the regulator is simply passing the input directly to the output with no regulation\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

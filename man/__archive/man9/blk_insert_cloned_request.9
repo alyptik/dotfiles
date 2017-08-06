@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: blk_insert_cloned_request
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_INSERT_CLONED_RE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_insert_cloned_request \- Helper for stacking drivers to submit a request
+.SH "SYNOPSIS"
+.HP \w'int\ blk_insert_cloned_request('u
+.BI "int blk_insert_cloned_request(struct\ request_queue\ *\ " "q" ", struct\ request\ *\ " "rq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the queue to submit the request
+.RE
+.PP
+\fIrq\fR
+.RS 4
+the request being queued
+.RE
+.SH "COPYRIGHT"
+.br

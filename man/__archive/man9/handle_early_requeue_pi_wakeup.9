@@ -1,0 +1,69 @@
+'\" t
+.\"     Title: handle_early_requeue_pi_wakeup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "HANDLE_EARLY_REQUEUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+handle_early_requeue_pi_wakeup \- Detect early wakeup on the initial futex
+.SH "SYNOPSIS"
+.HP \w'int\ handle_early_requeue_pi_wakeup('u
+.BI "int handle_early_requeue_pi_wakeup(struct\ futex_hash_bucket\ *\ " "hb" ", struct\ futex_q\ *\ " "q" ", union\ futex_key\ *\ " "key2" ", struct\ hrtimer_sleeper\ *\ " "timeout" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhb\fR
+.RS 4
+the hash_bucket futex_q was original enqueued on
+.RE
+.PP
+\fIq\fR
+.RS 4
+the futex_q woken while waiting to be requeued
+.RE
+.PP
+\fIkey2\fR
+.RS 4
+the futex_key of the requeue target futex
+.RE
+.PP
+\fItimeout\fR
+.RS 4
+the timeout associated with the wait (NULL if none)
+.RE
+.SH "DESCRIPTION"
+.PP
+Detect if the task was woken on the initial futex as opposed to the requeue target futex\&. If so, determine if it was a timeout or a signal that caused the wakeup and return the appropriate error code to the caller\&. Must be called with the hb lock held\&.
+.SH "RETURN"
+.PP
+0 = no early wakeup detected; <0 = \-ETIMEDOUT or \-ERESTARTNOINTR
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

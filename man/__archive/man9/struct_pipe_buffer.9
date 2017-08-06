@@ -1,0 +1,79 @@
+'\" t
+.\"     Title: struct pipe_buffer
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: pipes API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT PIPE_BUFFER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "pipes API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_pipe_buffer \- a linux kernel pipe buffer
+.SH "SYNOPSIS"
+.sp
+.nf
+struct pipe_buffer {
+  struct page * page;
+  unsigned int offset;
+  unsigned int len;
+  const struct pipe_buf_operations * ops;
+  unsigned int flags;
+  unsigned long private;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+page
+.RS 4
+the page containing the data for the pipe buffer
+.RE
+.PP
+offset
+.RS 4
+offset of data inside the
+\fIpage\fR
+.RE
+.PP
+len
+.RS 4
+length of data inside the
+\fIpage\fR
+.RE
+.PP
+ops
+.RS 4
+operations associated with this buffer\&. See
+\fIpipe_buf_operations\fR\&.
+.RE
+.PP
+flags
+.RS 4
+pipe buffer flags\&. See above\&.
+.RE
+.PP
+private
+.RS 4
+private data owned by the ops\&.
+.RE
+.SH "COPYRIGHT"
+.br

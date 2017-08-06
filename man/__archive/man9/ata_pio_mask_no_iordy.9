@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: ata_pio_mask_no_iordy
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_PIO_MASK_NO_IORD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_pio_mask_no_iordy \- Return the non IORDY mask
+.SH "SYNOPSIS"
+.HP \w'u32\ ata_pio_mask_no_iordy('u
+.BI "u32 ata_pio_mask_no_iordy(const\ struct\ ata_device\ *\ " "adev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIadev\fR
+.RS 4
+ATA device
+.RE
+.SH "DESCRIPTION"
+.PP
+Compute the highest mode possible if we are not using iordy\&. Return \-1 if no iordy mode is available\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

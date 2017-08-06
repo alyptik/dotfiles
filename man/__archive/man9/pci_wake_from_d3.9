@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: pci_wake_from_d3
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_WAKE_FROM_D3" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_wake_from_d3 \- enable/disable device to wake up from D3_hot or D3_cold
+.SH "SYNOPSIS"
+.HP \w'int\ pci_wake_from_d3('u
+.BI "int pci_wake_from_d3(struct\ pci_dev\ *\ " "dev" ", bool\ " "enable" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device to prepare
+.RE
+.PP
+\fIenable\fR
+.RS 4
+True to enable wake\-up event generation; false to disable
+.RE
+.SH "DESCRIPTION"
+.PP
+Many drivers want the device to wake up the system from D3_hot or D3_cold and this function allows them to set that up cleanly \-
+\fBpci_enable_wake\fR
+should not be called twice in a row to enable wake\-up due to PCI PM vs ACPI ordering constraints\&.
+.PP
+This function only returns error code if the device is not capable of generating PME# from both D3_hot and D3_cold, and the platform is unable to enable wake\-up power for it\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: blk_lld_busy
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_LLD_BUSY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_lld_busy \- Check if underlying low\-level drivers of a device are busy
+.SH "SYNOPSIS"
+.HP \w'int\ blk_lld_busy('u
+.BI "int blk_lld_busy(struct\ request_queue\ *\ " "q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the queue of the device being checked
+.RE
+.SH "DESCRIPTION"
+.PP
+Check if underlying low\-level drivers of a device are busy\&. If the drivers want to export their busy state, they must set own exporting function using
+\fBblk_queue_lld_busy\fR
+first\&.
+.PP
+Basically, this function is used only by request stacking drivers to stop dispatching requests to underlying devices when underlying devices are busy\&. This behavior helps more I/O merging on the queue of the request stacking driver and prevents I/O throughput regression on burst I/O load\&.
+.SH "RETURN"
+.PP
+0 \- Not busy (The request stacking driver should dispatch request) 1 \- Busy (The request stacking driver should stop dispatching request)
+.SH "COPYRIGHT"
+.br

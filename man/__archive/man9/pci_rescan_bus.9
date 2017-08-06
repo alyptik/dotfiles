@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: pci_rescan_bus
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_RESCAN_BUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_rescan_bus \- scan a PCI bus for devices\&.
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ pci_rescan_bus('u
+.BI "unsigned int pci_rescan_bus(struct\ pci_bus\ *\ " "bus" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbus\fR
+.RS 4
+PCI bus to scan
+.RE
+.SH "DESCRIPTION"
+.PP
+Scan a PCI bus and child buses for new devices, adds them, and enables them\&.
+.PP
+Returns the max number of subordinate bus discovered\&.
+.SH "COPYRIGHT"
+.br

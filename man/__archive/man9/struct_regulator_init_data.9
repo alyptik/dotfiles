@@ -1,0 +1,95 @@
+'\" t
+.\"     Title: struct regulator_init_data
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_INI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_init_data \- regulator platform initialisation data\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_init_data {
+  const char * supply_regulator;
+  struct regulation_constraints constraints;
+  int num_consumer_supplies;
+  struct regulator_consumer_supply * consumer_supplies;
+  int (* regulator_init) (void *driver_data);
+  void * driver_data;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+supply_regulator
+.RS 4
+Parent regulator\&. Specified using the regulator name as it appears in the name field in sysfs, which can be explicitly set using the constraints field \*(Aqname\*(Aq\&.
+.RE
+.PP
+constraints
+.RS 4
+Constraints\&. These must be specified for the regulator to be usable\&.
+.RE
+.PP
+num_consumer_supplies
+.RS 4
+Number of consumer device supplies\&.
+.RE
+.PP
+consumer_supplies
+.RS 4
+Consumer device supply configuration\&.
+.RE
+.PP
+regulator_init
+.RS 4
+Callback invoked when the regulator has been registered\&.
+.RE
+.PP
+driver_data
+.RS 4
+Data passed to regulator_init\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Initialisation constraints, our supply and consumers supplies\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

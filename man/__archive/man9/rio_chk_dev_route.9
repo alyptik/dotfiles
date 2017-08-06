@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: rio_chk_dev_route
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_CHK_DEV_ROUTE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_chk_dev_route \- Validate route to the specified device\&.
+.SH "SYNOPSIS"
+.HP \w'int\ rio_chk_dev_route('u
+.BI "int rio_chk_dev_route(struct\ rio_dev\ *\ " "rdev" ", struct\ rio_dev\ **\ " "nrdev" ", int\ *\ " "npnum" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrdev\fR
+.RS 4
+RIO device failed to respond
+.RE
+.PP
+\fInrdev\fR
+.RS 4
+Last active device on the route to rdev
+.RE
+.PP
+\fInpnum\fR
+.RS 4
+nrdev\*(Aqs port number on the route to rdev
+.RE
+.SH "DESCRIPTION"
+.PP
+Follows a route to the specified RIO device to determine the last available device (and corresponding RIO port) on the route\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

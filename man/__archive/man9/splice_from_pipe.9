@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: splice_from_pipe
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: splice API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SPLICE_FROM_PIPE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "splice API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+splice_from_pipe \- splice data from a pipe to a file
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ splice_from_pipe('u
+.BI "ssize_t splice_from_pipe(struct\ pipe_inode_info\ *\ " "pipe" ", struct\ file\ *\ " "out" ", loff_t\ *\ " "ppos" ", size_t\ " "len" ", unsigned\ int\ " "flags" ", splice_actor\ *\ " "actor" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpipe\fR
+.RS 4
+pipe to splice from
+.RE
+.PP
+\fIout\fR
+.RS 4
+file to splice to
+.RE
+.PP
+\fIppos\fR
+.RS 4
+position in
+\fIout\fR
+.RE
+.PP
+\fIlen\fR
+.RS 4
+how many bytes to splice
+.RE
+.PP
+\fIflags\fR
+.RS 4
+splice modifier flags
+.RE
+.PP
+\fIactor\fR
+.RS 4
+handler that splices the data
+.RE
+.SH "DESCRIPTION"
+.PP
+See __splice_from_pipe\&. This function locks the pipe inode, otherwise it\*(Aqs identical to
+\fB__splice_from_pipe\fR\&.
+.SH "COPYRIGHT"
+.br

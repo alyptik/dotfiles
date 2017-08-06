@@ -1,0 +1,191 @@
+'\" t
+.\"     Title: struct nand_ecc_ctrl
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT NAND_ECC_CTRL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_nand_ecc_ctrl \- Control structure for ECC
+.SH "SYNOPSIS"
+.sp
+.nf
+struct nand_ecc_ctrl {
+  nand_ecc_modes_t mode;
+  enum nand_ecc_algo algo;
+  int steps;
+  int size;
+  int bytes;
+  int total;
+  int strength;
+  int prepad;
+  int postpad;
+  unsigned int options;
+  void * priv;
+  void (* hwctl) (struct mtd_info *mtd, int mode);
+  int (* calculate) (struct mtd_info *mtd, const uint8_t *dat,uint8_t *ecc_code);
+  int (* correct) (struct mtd_info *mtd, uint8_t *dat, uint8_t *read_ecc,uint8_t *calc_ecc);
+  int (* read_page_raw) (struct mtd_info *mtd, struct nand_chip *chip,uint8_t *buf, int oob_required, int page);
+  int (* write_page_raw) (struct mtd_info *mtd, struct nand_chip *chip,const uint8_t *buf, int oob_required, int page);
+  int (* read_page) (struct mtd_info *mtd, struct nand_chip *chip,uint8_t *buf, int oob_required, int page);
+  int (* read_subpage) (struct mtd_info *mtd, struct nand_chip *chip,uint32_t offs, uint32_t len, uint8_t *buf, int page);
+  int (* write_subpage) (struct mtd_info *mtd, struct nand_chip *chip,uint32_t offset, uint32_t data_len,const uint8_t *data_buf, int oob_required, int page);
+  int (* write_page) (struct mtd_info *mtd, struct nand_chip *chip,const uint8_t *buf, int oob_required, int page);
+  int (* write_oob_raw) (struct mtd_info *mtd, struct nand_chip *chip,int page);
+  int (* read_oob_raw) (struct mtd_info *mtd, struct nand_chip *chip,int page);
+  int (* read_oob) (struct mtd_info *mtd, struct nand_chip *chip, int page);
+  int (* write_oob) (struct mtd_info *mtd, struct nand_chip *chip,int page);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+mode
+.RS 4
+ECC mode
+.RE
+.PP
+algo
+.RS 4
+ECC algorithm
+.RE
+.PP
+steps
+.RS 4
+number of ECC steps per page
+.RE
+.PP
+size
+.RS 4
+data bytes per ECC step
+.RE
+.PP
+bytes
+.RS 4
+ECC bytes per step
+.RE
+.PP
+total
+.RS 4
+total number of ECC bytes per page
+.RE
+.PP
+strength
+.RS 4
+max number of correctible bits per ECC step
+.RE
+.PP
+prepad
+.RS 4
+padding information for syndrome based ECC generators
+.RE
+.PP
+postpad
+.RS 4
+padding information for syndrome based ECC generators
+.RE
+.PP
+options
+.RS 4
+ECC specific options (see NAND_ECC_XXX flags defined above)
+.RE
+.PP
+priv
+.RS 4
+pointer to private ECC control data
+.RE
+.PP
+hwctl
+.RS 4
+function to control hardware ECC generator\&. Must only be provided if an hardware ECC is available
+.RE
+.PP
+calculate
+.RS 4
+function for ECC calculation or readback from ECC hardware
+.RE
+.PP
+correct
+.RS 4
+function for ECC correction, matching to ECC generator (sw/hw)\&. Should return a positive number representing the number of corrected bitflips, \-EBADMSG if the number of bitflips exceed ECC strength, or any other error code if the error is not directly related to correction\&. If \-EBADMSG is returned the input buffers should be left untouched\&.
+.RE
+.PP
+read_page_raw
+.RS 4
+function to read a raw page without ECC\&. This function should hide the specific layout used by the ECC controller and always return contiguous in\-band and out\-of\-band data even if they\*(Aqre not stored contiguously on the NAND chip (e\&.g\&. NAND_ECC_HW_SYNDROME interleaves in\-band and out\-of\-band data)\&.
+.RE
+.PP
+write_page_raw
+.RS 4
+function to write a raw page without ECC\&. This function should hide the specific layout used by the ECC controller and consider the passed data as contiguous in\-band and out\-of\-band data\&. ECC controller is responsible for doing the appropriate transformations to adapt to its specific layout (e\&.g\&. NAND_ECC_HW_SYNDROME interleaves in\-band and out\-of\-band data)\&.
+.RE
+.PP
+read_page
+.RS 4
+function to read a page according to the ECC generator requirements; returns maximum number of bitflips corrected in any single ECC step, 0 if bitflips uncorrectable, \-EIO hw error
+.RE
+.PP
+read_subpage
+.RS 4
+function to read parts of the page covered by ECC; returns same as
+\fBread_page\fR
+.RE
+.PP
+write_subpage
+.RS 4
+function to write parts of the page covered by ECC\&.
+.RE
+.PP
+write_page
+.RS 4
+function to write a page according to the ECC generator requirements\&.
+.RE
+.PP
+write_oob_raw
+.RS 4
+function to write chip OOB data without ECC
+.RE
+.PP
+read_oob_raw
+.RS 4
+function to read chip OOB data without ECC
+.RE
+.PP
+read_oob
+.RS 4
+function to read chip OOB data
+.RE
+.PP
+write_oob
+.RS 4
+function to write chip OOB data
+.RE
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

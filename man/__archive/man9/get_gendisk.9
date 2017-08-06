@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: get_gendisk
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GET_GENDISK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+get_gendisk \- get partitioning information for a given device
+.SH "SYNOPSIS"
+.HP \w'struct\ gendisk\ *\ get_gendisk('u
+.BI "struct gendisk * get_gendisk(dev_t\ " "devt" ", int\ *\ " "partno" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdevt\fR
+.RS 4
+device to get partitioning information for
+.RE
+.PP
+\fIpartno\fR
+.RS 4
+returned partition index
+.RE
+.SH "DESCRIPTION"
+.PP
+This function gets the structure containing partitioning information for the given device
+\fIdevt\fR\&.
+.SH "COPYRIGHT"
+.br

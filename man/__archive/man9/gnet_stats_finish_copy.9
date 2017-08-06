@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: gnet_stats_finish_copy
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GNET_STATS_FINISH_CO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gnet_stats_finish_copy \- finish dumping procedure
+.SH "SYNOPSIS"
+.HP \w'int\ gnet_stats_finish_copy('u
+.BI "int gnet_stats_finish_copy(struct\ gnet_dump\ *\ " "d" ");"
+.SH "ARGUMENTS"
+.PP
+\fId\fR
+.RS 4
+dumping handle
+.RE
+.SH "DESCRIPTION"
+.PP
+Corrects the length of the top level TLV to include all TLVs added by
+\fBgnet_stats_copy_XXX\fR
+calls\&. Adds the backward compatibility TLVs if
+\fBgnet_stats_start_copy_compat\fR
+was used and releases the statistics lock\&.
+.PP
+Returns 0 on success or \-1 with the statistic lock released if the room in the socket buffer was not sufficient\&.
+.SH "COPYRIGHT"
+.br

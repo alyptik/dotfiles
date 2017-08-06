@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: acct_collect
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Accounting Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ACCT_COLLECT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Accounting Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+acct_collect \- collect accounting information into pacct_struct
+.SH "SYNOPSIS"
+.HP \w'void\ acct_collect('u
+.BI "void acct_collect(long\ " "exitcode" ", int\ " "group_dead" ");"
+.SH "ARGUMENTS"
+.PP
+\fIexitcode\fR
+.RS 4
+task exit code
+.RE
+.PP
+\fIgroup_dead\fR
+.RS 4
+not 0, if this thread is the last one in the process\&.
+.RE
+.SH "COPYRIGHT"
+.br

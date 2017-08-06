@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: blkdev_get_by_dev
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLKDEV_GET_BY_DEV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blkdev_get_by_dev \- open a block device by device number
+.SH "SYNOPSIS"
+.HP \w'struct\ block_device\ *\ blkdev_get_by_dev('u
+.BI "struct block_device * blkdev_get_by_dev(dev_t\ " "dev" ", fmode_t\ " "mode" ", void\ *\ " "holder" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device number of block device to open
+.RE
+.PP
+\fImode\fR
+.RS 4
+FMODE_* mask
+.RE
+.PP
+\fIholder\fR
+.RS 4
+exclusive holder identifier
+.RE
+.SH "DESCRIPTION"
+.PP
+Open the blockdevice described by device number
+\fIdev\fR\&.
+\fImode\fR
+and
+\fIholder\fR
+are identical to
+\fBblkdev_get\fR\&.
+.PP
+Use it ONLY if you really do not have anything better \- i\&.e\&. when you are behind a truly sucky interface and all you are given is a device number\&. _Never_ to be used for internal purposes\&. If you ever need it \- reconsider your API\&.
+.PP
+On success, the returned block_device has reference count of one\&.
+.SH "CONTEXT"
+.PP
+Might sleep\&.
+.SH "RETURN"
+.PP
+Pointer to block_device on success, ERR_PTR(\-errno) on failure\&.
+.SH "COPYRIGHT"
+.br

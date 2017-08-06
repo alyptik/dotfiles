@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: airq_iv_scan
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "AIRQ_IV_SCAN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+airq_iv_scan \- scan interrupt vector for non\-zero bits
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ airq_iv_scan('u
+.BI "unsigned long airq_iv_scan(struct\ airq_iv\ *\ " "iv" ", unsigned\ long\ " "start" ", unsigned\ long\ " "end" ");"
+.SH "ARGUMENTS"
+.PP
+\fIiv\fR
+.RS 4
+pointer to interrupt vector structure
+.RE
+.PP
+\fIstart\fR
+.RS 4
+bit number to start the search
+.RE
+.PP
+\fIend\fR
+.RS 4
+bit number to end the search
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns the bit number of the next non\-zero interrupt bit, or \-1UL if the scan completed without finding any more any non\-zero bits\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

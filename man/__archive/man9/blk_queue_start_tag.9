@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: blk_queue_start_tag
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_QUEUE_START_TAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_queue_start_tag \- find a free tag and assign it
+.SH "SYNOPSIS"
+.HP \w'int\ blk_queue_start_tag('u
+.BI "int blk_queue_start_tag(struct\ request_queue\ *\ " "q" ", struct\ request\ *\ " "rq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the request queue for the device
+.RE
+.PP
+\fIrq\fR
+.RS 4
+the block request that needs tagging
+.RE
+.SH "DESCRIPTION"
+.PP
+This can either be used as a stand\-alone helper, or possibly be assigned as the queue
+prep_rq_fn
+(in which case
+struct request
+automagically gets a tag assigned)\&. Note that this function assumes that any type of request can be queued! if this is not true for your device, you must check the request type before calling this function\&. The request will also be removed from the request queue, so it\*(Aqs the drivers responsibility to readd it if it should need to be restarted for some reason\&.
+.SH "NOTES"
+.PP
+queue lock must be held\&.
+.SH "COPYRIGHT"
+.br

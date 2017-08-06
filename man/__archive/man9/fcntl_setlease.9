@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: fcntl_setlease
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FCNTL_SETLEASE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fcntl_setlease \- sets a lease on an open file
+.SH "SYNOPSIS"
+.HP \w'int\ fcntl_setlease('u
+.BI "int fcntl_setlease(unsigned\ int\ " "fd" ", struct\ file\ *\ " "filp" ", long\ " "arg" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfd\fR
+.RS 4
+open file descriptor
+.RE
+.PP
+\fIfilp\fR
+.RS 4
+file pointer
+.RE
+.PP
+\fIarg\fR
+.RS 4
+type of lease to obtain
+.RE
+.SH "DESCRIPTION"
+.PP
+Call this fcntl to establish a lease on the file\&. Note that you also need to call
+\fBF_SETSIG\fR
+to receive a signal when the lease is broken\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: pci_find_next_ext_capability
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_FIND_NEXT_EXT_CA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_find_next_ext_capability \- Find an extended capability
+.SH "SYNOPSIS"
+.HP \w'int\ pci_find_next_ext_capability('u
+.BI "int pci_find_next_ext_capability(struct\ pci_dev\ *\ " "dev" ", int\ " "start" ", int\ " "cap" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device to query
+.RE
+.PP
+\fIstart\fR
+.RS 4
+address at which to start looking (0 to start at beginning of list)
+.RE
+.PP
+\fIcap\fR
+.RS 4
+capability code
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns the address of the next matching extended capability structure within the device\*(Aqs PCI configuration space or 0 if the device does not support it\&. Some capabilities can occur several times, e\&.g\&., the vendor\-specific capability, and this provides a way to find them all\&.
+.SH "COPYRIGHT"
+.br

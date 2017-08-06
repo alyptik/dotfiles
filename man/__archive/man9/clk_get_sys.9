@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: clk_get_sys
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Clock Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CLK_GET_SYS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Clock Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+clk_get_sys \- get a clock based upon the device name
+.SH "SYNOPSIS"
+.HP \w'struct\ clk\ *\ clk_get_sys('u
+.BI "struct clk * clk_get_sys(const\ char\ *\ " "dev_id" ", const\ char\ *\ " "con_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev_id\fR
+.RS 4
+device name
+.RE
+.PP
+\fIcon_id\fR
+.RS 4
+connection ID
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns a struct clk corresponding to the clock producer, or valid
+\fBIS_ERR\fR
+condition containing errno\&. The implementation uses
+\fIdev_id\fR
+and
+\fIcon_id\fR
+to determine the clock consumer, and thereby the clock producer\&. In contrast to
+\fBclk_get\fR
+this function takes the device name instead of the device itself for identification\&.
+.PP
+Drivers must assume that the clock source is not enabled\&.
+.PP
+clk_get_sys should not be called from within interrupt context\&.
+.SH "COPYRIGHT"
+.br

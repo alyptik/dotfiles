@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: ccw_dev_id_is_equal
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CCW_DEV_ID_IS_EQUAL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ccw_dev_id_is_equal \- compare two ccw_dev_ids
+.SH "SYNOPSIS"
+.HP \w'int\ ccw_dev_id_is_equal('u
+.BI "int ccw_dev_id_is_equal(struct\ ccw_dev_id\ *\ " "dev_id1" ", struct\ ccw_dev_id\ *\ " "dev_id2" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev_id1\fR
+.RS 4
+a ccw_dev_id
+.RE
+.PP
+\fIdev_id2\fR
+.RS 4
+another ccw_dev_id
+.RE
+.SH "RETURN"
+.PP
+\fB1\fR
+if the two structures are equal field\-by\-field,
+\fB0\fR
+if not\&.
+.SH "CONTEXT"
+.PP
+any
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

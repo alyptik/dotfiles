@@ -1,0 +1,109 @@
+'\" t
+.\"     Title: struct platform_nand_ctrl
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT PLATFORM_NAND" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_platform_nand_ctrl \- controller level device structure
+.SH "SYNOPSIS"
+.sp
+.nf
+struct platform_nand_ctrl {
+  int (* probe) (struct platform_device *pdev);
+  void (* remove) (struct platform_device *pdev);
+  void (* hwcontrol) (struct mtd_info *mtd, int cmd);
+  int (* dev_ready) (struct mtd_info *mtd);
+  void (* select_chip) (struct mtd_info *mtd, int chip);
+  void (* cmd_ctrl) (struct mtd_info *mtd, int dat, unsigned int ctrl);
+  void (* write_buf) (struct mtd_info *mtd, const uint8_t *buf, int len);
+  void (* read_buf) (struct mtd_info *mtd, uint8_t *buf, int len);
+  unsigned char (* read_byte) (struct mtd_info *mtd);
+  void * priv;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+probe
+.RS 4
+platform specific function to probe/setup hardware
+.RE
+.PP
+remove
+.RS 4
+platform specific function to remove/teardown hardware
+.RE
+.PP
+hwcontrol
+.RS 4
+platform specific hardware control structure
+.RE
+.PP
+dev_ready
+.RS 4
+platform specific function to read ready/busy pin
+.RE
+.PP
+select_chip
+.RS 4
+platform specific chip select function
+.RE
+.PP
+cmd_ctrl
+.RS 4
+platform specific function for controlling ALE/CLE/nCE\&. Also used to write command and address
+.RE
+.PP
+write_buf
+.RS 4
+platform specific function for write buffer
+.RE
+.PP
+read_buf
+.RS 4
+platform specific function for read buffer
+.RE
+.PP
+read_byte
+.RS 4
+platform specific function to read one byte from chip
+.RE
+.PP
+priv
+.RS 4
+private data to transport driver specific settings
+.RE
+.SH "DESCRIPTION"
+.PP
+All fields are optional and depend on the hardware driver requirements
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

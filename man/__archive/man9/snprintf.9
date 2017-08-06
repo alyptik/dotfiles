@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: snprintf
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SNPRINTF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+snprintf \- Format a string and place it in a buffer
+.SH "SYNOPSIS"
+.HP \w'int\ snprintf('u
+.BI "int snprintf(char\ *\ " "buf" ", size_t\ " "size" ", const\ char\ *\ " "fmt" ", " "\&.\&.\&." ");"
+.SH "ARGUMENTS"
+.PP
+\fIbuf\fR
+.RS 4
+The buffer to place the result into
+.RE
+.PP
+\fIsize\fR
+.RS 4
+The size of the buffer, including the trailing null space
+.RE
+.PP
+\fIfmt\fR
+.RS 4
+The format string to use
+.RE
+.PP
+\fI\&.\&.\&.\fR
+.RS 4
+Arguments for the format string
+.RE
+.SH "DESCRIPTION"
+.PP
+The return value is the number of characters which would be generated for the given input, excluding the trailing null, as per ISO C99\&. If the return is greater than or equal to
+\fIsize\fR, the resulting string is truncated\&.
+.PP
+See the
+\fBvsnprintf\fR
+documentation for format string extensions over C99\&.
+.SH "COPYRIGHT"
+.br

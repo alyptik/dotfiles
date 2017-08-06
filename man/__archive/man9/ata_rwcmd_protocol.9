@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: ata_rwcmd_protocol
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_RWCMD_PROTOCOL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_rwcmd_protocol \- set taskfile r/w commands and protocol
+.SH "SYNOPSIS"
+.HP \w'int\ ata_rwcmd_protocol('u
+.BI "int ata_rwcmd_protocol(struct\ ata_taskfile\ *\ " "tf" ", struct\ ata_device\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fItf\fR
+.RS 4
+command to examine and configure
+.RE
+.PP
+\fIdev\fR
+.RS 4
+device tf belongs to
+.RE
+.SH "DESCRIPTION"
+.PP
+Examine the device configuration and tf\->flags to calculate the proper read/write commands and protocol to use\&.
+.PP
+LOCKING: caller\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: struct regulator_consumer_supply
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_CON" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_consumer_supply \- supply \-> device mapping
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_consumer_supply {
+  const char * dev_name;
+  const char * supply;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+dev_name
+.RS 4
+Result of
+\fBdev_name\fR
+for the consumer\&.
+.RE
+.PP
+supply
+.RS 4
+Name for the supply\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+This maps a supply name to a device\&. Use of dev_name allows support for buses which make struct device available late such as I2C\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

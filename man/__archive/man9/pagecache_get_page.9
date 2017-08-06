@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: pagecache_get_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PAGECACHE_GET_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pagecache_get_page \- find and get a page reference
+.SH "SYNOPSIS"
+.HP \w'struct\ page\ *\ pagecache_get_page('u
+.BI "struct page * pagecache_get_page(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "offset" ", int\ " "fgp_flags" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the address_space to search
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+the page index
+.RE
+.PP
+\fIfgp_flags\fR
+.RS 4
+PCG flags
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+gfp mask to use for the page cache data page allocation
+.RE
+.SH "DESCRIPTION"
+.PP
+Looks up the page cache slot at
+\fImapping\fR
+&
+\fIoffset\fR\&.
+.PP
+PCG flags modify how the page is returned\&.
+.PP
+FGP_ACCESSED: the page will be marked accessed FGP_LOCK: Page is return locked FGP_CREAT: If page is not present then a new page is allocated using
+\fIgfp_mask\fR
+and added to the page cache and the VM\*(Aqs LRU list\&. The page is returned locked and with an increased refcount\&. Otherwise,
+\fBNULL\fR
+is returned\&.
+.PP
+If FGP_LOCK or FGP_CREAT are specified then the function may sleep even if the GFP flags specified for FGP_CREAT are atomic\&.
+.PP
+If there is a page cache page, it is returned with an increased refcount\&.
+.SH "COPYRIGHT"
+.br

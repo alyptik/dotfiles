@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: ata_platform_remove_one
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_PLATFORM_REMOVE_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_platform_remove_one \- Platform layer callback for device removal
+.SH "SYNOPSIS"
+.HP \w'int\ ata_platform_remove_one('u
+.BI "int ata_platform_remove_one(struct\ platform_device\ *\ " "pdev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpdev\fR
+.RS 4
+Platform device that was removed
+.RE
+.SH "DESCRIPTION"
+.PP
+Platform layer indicates to libata via this hook that hot\-unplug or module unload event has occurred\&. Detach all ports\&. Resource release is handled via devres\&.
+.PP
+LOCKING: Inherited from platform layer (may sleep)\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

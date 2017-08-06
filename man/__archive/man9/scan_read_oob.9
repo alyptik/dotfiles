@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: scan_read_oob
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCAN_READ_OOB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scan_read_oob \- [GENERIC] Scan data+OOB region to buffer
+.SH "SYNOPSIS"
+.HP \w'int\ scan_read_oob('u
+.BI "int scan_read_oob(struct\ mtd_info\ *\ " "mtd" ", uint8_t\ *\ " "buf" ", loff_t\ " "offs" ", size_t\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+temporary buffer
+.RE
+.PP
+\fIoffs\fR
+.RS 4
+offset at which to scan
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length of data region to read
+.RE
+.SH "DESCRIPTION"
+.PP
+Scan read data from data+OOB\&. May traverse multiple pages, interleaving page,OOB,page,OOB,\&.\&.\&. in buf\&. Completes transfer and returns the
+\(lqstrongest\(rq
+ECC condition (error or bitflip)\&. May quit on the first (non\-ECC) error\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

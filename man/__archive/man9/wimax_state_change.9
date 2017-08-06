@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: wimax_state_change
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_STATE_CHANGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_state_change \- Set the current state of a WiMAX device
+.SH "SYNOPSIS"
+.HP \w'void\ wimax_state_change('u
+.BI "void wimax_state_change(struct\ wimax_dev\ *\ " "wimax_dev" ", enum\ wimax_st\ " "new_state" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor (properly referenced)
+.RE
+.PP
+\fInew_state\fR
+.RS 4
+New state to switch to
+.RE
+.SH "DESCRIPTION"
+.PP
+This implements the state changes for the wimax devices\&. It will
+.PP
+\- verify that the state transition is legal (for now it\*(Aqll just print a warning if not) according to the table in linux/wimax\&.h\*(Aqs documentation for \*(Aqenum wimax_st\*(Aq\&.
+.PP
+\- perform the actions needed for leaving the current state and whichever are needed for entering the new state\&.
+.PP
+\- issue a report to user space indicating the new state (and an optional payload with information about the new state)\&.
+.SH "NOTE"
+.PP
+\fIwimax_dev\fR
+must be locked
+.SH "COPYRIGHT"
+.br

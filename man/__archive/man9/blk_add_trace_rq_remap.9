@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: blk_add_trace_rq_remap
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_ADD_TRACE_RQ_REM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_add_trace_rq_remap \- Add a trace for a request\-remap operation
+.SH "SYNOPSIS"
+.HP \w'void\ blk_add_trace_rq_remap('u
+.BI "void blk_add_trace_rq_remap(void\ *\ " "ignore" ", struct\ request_queue\ *\ " "q" ", struct\ request\ *\ " "rq" ", dev_t\ " "dev" ", sector_t\ " "from" ");"
+.SH "ARGUMENTS"
+.PP
+\fIignore\fR
+.RS 4
+trace callback data parameter (not used)
+.RE
+.PP
+\fIq\fR
+.RS 4
+queue the io is for
+.RE
+.PP
+\fIrq\fR
+.RS 4
+the source request
+.RE
+.PP
+\fIdev\fR
+.RS 4
+target device
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+source sector
+.RE
+.SH "DESCRIPTION"
+.PP
+Device mapper remaps request to other devices\&. Add a trace for that action\&.
+.SH "COPYRIGHT"
+.br

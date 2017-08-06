@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: blk_queue_max_write_same_sectors
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_QUEUE_MAX_WRITE_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_queue_max_write_same_sectors \- set max sectors for a single write same
+.SH "SYNOPSIS"
+.HP \w'void\ blk_queue_max_write_same_sectors('u
+.BI "void blk_queue_max_write_same_sectors(struct\ request_queue\ *\ " "q" ", unsigned\ int\ " "max_write_same_sectors" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the request queue for the device
+.RE
+.PP
+\fImax_write_same_sectors\fR
+.RS 4
+maximum number of sectors to write per command
+.RE
+.SH "COPYRIGHT"
+.br

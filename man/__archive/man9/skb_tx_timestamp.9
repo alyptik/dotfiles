@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: skb_tx_timestamp
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_TX_TIMESTAMP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_tx_timestamp \- Driver hook for transmit timestamping
+.SH "SYNOPSIS"
+.HP \w'void\ skb_tx_timestamp('u
+.BI "void skb_tx_timestamp(struct\ sk_buff\ *\ " "skb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+A socket buffer\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Ethernet MAC Drivers should call this function in their
+\fBhard_xmit\fR
+function immediately before giving the sk_buff to the MAC hardware\&.
+.PP
+Specifically, one should make absolutely sure that this function is called before TX completion of this packet can trigger\&. Otherwise the packet could potentially already be freed\&.
+.SH "COPYRIGHT"
+.br

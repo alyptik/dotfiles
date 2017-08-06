@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: dmi_walk
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Firmware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMI_WALK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Firmware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dmi_walk \- Walk the DMI table and get called back for every record
+.SH "SYNOPSIS"
+.HP \w'int\ dmi_walk('u
+.BI "int dmi_walk(void\ (*" "decode" ")\ (const\ struct\ dmi_header\ *,\ void\ *), void\ *\ " "private_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdecode\fR
+.RS 4
+Callback function
+.RE
+.PP
+\fIprivate_data\fR
+.RS 4
+Private data to be passed to the callback function
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns \-1 when the DMI table can\*(Aqt be reached, 0 on success\&.
+.SH "COPYRIGHT"
+.br

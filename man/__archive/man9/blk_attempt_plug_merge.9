@@ -1,0 +1,78 @@
+'\" t
+.\"     Title: blk_attempt_plug_merge
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_ATTEMPT_PLUG_MER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_attempt_plug_merge \- try to merge with \fBcurrent\fR\*(Aqs plugged list
+.SH "SYNOPSIS"
+.HP \w'bool\ blk_attempt_plug_merge('u
+.BI "bool blk_attempt_plug_merge(struct\ request_queue\ *\ " "q" ", struct\ bio\ *\ " "bio" ", unsigned\ int\ *\ " "request_count" ", struct\ request\ **\ " "same_queue_rq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+request_queue new bio is being queued at
+.RE
+.PP
+\fIbio\fR
+.RS 4
+new bio being queued
+.RE
+.PP
+\fIrequest_count\fR
+.RS 4
+out parameter for number of traversed plugged requests
+.RE
+.PP
+\fIsame_queue_rq\fR
+.RS 4
+pointer to
+struct request
+that gets filled in when another request associated with
+\fIq\fR
+is found on the plug list (optional, may be
+\fBNULL\fR)
+.RE
+.SH "DESCRIPTION"
+.PP
+Determine whether
+\fIbio\fR
+being queued on
+\fIq\fR
+can be merged with a request on
+\fBcurrent\fR\*(Aqs plugged list\&. Returns
+\fBtrue\fR
+if merge was successful, otherwise
+\fBfalse\fR\&.
+.PP
+Plugging coalesces IOs from the same issuer for the same purpose without going through
+\fIq\fR\->queue_lock\&. As such it\*(Aqs more of an issuing mechanism than scheduling, and the request, while may have elvpriv data, is not added on the elevator at this point\&. In addition, we don\*(Aqt have reliable access to the elevator outside queue lock\&. Only check basic merging parameters without querying the elevator\&.
+.PP
+Caller must ensure !blk_queue_nomerges(q) beforehand\&.
+.SH "COPYRIGHT"
+.br

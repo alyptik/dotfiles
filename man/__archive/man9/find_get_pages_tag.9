@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: find_get_pages_tag
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FIND_GET_PAGES_TAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+find_get_pages_tag \- find and return pages that match \fItag\fR
+.SH "SYNOPSIS"
+.HP \w'unsigned\ find_get_pages_tag('u
+.BI "unsigned find_get_pages_tag(struct\ address_space\ *\ " "mapping" ", pgoff_t\ *\ " "index" ", int\ " "tag" ", unsigned\ int\ " "nr_pages" ", struct\ page\ **\ " "pages" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the address_space to search
+.RE
+.PP
+\fIindex\fR
+.RS 4
+the starting page index
+.RE
+.PP
+\fItag\fR
+.RS 4
+the tag index
+.RE
+.PP
+\fInr_pages\fR
+.RS 4
+the maximum number of pages
+.RE
+.PP
+\fIpages\fR
+.RS 4
+where the resulting pages are placed
+.RE
+.SH "DESCRIPTION"
+.PP
+Like find_get_pages, except we only return pages which are tagged with
+\fItag\fR\&. We update
+\fIindex\fR
+to index the next page for the traversal\&.
+.SH "COPYRIGHT"
+.br

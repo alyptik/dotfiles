@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: mutex_is_locked
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Mutex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MUTEX_IS_LOCKED" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Mutex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mutex_is_locked \- is the mutex locked
+.SH "SYNOPSIS"
+.HP \w'int\ mutex_is_locked('u
+.BI "int mutex_is_locked(struct\ mutex\ *\ " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlock\fR
+.RS 4
+the mutex to be queried
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 1 if the mutex is locked, 0 if unlocked\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: dev_remove_offload
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEV_REMOVE_OFFLOAD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dev_remove_offload \- remove packet offload handler
+.SH "SYNOPSIS"
+.HP \w'void\ dev_remove_offload('u
+.BI "void dev_remove_offload(struct\ packet_offload\ *\ " "po" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpo\fR
+.RS 4
+packet offload declaration
+.RE
+.SH "DESCRIPTION"
+.PP
+Remove a packet offload handler that was previously added to the kernel offload handlers by
+\fBdev_add_offload\fR\&. The passed
+offload_type
+is removed from the kernel lists and can be freed or reused once this function returns\&.
+.PP
+This call sleeps to guarantee that no CPU is looking at the packet type after return\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: ww_mutex_unlock
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Mutex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WW_MUTEX_UNLOCK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Mutex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ww_mutex_unlock \- release the w/w mutex
+.SH "SYNOPSIS"
+.HP \w'void\ __sched\ ww_mutex_unlock('u
+.BI "void __sched ww_mutex_unlock(struct\ ww_mutex\ *\ " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlock\fR
+.RS 4
+the mutex to be released
+.RE
+.SH "DESCRIPTION"
+.PP
+Unlock a mutex that has been locked by this task previously with any of the ww_mutex_lock* functions (with or without an acquire context)\&. It is forbidden to release the locks after releasing the acquire context\&.
+.PP
+This function must not be used in interrupt context\&. Unlocking of a unlocked mutex is not allowed\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

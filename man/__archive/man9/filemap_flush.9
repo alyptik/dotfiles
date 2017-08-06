@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: filemap_flush
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FILEMAP_FLUSH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+filemap_flush \- mostly a non\-blocking flush
+.SH "SYNOPSIS"
+.HP \w'int\ filemap_flush('u
+.BI "int filemap_flush(struct\ address_space\ *\ " "mapping" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+target address_space
+.RE
+.SH "DESCRIPTION"
+.PP
+This is a mostly non\-blocking flush\&. Not suitable for data\-integrity purposes \- I/O may not be started against all dirty pages\&.
+.SH "COPYRIGHT"
+.br

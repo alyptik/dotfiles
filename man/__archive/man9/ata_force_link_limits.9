@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: ata_force_link_limits
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_FORCE_LINK_LIMIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_force_link_limits \- force link limits according to libata\&.force
+.SH "SYNOPSIS"
+.HP \w'void\ ata_force_link_limits('u
+.BI "void ata_force_link_limits(struct\ ata_link\ *\ " "link" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+ATA link of interest
+.RE
+.SH "DESCRIPTION"
+.PP
+Force link flags and SATA spd limit according to libata\&.force and whine about it\&. When only the port part is specified (e\&.g\&. 1:), the limit applies to all links connected to both the host link and all fan\-out ports connected via PMP\&. If the device part is specified as 0 (e\&.g\&. 1\&.00:), it specifies the first fan\-out link not the host link\&. Device number 15 always points to the host link whether PMP is attached or not\&. If the controller has slave link, device number 16 points to it\&.
+.PP
+LOCKING: EH context\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

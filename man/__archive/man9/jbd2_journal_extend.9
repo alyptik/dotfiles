@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: jbd2_journal_extend
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2_JOURNAL_EXTEND" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2_journal_extend \- extend buffer credits\&.
+.SH "SYNOPSIS"
+.HP \w'int\ jbd2_journal_extend('u
+.BI "int jbd2_journal_extend(handle_t\ *\ " "handle" ", int\ " "nblocks" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhandle\fR
+.RS 4
+handle to \*(Aqextend\*(Aq
+.RE
+.PP
+\fInblocks\fR
+.RS 4
+nr blocks to try to extend by\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Some transactions, such as large extends and truncates, can be done atomically all at once or in several stages\&. The operation requests a credit for a number of buffer modifications in advance, but can extend its credit if it needs more\&.
+.PP
+jbd2_journal_extend tries to give the running handle more buffer credits\&. It does not guarantee that allocation \- this is a best\-effort only\&. The calling process MUST be able to deal cleanly with a failure to extend here\&.
+.PP
+Return 0 on success, non\-zero on failure\&.
+.PP
+return code < 0 implies an error return code > 0 implies normal transaction\-full status\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

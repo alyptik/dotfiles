@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: __audit_log_capset
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_LOG_CAPSET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_log_capset \- store information about the arguments to the capset syscall
+.SH "SYNOPSIS"
+.HP \w'void\ __audit_log_capset('u
+.BI "void __audit_log_capset(const\ struct\ cred\ *\ " "new" ", const\ struct\ cred\ *\ " "old" ");"
+.SH "ARGUMENTS"
+.PP
+\fInew\fR
+.RS 4
+the new credentials
+.RE
+.PP
+\fIold\fR
+.RS 4
+the old (current) credentials
+.RE
+.SH "DESCRIPTION"
+.PP
+Record the arguments userspace sent to sys_capset for later printing by the audit system if applicable
+.SH "COPYRIGHT"
+.br

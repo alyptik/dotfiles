@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: bitmap_allocate_region
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_ALLOCATE_REGI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_allocate_region \- allocate bitmap region
+.SH "SYNOPSIS"
+.HP \w'int\ bitmap_allocate_region('u
+.BI "int bitmap_allocate_region(unsigned\ long\ *\ " "bitmap" ", unsigned\ int\ " "pos" ", int\ " "order" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbitmap\fR
+.RS 4
+array of unsigned longs corresponding to the bitmap
+.RE
+.PP
+\fIpos\fR
+.RS 4
+beginning of bit region to allocate
+.RE
+.PP
+\fIorder\fR
+.RS 4
+region size (log base 2 of number of bits) to allocate
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocate (set bits in) a specified region of a bitmap\&.
+.PP
+Return 0 on success, or
+\fB\-EBUSY\fR
+if specified region wasn\*(Aqt free (not all bits were zero)\&.
+.SH "COPYRIGHT"
+.br

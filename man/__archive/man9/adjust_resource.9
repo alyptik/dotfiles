@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: adjust_resource
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ADJUST_RESOURCE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+adjust_resource \- modify a resource\*(Aqs start and size
+.SH "SYNOPSIS"
+.HP \w'int\ adjust_resource('u
+.BI "int adjust_resource(struct\ resource\ *\ " "res" ", resource_size_t\ " "start" ", resource_size_t\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIres\fR
+.RS 4
+resource to modify
+.RE
+.PP
+\fIstart\fR
+.RS 4
+new start value
+.RE
+.PP
+\fIsize\fR
+.RS 4
+new size
+.RE
+.SH "DESCRIPTION"
+.PP
+Given an existing resource, change its start and size to match the arguments\&. Returns 0 on success, \-EBUSY if it can\*(Aqt fit\&. Existing children of the resource are assumed to be immutable\&.
+.SH "COPYRIGHT"
+.br

@@ -1,27 +1,9 @@
 ﻿! xterm Settings
-
-
-!xterm*termName:	rxvt-256color
 xterm*termName:		xterm-256color
 xterm*locale:		true
 xterm*metaSendsEscape:	true
 xterm*saveLines:	4096
 xterm*VT100.geometry:	80x32
-!xterm*reverseVideo:	on
-!xterm -fg PapayaWhip -bg "rgb:00/00/80"
-!xterm*font:	7x13
-!xterm*faceName:	Terminus:style=Regular:size=18
-!xterm*faceName:		  xft:FiraCode:style=Light:size=20
-!xterm*faceName:		xft:Inconsolata\\-g:style=Light:pixelsize=26:antialias=true:hinting=true,xft:Symbola,xft:Symbola:pixelsize=26
-!xterm*faceName:	Terminus:size=18:antialias=false
-
-!xterm*faceName:		xft:Fira Code:style=Retina:pixelsize=30:antialias=true:hinting=true,\
-! xterm*faceName:		xft:Fura Code Nerd Font Complete:style=Retina:pixelsize=30:antialias=true:hinting=true,\
-!                                 xft:Noto Color Emoji:style=Regular:pixelsize=20:antialias=false,\
-!                                 xft:WenQuanYi Bitmap Song:pixelsize=30,\
-!                                 xft:FreeSerif:pixelsize=30:style=Regular,\
-!                                 xft:Unifont:pixelsize=30:style=Medium:antialias=false,\
-!                                 xft:Symbola:pixelsize=30
 xterm*faceName:		xft:FuraCode Nerd Font:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 				xft:Noto Emoji:style=Regular:pixelsize=26:antialias=true:hinting=true,\
 				xft:Symbola:style=Regular:pixelsize=26:antialias=true:hinting=true,\
@@ -43,7 +25,6 @@ xterm*toolBar:		false
 xterm*eightBitInput:	false
 ! BROKEN
 XTerm*VT100.translations:	#override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
-
 ! Forbid bold font faces; bold type is light blue.
 xterm*colorBDMode:	true
 xterm*colorBD:		rgb:82/a4/d3
@@ -51,59 +32,16 @@ xterm*colorBD:		rgb:82/a4/d3
 xterm*colorULMode:	true
 xterm*colorUL:		rgb:e4/e4/e4
 
-! xolarized
-
-! xterm*.background:	rgba:1111/1111/dddd
-! xterm*background:	#002b36
-! xterm*foreground:	#eee8d5
-! xterm*background:	#839496
-!xterm*fadeColor:	#1c1c1c
-!xterm*cursorColor:	#8a8a8a
-!xterm*pointerColorBackground:#585858
-!xterm*pointerColorForeground:#8a8a8a
-!! black dark/light
-!xterm*color0:		#262626
-!xterm*color8:		#1c1c1c
-!! red dark/light
-!xterm*color1:		#d70000
-!xterm*color9:		#d75f00
-!! green dark/light
-!xterm*color2:		#5f8700
-!xterm*color10:		#585858
-!! yellow dark/light
-!xterm*color3:		#af8700
-!xterm*color11:		#626262
-!! blue dark/light
-!xterm*color4:		#0087ff
-!xterm*color12:		#808080
-!! magenta dark/light
-!xterm*color5:		#af005f
-!xterm*color13:		#5f5faf
-!! cyan dark/light
-!xterm*color6:		#00afaf
-!xterm*color14:		#8a8a8a
-!! white dark/light
-!xterm*color7:		#e4e4e4
-!xterm*color15:		#ffffd7
-
 ! yeahconsole Settings
-
-! yeahconsole*term:	urxvtc
 yeahconsole*term:	xterm
-! yeahconsole*term:	urxvt
-! yeahconsole*termName:	rxvt-256color
 yeahconsole*termName:	xterm-256color
 yeahconsole*locale:	true
 yeahconsole*metaSendsEscape:	true
 yeahconsole*saveLines:	4096
 yeahconsole*VT100.geometry:	80x32
-! yeahconsole*reverseVideo:	on
-! yeahconsole -fg PapayaWhip -bg "rgb:00/00/80"
-! yeahconsole*font:	7x13
 yeahconsole*scaleHeight:	0.99
 yeahconsole*bellIsUrgent:	true
 yeahconsole*faceName:	Terminus:style=Regular:size=18
-! yeahconsole*faceName:	Terminus:size=18:antialias=false
 yeahconsole*dynamicColors:	true
 yeahconsole*utf8:	2
 yeahconsole*scrollKey:	true
@@ -115,9 +53,7 @@ yeahconsole*multiScroll:	true
 yeahconsole*toolBar:	false
 yeahconsole*eightBitInput:	false
 ! BROKEN
-! yeahconsole*font:	-*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
 yeahconsole*VT100.translations:	#override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
-
 ! Forbid bold font faces; bold type is light blue.
 yeahconsole*colorBDMode:	true
 yeahconsole*colorBD:	rgb:82/a4/d3
@@ -125,46 +61,10 @@ yeahconsole*colorBD:	rgb:82/a4/d3
 yeahconsole*colorULMode:	true
 yeahconsole*colorUL:	rgb:e4/e4/e4
 
-! xolarized
-
-! yeahconsole*.background:	rgba:1111/1111/dddd
-! yeahconsole*background:	#002b36
-! yeahconsole*foreground:	#eee8d5
-! yeahconsole*foreground:	#839496
-!yeahconsole*fadeColor:	#1c1c1c
-!yeahconsole*cursorColor:	#8a8a8a
-!yeahconsole*pointerColorBackground:#585858
-!yeahconsole*pointerColorForeground:#8a8a8a
-!! black dark/light
-!yeahconsole*color0:	#262626
-!yeahconsole*color8:	#1c1c1c
-!! red dark/light
-!yeahconsole*color1:	#d70000
-!yeahconsole*color9:	#d75f00
-!! green dark/light
-!yeahconsole*color2:	#5f8700
-!yeahconsole*color10:	#585858
-!! yellow dark/light
-!yeahconsole*color3:	#af8700
-!yeahconsole*color11:	#626262
-!! blue dark/light
-!yeahconsole*color4:	#0087ff
-!yeahconsole*color12:	#808080
-!! magenta dark/light
-!yeahconsole*color5:	#af005f
-!yeahconsole*color13:	#5f5faf
-!! cyan dark/light
-!yeahconsole*color6:	#00afaf
-!yeahconsole*color14:	#8a8a8a
-!! white dark/light
-!yeahconsole*color7:	#e4e4e4
-!yeahconsole*color15:	#ffffd7
-
 Xcursor*theme:	ArchCursorTheme
-!Xcursor*theme:	ecliz
 
-!Xft.dpi: 144
 Xft.dpi: 216
+!Xft.dpi: 144
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -172,44 +72,20 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 
-! Urxvt Settings
-!URxvt*font:		xft:Inconsolata:pixelsize=24:antialias=true:hinting=true,xft:Symbola,xft:Symbola:pixelsize=10
-!URxvt*font:		xft:Inconsolata\\-g:style=Light:pixelsize=26:antialias=true:hinting=true,\
-!URxvt*font:		xft:Fira Code:style=Light:pixelsize=30,xft:Noto Color Emoji:pixelsize=30:style=Regular:antialias=false,xft:EmojiOne Color:pixelsize=30:style=Regular:antialias=false,xft:Unifont:style=Medium:antialias=false:pixelsize=30,xft:Symbola:pixelsize=30:antialias=false
-!URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\
-! xft:Noto Color Emoji:style=Regular,\
-! xft:FuraMonoForPowerline Nerd Font:style=Regular:pixelsize=24:antialias=true:hinting=true,\
-! URxvt*font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=24:antialias=true:hinting=true,\
-! URxvt*font:		xft:FuraCode NF:style=Light:pixelsize=24:antialias=true:hinting=true,\
+! st.font:		SourceCodePro:style=Regular:pixelsize=28:antialias=true:hinting=true
+! st.font:		Fira Code:style=Retina:pixelsize=28:antialias=true:hinting=true
+! st.font:		SauceCodePro Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true
+st.font:		Fura Code Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true
+! st.font:		Fura Code Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true,\
+!                                 Noto Emoji:style=Regular:pixelsize=28:antialias=true:hinting=true,\
+!                                 Symbola:style=Regular:pixelsize=28:antialias=true:hinting=true,\
+!                                 Unifont:style=Medium:pixelsize=28:antialias=true:hinting=true,\
+!                                 FreeSerif:style=Regular:pixelsize=28:antialias=true:hinting=true,\
+!                                 WenQuanYi Micro Hei Mono:style=Light:pixelsize=28:antialias=true:hinting=true
 
-URxvt*font:		xft:FuraCode Nerd Font:style=Retina:pixelsize=26:antialias=true:hinting=true,\
-				xft:Noto Emoji:style=Regular:pixelsize=26:antialias=true:hinting=true,\
-				xft:Symbola:style=Regular:pixelsize=26:antialias=true:hinting=true,\
-				xft:Unifont:style=Medium:pixelsize=26:antialias=true:hinting=true,\
-				xft:FreeSerif:style=Regular:pixelsize=26:antialias=true:hinting=true,\
-				xft:WenQuanYi Micro Hei Mono:style=Light:pixelsize=26:antialias=true:hinting=true
-
-! st.font:		xft:FuraCode NF:style=Light:pixelsize=26:antialias=true:autohint=true,\
-! st.font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=26:antialias=true:autohint=true,\
-! st.font:		xft:FuraCode Nerd Font:style=Regular:pixelsize=26:antialias=true:autohint=true,\
-! st.font:		Fura Code Nerd Font:style=Light:pixelsize=26:antialias=true,\
-
-! st.font:		SauceCodePro Nerd Font:style=Retina:pixelsize=26:antialias=true:hinting=true,\
-st.font:		FuraCode Nerd Font:style=Retina:pixelsize=26:antialias=true:hinting=true,\
-				Noto Emoji:style=Regular:pixelsize=26:antialias=true:hinting=true,\
-				Symbola:style=Regular:pixelsize=26:antialias=true:hinting=true,\
-				Unifont:style=Medium:pixelsize=26:antialias=true:hinting=true,\
-				FreeSerif:style=Regular:pixelsize=26:antialias=true:hinting=true,\
-				WenQuanYi Micro Hei Mono:style=Light:pixelsize=26:antialias=true:hinting=true
-
-! st.font:			-*-fixed-*-*-*-*-10-*-*-*-*-*-*-1
 st.bold_font:			1
 st.italic_font:			1
-! st.background:		#131415
-! st.foreground:		#A3BAD0
-! st.cursorColor:		#8d9b5
-! st.cursorColor:		#b58900
-
+st.alpha:			250
 st.termname:			st-256color
 st.shell:			/bin/sh
 st.bellvolume:			0
@@ -217,55 +93,15 @@ st.tabspaces:			8
 st.cwscale:			0.9
 st.chscale:			1.0
 
-! st.color0:			#353540
-! st.color8:			#545466
-! st.color1:			#8c5760
-! st.color9:			#b26f7a
-! st.color2:			#7b8c58
-! st.color10:			#9db270
-! st.color3:			#8c6e43
-! st.color11:			#b28c55
-! st.color4:			#58698c
-! st.color12:			#7086b2
-! st.color5:			#7b5e7d
-! st.color13:			#9c77b2
-! st.color6:			#66808c
-! st.color14:			#82a2b2
-! st.color7:			#8c8b8b
-! st.color15:			#b8b8c8
-
-! st.background:			#32302f
-! st.foreground:			#ebdbb2
-! st.color0:			#282828
-! st.color8:			#928374
-! ! DarkRed + Red
-! st.color1:			#cc241d
-! st.color9:			#fb4934
-! ! DarkGreen + Green
-! st.color2:			#98971a
-! st.color10:			#b8bb26
-! ! DarkYellow + Yellow
-! st.color3:			#d79921
-! st.color11:			#fabd2f
-! ! DarkBlue + Blue
-! st.color4:			#458588
-! st.color12:			#83a598
-! ! DarkMagenta + Magenta
-! st.color5:			#b16286
-! st.color13:			#d3869b
-! ! DarkCyan + Cyan
-! st.color6:			#689d6a
-! st.color14:			#8ec07c
-! ! LightGrey + White
-! st.color7:			#ebdbb2
-! st.color15:			#ebdbb2
-
-st.alpha:			240
-
-!URxvt.font:	xft:DejaVu Sans Mono:pixelsize=13:antialias=true,xft:Android Emoji:style=Regular:antialias=false,xft:Symbola:pixelsize=9:antialias=false
-!URxvt.boldFont:	xft:DejaVu Sans Mono:bold:pixelsize=13:antialias=true,xft:Android Emoji:style=Regular:antialias=false,xft:Symbola:pixelsize=9:antialias=false
-!URxvt.italicFont:	xft:DejaVu Sans Mono:italic:pixelsize=13:antialias=true,xft:Android Emoji:style=Regular:antialias=false,xft:Symbola:pixelsize=9:antialias=false
-!URxvt.boldItalicFont:	xft:DejaVu Sans Mono:italic:bold:pixelsize=13:antialias=true,xft:Android Emoji:style=Regular:antialias=false,xft:Symbola:pixelsize=9:antialias=false
+! URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\
+! URxvt*font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=24:antialias=true:hinting=true,\
+! URxvt*font:		xft:FuraCode NF:style=Light:pixelsize=24:antialias=true:hinting=true,\
+URxvt*font:		xft:FuraCode Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true,\
+				xft:Noto Emoji:style=Regular:pixelsize=28:antialias=true:hinting=true,\
+				xft:Symbola:style=Regular:pixelsize=28:antialias=true:hinting=true,\
+				xft:Unifont:style=Medium:pixelsize=28:antialias=true:hinting=true,\
+				xft:FreeSerif:style=Regular:pixelsize=28:antialias=true:hinting=true,\
+				xft:WenQuanYi Micro Hei Mono:style=Light:pixelsize=28:antialias=true:hinting=true
 
 URxvt*letterSpace:		-1
 ! URxvt*letterSpace:		1
@@ -274,20 +110,15 @@ Aterm*cutchars:			`""''()*,;<>[]{|}
 Rxvt*cutchars:			`""''()*,;<>[]{|}
 XTerm*cutchars:			`""''()*,;<>[]{|}
 !URvxt*cutchars:		BACKSLASH `""''&()*,;<=>?@[]^{|}
-!Aterm*cutchars:		BACKSLASH `""''&()*,;<=>?@[]^{|}
-!Rxvt*cutchars:			BACKSLASH `""''&()*,;<=>?@[]^{|}
-!XTerm*cutchars:		BACKSLASH `""''&()*,;<=>?@[]^{|}
 
-! URxvt*perl-ext-common:	default,matcher,clipboard,url-select,keyboard-select,tabbedex,fullscreen,vtwheel,kuake,autocomplete-ALL-the-things,font-size
-! URxvt*perl-ext-common:	default,searchable-scrollback,url-select,readline,clipboard,clipboard-osc,keyboard-select,tabbedex,fullscreen,vtwheel,resize-font,autocomplete-ALL-the-things,font-size
 URxvt*perl-ext-common:		default,osc-xterm-clipboard,searchable-scrollback,readline,clipboard,clipboard-osc,keyboard-select,tabbedex,fullscreen,vtwheel,resize-font,autocomplete-ALL-the-things,font-size,url-select,matcher
-
 URxvt*matcher.pattern.1:	\\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
 URxvt*matcher.pattern.2:	\\B(/\\S+?):(\\d+)(?=:|$)
 URxvt*loginShell:		true
 URxvt*iso14755:			false
 ! URxvt*kuake.hotkey:		F10
 ! URxvt*kuake.hotkey:		F12
+
 ! aAtt:word-complete -- classical prefix-based completion for words
 ! aAtt:WORD-complete -- completion for WORDS (in the Vim meaning)
 ! aAtt:fuzzy-word-complete -- fuzzy completion for words
@@ -298,6 +129,7 @@ URxvt*iso14755:			false
 ! aAtt:undo -- undo the completion (must be used right after a completion)
 URxvt*keysym.M-Slash:		perl:aAtt:fuzzy-word-complete
 URxvt*keysym.M-Space:		perl:aAtt:surround-complete
+
 URxvt*keysym.M-Left:		\033[1;5D
 URxvt*keysym.M-Right:		\033[1;5C
 !URxvt*keysym.M-C-Down:		\001
@@ -357,22 +189,16 @@ URxvt*keysym.M-C-Up:	perl:tabbedex:move_tab_right
 URxvt*keysym.C-Left:		     \033[1;5D
 URxvt*keysym.C-Right:	     \033[1;5C
 URxvt*keysym.F11:	perl:fullscreen:switch
-! URxvt*keysym.C-Down:	font-size:decrease
-! URxvt*keysym.C-Up:	font-size:increase
-! URxvt*keysym.C-S-Down:	font-size:decglobal
-! URxvt*keysym.C-S-Up:	font-size:incglobal
 URxvt*keysym.C-Up:	perl:font-size:increase
 URxvt*keysym.C-Down:	perl:font-size:decrease
 URxvt*keysym.M-Up:	perl:font-size:incglobal
 URxvt*keysym.M-Down:	perl:font-size:decglobal
-
 ! :Bind C-0, C-+ and C-= to activate small, medium, and big font size resp.
 !URxvt*keysym.C-0:	command:\033]710;-*-dina-medium-r-normal--13-*-*-*-*-*-*-*\007
 !URxvt*keysym.C-minus:	command:\033]710;-*-dina-medium-r-normal--15-*-*-*-*-*-*-*\007
 !URxvt*keysym.C-equal:	command:\033]710;-*-dina-medium-r-normal--16-*-*-*-*-*-*-*\007
 
 URxvt*iconFile:	/usr/share/icons/Adwaita/scalable/apps/utilities-terminal-symbolic.svg
-
 ! scrollbar style - rxvt (default), plain (most compact), next, or xterm
 URxvt*scrollstyle:		plain
 ! do not scroll with output
@@ -387,9 +213,12 @@ URxvt*secondaryScroll:		0
 URxvt*secondaryWheel:		1
 ! Turn on/off hold window after exit support. If enabled, urxvt will not immediately destroy its
 URxvt*hold:			0
-
 ! Enables "insecure" mode. Rxvt-unicode offers some escape sequences that echo arbitrary strings
 URxvt*insecure:			1
+
+URxvt*depth:	32
+URxvt*background:	[95]#32302f
+URxvt*foreground:	#ebdbb2
 
 ! Other colors
 ! *color0:	black
@@ -408,7 +237,6 @@ URxvt*insecure:			1
 ! *color13:	magenta
 !  *color14:	cyan
 ! *color15:	white
-
 !  -----------------------------------------------------------------------------
 ! File:	gruvbox-dark.xresources
 ! Description:	Retro groove colorscheme generalized
@@ -417,35 +245,12 @@ URxvt*insecure:			1
 ! Last Modified:	6 Sep 2014
 ! -----------------------------------------------------------------------------
 
-
-! Background color
-URxvt*depth:	32
-!URxvt*background:	[50]#073642
-! Dark Grey
-!URxvt*background:	[90]#1d2021
-! Light Grey
-URxvt*background:	[95]#32302f
-!URxvt*transparent:	true
-!URxvt*shading:	50
-! Font color
-!URxvt*foreground:	#839496
-URxvt*foreground:	#ebdbb2
-!*foreground:	#ffffff
-!URxvt*foreground:	#282828
-
-!*background:	#282828
 ! hard contrast:
-!*background:	#1d2021
 *background:	#32302f
 ! soft contrast:
-!*background:	#32302f
 *foreground:	#ebdbb2
 ! Black + DarkGrey
-! *foreground:	#282828
-
-
 *color0:	#282828
-!*color0:	#ffffff
 *color8:	#928374
 ! DarkRed + Red
 *color1:	#cc241d
@@ -462,18 +267,11 @@ URxvt*foreground:	#ebdbb2
 ! DarkMagenta + Magenta
 *color5:	#b16286
 *color13:	#d3869b
-!*color5:	#7e40a5
-!*color13:	#bb88dd
-!*color13:	#282828
 ! DarkCyan + Cyan
 *color6:	#689d6a
 *color14:	#8ec07c
 ! LightGrey + White
-!*color7:	#a89984
 *color7:	#ebdbb2
-!*color7:	#282828
-!*color7:	#ffffff
-!*color15:	#282828
 *color15:	#ebdbb2
 
 termite*background:	#32302f
@@ -502,15 +300,7 @@ termite*color14:	#8ec07c
 termite*color7:	#ebdbb2
 termite*color15:	#ebdbb2
 
-!stjerm*keysym.S-C-T:		perl:tabbedex:new_tab
-!stjerm*keysym.M-t:		perl:tabbedex:new_tab
-!stjerm*keysym.Control-Tab:	perl:tabbedex:next_tab
-!stjerm*keysym.S-Right:		\033\133\065\100
-!stjerm*keysym.M-Tab:		perl:tabbedex:prev_tab
-!stjerm*keysym.S-Left:		\033\133\066\100
-!stjerm*keysym.S-C-W:		perl:tabbedex:kill_tab
-!stjerm*keysym.M-w:		perl:tabbedex:kill_tab
-
+! solarized
 stjerm*background:	#32302f
 stjerm*foreground:	#ebdbb2
 stjerm*color0:	#282828
@@ -537,26 +327,26 @@ stjerm*color14:	#8ec07c
 stjerm*color7:	#ebdbb2
 stjerm*color15:	#ebdbb2
 
-! Molokai theme
-!stjerm*background:	#121212
-!stjerm*foreground:	#d0d0d0
-!stjerm*cursorColor:	#d0d0d0
-!stjerm*color0:	#101010
-!stjerm*color1:	#960050
-!stjerm*color2:	#66aa11
-!stjerm*color3:	#c47f2c
-!stjerm*color4:	#30309b
-!stjerm*color5:	#7e40a5
-!!stjerm*color6:	#89b6e2
-!stjerm*color7:	#9999aa
-!stjerm*color8:	#303030
-!stjerm*color9:	#ff0090
-!stjerm*color10:	#80ff00
-!stjerm*color11:	#ffba68
-!stjerm*color12:	#5f5fee
-!stjerm*color13:	#bb88dd
-!stjerm*color14:	#4eb4fa
-!stjerm*color15:	#d0d0d0
+! ! Molokai theme
+! stjerm*background:	#121212
+! stjerm*foreground:	#d0d0d0
+! stjerm*cursorColor:	#d0d0d0
+! stjerm*color0:		#101010
+! stjerm*color1:		#960050
+! stjerm*color2:		#66aa11
+! stjerm*color3:		#c47f2c
+! stjerm*color4:		#30309b
+! stjerm*color5:		#7e40a5
+! stjerm*color6:		#89b6e2
+! stjerm*color7:		#9999aa
+! stjerm*color8:		#303030
+! stjerm*color9:		#ff0090
+! stjerm*color10:		#80ff00
+! stjerm*color11:		#ffba68
+! stjerm*color12:		#5f5fee
+! stjerm*color13:		#bb88dd
+! stjerm*color14:		#4eb4fa
+! stjerm*color15:		#d0d0d0
 
 ! Set the key to be interpreted as the Meta key to:	alt, meta, hyper, super, mod1, mod2, mod3,
 ! URxvt*modifier:	modifier
@@ -762,9 +552,6 @@ stjerm*color15:	#ebdbb2
 ! The characters used as delimiters for double-click word selection (whitespace delimiting is added
 ! URxvt*cutchars:	string
 
-!
-! URxvt*{|}
-
 ! OverTheSpot, OffTheSpot, Root; option -pt.
 ! URxvt*preeditType:	style
 
@@ -841,5 +628,3 @@ stjerm*color15:	#ebdbb2
 
 ! Turn on/off ISO 14755 5.2 mode (default enabled).
 ! URxvt*iso14755_52:	boolean
-
-

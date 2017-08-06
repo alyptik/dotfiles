@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: ida_pre_get
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IDA_PRE_GET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ida_pre_get \- reserve resources for ida allocation
+.SH "SYNOPSIS"
+.HP \w'int\ ida_pre_get('u
+.BI "int ida_pre_get(struct\ ida\ *\ " "ida" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIida\fR
+.RS 4
+ida handle
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation flag
+.RE
+.SH "DESCRIPTION"
+.PP
+This function should be called prior to locking and calling the following function\&. It preallocates enough memory to satisfy the worst possible allocation\&.
+.PP
+If the system is REALLY out of memory this function returns
+\fB0\fR, otherwise
+\fB1\fR\&.
+.SH "COPYRIGHT"
+.br

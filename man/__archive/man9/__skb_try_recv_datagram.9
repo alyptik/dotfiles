@@ -1,0 +1,83 @@
+'\" t
+.\"     Title: __skb_try_recv_datagram
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__SKB_TRY_RECV_DATAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__skb_try_recv_datagram \- Receive a datagram skbuff
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ __skb_try_recv_datagram('u
+.BI "struct sk_buff * __skb_try_recv_datagram(struct\ sock\ *\ " "sk" ", unsigned\ int\ " "flags" ", void\ (*" "destructor" ")\ (struct\ sock\ *sk,\ struct\ sk_buff\ *skb), int\ *\ " "peeked" ", int\ *\ " "off" ", int\ *\ " "err" ", struct\ sk_buff\ **\ " "last" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsk\fR
+.RS 4
+socket
+.RE
+.PP
+\fIflags\fR
+.RS 4
+MSG_ flags
+.RE
+.PP
+\fIdestructor\fR
+.RS 4
+invoked under the receive lock on successful dequeue
+.RE
+.PP
+\fIpeeked\fR
+.RS 4
+returns non\-zero if this packet has been seen before
+.RE
+.PP
+\fIoff\fR
+.RS 4
+an offset in bytes to peek skb from\&. Returns an offset within an skb where data actually starts
+.RE
+.PP
+\fIerr\fR
+.RS 4
+error code returned
+.RE
+.PP
+\fIlast\fR
+.RS 4
+set to last peeked message to inform the wait function what to look for when peeking
+.RE
+.SH "DESCRIPTION"
+.PP
+Get a datagram skbuff, understands the peeking, nonblocking wakeups and possible races\&. This replaces identical code in packet, raw and udp, as well as the IPX AX\&.25 and Appletalk\&. It also finally fixes the long standing peek and read race for datagram sockets\&. If you alter this routine remember it must be re\-entrant\&.
+.PP
+This function will lock the socket if a skb is returned, so the caller needs to unlock the socket in that case (usually by calling skb_free_datagram)\&. Returns NULL with *err set to \-EAGAIN if no data was available or to some other value if an error was detected\&.
+.PP
+* It does not lock socket since today\&. This function is * free of race conditions\&. This measure should/can improve * significantly datagram socket latencies at high loads, * when data copying to user space takes lots of time\&. * (BTW I\*(Aqve just killed the last
+\fBcli\fR
+in IP/IPv6/core/netlink/packet * 8) Great win\&.) * \-\-ANK (980729)
+.PP
+The order of the tests when we find no data waiting are specified quite explicitly by POSIX 1003\&.1g, don\*(Aqt change them without having the standard around please\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: path_has_submounts
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PATH_HAS_SUBMOUNTS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+path_has_submounts \- check for mounts over a dentry in the current namespace\&.
+.SH "SYNOPSIS"
+.HP \w'int\ path_has_submounts('u
+.BI "int path_has_submounts(const\ struct\ path\ *\ " "parent" ");"
+.SH "ARGUMENTS"
+.PP
+\fIparent\fR
+.RS 4
+path to check\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Return true if the parent or its subdirectories contain a mount point in the current namespace\&.
+.SH "COPYRIGHT"
+.br

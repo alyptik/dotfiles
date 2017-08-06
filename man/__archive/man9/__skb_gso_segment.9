@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: __skb_gso_segment
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__SKB_GSO_SEGMENT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__skb_gso_segment \- Perform segmentation on skb\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ __skb_gso_segment('u
+.BI "struct sk_buff * __skb_gso_segment(struct\ sk_buff\ *\ " "skb" ", netdev_features_t\ " "features" ", bool\ " "tx_path" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to segment
+.RE
+.PP
+\fIfeatures\fR
+.RS 4
+features for the output path (see dev\->features)
+.RE
+.PP
+\fItx_path\fR
+.RS 4
+whether it is called in TX path
+.RE
+.SH "DESCRIPTION"
+.PP
+This function segments the given skb and returns a list of segments\&.
+.PP
+It may return NULL if the skb requires no segmentation\&. This is only possible when GSO is used for verifying header integrity\&.
+.PP
+Segmentation preserves SKB_SGO_CB_OFFSET bytes of previous skb cb\&.
+.SH "COPYRIGHT"
+.br

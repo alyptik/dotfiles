@@ -1,0 +1,107 @@
+'\" t
+.\"     Title: struct kgdb_arch
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT KGDB_ARCH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_kgdb_arch \- Describe architecture specific values\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct kgdb_arch {
+  unsigned char gdb_bpt_instr[BREAK_INSTR_SIZE];
+  unsigned long flags;
+  int (* set_breakpoint) (unsigned long, char *);
+  int (* remove_breakpoint) (unsigned long, char *);
+  int (* set_hw_breakpoint) (unsigned long, int, enum kgdb_bptype);
+  int (* remove_hw_breakpoint) (unsigned long, int, enum kgdb_bptype);
+  void (* disable_hw_break) (struct pt_regs *regs);
+  void (* remove_all_hw_break) (void);
+  void (* correct_hw_break) (void);
+  void (* enable_nmi) (bool on);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+gdb_bpt_instr[BREAK_INSTR_SIZE]
+.RS 4
+The instruction to trigger a breakpoint\&.
+.RE
+.PP
+flags
+.RS 4
+Flags for the breakpoint, currently just
+\fBKGDB_HW_BREAKPOINT\fR\&.
+.RE
+.PP
+set_breakpoint
+.RS 4
+Allow an architecture to specify how to set a software breakpoint\&.
+.RE
+.PP
+remove_breakpoint
+.RS 4
+Allow an architecture to specify how to remove a software breakpoint\&.
+.RE
+.PP
+set_hw_breakpoint
+.RS 4
+Allow an architecture to specify how to set a hardware breakpoint\&.
+.RE
+.PP
+remove_hw_breakpoint
+.RS 4
+Allow an architecture to specify how to remove a hardware breakpoint\&.
+.RE
+.PP
+disable_hw_break
+.RS 4
+Allow an architecture to specify how to disable hardware breakpoints for a single cpu\&.
+.RE
+.PP
+remove_all_hw_break
+.RS 4
+Allow an architecture to specify how to remove all hardware breakpoints\&.
+.RE
+.PP
+correct_hw_break
+.RS 4
+Allow an architecture to specify how to correct the hardware debug registers\&.
+.RE
+.PP
+enable_nmi
+.RS 4
+Manage NMI\-triggered entry to KGDB
+.RE
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

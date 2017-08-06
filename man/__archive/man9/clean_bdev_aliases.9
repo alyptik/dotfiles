@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: clean_bdev_aliases
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CLEAN_BDEV_ALIASES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+clean_bdev_aliases \- 
+.SH "SYNOPSIS"
+.HP \w'void\ clean_bdev_aliases('u
+.BI "void clean_bdev_aliases(struct\ block_device\ *\ " "bdev" ", sector_t\ " "block" ", sector_t\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+Block device to clean buffers in
+.RE
+.PP
+\fIblock\fR
+.RS 4
+Start of a range of blocks to clean
+.RE
+.PP
+\fIlen\fR
+.RS 4
+Number of blocks to clean
+.RE
+.SH "DESCRIPTION"
+.PP
+We are taking a range of blocks for data and we don\*(Aqt want writeback of any buffer\-cache aliases starting from return from this function and until the moment when something will explicitly mark the buffer dirty (hopefully that will not happen until we will free that block ;\-) We don\*(Aqt even need to mark it not\-uptodate \- nobody can expect anything from a newly allocated buffer anyway\&. We used to use
+\fBunmap_buffer\fR
+for such invalidation, but that was wrong\&. We definitely don\*(Aqt want to mark the alias unmapped, for example \- it would confuse anyone who might pick it with
+\fBbread\fR
+afterwards\&.\&.\&.
+.PP
+Also\&.\&. Note that
+\fBbforget\fR
+doesn\*(Aqt lock the buffer\&. So there can be writeout I/O going on against recently\-freed buffers\&. We don\*(Aqt wait on that I/O in
+\fBbforget\fR
+\- it\*(Aqs more efficient to wait on the I/O only if we really need to\&. That happens here\&.
+.SH "COPYRIGHT"
+.br

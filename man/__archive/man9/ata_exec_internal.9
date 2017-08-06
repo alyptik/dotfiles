@@ -1,0 +1,88 @@
+'\" t
+.\"     Title: ata_exec_internal
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_EXEC_INTERNAL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_exec_internal \- execute libata internal command
+.SH "SYNOPSIS"
+.HP \w'unsigned\ ata_exec_internal('u
+.BI "unsigned ata_exec_internal(struct\ ata_device\ *\ " "dev" ", struct\ ata_taskfile\ *\ " "tf" ", const\ u8\ *\ " "cdb" ", int\ " "dma_dir" ", void\ *\ " "buf" ", unsigned\ int\ " "buflen" ", unsigned\ long\ " "timeout" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device to which the command is sent
+.RE
+.PP
+\fItf\fR
+.RS 4
+Taskfile registers for the command and the result
+.RE
+.PP
+\fIcdb\fR
+.RS 4
+CDB for packet command
+.RE
+.PP
+\fIdma_dir\fR
+.RS 4
+Data transfer direction of the command
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+Data buffer of the command
+.RE
+.PP
+\fIbuflen\fR
+.RS 4
+Length of data buffer
+.RE
+.PP
+\fItimeout\fR
+.RS 4
+Timeout in msecs (0 for default)
+.RE
+.SH "DESCRIPTION"
+.PP
+Wrapper around
+\fBata_exec_internal_sg\fR
+which takes simple buffer instead of sg list\&.
+.PP
+LOCKING: None\&. Should be called with kernel context, might sleep\&.
+.SH "RETURN"
+.PP
+Zero on success, AC_ERR_* mask on failure
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

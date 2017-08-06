@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: bioset_create
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BIOSET_CREATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bioset_create \- Create a bio_set
+.SH "SYNOPSIS"
+.HP \w'struct\ bio_set\ *\ bioset_create('u
+.BI "struct bio_set * bioset_create(unsigned\ int\ " "pool_size" ", unsigned\ int\ " "front_pad" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpool_size\fR
+.RS 4
+Number of bio and bio_vecs to cache in the mempool
+.RE
+.PP
+\fIfront_pad\fR
+.RS 4
+Number of bytes to allocate in front of the returned bio
+.RE
+.SH "DESCRIPTION"
+.PP
+Set up a bio_set to be used with
+\fIbio_alloc_bioset\fR\&. Allows the caller to ask for a number of bytes to be allocated in front of the bio\&. Front pad allocation is useful for embedding the bio inside another structure, to avoid allocating extra data to go with the bio\&. Note that the bio must be embedded at the END of that structure always, or things will break badly\&.
+.SH "COPYRIGHT"
+.br

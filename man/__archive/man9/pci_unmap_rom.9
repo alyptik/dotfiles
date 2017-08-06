@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: pci_unmap_rom
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_UNMAP_ROM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_unmap_rom \- unmap the ROM from kernel space
+.SH "SYNOPSIS"
+.HP \w'void\ pci_unmap_rom('u
+.BI "void pci_unmap_rom(struct\ pci_dev\ *\ " "pdev" ", void\ __iomem\ *\ " "rom" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpdev\fR
+.RS 4
+pointer to pci device struct
+.RE
+.PP
+\fIrom\fR
+.RS 4
+virtual address of the previous mapping
+.RE
+.SH "DESCRIPTION"
+.PP
+Remove a mapping of a previously mapped ROM
+.SH "COPYRIGHT"
+.br

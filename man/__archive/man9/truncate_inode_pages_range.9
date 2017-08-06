@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: truncate_inode_pages_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "TRUNCATE_INODE_PAGES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+truncate_inode_pages_range \- truncate range of pages specified by start & end byte offsets
+.SH "SYNOPSIS"
+.HP \w'void\ truncate_inode_pages_range('u
+.BI "void truncate_inode_pages_range(struct\ address_space\ *\ " "mapping" ", loff_t\ " "lstart" ", loff_t\ " "lend" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+mapping to truncate
+.RE
+.PP
+\fIlstart\fR
+.RS 4
+offset from which to truncate
+.RE
+.PP
+\fIlend\fR
+.RS 4
+offset to which to truncate (inclusive)
+.RE
+.SH "DESCRIPTION"
+.PP
+Truncate the page cache, removing the pages that are between specified offsets (and zeroing out partial pages if lstart or lend + 1 is not page aligned)\&.
+.PP
+Truncate takes two passes \- the first pass is nonblocking\&. It will not block on page locks and it will not block on writeback\&. The second pass will wait\&. This is to prevent as much IO as possible in the affected region\&. The first pass will remove most pages, so the search cost of the second pass is low\&.
+.PP
+We pass down the cache\-hot hint to the page freeing code\&. Even if the mapping is large, it is probably the case that the final pages are the most recently touched, and freeing happens in ascending file offset order\&.
+.PP
+Note that since \->\fBinvalidatepage\fR
+accepts range to invalidate truncate_inode_pages_range is able to handle cases where lend + 1 is not page aligned properly\&.
+.SH "COPYRIGHT"
+.br

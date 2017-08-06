@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: eth_commit_mac_addr_change
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ETH_COMMIT_MAC_ADDR_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eth_commit_mac_addr_change \- commit mac change
+.SH "SYNOPSIS"
+.HP \w'void\ eth_commit_mac_addr_change('u
+.BI "void eth_commit_mac_addr_change(struct\ net_device\ *\ " "dev" ", void\ *\ " "p" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+network device
+.RE
+.PP
+\fIp\fR
+.RS 4
+socket address
+.RE
+.SH "COPYRIGHT"
+.br

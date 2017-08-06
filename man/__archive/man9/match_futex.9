@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: match_futex
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MATCH_FUTEX" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+match_futex \- Check whether two futex keys are equal
+.SH "SYNOPSIS"
+.HP \w'int\ match_futex('u
+.BI "int match_futex(union\ futex_key\ *\ " "key1" ", union\ futex_key\ *\ " "key2" ");"
+.SH "ARGUMENTS"
+.PP
+\fIkey1\fR
+.RS 4
+Pointer to key1
+.RE
+.PP
+\fIkey2\fR
+.RS 4
+Pointer to key2
+.RE
+.SH "DESCRIPTION"
+.PP
+Return 1 if two futex_keys are equal, 0 otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

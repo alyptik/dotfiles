@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: free_bootmem_with_active_regions
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FREE_BOOTMEM_WITH_AC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+free_bootmem_with_active_regions \- Call memblock_free_early_nid for each active range
+.SH "SYNOPSIS"
+.HP \w'void\ free_bootmem_with_active_regions('u
+.BI "void free_bootmem_with_active_regions(int\ " "nid" ", unsigned\ long\ " "max_low_pfn" ");"
+.SH "ARGUMENTS"
+.PP
+\fInid\fR
+.RS 4
+The node to free memory on\&. If MAX_NUMNODES, all nodes are freed\&.
+.RE
+.PP
+\fImax_low_pfn\fR
+.RS 4
+The highest PFN that will be passed to memblock_free_early_nid
+.RE
+.SH "DESCRIPTION"
+.PP
+If an architecture guarantees that all ranges registered contain no holes and may be freed, this this function may be used instead of calling
+\fBmemblock_free_early_nid\fR
+manually\&.
+.SH "COPYRIGHT"
+.br

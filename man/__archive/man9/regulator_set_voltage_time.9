@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: regulator_set_voltage_time
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_SET_VOLTAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_set_voltage_time \- get raise/fall time
+.SH "SYNOPSIS"
+.HP \w'int\ regulator_set_voltage_time('u
+.BI "int regulator_set_voltage_time(struct\ regulator\ *\ " "regulator" ", int\ " "old_uV" ", int\ " "new_uV" ");"
+.SH "ARGUMENTS"
+.PP
+\fIregulator\fR
+.RS 4
+regulator source
+.RE
+.PP
+\fIold_uV\fR
+.RS 4
+starting voltage in microvolts
+.RE
+.PP
+\fInew_uV\fR
+.RS 4
+target voltage in microvolts
+.RE
+.SH "DESCRIPTION"
+.PP
+Provided with the starting and ending voltage, this function attempts to calculate the time in microseconds required to rise or fall to this new voltage\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

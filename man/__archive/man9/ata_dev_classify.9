@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: ata_dev_classify
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DEV_CLASSIFY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_dev_classify \- determine device type based on ATA\-spec signature
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ ata_dev_classify('u
+.BI "unsigned int ata_dev_classify(const\ struct\ ata_taskfile\ *\ " "tf" ");"
+.SH "ARGUMENTS"
+.PP
+\fItf\fR
+.RS 4
+ATA taskfile register set for device to be identified
+.RE
+.SH "DESCRIPTION"
+.PP
+Determine from taskfile register contents whether a device is ATA or ATAPI, as per
+\(lqSignature and persistence\(rq
+section of ATA/PI spec (volume 1, sect 5\&.14)\&.
+.PP
+LOCKING: None\&.
+.SH "RETURN"
+.PP
+Device type,
+\fBATA_DEV_ATA\fR,
+\fBATA_DEV_ATAPI\fR,
+\fBATA_DEV_PMP\fR,
+\fBATA_DEV_ZAC\fR, or
+\fBATA_DEV_UNKNOWN\fR
+the event of failure\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

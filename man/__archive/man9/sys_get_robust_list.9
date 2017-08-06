@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: sys_get_robust_list
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYS_GET_ROBUST_LIST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sys_get_robust_list \- Get the robust\-futex list head of a task
+.SH "SYNOPSIS"
+.HP \w'long\ sys_get_robust_list('u
+.BI "long sys_get_robust_list(int\ " "pid" ", struct\ robust_list_head\ __user\ *__user\ *\ " "head_ptr" ", size_t\ __user\ *\ " "len_ptr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpid\fR
+.RS 4
+pid of the process [zero for current task]
+.RE
+.PP
+\fIhead_ptr\fR
+.RS 4
+pointer to a list\-head pointer, the kernel fills it in
+.RE
+.PP
+\fIlen_ptr\fR
+.RS 4
+pointer to a length field, the kernel fills in the header size
+.RE
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

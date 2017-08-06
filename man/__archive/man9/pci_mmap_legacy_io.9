@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: pci_mmap_legacy_io
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_MMAP_LEGACY_IO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_mmap_legacy_io \- map legacy PCI IO into user memory space
+.SH "SYNOPSIS"
+.HP \w'int\ pci_mmap_legacy_io('u
+.BI "int pci_mmap_legacy_io(struct\ file\ *\ " "filp" ", struct\ kobject\ *\ " "kobj" ", struct\ bin_attribute\ *\ " "attr" ", struct\ vm_area_struct\ *\ " "vma" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfilp\fR
+.RS 4
+open sysfs file
+.RE
+.PP
+\fIkobj\fR
+.RS 4
+kobject corresponding to device to be mapped
+.RE
+.PP
+\fIattr\fR
+.RS 4
+struct bin_attribute for this file
+.RE
+.PP
+\fIvma\fR
+.RS 4
+struct vm_area_struct passed to mmap
+.RE
+.SH "DESCRIPTION"
+.PP
+Uses an arch specific callback, pci_mmap_legacy_io_page_range, to mmap legacy IO space (first meg of bus space) into application virtual memory space\&. Returns \-ENOSYS if the operation isn\*(Aqt supported
+.SH "COPYRIGHT"
+.br

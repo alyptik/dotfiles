@@ -1,0 +1,250 @@
+'\" t
+.\"     Title: struct regulator_ops
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_OPS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_ops \- regulator operations\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_ops {
+  int (* list_voltage) (struct regulator_dev *, unsigned selector);
+  int (* set_voltage) (struct regulator_dev *, int min_uV, int max_uV,unsigned *selector);
+  int (* map_voltage) (struct regulator_dev *, int min_uV, int max_uV);
+  int (* set_voltage_sel) (struct regulator_dev *, unsigned selector);
+  int (* get_voltage) (struct regulator_dev *);
+  int (* get_voltage_sel) (struct regulator_dev *);
+  int (* set_current_limit) (struct regulator_dev *,int min_uA, int max_uA);
+  int (* get_current_limit) (struct regulator_dev *);
+  int (* set_input_current_limit) (struct regulator_dev *, int lim_uA);
+  int (* set_over_current_protection) (struct regulator_dev *);
+  int (* set_active_discharge) (struct regulator_dev *, bool enable);
+  int (* enable) (struct regulator_dev *);
+  int (* disable) (struct regulator_dev *);
+  int (* is_enabled) (struct regulator_dev *);
+  int (* set_mode) (struct regulator_dev *, unsigned int mode);
+  unsigned int (* get_mode) (struct regulator_dev *);
+  int (* get_error_flags) (struct regulator_dev *, unsigned int *flags);
+  int (* enable_time) (struct regulator_dev *);
+  int (* set_ramp_delay) (struct regulator_dev *, int ramp_delay);
+  int (* set_voltage_time) (struct regulator_dev *, int old_uV,int new_uV);
+  int (* set_voltage_time_sel) (struct regulator_dev *,unsigned int old_selector,unsigned int new_selector);
+  int (* set_soft_start) (struct regulator_dev *);
+  int (* get_status) (struct regulator_dev *);
+  unsigned int (* get_optimum_mode) (struct regulator_dev *, int input_uV,int output_uV, int load_uA);
+  int (* set_load) (struct regulator_dev *, int load_uA);
+  int (* set_bypass) (struct regulator_dev *dev, bool enable);
+  int (* get_bypass) (struct regulator_dev *dev, bool *enable);
+  int (* set_suspend_voltage) (struct regulator_dev *, int uV);
+  int (* set_suspend_enable) (struct regulator_dev *);
+  int (* set_suspend_disable) (struct regulator_dev *);
+  int (* set_suspend_mode) (struct regulator_dev *, unsigned int mode);
+  int (* set_pull_down) (struct regulator_dev *);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+list_voltage
+.RS 4
+Return one of the supported voltages, in microvolts; zero if the selector indicates a voltage that is unusable on this system; or negative errno\&. Selectors range from zero to one less than regulator_desc\&.n_voltages\&. Voltages may be reported in any order\&.
+.RE
+.PP
+set_voltage
+.RS 4
+Set the voltage for the regulator within the range specified\&. The driver should select the voltage closest to min_uV\&.
+.RE
+.PP
+map_voltage
+.RS 4
+Convert a voltage into a selector
+.RE
+.PP
+set_voltage_sel
+.RS 4
+Set the voltage for the regulator using the specified selector\&.
+.RE
+.PP
+get_voltage
+.RS 4
+Return the currently configured voltage for the regulator\&.
+.RE
+.PP
+get_voltage_sel
+.RS 4
+Return the currently configured voltage selector for the regulator\&.
+.RE
+.PP
+set_current_limit
+.RS 4
+Configure a limit for a current\-limited regulator\&. The driver should select the current closest to max_uA\&.
+.RE
+.PP
+get_current_limit
+.RS 4
+Get the configured limit for a current\-limited regulator\&.
+.RE
+.PP
+set_input_current_limit
+.RS 4
+Configure an input limit\&.
+.RE
+.PP
+set_over_current_protection
+.RS 4
+Support capability of automatically shutting down when detecting an over current event\&.
+.RE
+.PP
+set_active_discharge
+.RS 4
+Set active discharge enable/disable of regulators\&.
+.RE
+.PP
+enable
+.RS 4
+Configure the regulator as enabled\&.
+.RE
+.PP
+disable
+.RS 4
+Configure the regulator as disabled\&.
+.RE
+.PP
+is_enabled
+.RS 4
+Return 1 if the regulator is enabled, 0 if not\&. May also return negative errno\&.
+.RE
+.PP
+set_mode
+.RS 4
+Set the configured operating mode for the regulator\&.
+.RE
+.PP
+get_mode
+.RS 4
+Get the configured operating mode for the regulator\&.
+.RE
+.PP
+get_error_flags
+.RS 4
+Get the current error(s) for the regulator\&.
+.RE
+.PP
+enable_time
+.RS 4
+Time taken for the regulator voltage output voltage to stabilise after being enabled, in microseconds\&.
+.RE
+.PP
+set_ramp_delay
+.RS 4
+Set the ramp delay for the regulator\&. The driver should select ramp delay equal to or less than(closest) ramp_delay\&.
+.RE
+.PP
+set_voltage_time
+.RS 4
+Time taken for the regulator voltage output voltage to stabilise after being set to a new value, in microseconds\&. The function receives the from and to voltage as input, it should return the worst case\&.
+.RE
+.PP
+set_voltage_time_sel
+.RS 4
+Time taken for the regulator voltage output voltage to stabilise after being set to a new value, in microseconds\&. The function receives the from and to voltage selector as input, it should return the worst case\&.
+.RE
+.PP
+set_soft_start
+.RS 4
+Enable soft start for the regulator\&.
+.RE
+.PP
+get_status
+.RS 4
+Return actual (not as\-configured) status of regulator, as a REGULATOR_STATUS value (or negative errno)
+.RE
+.PP
+get_optimum_mode
+.RS 4
+Get the most efficient operating mode for the regulator when running with the specified parameters\&.
+.RE
+.PP
+set_load
+.RS 4
+Set the load for the regulator\&.
+.RE
+.PP
+set_bypass
+.RS 4
+Set the regulator in bypass mode\&.
+.RE
+.PP
+get_bypass
+.RS 4
+Get the regulator bypass mode state\&.
+.RE
+.PP
+set_suspend_voltage
+.RS 4
+Set the voltage for the regulator when the system is suspended\&.
+.RE
+.PP
+set_suspend_enable
+.RS 4
+Mark the regulator as enabled when the system is suspended\&.
+.RE
+.PP
+set_suspend_disable
+.RS 4
+Mark the regulator as disabled when the system is suspended\&.
+.RE
+.PP
+set_suspend_mode
+.RS 4
+Set the operating mode for the regulator when the system is suspended\&.
+.RE
+.PP
+set_pull_down
+.RS 4
+Configure the regulator to pull down when the regulator is disabled\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This struct describes regulator operations which can be implemented by regulator chip drivers\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

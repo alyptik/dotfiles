@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: idr_preload
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IDR_PRELOAD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+idr_preload \- preload for \fBidr_alloc\fR
+.SH "SYNOPSIS"
+.HP \w'void\ idr_preload('u
+.BI "void idr_preload(gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation mask to use for preloading
+.RE
+.SH "DESCRIPTION"
+.PP
+Preload per\-cpu layer buffer for
+\fBidr_alloc\fR\&. Can only be used from process context and each
+\fBidr_preload\fR
+invocation should be matched with
+\fBidr_preload_end\fR\&. Note that preemption is disabled while preloaded\&.
+.PP
+The first
+\fBidr_alloc\fR
+in the preloaded section can be treated as if it were invoked with
+\fIgfp_mask\fR
+used for preloading\&. This allows using more permissive allocation masks for idrs protected by spinlocks\&.
+.PP
+For example, if
+\fBidr_alloc\fR
+below fails, the failure can be treated as if
+\fBidr_alloc\fR
+were called with GFP_KERNEL rather than GFP_NOWAIT\&.
+.PP
+idr_preload(GFP_KERNEL); spin_lock(lock);
+.PP
+id = idr_alloc(idr, ptr, start, end, GFP_NOWAIT);
+.PP
+spin_unlock(lock);
+\fBidr_preload_end\fR; if (id < 0) error;
+.SH "COPYRIGHT"
+.br

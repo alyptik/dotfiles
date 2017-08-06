@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: kgdb_roundup_cpus
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KGDB_ROUNDUP_CPUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kgdb_roundup_cpus \- Get other CPUs into a holding pattern
+.SH "SYNOPSIS"
+.HP \w'void\ kgdb_roundup_cpus('u
+.BI "void kgdb_roundup_cpus(unsigned\ long\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIflags\fR
+.RS 4
+Current IRQ state
+.RE
+.SH "DESCRIPTION"
+.PP
+On SMP systems, we need to get the attention of the other CPUs and get them into a known state\&. This should do what is needed to get the other CPUs to call
+\fBkgdb_wait\fR\&. Note that on some arches, the NMI approach is not used for rounding up all the CPUs\&. For example, in case of MIPS,
+\fBsmp_call_function\fR
+is used to roundup CPUs\&. In this case, we have to make sure that interrupts are enabled before calling
+\fBsmp_call_function\fR\&. The argument to this function is the flags that will be used when restoring the interrupts\&. There is
+\fBlocal_irq_save\fR
+call before
+\fBkgdb_roundup_cpus\fR\&.
+.PP
+On non\-SMP systems, this is not called\&.
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

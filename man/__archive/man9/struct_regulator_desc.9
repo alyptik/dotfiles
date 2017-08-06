@@ -1,0 +1,319 @@
+'\" t
+.\"     Title: struct regulator_desc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_DES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_desc \- Static regulator descriptor
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_desc {
+  const char * name;
+  const char * supply_name;
+  const char * of_match;
+  const char * regulators_node;
+  int (* of_parse_cb) (struct device_node *,const struct regulator_desc *,struct regulator_config *);
+  int id;
+  unsigned int continuous_voltage_range:1;
+  unsigned n_voltages;
+  const struct regulator_ops * ops;
+  int irq;
+  enum regulator_type type;
+  struct module * owner;
+  unsigned int min_uV;
+  unsigned int uV_step;
+  unsigned int linear_min_sel;
+  int fixed_uV;
+  unsigned int ramp_delay;
+  int min_dropout_uV;
+  const struct regulator_linear_range * linear_ranges;
+  int n_linear_ranges;
+  const unsigned int * volt_table;
+  unsigned int vsel_reg;
+  unsigned int vsel_mask;
+  unsigned int csel_reg;
+  unsigned int csel_mask;
+  unsigned int apply_reg;
+  unsigned int apply_bit;
+  unsigned int enable_reg;
+  unsigned int enable_mask;
+  unsigned int enable_val;
+  unsigned int disable_val;
+  bool enable_is_inverted;
+  unsigned int bypass_reg;
+  unsigned int bypass_mask;
+  unsigned int bypass_val_on;
+  unsigned int bypass_val_off;
+  unsigned int active_discharge_on;
+  unsigned int active_discharge_off;
+  unsigned int active_discharge_mask;
+  unsigned int active_discharge_reg;
+  unsigned int enable_time;
+  unsigned int off_on_delay;
+  unsigned int (* of_map_mode) (unsigned int mode);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+name
+.RS 4
+Identifying name for the regulator\&.
+.RE
+.PP
+supply_name
+.RS 4
+Identifying the regulator supply
+.RE
+.PP
+of_match
+.RS 4
+Name used to identify regulator in DT\&.
+.RE
+.PP
+regulators_node
+.RS 4
+Name of node containing regulator definitions in DT\&.
+.RE
+.PP
+of_parse_cb
+.RS 4
+Optional callback called only if of_match is present\&. Will be called for each regulator parsed from DT, during init_data parsing\&. The regulator_config passed as argument to the callback will be a copy of config passed to regulator_register, valid only for this particular call\&. Callback may freely change the config but it cannot store it for later usage\&. Callback should return 0 on success or negative ERRNO indicating failure\&.
+.RE
+.PP
+id
+.RS 4
+Numerical identifier for the regulator\&.
+.RE
+.PP
+continuous_voltage_range
+.RS 4
+Indicates if the regulator can set any voltage within constrains range\&.
+.RE
+.PP
+n_voltages
+.RS 4
+Number of selectors available for ops\&.\fBlist_voltage\fR\&.
+.RE
+.PP
+ops
+.RS 4
+Regulator operations table\&.
+.RE
+.PP
+irq
+.RS 4
+Interrupt number for the regulator\&.
+.RE
+.PP
+type
+.RS 4
+Indicates if the regulator is a voltage or current regulator\&.
+.RE
+.PP
+owner
+.RS 4
+Module providing the regulator, used for refcounting\&.
+.RE
+.PP
+min_uV
+.RS 4
+Voltage given by the lowest selector (if linear mapping)
+.RE
+.PP
+uV_step
+.RS 4
+Voltage increase with each selector (if linear mapping)
+.RE
+.PP
+linear_min_sel
+.RS 4
+Minimal selector for starting linear mapping
+.RE
+.PP
+fixed_uV
+.RS 4
+Fixed voltage of rails\&.
+.RE
+.PP
+ramp_delay
+.RS 4
+Time to settle down after voltage change (unit: uV/us)
+.RE
+.PP
+min_dropout_uV
+.RS 4
+The minimum dropout voltage this regulator can handle
+.RE
+.PP
+linear_ranges
+.RS 4
+A constant table of possible voltage ranges\&.
+.RE
+.PP
+n_linear_ranges
+.RS 4
+Number of entries in the
+\fIlinear_ranges\fR
+table\&.
+.RE
+.PP
+volt_table
+.RS 4
+Voltage mapping table (if table based mapping)
+.RE
+.PP
+vsel_reg
+.RS 4
+Register for selector when using regulator_regmap_X_voltage_
+.RE
+.PP
+vsel_mask
+.RS 4
+Mask for register bitfield used for selector
+.RE
+.PP
+csel_reg
+.RS 4
+Register for TPS65218 LS3 current regulator
+.RE
+.PP
+csel_mask
+.RS 4
+Mask for TPS65218 LS3 current regulator
+.RE
+.PP
+apply_reg
+.RS 4
+Register for initiate voltage change on the output when using regulator_set_voltage_sel_regmap
+.RE
+.PP
+apply_bit
+.RS 4
+Register bitfield used for initiate voltage change on the output when using regulator_set_voltage_sel_regmap
+.RE
+.PP
+enable_reg
+.RS 4
+Register for control when using regmap enable/disable ops
+.RE
+.PP
+enable_mask
+.RS 4
+Mask for control when using regmap enable/disable ops
+.RE
+.PP
+enable_val
+.RS 4
+Enabling value for control when using regmap enable/disable ops
+.RE
+.PP
+disable_val
+.RS 4
+Disabling value for control when using regmap enable/disable ops
+.RE
+.PP
+enable_is_inverted
+.RS 4
+A flag to indicate set enable_mask bits to disable when using regulator_enable_regmap and friends APIs\&.
+.RE
+.PP
+bypass_reg
+.RS 4
+Register for control when using regmap set_bypass
+.RE
+.PP
+bypass_mask
+.RS 4
+Mask for control when using regmap set_bypass
+.RE
+.PP
+bypass_val_on
+.RS 4
+Enabling value for control when using regmap set_bypass
+.RE
+.PP
+bypass_val_off
+.RS 4
+Disabling value for control when using regmap set_bypass
+.RE
+.PP
+active_discharge_on
+.RS 4
+Disabling value for control when using regmap set_active_discharge
+.RE
+.PP
+active_discharge_off
+.RS 4
+Enabling value for control when using regmap set_active_discharge
+.RE
+.PP
+active_discharge_mask
+.RS 4
+Mask for control when using regmap set_active_discharge
+.RE
+.PP
+active_discharge_reg
+.RS 4
+Register for control when using regmap set_active_discharge
+.RE
+.PP
+enable_time
+.RS 4
+Time taken for initial enable of regulator (in uS)\&.
+.RE
+.PP
+off_on_delay
+.RS 4
+guard time (in uS), before re\-enabling a regulator
+.RE
+.PP
+of_map_mode
+.RS 4
+Maps a hardware mode defined in a DeviceTree to a standard mode
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Each regulator registered with the core is described with a structure of this type and a struct regulator_config\&. This structure contains the non\-varying parts of the regulator description\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

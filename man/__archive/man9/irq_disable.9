@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: irq_disable
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_DISABLE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_disable \- Mark interrupt disabled
+.SH "SYNOPSIS"
+.HP \w'void\ irq_disable('u
+.BI "void irq_disable(struct\ irq_desc\ *\ " "desc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdesc\fR
+.RS 4
+irq descriptor which should be disabled
+.RE
+.SH "DESCRIPTION"
+.PP
+If the chip does not implement the irq_disable callback, we use a lazy disable approach\&. That means we mark the interrupt disabled, but leave the hardware unmasked\&. That\*(Aqs an optimization because we avoid the hardware access for the common case where no interrupt happens after we marked it disabled\&. If an interrupt happens, then the interrupt flow handler masks the line at the hardware level and marks it pending\&.
+.PP
+If the interrupt chip does not implement the irq_disable callback, a driver can disable the lazy approach for a particular irq line by calling \*(Aqirq_set_status_flags(irq, IRQ_DISABLE_UNLAZY)\*(Aq\&. This can be used for devices which cannot disable the interrupt at the device level under certain circumstances and have to use disable_irq[_nosync] instead\&.
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: skb_morph
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_MORPH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_morph \- morph one skb into another
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_morph('u
+.BI "struct sk_buff * skb_morph(struct\ sk_buff\ *\ " "dst" ", struct\ sk_buff\ *\ " "src" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdst\fR
+.RS 4
+the skb to receive the contents
+.RE
+.PP
+\fIsrc\fR
+.RS 4
+the skb to supply the contents
+.RE
+.SH "DESCRIPTION"
+.PP
+This is identical to skb_clone except that the target skb is supplied by the user\&.
+.PP
+The target skb is returned upon exit\&.
+.SH "COPYRIGHT"
+.br

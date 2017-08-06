@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: disk_clear_events
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DISK_CLEAR_EVENTS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+disk_clear_events \- synchronously check, clear and return pending events
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ disk_clear_events('u
+.BI "unsigned int disk_clear_events(struct\ gendisk\ *\ " "disk" ", unsigned\ int\ " "mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdisk\fR
+.RS 4
+disk to fetch and clear events from
+.RE
+.PP
+\fImask\fR
+.RS 4
+mask of events to be fetched and cleared
+.RE
+.SH "DESCRIPTION"
+.PP
+Disk events are synchronously checked and pending events in
+\fImask\fR
+are cleared and returned\&. This ignores the block count\&.
+.SH "CONTEXT"
+.PP
+Might sleep\&.
+.SH "COPYRIGHT"
+.br

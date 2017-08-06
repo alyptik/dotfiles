@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: irq_remove_generic_chip
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interrupt chip
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_REMOVE_GENERIC_C" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interrupt chip"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_remove_generic_chip \- Remove a chip
+.SH "SYNOPSIS"
+.HP \w'void\ irq_remove_generic_chip('u
+.BI "void irq_remove_generic_chip(struct\ irq_chip_generic\ *\ " "gc" ", u32\ " "msk" ", unsigned\ int\ " "clr" ", unsigned\ int\ " "set" ");"
+.SH "ARGUMENTS"
+.PP
+\fIgc\fR
+.RS 4
+Generic irq chip holding all data
+.RE
+.PP
+\fImsk\fR
+.RS 4
+Bitmask holding the irqs to initialize relative to gc\->irq_base
+.RE
+.PP
+\fIclr\fR
+.RS 4
+IRQ_* bits to clear
+.RE
+.PP
+\fIset\fR
+.RS 4
+IRQ_* bits to set
+.RE
+.SH "DESCRIPTION"
+.PP
+Remove up to 32 interrupts starting from gc\->irq_base\&.
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

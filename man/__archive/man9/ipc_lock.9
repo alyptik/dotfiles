@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: ipc_lock
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPC_LOCK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipc_lock \- lock an ipc structure without rwsem held
+.SH "SYNOPSIS"
+.HP \w'struct\ kern_ipc_perm\ *\ ipc_lock('u
+.BI "struct kern_ipc_perm * ipc_lock(struct\ ipc_ids\ *\ " "ids" ", int\ " "id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIids\fR
+.RS 4
+ipc identifier set
+.RE
+.PP
+\fIid\fR
+.RS 4
+ipc id to look for
+.RE
+.SH "DESCRIPTION"
+.PP
+Look for an id in the ipc ids idr and lock the associated ipc object\&.
+.PP
+The ipc object is locked on successful exit\&.
+.SH "COPYRIGHT"
+.br

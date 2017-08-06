@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: bio_advance
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BIO_ADVANCE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bio_advance \- increment/complete a bio by some number of bytes
+.SH "SYNOPSIS"
+.HP \w'void\ bio_advance('u
+.BI "void bio_advance(struct\ bio\ *\ " "bio" ", unsigned\ " "bytes" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbio\fR
+.RS 4
+bio to advance
+.RE
+.PP
+\fIbytes\fR
+.RS 4
+number of bytes to complete
+.RE
+.SH "DESCRIPTION"
+.PP
+This updates bi_sector, bi_size and bi_idx; if the number of bytes to complete doesn\*(Aqt align with a bvec boundary, then bv_len and bv_offset will be updated on the last bvec as well\&.
+.PP
+\fIbio\fR
+will then represent the remaining, uncompleted portion of the io\&.
+.SH "COPYRIGHT"
+.br

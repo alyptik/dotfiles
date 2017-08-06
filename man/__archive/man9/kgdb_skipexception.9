@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: kgdb_skipexception
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KGDB_SKIPEXCEPTION" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kgdb_skipexception \- (optional) exit kgdb_handle_exception early
+.SH "SYNOPSIS"
+.HP \w'int\ kgdb_skipexception('u
+.BI "int kgdb_skipexception(int\ " "exception" ", struct\ pt_regs\ *\ " "regs" ");"
+.SH "ARGUMENTS"
+.PP
+\fIexception\fR
+.RS 4
+Exception vector number
+.RE
+.PP
+\fIregs\fR
+.RS 4
+Current
+struct pt_regs\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+On some architectures it is required to skip a breakpoint exception when it occurs after a breakpoint has been removed\&. This can be implemented in the architecture specific portion of kgdb\&.
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

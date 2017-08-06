@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: xprt_reserve_xprt
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XPRT_RESERVE_XPRT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xprt_reserve_xprt \- serialize write access to transports
+.SH "SYNOPSIS"
+.HP \w'int\ xprt_reserve_xprt('u
+.BI "int xprt_reserve_xprt(struct\ rpc_xprt\ *\ " "xprt" ", struct\ rpc_task\ *\ " "task" ");"
+.SH "ARGUMENTS"
+.PP
+\fIxprt\fR
+.RS 4
+pointer to the target transport
+.RE
+.PP
+\fItask\fR
+.RS 4
+task that is requesting access to the transport
+.RE
+.SH "DESCRIPTION"
+.PP
+This prevents mixing the payload of separate requests, and prevents transport connects from colliding with writes\&. No congestion control is provided\&.
+.SH "COPYRIGHT"
+.br

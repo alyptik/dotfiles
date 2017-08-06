@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: __audit_mq_notify
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_MQ_NOTIFY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_mq_notify \- record audit data for a POSIX MQ notify
+.SH "SYNOPSIS"
+.HP \w'void\ __audit_mq_notify('u
+.BI "void __audit_mq_notify(mqd_t\ " "mqdes" ", const\ struct\ sigevent\ *\ " "notification" ");"
+.SH "ARGUMENTS"
+.PP
+\fImqdes\fR
+.RS 4
+MQ descriptor
+.RE
+.PP
+\fInotification\fR
+.RS 4
+Notification event
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: wakeup_readers
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: relay interface support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WAKEUP_READERS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "relay interface support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wakeup_readers \- wake up readers waiting on a channel
+.SH "SYNOPSIS"
+.HP \w'void\ wakeup_readers('u
+.BI "void wakeup_readers(struct\ irq_work\ *\ " "work" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwork\fR
+.RS 4
+contains the channel buffer
+.RE
+.SH "DESCRIPTION"
+.PP
+This is the function used to defer reader waking
+.SH "COPYRIGHT"
+.br

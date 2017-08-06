@@ -1,0 +1,89 @@
+'\" t
+.\"     Title: sata_link_hardreset
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SATA_LINK_HARDRESET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sata_link_hardreset \- reset link via SATA phy reset
+.SH "SYNOPSIS"
+.HP \w'int\ sata_link_hardreset('u
+.BI "int sata_link_hardreset(struct\ ata_link\ *\ " "link" ", const\ unsigned\ long\ *\ " "timing" ", unsigned\ long\ " "deadline" ", bool\ *\ " "online" ", int\ (*" "check_ready" ")\ (struct\ ata_link\ *));"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+link to reset
+.RE
+.PP
+\fItiming\fR
+.RS 4
+timing parameters { interval, duration, timeout } in msec
+.RE
+.PP
+\fIdeadline\fR
+.RS 4
+deadline jiffies for the operation
+.RE
+.PP
+\fIonline\fR
+.RS 4
+optional out parameter indicating link onlineness
+.RE
+.PP
+\fIcheck_ready\fR
+.RS 4
+optional callback to check link readiness
+.RE
+.SH "DESCRIPTION"
+.PP
+SATA phy\-reset
+\fIlink\fR
+using DET bits of SControl register\&. After hardreset, link readiness is waited upon using
+\fBata_wait_ready\fR
+if
+\fIcheck_ready\fR
+is specified\&. LLDs are allowed to not specify
+\fIcheck_ready\fR
+and wait itself after this function returns\&. Device classification is LLD\*(Aqs responsibility\&.
+.PP
+*\fIonline\fR
+is set to one iff reset succeeded and
+\fIlink\fR
+is online after reset\&.
+.PP
+LOCKING: Kernel thread context (may sleep)
+.SH "RETURN"
+.PP
+0 on success, \-errno otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

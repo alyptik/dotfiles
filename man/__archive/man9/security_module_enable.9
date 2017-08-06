@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: security_module_enable
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Security Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SECURITY_MODULE_ENAB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Security Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+security_module_enable \- Load given security module on boot ?
+.SH "SYNOPSIS"
+.HP \w'int\ security_module_enable('u
+.BI "int security_module_enable(const\ char\ *\ " "module" ");"
+.SH "ARGUMENTS"
+.PP
+\fImodule\fR
+.RS 4
+the name of the module
+.RE
+.SH "DESCRIPTION"
+.PP
+Each LSM must pass this method before registering its own operations to avoid security registration races\&. This method may also be used to check if your LSM is currently loaded during kernel initialization\&.
+.PP
+Return true if: \-The passed LSM is the one chosen by user at boot time, \-or the passed LSM is configured as the default and the user did not choose an alternate LSM at boot time\&. Otherwise, return false\&.
+.SH "COPYRIGHT"
+.br

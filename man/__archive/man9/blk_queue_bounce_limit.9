@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: blk_queue_bounce_limit
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_QUEUE_BOUNCE_LIM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_queue_bounce_limit \- set bounce buffer limit for queue
+.SH "SYNOPSIS"
+.HP \w'void\ blk_queue_bounce_limit('u
+.BI "void blk_queue_bounce_limit(struct\ request_queue\ *\ " "q" ", u64\ " "max_addr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the request queue for the device
+.RE
+.PP
+\fImax_addr\fR
+.RS 4
+the maximum address the device can handle
+.RE
+.SH "DESCRIPTION"
+.PP
+Different hardware can have different requirements as to what pages it can do I/O directly to\&. A low level driver can call blk_queue_bounce_limit to have lower memory pages allocated as bounce buffers for doing I/O to pages residing above
+\fImax_addr\fR\&.
+.SH "COPYRIGHT"
+.br

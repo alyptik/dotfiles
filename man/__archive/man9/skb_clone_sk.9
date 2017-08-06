@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: skb_clone_sk
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_CLONE_SK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_clone_sk \- create clone of skb, and take reference to socket
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_clone_sk('u
+.BI "struct sk_buff * skb_clone_sk(struct\ sk_buff\ *\ " "skb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+the skb to clone
+.RE
+.SH "DESCRIPTION"
+.PP
+This function creates a clone of a buffer that holds a reference on sk_refcnt\&. Buffers created via this function are meant to be returned using sock_queue_err_skb, or free via kfree_skb\&.
+.PP
+When passing buffers allocated with this function to sock_queue_err_skb it is necessary to wrap the call with sock_hold/sock_put in order to prevent the socket from being released prior to being enqueued on the sk_error_queue\&.
+.SH "COPYRIGHT"
+.br

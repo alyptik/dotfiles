@@ -1,0 +1,116 @@
+'\" t
+.\"     Title: struct regulator_config
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_CON" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_config \- Dynamic regulator descriptor
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_config {
+  struct device * dev;
+  const struct regulator_init_data * init_data;
+  void * driver_data;
+  struct device_node * of_node;
+  struct regmap * regmap;
+  bool ena_gpio_initialized;
+  int ena_gpio;
+  unsigned int ena_gpio_invert:1;
+  unsigned int ena_gpio_flags;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+dev
+.RS 4
+struct device for the regulator
+.RE
+.PP
+init_data
+.RS 4
+platform provided init data, passed through by driver
+.RE
+.PP
+driver_data
+.RS 4
+private regulator data
+.RE
+.PP
+of_node
+.RS 4
+OpenFirmware node to parse for device tree bindings (may be NULL)\&.
+.RE
+.PP
+regmap
+.RS 4
+regmap to use for core regmap helpers if
+\fBdev_get_regmap\fR
+is insufficient\&.
+.RE
+.PP
+ena_gpio_initialized
+.RS 4
+GPIO controlling regulator enable was properly initialized, meaning that >= 0 is a valid gpio identifier and < 0 is a non existent gpio\&.
+.RE
+.PP
+ena_gpio
+.RS 4
+GPIO controlling regulator enable\&.
+.RE
+.PP
+ena_gpio_invert
+.RS 4
+Sense for GPIO enable control\&.
+.RE
+.PP
+ena_gpio_flags
+.RS 4
+Flags to use when calling
+\fBgpio_request_one\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Each regulator registered with the core is described with a structure of this type and a struct regulator_desc\&. This structure contains the runtime variable parts of the regulator description\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

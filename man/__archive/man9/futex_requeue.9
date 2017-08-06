@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: futex_requeue
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FUTEX_REQUEUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+futex_requeue \- Requeue waiters from uaddr1 to uaddr2
+.SH "SYNOPSIS"
+.HP \w'int\ futex_requeue('u
+.BI "int futex_requeue(u32\ __user\ *\ " "uaddr1" ", unsigned\ int\ " "flags" ", u32\ __user\ *\ " "uaddr2" ", int\ " "nr_wake" ", int\ " "nr_requeue" ", u32\ *\ " "cmpval" ", int\ " "requeue_pi" ");"
+.SH "ARGUMENTS"
+.PP
+\fIuaddr1\fR
+.RS 4
+source futex user address
+.RE
+.PP
+\fIflags\fR
+.RS 4
+futex flags (FLAGS_SHARED, etc\&.)
+.RE
+.PP
+\fIuaddr2\fR
+.RS 4
+target futex user address
+.RE
+.PP
+\fInr_wake\fR
+.RS 4
+number of waiters to wake (must be 1 for requeue_pi)
+.RE
+.PP
+\fInr_requeue\fR
+.RS 4
+number of waiters to requeue (0\-INT_MAX)
+.RE
+.PP
+\fIcmpval\fR
+.RS 4
+\fIuaddr1\fR
+expected value (or
+\fBNULL\fR)
+.RE
+.PP
+\fIrequeue_pi\fR
+.RS 4
+if we are attempting to requeue from a non\-pi futex to a pi futex (pi to pi requeue is not supported)
+.RE
+.SH "DESCRIPTION"
+.PP
+Requeue waiters on uaddr1 to uaddr2\&. In the requeue_pi case, try to acquire uaddr2 atomically on behalf of the top waiter\&.
+.SH "RETURN"
+.PP
+>=0 \- on success, the number of tasks requeued or woken; <0 \- on error
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

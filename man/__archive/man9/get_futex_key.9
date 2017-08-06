@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: get_futex_key
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GET_FUTEX_KEY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+get_futex_key \- Get parameters which are the keys for a futex
+.SH "SYNOPSIS"
+.HP \w'int\ get_futex_key('u
+.BI "int get_futex_key(u32\ __user\ *\ " "uaddr" ", int\ " "fshared" ", union\ futex_key\ *\ " "key" ", int\ " "rw" ");"
+.SH "ARGUMENTS"
+.PP
+\fIuaddr\fR
+.RS 4
+virtual address of the futex
+.RE
+.PP
+\fIfshared\fR
+.RS 4
+0 for a PROCESS_PRIVATE futex, 1 for PROCESS_SHARED
+.RE
+.PP
+\fIkey\fR
+.RS 4
+address where result is stored\&.
+.RE
+.PP
+\fIrw\fR
+.RS 4
+mapping needs to be read/write (values: VERIFY_READ, VERIFY_WRITE)
+.RE
+.SH "RETURN"
+.PP
+a negative error code or 0
+.PP
+The key words are stored in *key on success\&.
+.PP
+For shared mappings, it\*(Aqs (page\->index, file_inode(vma\->vm_file), offset_within_page)\&. For private mappings, it\*(Aqs (uaddr, current\->mm)\&. We can usually work out the index without swapping in the page\&.
+.PP
+\fBlock_page\fR
+might sleep, the caller should not hold a spinlock\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

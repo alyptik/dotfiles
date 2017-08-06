@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: deactivate_locked_super
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEACTIVATE_LOCKED_SU" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+deactivate_locked_super \- drop an active reference to superblock
+.SH "SYNOPSIS"
+.HP \w'void\ deactivate_locked_super('u
+.BI "void deactivate_locked_super(struct\ super_block\ *\ " "s" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+superblock to deactivate
+.RE
+.SH "DESCRIPTION"
+.PP
+Drops an active reference to superblock, converting it into a temporary one if there is no other active references left\&. In that case we tell fs driver to shut it down and drop the temporary reference we had just acquired\&.
+.PP
+Caller holds exclusive lock on superblock; that lock is released\&.
+.SH "COPYRIGHT"
+.br

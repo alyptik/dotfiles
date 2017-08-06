@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: posix_lock_inode_wait
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "POSIX_LOCK_INODE_WAI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+posix_lock_inode_wait \- Apply a POSIX\-style lock to a file
+.SH "SYNOPSIS"
+.HP \w'int\ posix_lock_inode_wait('u
+.BI "int posix_lock_inode_wait(struct\ inode\ *\ " "inode" ", struct\ file_lock\ *\ " "fl" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+inode of file to which lock request should be applied
+.RE
+.PP
+\fIfl\fR
+.RS 4
+The lock to be applied
+.RE
+.SH "DESCRIPTION"
+.PP
+Apply a POSIX style lock request to an inode\&.
+.SH "COPYRIGHT"
+.br

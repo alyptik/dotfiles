@@ -1,0 +1,77 @@
+'\" t
+.\"     Title: fc_remote_port_add
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FC_REMOTE_PORT_ADD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fc_remote_port_add \- notify fc transport of the existence of a remote FC port\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ fc_rport\ *\ fc_remote_port_add('u
+.BI "struct fc_rport * fc_remote_port_add(struct\ Scsi_Host\ *\ " "shost" ", int\ " "channel" ", struct\ fc_rport_identifiers\ *\ " "ids" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+scsi host the remote port is connected to\&.
+.RE
+.PP
+\fIchannel\fR
+.RS 4
+Channel on shost port connected to\&.
+.RE
+.PP
+\fIids\fR
+.RS 4
+The world wide names, fc address, and FC4 port roles for the remote port\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+The LLDD calls this routine to notify the transport of the existence of a remote port\&. The LLDD provides the unique identifiers (wwpn,wwn) of the port, it\*(Aqs FC address (port_id), and the FC4 roles that are active for the port\&.
+.PP
+For ports that are FCP targets (aka scsi targets), the FC transport maintains consistent target id bindings on behalf of the LLDD\&. A consistent target id binding is an assignment of a target id to a remote port identifier, which persists while the scsi host is attached\&. The remote port can disappear, then later reappear, and it\*(Aqs target id assignment remains the same\&. This allows for shifts in FC addressing (if binding by wwpn or wwnn) with no apparent changes to the scsi subsystem which is based on scsi host number and target id values\&. Bindings are only valid during the attachment of the scsi host\&. If the host detaches, then later re\-attaches, target id bindings may change\&.
+.PP
+This routine is responsible for returning a remote port structure\&. The routine will search the list of remote ports it maintains internally on behalf of consistent target id mappings\&. If found, the remote port structure will be reused\&. Otherwise, a new remote port structure will be allocated\&.
+.PP
+Whenever a remote port is allocated, a new fc_remote_port class device is created\&.
+.PP
+Should not be called from interrupt context\&.
+.SH "NOTES"
+.PP
+This routine assumes no locks are held on entry\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

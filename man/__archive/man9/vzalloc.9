@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: vzalloc
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VZALLOC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vzalloc \- allocate virtually contiguous memory with zero fill
+.SH "SYNOPSIS"
+.HP \w'void\ *\ vzalloc('u
+.BI "void * vzalloc(unsigned\ long\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsize\fR
+.RS 4
+allocation size Allocate enough pages to cover
+\fIsize\fR
+from the page level allocator and map them into contiguous kernel virtual space\&. The memory allocated is set to zero\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+For tight control over page level allocator and protection flags use
+\fB__vmalloc\fR
+instead\&.
+.SH "COPYRIGHT"
+.br

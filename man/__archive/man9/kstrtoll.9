@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: kstrtoll
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KSTRTOLL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kstrtoll \- convert a string to a long long
+.SH "SYNOPSIS"
+.HP \w'int\ kstrtoll('u
+.BI "int kstrtoll(const\ char\ *\ " "s" ", unsigned\ int\ " "base" ", long\ long\ *\ " "res" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+The start of the string\&. The string must be null\-terminated, and may also include a single newline before its terminating null\&. The first character may also be a plus sign or a minus sign\&.
+.RE
+.PP
+\fIbase\fR
+.RS 4
+The number base to use\&. The maximum supported base is 16\&. If base is given as 0, then the base of the string is automatically detected with the conventional semantics \- If it begins with 0x the number will be parsed as a hexadecimal (case insensitive), if it otherwise begins with 0, it will be parsed as an octal number\&. Otherwise it will be parsed as a decimal\&.
+.RE
+.PP
+\fIres\fR
+.RS 4
+Where to write the result of the conversion on success\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 on success, \-ERANGE on overflow and \-EINVAL on parsing error\&. Used as a replacement for the obsolete simple_strtoull\&. Return code must be checked\&.
+.SH "COPYRIGHT"
+.br

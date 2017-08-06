@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: d_exact_alias
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "D_EXACT_ALIAS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+d_exact_alias \- find and hash an exact unhashed alias
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ d_exact_alias('u
+.BI "struct dentry * d_exact_alias(struct\ dentry\ *\ " "entry" ", struct\ inode\ *\ " "inode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIentry\fR
+.RS 4
+dentry to add
+.RE
+.PP
+\fIinode\fR
+.RS 4
+The inode to go with this dentry
+.RE
+.SH "DESCRIPTION"
+.PP
+If an unhashed dentry with the same name/parent and desired inode already exists, hash and return it\&. Otherwise, return NULL\&.
+.PP
+Parent directory should be locked\&.
+.SH "COPYRIGHT"
+.br

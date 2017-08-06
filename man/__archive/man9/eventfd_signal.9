@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: eventfd_signal
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Events based on file descriptors
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "EVENTFD_SIGNAL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Events based on file descripto"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eventfd_signal \- Adds \fIn\fR to the eventfd counter\&.
+.SH "SYNOPSIS"
+.HP \w'__u64\ eventfd_signal('u
+.BI "__u64 eventfd_signal(struct\ eventfd_ctx\ *\ " "ctx" ", __u64\ " "n" ");"
+.SH "ARGUMENTS"
+.PP
+\fIctx\fR
+.RS 4
+[in] Pointer to the eventfd context\&.
+.RE
+.PP
+\fIn\fR
+.RS 4
+[in] Value of the counter to be added to the eventfd internal counter\&. The value cannot be negative\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function is supposed to be called by the kernel in paths that do not allow sleeping\&. In this function we allow the counter to reach the ULLONG_MAX value, and we signal this as overflow condition by returning a POLLERR to poll(2)\&.
+.PP
+Returns the amount by which the counter was incremented\&. This will be less than
+\fIn\fR
+if the counter has overflowed\&.
+.SH "COPYRIGHT"
+.br

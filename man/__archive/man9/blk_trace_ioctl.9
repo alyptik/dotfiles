@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: blk_trace_ioctl
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_TRACE_IOCTL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_trace_ioctl \- handle the ioctls associated with tracing
+.SH "SYNOPSIS"
+.HP \w'int\ blk_trace_ioctl('u
+.BI "int blk_trace_ioctl(struct\ block_device\ *\ " "bdev" ", unsigned\ " "cmd" ", char\ __user\ *\ " "arg" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+the block device
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+the ioctl cmd
+.RE
+.PP
+\fIarg\fR
+.RS 4
+the argument data, if any
+.RE
+.SH "COPYRIGHT"
+.br

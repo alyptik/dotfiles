@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: regulator_get_exclusive
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_GET_EXCLUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_get_exclusive \- obtain exclusive access to a regulator\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ regulator\ *\ regulator_get_exclusive('u
+.BI "struct regulator * regulator_get_exclusive(struct\ device\ *\ " "dev" ", const\ char\ *\ " "id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device for regulator
+\(lqconsumer\(rq
+.RE
+.PP
+\fIid\fR
+.RS 4
+Supply name or regulator ID\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns a struct regulator corresponding to the regulator producer, or
+\fBIS_ERR\fR
+condition containing errno\&. Other consumers will be unable to obtain this regulator while this reference is held and the use count for the regulator will be initialised to reflect the current state of the regulator\&.
+.PP
+This is intended for use by consumers which cannot tolerate shared use of the regulator such as those which need to force the regulator off for correct operation of the hardware they are controlling\&.
+.PP
+Use of supply names configured via
+\fBregulator_set_device_supply\fR
+is strongly encouraged\&. It is recommended that the supply name used should match the name used for the supply and/or the relevant device pins in the datasheet\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: page_cache_prev_hole
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PAGE_CACHE_PREV_HOLE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+page_cache_prev_hole \- find the prev hole (not\-present entry)
+.SH "SYNOPSIS"
+.HP \w'pgoff_t\ page_cache_prev_hole('u
+.BI "pgoff_t page_cache_prev_hole(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "index" ", unsigned\ long\ " "max_scan" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+mapping
+.RE
+.PP
+\fIindex\fR
+.RS 4
+index
+.RE
+.PP
+\fImax_scan\fR
+.RS 4
+maximum range to search
+.RE
+.SH "DESCRIPTION"
+.PP
+Search backwards in the range [max(index\-max_scan+1, 0), index] for the first hole\&.
+.SH "RETURN"
+.PP
+the index of the hole if found, otherwise returns an index outside of the set specified (in which case \*(Aqindex \- return >= max_scan\*(Aq will be true)\&. In rare cases of wrap\-around, ULONG_MAX will be returned\&.
+.PP
+page_cache_prev_hole may be called under rcu_read_lock\&. However, like radix_tree_gang_lookup, this will not atomically search a snapshot of the tree at a single point in time\&. For example, if a hole is created at index 10, then subsequently a hole is created at index 5, page_cache_prev_hole covering both indexes may return 5 if called under rcu_read_lock\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: seq_escape
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SEQ_ESCAPE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+seq_escape \- print string into buffer, escaping some characters
+.SH "SYNOPSIS"
+.HP \w'void\ seq_escape('u
+.BI "void seq_escape(struct\ seq_file\ *\ " "m" ", const\ char\ *\ " "s" ", const\ char\ *\ " "esc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIm\fR
+.RS 4
+target buffer
+.RE
+.PP
+\fIs\fR
+.RS 4
+string
+.RE
+.PP
+\fIesc\fR
+.RS 4
+set of characters that need escaping
+.RE
+.SH "DESCRIPTION"
+.PP
+Puts string into buffer, replacing each occurrence of character from
+\fIesc\fR
+with usual octal escape\&. Use
+\fBseq_has_overflowed\fR
+to check for errors\&.
+.SH "COPYRIGHT"
+.br

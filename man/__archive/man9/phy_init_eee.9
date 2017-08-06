@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: phy_init_eee
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_INIT_EEE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_init_eee \- init and check the EEE feature
+.SH "SYNOPSIS"
+.HP \w'int\ phy_init_eee('u
+.BI "int phy_init_eee(struct\ phy_device\ *\ " "phydev" ", bool\ " "clk_stop_enable" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+target phy_device struct
+.RE
+.PP
+\fIclk_stop_enable\fR
+.RS 4
+PHY may stop the clock during LPI
+.RE
+.SH "DESCRIPTION"
+.PP
+it checks if the Energy\-Efficient Ethernet (EEE) is supported by looking at the MMD registers 3\&.20 and 7\&.60/61 and it programs the MMD register 3\&.0 setting the
+\(lqClock stop enable\(rq
+bit if required\&.
+.SH "COPYRIGHT"
+.br

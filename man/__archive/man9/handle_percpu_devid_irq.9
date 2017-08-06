@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: handle_percpu_devid_irq
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "HANDLE_PERCPU_DEVID_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+handle_percpu_devid_irq \- Per CPU local irq handler with per cpu dev ids
+.SH "SYNOPSIS"
+.HP \w'void\ handle_percpu_devid_irq('u
+.BI "void handle_percpu_devid_irq(struct\ irq_desc\ *\ " "desc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdesc\fR
+.RS 4
+the interrupt description structure for this irq
+.RE
+.SH "DESCRIPTION"
+.PP
+Per CPU interrupts on SMP machines without locking requirements\&. Same as
+\fBhandle_percpu_irq\fR
+above but with the following extras:
+.PP
+action\->percpu_dev_id is a pointer to percpu variables which contain the real device id for the cpu on which this handler is called
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

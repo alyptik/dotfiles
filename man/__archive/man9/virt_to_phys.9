@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: virt_to_phys
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VIRT_TO_PHYS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+virt_to_phys \- map virtual addresses to physical
+.SH "SYNOPSIS"
+.HP \w'phys_addr_t\ virt_to_phys('u
+.BI "phys_addr_t virt_to_phys(volatile\ void\ *\ " "address" ");"
+.SH "ARGUMENTS"
+.PP
+\fIaddress\fR
+.RS 4
+address to remap
+.RE
+.SH "DESCRIPTION"
+.PP
+The returned physical address is the physical (CPU) mapping for the memory address given\&. It is only valid to use this function on addresses directly mapped or allocated via kmalloc\&.
+.PP
+This function does not give bus mappings for DMA transfers\&. In almost all conceivable cases a device driver should not be using this function
+.SH "AUTHORS"
+.PP
+\fBMatthew Wilcox\fR <\&matthew@wil.cx\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

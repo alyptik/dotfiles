@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: balance_dirty_pages_ratelimited
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BALANCE_DIRTY_PAGES_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+balance_dirty_pages_ratelimited \- balance dirty memory state
+.SH "SYNOPSIS"
+.HP \w'void\ balance_dirty_pages_ratelimited('u
+.BI "void balance_dirty_pages_ratelimited(struct\ address_space\ *\ " "mapping" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+address_space which was dirtied
+.RE
+.SH "DESCRIPTION"
+.PP
+Processes which are dirtying memory should call in here once for each page which was newly dirtied\&. The function will periodically check the system\*(Aqs dirty state and will initiate writeback if needed\&.
+.PP
+On really big machines, get_writeback_state is expensive, so try to avoid calling it too often (ratelimiting)\&. But once we\*(Aqre over the dirty memory limit we decrease the ratelimiting by a lot, to prevent individual processes from overshooting the limit by (ratelimit_pages) each\&.
+.SH "COPYRIGHT"
+.br

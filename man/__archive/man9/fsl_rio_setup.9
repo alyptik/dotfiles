@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: fsl_rio_setup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FSL_RIO_SETUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fsl_rio_setup \- Setup Freescale PowerPC RapidIO interface
+.SH "SYNOPSIS"
+.HP \w'int\ fsl_rio_setup('u
+.BI "int fsl_rio_setup(struct\ platform_device\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+platform_device pointer
+.RE
+.SH "DESCRIPTION"
+.PP
+Initializes MPC85xx RapidIO hardware interface, configures master port with system\-specific info, and registers the master port with the RapidIO subsystem\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

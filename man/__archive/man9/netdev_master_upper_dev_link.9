@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: netdev_master_upper_dev_link
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETDEV_MASTER_UPPER_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netdev_master_upper_dev_link \- Add a master link to the upper device
+.SH "SYNOPSIS"
+.HP \w'int\ netdev_master_upper_dev_link('u
+.BI "int netdev_master_upper_dev_link(struct\ net_device\ *\ " "dev" ", struct\ net_device\ *\ " "upper_dev" ", void\ *\ " "upper_priv" ", void\ *\ " "upper_info" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device
+.RE
+.PP
+\fIupper_dev\fR
+.RS 4
+new upper device
+.RE
+.PP
+\fIupper_priv\fR
+.RS 4
+upper device private
+.RE
+.PP
+\fIupper_info\fR
+.RS 4
+upper info to be passed down via notifier
+.RE
+.SH "DESCRIPTION"
+.PP
+Adds a link to device which is upper to this one\&. In this case, only one master upper device can be linked, although other non\-master devices might be linked as well\&. The caller must hold the RTNL lock\&. On a failure a negative errno code is returned\&. On success the reference counts are adjusted and the function returns zero\&.
+.SH "COPYRIGHT"
+.br

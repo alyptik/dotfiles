@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: rio_register_scan
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_REGISTER_SCAN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_register_scan \- enumeration/discovery method registration interface
+.SH "SYNOPSIS"
+.HP \w'int\ rio_register_scan('u
+.BI "int rio_register_scan(int\ " "mport_id" ", struct\ rio_scan\ *\ " "scan_ops" ");"
+.SH "ARGUMENTS"
+.PP
+\fImport_id\fR
+.RS 4
+mport device ID for which fabric scan routine has to be set (RIO_MPORT_ANY = set for all available mports)
+.RE
+.PP
+\fIscan_ops\fR
+.RS 4
+enumeration/discovery operations structure
+.RE
+.SH "DESCRIPTION"
+.PP
+Registers enumeration/discovery operations with RapidIO subsystem and attaches it to the specified mport device (or all available mports if RIO_MPORT_ANY is specified)\&.
+.PP
+Returns error if the mport already has an enumerator attached to it\&. In case of RIO_MPORT_ANY skips mports with valid scan routines (no error)\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: mutex_lock
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Mutex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MUTEX_LOCK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Mutex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mutex_lock \- acquire the mutex
+.SH "SYNOPSIS"
+.HP \w'void\ __sched\ mutex_lock('u
+.BI "void __sched mutex_lock(struct\ mutex\ *\ " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlock\fR
+.RS 4
+the mutex to be acquired
+.RE
+.SH "DESCRIPTION"
+.PP
+Lock the mutex exclusively for this task\&. If the mutex is not available right now, it will sleep until it can get it\&.
+.PP
+The mutex must later on be released by the same task that acquired it\&. Recursive locking is not allowed\&. The task may not exit without first unlocking the mutex\&. Also, kernel memory where the mutex resides must not be freed with the mutex still locked\&. The mutex must first be initialized (or statically defined) before it can be locked\&.
+\fBmemset\fR\-ing the mutex to 0 is not allowed\&.
+.PP
+( The CONFIG_DEBUG_MUTEXES \&.config option turns on debugging checks that will enforce the restrictions and will also do deadlock debugging\&. )
+.PP
+This function is similar to (but not equivalent to)
+\fBdown\fR\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,48 @@
+'\" t
+.\"     Title: vm_unmap_aliases
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VM_UNMAP_ALIASES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vm_unmap_aliases \- unmap outstanding lazy aliases in the vmap layer
+.SH "SYNOPSIS"
+.HP \w'void\ vm_unmap_aliases('u
+.BI "void vm_unmap_aliases(" "void" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvoid\fR
+.RS 4
+no arguments
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+The vmap/vmalloc layer lazily flushes kernel virtual mappings primarily to amortize TLB flushing overheads\&. What this means is that any page you have now, may, in a former life, have been mapped into kernel virtual address by the vmap layer and so there might be some CPUs with TLB entries still referencing that page (additional to the regular 1:1 kernel mapping)\&.
+.PP
+vm_unmap_aliases flushes all such lazy mappings\&. After it returns, we can be sure that none of the pages we have control over will have any aliases from the vmap layer\&.
+.SH "COPYRIGHT"
+.br

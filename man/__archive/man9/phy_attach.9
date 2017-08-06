@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: phy_attach
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_ATTACH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_attach \- attach a network device to a particular PHY device
+.SH "SYNOPSIS"
+.HP \w'struct\ phy_device\ *\ phy_attach('u
+.BI "struct phy_device * phy_attach(struct\ net_device\ *\ " "dev" ", const\ char\ *\ " "bus_id" ", phy_interface_t\ " "interface" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+network device to attach
+.RE
+.PP
+\fIbus_id\fR
+.RS 4
+Bus ID of PHY device to attach
+.RE
+.PP
+\fIinterface\fR
+.RS 4
+PHY device\*(Aqs interface
+.RE
+.SH "DESCRIPTION"
+.PP
+Same as
+\fBphy_attach_direct\fR
+except that a PHY bus_id string is passed instead of a pointer to a struct phy_device\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: aica_rtc_gettimeofday
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Machine Specific Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "AICA_RTC_GETTIMEOFDA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Machine Specific Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+aica_rtc_gettimeofday \- Get the time from the AICA RTC
+.SH "SYNOPSIS"
+.HP \w'void\ aica_rtc_gettimeofday('u
+.BI "void aica_rtc_gettimeofday(struct\ timespec\ *\ " "ts" ");"
+.SH "ARGUMENTS"
+.PP
+\fIts\fR
+.RS 4
+pointer to resulting timespec
+.RE
+.SH "DESCRIPTION"
+.PP
+Grabs the current RTC seconds counter and adjusts it to the Unix Epoch\&.
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

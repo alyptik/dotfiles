@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: vm_unmap_ram
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VM_UNMAP_RAM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vm_unmap_ram \- unmap linear kernel address space set up by vm_map_ram
+.SH "SYNOPSIS"
+.HP \w'void\ vm_unmap_ram('u
+.BI "void vm_unmap_ram(const\ void\ *\ " "mem" ", unsigned\ int\ " "count" ");"
+.SH "ARGUMENTS"
+.PP
+\fImem\fR
+.RS 4
+the pointer returned by vm_map_ram
+.RE
+.PP
+\fIcount\fR
+.RS 4
+the count passed to that vm_map_ram call (cannot unmap partial)
+.RE
+.SH "COPYRIGHT"
+.br

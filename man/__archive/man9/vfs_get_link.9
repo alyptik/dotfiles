@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: vfs_get_link
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VFS_GET_LINK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vfs_get_link \- get symlink body
+.SH "SYNOPSIS"
+.HP \w'const\ char\ *\ vfs_get_link('u
+.BI "const char * vfs_get_link(struct\ dentry\ *\ " "dentry" ", struct\ delayed_call\ *\ " "done" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdentry\fR
+.RS 4
+dentry on which to get symbolic link
+.RE
+.PP
+\fIdone\fR
+.RS 4
+caller needs to free returned data with this
+.RE
+.SH "DESCRIPTION"
+.PP
+Calls security hook and i_op\->\fBget_link\fR
+on the supplied inode\&.
+.PP
+It does not touch atime\&. That\*(Aqs up to the caller if necessary\&.
+.PP
+Does not work on
+\(lqspecial\(rq
+symlinks like /proc/$$/fd/N
+.SH "COPYRIGHT"
+.br

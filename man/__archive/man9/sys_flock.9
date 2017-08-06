@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: sys_flock
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYS_FLOCK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sys_flock \- \fBflock\fR system call\&.
+.SH "SYNOPSIS"
+.HP \w'long\ sys_flock('u
+.BI "long sys_flock(unsigned\ int\ " "fd" ", unsigned\ int\ " "cmd" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfd\fR
+.RS 4
+the file descriptor to lock\&.
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+the type of lock to apply\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Apply a
+\fBFL_FLOCK\fR
+style lock to an open file descriptor\&. The
+\fIcmd\fR
+can be one of
+.PP
+\fBLOCK_SH\fR
+\-\- a shared lock\&.
+.PP
+\fBLOCK_EX\fR
+\-\- an exclusive lock\&.
+.PP
+\fBLOCK_UN\fR
+\-\- remove an existing lock\&.
+.PP
+\fBLOCK_MAND\fR
+\-\- a `mandatory\*(Aq flock\&. This exists to emulate Windows Share Modes\&.
+.PP
+\fBLOCK_MAND\fR
+can be combined with
+\fBLOCK_READ\fR
+or
+\fBLOCK_WRITE\fR
+to allow other processes read and write access respectively\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: ccwgroup_remove_ccwdev
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccwgroup bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CCWGROUP_REMOVE_CCWD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccwgroup bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ccwgroup_remove_ccwdev \- remove function for slave devices
+.SH "SYNOPSIS"
+.HP \w'void\ ccwgroup_remove_ccwdev('u
+.BI "void ccwgroup_remove_ccwdev(struct\ ccw_device\ *\ " "cdev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcdev\fR
+.RS 4
+ccw device to be removed
+.RE
+.SH "DESCRIPTION"
+.PP
+This is a remove function for ccw devices that are slave devices in a ccw group device\&. It sets the ccw device offline and also deregisters the embedding ccw group device\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

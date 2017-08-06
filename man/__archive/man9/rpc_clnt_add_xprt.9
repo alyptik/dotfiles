@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: rpc_clnt_add_xprt
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RPC_CLNT_ADD_XPRT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rpc_clnt_add_xprt \- Add a new transport to a rpc_clnt
+.SH "SYNOPSIS"
+.HP \w'int\ rpc_clnt_add_xprt('u
+.BI "int rpc_clnt_add_xprt(struct\ rpc_clnt\ *\ " "clnt" ", struct\ xprt_create\ *\ " "xprtargs" ", int\ (*" "setup" ")\ (struct\ rpc_clnt\ *,\ struct\ rpc_xprt_switch\ *,\ struct\ rpc_xprt\ *,\ void\ *), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclnt\fR
+.RS 4
+pointer to struct rpc_clnt
+.RE
+.PP
+\fIxprtargs\fR
+.RS 4
+pointer to struct xprt_create
+.RE
+.PP
+\fIsetup\fR
+.RS 4
+callback to test and/or set up the connection
+.RE
+.PP
+\fIdata\fR
+.RS 4
+pointer to setup function data
+.RE
+.SH "DESCRIPTION"
+.PP
+Creates a new transport using the parameters set in args and adds it to clnt\&. If ping is set, then test that connectivity succeeds before adding the new transport\&.
+.SH "COPYRIGHT"
+.br

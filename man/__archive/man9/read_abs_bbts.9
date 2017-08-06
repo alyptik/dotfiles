@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: read_abs_bbts
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "READ_ABS_BBTS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+read_abs_bbts \- [GENERIC] Read the bad block table(s) for all chips starting at a given page
+.SH "SYNOPSIS"
+.HP \w'void\ read_abs_bbts('u
+.BI "void read_abs_bbts(struct\ mtd_info\ *\ " "mtd" ", uint8_t\ *\ " "buf" ", struct\ nand_bbt_descr\ *\ " "td" ", struct\ nand_bbt_descr\ *\ " "md" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+temporary buffer
+.RE
+.PP
+\fItd\fR
+.RS 4
+descriptor for the bad block table
+.RE
+.PP
+\fImd\fR
+.RS 4
+descriptor for the bad block table mirror
+.RE
+.SH "DESCRIPTION"
+.PP
+Read the bad block table(s) for all chips starting at a given page\&. We assume that the bbt bits are in consecutive order\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

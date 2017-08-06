@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: check_disk_size_change
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CHECK_DISK_SIZE_CHAN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+check_disk_size_change \- checks for disk size change and adjusts bdev size\&.
+.SH "SYNOPSIS"
+.HP \w'void\ check_disk_size_change('u
+.BI "void check_disk_size_change(struct\ gendisk\ *\ " "disk" ", struct\ block_device\ *\ " "bdev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdisk\fR
+.RS 4
+struct gendisk to check
+.RE
+.PP
+\fIbdev\fR
+.RS 4
+struct bdev to adjust\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This routine checks to see if the bdev size does not match the disk size and adjusts it if it differs\&.
+.SH "COPYRIGHT"
+.br

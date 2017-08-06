@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: ata_sg_setup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SG_SETUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_sg_setup \- DMA\-map the scatter\-gather table associated with a command\&.
+.SH "SYNOPSIS"
+.HP \w'int\ ata_sg_setup('u
+.BI "int ata_sg_setup(struct\ ata_queued_cmd\ *\ " "qc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIqc\fR
+.RS 4
+Command with scatter\-gather table to be mapped\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+DMA\-map the scatter\-gather table associated with queued_cmd
+\fIqc\fR\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "RETURN"
+.PP
+Zero on success, negative on error\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

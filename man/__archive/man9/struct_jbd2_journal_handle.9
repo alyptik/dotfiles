@@ -1,0 +1,93 @@
+'\" t
+.\"     Title: struct jbd2_journal_handle
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT JBD2_JOURNAL_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_jbd2_journal_handle \- The handle_s type is the concrete type associated with handle_t\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct jbd2_journal_handle {
+  union {unnamed_union};
+  int h_buffer_credits;
+  int h_ref;
+  int h_err;
+  unsigned int h_sync:1;
+  unsigned int h_jdata:1;
+  unsigned int h_aborted:1;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+{unnamed_union}
+.RS 4
+anonymous
+.RE
+.PP
+h_buffer_credits
+.RS 4
+Number of remaining buffers we are allowed to dirty\&.
+.RE
+.PP
+h_ref
+.RS 4
+Reference count on this handle
+.RE
+.PP
+h_err
+.RS 4
+Field for caller\*(Aqs use to track errors through large fs operations
+.RE
+.PP
+h_sync
+.RS 4
+flag for sync\-on\-close
+.RE
+.PP
+h_jdata
+.RS 4
+flag to force data journaling
+.RE
+.PP
+h_aborted
+.RS 4
+flag indicating fatal error on handle
+.RE
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

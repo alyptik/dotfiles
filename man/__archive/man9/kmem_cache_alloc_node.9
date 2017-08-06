@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: kmem_cache_alloc_node
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KMEM_CACHE_ALLOC_NOD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kmem_cache_alloc_node \- Allocate an object on the specified node
+.SH "SYNOPSIS"
+.HP \w'void\ *\ kmem_cache_alloc_node('u
+.BI "void * kmem_cache_alloc_node(struct\ kmem_cache\ *\ " "cachep" ", gfp_t\ " "flags" ", int\ " "nodeid" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcachep\fR
+.RS 4
+The cache to allocate from\&.
+.RE
+.PP
+\fIflags\fR
+.RS 4
+See
+\fBkmalloc\fR\&.
+.RE
+.PP
+\fInodeid\fR
+.RS 4
+node number of the target node\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Identical to kmem_cache_alloc but it will allocate memory on the given node, which can improve the performance for cpu bound structures\&.
+.PP
+Fallback to other node is possible if __GFP_THISNODE is not set\&.
+.SH "COPYRIGHT"
+.br

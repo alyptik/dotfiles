@@ -1,0 +1,82 @@
+'\" t
+.\"     Title: ata_dev_same_device
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DEV_SAME_DEVICE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_dev_same_device \- Determine whether new ID matches configured device
+.SH "SYNOPSIS"
+.HP \w'int\ ata_dev_same_device('u
+.BI "int ata_dev_same_device(struct\ ata_device\ *\ " "dev" ", unsigned\ int\ " "new_class" ", const\ u16\ *\ " "new_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device to compare against
+.RE
+.PP
+\fInew_class\fR
+.RS 4
+class of the new device
+.RE
+.PP
+\fInew_id\fR
+.RS 4
+IDENTIFY page of the new device
+.RE
+.SH "DESCRIPTION"
+.PP
+Compare
+\fInew_class\fR
+and
+\fInew_id\fR
+against
+\fIdev\fR
+and determine whether
+\fIdev\fR
+is the device indicated by
+\fInew_class\fR
+and
+\fInew_id\fR\&.
+.PP
+LOCKING: None\&.
+.SH "RETURN"
+.PP
+1 if
+\fIdev\fR
+matches
+\fInew_class\fR
+and
+\fInew_id\fR, 0 otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

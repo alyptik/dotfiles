@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: xdr_buf_trim
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XDR_BUF_TRIM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xdr_buf_trim \- lop at most \(lqlen\(rq bytes off the end of \(lqbuf\(rq
+.SH "SYNOPSIS"
+.HP \w'void\ xdr_buf_trim('u
+.BI "void xdr_buf_trim(struct\ xdr_buf\ *\ " "buf" ", unsigned\ int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbuf\fR
+.RS 4
+buf to be trimmed
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of bytes to reduce
+\(lqbuf\(rq
+by
+.RE
+.SH "DESCRIPTION"
+.PP
+Trim an xdr_buf by the given number of bytes by fixing up the lengths\&. Note that it\*(Aqs possible that we\*(Aqll trim less than that amount if the xdr_buf is too small, or if (for instance) it\*(Aqs all in the head and the parser has already read too far into it\&.
+.SH "COPYRIGHT"
+.br

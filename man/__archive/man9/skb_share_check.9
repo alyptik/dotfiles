@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: skb_share_check
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_SHARE_CHECK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_share_check \- check if buffer is shared and if so clone it
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_share_check('u
+.BI "struct sk_buff * skb_share_check(struct\ sk_buff\ *\ " "skb" ", gfp_t\ " "pri" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to check
+.RE
+.PP
+\fIpri\fR
+.RS 4
+priority for memory allocation
+.RE
+.SH "DESCRIPTION"
+.PP
+If the buffer is shared the buffer is cloned and the old copy drops a reference\&. A new clone with a single reference is returned\&. If the buffer is not shared the original buffer is returned\&. When being called from interrupt status or with spinlocks held pri must be GFP_ATOMIC\&.
+.PP
+NULL is returned on a memory allocation failure\&.
+.SH "COPYRIGHT"
+.br

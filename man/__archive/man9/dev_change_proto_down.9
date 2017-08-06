@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: dev_change_proto_down
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEV_CHANGE_PROTO_DOW" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dev_change_proto_down \- update protocol port state information
+.SH "SYNOPSIS"
+.HP \w'int\ dev_change_proto_down('u
+.BI "int dev_change_proto_down(struct\ net_device\ *\ " "dev" ", bool\ " "proto_down" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device
+.RE
+.PP
+\fIproto_down\fR
+.RS 4
+new value
+.RE
+.SH "DESCRIPTION"
+.PP
+This info can be used by switch drivers to set the phys state of the port\&.
+.SH "COPYRIGHT"
+.br

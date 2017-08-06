@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: netdev_rx_handler_register
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETDEV_RX_HANDLER_RE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netdev_rx_handler_register \- register receive handler
+.SH "SYNOPSIS"
+.HP \w'int\ netdev_rx_handler_register('u
+.BI "int netdev_rx_handler_register(struct\ net_device\ *\ " "dev" ", rx_handler_func_t\ *\ " "rx_handler" ", void\ *\ " "rx_handler_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device to register a handler for
+.RE
+.PP
+\fIrx_handler\fR
+.RS 4
+receive handler to register
+.RE
+.PP
+\fIrx_handler_data\fR
+.RS 4
+data pointer that is used by rx handler
+.RE
+.SH "DESCRIPTION"
+.PP
+Register a receive handler for a device\&. This handler will then be called from __netif_receive_skb\&. A negative errno code is returned on a failure\&.
+.PP
+The caller must hold the rtnl_mutex\&.
+.PP
+For a general description of rx_handler, see enum rx_handler_result\&.
+.SH "COPYRIGHT"
+.br
