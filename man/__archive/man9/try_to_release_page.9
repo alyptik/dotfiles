@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: try_to_release_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "TRY_TO_RELEASE_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+try_to_release_page \- release old fs\-specific metadata on a page
+.SH "SYNOPSIS"
+.HP \w'int\ try_to_release_page('u
+.BI "int try_to_release_page(struct\ page\ *\ " "page" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpage\fR
+.RS 4
+the page which the kernel is trying to free
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation flags (and I/O mode)
+.RE
+.SH "DESCRIPTION"
+.PP
+The address_space is to try to release any data against the page (presumably at page\->private)\&. If the release was successful, return `1\*(Aq\&. Otherwise return zero\&.
+.PP
+This may also be called if PG_fscache is set on a page, indicating that the page is known to the local caching routines\&.
+.PP
+The
+\fIgfp_mask\fR
+argument specifies whether I/O may be performed to release this page (__GFP_IO), and whether the call may block (__GFP_RECLAIM & __GFP_FS)\&.
+.SH "COPYRIGHT"
+.br

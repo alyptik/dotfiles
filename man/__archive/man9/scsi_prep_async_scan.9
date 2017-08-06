@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: scsi_prep_async_scan
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_PREP_ASYNC_SCAN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_prep_async_scan \- prepare for an async scan
+.SH "SYNOPSIS"
+.HP \w'struct\ async_scan_data\ *\ scsi_prep_async_scan('u
+.BI "struct async_scan_data * scsi_prep_async_scan(struct\ Scsi_Host\ *\ " "shost" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+the host which will be scanned
+.RE
+.SH "RETURN"
+.PP
+a cookie to be passed to
+\fBscsi_finish_async_scan\fR
+.PP
+Tells the midlayer this host is going to do an asynchronous scan\&. It reserves the host\*(Aqs position in the scanning list and ensures that other asynchronous scans started after this one won\*(Aqt affect the ordering of the discovered devices\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

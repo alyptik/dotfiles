@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: z8530_rx_done
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_RX_DONE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_rx_done \- Receive completion callback
+.SH "SYNOPSIS"
+.HP \w'void\ z8530_rx_done('u
+.BI "void z8530_rx_done(struct\ z8530_channel\ *\ " "c" ");"
+.SH "ARGUMENTS"
+.PP
+\fIc\fR
+.RS 4
+The channel that completed a receive
+.RE
+.SH "DESCRIPTION"
+.PP
+A new packet is complete\&. Our goal here is to get back into receive mode as fast as possible\&. On the Z85230 we could change to using ESCC mode, but on the older chips we have no choice\&. We flip to the new buffer immediately in DMA mode so that the DMA of the next frame can occur while we are copying the previous buffer to an sk_buff
+.PP
+Called with the lock held
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

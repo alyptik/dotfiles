@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: bitmap_find_free_region
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_FIND_FREE_REG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_find_free_region \- find a contiguous aligned mem region
+.SH "SYNOPSIS"
+.HP \w'int\ bitmap_find_free_region('u
+.BI "int bitmap_find_free_region(unsigned\ long\ *\ " "bitmap" ", unsigned\ int\ " "bits" ", int\ " "order" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbitmap\fR
+.RS 4
+array of unsigned longs corresponding to the bitmap
+.RE
+.PP
+\fIbits\fR
+.RS 4
+number of bits in the bitmap
+.RE
+.PP
+\fIorder\fR
+.RS 4
+region size (log base 2 of number of bits) to find
+.RE
+.SH "DESCRIPTION"
+.PP
+Find a region of free (zero) bits in a
+\fIbitmap\fR
+of
+\fIbits\fR
+bits and allocate them (set them to one)\&. Only consider regions of length a power (\fIorder\fR) of two, aligned to that power of two, which makes the search algorithm much faster\&.
+.PP
+Return the bit offset in bitmap of the allocated region, or \-errno on failure\&.
+.SH "COPYRIGHT"
+.br

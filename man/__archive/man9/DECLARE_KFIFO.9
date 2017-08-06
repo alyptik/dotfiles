@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: DECLARE_KFIFO
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: FIFO Buffer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DECLARE_KFIFO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "FIFO Buffer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+DECLARE_KFIFO \- macro to declare a fifo object
+.SH "SYNOPSIS"
+.HP \w'DECLARE_KFIFO('u
+.BI "DECLARE_KFIFO(" "fifo" ", " "type" ", " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfifo\fR
+.RS 4
+name of the declared fifo
+.RE
+.PP
+\fItype\fR
+.RS 4
+type of the fifo elements
+.RE
+.PP
+\fIsize\fR
+.RS 4
+the number of elements in the fifo, this must be a power of 2
+.RE
+.SH "COPYRIGHT"
+.br

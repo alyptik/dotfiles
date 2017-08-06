@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: bio_copy_data
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BIO_COPY_DATA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bio_copy_data \- copy contents of data buffers from one chain of bios to another
+.SH "SYNOPSIS"
+.HP \w'void\ bio_copy_data('u
+.BI "void bio_copy_data(struct\ bio\ *\ " "dst" ", struct\ bio\ *\ " "src" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdst\fR
+.RS 4
+destination bio list
+.RE
+.PP
+\fIsrc\fR
+.RS 4
+source bio list
+.RE
+.SH "DESCRIPTION"
+.PP
+If
+\fIsrc\fR
+and
+\fIdst\fR
+are single bios, bi_next must be NULL \- otherwise, treats
+\fIsrc\fR
+and
+\fIdst\fR
+as linked lists of bios\&.
+.PP
+Stops when it reaches the end of either
+\fIsrc\fR
+or
+\fIdst\fR
+\- that is, copies min(src\->bi_size, dst\->bi_size) bytes (or the equivalent for lists of bios)\&.
+.SH "COPYRIGHT"
+.br

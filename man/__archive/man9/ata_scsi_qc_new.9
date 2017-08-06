@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: ata_scsi_qc_new
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SCSI_QC_NEW" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_scsi_qc_new \- acquire new ata_queued_cmd reference
+.SH "SYNOPSIS"
+.HP \w'struct\ ata_queued_cmd\ *\ ata_scsi_qc_new('u
+.BI "struct ata_queued_cmd * ata_scsi_qc_new(struct\ ata_device\ *\ " "dev" ", struct\ scsi_cmnd\ *\ " "cmd" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+ATA device to which the new command is attached
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+SCSI command that originated this ATA command
+.RE
+.SH "DESCRIPTION"
+.PP
+Obtain a reference to an unused ata_queued_cmd structure, which is the basic libata structure representing a single ATA command sent to the hardware\&.
+.PP
+If a command was available, fill in the SCSI\-specific portions of the structure with information on the current command\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "RETURN"
+.PP
+Command allocated, or
+\fBNULL\fR
+if none available\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

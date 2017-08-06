@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: kfifo_in_spinlocked
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: FIFO Buffer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KFIFO_IN_SPINLOCKED" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "FIFO Buffer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kfifo_in_spinlocked \- put data into the fifo using a spinlock for locking
+.SH "SYNOPSIS"
+.HP \w'kfifo_in_spinlocked('u
+.BI "kfifo_in_spinlocked(" "fifo" ", " "buf" ", " "n" ", " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfifo\fR
+.RS 4
+address of the fifo to be used
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+the data to be added
+.RE
+.PP
+\fIn\fR
+.RS 4
+number of elements to be added
+.RE
+.PP
+\fIlock\fR
+.RS 4
+pointer to the spinlock to use for locking
+.RE
+.SH "DESCRIPTION"
+.PP
+This macro copies the given values buffer into the fifo and returns the number of copied elements\&.
+.SH "COPYRIGHT"
+.br

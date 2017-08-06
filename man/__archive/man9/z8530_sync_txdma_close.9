@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: z8530_sync_txdma_close
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_SYNC_TXDMA_CLO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_sync_txdma_close \- Close down a TX driven DMA channel
+.SH "SYNOPSIS"
+.HP \w'int\ z8530_sync_txdma_close('u
+.BI "int z8530_sync_txdma_close(struct\ net_device\ *\ " "dev" ", struct\ z8530_channel\ *\ " "c" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Network device to detach
+.RE
+.PP
+\fIc\fR
+.RS 4
+Z8530 channel to move into discard mode
+.RE
+.SH "DESCRIPTION"
+.PP
+Shut down a DMA/PIO split mode synchronous interface\&. Halt the DMA, and free the buffers\&.
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

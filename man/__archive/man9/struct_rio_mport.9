@@ -1,0 +1,192 @@
+'\" t
+.\"     Title: struct rio_mport
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT RIO_MPORT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_rio_mport \- RIO master port info
+.SH "SYNOPSIS"
+.sp
+.nf
+struct rio_mport {
+  struct list_head dbells;
+  struct list_head pwrites;
+  struct list_head node;
+  struct list_head nnode;
+  struct rio_net * net;
+  struct mutex lock;
+  struct resource iores;
+  struct resource riores[RIO_MAX_MPORT_RESOURCES];
+  struct rio_msg inb_msg[RIO_MAX_MBOX];
+  struct rio_msg outb_msg[RIO_MAX_MBOX];
+  int host_deviceid;
+  struct rio_ops * ops;
+  unsigned char id;
+  unsigned char index;
+  unsigned int sys_size;
+  u32 phys_efptr;
+  u32 phys_rmap;
+  unsigned char name[RIO_MAX_MPORT_NAME];
+  struct device dev;
+  void * priv;
+#ifdef CONFIG_RAPIDIO_DMA_ENGINE
+  struct dma_device dma;
+#endif
+  struct rio_scan * nscan;
+  atomic_t state;
+  unsigned int pwe_refcnt;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+dbells
+.RS 4
+List of doorbell events
+.RE
+.PP
+pwrites
+.RS 4
+List of portwrite events
+.RE
+.PP
+node
+.RS 4
+Node in global list of master ports
+.RE
+.PP
+nnode
+.RS 4
+Node in network list of master ports
+.RE
+.PP
+net
+.RS 4
+RIO net this mport is attached to
+.RE
+.PP
+lock
+.RS 4
+lock to synchronize lists manipulations
+.RE
+.PP
+iores
+.RS 4
+I/O mem resource that this master port interface owns
+.RE
+.PP
+riores[RIO_MAX_MPORT_RESOURCES]
+.RS 4
+RIO resources that this master port interfaces owns
+.RE
+.PP
+inb_msg[RIO_MAX_MBOX]
+.RS 4
+RIO inbound message event descriptors
+.RE
+.PP
+outb_msg[RIO_MAX_MBOX]
+.RS 4
+RIO outbound message event descriptors
+.RE
+.PP
+host_deviceid
+.RS 4
+Host device ID associated with this master port
+.RE
+.PP
+ops
+.RS 4
+configuration space functions
+.RE
+.PP
+id
+.RS 4
+Port ID, unique among all ports
+.RE
+.PP
+index
+.RS 4
+Port index, unique among all port interfaces of the same type
+.RE
+.PP
+sys_size
+.RS 4
+RapidIO common transport system size
+.RE
+.PP
+phys_efptr
+.RS 4
+RIO port extended features pointer
+.RE
+.PP
+phys_rmap
+.RS 4
+LP\-Serial EFB Register Mapping type (1 or 2)\&.
+.RE
+.PP
+name[RIO_MAX_MPORT_NAME]
+.RS 4
+Port name string
+.RE
+.PP
+dev
+.RS 4
+device structure associated with an mport
+.RE
+.PP
+priv
+.RS 4
+Master port private data
+.RE
+.PP
+dma
+.RS 4
+DMA device associated with mport
+.RE
+.PP
+nscan
+.RS 4
+RapidIO network enumeration/discovery operations
+.RE
+.PP
+state
+.RS 4
+mport device state
+.RE
+.PP
+pwe_refcnt
+.RS 4
+port\-write enable ref counter to track enable/disable requests
+.RE
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,69 @@
+'\" t
+.\"     Title: proc_dostring
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The proc filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PROC_DOSTRING" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The proc filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+proc_dostring \- read a string sysctl
+.SH "SYNOPSIS"
+.HP \w'int\ proc_dostring('u
+.BI "int proc_dostring(struct\ ctl_table\ *\ " "table" ", int\ " "write" ", void\ __user\ *\ " "buffer" ", size_t\ *\ " "lenp" ", loff_t\ *\ " "ppos" ");"
+.SH "ARGUMENTS"
+.PP
+\fItable\fR
+.RS 4
+the sysctl table
+.RE
+.PP
+\fIwrite\fR
+.RS 4
+\fBTRUE\fR
+if this is a write to the sysctl file
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+the user buffer
+.RE
+.PP
+\fIlenp\fR
+.RS 4
+the size of the user buffer
+.RE
+.PP
+\fIppos\fR
+.RS 4
+file position
+.RE
+.SH "DESCRIPTION"
+.PP
+Reads/writes a string from/to the user buffer\&. If the kernel buffer provided is not large enough to hold the string, the string is truncated\&. The copied string is
+\fBNULL\-terminated\fR\&. If the string is being read by the user process, it is copied and a newline \*(Aq\en\*(Aq is added\&. It is truncated if the buffer is not large enough\&.
+.PP
+Returns 0 on success\&.
+.SH "COPYRIGHT"
+.br

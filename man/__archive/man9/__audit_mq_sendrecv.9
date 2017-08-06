@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: __audit_mq_sendrecv
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_MQ_SENDRECV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_mq_sendrecv \- record audit data for a POSIX MQ timed send/receive
+.SH "SYNOPSIS"
+.HP \w'void\ __audit_mq_sendrecv('u
+.BI "void __audit_mq_sendrecv(mqd_t\ " "mqdes" ", size_t\ " "msg_len" ", unsigned\ int\ " "msg_prio" ", const\ struct\ timespec\ *\ " "abs_timeout" ");"
+.SH "ARGUMENTS"
+.PP
+\fImqdes\fR
+.RS 4
+MQ descriptor
+.RE
+.PP
+\fImsg_len\fR
+.RS 4
+Message length
+.RE
+.PP
+\fImsg_prio\fR
+.RS 4
+Message priority
+.RE
+.PP
+\fIabs_timeout\fR
+.RS 4
+Message timeout in absolute time
+.RE
+.SH "COPYRIGHT"
+.br

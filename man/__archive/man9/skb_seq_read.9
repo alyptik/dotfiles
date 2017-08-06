@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: skb_seq_read
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_SEQ_READ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_seq_read \- Sequentially read skb data
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ skb_seq_read('u
+.BI "unsigned int skb_seq_read(unsigned\ int\ " "consumed" ", const\ u8\ **\ " "data" ", struct\ skb_seq_state\ *\ " "st" ");"
+.SH "ARGUMENTS"
+.PP
+\fIconsumed\fR
+.RS 4
+number of bytes consumed by the caller so far
+.RE
+.PP
+\fIdata\fR
+.RS 4
+destination pointer for data to be returned
+.RE
+.PP
+\fIst\fR
+.RS 4
+state variable
+.RE
+.SH "DESCRIPTION"
+.PP
+Reads a block of skb data at
+\fIconsumed\fR
+relative to the lower offset specified to
+\fBskb_prepare_seq_read\fR\&. Assigns the head of the data block to
+\fIdata\fR
+and returns the length of the block or 0 if the end of the skb data or the upper offset has been reached\&.
+.PP
+The caller is not required to consume all of the data returned, i\&.e\&.
+\fIconsumed\fR
+is typically set to the number of bytes already consumed and the next call to
+\fBskb_seq_read\fR
+will return the remaining part of the block\&.
+.PP
+Note 1: The size of each block of data returned can be arbitrary, this limitation is the cost for zerocopy sequential reads of potentially non linear data\&.
+.PP
+Note 2: Fragment lists within fragments are not implemented at the moment, state\->root_skb could be replaced with a stack for this purpose\&.
+.SH "COPYRIGHT"
+.br

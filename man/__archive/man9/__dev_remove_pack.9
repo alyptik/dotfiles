@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: __dev_remove_pack
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__DEV_REMOVE_PACK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__dev_remove_pack \- remove packet handler
+.SH "SYNOPSIS"
+.HP \w'void\ __dev_remove_pack('u
+.BI "void __dev_remove_pack(struct\ packet_type\ *\ " "pt" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpt\fR
+.RS 4
+packet type declaration
+.RE
+.SH "DESCRIPTION"
+.PP
+Remove a protocol handler that was previously added to the kernel protocol handlers by
+\fBdev_add_pack\fR\&. The passed
+packet_type
+is removed from the kernel lists and can be freed or reused once this function returns\&.
+.PP
+The packet type might still be in use by receivers and must not be freed until after all the CPU\*(Aqs have gone through a quiescent state\&.
+.SH "COPYRIGHT"
+.br

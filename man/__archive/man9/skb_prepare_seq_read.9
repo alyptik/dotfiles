@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: skb_prepare_seq_read
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_PREPARE_SEQ_READ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_prepare_seq_read \- Prepare a sequential read of skb data
+.SH "SYNOPSIS"
+.HP \w'void\ skb_prepare_seq_read('u
+.BI "void skb_prepare_seq_read(struct\ sk_buff\ *\ " "skb" ", unsigned\ int\ " "from" ", unsigned\ int\ " "to" ", struct\ skb_seq_state\ *\ " "st" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+the buffer to read
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+lower offset of data to be read
+.RE
+.PP
+\fIto\fR
+.RS 4
+upper offset of data to be read
+.RE
+.PP
+\fIst\fR
+.RS 4
+state variable
+.RE
+.SH "DESCRIPTION"
+.PP
+Initializes the specified state variable\&. Must be called before invoking
+\fBskb_seq_read\fR
+for the first time\&.
+.SH "COPYRIGHT"
+.br

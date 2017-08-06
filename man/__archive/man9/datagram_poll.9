@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: datagram_poll
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DATAGRAM_POLL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+datagram_poll \- generic datagram poll
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ datagram_poll('u
+.BI "unsigned int datagram_poll(struct\ file\ *\ " "file" ", struct\ socket\ *\ " "sock" ", poll_table\ *\ " "wait" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfile\fR
+.RS 4
+file struct
+.RE
+.PP
+\fIsock\fR
+.RS 4
+socket
+.RE
+.PP
+\fIwait\fR
+.RS 4
+poll table
+.RE
+.SH "DESCRIPTION"
+.PP
+Datagram poll: Again totally generic\&. This also handles sequenced packet sockets providing the socket receive queue is only ever holding data ready to receive\&.
+.SH "NOTE"
+.PP
+when you _don\*(Aqt_ use this routine for this protocol, and you use a different write policy from
+\fBsock_writeable\fR
+then please supply your own write_space callback\&.
+.SH "COPYRIGHT"
+.br

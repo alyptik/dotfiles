@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: skb_copy_expand
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_COPY_EXPAND" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_copy_expand \- copy and expand sk_buff
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_copy_expand('u
+.BI "struct sk_buff * skb_copy_expand(const\ struct\ sk_buff\ *\ " "skb" ", int\ " "newheadroom" ", int\ " "newtailroom" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to copy
+.RE
+.PP
+\fInewheadroom\fR
+.RS 4
+new free bytes at head
+.RE
+.PP
+\fInewtailroom\fR
+.RS 4
+new free bytes at tail
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation priority
+.RE
+.SH "DESCRIPTION"
+.PP
+Make a copy of both an
+sk_buff
+and its data and while doing so allocate additional space\&.
+.PP
+This is used when the caller wishes to modify the data and needs a private copy of the data to alter as well as more space for new fields\&. Returns
+\fBNULL\fR
+on failure or the pointer to the buffer on success\&. The returned buffer has a reference count of 1\&.
+.PP
+You must pass
+\fBGFP_ATOMIC\fR
+as the allocation priority if this function is called from an interrupt\&.
+.SH "COPYRIGHT"
+.br

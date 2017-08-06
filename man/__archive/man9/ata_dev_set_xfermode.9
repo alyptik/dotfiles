@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: ata_dev_set_xfermode
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DEV_SET_XFERMODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_dev_set_xfermode \- Issue SET FEATURES \- XFER MODE command
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ ata_dev_set_xfermode('u
+.BI "unsigned int ata_dev_set_xfermode(struct\ ata_device\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device to which command will be sent
+.RE
+.SH "DESCRIPTION"
+.PP
+Issue SET FEATURES \- XFER MODE command to device
+\fIdev\fR
+on port
+\fIap\fR\&.
+.PP
+LOCKING: PCI/etc\&. bus probe sem\&.
+.SH "RETURN"
+.PP
+0 on success, AC_ERR_* mask otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

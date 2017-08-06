@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: xprt_release_xprt
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XPRT_RELEASE_XPRT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xprt_release_xprt \- allow other requests to use a transport
+.SH "SYNOPSIS"
+.HP \w'void\ xprt_release_xprt('u
+.BI "void xprt_release_xprt(struct\ rpc_xprt\ *\ " "xprt" ", struct\ rpc_task\ *\ " "task" ");"
+.SH "ARGUMENTS"
+.PP
+\fIxprt\fR
+.RS 4
+transport with other tasks potentially waiting
+.RE
+.PP
+\fItask\fR
+.RS 4
+task that is releasing access to the transport
+.RE
+.SH "DESCRIPTION"
+.PP
+Note that
+\(lqtask\(rq
+can be NULL\&. No congestion control is provided\&.
+.SH "COPYRIGHT"
+.br

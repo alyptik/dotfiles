@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: usb_gadget_config_buf
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "USB_GADGET_CONFIG_BU" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+usb_gadget_config_buf \- builts a complete configuration descriptor
+.SH "SYNOPSIS"
+.HP \w'int\ usb_gadget_config_buf('u
+.BI "int usb_gadget_config_buf(const\ struct\ usb_config_descriptor\ *\ " "config" ", void\ *\ " "buf" ", unsigned\ " "length" ", const\ struct\ usb_descriptor_header\ **\ " "desc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIconfig\fR
+.RS 4
+Header for the descriptor, including characteristics such as power requirements and number of interfaces\&.
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+Buffer for the resulting configuration descriptor\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+Length of buffer\&. If this is not big enough to hold the entire configuration descriptor, an error code will be returned\&.
+.RE
+.PP
+\fIdesc\fR
+.RS 4
+Null\-terminated vector of pointers to the descriptors (interface, endpoint, etc) defining all functions in this device configuration\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This copies descriptors into the response buffer, building a descriptor for that configuration\&. It returns the buffer length or a negative status code\&. The config\&.wTotalLength field is set to match the length of the result, but other descriptor fields (including power usage and interface count) must be set by the caller\&.
+.PP
+Gadget drivers could use this when constructing a config descriptor in response to USB_REQ_GET_DESCRIPTOR\&. They will need to patch the resulting bDescriptorType value if USB_DT_OTHER_SPEED_CONFIG is needed\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

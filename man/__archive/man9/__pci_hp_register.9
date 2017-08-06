@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: __pci_hp_register
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__PCI_HP_REGISTER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__pci_hp_register \- register a hotplug_slot with the PCI hotplug subsystem
+.SH "SYNOPSIS"
+.HP \w'int\ __pci_hp_register('u
+.BI "int __pci_hp_register(struct\ hotplug_slot\ *\ " "slot" ", struct\ pci_bus\ *\ " "bus" ", int\ " "devnr" ", const\ char\ *\ " "name" ", struct\ module\ *\ " "owner" ", const\ char\ *\ " "mod_name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIslot\fR
+.RS 4
+pointer to the
+struct hotplug_slot
+to register
+.RE
+.PP
+\fIbus\fR
+.RS 4
+bus this slot is on
+.RE
+.PP
+\fIdevnr\fR
+.RS 4
+device number
+.RE
+.PP
+\fIname\fR
+.RS 4
+name registered with kobject core
+.RE
+.PP
+\fIowner\fR
+.RS 4
+caller module owner
+.RE
+.PP
+\fImod_name\fR
+.RS 4
+caller module name
+.RE
+.SH "DESCRIPTION"
+.PP
+Registers a hotplug slot with the pci hotplug subsystem, which will allow userspace interaction to the slot\&.
+.PP
+Returns 0 if successful, anything else for an error\&.
+.SH "COPYRIGHT"
+.br

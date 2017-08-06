@@ -1,0 +1,99 @@
+'\" t
+.\"     Title: ata_build_rw_tf
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_BUILD_RW_TF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_build_rw_tf \- Build ATA taskfile for given read/write request
+.SH "SYNOPSIS"
+.HP \w'int\ ata_build_rw_tf('u
+.BI "int ata_build_rw_tf(struct\ ata_taskfile\ *\ " "tf" ", struct\ ata_device\ *\ " "dev" ", u64\ " "block" ", u32\ " "n_block" ", unsigned\ int\ " "tf_flags" ", unsigned\ int\ " "tag" ", int\ " "class" ");"
+.SH "ARGUMENTS"
+.PP
+\fItf\fR
+.RS 4
+Target ATA taskfile
+.RE
+.PP
+\fIdev\fR
+.RS 4
+ATA device
+\fItf\fR
+belongs to
+.RE
+.PP
+\fIblock\fR
+.RS 4
+Block address
+.RE
+.PP
+\fIn_block\fR
+.RS 4
+Number of blocks
+.RE
+.PP
+\fItf_flags\fR
+.RS 4
+RW/FUA etc\&.\&.\&.
+.RE
+.PP
+\fItag\fR
+.RS 4
+tag
+.RE
+.PP
+\fIclass\fR
+.RS 4
+IO priority class
+.RE
+.SH "DESCRIPTION"
+.PP
+LOCKING: None\&.
+.PP
+Build ATA taskfile
+\fItf\fR
+for read/write request described by
+\fIblock\fR,
+\fIn_block\fR,
+\fItf_flags\fR
+and
+\fItag\fR
+on
+\fIdev\fR\&.
+.SH "RETURN"
+.PP
+.PP
+0 on success, \-ERANGE if the request is too large for
+\fIdev\fR, \-EINVAL if the request is invalid\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

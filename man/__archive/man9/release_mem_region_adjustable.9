@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: release_mem_region_adjustable
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RELEASE_MEM_REGION_A" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+release_mem_region_adjustable \- release a previously reserved memory region
+.SH "SYNOPSIS"
+.HP \w'int\ release_mem_region_adjustable('u
+.BI "int release_mem_region_adjustable(struct\ resource\ *\ " "parent" ", resource_size_t\ " "start" ", resource_size_t\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIparent\fR
+.RS 4
+parent resource descriptor
+.RE
+.PP
+\fIstart\fR
+.RS 4
+resource start address
+.RE
+.PP
+\fIsize\fR
+.RS 4
+resource region size
+.RE
+.SH "DESCRIPTION"
+.PP
+This interface is intended for memory hot\-delete\&. The requested region is released from a currently busy memory resource\&. The requested region must either match exactly or fit into a single busy resource entry\&. In the latter case, the remaining resource is adjusted accordingly\&. Existing children of the busy memory resource must be immutable in the request\&.
+.SH "NOTE"
+.PP
+\- Additional release conditions, such as overlapping region, can be supported after they are confirmed as valid cases\&. \- When a busy memory resource gets split into two entries, the code assumes that all children remain in the lower address entry for simplicity\&. Enhance this logic when necessary\&.
+.SH "COPYRIGHT"
+.br

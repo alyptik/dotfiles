@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: gnet_stats_copy_queue
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GNET_STATS_COPY_QUEU" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gnet_stats_copy_queue \- copy queue statistics into statistics TLV
+.SH "SYNOPSIS"
+.HP \w'int\ gnet_stats_copy_queue('u
+.BI "int gnet_stats_copy_queue(struct\ gnet_dump\ *\ " "d" ", struct\ gnet_stats_queue\ __percpu\ *\ " "cpu_q" ", struct\ gnet_stats_queue\ *\ " "q" ", __u32\ " "qlen" ");"
+.SH "ARGUMENTS"
+.PP
+\fId\fR
+.RS 4
+dumping handle
+.RE
+.PP
+\fIcpu_q\fR
+.RS 4
+per cpu queue statistics
+.RE
+.PP
+\fIq\fR
+.RS 4
+queue statistics
+.RE
+.PP
+\fIqlen\fR
+.RS 4
+queue length statistics
+.RE
+.SH "DESCRIPTION"
+.PP
+Appends the queue statistics to the top level TLV created by
+\fBgnet_stats_start_copy\fR\&. Using per cpu queue statistics if they are available\&.
+.PP
+Returns 0 on success or \-1 with the statistic lock released if the room in the socket buffer was not sufficient\&.
+.SH "COPYRIGHT"
+.br

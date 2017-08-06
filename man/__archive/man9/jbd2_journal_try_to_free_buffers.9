@@ -1,0 +1,90 @@
+'\" t
+.\"     Title: jbd2_journal_try_to_free_buffers
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2_JOURNAL_TRY_TO_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2_journal_try_to_free_buffers \- try to free page buffers\&.
+.SH "SYNOPSIS"
+.HP \w'int\ jbd2_journal_try_to_free_buffers('u
+.BI "int jbd2_journal_try_to_free_buffers(journal_t\ *\ " "journal" ", struct\ page\ *\ " "page" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIjournal\fR
+.RS 4
+journal for operation
+.RE
+.PP
+\fIpage\fR
+.RS 4
+to try and free
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+we use the mask to detect how hard should we try to release buffers\&. If __GFP_DIRECT_RECLAIM and __GFP_FS is set, we wait for commit code to release the buffers\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+For all the buffers on this page, if they are fully written out ordered data, move them onto BUF_CLEAN so
+\fBtry_to_free_buffers\fR
+can reap them\&.
+.PP
+This function returns non\-zero if we wish
+\fBtry_to_free_buffers\fR
+to be called\&. We do this if the page is releasable by
+\fBtry_to_free_buffers\fR\&. We also do it if the page has locked or dirty buffers and the caller wants us to perform sync or async writeout\&.
+.PP
+This complicates JBD locking somewhat\&. We aren\*(Aqt protected by the BKL here\&. We wish to remove the buffer from its committing or running transaction\*(Aqs \->t_datalist via __jbd2_journal_unfile_buffer\&.
+.PP
+This may *change* the value of transaction_t\->t_datalist, so anyone who looks at t_datalist needs to lock against this function\&.
+.PP
+Even worse, someone may be doing a jbd2_journal_dirty_data on this buffer\&. So we need to lock against that\&.
+\fBjbd2_journal_dirty_data\fR
+will come out of the lock with the buffer dirty, which makes it ineligible for release here\&.
+.PP
+Who else is affected by this? hmm\&.\&.\&. Really the only contender is
+\fBdo_get_write_access\fR
+\- it could be looking at the buffer while
+\fBjournal_try_to_free_buffer\fR
+is changing its state\&. But that cannot happen because we never reallocate freed data as metadata while the data is part of a transaction\&. Yes?
+.PP
+Return 0 on failure, 1 on success
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

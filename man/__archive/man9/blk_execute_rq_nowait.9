@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: blk_execute_rq_nowait
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_EXECUTE_RQ_NOWAI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_execute_rq_nowait \- insert a request into queue for execution
+.SH "SYNOPSIS"
+.HP \w'void\ blk_execute_rq_nowait('u
+.BI "void blk_execute_rq_nowait(struct\ request_queue\ *\ " "q" ", struct\ gendisk\ *\ " "bd_disk" ", struct\ request\ *\ " "rq" ", int\ " "at_head" ", rq_end_io_fn\ *\ " "done" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+queue to insert the request in
+.RE
+.PP
+\fIbd_disk\fR
+.RS 4
+matching gendisk
+.RE
+.PP
+\fIrq\fR
+.RS 4
+request to insert
+.RE
+.PP
+\fIat_head\fR
+.RS 4
+insert request at head or tail of queue
+.RE
+.PP
+\fIdone\fR
+.RS 4
+I/O completion handler
+.RE
+.SH "DESCRIPTION"
+.PP
+Insert a fully prepared request at the back of the I/O scheduler queue for execution\&. Don\*(Aqt wait for completion\&.
+.SH "NOTE"
+.PP
+This function will invoke
+\fIdone\fR
+directly if the queue is dead\&.
+.SH "COPYRIGHT"
+.br

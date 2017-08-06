@@ -1,0 +1,83 @@
+'\" t
+.\"     Title: enum irq_gc_flags
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ENUM IRQ_GC_FLAGS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+enum_irq_gc_flags \- Initialization flags for generic irq chips
+.SH "SYNOPSIS"
+.sp
+.nf
+enum irq_gc_flags {
+  IRQ_GC_INIT_MASK_CACHE,
+  IRQ_GC_INIT_NESTED_LOCK,
+  IRQ_GC_MASK_CACHE_PER_TYPE,
+  IRQ_GC_NO_MASK,
+  IRQ_GC_BE_IO
+};  
+.fi
+.SH "CONSTANTS"
+.PP
+IRQ_GC_INIT_MASK_CACHE
+.RS 4
+Initialize the mask_cache by reading mask reg
+.RE
+.PP
+IRQ_GC_INIT_NESTED_LOCK
+.RS 4
+Set the lock class of the irqs to nested for irq chips which need to call
+\fBirq_set_wake\fR
+on the parent irq\&. Usually GPIO implementations
+.RE
+.PP
+IRQ_GC_MASK_CACHE_PER_TYPE
+.RS 4
+Mask cache is chip type private
+.RE
+.PP
+IRQ_GC_NO_MASK
+.RS 4
+Do not calculate irq_data\->mask
+.RE
+.PP
+IRQ_GC_BE_IO
+.RS 4
+Use big\-endian register accesses (default: LE)
+.RE
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

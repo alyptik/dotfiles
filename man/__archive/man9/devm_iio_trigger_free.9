@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: devm_iio_trigger_free
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Industrial I/O core
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEVM_IIO_TRIGGER_FRE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Industrial I/O core"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+devm_iio_trigger_free \- Resource\-managed \fBiio_trigger_free\fR
+.SH "SYNOPSIS"
+.HP \w'void\ devm_iio_trigger_free('u
+.BI "void devm_iio_trigger_free(struct\ device\ *\ " "dev" ", struct\ iio_trigger\ *\ " "iio_trig" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device this iio_dev belongs to
+.RE
+.PP
+\fIiio_trig\fR
+.RS 4
+the iio_trigger associated with the device
+.RE
+.SH "DESCRIPTION"
+.PP
+Free iio_trigger allocated with
+\fBdevm_iio_trigger_alloc\fR\&.
+.SH "AUTHOR"
+.PP
+\fBDaniel Baluta\fR <\&daniel.baluta@intel.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

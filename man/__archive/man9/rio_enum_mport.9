@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: rio_enum_mport
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_ENUM_MPORT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_enum_mport \- Start enumeration through a master port
+.SH "SYNOPSIS"
+.HP \w'int\ rio_enum_mport('u
+.BI "int rio_enum_mport(struct\ rio_mport\ *\ " "mport" ", u32\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fImport\fR
+.RS 4
+Master port to send transactions
+.RE
+.PP
+\fIflags\fR
+.RS 4
+Enumeration control flags
+.RE
+.SH "DESCRIPTION"
+.PP
+Starts the enumeration process\&. If somebody has enumerated our master port device, then give up\&. If not and we have an active link, then start recursive peer enumeration\&. Returns
+\fB0\fR
+if enumeration succeeds or
+\fB\-EBUSY\fR
+if enumeration fails\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: blk_pm_runtime_init
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_PM_RUNTIME_INIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_pm_runtime_init \- Block layer runtime PM initialization routine
+.SH "SYNOPSIS"
+.HP \w'void\ blk_pm_runtime_init('u
+.BI "void blk_pm_runtime_init(struct\ request_queue\ *\ " "q" ", struct\ device\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the queue of the device
+.RE
+.PP
+\fIdev\fR
+.RS 4
+the device the queue belongs to
+.RE
+.SH "DESCRIPTION"
+.PP
+Initialize runtime\-PM\-related fields for
+\fIq\fR
+and start auto suspend for
+\fIdev\fR\&. Drivers that want to take advantage of request\-based runtime PM should call this function after
+\fIdev\fR
+has been initialized, and its request queue
+\fIq\fR
+has been allocated, and runtime PM for it can not happen yet(either due to disabled/forbidden or its usage_count > 0)\&. In most cases, driver should call this function before any I/O has taken place\&.
+.PP
+This function takes care of setting up using auto suspend for the device, the autosuspend delay is set to \-1 to make runtime suspend impossible until an updated value is either set by user or by driver\&. Drivers do not need to touch other autosuspend settings\&.
+.PP
+The block layer runtime PM is request based, so only works for drivers that use request as their IO unit instead of those directly use bio\*(Aqs\&.
+.SH "COPYRIGHT"
+.br

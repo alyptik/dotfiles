@@ -1,0 +1,83 @@
+'\" t
+.\"     Title: ata_to_sense_error
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_TO_SENSE_ERROR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_to_sense_error \- convert ATA error to SCSI error
+.SH "SYNOPSIS"
+.HP \w'void\ ata_to_sense_error('u
+.BI "void ata_to_sense_error(unsigned\ " "id" ", u8\ " "drv_stat" ", u8\ " "drv_err" ", u8\ *\ " "sk" ", u8\ *\ " "asc" ", u8\ *\ " "ascq" ", int\ " "verbose" ");"
+.SH "ARGUMENTS"
+.PP
+\fIid\fR
+.RS 4
+ATA device number
+.RE
+.PP
+\fIdrv_stat\fR
+.RS 4
+value contained in ATA status register
+.RE
+.PP
+\fIdrv_err\fR
+.RS 4
+value contained in ATA error register
+.RE
+.PP
+\fIsk\fR
+.RS 4
+the sense key we\*(Aqll fill out
+.RE
+.PP
+\fIasc\fR
+.RS 4
+the additional sense code we\*(Aqll fill out
+.RE
+.PP
+\fIascq\fR
+.RS 4
+the additional sense code qualifier we\*(Aqll fill out
+.RE
+.PP
+\fIverbose\fR
+.RS 4
+be verbose
+.RE
+.SH "DESCRIPTION"
+.PP
+Converts an ATA error into a SCSI error\&. Fill out pointers to SK, ASC, and ASCQ bytes for later use in fixed or descriptor format sense blocks\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

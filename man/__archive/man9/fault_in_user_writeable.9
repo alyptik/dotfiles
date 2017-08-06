@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: fault_in_user_writeable
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FAULT_IN_USER_WRITEA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fault_in_user_writeable \- Fault in user address and verify RW access
+.SH "SYNOPSIS"
+.HP \w'int\ fault_in_user_writeable('u
+.BI "int fault_in_user_writeable(u32\ __user\ *\ " "uaddr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIuaddr\fR
+.RS 4
+pointer to faulting user space address
+.RE
+.SH "DESCRIPTION"
+.PP
+Slow path to fixup the fault we just took in the atomic write access to
+\fIuaddr\fR\&.
+.PP
+We have no generic implementation of a non\-destructive write to the user address\&. We know that we faulted in the atomic pagefault disabled section so we can as well avoid the #PF overhead by calling
+\fBget_user_pages\fR
+right away\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

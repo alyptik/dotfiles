@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: rio_request_outb_dbell
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_REQUEST_OUTB_DBE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_request_outb_dbell \- request outbound doorbell message range
+.SH "SYNOPSIS"
+.HP \w'struct\ resource\ *\ rio_request_outb_dbell('u
+.BI "struct resource * rio_request_outb_dbell(struct\ rio_dev\ *\ " "rdev" ", u16\ " "start" ", u16\ " "end" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrdev\fR
+.RS 4
+RIO device from which to allocate the doorbell resource
+.RE
+.PP
+\fIstart\fR
+.RS 4
+Doorbell message range start
+.RE
+.PP
+\fIend\fR
+.RS 4
+Doorbell message range end
+.RE
+.SH "DESCRIPTION"
+.PP
+Requests ownership of a doorbell message range\&. Returns a resource if the request has been satisfied or
+\fBNULL\fR
+on failure\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

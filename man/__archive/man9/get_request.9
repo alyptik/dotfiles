@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: get_request
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GET_REQUEST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+get_request \- get a free request
+.SH "SYNOPSIS"
+.HP \w'struct\ request\ *\ get_request('u
+.BI "struct request * get_request(struct\ request_queue\ *\ " "q" ", unsigned\ int\ " "op" ", struct\ bio\ *\ " "bio" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+request_queue to allocate request from
+.RE
+.PP
+\fIop\fR
+.RS 4
+operation and flags
+.RE
+.PP
+\fIbio\fR
+.RS 4
+bio to allocate request for (can be
+\fBNULL\fR)
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation mask
+.RE
+.SH "DESCRIPTION"
+.PP
+Get a free request from
+\fIq\fR\&. If
+\fB__GFP_DIRECT_RECLAIM\fR
+is set in
+\fIgfp_mask\fR, this function keeps retrying under memory pressure and fails iff
+\fIq\fR
+is dead\&.
+.PP
+Must be called with
+\fIq\fR\->queue_lock held and, Returns ERR_PTR on failure, with
+\fIq\fR\->queue_lock held\&. Returns request pointer on success, with
+\fIq\fR\->queue_lock *not held*\&.
+.SH "COPYRIGHT"
+.br

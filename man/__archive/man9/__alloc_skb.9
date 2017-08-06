@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: __alloc_skb
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__ALLOC_SKB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__alloc_skb \- allocate a network buffer
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ __alloc_skb('u
+.BI "struct sk_buff * __alloc_skb(unsigned\ int\ " "size" ", gfp_t\ " "gfp_mask" ", int\ " "flags" ", int\ " "node" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsize\fR
+.RS 4
+size to allocate
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation mask
+.RE
+.PP
+\fIflags\fR
+.RS 4
+If SKB_ALLOC_FCLONE is set, allocate from fclone cache instead of head cache and allocate a cloned (child) skb\&. If SKB_ALLOC_RX is set, __GFP_MEMALLOC will be used for allocations in case the data is required for writeback
+.RE
+.PP
+\fInode\fR
+.RS 4
+numa node to allocate memory on
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocate a new
+sk_buff\&. The returned buffer has no headroom and a tail room of at least size bytes\&. The object has a reference count of one\&. The return is the buffer\&. On a failure the return is
+\fBNULL\fR\&.
+.PP
+Buffers may only be allocated from interrupts using a
+\fIgfp_mask\fR
+of
+\fBGFP_ATOMIC\fR\&.
+.SH "COPYRIGHT"
+.br

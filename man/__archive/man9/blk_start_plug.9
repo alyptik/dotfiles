@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: blk_start_plug
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_START_PLUG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_start_plug \- initialize blk_plug and track it inside the task_struct
+.SH "SYNOPSIS"
+.HP \w'void\ blk_start_plug('u
+.BI "void blk_start_plug(struct\ blk_plug\ *\ " "plug" ");"
+.SH "ARGUMENTS"
+.PP
+\fIplug\fR
+.RS 4
+The
+struct blk_plug
+that needs to be initialized
+.RE
+.SH "DESCRIPTION"
+.PP
+Tracking blk_plug inside the task_struct will help with auto\-flushing the pending I/O should the task end up blocking between
+\fBblk_start_plug\fR
+and
+\fBblk_finish_plug\fR\&. This is important from a performance perspective, but also ensures that we don\*(Aqt deadlock\&. For instance, if the task is blocking for a memory allocation, memory reclaim could end up wanting to free a page belonging to that request that is currently residing in our private plug\&. By flushing the pending I/O when the process goes to sleep, we avoid this kind of deadlock\&.
+.SH "COPYRIGHT"
+.br

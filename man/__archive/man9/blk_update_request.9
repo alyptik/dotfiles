@@ -1,0 +1,80 @@
+'\" t
+.\"     Title: blk_update_request
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_UPDATE_REQUEST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_update_request \- Special helper function for request stacking drivers
+.SH "SYNOPSIS"
+.HP \w'bool\ blk_update_request('u
+.BI "bool blk_update_request(struct\ request\ *\ " "req" ", int\ " "error" ", unsigned\ int\ " "nr_bytes" ");"
+.SH "ARGUMENTS"
+.PP
+\fIreq\fR
+.RS 4
+the request being processed
+.RE
+.PP
+\fIerror\fR
+.RS 4
+\fB0\fR
+for success, <
+\fB0\fR
+for error
+.RE
+.PP
+\fInr_bytes\fR
+.RS 4
+number of bytes to complete
+\fIreq\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Ends I/O on a number of bytes attached to
+\fIreq\fR, but doesn\*(Aqt complete the request structure even if
+\fIreq\fR
+doesn\*(Aqt have leftover\&. If
+\fIreq\fR
+has leftover, sets it up for the next range of segments\&.
+.PP
+This special helper function is only for request stacking drivers (e\&.g\&. request\-based dm) so that they can handle partial completion\&. Actual device drivers should use blk_end_request instead\&.
+.PP
+Passing the result of
+\fBblk_rq_bytes\fR
+as
+\fInr_bytes\fR
+guarantees
+\fBfalse\fR
+return from this function\&.
+.SH "RETURN"
+.PP
+\fBfalse\fR
+\- this request doesn\*(Aqt have any more data
+\fBtrue\fR
+\- this request has more data
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,202 @@
+'\" t
+.\"     Title: struct w1_master
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT W1_MASTER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_w1_master \- one per bus master
+.SH "SYNOPSIS"
+.sp
+.nf
+struct w1_master {
+  struct list_head w1_master_entry;
+  struct module * owner;
+  unsigned char name[W1_MAXNAMELEN];
+  struct mutex list_mutex;
+  struct list_head slist;
+  struct list_head async_list;
+  int max_slave_count;
+  int slave_count;
+  unsigned long attempts;
+  int slave_ttl;
+  int initialized;
+  u32 id;
+  int search_count;
+  u64 search_id;
+  atomic_t refcnt;
+  void * priv;
+  int enable_pullup;
+  int pullup_duration;
+  long flags;
+  struct task_struct * thread;
+  struct mutex mutex;
+  struct mutex bus_mutex;
+  struct device_driver * driver;
+  struct device dev;
+  struct w1_bus_master * bus_master;
+  u32 seq;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+w1_master_entry
+.RS 4
+master linked list
+.RE
+.PP
+owner
+.RS 4
+module owner
+.RE
+.PP
+name[W1_MAXNAMELEN]
+.RS 4
+dynamically allocate bus name
+.RE
+.PP
+list_mutex
+.RS 4
+protect slist and async_list
+.RE
+.PP
+slist
+.RS 4
+linked list of slaves
+.RE
+.PP
+async_list
+.RS 4
+linked list of netlink commands to execute
+.RE
+.PP
+max_slave_count
+.RS 4
+maximum number of slaves to search for at a time
+.RE
+.PP
+slave_count
+.RS 4
+current number of slaves known
+.RE
+.PP
+attempts
+.RS 4
+number of searches ran
+.RE
+.PP
+slave_ttl
+.RS 4
+number of searches before a slave is timed out
+.RE
+.PP
+initialized
+.RS 4
+prevent init/removal race conditions
+.RE
+.PP
+id
+.RS 4
+w1 bus number
+.RE
+.PP
+search_count
+.RS 4
+number of automatic searches to run, \-1 unlimited
+.RE
+.PP
+search_id
+.RS 4
+allows continuing a search
+.RE
+.PP
+refcnt
+.RS 4
+reference count
+.RE
+.PP
+priv
+.RS 4
+private data storage
+.RE
+.PP
+enable_pullup
+.RS 4
+allows a strong pullup
+.RE
+.PP
+pullup_duration
+.RS 4
+time for the next strong pullup
+.RE
+.PP
+flags
+.RS 4
+one of w1_master_flags
+.RE
+.PP
+thread
+.RS 4
+thread for bus search and netlink commands
+.RE
+.PP
+mutex
+.RS 4
+protect most of w1_master
+.RE
+.PP
+bus_mutex
+.RS 4
+pretect concurrent bus access
+.RE
+.PP
+driver
+.RS 4
+sysfs driver
+.RE
+.PP
+dev
+.RS 4
+sysfs device
+.RE
+.PP
+bus_master
+.RS 4
+io operations available
+.RE
+.PP
+seq
+.RS 4
+sequence number used for netlink broadcasts
+.RE
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

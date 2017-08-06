@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: jbd2_journal_invalidatepage
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2_JOURNAL_INVALID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2_journal_invalidatepage \- 
+.SH "SYNOPSIS"
+.HP \w'int\ jbd2_journal_invalidatepage('u
+.BI "int jbd2_journal_invalidatepage(journal_t\ *\ " "journal" ", struct\ page\ *\ " "page" ", unsigned\ int\ " "offset" ", unsigned\ int\ " "length" ");"
+.SH "ARGUMENTS"
+.PP
+\fIjournal\fR
+.RS 4
+journal to use for flush\&.\&.\&.
+.RE
+.PP
+\fIpage\fR
+.RS 4
+page to flush
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+start of the range to invalidate
+.RE
+.PP
+\fIlength\fR
+.RS 4
+length of the range to invalidate
+.RE
+.SH "DESCRIPTION"
+.PP
+Reap page buffers containing data after in the specified range in page\&. Can return \-EBUSY if buffers are part of the committing transaction and the page is straddling i_size\&. Caller then has to wait for current commit and try again\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

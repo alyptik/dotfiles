@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: sk_filter_trim_cap
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SK_FILTER_TRIM_CAP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sk_filter_trim_cap \- run a packet through a socket filter
+.SH "SYNOPSIS"
+.HP \w'int\ sk_filter_trim_cap('u
+.BI "int sk_filter_trim_cap(struct\ sock\ *\ " "sk" ", struct\ sk_buff\ *\ " "skb" ", unsigned\ int\ " "cap" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsk\fR
+.RS 4
+sock associated with
+sk_buff
+.RE
+.PP
+\fIskb\fR
+.RS 4
+buffer to filter
+.RE
+.PP
+\fIcap\fR
+.RS 4
+limit on how short the eBPF program may trim the packet
+.RE
+.SH "DESCRIPTION"
+.PP
+Run the eBPF program and then cut skb\->data to correct size returned by the program\&. If pkt_len is 0 we toss packet\&. If skb\->len is smaller than pkt_len we keep whole skb\->data\&. This is the socket level wrapper to BPF_PROG_RUN\&. It returns 0 if the packet should be accepted or \-EPERM if the packet should be tossed\&.
+.SH "COPYRIGHT"
+.br

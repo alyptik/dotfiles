@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: idr_for_each
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IDR_FOR_EACH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+idr_for_each \- iterate through all stored pointers
+.SH "SYNOPSIS"
+.HP \w'int\ idr_for_each('u
+.BI "int idr_for_each(struct\ idr\ *\ " "idp" ", int\ (*" "fn" ")\ (int\ id,\ void\ *p,\ void\ *data), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIidp\fR
+.RS 4
+idr handle
+.RE
+.PP
+\fIfn\fR
+.RS 4
+function to be called for each pointer
+.RE
+.PP
+\fIdata\fR
+.RS 4
+data passed back to callback function
+.RE
+.SH "DESCRIPTION"
+.PP
+Iterate over the pointers registered with the given idr\&. The callback function will be called for each pointer currently registered, passing the id, the pointer and the data pointer passed to this function\&. It is not safe to modify the idr tree while in the callback, so functions such as idr_get_new and idr_remove are not allowed\&.
+.PP
+We check the return of
+\fIfn\fR
+each time\&. If it returns anything other than
+\fB0\fR, we break out and return that value\&.
+.PP
+The caller must serialize
+\fBidr_for_each\fR
+vs
+\fBidr_get_new\fR
+and
+\fBidr_remove\fR\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: kfifo_dma_out_finish
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: FIFO Buffer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KFIFO_DMA_OUT_FINISH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "FIFO Buffer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kfifo_dma_out_finish \- finish a DMA OUT operation
+.SH "SYNOPSIS"
+.HP \w'kfifo_dma_out_finish('u
+.BI "kfifo_dma_out_finish(" "fifo" ", " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfifo\fR
+.RS 4
+address of the fifo to be used
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of bytes transferred
+.RE
+.SH "DESCRIPTION"
+.PP
+This macro finish a DMA OUT operation\&. The out counter will be updated by the len parameter\&. No error checking will be done\&.
+.PP
+Note that with only one concurrent reader and one concurrent writer, you don\*(Aqt need extra locking to use these macros\&.
+.SH "COPYRIGHT"
+.br

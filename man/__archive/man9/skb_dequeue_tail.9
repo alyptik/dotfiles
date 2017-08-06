@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: skb_dequeue_tail
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_DEQUEUE_TAIL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_dequeue_tail \- remove from the tail of the queue
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_dequeue_tail('u
+.BI "struct sk_buff * skb_dequeue_tail(struct\ sk_buff_head\ *\ " "list" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlist\fR
+.RS 4
+list to dequeue from
+.RE
+.SH "DESCRIPTION"
+.PP
+Remove the tail of the list\&. The list lock is taken so the function may be used safely with other locking list functions\&. The tail item is returned or
+\fBNULL\fR
+if the list is empty\&.
+.SH "COPYRIGHT"
+.br

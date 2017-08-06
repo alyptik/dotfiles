@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: pci_iomap
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_IOMAP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_iomap \- create a virtual mapping cookie for a PCI BAR
+.SH "SYNOPSIS"
+.HP \w'void\ __iomem\ *\ pci_iomap('u
+.BI "void __iomem * pci_iomap(struct\ pci_dev\ *\ " "dev" ", int\ " "bar" ", unsigned\ long\ " "maxlen" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device that owns the BAR
+.RE
+.PP
+\fIbar\fR
+.RS 4
+BAR number
+.RE
+.PP
+\fImaxlen\fR
+.RS 4
+length of the memory to map
+.RE
+.SH "DESCRIPTION"
+.PP
+Using this function you will get a __iomem address to your device BAR\&. You can access it using ioread*() and iowrite*()\&. These functions hide the details if this is a MMIO or PIO address space and will just do what you expect from them in the correct way\&.
+.PP
+\fImaxlen\fR
+specifies the maximum length to map\&. If you want to get access to the complete BAR without checking for its length first, pass
+\fB0\fR
+here\&.
+.SH "AUTHORS"
+.PP
+\fBMatthew Wilcox\fR <\&matthew@wil.cx\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

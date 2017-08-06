@@ -1,0 +1,274 @@
+'\" t
+.\"     Title: struct nand_sdr_timings
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT NAND_SDR_TIMI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_nand_sdr_timings \- SDR NAND chip timings
+.SH "SYNOPSIS"
+.sp
+.nf
+struct nand_sdr_timings {
+  u32 tBERS_max;
+  u32 tCCS_min;
+  u32 tPROG_max;
+  u32 tR_max;
+  u32 tALH_min;
+  u32 tADL_min;
+  u32 tALS_min;
+  u32 tAR_min;
+  u32 tCEA_max;
+  u32 tCH_min;
+  u32 tCHZ_max;
+  u32 tCLH_min;
+  u32 tCLR_min;
+  u32 tCLS_min;
+  u32 tCOH_min;
+  u32 tCS_min;
+  u32 tDH_min;
+  u32 tDS_min;
+  u32 tFEAT_max;
+  u32 tIR_min;
+  u32 tITC_max;
+  u32 tRC_min;
+  u32 tREA_max;
+  u32 tREH_min;
+  u32 tRHOH_min;
+  u32 tRHW_min;
+  u32 tRHZ_max;
+  u32 tRLOH_min;
+  u32 tRP_min;
+  u32 tRR_min;
+  u64 tRST_max;
+  u32 tWB_max;
+  u32 tWC_min;
+  u32 tWH_min;
+  u32 tWHR_min;
+  u32 tWP_min;
+  u32 tWW_min;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+tBERS_max
+.RS 4
+Block erase time
+.RE
+.PP
+tCCS_min
+.RS 4
+Change column setup time
+.RE
+.PP
+tPROG_max
+.RS 4
+Page program time
+.RE
+.PP
+tR_max
+.RS 4
+Page read time
+.RE
+.PP
+tALH_min
+.RS 4
+ALE hold time
+.RE
+.PP
+tADL_min
+.RS 4
+ALE to data loading time
+.RE
+.PP
+tALS_min
+.RS 4
+ALE setup time
+.RE
+.PP
+tAR_min
+.RS 4
+ALE to RE# delay
+.RE
+.PP
+tCEA_max
+.RS 4
+CE# access time
+.RE
+.PP
+tCH_min
+.RS 4
+CE# hold time
+.RE
+.PP
+tCHZ_max
+.RS 4
+CE# high to output hi\-Z
+.RE
+.PP
+tCLH_min
+.RS 4
+CLE hold time
+.RE
+.PP
+tCLR_min
+.RS 4
+CLE to RE# delay
+.RE
+.PP
+tCLS_min
+.RS 4
+CLE setup time
+.RE
+.PP
+tCOH_min
+.RS 4
+CE# high to output hold
+.RE
+.PP
+tCS_min
+.RS 4
+CE# setup time
+.RE
+.PP
+tDH_min
+.RS 4
+Data hold time
+.RE
+.PP
+tDS_min
+.RS 4
+Data setup time
+.RE
+.PP
+tFEAT_max
+.RS 4
+Busy time for Set Features and Get Features
+.RE
+.PP
+tIR_min
+.RS 4
+Output hi\-Z to RE# low
+.RE
+.PP
+tITC_max
+.RS 4
+Interface and Timing Mode Change time
+.RE
+.PP
+tRC_min
+.RS 4
+RE# cycle time
+.RE
+.PP
+tREA_max
+.RS 4
+RE# access time
+.RE
+.PP
+tREH_min
+.RS 4
+RE# high hold time
+.RE
+.PP
+tRHOH_min
+.RS 4
+RE# high to output hold
+.RE
+.PP
+tRHW_min
+.RS 4
+RE# high to WE# low
+.RE
+.PP
+tRHZ_max
+.RS 4
+RE# high to output hi\-Z
+.RE
+.PP
+tRLOH_min
+.RS 4
+RE# low to output hold
+.RE
+.PP
+tRP_min
+.RS 4
+RE# pulse width
+.RE
+.PP
+tRR_min
+.RS 4
+Ready to RE# low (data only)
+.RE
+.PP
+tRST_max
+.RS 4
+Device reset time, measured from the falling edge of R/B# to the rising edge of R/B#\&.
+.RE
+.PP
+tWB_max
+.RS 4
+WE# high to SR[6] low
+.RE
+.PP
+tWC_min
+.RS 4
+WE# cycle time
+.RE
+.PP
+tWH_min
+.RS 4
+WE# high hold time
+.RE
+.PP
+tWHR_min
+.RS 4
+WE# high to RE# low
+.RE
+.PP
+tWP_min
+.RS 4
+WE# pulse width
+.RE
+.PP
+tWW_min
+.RS 4
+WP# transition to WE# low
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+This struct defines the timing requirements of a SDR NAND chip\&. These information can be found in every NAND datasheets and the timings meaning are described in the ONFI specifications: www\&.onfi\&.org/~/media/ONFI/specs/onfi_3_1_spec\&.pdf (chapter 4\&.15 Timing Parameters)
+.PP
+All these timings are expressed in picoseconds\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

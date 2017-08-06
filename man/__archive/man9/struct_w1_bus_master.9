@@ -1,0 +1,139 @@
+'\" t
+.\"     Title: struct w1_bus_master
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT W1_BUS_MASTER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_w1_bus_master \- operations available on a bus master
+.SH "SYNOPSIS"
+.sp
+.nf
+struct w1_bus_master {
+  void * data;
+  u8 (* read_bit) (void *);
+  void (* write_bit) (void *, u8);
+  u8 (* touch_bit) (void *, u8);
+  u8 (* read_byte) (void *);
+  void (* write_byte) (void *, u8);
+  u8 (* read_block) (void *, u8 *, int);
+  void (* write_block) (void *, const u8 *, int);
+  u8 (* triplet) (void *, u8);
+  u8 (* reset_bus) (void *);
+  u8 (* set_pullup) (void *, int);
+  void (* search) (void *, struct w1_master *,u8, w1_slave_found_callback);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+data
+.RS 4
+the first parameter in all the functions below
+.RE
+.PP
+read_bit
+.RS 4
+Sample the line level
+\fIreturn\fR
+the level read (0 or 1)
+.RE
+.PP
+write_bit
+.RS 4
+Sets the line level
+.RE
+.PP
+touch_bit
+.RS 4
+the lowest\-level function for devices that really support the 1\-wire protocol\&. touch_bit(0) = write\-0 cycle touch_bit(1) = write\-1 / read cycle
+\fIreturn\fR
+the bit read (0 or 1)
+.RE
+.PP
+read_byte
+.RS 4
+Reads a bytes\&. Same as 8 touch_bit(1) calls\&.
+\fIreturn\fR
+the byte read
+.RE
+.PP
+write_byte
+.RS 4
+Writes a byte\&. Same as 8 touch_bit(x) calls\&.
+.RE
+.PP
+read_block
+.RS 4
+Same as a series of
+\fBread_byte\fR
+calls
+\fIreturn\fR
+the number of bytes read
+.RE
+.PP
+write_block
+.RS 4
+Same as a series of
+\fBwrite_byte\fR
+calls
+.RE
+.PP
+triplet
+.RS 4
+Combines two reads and a smart write for ROM searches
+\fIreturn\fR
+bit0=Id bit1=comp_id bit2=dir_taken
+.RE
+.PP
+reset_bus
+.RS 4
+long write\-0 with a read for the presence pulse detection
+\fIreturn\fR
+\-1=Error, 0=Device present, 1=No device present
+.RE
+.PP
+set_pullup
+.RS 4
+Put out a strong pull\-up pulse of the specified duration\&.
+\fIreturn\fR
+\-1=Error, 0=completed
+.RE
+.PP
+search
+.RS 4
+Really nice hardware can handles the different types of ROM search w1_master* is passed to the slave found callback\&. u8 is search_type, W1_SEARCH or W1_ALARM_SEARCH
+.RE
+.SH "NOTE"
+.PP
+read_bit and write_bit are very low level functions and should only be used with hardware that doesn\*(Aqt really support 1\-wire operations, like a parallel/serial port\&. Either define read_bit and write_bit OR define, at minimum, touch_bit and reset_bus\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

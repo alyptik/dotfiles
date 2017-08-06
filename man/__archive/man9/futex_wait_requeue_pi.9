@@ -1,0 +1,95 @@
+'\" t
+.\"     Title: futex_wait_requeue_pi
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FUTEX_WAIT_REQUEUE_P" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+futex_wait_requeue_pi \- Wait on uaddr and take uaddr2
+.SH "SYNOPSIS"
+.HP \w'int\ futex_wait_requeue_pi('u
+.BI "int futex_wait_requeue_pi(u32\ __user\ *\ " "uaddr" ", unsigned\ int\ " "flags" ", u32\ " "val" ", ktime_t\ *\ " "abs_time" ", u32\ " "bitset" ", u32\ __user\ *\ " "uaddr2" ");"
+.SH "ARGUMENTS"
+.PP
+\fIuaddr\fR
+.RS 4
+the futex we initially wait on (non\-pi)
+.RE
+.PP
+\fIflags\fR
+.RS 4
+futex flags (FLAGS_SHARED, FLAGS_CLOCKRT, etc\&.), they must be the same type, no requeueing from private to shared, etc\&.
+.RE
+.PP
+\fIval\fR
+.RS 4
+the expected value of uaddr
+.RE
+.PP
+\fIabs_time\fR
+.RS 4
+absolute timeout
+.RE
+.PP
+\fIbitset\fR
+.RS 4
+32 bit wakeup bitset set by userspace, defaults to all
+.RE
+.PP
+\fIuaddr2\fR
+.RS 4
+the pi futex we will take prior to returning to user\-space
+.RE
+.SH "DESCRIPTION"
+.PP
+The caller will wait on uaddr and will be requeued by
+\fBfutex_requeue\fR
+to uaddr2 which must be PI aware and unique from uaddr\&. Normal wakeup will wake on uaddr2 and complete the acquisition of the rt_mutex prior to returning to userspace\&. This ensures the rt_mutex maintains an owner when it has waiters; without one, the pi logic would not know which task to boost/deboost, if there was a need to\&.
+.PP
+We call schedule in
+\fBfutex_wait_queue_me\fR
+when we enqueue and return there via the following\-\- 1) wakeup on uaddr2 after an atomic lock acquisition by
+\fBfutex_requeue\fR
+2) wakeup on uaddr2 after a requeue 3) signal 4) timeout
+.PP
+If 3, cleanup and return \-ERESTARTNOINTR\&.
+.PP
+If 2, we may then block on trying to take the rt_mutex and return via: 5) successful lock 6) signal 7) timeout 8) other lock acquisition failure
+.PP
+If 6, return \-EWOULDBLOCK (restarting the syscall would do the same)\&.
+.PP
+If 4 or 7, we cleanup and return with \-ETIMEDOUT\&.
+.SH "RETURN"
+.PP
+0 \- On success; <0 \- On error
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,77 @@
+'\" t
+.\"     Title: irq_alloc_generic_chip
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Generic interrupt chip
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_ALLOC_GENERIC_CH" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Generic interrupt chip"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_alloc_generic_chip \- Allocate a generic chip and initialize it
+.SH "SYNOPSIS"
+.HP \w'struct\ irq_chip_generic\ *\ irq_alloc_generic_chip('u
+.BI "struct irq_chip_generic * irq_alloc_generic_chip(const\ char\ *\ " "name" ", int\ " "num_ct" ", unsigned\ int\ " "irq_base" ", void\ __iomem\ *\ " "reg_base" ", irq_flow_handler_t\ " "handler" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+Name of the irq chip
+.RE
+.PP
+\fInum_ct\fR
+.RS 4
+Number of irq_chip_type instances associated with this
+.RE
+.PP
+\fIirq_base\fR
+.RS 4
+Interrupt base nr for this chip
+.RE
+.PP
+\fIreg_base\fR
+.RS 4
+Register base address (virtual)
+.RE
+.PP
+\fIhandler\fR
+.RS 4
+Default flow handler associated with this chip
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns an initialized irq_chip_generic structure\&. The chip defaults to the primary (index 0) irq_chip_type and
+\fIhandler\fR
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

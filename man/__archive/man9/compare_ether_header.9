@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: compare_ether_header
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "COMPARE_ETHER_HEADER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+compare_ether_header \- Compare two Ethernet headers
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ compare_ether_header('u
+.BI "unsigned long compare_ether_header(const\ void\ *\ " "a" ", const\ void\ *\ " "b" ");"
+.SH "ARGUMENTS"
+.PP
+\fIa\fR
+.RS 4
+Pointer to Ethernet header
+.RE
+.PP
+\fIb\fR
+.RS 4
+Pointer to Ethernet header
+.RE
+.SH "DESCRIPTION"
+.PP
+Compare two Ethernet headers, returns 0 if equal\&. This assumes that the network header (i\&.e\&., IP header) is 4\-byte aligned OR the platform can handle unaligned access\&. This is the case for all packets coming into netif_receive_skb or similar entry points\&.
+.SH "COPYRIGHT"
+.br

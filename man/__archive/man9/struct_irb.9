@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: struct irb
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IRB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_irb \- interruption response block
+.SH "SYNOPSIS"
+.sp
+.nf
+struct irb {
+  union scsw scsw;
+  union esw;
+  __u8 ecw[32];
+};  
+.fi
+.SH "MEMBERS"
+.PP
+scsw
+.RS 4
+subchannel status word
+.RE
+.PP
+esw
+.RS 4
+extended status word
+.RE
+.PP
+ecw[32]
+.RS 4
+extended control word
+.RE
+.SH "DESCRIPTION"
+.PP
+The irb that is handed to the device driver when an interrupt occurs\&. For solicited interrupts, the common I/O layer already performs checks whether a field is valid; a field not being valid is always passed as
+\fB0\fR\&. If a unit check occurred,
+\fIecw\fR
+may contain sense data; this is retrieved by the common I/O layer itself if the device doesn\*(Aqt support concurrent sense (so that the device driver never needs to perform basic sene itself)\&. For unsolicited interrupts, the irb is passed as\-is (expect for sense data, if applicable)\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,493 @@
+'\" t
+.\"     Title: struct sock
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT SOCK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_sock \- network layer representation of sockets
+.SH "SYNOPSIS"
+.sp
+.nf
+struct sock {
+  struct sock_common __sk_common;
+#define sk_node			__sk_common\&.skc_node
+#define sk_nulls_node		__sk_common\&.skc_nulls_node
+#define sk_refcnt		__sk_common\&.skc_refcnt
+#define sk_tx_queue_mapping	__sk_common\&.skc_tx_queue_mapping
+#define sk_dontcopy_begin	__sk_common\&.skc_dontcopy_begin
+#define sk_dontcopy_end		__sk_common\&.skc_dontcopy_end
+#define sk_hash			__sk_common\&.skc_hash
+#define sk_portpair		__sk_common\&.skc_portpair
+#define sk_num			__sk_common\&.skc_num
+#define sk_dport		__sk_common\&.skc_dport
+#define sk_addrpair		__sk_common\&.skc_addrpair
+#define sk_daddr		__sk_common\&.skc_daddr
+#define sk_rcv_saddr		__sk_common\&.skc_rcv_saddr
+#define sk_family		__sk_common\&.skc_family
+#define sk_state		__sk_common\&.skc_state
+#define sk_reuse		__sk_common\&.skc_reuse
+#define sk_reuseport		__sk_common\&.skc_reuseport
+#define sk_ipv6only		__sk_common\&.skc_ipv6only
+#define sk_net_refcnt		__sk_common\&.skc_net_refcnt
+#define sk_bound_dev_if		__sk_common\&.skc_bound_dev_if
+#define sk_bind_node		__sk_common\&.skc_bind_node
+#define sk_prot			__sk_common\&.skc_prot
+#define sk_net			__sk_common\&.skc_net
+#define sk_v6_daddr		__sk_common\&.skc_v6_daddr
+#define sk_v6_rcv_saddr	__sk_common\&.skc_v6_rcv_saddr
+#define sk_cookie		__sk_common\&.skc_cookie
+#define sk_incoming_cpu		__sk_common\&.skc_incoming_cpu
+#define sk_flags		__sk_common\&.skc_flags
+#define sk_rxhash		__sk_common\&.skc_rxhash
+  socket_lock_t sk_lock;
+  atomic_t sk_drops;
+  int sk_rcvlowat;
+  struct sk_buff_head sk_error_queue;
+  struct sk_buff_head sk_receive_queue;
+  struct {unnamed_struct};
+#ifdef CONFIG_XFRM
+  struct xfrm_policy __rcu * sk_policy[2];
+#endif
+  struct dst_entry * sk_rx_dst;
+  struct dst_entry __rcu * sk_dst_cache;
+  atomic_t sk_omem_alloc;
+  int sk_sndbuf;
+  int sk_wmem_queued;
+  atomic_t sk_wmem_alloc;
+  struct sk_buff * sk_send_head;
+  struct sk_buff_head sk_write_queue;
+  __s32 sk_peek_off;
+  int sk_write_pending;
+  long sk_sndtimeo;
+  struct timer_list sk_timer;
+  __u32 sk_priority;
+  __u32 sk_mark;
+  u32 sk_pacing_rate;
+  u32 sk_max_pacing_rate;
+  struct page_frag sk_frag;
+  netdev_features_t sk_route_caps;
+  netdev_features_t sk_route_nocaps;
+  int sk_gso_type;
+  unsigned int sk_gso_max_size;
+  gfp_t sk_allocation;
+  __u32 sk_txhash;
+#ifdef __BIG_ENDIAN_BITFIELD
+#define SK_FL_PROTO_SHIFT  16
+#define SK_FL_PROTO_MASK   0x00ff0000
+#define SK_FL_TYPE_SHIFT   0
+#define SK_FL_TYPE_MASK    0x0000ffff
+#else
+#define SK_FL_PROTO_SHIFT  8
+#define SK_FL_PROTO_MASK   0x0000ff00
+#define SK_FL_TYPE_SHIFT   16
+#define SK_FL_TYPE_MASK    0xffff0000
+#endif
+  unsigned int sk_padding:2;
+  unsigned int sk_no_check_tx:1;
+  unsigned int sk_no_check_rx:1;
+  unsigned int sk_userlocks:4;
+  unsigned int sk_protocol:8;
+  unsigned int sk_type:16;
+#define SK_PROTOCOL_MAX U8_MAX
+  u16 sk_gso_max_segs;
+  unsigned long sk_lingertime;
+  struct proto * sk_prot_creator;
+  rwlock_t sk_callback_lock;
+  int sk_err;
+  int sk_err_soft;
+  u32 sk_ack_backlog;
+  u32 sk_max_ack_backlog;
+  struct pid * sk_peer_pid;
+  const struct cred * sk_peer_cred;
+  long sk_rcvtimeo;
+  ktime_t sk_stamp;
+  u16 sk_tsflags;
+  u8 sk_shutdown;
+  u32 sk_tskey;
+  struct socket * sk_socket;
+  void * sk_user_data;
+#ifdef CONFIG_SECURITY
+  void * sk_security;
+#endif
+  struct sock_cgroup_data sk_cgrp_data;
+  struct mem_cgroup * sk_memcg;
+  void (* sk_state_change) (struct sock *sk);
+  void (* sk_data_ready) (struct sock *sk);
+  void (* sk_write_space) (struct sock *sk);
+  void (* sk_error_report) (struct sock *sk);
+  int (* sk_backlog_rcv) (struct sock *sk,struct sk_buff *skb);
+  void (* sk_destruct) (struct sock *sk);
+  struct sock_reuseport __rcu * sk_reuseport_cb;
+  struct rcu_head sk_rcu;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+__sk_common
+.RS 4
+shared layout with inet_timewait_sock
+.RE
+.PP
+sk_lock
+.RS 4
+synchronizer
+.RE
+.PP
+sk_drops
+.RS 4
+raw/udp drops counter
+.RE
+.PP
+sk_rcvlowat
+.RS 4
+\fBSO_RCVLOWAT\fR
+setting
+.RE
+.PP
+sk_error_queue
+.RS 4
+rarely used
+.RE
+.PP
+sk_receive_queue
+.RS 4
+incoming packets
+.RE
+.PP
+{unnamed_struct}
+.RS 4
+anonymous
+.RE
+.PP
+sk_policy[2]
+.RS 4
+flow policy
+.RE
+.PP
+sk_rx_dst
+.RS 4
+receive input route used by early demux
+.RE
+.PP
+sk_dst_cache
+.RS 4
+destination cache
+.RE
+.PP
+sk_omem_alloc
+.RS 4
+"o\(lq is \(rqoption\(lq or \(rqother"
+.RE
+.PP
+sk_sndbuf
+.RS 4
+size of send buffer in bytes
+.RE
+.PP
+sk_wmem_queued
+.RS 4
+persistent queue size
+.RE
+.PP
+sk_wmem_alloc
+.RS 4
+transmit queue bytes committed
+.RE
+.PP
+sk_send_head
+.RS 4
+front of stuff to transmit
+.RE
+.PP
+sk_write_queue
+.RS 4
+Packet sending queue
+.RE
+.PP
+sk_peek_off
+.RS 4
+current peek_offset value
+.RE
+.PP
+sk_write_pending
+.RS 4
+a write to stream socket waits to start
+.RE
+.PP
+sk_sndtimeo
+.RS 4
+\fBSO_SNDTIMEO\fR
+setting
+.RE
+.PP
+sk_timer
+.RS 4
+sock cleanup timer
+.RE
+.PP
+sk_priority
+.RS 4
+\fBSO_PRIORITY\fR
+setting
+.RE
+.PP
+sk_mark
+.RS 4
+generic packet mark
+.RE
+.PP
+sk_pacing_rate
+.RS 4
+Pacing rate (if supported by transport/packet scheduler)
+.RE
+.PP
+sk_max_pacing_rate
+.RS 4
+Maximum pacing rate (\fBSO_MAX_PACING_RATE\fR)
+.RE
+.PP
+sk_frag
+.RS 4
+cached page frag
+.RE
+.PP
+sk_route_caps
+.RS 4
+route capabilities (e\&.g\&.
+\fBNETIF_F_TSO\fR)
+.RE
+.PP
+sk_route_nocaps
+.RS 4
+forbidden route capabilities (e\&.g NETIF_F_GSO_MASK)
+.RE
+.PP
+sk_gso_type
+.RS 4
+GSO type (e\&.g\&.
+\fBSKB_GSO_TCPV4\fR)
+.RE
+.PP
+sk_gso_max_size
+.RS 4
+Maximum GSO segment size to build
+.RE
+.PP
+sk_allocation
+.RS 4
+allocation mode
+.RE
+.PP
+sk_txhash
+.RS 4
+computed flow hash for use on transmit
+.RE
+.PP
+sk_padding
+.RS 4
+unused element for alignment
+.RE
+.PP
+sk_no_check_tx
+.RS 4
+\fBSO_NO_CHECK\fR
+setting, set checksum in TX packets
+.RE
+.PP
+sk_no_check_rx
+.RS 4
+allow zero checksum in RX packets
+.RE
+.PP
+sk_userlocks
+.RS 4
+\fBSO_SNDBUF\fR
+and
+\fBSO_RCVBUF\fR
+settings
+.RE
+.PP
+sk_protocol
+.RS 4
+which protocol this socket belongs in this network family
+.RE
+.PP
+sk_type
+.RS 4
+socket type (\fBSOCK_STREAM\fR, etc)
+.RE
+.PP
+sk_gso_max_segs
+.RS 4
+Maximum number of GSO segments
+.RE
+.PP
+sk_lingertime
+.RS 4
+\fBSO_LINGER\fR
+l_linger setting
+.RE
+.PP
+sk_prot_creator
+.RS 4
+sk_prot of original sock creator (see ipv6_setsockopt, IPV6_ADDRFORM for instance)
+.RE
+.PP
+sk_callback_lock
+.RS 4
+used with the callbacks in the end of this struct
+.RE
+.PP
+sk_err
+.RS 4
+last error
+.RE
+.PP
+sk_err_soft
+.RS 4
+errors that don\*(Aqt cause failure but are the cause of a persistent failure not just \*(Aqtimed out\*(Aq
+.RE
+.PP
+sk_ack_backlog
+.RS 4
+current listen backlog
+.RE
+.PP
+sk_max_ack_backlog
+.RS 4
+listen backlog set in
+\fBlisten\fR
+.RE
+.PP
+sk_peer_pid
+.RS 4
+struct pid
+for this socket\*(Aqs peer
+.RE
+.PP
+sk_peer_cred
+.RS 4
+\fBSO_PEERCRED\fR
+setting
+.RE
+.PP
+sk_rcvtimeo
+.RS 4
+\fBSO_RCVTIMEO\fR
+setting
+.RE
+.PP
+sk_stamp
+.RS 4
+time stamp of last packet received
+.RE
+.PP
+sk_tsflags
+.RS 4
+SO_TIMESTAMPING socket options
+.RE
+.PP
+sk_shutdown
+.RS 4
+mask of
+\fBSEND_SHUTDOWN\fR
+and/or
+\fBRCV_SHUTDOWN\fR
+.RE
+.PP
+sk_tskey
+.RS 4
+counter to disambiguate concurrent tstamp requests
+.RE
+.PP
+sk_socket
+.RS 4
+Identd and reporting IO signals
+.RE
+.PP
+sk_user_data
+.RS 4
+RPC layer private data
+.RE
+.PP
+sk_security
+.RS 4
+used by security modules
+.RE
+.PP
+sk_cgrp_data
+.RS 4
+cgroup data for this cgroup
+.RE
+.PP
+sk_memcg
+.RS 4
+this socket\*(Aqs memory cgroup association
+.RE
+.PP
+sk_state_change
+.RS 4
+callback to indicate change in the state of the sock
+.RE
+.PP
+sk_data_ready
+.RS 4
+callback to indicate there is data to be processed
+.RE
+.PP
+sk_write_space
+.RS 4
+callback to indicate there is bf sending space available
+.RE
+.PP
+sk_error_report
+.RS 4
+callback to indicate errors (e\&.g\&.
+\fBMSG_ERRQUEUE\fR)
+.RE
+.PP
+sk_backlog_rcv
+.RS 4
+callback to process the backlog
+.RE
+.PP
+sk_destruct
+.RS 4
+called at sock freeing time, i\&.e\&. when all refcnt == 0
+.RE
+.PP
+sk_reuseport_cb
+.RS 4
+reuseport group container
+.RE
+.PP
+sk_rcu
+.RS 4
+used during RCU grace period
+.RE
+.SH "COPYRIGHT"
+.br

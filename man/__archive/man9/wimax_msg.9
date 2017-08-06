@@ -1,0 +1,79 @@
+'\" t
+.\"     Title: wimax_msg
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_MSG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_msg \- Send a message to user space
+.SH "SYNOPSIS"
+.HP \w'int\ wimax_msg('u
+.BI "int wimax_msg(struct\ wimax_dev\ *\ " "wimax_dev" ", const\ char\ *\ " "pipe_name" ", const\ void\ *\ " "buf" ", size_t\ " "size" ", gfp_t\ " "gfp_flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor (properly referenced)
+.RE
+.PP
+\fIpipe_name\fR
+.RS 4
+"named pipe" the message will be sent to
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+pointer to the message to send\&.
+.RE
+.PP
+\fIsize\fR
+.RS 4
+size of the buffer pointed to by
+\fIbuf\fR
+(in bytes)\&.
+.RE
+.PP
+\fIgfp_flags\fR
+.RS 4
+flags for memory allocation\&.
+.RE
+.SH "RETURN"
+.PP
+\fB0\fR
+if ok, negative errno code on error\&.
+.SH "DESCRIPTION"
+.PP
+.PP
+Sends a free\-form message to user space on the device
+\fIwimax_dev\fR\&.
+.SH "NOTES"
+.PP
+.PP
+Once the
+\fIskb\fR
+is given to this function, who will own it and will release it when done (unless it returns error)\&.
+.SH "COPYRIGHT"
+.br

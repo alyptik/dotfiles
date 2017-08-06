@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: scsi_host_lookup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_HOST_LOOKUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_host_lookup \- get a reference to a Scsi_Host by host no
+.SH "SYNOPSIS"
+.HP \w'struct\ Scsi_Host\ *\ scsi_host_lookup('u
+.BI "struct Scsi_Host * scsi_host_lookup(unsigned\ short\ " "hostnum" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhostnum\fR
+.RS 4
+host number to locate
+.RE
+.SH "DESCRIPTION"
+.PP
+Return value: A pointer to located Scsi_Host or NULL\&.
+.PP
+The caller must do a
+\fBscsi_host_put\fR
+to drop the reference that
+\fBscsi_host_get\fR
+took\&. The
+\fBput_device\fR
+below dropped the reference from
+\fBclass_find_device\fR\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

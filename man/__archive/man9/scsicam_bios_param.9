@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: scsicam_bios_param
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSICAM_BIOS_PARAM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsicam_bios_param \- Determine geometry of a disk in cylinders/heads/sectors\&.
+.SH "SYNOPSIS"
+.HP \w'int\ scsicam_bios_param('u
+.BI "int scsicam_bios_param(struct\ block_device\ *\ " "bdev" ", sector_t\ " "capacity" ", int\ *\ " "ip" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+which device
+.RE
+.PP
+\fIcapacity\fR
+.RS 4
+size of the disk in sectors
+.RE
+.PP
+\fIip\fR
+.RS 4
+return value: ip[0]=heads, ip[1]=sectors, ip[2]=cylinders
+.RE
+.SH "DESCRIPTION"
+.PP
+determine the BIOS mapping/geometry used for a drive in a SCSI\-CAM system, storing the results in ip as required by the HDIO_GETGEO
+\fBioctl\fR\&.
+.SH "RETURN"
+.PP
+\-1 on failure, 0 on success\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

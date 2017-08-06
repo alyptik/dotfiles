@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: nand_correct_data
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_CORRECT_DATA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_correct_data \- [NAND Interface] Detect and correct bit error(s)
+.SH "SYNOPSIS"
+.HP \w'int\ nand_correct_data('u
+.BI "int nand_correct_data(struct\ mtd_info\ *\ " "mtd" ", unsigned\ char\ *\ " "buf" ", unsigned\ char\ *\ " "read_ecc" ", unsigned\ char\ *\ " "calc_ecc" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD block structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+raw data read from the chip
+.RE
+.PP
+\fIread_ecc\fR
+.RS 4
+ECC from the chip
+.RE
+.PP
+\fIcalc_ecc\fR
+.RS 4
+the ECC calculated from raw data
+.RE
+.SH "DESCRIPTION"
+.PP
+Detect and correct a 1 bit error for 256/512 byte block
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

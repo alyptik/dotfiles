@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: xdr_encode_opaque_fixed
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XDR_ENCODE_OPAQUE_FI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xdr_encode_opaque_fixed \- Encode fixed length opaque data
+.SH "SYNOPSIS"
+.HP \w'__be32\ *\ xdr_encode_opaque_fixed('u
+.BI "__be32 * xdr_encode_opaque_fixed(__be32\ *\ " "p" ", const\ void\ *\ " "ptr" ", unsigned\ int\ " "nbytes" ");"
+.SH "ARGUMENTS"
+.PP
+\fIp\fR
+.RS 4
+pointer to current position in XDR buffer\&.
+.RE
+.PP
+\fIptr\fR
+.RS 4
+pointer to data to encode (or NULL)
+.RE
+.PP
+\fInbytes\fR
+.RS 4
+size of data\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Copy the array of data of length nbytes at ptr to the XDR buffer at position p, then align to the next 32\-bit boundary by padding with zero bytes (see RFC1832)\&.
+.SH "NOTE"
+.PP
+if ptr is NULL, only the padding is performed\&.
+.PP
+Returns the updated current XDR buffer position
+.SH "COPYRIGHT"
+.br

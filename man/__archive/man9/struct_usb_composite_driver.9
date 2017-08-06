@@ -1,0 +1,127 @@
+'\" t
+.\"     Title: struct usb_composite_driver
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_COMPOSITE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_composite_driver \- groups configurations into a gadget
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_composite_driver {
+  const char * name;
+  const struct usb_device_descriptor * dev;
+  struct usb_gadget_strings ** strings;
+  enum usb_device_speed max_speed;
+  unsigned needs_serial:1;
+  int (* bind) (struct usb_composite_dev *cdev);
+  int (* unbind) (struct usb_composite_dev *);
+  void (* disconnect) (struct usb_composite_dev *);
+  void (* suspend) (struct usb_composite_dev *);
+  void (* resume) (struct usb_composite_dev *);
+  struct usb_gadget_driver gadget_driver;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+name
+.RS 4
+For diagnostics, identifies the driver\&.
+.RE
+.PP
+dev
+.RS 4
+Template descriptor for the device, including default device identifiers\&.
+.RE
+.PP
+strings
+.RS 4
+tables of strings, keyed by identifiers assigned during
+\fIbind\fR
+and language IDs provided in control requests\&. Note: The first entries are predefined\&. The first entry that may be used is USB_GADGET_FIRST_AVAIL_IDX
+.RE
+.PP
+max_speed
+.RS 4
+Highest speed the driver supports\&.
+.RE
+.PP
+needs_serial
+.RS 4
+set to 1 if the gadget needs userspace to provide a serial number\&. If one is not provided, warning will be printed\&.
+.RE
+.PP
+bind
+.RS 4
+(REQUIRED) Used to allocate resources that are shared across the whole device, such as string IDs, and add its configurations using
+\fIusb_add_config\fR()\&. This may fail by returning a negative errno value; it should return zero on successful initialization\&.
+.RE
+.PP
+unbind
+.RS 4
+Reverses
+\fIbind\fR; called as a side effect of unregistering this driver\&.
+.RE
+.PP
+disconnect
+.RS 4
+optional driver disconnect method
+.RE
+.PP
+suspend
+.RS 4
+Notifies when the host stops sending USB traffic, after function notifications
+.RE
+.PP
+resume
+.RS 4
+Notifies configuration when the host restarts USB traffic, before function notifications
+.RE
+.PP
+gadget_driver
+.RS 4
+Gadget driver controlling this driver
+.RE
+.SH "DESCRIPTION"
+.PP
+Devices default to reporting self powered operation\&. Devices which rely on bus powered operation should report this in their
+\fIbind\fR
+method\&.
+.PP
+Before returning from
+\fIbind\fR, various fields in the template descriptor may be overridden\&. These include the idVendor/idProduct/bcdDevice values normally to bind the appropriate host side driver, and the three strings (iManufacturer, iProduct, iSerialNumber) normally used to provide user meaningful device identifiers\&. (The strings will not be defined unless they are defined in
+\fIdev\fR
+and
+\fIstrings\fR\&.) The correct ep0 maxpacket size is also reported, as defined by the underlying controller driver\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

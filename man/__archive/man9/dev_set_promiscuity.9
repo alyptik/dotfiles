@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: dev_set_promiscuity
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEV_SET_PROMISCUITY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dev_set_promiscuity \- update promiscuity count on a device
+.SH "SYNOPSIS"
+.HP \w'int\ dev_set_promiscuity('u
+.BI "int dev_set_promiscuity(struct\ net_device\ *\ " "dev" ", int\ " "inc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device
+.RE
+.PP
+\fIinc\fR
+.RS 4
+modifier
+.RE
+.SH "DESCRIPTION"
+.PP
+Add or remove promiscuity from a device\&. While the count in the device remains above zero the interface remains promiscuous\&. Once it hits zero the device reverts back to normal filtering operation\&. A negative inc value is used to drop promiscuity on the device\&. Return 0 if successful or a negative errno code on error\&.
+.SH "COPYRIGHT"
+.br

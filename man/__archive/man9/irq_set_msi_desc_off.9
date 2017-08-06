@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: irq_set_msi_desc_off
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_SET_MSI_DESC_OFF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_set_msi_desc_off \- set MSI descriptor data for an irq at offset
+.SH "SYNOPSIS"
+.HP \w'int\ irq_set_msi_desc_off('u
+.BI "int irq_set_msi_desc_off(unsigned\ int\ " "irq_base" ", unsigned\ int\ " "irq_offset" ", struct\ msi_desc\ *\ " "entry" ");"
+.SH "ARGUMENTS"
+.PP
+\fIirq_base\fR
+.RS 4
+Interrupt number base
+.RE
+.PP
+\fIirq_offset\fR
+.RS 4
+Interrupt number offset
+.RE
+.PP
+\fIentry\fR
+.RS 4
+Pointer to MSI descriptor data
+.RE
+.SH "DESCRIPTION"
+.PP
+Set the MSI descriptor entry for an irq at offset
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

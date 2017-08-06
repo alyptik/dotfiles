@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: remap_vmalloc_range_partial
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REMAP_VMALLOC_RANGE_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+remap_vmalloc_range_partial \- map vmalloc pages to userspace
+.SH "SYNOPSIS"
+.HP \w'int\ remap_vmalloc_range_partial('u
+.BI "int remap_vmalloc_range_partial(struct\ vm_area_struct\ *\ " "vma" ", unsigned\ long\ " "uaddr" ", void\ *\ " "kaddr" ", unsigned\ long\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvma\fR
+.RS 4
+vma to cover
+.RE
+.PP
+\fIuaddr\fR
+.RS 4
+target user address to start at
+.RE
+.PP
+\fIkaddr\fR
+.RS 4
+virtual address of vmalloc kernel memory
+.RE
+.PP
+\fIsize\fR
+.RS 4
+size of map area
+.RE
+.SH "RETURN"
+.PP
+0 for success, \-Exxx on failure
+.PP
+This function checks that
+\fIkaddr\fR
+is a valid vmalloc\*(Aqed area, and that it is big enough to cover the range starting at
+\fIuaddr\fR
+in
+\fIvma\fR\&. Will return failure if that criteria isn\*(Aqt met\&.
+.PP
+Similar to
+\fBremap_pfn_range\fR
+(see mm/memory\&.c)
+.SH "COPYRIGHT"
+.br

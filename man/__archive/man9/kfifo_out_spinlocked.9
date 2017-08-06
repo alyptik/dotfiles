@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: kfifo_out_spinlocked
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: FIFO Buffer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KFIFO_OUT_SPINLOCKED" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "FIFO Buffer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kfifo_out_spinlocked \- get data from the fifo using a spinlock for locking
+.SH "SYNOPSIS"
+.HP \w'kfifo_out_spinlocked('u
+.BI "kfifo_out_spinlocked(" "fifo" ", " "buf" ", " "n" ", " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfifo\fR
+.RS 4
+address of the fifo to be used
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+pointer to the storage buffer
+.RE
+.PP
+\fIn\fR
+.RS 4
+max\&. number of elements to get
+.RE
+.PP
+\fIlock\fR
+.RS 4
+pointer to the spinlock to use for locking
+.RE
+.SH "DESCRIPTION"
+.PP
+This macro get the data from the fifo and return the numbers of elements copied\&.
+.SH "COPYRIGHT"
+.br

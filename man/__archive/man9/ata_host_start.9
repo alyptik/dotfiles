@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: ata_host_start
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_HOST_START" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_host_start \- start and freeze ports of an ATA host
+.SH "SYNOPSIS"
+.HP \w'int\ ata_host_start('u
+.BI "int ata_host_start(struct\ ata_host\ *\ " "host" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhost\fR
+.RS 4
+ATA host to start ports for
+.RE
+.SH "DESCRIPTION"
+.PP
+Start and then freeze ports of
+\fIhost\fR\&. Started status is recorded in host\->flags, so this function can be called multiple times\&. Ports are guaranteed to get started only once\&. If host\->ops isn\*(Aqt initialized yet, its set to the first non\-dummy port ops\&.
+.PP
+LOCKING: Inherited from calling layer (may sleep)\&.
+.SH "RETURN"
+.PP
+0 if all ports are started successfully, \-errno otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

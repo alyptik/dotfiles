@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: part_round_stats
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PART_ROUND_STATS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+part_round_stats \- Round off the performance stats on a struct disk_stats\&.
+.SH "SYNOPSIS"
+.HP \w'void\ part_round_stats('u
+.BI "void part_round_stats(int\ " "cpu" ", struct\ hd_struct\ *\ " "part" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcpu\fR
+.RS 4
+cpu number for stats access
+.RE
+.PP
+\fIpart\fR
+.RS 4
+target partition
+.RE
+.SH "DESCRIPTION"
+.PP
+The average IO queue length and utilisation statistics are maintained by observing the current state of the queue length and the amount of time it has been in this state for\&.
+.PP
+Normally, that accounting is done on IO completion, but that can result in more than a second\*(Aqs worth of IO being accounted for within any one second, leading to >100% utilisation\&. To deal with that, we call this function to do a round\-off before returning the results when reading /proc/diskstats\&. This accounts immediately for all queue usage up to the current jiffies and restarts the counters again\&.
+.SH "COPYRIGHT"
+.br

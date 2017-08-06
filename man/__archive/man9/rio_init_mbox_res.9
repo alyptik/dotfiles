@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: rio_init_mbox_res
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_INIT_MBOX_RES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_init_mbox_res \- Initialize a RIO mailbox resource
+.SH "SYNOPSIS"
+.HP \w'void\ rio_init_mbox_res('u
+.BI "void rio_init_mbox_res(struct\ resource\ *\ " "res" ", int\ " "start" ", int\ " "end" ");"
+.SH "ARGUMENTS"
+.PP
+\fIres\fR
+.RS 4
+resource struct
+.RE
+.PP
+\fIstart\fR
+.RS 4
+start of mailbox range
+.RE
+.PP
+\fIend\fR
+.RS 4
+end of mailbox range
+.RE
+.SH "DESCRIPTION"
+.PP
+This function is used to initialize the fields of a resource for use as a mailbox resource\&. It initializes a range of mailboxes using the start and end arguments\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

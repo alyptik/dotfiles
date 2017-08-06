@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: pci_request_region_exclusive
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_REQUEST_REGION_E" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_request_region_exclusive \- Reserved PCI I/O and memory resource
+.SH "SYNOPSIS"
+.HP \w'int\ pci_request_region_exclusive('u
+.BI "int pci_request_region_exclusive(struct\ pci_dev\ *\ " "pdev" ", int\ " "bar" ", const\ char\ *\ " "res_name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpdev\fR
+.RS 4
+PCI device whose resources are to be reserved
+.RE
+.PP
+\fIbar\fR
+.RS 4
+BAR to be reserved
+.RE
+.PP
+\fIres_name\fR
+.RS 4
+Name to be associated with resource\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Mark the PCI region associated with PCI device
+\fIpdev\fR
+BR
+\fIbar\fR
+as being reserved by owner
+\fIres_name\fR\&. Do not access any address inside the PCI regions unless this call returns successfully\&.
+.PP
+Returns 0 on success, or
+\fBEBUSY\fR
+on error\&. A warning message is also printed on failure\&.
+.PP
+The key difference that _exclusive makes it that userspace is explicitly not allowed to map the resource via /dev/mem or sysfs\&.
+.SH "COPYRIGHT"
+.br

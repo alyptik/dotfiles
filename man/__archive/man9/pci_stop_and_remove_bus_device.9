@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: pci_stop_and_remove_bus_device
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_STOP_AND_REMOVE_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_stop_and_remove_bus_device \- remove a PCI device and any children
+.SH "SYNOPSIS"
+.HP \w'void\ pci_stop_and_remove_bus_device('u
+.BI "void pci_stop_and_remove_bus_device(struct\ pci_dev\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the device to remove
+.RE
+.SH "DESCRIPTION"
+.PP
+Remove a PCI device from the device lists, informing the drivers that the device has been removed\&. We also remove any subordinate buses and children in a depth\-first manner\&.
+.PP
+For each device we remove, delete the device structure from the device lists, remove the /proc entry, and notify userspace (/sbin/hotplug)\&.
+.SH "COPYRIGHT"
+.br

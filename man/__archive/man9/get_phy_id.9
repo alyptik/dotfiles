@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: get_phy_id
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GET_PHY_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+get_phy_id \- reads the specified addr for its ID\&.
+.SH "SYNOPSIS"
+.HP \w'int\ get_phy_id('u
+.BI "int get_phy_id(struct\ mii_bus\ *\ " "bus" ", int\ " "addr" ", u32\ *\ " "phy_id" ", bool\ " "is_c45" ", struct\ phy_c45_device_ids\ *\ " "c45_ids" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbus\fR
+.RS 4
+the target MII bus
+.RE
+.PP
+\fIaddr\fR
+.RS 4
+PHY address on the MII bus
+.RE
+.PP
+\fIphy_id\fR
+.RS 4
+where to store the ID retrieved\&.
+.RE
+.PP
+\fIis_c45\fR
+.RS 4
+If true the PHY uses the 802\&.3 clause 45 protocol
+.RE
+.PP
+\fIc45_ids\fR
+.RS 4
+where to store the c45 ID information\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+In the case of a 802\&.3\-c22 PHY, reads the ID registers of the PHY at
+\fIaddr\fR
+on the
+\fIbus\fR, stores it in
+\fIphy_id\fR
+and returns zero on success\&.
+.PP
+In the case of a 802\&.3\-c45 PHY,
+\fBget_phy_c45_ids\fR
+is invoked, and its return value is in turn returned\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: pci_msi_create_irq_domain
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_MSI_CREATE_IRQ_D" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_msi_create_irq_domain \- Create a MSI interrupt domain
+.SH "SYNOPSIS"
+.HP \w'struct\ irq_domain\ *\ pci_msi_create_irq_domain('u
+.BI "struct irq_domain * pci_msi_create_irq_domain(struct\ fwnode_handle\ *\ " "fwnode" ", struct\ msi_domain_info\ *\ " "info" ", struct\ irq_domain\ *\ " "parent" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfwnode\fR
+.RS 4
+Optional fwnode of the interrupt controller
+.RE
+.PP
+\fIinfo\fR
+.RS 4
+MSI domain info
+.RE
+.PP
+\fIparent\fR
+.RS 4
+Parent irq domain
+.RE
+.SH "DESCRIPTION"
+.PP
+Updates the domain and chip ops and creates a MSI interrupt domain\&.
+.SH "RETURN"
+.PP
+A domain pointer or NULL in case of failure\&.
+.SH "COPYRIGHT"
+.br

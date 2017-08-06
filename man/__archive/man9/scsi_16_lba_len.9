@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: scsi_16_lba_len
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_16_LBA_LEN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_16_lba_len \- Get LBA and transfer length
+.SH "SYNOPSIS"
+.HP \w'void\ scsi_16_lba_len('u
+.BI "void scsi_16_lba_len(const\ u8\ *\ " "cdb" ", u64\ *\ " "plba" ", u32\ *\ " "plen" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcdb\fR
+.RS 4
+SCSI command to translate
+.RE
+.PP
+\fIplba\fR
+.RS 4
+the LBA
+.RE
+.PP
+\fIplen\fR
+.RS 4
+the transfer length
+.RE
+.SH "DESCRIPTION"
+.PP
+Calculate LBA and transfer length for 16\-byte commands\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

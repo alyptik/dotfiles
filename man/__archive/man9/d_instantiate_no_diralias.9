@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: d_instantiate_no_diralias
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "D_INSTANTIATE_NO_DIR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+d_instantiate_no_diralias \- instantiate a non\-aliased dentry
+.SH "SYNOPSIS"
+.HP \w'int\ d_instantiate_no_diralias('u
+.BI "int d_instantiate_no_diralias(struct\ dentry\ *\ " "entry" ", struct\ inode\ *\ " "inode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIentry\fR
+.RS 4
+dentry to complete
+.RE
+.PP
+\fIinode\fR
+.RS 4
+inode to attach to this dentry
+.RE
+.SH "DESCRIPTION"
+.PP
+Fill in inode information in the entry\&. If a directory alias is found, then return an error (and drop inode)\&. Together with
+\fBd_materialise_unique\fR
+this guarantees that a directory inode may never have more than one alias\&.
+.SH "COPYRIGHT"
+.br

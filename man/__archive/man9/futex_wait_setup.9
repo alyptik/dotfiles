@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: futex_wait_setup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FUTEX_WAIT_SETUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+futex_wait_setup \- Prepare to wait on a futex
+.SH "SYNOPSIS"
+.HP \w'int\ futex_wait_setup('u
+.BI "int futex_wait_setup(u32\ __user\ *\ " "uaddr" ", u32\ " "val" ", unsigned\ int\ " "flags" ", struct\ futex_q\ *\ " "q" ", struct\ futex_hash_bucket\ **\ " "hb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIuaddr\fR
+.RS 4
+the futex userspace address
+.RE
+.PP
+\fIval\fR
+.RS 4
+the expected value
+.RE
+.PP
+\fIflags\fR
+.RS 4
+futex flags (FLAGS_SHARED, etc\&.)
+.RE
+.PP
+\fIq\fR
+.RS 4
+the associated futex_q
+.RE
+.PP
+\fIhb\fR
+.RS 4
+storage for hash_bucket pointer to be returned to caller
+.RE
+.SH "DESCRIPTION"
+.PP
+Setup the futex_q and locate the hash_bucket\&. Get the futex value and compare it with the expected value\&. Handle atomic faults internally\&. Return with the hb lock held and a q\&.key reference on success, and unlocked with no q\&.key reference on failure\&.
+.SH "RETURN"
+.PP
+0 \- uaddr contains val and hb has been locked; <1 \- \-EFAULT or \-EWOULDBLOCK (uaddr does not contain val) and hb is unlocked
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

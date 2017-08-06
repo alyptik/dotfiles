@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: netif_dormant_on
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETIF_DORMANT_ON" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netif_dormant_on \- mark device as dormant\&.
+.SH "SYNOPSIS"
+.HP \w'void\ netif_dormant_on('u
+.BI "void netif_dormant_on(struct\ net_device\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+network device
+.RE
+.SH "DESCRIPTION"
+.PP
+Mark device as dormant (as per RFC2863)\&.
+.PP
+The dormant state indicates that the relevant interface is not actually in a condition to pass packets (i\&.e\&., it is not \*(Aqup\*(Aq) but is in a
+\(lqpending\(rq
+state, waiting for some external event\&. For
+\(lqon\- demand\(rq
+interfaces, this new state identifies the situation where the interface is waiting for events to place it in the up state\&.
+.SH "COPYRIGHT"
+.br

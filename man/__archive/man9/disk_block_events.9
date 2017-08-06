@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: disk_block_events
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DISK_BLOCK_EVENTS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+disk_block_events \- block and flush disk event checking
+.SH "SYNOPSIS"
+.HP \w'void\ disk_block_events('u
+.BI "void disk_block_events(struct\ gendisk\ *\ " "disk" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdisk\fR
+.RS 4
+disk to block events for
+.RE
+.SH "DESCRIPTION"
+.PP
+On return from this function, it is guaranteed that event checking isn\*(Aqt in progress and won\*(Aqt happen until unblocked by
+\fBdisk_unblock_events\fR\&. Events blocking is counted and the actual unblocking happens after the matching number of unblocks are done\&.
+.PP
+Note that this intentionally does not block event checking from
+\fBdisk_clear_events\fR\&.
+.SH "CONTEXT"
+.PP
+Might sleep\&.
+.SH "COPYRIGHT"
+.br

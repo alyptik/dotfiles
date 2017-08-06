@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: rio_set_device_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_SET_DEVICE_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_set_device_id \- Set the base/extended device id for a device
+.SH "SYNOPSIS"
+.HP \w'void\ rio_set_device_id('u
+.BI "void rio_set_device_id(struct\ rio_mport\ *\ " "port" ", u16\ " "destid" ", u8\ " "hopcount" ", u16\ " "did" ");"
+.SH "ARGUMENTS"
+.PP
+\fIport\fR
+.RS 4
+RIO master port
+.RE
+.PP
+\fIdestid\fR
+.RS 4
+Destination ID of device
+.RE
+.PP
+\fIhopcount\fR
+.RS 4
+Hopcount to device
+.RE
+.PP
+\fIdid\fR
+.RS 4
+Device ID value to be written
+.RE
+.SH "DESCRIPTION"
+.PP
+Writes the base/extended device id from a device\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

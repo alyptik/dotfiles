@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: eth_header_cache_update
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ETH_HEADER_CACHE_UPD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eth_header_cache_update \- update cache entry
+.SH "SYNOPSIS"
+.HP \w'void\ eth_header_cache_update('u
+.BI "void eth_header_cache_update(struct\ hh_cache\ *\ " "hh" ", const\ struct\ net_device\ *\ " "dev" ", const\ unsigned\ char\ *\ " "haddr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhh\fR
+.RS 4
+destination cache entry
+.RE
+.PP
+\fIdev\fR
+.RS 4
+network device
+.RE
+.PP
+\fIhaddr\fR
+.RS 4
+new hardware address
+.RE
+.SH "DESCRIPTION"
+.PP
+Called by Address Resolution module to notify changes in address\&.
+.SH "COPYRIGHT"
+.br

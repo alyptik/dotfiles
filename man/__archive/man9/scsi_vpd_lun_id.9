@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: scsi_vpd_lun_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_VPD_LUN_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_vpd_lun_id \- return a unique device identification
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_vpd_lun_id('u
+.BI "int scsi_vpd_lun_id(struct\ scsi_device\ *\ " "sdev" ", char\ *\ " "id" ", size_t\ " "id_len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+SCSI device
+.RE
+.PP
+\fIid\fR
+.RS 4
+buffer for the identification
+.RE
+.PP
+\fIid_len\fR
+.RS 4
+length of the buffer
+.RE
+.SH "DESCRIPTION"
+.PP
+Copies a unique device identification into
+\fIid\fR
+based on the information in the VPD page 0x83 of the device\&. The string will be formatted as a SCSI name string\&.
+.PP
+Returns the length of the identification or error on failure\&. If the identifier is longer than the supplied buffer the actual identifier length is returned and the buffer is not zero\-padded\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

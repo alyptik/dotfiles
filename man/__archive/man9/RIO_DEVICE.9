@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: RIO_DEVICE
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_DEVICE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+RIO_DEVICE \- macro used to describe a specific RIO device
+.SH "SYNOPSIS"
+.HP \w'RIO_DEVICE('u
+.BI "RIO_DEVICE(" "dev" ", " "ven" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the 16 bit RIO device ID
+.RE
+.PP
+\fIven\fR
+.RS 4
+the 16 bit RIO vendor ID
+.RE
+.SH "DESCRIPTION"
+.PP
+This macro is used to create a struct rio_device_id that matches a specific device\&. The assembly vendor and assembly device fields will be set to
+\fBRIO_ANY_ID\fR\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

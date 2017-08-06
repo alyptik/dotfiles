@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: ata_pack_xfermask
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_PACK_XFERMASK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_pack_xfermask \- Pack pio, mwdma and udma masks into xfer_mask
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ ata_pack_xfermask('u
+.BI "unsigned long ata_pack_xfermask(unsigned\ long\ " "pio_mask" ", unsigned\ long\ " "mwdma_mask" ", unsigned\ long\ " "udma_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpio_mask\fR
+.RS 4
+pio_mask
+.RE
+.PP
+\fImwdma_mask\fR
+.RS 4
+mwdma_mask
+.RE
+.PP
+\fIudma_mask\fR
+.RS 4
+udma_mask
+.RE
+.SH "DESCRIPTION"
+.PP
+Pack
+\fIpio_mask\fR,
+\fImwdma_mask\fR
+and
+\fIudma_mask\fR
+into a single unsigned int xfer_mask\&.
+.PP
+LOCKING: None\&.
+.SH "RETURN"
+.PP
+Packed xfer_mask\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

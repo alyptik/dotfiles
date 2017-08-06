@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: scsi_internal_device_unblock
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_INTERNAL_DEVICE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_internal_device_unblock \- resume a device after a block request
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_internal_device_unblock('u
+.BI "int scsi_internal_device_unblock(struct\ scsi_device\ *\ " "sdev" ", enum\ scsi_device_state\ " "new_state" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+device to resume
+.RE
+.PP
+\fInew_state\fR
+.RS 4
+state to set devices to after unblocking
+.RE
+.SH "DESCRIPTION"
+.PP
+Called by scsi lld\*(Aqs or the midlayer to restart the device queue for the previously suspended scsi device\&. Called from interrupt or normal process context\&.
+.PP
+Returns zero if successful or error if not\&.
+.SH "NOTES"
+.PP
+This routine transitions the device to the SDEV_RUNNING state or to one of the offline states (which must be a legal transition) allowing the midlayer to goose the queue for this device\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

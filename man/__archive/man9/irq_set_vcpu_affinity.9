@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: irq_set_vcpu_affinity
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_SET_VCPU_AFFINIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_set_vcpu_affinity \- Set vcpu affinity for the interrupt
+.SH "SYNOPSIS"
+.HP \w'int\ irq_set_vcpu_affinity('u
+.BI "int irq_set_vcpu_affinity(unsigned\ int\ " "irq" ", void\ *\ " "vcpu_info" ");"
+.SH "ARGUMENTS"
+.PP
+\fIirq\fR
+.RS 4
+interrupt number to set affinity
+.RE
+.PP
+\fIvcpu_info\fR
+.RS 4
+vCPU specific data
+.RE
+.SH "DESCRIPTION"
+.PP
+This function uses the vCPU specific data to set the vCPU affinity for an irq\&. The vCPU specific data is passed from outside, such as KVM\&. One example code path is as below: KVM \-> IOMMU \->
+\fBirq_set_vcpu_affinity\fR\&.
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

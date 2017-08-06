@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: rio_enable_rx_tx_port
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_ENABLE_RX_TX_POR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_enable_rx_tx_port \- enable input receiver and output transmitter of given port
+.SH "SYNOPSIS"
+.HP \w'int\ rio_enable_rx_tx_port('u
+.BI "int rio_enable_rx_tx_port(struct\ rio_mport\ *\ " "port" ", int\ " "local" ", u16\ " "destid" ", u8\ " "hopcount" ", u8\ " "port_num" ");"
+.SH "ARGUMENTS"
+.PP
+\fIport\fR
+.RS 4
+Master port associated with the RIO network
+.RE
+.PP
+\fIlocal\fR
+.RS 4
+local=1 select local port otherwise a far device is reached
+.RE
+.PP
+\fIdestid\fR
+.RS 4
+Destination ID of the device to check host bit
+.RE
+.PP
+\fIhopcount\fR
+.RS 4
+Number of hops to reach the target
+.RE
+.PP
+\fIport_num\fR
+.RS 4
+Port (\-number on switch) to enable on a far end device
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 or 1 from on General Control Command and Status Register (EXT_PTR+0x3C)
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

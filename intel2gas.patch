@@ -1,0 +1,24 @@
+diff --git a/intel2gas.cc b/intel2gas.cc
+index 68f0610..78eb63e 100644
+--- a/intel2gas.cc
++++ b/intel2gas.cc
+@@ -883,6 +883,7 @@ static int main_parse_loop()
+       comments--;
+     }
+   }
++
+   return 0;
+ }
+ 
+@@ -910,5 +911,10 @@ int main(int argc, char *argv[])
+     return 3;
+   }
+ 
+-  return main_parse_loop();
++  main_parse_loop();
++
++  fclose(stdout);
++  fclose(stdin);
++
++  return 0;
+ }

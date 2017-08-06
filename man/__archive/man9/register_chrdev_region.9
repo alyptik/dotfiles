@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: register_chrdev_region
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Char devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGISTER_CHRDEV_REGI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Char devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+register_chrdev_region \- register a range of device numbers
+.SH "SYNOPSIS"
+.HP \w'int\ register_chrdev_region('u
+.BI "int register_chrdev_region(dev_t\ " "from" ", unsigned\ " "count" ", const\ char\ *\ " "name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfrom\fR
+.RS 4
+the first in the desired range of device numbers; must include the major number\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+the number of consecutive device numbers required
+.RE
+.PP
+\fIname\fR
+.RS 4
+the name of the device or driver\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Return value is zero on success, a negative error code on failure\&.
+.SH "COPYRIGHT"
+.br

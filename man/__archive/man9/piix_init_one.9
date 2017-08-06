@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: piix_init_one
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: ata_piix Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PIIX_INIT_ONE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "ata_piix Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+piix_init_one \- Register PIIX ATA PCI device with kernel services
+.SH "SYNOPSIS"
+.HP \w'int\ piix_init_one('u
+.BI "int piix_init_one(struct\ pci_dev\ *\ " "pdev" ", const\ struct\ pci_device_id\ *\ " "ent" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpdev\fR
+.RS 4
+PCI device to register
+.RE
+.PP
+\fIent\fR
+.RS 4
+Entry in piix_pci_tbl matching with
+\fIpdev\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Called from kernel PCI layer\&. We probe for combined mode (sigh), and then hand over control to libata, for it to do the rest\&.
+.PP
+LOCKING: Inherited from PCI layer (may sleep)\&.
+.SH "RETURN"
+.PP
+Zero on success, or \-ERRNO value\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: futex_wait_queue_me
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FUTEX_WAIT_QUEUE_ME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+futex_wait_queue_me \- \fBqueue_me\fR and wait for wakeup, timeout, or signal
+.SH "SYNOPSIS"
+.HP \w'void\ futex_wait_queue_me('u
+.BI "void futex_wait_queue_me(struct\ futex_hash_bucket\ *\ " "hb" ", struct\ futex_q\ *\ " "q" ", struct\ hrtimer_sleeper\ *\ " "timeout" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhb\fR
+.RS 4
+the futex hash bucket, must be locked by the caller
+.RE
+.PP
+\fIq\fR
+.RS 4
+the futex_q to queue up on
+.RE
+.PP
+\fItimeout\fR
+.RS 4
+the prepared hrtimer_sleeper, or null for no timeout
+.RE
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: __bitmap_parse
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__BITMAP_PARSE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__bitmap_parse \- convert an ASCII hex string into a bitmap\&.
+.SH "SYNOPSIS"
+.HP \w'int\ __bitmap_parse('u
+.BI "int __bitmap_parse(const\ char\ *\ " "buf" ", unsigned\ int\ " "buflen" ", int\ " "is_user" ", unsigned\ long\ *\ " "maskp" ", int\ " "nmaskbits" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbuf\fR
+.RS 4
+pointer to buffer containing string\&.
+.RE
+.PP
+\fIbuflen\fR
+.RS 4
+buffer size in bytes\&. If string is smaller than this then it must be terminated with a \e0\&.
+.RE
+.PP
+\fIis_user\fR
+.RS 4
+location of buffer, 0 indicates kernel space
+.RE
+.PP
+\fImaskp\fR
+.RS 4
+pointer to bitmap array that will contain result\&.
+.RE
+.PP
+\fInmaskbits\fR
+.RS 4
+size of bitmap, in bits\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Commas group hex digits into chunks\&. Each chunk defines exactly 32 bits of the resultant bitmask\&. No chunk may specify a value larger than 32 bits (\fB\-EOVERFLOW\fR), and if a chunk specifies a smaller value then leading 0\-bits are prepended\&.
+\fB\-EINVAL\fR
+is returned for illegal characters and for grouping errors such as
+\(lq1,,5\(rq,
+\(lq,44\(rq,
+\(lq,\(rq
+and ""\&. Leading and trailing whitespace accepted, but not embedded whitespace\&.
+.SH "COPYRIGHT"
+.br

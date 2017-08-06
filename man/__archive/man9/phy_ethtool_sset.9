@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: phy_ethtool_sset
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_ETHTOOL_SSET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_ethtool_sset \- generic ethtool sset function, handles all the details
+.SH "SYNOPSIS"
+.HP \w'int\ phy_ethtool_sset('u
+.BI "int phy_ethtool_sset(struct\ phy_device\ *\ " "phydev" ", struct\ ethtool_cmd\ *\ " "cmd" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+target phy_device struct
+.RE
+.PP
+\fIcmd\fR
+.RS 4
+ethtool_cmd
+.RE
+.SH "DESCRIPTION"
+.PP
+A few notes about parameter checking: \- We don\*(Aqt set port or transceiver, so we don\*(Aqt care what they were set to\&. \-
+\fBphy_start_aneg\fR
+will make sure forced settings are sane, and choose the next best ones from the ones selected, so we don\*(Aqt care if ethtool tries to give us bad values\&.
+.SH "COPYRIGHT"
+.br

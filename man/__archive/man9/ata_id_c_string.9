@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: ata_id_c_string
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_ID_C_STRING" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_id_c_string \- Convert IDENTIFY DEVICE page into C string
+.SH "SYNOPSIS"
+.HP \w'void\ ata_id_c_string('u
+.BI "void ata_id_c_string(const\ u16\ *\ " "id" ", unsigned\ char\ *\ " "s" ", unsigned\ int\ " "ofs" ", unsigned\ int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIid\fR
+.RS 4
+IDENTIFY DEVICE results we will examine
+.RE
+.PP
+\fIs\fR
+.RS 4
+string into which data is output
+.RE
+.PP
+\fIofs\fR
+.RS 4
+offset into identify device page
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length of string to return\&. must be an odd number\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function is identical to ata_id_string except that it trims trailing spaces and terminates the resulting string with null\&.
+\fIlen\fR
+must be actual maximum length (even number) + 1\&.
+.PP
+LOCKING: caller\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

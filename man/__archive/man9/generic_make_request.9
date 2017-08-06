@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: generic_make_request
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GENERIC_MAKE_REQUEST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+generic_make_request \- hand a buffer to its device driver for I/O
+.SH "SYNOPSIS"
+.HP \w'blk_qc_t\ generic_make_request('u
+.BI "blk_qc_t generic_make_request(struct\ bio\ *\ " "bio" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbio\fR
+.RS 4
+The bio describing the location in memory and on the device\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBgeneric_make_request\fR
+is used to make I/O requests of block devices\&. It is passed a
+struct bio, which describes the I/O that needs to be done\&.
+.PP
+\fBgeneric_make_request\fR
+does not return any status\&. The success/failure status of the request, along with notification of completion, is delivered asynchronously through the bio\->bi_end_io function described (one day) else where\&.
+.PP
+The caller of generic_make_request must make sure that bi_io_vec are set to describe the memory buffer, and that bi_dev and bi_sector are set to describe the device address, and the bi_end_io and optionally bi_private are set to describe how completion notification should be signaled\&.
+.PP
+generic_make_request and the drivers it calls may use bi_next if this bio happens to be merged with someone else, and may resubmit the bio to a lower device by calling into generic_make_request recursively, which means the bio should NOT be touched after the call to \->make_request_fn\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: usb_function_deactivate
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "USB_FUNCTION_DEACTIV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+usb_function_deactivate \- prevent function and gadget enumeration
+.SH "SYNOPSIS"
+.HP \w'int\ usb_function_deactivate('u
+.BI "int usb_function_deactivate(struct\ usb_function\ *\ " "function" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfunction\fR
+.RS 4
+the function that isn\*(Aqt yet ready to respond
+.RE
+.SH "DESCRIPTION"
+.PP
+Blocks response of the gadget driver to host enumeration by preventing the data line pullup from being activated\&. This is normally called during
+\fIbind\fR() processing to change from the initial
+\(lqready to respond\(rq
+state, or when a required resource becomes available\&.
+.PP
+For example, drivers that serve as a passthrough to a userspace daemon can block enumeration unless that daemon (such as an OBEX, MTP, or print server) is ready to handle host requests\&.
+.PP
+Not all systems support software control of their USB peripheral data pullups\&.
+.PP
+Returns zero on success, else negative errno\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

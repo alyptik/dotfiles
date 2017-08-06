@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: dev_loopback_xmit
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEV_LOOPBACK_XMIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dev_loopback_xmit \- loop back \fIskb\fR
+.SH "SYNOPSIS"
+.HP \w'int\ dev_loopback_xmit('u
+.BI "int dev_loopback_xmit(struct\ net\ *\ " "net" ", struct\ sock\ *\ " "sk" ", struct\ sk_buff\ *\ " "skb" ");"
+.SH "ARGUMENTS"
+.PP
+\fInet\fR
+.RS 4
+network namespace this loopback is happening in
+.RE
+.PP
+\fIsk\fR
+.RS 4
+sk needed to be a netfilter okfn
+.RE
+.PP
+\fIskb\fR
+.RS 4
+buffer to transmit
+.RE
+.SH "COPYRIGHT"
+.br

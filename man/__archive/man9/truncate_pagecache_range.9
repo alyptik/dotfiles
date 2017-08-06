@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: truncate_pagecache_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "TRUNCATE_PAGECACHE_R" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+truncate_pagecache_range \- unmap and remove pagecache that is hole\-punched
+.SH "SYNOPSIS"
+.HP \w'void\ truncate_pagecache_range('u
+.BI "void truncate_pagecache_range(struct\ inode\ *\ " "inode" ", loff_t\ " "lstart" ", loff_t\ " "lend" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+inode
+.RE
+.PP
+\fIlstart\fR
+.RS 4
+offset of beginning of hole
+.RE
+.PP
+\fIlend\fR
+.RS 4
+offset of last byte of hole
+.RE
+.SH "DESCRIPTION"
+.PP
+This function should typically be called before the filesystem releases resources associated with the freed range (eg\&. deallocates blocks)\&. This way, pagecache will always stay logically coherent with on\-disk format, and the filesystem would not have to deal with situations such as writepage being called for a page that has already had its underlying blocks deallocated\&.
+.SH "COPYRIGHT"
+.br

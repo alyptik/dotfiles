@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: nand_write
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_WRITE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_write \- [MTD Interface] NAND write with ECC
+.SH "SYNOPSIS"
+.HP \w'int\ nand_write('u
+.BI "int nand_write(struct\ mtd_info\ *\ " "mtd" ", loff_t\ " "to" ", size_t\ " "len" ", size_t\ *\ " "retlen" ", const\ uint8_t\ *\ " "buf" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+MTD device structure
+.RE
+.PP
+\fIto\fR
+.RS 4
+offset to write to
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of bytes to write
+.RE
+.PP
+\fIretlen\fR
+.RS 4
+pointer to variable to store the number of written bytes
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+the data to write
+.RE
+.SH "DESCRIPTION"
+.PP
+NAND write with ECC\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

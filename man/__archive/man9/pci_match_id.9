@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: pci_match_id
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_MATCH_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_match_id \- See if a pci device matches a given pci_id table
+.SH "SYNOPSIS"
+.HP \w'const\ struct\ pci_device_id\ *\ pci_match_id('u
+.BI "const struct pci_device_id * pci_match_id(const\ struct\ pci_device_id\ *\ " "ids" ", struct\ pci_dev\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIids\fR
+.RS 4
+array of PCI device id structures to search in
+.RE
+.PP
+\fIdev\fR
+.RS 4
+the PCI device structure to match against\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Used by a driver to check whether a PCI device present in the system is in its list of supported devices\&. Returns the matching pci_device_id structure or
+\fBNULL\fR
+if there is no match\&.
+.PP
+Deprecated, don\*(Aqt use this as it will not catch any dynamic ids that a driver might want to check for\&.
+.SH "COPYRIGHT"
+.br

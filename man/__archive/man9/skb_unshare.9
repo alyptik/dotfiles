@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: skb_unshare
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_UNSHARE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_unshare \- make a copy of a shared buffer
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ skb_unshare('u
+.BI "struct sk_buff * skb_unshare(struct\ sk_buff\ *\ " "skb" ", gfp_t\ " "pri" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to check
+.RE
+.PP
+\fIpri\fR
+.RS 4
+priority for memory allocation
+.RE
+.SH "DESCRIPTION"
+.PP
+If the socket buffer is a clone then this function creates a new copy of the data, drops a reference count on the old copy and returns the new copy with the reference count at 1\&. If the buffer is not a clone the original buffer is returned\&. When called with a spinlock held or from interrupt state
+\fIpri\fR
+must be
+\fBGFP_ATOMIC\fR
+.PP
+\fBNULL\fR
+is returned on a memory allocation failure\&.
+.SH "COPYRIGHT"
+.br

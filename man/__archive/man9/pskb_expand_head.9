@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: pskb_expand_head
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PSKB_EXPAND_HEAD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pskb_expand_head \- reallocate header of sk_buff
+.SH "SYNOPSIS"
+.HP \w'int\ pskb_expand_head('u
+.BI "int pskb_expand_head(struct\ sk_buff\ *\ " "skb" ", int\ " "nhead" ", int\ " "ntail" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to reallocate
+.RE
+.PP
+\fInhead\fR
+.RS 4
+room to add at head
+.RE
+.PP
+\fIntail\fR
+.RS 4
+room to add at tail
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation priority
+.RE
+.SH "DESCRIPTION"
+.PP
+Expands (or creates identical copy, if
+\fInhead\fR
+and
+\fIntail\fR
+are zero) header of
+\fIskb\fR\&.
+sk_buff
+itself is not changed\&.
+sk_buff
+MUST have reference count of 1\&. Returns zero in the case of success or error, if expansion failed\&. In the last case,
+sk_buff
+is not changed\&.
+.PP
+All the pointers pointing into skb header may change and must be reloaded after call to this function\&.
+.SH "COPYRIGHT"
+.br

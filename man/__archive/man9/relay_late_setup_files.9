@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: relay_late_setup_files
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: relay interface support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RELAY_LATE_SETUP_FIL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "relay interface support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+relay_late_setup_files \- triggers file creation
+.SH "SYNOPSIS"
+.HP \w'int\ relay_late_setup_files('u
+.BI "int relay_late_setup_files(struct\ rchan\ *\ " "chan" ", const\ char\ *\ " "base_filename" ", struct\ dentry\ *\ " "parent" ");"
+.SH "ARGUMENTS"
+.PP
+\fIchan\fR
+.RS 4
+channel to operate on
+.RE
+.PP
+\fIbase_filename\fR
+.RS 4
+base name of files to create
+.RE
+.PP
+\fIparent\fR
+.RS 4
+dentry of parent directory,
+\fBNULL\fR
+for root directory
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 if successful, non\-zero otherwise\&.
+.PP
+Use to setup files for a previously buffer\-only channel created by
+\fBrelay_open\fR
+with a NULL parent dentry\&.
+.PP
+For example, this is useful for perfomring early tracing in kernel, before VFS is up and then exposing the early results once the dentry is available\&.
+.SH "COPYRIGHT"
+.br

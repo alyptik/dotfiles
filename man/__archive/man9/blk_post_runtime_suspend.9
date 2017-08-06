@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: blk_post_runtime_suspend
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_POST_RUNTIME_SUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_post_runtime_suspend \- Post runtime suspend processing
+.SH "SYNOPSIS"
+.HP \w'void\ blk_post_runtime_suspend('u
+.BI "void blk_post_runtime_suspend(struct\ request_queue\ *\ " "q" ", int\ " "err" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the queue of the device
+.RE
+.PP
+\fIerr\fR
+.RS 4
+return value of the device\*(Aqs runtime_suspend function
+.RE
+.SH "DESCRIPTION"
+.PP
+Update the queue\*(Aqs runtime status according to the return value of the device\*(Aqs runtime suspend function and mark last busy for the device so that PM core will try to auto suspend the device at a later time\&.
+.PP
+This function should be called near the end of the device\*(Aqs runtime_suspend callback\&.
+.SH "COPYRIGHT"
+.br

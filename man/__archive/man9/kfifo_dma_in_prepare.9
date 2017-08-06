@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: kfifo_dma_in_prepare
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: FIFO Buffer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KFIFO_DMA_IN_PREPARE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "FIFO Buffer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kfifo_dma_in_prepare \- setup a scatterlist for DMA input
+.SH "SYNOPSIS"
+.HP \w'kfifo_dma_in_prepare('u
+.BI "kfifo_dma_in_prepare(" "fifo" ", " "sgl" ", " "nents" ", " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfifo\fR
+.RS 4
+address of the fifo to be used
+.RE
+.PP
+\fIsgl\fR
+.RS 4
+pointer to the scatterlist array
+.RE
+.PP
+\fInents\fR
+.RS 4
+number of entries in the scatterlist array
+.RE
+.PP
+\fIlen\fR
+.RS 4
+number of elements to transfer
+.RE
+.SH "DESCRIPTION"
+.PP
+This macro fills a scatterlist for DMA input\&. It returns the number entries in the scatterlist array\&.
+.PP
+Note that with only one concurrent reader and one concurrent writer, you don\*(Aqt need extra locking to use these macros\&.
+.SH "COPYRIGHT"
+.br

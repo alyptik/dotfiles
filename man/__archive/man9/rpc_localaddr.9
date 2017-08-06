@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: rpc_localaddr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RPC_LOCALADDR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rpc_localaddr \- discover local endpoint address for an RPC client
+.SH "SYNOPSIS"
+.HP \w'int\ rpc_localaddr('u
+.BI "int rpc_localaddr(struct\ rpc_clnt\ *\ " "clnt" ", struct\ sockaddr\ *\ " "buf" ", size_t\ " "buflen" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclnt\fR
+.RS 4
+RPC client structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+target buffer
+.RE
+.PP
+\fIbuflen\fR
+.RS 4
+size of target buffer, in bytes
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns zero and fills in
+\(lqbuf\(rq
+and
+\(lqbuflen\(rq
+if successful; otherwise, a negative errno is returned\&.
+.PP
+This works even if the underlying transport is not currently connected, or if the upper layer never previously provided a source address\&.
+.PP
+The result of this function call is transient: multiple calls in succession may give different results, depending on how local networking configuration changes over time\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: skb_find_text
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_FIND_TEXT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_find_text \- Find a text pattern in skb data
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ skb_find_text('u
+.BI "unsigned int skb_find_text(struct\ sk_buff\ *\ " "skb" ", unsigned\ int\ " "from" ", unsigned\ int\ " "to" ", struct\ ts_config\ *\ " "config" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+the buffer to look in
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+search offset
+.RE
+.PP
+\fIto\fR
+.RS 4
+search limit
+.RE
+.PP
+\fIconfig\fR
+.RS 4
+textsearch configuration
+.RE
+.SH "DESCRIPTION"
+.PP
+Finds a pattern in the skb data according to the specified textsearch configuration\&. Use
+\fBtextsearch_next\fR
+to retrieve subsequent occurrences of the pattern\&. Returns the offset to the first occurrence or UINT_MAX if no match was found\&.
+.SH "COPYRIGHT"
+.br

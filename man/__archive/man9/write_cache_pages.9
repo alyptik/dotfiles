@@ -1,0 +1,69 @@
+'\" t
+.\"     Title: write_cache_pages
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WRITE_CACHE_PAGES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+write_cache_pages \- walk the list of dirty pages of the given address space and write all of them\&.
+.SH "SYNOPSIS"
+.HP \w'int\ write_cache_pages('u
+.BI "int write_cache_pages(struct\ address_space\ *\ " "mapping" ", struct\ writeback_control\ *\ " "wbc" ", writepage_t\ " "writepage" ", void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+address space structure to write
+.RE
+.PP
+\fIwbc\fR
+.RS 4
+subtract the number of written pages from *\fIwbc\fR\->nr_to_write
+.RE
+.PP
+\fIwritepage\fR
+.RS 4
+function called for each page
+.RE
+.PP
+\fIdata\fR
+.RS 4
+data passed to writepage function
+.RE
+.SH "DESCRIPTION"
+.PP
+If a page is already under I/O,
+\fBwrite_cache_pages\fR
+skips it, even if it\*(Aqs dirty\&. This is desirable behaviour for memory\-cleaning writeback, but it is INCORRECT for data\-integrity system calls such as
+\fBfsync\fR\&.
+\fBfsync\fR
+and
+\fBmsync\fR
+need to guarantee that all the data which was dirty at the time the call was made get new I/O started against them\&. If wbc\->sync_mode is WB_SYNC_ALL then we were called for data integrity and we must wait for existing IO to complete\&.
+.PP
+To avoid livelocks (when other process dirties new pages), we first tag pages which should be written back with TOWRITE tag and only then start writing them\&. For data\-integrity sync we have to be careful so that we do not miss some pages (e\&.g\&., because some other process has cleared TOWRITE tag we set)\&. The rule we follow is that TOWRITE tag can be cleared only by the process clearing the DIRTY tag (and submitting the page for IO)\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: block_invalidatepage
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLOCK_INVALIDATEPAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+block_invalidatepage \- invalidate part or all of a buffer\-backed page
+.SH "SYNOPSIS"
+.HP \w'void\ block_invalidatepage('u
+.BI "void block_invalidatepage(struct\ page\ *\ " "page" ", unsigned\ int\ " "offset" ", unsigned\ int\ " "length" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpage\fR
+.RS 4
+the page which is affected
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+start of the range to invalidate
+.RE
+.PP
+\fIlength\fR
+.RS 4
+length of the range to invalidate
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBblock_invalidatepage\fR
+is called when all or part of the page has become invalidated by a truncate operation\&.
+.PP
+\fBblock_invalidatepage\fR
+does not have to release all buffers, but it must ensure that no dirty buffer is left outside
+\fIoffset\fR
+and that no I/O is underway against any of the blocks which are outside the truncation point\&. Because the caller is about to free (and possibly reuse) those blocks on\-disk\&.
+.SH "COPYRIGHT"
+.br

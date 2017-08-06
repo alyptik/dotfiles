@@ -1,0 +1,107 @@
+'\" t
+.\"     Title: struct usb_composite_dev
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_COMPOSITE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_composite_dev \- represents one composite usb gadget
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_composite_dev {
+  struct usb_gadget * gadget;
+  struct usb_request * req;
+  struct usb_request * os_desc_req;
+  struct usb_configuration * config;
+  u8 qw_sign[OS_STRING_QW_SIGN_LEN];
+  u8 b_vendor_code;
+  struct usb_configuration * os_desc_config;
+  unsigned int use_os_string:1;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+gadget
+.RS 4
+read\-only, abstracts the gadget\*(Aqs usb peripheral controller
+.RE
+.PP
+req
+.RS 4
+used for control responses; buffer is pre\-allocated
+.RE
+.PP
+os_desc_req
+.RS 4
+used for OS descriptors responses; buffer is pre\-allocated
+.RE
+.PP
+config
+.RS 4
+the currently active configuration
+.RE
+.PP
+qw_sign[OS_STRING_QW_SIGN_LEN]
+.RS 4
+qwSignature part of the OS string
+.RE
+.PP
+b_vendor_code
+.RS 4
+bMS_VendorCode part of the OS string
+.RE
+.PP
+os_desc_config
+.RS 4
+the configuration to be used with OS descriptors
+.RE
+.PP
+use_os_string
+.RS 4
+false by default, interested gadgets set it
+.RE
+.SH "DESCRIPTION"
+.PP
+One of these devices is allocated and initialized before the associated device driver\*(Aqs
+\fBbind\fR
+is called\&.
+.PP
+OPEN ISSUE: it appears that some WUSB devices will need to be built by combining a normal (wired) gadget with a wireless one\&. This revision of the gadget framework should probably try to make sure doing that won\*(Aqt hurt too much\&.
+.PP
+One notion for how to handle Wireless USB devices involves: (a) a second gadget here, discovery mechanism TBD, but likely needing separate
+\(lqregister/unregister WUSB gadget\(rq
+calls; (b) updates to usb_gadget to include flags
+\(lqis it wireless\(rq,
+\(lqis it wired\(rq, plus (presumably in a wrapper structure) bandgroup and PHY info; (c) presumably a wireless_ep wrapping a usb_ep, and reporting wireless\-specific parameters like maxburst and maxsequence; (d) configurations that are specific to wireless links; (e) function drivers that understand wireless configs and will support wireless for (additional) function instances; (f) a function to support association setup (like CBAF), not necessarily requiring a wireless adapter; (g) composite device setup that can create one or more wireless configs, including appropriate association setup support; (h) more, TBD\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

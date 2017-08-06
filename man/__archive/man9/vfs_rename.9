@@ -1,0 +1,84 @@
+'\" t
+.\"     Title: vfs_rename
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VFS_RENAME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vfs_rename \- rename a filesystem object
+.SH "SYNOPSIS"
+.HP \w'int\ vfs_rename('u
+.BI "int vfs_rename(struct\ inode\ *\ " "old_dir" ", struct\ dentry\ *\ " "old_dentry" ", struct\ inode\ *\ " "new_dir" ", struct\ dentry\ *\ " "new_dentry" ", struct\ inode\ **\ " "delegated_inode" ", unsigned\ int\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIold_dir\fR
+.RS 4
+parent of source
+.RE
+.PP
+\fIold_dentry\fR
+.RS 4
+source
+.RE
+.PP
+\fInew_dir\fR
+.RS 4
+parent of destination
+.RE
+.PP
+\fInew_dentry\fR
+.RS 4
+destination
+.RE
+.PP
+\fIdelegated_inode\fR
+.RS 4
+returns an inode needing a delegation break
+.RE
+.PP
+\fIflags\fR
+.RS 4
+rename flags
+.RE
+.SH "DESCRIPTION"
+.PP
+The caller must hold multiple mutexes\-\-see
+\fBlock_rename\fR)\&.
+.PP
+If vfs_rename discovers a delegation in need of breaking at either the source or destination, it will return \-EWOULDBLOCK and return a reference to the inode in delegated_inode\&. The caller should then break the delegation and retry\&. Because breaking a delegation may take a long time, the caller should drop all locks before doing so\&.
+.PP
+Alternatively, a caller may pass NULL for delegated_inode\&. This may be appropriate for callers that expect the underlying filesystem not to be NFS exported\&.
+.PP
+The worst of all namespace operations \- renaming directory\&.
+\(lqPerverted\(rq
+doesn\*(Aqt even start to describe it\&. Somebody in UCB had a heck of a trip\&.\&.\&. Problems: a) we can get into loop creation\&. b) race potential \- two innocent renames can create a loop together\&. That\*(Aqs where 4\&.4 screws up\&. Current fix: serialization on sb\->s_vfs_rename_mutex\&. We might be more accurate, but that\*(Aqs another story\&. c) we have to lock _four_ objects \- parents and victim (if it exists), and source (if it is not a directory)\&. And that \- after we got \->i_mutex on parents (until then we don\*(Aqt know whether the target exists)\&. Solution: try to be smart with locking order for inodes\&. We rely on the fact that tree topology may change only under \->s_vfs_rename_mutex _and_ that parent of the object we move will be locked\&. Thus we can rank directories by the tree (ancestors first) and rank all non\-directories after them\&. That works since everybody except rename does
+\(lqlock parent, lookup, lock child\(rq
+and rename is under \->s_vfs_rename_mutex\&. HOWEVER, it relies on the assumption that any object with \->\fBlookup\fR
+has no more than 1 dentry\&. If
+\(lqhybrid\(rq
+objects will ever appear, we\*(Aqd better make sure that there\*(Aqs no link(2) for them\&. d) conversion from fhandle to dentry may come in the wrong moment \- when we are removing the target\&. Solution: we will have to grab \->i_mutex in the fhandle_to_dentry code\&. [FIXME \- current nfsfh\&.c relies on \->i_mutex on parents, which works but leads to some truly excessive locking]\&.
+.SH "COPYRIGHT"
+.br

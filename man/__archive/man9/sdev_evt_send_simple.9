@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: sdev_evt_send_simple
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SDEV_EVT_SEND_SIMPLE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sdev_evt_send_simple \- send asserted event to uevent thread
+.SH "SYNOPSIS"
+.HP \w'void\ sdev_evt_send_simple('u
+.BI "void sdev_evt_send_simple(struct\ scsi_device\ *\ " "sdev" ", enum\ scsi_device_event\ " "evt_type" ", gfp_t\ " "gfpflags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+scsi_device event occurred on
+.RE
+.PP
+\fIevt_type\fR
+.RS 4
+type of event to send
+.RE
+.PP
+\fIgfpflags\fR
+.RS 4
+GFP flags for allocation
+.RE
+.SH "DESCRIPTION"
+.PP
+Assert scsi device event asynchronously, given an event type\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

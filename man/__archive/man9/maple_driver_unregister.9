@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: maple_driver_unregister
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Busses
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MAPLE_DRIVER_UNREGIS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Busses"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+maple_driver_unregister \- unregister a maple driver\&.
+.SH "SYNOPSIS"
+.HP \w'void\ maple_driver_unregister('u
+.BI "void maple_driver_unregister(struct\ maple_driver\ *\ " "drv" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdrv\fR
+.RS 4
+maple driver to unregister\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Cleans up after
+\fBmaple_driver_register\fR\&. To be invoked in the exit path of any module drivers\&.
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

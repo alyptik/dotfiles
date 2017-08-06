@@ -1,0 +1,85 @@
+'\" t
+.\"     Title: bitmap_pos_to_ord
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_POS_TO_ORD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_pos_to_ord \- find ordinal of set bit at given position in bitmap
+.SH "SYNOPSIS"
+.HP \w'int\ bitmap_pos_to_ord('u
+.BI "int bitmap_pos_to_ord(const\ unsigned\ long\ *\ " "buf" ", unsigned\ int\ " "pos" ", unsigned\ int\ " "nbits" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbuf\fR
+.RS 4
+pointer to a bitmap
+.RE
+.PP
+\fIpos\fR
+.RS 4
+a bit position in
+\fIbuf\fR
+(0 <=
+\fIpos\fR
+<
+\fInbits\fR)
+.RE
+.PP
+\fInbits\fR
+.RS 4
+number of valid bit positions in
+\fIbuf\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Map the bit at position
+\fIpos\fR
+in
+\fIbuf\fR
+(of length
+\fInbits\fR) to the ordinal of which set bit it is\&. If it is not set or if
+\fIpos\fR
+is not a valid bit position, map to \-1\&.
+.PP
+If for example, just bits 4 through 7 are set in
+\fIbuf\fR, then
+\fIpos\fR
+values 4 through 7 will get mapped to 0 through 3, respectively, and other
+\fIpos\fR
+values will get mapped to \-1\&. When
+\fIpos\fR
+value 7 gets mapped to (returns)
+\fIord\fR
+value 3 in this example, that means that bit 7 is the 3rd (starting with 0th) set bit in
+\fIbuf\fR\&.
+.PP
+The bit positions 0 through
+\fIbits\fR
+are valid positions in
+\fIbuf\fR\&.
+.SH "COPYRIGHT"
+.br

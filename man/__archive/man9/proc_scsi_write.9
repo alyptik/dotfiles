@@ -1,0 +1,80 @@
+'\" t
+.\"     Title: proc_scsi_write
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PROC_SCSI_WRITE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+proc_scsi_write \- handle writes to /proc/scsi/scsi
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ proc_scsi_write('u
+.BI "ssize_t proc_scsi_write(struct\ file\ *\ " "file" ", const\ char\ __user\ *\ " "buf" ", size_t\ " "length" ", loff_t\ *\ " "ppos" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfile\fR
+.RS 4
+not used
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+buffer to write
+.RE
+.PP
+\fIlength\fR
+.RS 4
+length of buf, at most PAGE_SIZE
+.RE
+.PP
+\fIppos\fR
+.RS 4
+not used
+.RE
+.SH "DESCRIPTION"
+.PP
+this provides a legacy mechanism to add or remove devices by Host, Channel, ID, and Lun\&. To use,
+\(lqecho \*(Aqscsi add\-single\-device 0 1 2 3\*(Aq > /proc/scsi/scsi\(rq
+or
+\(lqecho \*(Aqscsi remove\-single\-device 0 1 2 3\*(Aq > /proc/scsi/scsi\(rq
+with
+\(lq0 1 2 3\(rq
+replaced by the Host, Channel, Id, and Lun\&.
+.SH "NOTE"
+.PP
+this seems to be aimed at parallel SCSI\&. Most modern busses (USB, SATA, Firewire, Fibre Channel, etc) dynamically assign these values to provide a unique identifier and nothing more\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

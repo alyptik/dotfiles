@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: __mdiobus_register
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__MDIOBUS_REGISTER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__mdiobus_register \- bring up all the PHYs on a given bus and attach them to bus
+.SH "SYNOPSIS"
+.HP \w'int\ __mdiobus_register('u
+.BI "int __mdiobus_register(struct\ mii_bus\ *\ " "bus" ", struct\ module\ *\ " "owner" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbus\fR
+.RS 4
+target mii_bus
+.RE
+.PP
+\fIowner\fR
+.RS 4
+module containing bus accessor functions
+.RE
+.SH "DESCRIPTION"
+.PP
+Called by a bus driver to bring up all the PHYs on a given bus, and attach them to the bus\&. Drivers should use
+\fBmdiobus_register\fR
+rather than
+\fB__mdiobus_register\fR
+unless they need to pass a specific owner module\&. MDIO devices which are not PHYs will not be brought up by this function\&. They are expected to to be explicitly listed in DT and instantiated by
+\fBof_mdiobus_register\fR\&.
+.PP
+Returns 0 on success or < 0 on error\&.
+.SH "COPYRIGHT"
+.br

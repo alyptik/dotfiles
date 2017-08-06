@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: rio_mport_get_feature
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: RapidIO driver interface
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RIO_MPORT_GET_FEATUR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "RapidIO driver interface"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rio_mport_get_feature \- query for devices\*(Aq extended features
+.SH "SYNOPSIS"
+.HP \w'u32\ rio_mport_get_feature('u
+.BI "u32 rio_mport_get_feature(struct\ rio_mport\ *\ " "port" ", int\ " "local" ", u16\ " "destid" ", u8\ " "hopcount" ", int\ " "ftr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIport\fR
+.RS 4
+Master port to issue transaction
+.RE
+.PP
+\fIlocal\fR
+.RS 4
+Indicate a local master port or remote device access
+.RE
+.PP
+\fIdestid\fR
+.RS 4
+Destination ID of the device
+.RE
+.PP
+\fIhopcount\fR
+.RS 4
+Number of switch hops to the device
+.RE
+.PP
+\fIftr\fR
+.RS 4
+Extended feature code
+.RE
+.SH "DESCRIPTION"
+.PP
+Tell if a device supports a given RapidIO capability\&. Returns the offset of the requested extended feature block within the device\*(Aqs RIO configuration space or 0 in case the device does not support it\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: unlock_new_inode
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "UNLOCK_NEW_INODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+unlock_new_inode \- clear the I_NEW state and wake up any waiters
+.SH "SYNOPSIS"
+.HP \w'void\ unlock_new_inode('u
+.BI "void unlock_new_inode(struct\ inode\ *\ " "inode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+new inode to unlock
+.RE
+.SH "DESCRIPTION"
+.PP
+Called when the inode is fully initialised to clear the new state of the inode and wake up anyone waiting for the inode to finish initialisation\&.
+.SH "COPYRIGHT"
+.br

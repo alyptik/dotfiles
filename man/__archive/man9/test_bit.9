@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: test_bit
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "TEST_BIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+test_bit \- Determine whether a bit is set
+.SH "SYNOPSIS"
+.HP \w'bool\ test_bit('u
+.BI "bool test_bit(int\ " "nr" ", const\ volatile\ unsigned\ long\ *\ " "addr" ");"
+.SH "ARGUMENTS"
+.PP
+\fInr\fR
+.RS 4
+bit number to test
+.RE
+.PP
+\fIaddr\fR
+.RS 4
+Address to start counting from
+.RE
+.SH "COPYRIGHT"
+.br

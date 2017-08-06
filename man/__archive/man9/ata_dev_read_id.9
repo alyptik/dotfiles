@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: ata_dev_read_id
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DEV_READ_ID" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_dev_read_id \- Read ID data from the specified device
+.SH "SYNOPSIS"
+.HP \w'int\ ata_dev_read_id('u
+.BI "int ata_dev_read_id(struct\ ata_device\ *\ " "dev" ", unsigned\ int\ *\ " "p_class" ", unsigned\ int\ " "flags" ", u16\ *\ " "id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+target device
+.RE
+.PP
+\fIp_class\fR
+.RS 4
+pointer to class of the target device (may be changed)
+.RE
+.PP
+\fIflags\fR
+.RS 4
+ATA_READID_* flags
+.RE
+.PP
+\fIid\fR
+.RS 4
+buffer to read IDENTIFY data into
+.RE
+.SH "DESCRIPTION"
+.PP
+Read ID data from the specified device\&. ATA_CMD_ID_ATA is performed on ATA devices and ATA_CMD_ID_ATAPI on ATAPI devices\&. This function also issues ATA_CMD_INIT_DEV_PARAMS for pre\-ATA4 drives\&.
+.PP
+FIXME: ATA_CMD_ID_ATA is optional for early drives and right now we abort if we hit that case\&.
+.PP
+LOCKING: Kernel thread context (may sleep)
+.SH "RETURN"
+.PP
+0 on success, \-errno otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

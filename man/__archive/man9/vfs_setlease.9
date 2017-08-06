@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: vfs_setlease
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VFS_SETLEASE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vfs_setlease \- sets a lease on an open file
+.SH "SYNOPSIS"
+.HP \w'int\ vfs_setlease('u
+.BI "int vfs_setlease(struct\ file\ *\ " "filp" ", long\ " "arg" ", struct\ file_lock\ **\ " "lease" ", void\ **\ " "priv" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfilp\fR
+.RS 4
+file pointer
+.RE
+.PP
+\fIarg\fR
+.RS 4
+type of lease to obtain
+.RE
+.PP
+\fIlease\fR
+.RS 4
+file_lock to use when adding a lease
+.RE
+.PP
+\fIpriv\fR
+.RS 4
+private info for lm_setup when adding a lease (may be NULL if lm_setup doesn\*(Aqt require it)
+.RE
+.SH "DESCRIPTION"
+.PP
+Call this to establish a lease on the file\&. The
+\(lqlease\(rq
+argument is not used for F_UNLCK requests and may be NULL\&. For commands that set or alter an existing lease, the (*lease)\->fl_lmops\->lm_break operation must be set; if not, this function will return \-ENOLCK (and generate a scary\-looking stack trace)\&.
+.PP
+The
+\(lqpriv\(rq
+pointer is passed directly to the lm_setup function as\-is\&. It may be NULL if the lm_setup operation doesn\*(Aqt require it\&.
+.SH "COPYRIGHT"
+.br

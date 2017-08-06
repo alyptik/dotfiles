@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: ata_scsi_rbuf_put
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SCSI_RBUF_PUT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_scsi_rbuf_put \- Unmap response buffer\&.
+.SH "SYNOPSIS"
+.HP \w'void\ ata_scsi_rbuf_put('u
+.BI "void ata_scsi_rbuf_put(struct\ scsi_cmnd\ *\ " "cmd" ", bool\ " "copy_out" ", unsigned\ long\ *\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcmd\fR
+.RS 4
+SCSI command containing buffer to be unmapped\&.
+.RE
+.PP
+\fIcopy_out\fR
+.RS 4
+copy out result
+.RE
+.PP
+\fIflags\fR
+.RS 4
+\fIflags\fR
+passed to
+\fBata_scsi_rbuf_get\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns rbuf buffer\&. The result is copied to
+\fIcmd\fR\*(Aqs buffer if
+\fIcopy_back\fR
+is true\&.
+.PP
+LOCKING: Unlocks ata_scsi_rbuf_lock\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

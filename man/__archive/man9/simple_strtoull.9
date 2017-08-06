@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: simple_strtoull
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SIMPLE_STRTOULL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+simple_strtoull \- convert a string to an unsigned long long
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ long\ simple_strtoull('u
+.BI "unsigned long long simple_strtoull(const\ char\ *\ " "cp" ", char\ **\ " "endp" ", unsigned\ int\ " "base" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcp\fR
+.RS 4
+The start of the string
+.RE
+.PP
+\fIendp\fR
+.RS 4
+A pointer to the end of the parsed string will be placed here
+.RE
+.PP
+\fIbase\fR
+.RS 4
+The number base to use
+.RE
+.SH "DESCRIPTION"
+.PP
+This function is obsolete\&. Please use kstrtoull instead\&.
+.SH "COPYRIGHT"
+.br

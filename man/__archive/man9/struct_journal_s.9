@@ -1,0 +1,354 @@
+'\" t
+.\"     Title: struct journal_s
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT JOURNAL_S" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_journal_s \- The journal_s type is the concrete type associated with journal_t\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct journal_s {
+  unsigned long j_flags;
+  int j_errno;
+  struct buffer_head * j_sb_buffer;
+  journal_superblock_t * j_superblock;
+  int j_format_version;
+  rwlock_t j_state_lock;
+  int j_barrier_count;
+  struct mutex j_barrier;
+  transaction_t * j_running_transaction;
+  transaction_t * j_committing_transaction;
+  transaction_t * j_checkpoint_transactions;
+  wait_queue_head_t j_wait_transaction_locked;
+  wait_queue_head_t j_wait_done_commit;
+  wait_queue_head_t j_wait_commit;
+  wait_queue_head_t j_wait_updates;
+  wait_queue_head_t j_wait_reserved;
+  struct mutex j_checkpoint_mutex;
+  unsigned long j_head;
+  unsigned long j_tail;
+  unsigned long j_free;
+  unsigned long j_first;
+  unsigned long j_last;
+  struct block_device * j_dev;
+  int j_blocksize;
+  unsigned long long j_blk_offset;
+  struct block_device * j_fs_dev;
+  unsigned int j_maxlen;
+  atomic_t j_reserved_credits;
+  spinlock_t j_list_lock;
+  struct inode * j_inode;
+  tid_t j_tail_sequence;
+  tid_t j_transaction_sequence;
+  tid_t j_commit_sequence;
+  tid_t j_commit_request;
+  __u8 j_uuid[16];
+  struct task_struct * j_task;
+  int j_max_transaction_buffers;
+  unsigned long j_commit_interval;
+  struct timer_list j_commit_timer;
+  spinlock_t j_revoke_lock;
+  struct jbd2_revoke_table_s * j_revoke;
+  struct jbd2_revoke_table_s * j_revoke_table[2];
+  struct buffer_head ** j_wbuf;
+  int j_wbufsize;
+  pid_t j_last_sync_writer;
+  spinlock_t j_history_lock;
+  struct proc_dir_entry * j_proc_entry;
+  struct transaction_stats_s j_stats;
+  void * j_private;
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+  struct lockdep_map j_trans_commit_map;
+#endif
+};  
+.fi
+.SH "MEMBERS"
+.PP
+j_flags
+.RS 4
+General journaling state flags
+.RE
+.PP
+j_errno
+.RS 4
+Is there an outstanding uncleared error on the journal (from a prior abort)?
+.RE
+.PP
+j_sb_buffer
+.RS 4
+First part of superblock buffer
+.RE
+.PP
+j_superblock
+.RS 4
+Second part of superblock buffer
+.RE
+.PP
+j_format_version
+.RS 4
+Version of the superblock format
+.RE
+.PP
+j_state_lock
+.RS 4
+Protect the various scalars in the journal
+.RE
+.PP
+j_barrier_count
+.RS 4
+Number of processes waiting to create a barrier lock
+.RE
+.PP
+j_barrier
+.RS 4
+The barrier lock itself
+.RE
+.PP
+j_running_transaction
+.RS 4
+The current running transaction\&.\&.
+.RE
+.PP
+j_committing_transaction
+.RS 4
+the transaction we are pushing to disk
+.RE
+.PP
+j_checkpoint_transactions
+.RS 4
+a linked circular list of all transactions waiting for checkpointing
+.RE
+.PP
+j_wait_transaction_locked
+.RS 4
+Wait queue for waiting for a locked transaction to start committing, or for a barrier lock to be released
+.RE
+.PP
+j_wait_done_commit
+.RS 4
+Wait queue for waiting for commit to complete
+.RE
+.PP
+j_wait_commit
+.RS 4
+Wait queue to trigger commit
+.RE
+.PP
+j_wait_updates
+.RS 4
+Wait queue to wait for updates to complete
+.RE
+.PP
+j_wait_reserved
+.RS 4
+Wait queue to wait for reserved buffer credits to drop
+.RE
+.PP
+j_checkpoint_mutex
+.RS 4
+Mutex for locking against concurrent checkpoints
+.RE
+.PP
+j_head
+.RS 4
+Journal head \- identifies the first unused block in the journal
+.RE
+.PP
+j_tail
+.RS 4
+Journal tail \- identifies the oldest still\-used block in the journal\&.
+.RE
+.PP
+j_free
+.RS 4
+Journal free \- how many free blocks are there in the journal?
+.RE
+.PP
+j_first
+.RS 4
+The block number of the first usable block
+.RE
+.PP
+j_last
+.RS 4
+The block number one beyond the last usable block
+.RE
+.PP
+j_dev
+.RS 4
+Device where we store the journal
+.RE
+.PP
+j_blocksize
+.RS 4
+blocksize for the location where we store the journal\&.
+.RE
+.PP
+j_blk_offset
+.RS 4
+starting block offset for into the device where we store the journal
+.RE
+.PP
+j_fs_dev
+.RS 4
+Device which holds the client fs\&. For internal journal this will be equal to j_dev
+.RE
+.PP
+j_maxlen
+.RS 4
+Total maximum capacity of the journal region on disk\&.
+.RE
+.PP
+j_reserved_credits
+.RS 4
+Number of buffers reserved from the running transaction
+.RE
+.PP
+j_list_lock
+.RS 4
+Protects the buffer lists and internal buffer state\&.
+.RE
+.PP
+j_inode
+.RS 4
+Optional inode where we store the journal\&. If present, all journal block numbers are mapped into this inode via
+\fBbmap\fR\&.
+.RE
+.PP
+j_tail_sequence
+.RS 4
+Sequence number of the oldest transaction in the log
+.RE
+.PP
+j_transaction_sequence
+.RS 4
+Sequence number of the next transaction to grant
+.RE
+.PP
+j_commit_sequence
+.RS 4
+Sequence number of the most recently committed transaction
+.RE
+.PP
+j_commit_request
+.RS 4
+Sequence number of the most recent transaction wanting commit
+.RE
+.PP
+j_uuid[16]
+.RS 4
+Uuid of client object\&.
+.RE
+.PP
+j_task
+.RS 4
+Pointer to the current commit thread for this journal
+.RE
+.PP
+j_max_transaction_buffers
+.RS 4
+Maximum number of metadata buffers to allow in a single compound commit transaction
+.RE
+.PP
+j_commit_interval
+.RS 4
+What is the maximum transaction lifetime before we begin a commit?
+.RE
+.PP
+j_commit_timer
+.RS 4
+The timer used to wakeup the commit thread
+.RE
+.PP
+j_revoke_lock
+.RS 4
+Protect the revoke table
+.RE
+.PP
+j_revoke
+.RS 4
+The revoke table \- maintains the list of revoked blocks in the current transaction\&.
+.RE
+.PP
+j_revoke_table[2]
+.RS 4
+alternate revoke tables for j_revoke
+.RE
+.PP
+j_wbuf
+.RS 4
+array of buffer_heads for jbd2_journal_commit_transaction
+.RE
+.PP
+j_wbufsize
+.RS 4
+maximum number of buffer_heads allowed in j_wbuf, the number that will fit in j_blocksize
+.RE
+.PP
+j_last_sync_writer
+.RS 4
+most recent pid which did a synchronous write
+.RE
+.PP
+j_history_lock
+.RS 4
+Protect the transactions statistics history
+.RE
+.PP
+j_proc_entry
+.RS 4
+procfs entry for the jbd statistics directory
+.RE
+.PP
+j_stats
+.RS 4
+Overall statistics
+.RE
+.PP
+j_private
+.RS 4
+An opaque pointer to fs\-private information\&.
+.RE
+.PP
+j_trans_commit_map
+.RS 4
+Lockdep entity to track transaction commit dependencies
+.RE
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

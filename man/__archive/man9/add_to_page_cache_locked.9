@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: add_to_page_cache_locked
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ADD_TO_PAGE_CACHE_LO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+add_to_page_cache_locked \- add a locked page to the pagecache
+.SH "SYNOPSIS"
+.HP \w'int\ add_to_page_cache_locked('u
+.BI "int add_to_page_cache_locked(struct\ page\ *\ " "page" ", struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "offset" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpage\fR
+.RS 4
+page to add
+.RE
+.PP
+\fImapping\fR
+.RS 4
+the page\*(Aqs address_space
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+page index
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+page allocation mode
+.RE
+.SH "DESCRIPTION"
+.PP
+This function is used to add a page to the pagecache\&. It must be locked\&. This function does not add the page to the LRU\&. The caller must do that\&.
+.SH "COPYRIGHT"
+.br

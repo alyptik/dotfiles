@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: devm_mdiobus_free
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEVM_MDIOBUS_FREE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+devm_mdiobus_free \- Resource\-managed \fBmdiobus_free\fR
+.SH "SYNOPSIS"
+.HP \w'void\ devm_mdiobus_free('u
+.BI "void devm_mdiobus_free(struct\ device\ *\ " "dev" ", struct\ mii_bus\ *\ " "bus" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device this mii_bus belongs to
+.RE
+.PP
+\fIbus\fR
+.RS 4
+the mii_bus associated with the device
+.RE
+.SH "DESCRIPTION"
+.PP
+Free mii_bus allocated with
+\fBdevm_mdiobus_alloc_size\fR\&.
+.SH "COPYRIGHT"
+.br

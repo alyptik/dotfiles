@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: ipc_init_ids
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPC_INIT_IDS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipc_init_ids \- initialise ipc identifiers
+.SH "SYNOPSIS"
+.HP \w'void\ ipc_init_ids('u
+.BI "void ipc_init_ids(struct\ ipc_ids\ *\ " "ids" ");"
+.SH "ARGUMENTS"
+.PP
+\fIids\fR
+.RS 4
+ipc identifier set
+.RE
+.SH "DESCRIPTION"
+.PP
+Set up the sequence range to use for the ipc identifier range (limited below IPCMNI) then initialise the ids idr\&.
+.SH "COPYRIGHT"
+.br

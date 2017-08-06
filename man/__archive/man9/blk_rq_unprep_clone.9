@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: blk_rq_unprep_clone
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_RQ_UNPREP_CLONE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_rq_unprep_clone \- Helper function to free all bios in a cloned request
+.SH "SYNOPSIS"
+.HP \w'void\ blk_rq_unprep_clone('u
+.BI "void blk_rq_unprep_clone(struct\ request\ *\ " "rq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrq\fR
+.RS 4
+the clone request to be cleaned up
+.RE
+.SH "DESCRIPTION"
+.PP
+Free all bios in
+\fIrq\fR
+for a cloned request\&.
+.SH "COPYRIGHT"
+.br

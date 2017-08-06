@@ -1,0 +1,244 @@
+'\" t
+.\"     Title: struct iio_dev
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Industrial I/O core
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IIO_DEV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Industrial I/O core"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_iio_dev \- industrial I/O device
+.SH "SYNOPSIS"
+.sp
+.nf
+struct iio_dev {
+  int id;
+  int modes;
+  int currentmode;
+  struct device dev;
+  struct iio_event_interface * event_interface;
+  struct iio_buffer * buffer;
+  struct list_head buffer_list;
+  int scan_bytes;
+  struct mutex mlock;
+  const unsigned long * available_scan_masks;
+  unsigned masklength;
+  const unsigned long * active_scan_mask;
+  bool scan_timestamp;
+  unsigned scan_index_timestamp;
+  struct iio_trigger * trig;
+  struct iio_poll_func * pollfunc;
+  struct iio_poll_func * pollfunc_event;
+  struct iio_chan_spec const * channels;
+  int num_channels;
+  struct list_head channel_attr_list;
+  struct attribute_group chan_attr_group;
+  const char * name;
+  const struct iio_info * info;
+  clockid_t clock_id;
+  struct mutex info_exist_lock;
+  const struct iio_buffer_setup_ops * setup_ops;
+  struct cdev chrdev;
+#define IIO_MAX_GROUPS 6
+  const struct attribute_group * groups[IIO_MAX_GROUPS + 1];
+  int groupcounter;
+  unsigned long flags;
+#if defined(CONFIG_DEBUG_FS)
+  struct dentry * debugfs_dentry;
+  unsigned cached_reg_addr;
+#endif
+};  
+.fi
+.SH "MEMBERS"
+.PP
+id
+.RS 4
+[INTERN] used to identify device internally
+.RE
+.PP
+modes
+.RS 4
+[DRIVER] operating modes supported by device
+.RE
+.PP
+currentmode
+.RS 4
+[DRIVER] current operating mode
+.RE
+.PP
+dev
+.RS 4
+[DRIVER] device structure, should be assigned a parent and owner
+.RE
+.PP
+event_interface
+.RS 4
+[INTERN] event chrdevs associated with interrupt lines
+.RE
+.PP
+buffer
+.RS 4
+[DRIVER] any buffer present
+.RE
+.PP
+buffer_list
+.RS 4
+[INTERN] list of all buffers currently attached
+.RE
+.PP
+scan_bytes
+.RS 4
+[INTERN] num bytes captured to be fed to buffer demux
+.RE
+.PP
+mlock
+.RS 4
+[DRIVER] lock used to prevent simultaneous device state changes
+.RE
+.PP
+available_scan_masks
+.RS 4
+[DRIVER] optional array of allowed bitmasks
+.RE
+.PP
+masklength
+.RS 4
+[INTERN] the length of the mask established from channels
+.RE
+.PP
+active_scan_mask
+.RS 4
+[INTERN] union of all scan masks requested by buffers
+.RE
+.PP
+scan_timestamp
+.RS 4
+[INTERN] set if any buffers have requested timestamp
+.RE
+.PP
+scan_index_timestamp
+.RS 4
+[INTERN] cache of the index to the timestamp
+.RE
+.PP
+trig
+.RS 4
+[INTERN] current device trigger (buffer modes)
+\fItrig_readonly\fR
+[INTERN] mark the current trigger immutable
+.RE
+.PP
+pollfunc
+.RS 4
+[DRIVER] function run on trigger being received
+.RE
+.PP
+pollfunc_event
+.RS 4
+[DRIVER] function run on events trigger being received
+.RE
+.PP
+channels
+.RS 4
+[DRIVER] channel specification structure table
+.RE
+.PP
+num_channels
+.RS 4
+[DRIVER] number of channels specified in
+\fIchannels\fR\&.
+.RE
+.PP
+channel_attr_list
+.RS 4
+[INTERN] keep track of automatically created channel attributes
+.RE
+.PP
+chan_attr_group
+.RS 4
+[INTERN] group for all attrs in base directory
+.RE
+.PP
+name
+.RS 4
+[DRIVER] name of the device\&.
+.RE
+.PP
+info
+.RS 4
+[DRIVER] callbacks and constant info from driver
+.RE
+.PP
+clock_id
+.RS 4
+[INTERN] timestamping clock posix identifier
+.RE
+.PP
+info_exist_lock
+.RS 4
+[INTERN] lock to prevent use during removal
+.RE
+.PP
+setup_ops
+.RS 4
+[DRIVER] callbacks to call before and after buffer enable/disable
+.RE
+.PP
+chrdev
+.RS 4
+[INTERN] associated character device
+.RE
+.PP
+groups[IIO_MAX_GROUPS + 1]
+.RS 4
+[INTERN] attribute groups
+.RE
+.PP
+groupcounter
+.RS 4
+[INTERN] index of next attribute group
+.RE
+.PP
+flags
+.RS 4
+[INTERN] file ops related flags including busy flag\&.
+.RE
+.PP
+debugfs_dentry
+.RS 4
+[INTERN] device specific debugfs dentry\&.
+.RE
+.PP
+cached_reg_addr
+.RS 4
+[INTERN] cached register address for debugfs reads\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBDaniel Baluta\fR <\&daniel.baluta@intel.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

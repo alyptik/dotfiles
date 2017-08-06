@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: vm_map_ram
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VM_MAP_RAM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vm_map_ram \- map pages linearly into kernel virtual address (vmalloc space)
+.SH "SYNOPSIS"
+.HP \w'void\ *\ vm_map_ram('u
+.BI "void * vm_map_ram(struct\ page\ **\ " "pages" ", unsigned\ int\ " "count" ", int\ " "node" ", pgprot_t\ " "prot" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpages\fR
+.RS 4
+an array of pointers to the pages to be mapped
+.RE
+.PP
+\fIcount\fR
+.RS 4
+number of pages
+.RE
+.PP
+\fInode\fR
+.RS 4
+prefer to allocate data structures on this node
+.RE
+.PP
+\fIprot\fR
+.RS 4
+memory protection to use\&. PAGE_KERNEL for regular RAM
+.RE
+.SH "DESCRIPTION"
+.PP
+If you use this function for less than VMAP_MAX_ALLOC pages, it could be faster than vmap so it\*(Aqs good\&. But if you mix long\-life and short\-life objects with
+\fBvm_map_ram\fR, it could consume lots of address space through fragmentation (especially on a 32bit machine)\&. You could see failures in the end\&. Please use this function for short\-lived objects\&.
+.SH "RETURN"
+.PP
+a pointer to the address that has been mapped, or
+\fBNULL\fR
+on failure
+.SH "COPYRIGHT"
+.br

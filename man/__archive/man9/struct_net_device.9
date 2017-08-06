@@ -1,0 +1,261 @@
+'\" t
+.\"     Title: struct net_device
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT NET_DEVICE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_net_device \- The DEVICE structure\&. Actually, this whole structure is a big mistake\&. It mixes I/O data with strictly \(lqhigh\-level\(rq data, and it has to know about almost every data structure used in the INET module\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct net_device {
+  char name[IFNAMSIZ];
+  struct hlist_node name_hlist;
+  char * ifalias;
+  unsigned long mem_end;
+  unsigned long mem_start;
+  unsigned long base_addr;
+  int irq;
+  atomic_t carrier_changes;
+  unsigned long state;
+  struct list_head dev_list;
+  struct list_head napi_list;
+  struct list_head unreg_list;
+  struct list_head close_list;
+  struct list_head ptype_all;
+  struct list_head ptype_specific;
+  struct {unnamed_struct};
+  struct garp_port __rcu * garp_port;
+  struct mrp_port __rcu * mrp_port;
+  struct device dev;
+  const struct attribute_group * sysfs_groups[4];
+  const struct attribute_group * sysfs_rx_queue_group;
+  const struct rtnl_link_ops * rtnl_link_ops;
+#define GSO_MAX_SIZE		65536
+  unsigned int gso_max_size;
+#define GSO_MAX_SEGS		65535
+  u16 gso_max_segs;
+#ifdef CONFIG_DCB
+  const struct dcbnl_rtnl_ops * dcbnl_ops;
+#endif
+  u8 num_tc;
+  struct netdev_tc_txq tc_to_txq[TC_MAX_QUEUE];
+  u8 prio_tc_map[TC_BITMASK + 1];
+#if IS_ENABLED(CONFIG_FCOE)
+  unsigned int fcoe_ddp_xid;
+#endif
+#if IS_ENABLED(CONFIG_CGROUP_NET_PRIO)
+  struct netprio_map __rcu * priomap;
+#endif
+  struct phy_device * phydev;
+  struct lock_class_key * qdisc_tx_busylock;
+  struct lock_class_key * qdisc_running_key;
+  bool proto_down;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+name[IFNAMSIZ]
+.RS 4
+This is the first field of the
+\(lqvisible\(rq
+part of this structure (i\&.e\&. as seen by users in the
+\(lqSpace\&.c\(rq
+file)\&. It is the name of the interface\&.
+.RE
+.PP
+name_hlist
+.RS 4
+Device name hash chain, please keep it close to name[]
+.RE
+.PP
+ifalias
+.RS 4
+SNMP alias
+.RE
+.PP
+mem_end
+.RS 4
+Shared memory end
+.RE
+.PP
+mem_start
+.RS 4
+Shared memory start
+.RE
+.PP
+base_addr
+.RS 4
+Device I/O address
+.RE
+.PP
+irq
+.RS 4
+Device IRQ number
+.RE
+.PP
+carrier_changes
+.RS 4
+Stats to monitor carrier on<\->off transitions
+.RE
+.PP
+state
+.RS 4
+Generic network queuing layer state, see netdev_state_t
+.RE
+.PP
+dev_list
+.RS 4
+The global list of network devices
+.RE
+.PP
+napi_list
+.RS 4
+List entry used for polling NAPI devices
+.RE
+.PP
+unreg_list
+.RS 4
+List entry when we are unregistering the device; see the function unregister_netdev
+.RE
+.PP
+close_list
+.RS 4
+List entry used when we are closing the device
+.RE
+.PP
+ptype_all
+.RS 4
+Device\-specific packet handlers for all protocols
+.RE
+.PP
+ptype_specific
+.RS 4
+Device\-specific, protocol\-specific packet handlers
+.RE
+.PP
+{unnamed_struct}
+.RS 4
+anonymous
+.RE
+.PP
+garp_port
+.RS 4
+GARP
+.RE
+.PP
+mrp_port
+.RS 4
+MRP
+.RE
+.PP
+dev
+.RS 4
+Class/net/name entry
+.RE
+.PP
+sysfs_groups[4]
+.RS 4
+Space for optional device, statistics and wireless sysfs groups
+.RE
+.PP
+sysfs_rx_queue_group
+.RS 4
+Space for optional per\-rx queue attributes
+.RE
+.PP
+rtnl_link_ops
+.RS 4
+Rtnl_link_ops
+.RE
+.PP
+gso_max_size
+.RS 4
+Maximum size of generic segmentation offload
+.RE
+.PP
+gso_max_segs
+.RS 4
+Maximum number of segments that can be passed to the NIC for GSO
+.RE
+.PP
+dcbnl_ops
+.RS 4
+Data Center Bridging netlink ops
+.RE
+.PP
+num_tc
+.RS 4
+Number of traffic classes in the net device
+.RE
+.PP
+tc_to_txq[TC_MAX_QUEUE]
+.RS 4
+XXX: need comments on this one
+.RE
+.PP
+prio_tc_map[TC_BITMASK + 1]
+.RS 4
+XXX: need comments on this one
+.RE
+.PP
+fcoe_ddp_xid
+.RS 4
+Max exchange id for FCoE LRO by ddp
+.RE
+.PP
+priomap
+.RS 4
+XXX: need comments on this one
+.RE
+.PP
+phydev
+.RS 4
+Physical device may attach itself for hardware timestamping
+.RE
+.PP
+qdisc_tx_busylock
+.RS 4
+lockdep class annotating Qdisc\->busylock spinlock
+.RE
+.PP
+qdisc_running_key
+.RS 4
+lockdep class annotating Qdisc\->running seqcount
+.RE
+.PP
+proto_down
+.RS 4
+protocol port state information can be sent to the switch driver and used to set the phys state of the switch port\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+interface address info:
+.PP
+FIXME: cleanup struct net_device such that network protocol info moves out\&.
+.SH "COPYRIGHT"
+.br

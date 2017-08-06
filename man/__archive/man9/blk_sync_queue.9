@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: blk_sync_queue
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_SYNC_QUEUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_sync_queue \- cancel any pending callbacks on a queue
+.SH "SYNOPSIS"
+.HP \w'void\ blk_sync_queue('u
+.BI "void blk_sync_queue(struct\ request_queue\ *\ " "q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+the queue
+.RE
+.SH "DESCRIPTION"
+.PP
+The block layer may perform asynchronous callback activity on a queue, such as calling the unplug function after a timeout\&. A block device may call blk_sync_queue to ensure that any such activity is cancelled, thus allowing it to release resources that the callbacks might use\&. The caller must already have made sure that its \->make_request_fn will not re\-add plugging prior to calling this function\&.
+.PP
+This function does not cancel any asynchronous activity arising out of elevator or throttling code\&. That would require
+\fBelevator_exit\fR
+and
+\fBblkcg_exit_queue\fR
+to be called with queue lock initialized\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: piix_check_450nx_errata
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: ata_piix Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PIIX_CHECK_450NX_ERR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "ata_piix Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+piix_check_450nx_errata \- Check for problem 450NX setup
+.SH "SYNOPSIS"
+.HP \w'int\ piix_check_450nx_errata('u
+.BI "int piix_check_450nx_errata(struct\ pci_dev\ *\ " "ata_dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIata_dev\fR
+.RS 4
+the PCI device to check
+.RE
+.SH "DESCRIPTION"
+.PP
+Check for the present of 450NX errata #19 and errata #25\&. If they are found return an error code so we can turn off DMA
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

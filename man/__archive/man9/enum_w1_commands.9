@@ -1,0 +1,106 @@
+'\" t
+.\"     Title: enum w1_commands
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ENUM W1_COMMANDS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+enum_w1_commands \- commands available for master or slave operations
+.SH "SYNOPSIS"
+.sp
+.nf
+enum w1_commands {
+  W1_CMD_READ,
+  W1_CMD_WRITE,
+  W1_CMD_SEARCH,
+  W1_CMD_ALARM_SEARCH,
+  W1_CMD_TOUCH,
+  W1_CMD_RESET,
+  W1_CMD_SLAVE_ADD,
+  W1_CMD_SLAVE_REMOVE,
+  W1_CMD_LIST_SLAVES,
+  W1_CMD_MAX
+};  
+.fi
+.SH "CONSTANTS"
+.PP
+W1_CMD_READ
+.RS 4
+read len bytes
+.RE
+.PP
+W1_CMD_WRITE
+.RS 4
+write len bytes
+.RE
+.PP
+W1_CMD_SEARCH
+.RS 4
+initiate a standard search, returns only the slave devices found during that search
+.RE
+.PP
+W1_CMD_ALARM_SEARCH
+.RS 4
+search for devices that are currently alarming
+.RE
+.PP
+W1_CMD_TOUCH
+.RS 4
+Touches a series of bytes\&.
+.RE
+.PP
+W1_CMD_RESET
+.RS 4
+sends a bus reset on the given master
+.RE
+.PP
+W1_CMD_SLAVE_ADD
+.RS 4
+adds a slave to the given master, 8 byte slave id at data[0]
+.RE
+.PP
+W1_CMD_SLAVE_REMOVE
+.RS 4
+removes a slave to the given master, 8 byte slave id at data[0]
+.RE
+.PP
+W1_CMD_LIST_SLAVES
+.RS 4
+list of slaves registered on this master
+.RE
+.PP
+W1_CMD_MAX
+.RS 4
+number of available commands
+.RE
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

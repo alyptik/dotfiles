@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: debugfs_create_u32_array
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_CREATE_U32_A" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_create_u32_array \- create a debugfs file that is used to read u32 array\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ debugfs_create_u32_array('u
+.BI "struct dentry * debugfs_create_u32_array(const\ char\ *\ " "name" ", umode_t\ " "mode" ", struct\ dentry\ *\ " "parent" ", u32\ *\ " "array" ", u32\ " "elements" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+a pointer to a string containing the name of the file to create\&.
+.RE
+.PP
+\fImode\fR
+.RS 4
+the permission that the file should have\&.
+.RE
+.PP
+\fIparent\fR
+.RS 4
+a pointer to the parent dentry for this file\&. This should be a directory dentry if set\&. If this parameter is
+\fBNULL\fR, then the file will be created in the root of the debugfs filesystem\&.
+.RE
+.PP
+\fIarray\fR
+.RS 4
+u32 array that provides data\&.
+.RE
+.PP
+\fIelements\fR
+.RS 4
+total number of elements in the array\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function creates a file in debugfs with the given name that exports
+\fIarray\fR
+as data\&. If the
+\fImode\fR
+variable is so set it can be read from\&. Writing is not supported\&. Seek within the file is also not supported\&. Once array is created its size can not be changed\&.
+.PP
+The function returns a pointer to dentry on success\&. If debugfs is not enabled in the kernel, the value \-\fBENODEV\fR
+will be returned\&.
+.SH "COPYRIGHT"
+.br

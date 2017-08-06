@@ -1,0 +1,156 @@
+'\" t
+.\"     Title: struct usb_request
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_REQUEST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_request \- describes one i/o request
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_request {
+  void * buf;
+  unsigned length;
+  dma_addr_t dma;
+  struct scatterlist * sg;
+  unsigned num_sgs;
+  unsigned num_mapped_sgs;
+  unsigned stream_id:16;
+  unsigned no_interrupt:1;
+  unsigned zero:1;
+  unsigned short_not_ok:1;
+  void (* complete) (struct usb_ep *ep,struct usb_request *req);
+  void * context;
+  struct list_head list;
+  int status;
+  unsigned actual;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+buf
+.RS 4
+Buffer used for data\&. Always provide this; some controllers only use PIO, or don\*(Aqt use DMA for some endpoints\&.
+.RE
+.PP
+length
+.RS 4
+Length of that data
+.RE
+.PP
+dma
+.RS 4
+DMA address corresponding to \*(Aqbuf\*(Aq\&. If you don\*(Aqt set this field, and the usb controller needs one, it is responsible for mapping and unmapping the buffer\&.
+.RE
+.PP
+sg
+.RS 4
+a scatterlist for SG\-capable controllers\&.
+.RE
+.PP
+num_sgs
+.RS 4
+number of SG entries
+.RE
+.PP
+num_mapped_sgs
+.RS 4
+number of SG entries mapped to DMA (internal)
+.RE
+.PP
+stream_id
+.RS 4
+The stream id, when USB3\&.0 bulk streams are being used
+.RE
+.PP
+no_interrupt
+.RS 4
+If true, hints that no completion irq is needed\&. Helpful sometimes with deep request queues that are handled directly by DMA controllers\&.
+.RE
+.PP
+zero
+.RS 4
+If true, when writing data, makes the last packet be
+\(lqshort\(rq
+by adding a zero length packet as needed;
+.RE
+.PP
+short_not_ok
+.RS 4
+When reading data, makes short packets be treated as errors (queue stops advancing till cleanup)\&.
+.RE
+.PP
+complete
+.RS 4
+Function called when request completes, so this request and its buffer may be re\-used\&. The function will always be called with interrupts disabled, and it must not sleep\&. Reads terminate with a short packet, or when the buffer fills, whichever comes first\&. When writes terminate, some data bytes will usually still be in flight (often in a hardware fifo)\&. Errors (for reads or writes) stop the queue from advancing until the completion function returns, so that any transfers invalidated by the error may first be dequeued\&.
+.RE
+.PP
+context
+.RS 4
+For use by the completion callback
+.RE
+.PP
+list
+.RS 4
+For use by the gadget driver\&.
+.RE
+.PP
+status
+.RS 4
+Reports completion code, zero or a negative errno\&. Normally, faults block the transfer queue from advancing until the completion callback returns\&. Code
+\(lq\-ESHUTDOWN\(rq
+indicates completion caused by device disconnect, or when the driver disabled the endpoint\&.
+.RE
+.PP
+actual
+.RS 4
+Reports bytes transferred to/from the buffer\&. For reads (OUT transfers) this may be less than the requested length\&. If the short_not_ok flag is set, short reads are treated as errors even when status otherwise indicates successful completion\&. Note that for writes (IN transfers) some data bytes may still reside in a device\-side FIFO when the request is reported as complete\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+These are allocated/freed through the endpoint they\*(Aqre used with\&. The hardware\*(Aqs driver can add extra per\-request data to the memory it returns, which often avoids separate memory allocations (potential failures), later when the request is queued\&.
+.PP
+Request flags affect request handling, such as whether a zero length packet is written (the
+\(lqzero\(rq
+flag), whether a short read should be treated as an error (blocking request queue advance, the
+\(lqshort_not_ok\(rq
+flag), or hinting that an interrupt is not required (the
+\(lqno_interrupt\(rq
+flag, for use with deep request queues)\&.
+.PP
+Bulk endpoints can use any size buffers, and can also be used for interrupt transfers\&. interrupt\-only endpoints can be much less functional\&.
+.SH "NOTE"
+.PP
+this is analogous to \*(Aqstruct urb\*(Aq on the host side, except that it\*(Aqs thinner and promotes more pre\-allocation\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

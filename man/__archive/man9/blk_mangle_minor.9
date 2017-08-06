@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: blk_mangle_minor
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_MANGLE_MINOR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_mangle_minor \- scatter minor numbers apart
+.SH "SYNOPSIS"
+.HP \w'int\ blk_mangle_minor('u
+.BI "int blk_mangle_minor(int\ " "minor" ");"
+.SH "ARGUMENTS"
+.PP
+\fIminor\fR
+.RS 4
+minor number to mangle
+.RE
+.SH "DESCRIPTION"
+.PP
+Scatter consecutively allocated
+\fIminor\fR
+number apart if MANGLE_DEVT is enabled\&. Mangling twice gives the original value\&.
+.SH "RETURN"
+.PP
+Mangled value\&.
+.SH "CONTEXT"
+.PP
+Don\*(Aqt care\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: filemap_fdatawait
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FILEMAP_FDATAWAIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+filemap_fdatawait \- wait for all under\-writeback pages to complete
+.SH "SYNOPSIS"
+.HP \w'int\ filemap_fdatawait('u
+.BI "int filemap_fdatawait(struct\ address_space\ *\ " "mapping" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+address space structure to wait for
+.RE
+.SH "DESCRIPTION"
+.PP
+Walk the list of under\-writeback pages of the given address space and wait for all of them\&. Check error status of the address space and return it\&.
+.PP
+Since the error status of the address space is cleared by this function, callers are responsible for checking the return value and handling and/or reporting the error\&.
+.SH "COPYRIGHT"
+.br

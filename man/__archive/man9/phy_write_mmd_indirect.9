@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: phy_write_mmd_indirect
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_WRITE_MMD_INDIRE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_write_mmd_indirect \- writes data to the MMD registers
+.SH "SYNOPSIS"
+.HP \w'void\ phy_write_mmd_indirect('u
+.BI "void phy_write_mmd_indirect(struct\ phy_device\ *\ " "phydev" ", int\ " "prtad" ", int\ " "devad" ", u32\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+The PHY device
+.RE
+.PP
+\fIprtad\fR
+.RS 4
+MMD Address
+.RE
+.PP
+\fIdevad\fR
+.RS 4
+MMD DEVAD
+.RE
+.PP
+\fIdata\fR
+.RS 4
+data to write in the MMD register
+.RE
+.SH "DESCRIPTION"
+.PP
+Write data from the MMD registers of the specified phy address\&. To write these register we have: 1) Write reg 13 // DEVAD 2) Write reg 14 // MMD Address 3) Write reg 13 // MMD Data Command for MMD DEVAD 3) Write reg 14 // Write MMD data
+.SH "COPYRIGHT"
+.br

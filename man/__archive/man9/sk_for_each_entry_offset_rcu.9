@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: sk_for_each_entry_offset_rcu
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SK_FOR_EACH_ENTRY_OF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sk_for_each_entry_offset_rcu \- iterate over a list at a given struct offset
+.SH "SYNOPSIS"
+.HP \w'sk_for_each_entry_offset_rcu('u
+.BI "sk_for_each_entry_offset_rcu(" "tpos" ", " "pos" ", " "head" ", " "offset" ");"
+.SH "ARGUMENTS"
+.PP
+\fItpos\fR
+.RS 4
+the type * to use as a loop cursor\&.
+.RE
+.PP
+\fIpos\fR
+.RS 4
+the
+struct hlist_node
+to use as a loop cursor\&.
+.RE
+.PP
+\fIhead\fR
+.RS 4
+the head for your list\&.
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+offset of hlist_node within the struct\&.
+.RE
+.SH "COPYRIGHT"
+.br

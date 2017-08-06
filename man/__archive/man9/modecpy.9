@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: modecpy
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MODECPY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+modecpy \- Prepare response for MODE SENSE
+.SH "SYNOPSIS"
+.HP \w'void\ modecpy('u
+.BI "void modecpy(u8\ *\ " "dest" ", const\ u8\ *\ " "src" ", int\ " "n" ", bool\ " "changeable" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdest\fR
+.RS 4
+output buffer
+.RE
+.PP
+\fIsrc\fR
+.RS 4
+data being copied
+.RE
+.PP
+\fIn\fR
+.RS 4
+length of mode page
+.RE
+.PP
+\fIchangeable\fR
+.RS 4
+whether changeable parameters are requested
+.RE
+.SH "DESCRIPTION"
+.PP
+Generate a generic MODE SENSE page for either current or changeable parameters\&.
+.PP
+LOCKING: None\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

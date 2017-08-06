@@ -1,0 +1,42 @@
+'\" t
+.\"     Title: dmi_name_in_vendors
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Firmware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMI_NAME_IN_VENDORS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Firmware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dmi_name_in_vendors \- Check if string is in the DMI system or board vendor name
+.SH "SYNOPSIS"
+.HP \w'int\ dmi_name_in_vendors('u
+.BI "int dmi_name_in_vendors(const\ char\ *\ " "str" ");"
+.SH "ARGUMENTS"
+.PP
+\fIstr\fR
+.RS 4
+Case sensitive Name
+.RE
+.SH "COPYRIGHT"
+.br

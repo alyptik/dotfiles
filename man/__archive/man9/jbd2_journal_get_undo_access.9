@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: jbd2_journal_get_undo_access
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2_JOURNAL_GET_UND" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2_journal_get_undo_access \- Notify intent to modify metadata with non\-rewindable consequences
+.SH "SYNOPSIS"
+.HP \w'int\ jbd2_journal_get_undo_access('u
+.BI "int jbd2_journal_get_undo_access(handle_t\ *\ " "handle" ", struct\ buffer_head\ *\ " "bh" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhandle\fR
+.RS 4
+transaction
+.RE
+.PP
+\fIbh\fR
+.RS 4
+buffer to undo
+.RE
+.SH "DESCRIPTION"
+.PP
+Sometimes there is a need to distinguish between metadata which has been committed to disk and that which has not\&. The ext3fs code uses this for freeing and allocating space, we have to make sure that we do not reuse freed space until the deallocation has been committed, since if we overwrote that space we would make the delete un\-rewindable in case of a crash\&.
+.PP
+To deal with that, jbd2_journal_get_undo_access requests write access to a buffer for parts of non\-rewindable operations such as delete operations on the bitmaps\&. The journaling code must keep a copy of the buffer\*(Aqs contents prior to the undo_access call until such time as we know that the buffer has definitely been committed to disk\&.
+.PP
+We never need to know which transaction the committed data is part of, buffers touched here are guaranteed to be dirtied later and so will be committed to a new transaction in due course, at which point we can discard the old committed data pointer\&.
+.PP
+Returns error number or 0 on success\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

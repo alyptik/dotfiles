@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: clear_bit
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CLEAR_BIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+clear_bit \- Clears a bit in memory
+.SH "SYNOPSIS"
+.HP \w'void\ clear_bit('u
+.BI "void clear_bit(long\ " "nr" ", volatile\ unsigned\ long\ *\ " "addr" ");"
+.SH "ARGUMENTS"
+.PP
+\fInr\fR
+.RS 4
+Bit to clear
+.RE
+.PP
+\fIaddr\fR
+.RS 4
+Address to start counting from
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBclear_bit\fR
+is atomic and may not be reordered\&. However, it does not contain a memory barrier, so if it is used for locking purposes, you should call
+\fBsmp_mb__before_atomic\fR
+and/or
+\fBsmp_mb__after_atomic\fR
+in order to ensure changes are visible on other processors\&.
+.SH "COPYRIGHT"
+.br

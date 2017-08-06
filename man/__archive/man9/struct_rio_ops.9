@@ -1,0 +1,155 @@
+'\" t
+.\"     Title: struct rio_ops
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT RIO_OPS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_rio_ops \- Low\-level RIO configuration space operations
+.SH "SYNOPSIS"
+.sp
+.nf
+struct rio_ops {
+  int (* lcread) (struct rio_mport *mport, int index, u32 offset, int len,u32 *data);
+  int (* lcwrite) (struct rio_mport *mport, int index, u32 offset, int len,u32 data);
+  int (* cread) (struct rio_mport *mport, int index, u16 destid,u8 hopcount, u32 offset, int len, u32 *data);
+  int (* cwrite) (struct rio_mport *mport, int index, u16 destid,u8 hopcount, u32 offset, int len, u32 data);
+  int (* dsend) (struct rio_mport *mport, int index, u16 destid, u16 data);
+  int (* pwenable) (struct rio_mport *mport, int enable);
+  int (* open_outb_mbox) (struct rio_mport *mport, void *dev_id,int mbox, int entries);
+  void (* close_outb_mbox) (struct rio_mport *mport, int mbox);
+  int (* open_inb_mbox) (struct rio_mport *mport, void *dev_id,int mbox, int entries);
+  void (* close_inb_mbox) (struct rio_mport *mport, int mbox);
+  int (* add_outb_message) (struct rio_mport *mport, struct rio_dev *rdev,int mbox, void *buffer, size_t len);
+  int (* add_inb_buffer) (struct rio_mport *mport, int mbox, void *buf);
+  void *(* get_inb_message) (struct rio_mport *mport, int mbox);
+  int (* map_inb) (struct rio_mport *mport, dma_addr_t lstart,u64 rstart, u64 size, u32 flags);
+  void (* unmap_inb) (struct rio_mport *mport, dma_addr_t lstart);
+  int (* query_mport) (struct rio_mport *mport,struct rio_mport_attr *attr);
+  int (* map_outb) (struct rio_mport *mport, u16 destid, u64 rstart,u32 size, u32 flags, dma_addr_t *laddr);
+  void (* unmap_outb) (struct rio_mport *mport, u16 destid, u64 rstart);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+lcread
+.RS 4
+Callback to perform local (master port) read of config space\&.
+.RE
+.PP
+lcwrite
+.RS 4
+Callback to perform local (master port) write of config space\&.
+.RE
+.PP
+cread
+.RS 4
+Callback to perform network read of config space\&.
+.RE
+.PP
+cwrite
+.RS 4
+Callback to perform network write of config space\&.
+.RE
+.PP
+dsend
+.RS 4
+Callback to send a doorbell message\&.
+.RE
+.PP
+pwenable
+.RS 4
+Callback to enable/disable port\-write message handling\&.
+.RE
+.PP
+open_outb_mbox
+.RS 4
+Callback to initialize outbound mailbox\&.
+.RE
+.PP
+close_outb_mbox
+.RS 4
+Callback to shut down outbound mailbox\&.
+.RE
+.PP
+open_inb_mbox
+.RS 4
+Callback to initialize inbound mailbox\&.
+.RE
+.PP
+close_inb_mbox
+.RS 4
+Callback to shut down inbound mailbox\&.
+.RE
+.PP
+add_outb_message
+.RS 4
+Callback to add a message to an outbound mailbox queue\&.
+.RE
+.PP
+add_inb_buffer
+.RS 4
+Callback to add a buffer to an inbound mailbox queue\&.
+.RE
+.PP
+get_inb_message
+.RS 4
+Callback to get a message from an inbound mailbox queue\&.
+.RE
+.PP
+map_inb
+.RS 4
+Callback to map RapidIO address region into local memory space\&.
+.RE
+.PP
+unmap_inb
+.RS 4
+Callback to unmap RapidIO address region mapped with
+\fBmap_inb\fR\&.
+.RE
+.PP
+query_mport
+.RS 4
+Callback to query mport device attributes\&.
+.RE
+.PP
+map_outb
+.RS 4
+Callback to map outbound address region into local memory space\&.
+.RE
+.PP
+unmap_outb
+.RS 4
+Callback to unmap outbound RapidIO address region\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

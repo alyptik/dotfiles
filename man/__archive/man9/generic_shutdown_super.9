@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: generic_shutdown_super
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GENERIC_SHUTDOWN_SUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+generic_shutdown_super \- common helper for \->\fBkill_sb\fR
+.SH "SYNOPSIS"
+.HP \w'void\ generic_shutdown_super('u
+.BI "void generic_shutdown_super(struct\ super_block\ *\ " "sb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+superblock to kill
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBgeneric_shutdown_super\fR
+does all fs\-independent work on superblock shutdown\&. Typical \->\fBkill_sb\fR
+should pick all fs\-specific objects that need destruction out of superblock, call
+\fBgeneric_shutdown_super\fR
+and release aforementioned objects\&. Note: dentries and inodes _are_ taken care of and do not need specific handling\&.
+.PP
+Upon calling this function, the filesystem may no longer alter or rearrange the set of dentries belonging to this super_block, nor may it change the attachments of dentries to inodes\&.
+.SH "COPYRIGHT"
+.br

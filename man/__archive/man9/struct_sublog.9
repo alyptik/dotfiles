@@ -1,0 +1,112 @@
+'\" t
+.\"     Title: struct sublog
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT SUBLOG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_sublog \- subchannel logout area
+.SH "SYNOPSIS"
+.sp
+.nf
+struct sublog {
+  __u32 res0:1;
+  __u32 esf:7;
+  __u32 lpum:8;
+  __u32 arep:1;
+  __u32 fvf:5;
+  __u32 sacc:2;
+  __u32 termc:2;
+  __u32 devsc:1;
+  __u32 serr:1;
+  __u32 ioerr:1;
+  __u32 seqc:3;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+res0
+.RS 4
+reserved
+.RE
+.PP
+esf
+.RS 4
+extended status flags
+.RE
+.PP
+lpum
+.RS 4
+last path used mask
+.RE
+.PP
+arep
+.RS 4
+ancillary report
+.RE
+.PP
+fvf
+.RS 4
+field\-validity flags
+.RE
+.PP
+sacc
+.RS 4
+storage access code
+.RE
+.PP
+termc
+.RS 4
+termination code
+.RE
+.PP
+devsc
+.RS 4
+device\-status check
+.RE
+.PP
+serr
+.RS 4
+secondary error
+.RE
+.PP
+ioerr
+.RS 4
+i/o\-error alert
+.RE
+.PP
+seqc
+.RS 4
+sequence code
+.RE
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

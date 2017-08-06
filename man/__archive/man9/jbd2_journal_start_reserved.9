@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: jbd2_journal_start_reserved
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "JBD2_JOURNAL_START_R" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+jbd2_journal_start_reserved \- start reserved handle
+.SH "SYNOPSIS"
+.HP \w'int\ jbd2_journal_start_reserved('u
+.BI "int jbd2_journal_start_reserved(handle_t\ *\ " "handle" ", unsigned\ int\ " "type" ", unsigned\ int\ " "line_no" ");"
+.SH "ARGUMENTS"
+.PP
+\fIhandle\fR
+.RS 4
+handle to start
+.RE
+.PP
+\fItype\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.PP
+\fIline_no\fR
+.RS 4
+\-\- undescribed \-\-
+.RE
+.SH "DESCRIPTION"
+.PP
+Start handle that has been previously reserved with
+\fBjbd2_journal_reserve\fR\&. This attaches
+\fIhandle\fR
+to the running transaction (or creates one if there\*(Aqs not transaction running)\&. Unlike
+\fBjbd2_journal_start\fR
+this function cannot block on journal commit, checkpointing, or similar stuff\&. It can block on memory allocation or frozen journal though\&.
+.PP
+Return 0 on success, non\-zero on error \- handle is freed in that case\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

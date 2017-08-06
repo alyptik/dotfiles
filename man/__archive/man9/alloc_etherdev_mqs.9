@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: alloc_etherdev_mqs
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ALLOC_ETHERDEV_MQS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+alloc_etherdev_mqs \- Allocates and sets up an Ethernet device
+.SH "SYNOPSIS"
+.HP \w'struct\ net_device\ *\ alloc_etherdev_mqs('u
+.BI "struct net_device * alloc_etherdev_mqs(int\ " "sizeof_priv" ", unsigned\ int\ " "txqs" ", unsigned\ int\ " "rxqs" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsizeof_priv\fR
+.RS 4
+Size of additional driver\-private structure to be allocated for this Ethernet device
+.RE
+.PP
+\fItxqs\fR
+.RS 4
+The number of TX queues this device has\&.
+.RE
+.PP
+\fIrxqs\fR
+.RS 4
+The number of RX queues this device has\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Fill in the fields of the device structure with Ethernet\-generic values\&. Basically does everything except registering the device\&.
+.PP
+Constructs a new net device, complete with a private data area of size (sizeof_priv)\&. A 32\-byte (not bit) alignment is enforced for this private data area\&.
+.SH "COPYRIGHT"
+.br

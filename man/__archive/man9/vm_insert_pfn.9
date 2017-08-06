@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: vm_insert_pfn
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VM_INSERT_PFN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vm_insert_pfn \- insert single pfn into user vma
+.SH "SYNOPSIS"
+.HP \w'int\ vm_insert_pfn('u
+.BI "int vm_insert_pfn(struct\ vm_area_struct\ *\ " "vma" ", unsigned\ long\ " "addr" ", unsigned\ long\ " "pfn" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvma\fR
+.RS 4
+user vma to map to
+.RE
+.PP
+\fIaddr\fR
+.RS 4
+target user address of this page
+.RE
+.PP
+\fIpfn\fR
+.RS 4
+source kernel pfn
+.RE
+.SH "DESCRIPTION"
+.PP
+Similar to vm_insert_page, this allows drivers to insert individual pages they\*(Aqve allocated into a user vma\&. Same comments apply\&.
+.PP
+This function should only be called from a vm_ops\->fault handler, and in that case the handler should return NULL\&.
+.PP
+vma cannot be a COW mapping\&.
+.PP
+As this is called only for pages that do not currently exist, we do not need to flush old virtual caches or the TLB\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: sk_wait_data
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SK_WAIT_DATA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sk_wait_data \- wait for data to arrive at sk_receive_queue
+.SH "SYNOPSIS"
+.HP \w'int\ sk_wait_data('u
+.BI "int sk_wait_data(struct\ sock\ *\ " "sk" ", long\ *\ " "timeo" ", const\ struct\ sk_buff\ *\ " "skb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsk\fR
+.RS 4
+sock to wait on
+.RE
+.PP
+\fItimeo\fR
+.RS 4
+for how long
+.RE
+.PP
+\fIskb\fR
+.RS 4
+last skb seen on sk_receive_queue
+.RE
+.SH "DESCRIPTION"
+.PP
+Now socket state including sk\->sk_err is changed only under lock, hence we may omit checks after joining wait queue\&. We check receive queue before
+\fBschedule\fR
+only as optimization; it is very likely that
+\fBrelease_sock\fR
+added new data\&.
+.SH "COPYRIGHT"
+.br

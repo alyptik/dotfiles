@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: wait_for_stable_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WAIT_FOR_STABLE_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wait_for_stable_page \- wait for writeback to finish, if necessary\&.
+.SH "SYNOPSIS"
+.HP \w'void\ wait_for_stable_page('u
+.BI "void wait_for_stable_page(struct\ page\ *\ " "page" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpage\fR
+.RS 4
+The page to wait on\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function determines if the given page is related to a backing device that requires page contents to be held stable during writeback\&. If so, then it will wait for any pending writeback to complete\&.
+.SH "COPYRIGHT"
+.br

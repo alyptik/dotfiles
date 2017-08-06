@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: ipc_findkey
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel IPC facilities
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IPC_FINDKEY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel IPC facilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ipc_findkey \- find a key in an ipc identifier set
+.SH "SYNOPSIS"
+.HP \w'struct\ kern_ipc_perm\ *\ ipc_findkey('u
+.BI "struct kern_ipc_perm * ipc_findkey(struct\ ipc_ids\ *\ " "ids" ", key_t\ " "key" ");"
+.SH "ARGUMENTS"
+.PP
+\fIids\fR
+.RS 4
+ipc identifier set
+.RE
+.PP
+\fIkey\fR
+.RS 4
+key to find
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns the locked pointer to the ipc structure if found or NULL otherwise\&. If key is found ipc points to the owning ipc structure
+.PP
+Called with ipc_ids\&.rwsem held\&.
+.SH "COPYRIGHT"
+.br

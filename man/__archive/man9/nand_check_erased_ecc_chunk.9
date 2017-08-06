@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: nand_check_erased_ecc_chunk
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_CHECK_ERASED_EC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_check_erased_ecc_chunk \- check if an ECC chunk contains (almost) only 0xff data
+.SH "SYNOPSIS"
+.HP \w'int\ nand_check_erased_ecc_chunk('u
+.BI "int nand_check_erased_ecc_chunk(void\ *\ " "data" ", int\ " "datalen" ", void\ *\ " "ecc" ", int\ " "ecclen" ", void\ *\ " "extraoob" ", int\ " "extraooblen" ", int\ " "bitflips_threshold" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdata\fR
+.RS 4
+data buffer to test
+.RE
+.PP
+\fIdatalen\fR
+.RS 4
+data length
+.RE
+.PP
+\fIecc\fR
+.RS 4
+ECC buffer
+.RE
+.PP
+\fIecclen\fR
+.RS 4
+ECC length
+.RE
+.PP
+\fIextraoob\fR
+.RS 4
+extra OOB buffer
+.RE
+.PP
+\fIextraooblen\fR
+.RS 4
+extra OOB length
+.RE
+.PP
+\fIbitflips_threshold\fR
+.RS 4
+maximum number of bitflips
+.RE
+.SH "DESCRIPTION"
+.PP
+Check if a data buffer and its associated ECC and OOB data contains only 0xff pattern, which means the underlying region has been erased and is ready to be programmed\&. The bitflips_threshold specify the maximum number of bitflips before considering the region as not erased\&.
+.SH "NOTE"
+.PP
+1/ ECC algorithms are working on pre\-defined block sizes which are usually different from the NAND page size\&. When fixing bitflips, ECC engines will report the number of errors per chunk, and the NAND core infrastructure expect you to return the maximum number of bitflips for the whole page\&. This is why you should always use this function on a single chunk and not on the whole page\&. After checking each chunk you should update your max_bitflips value accordingly\&. 2/ When checking for bitflips in erased pages you should not only check the payload data but also their associated ECC data, because a user might have programmed almost all bits to 1 but a few\&. In this case, we shouldn\*(Aqt consider the chunk as erased, and checking ECC bytes prevent this case\&. 3/ The extraoob argument is optional, and should be used if some of your OOB data are protected by the ECC engine\&. It could also be used if you support subpages and want to attach some extra OOB data to an ECC chunk\&.
+.PP
+Returns a positive number of bitflips less than or equal to bitflips_threshold, or \-ERROR_CODE for bitflips in excess of the threshold\&. In case of success, the passed buffers are filled with 0xff\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

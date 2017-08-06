@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: usb_ep_align
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "USB_EP_ALIGN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+usb_ep_align \- returns \fIlen\fR aligned to ep\*(Aqs maxpacketsize\&.
+.SH "SYNOPSIS"
+.HP \w'size_t\ usb_ep_align('u
+.BI "size_t usb_ep_align(struct\ usb_ep\ *\ " "ep" ", size_t\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIep\fR
+.RS 4
+the endpoint whose maxpacketsize is used to align
+\fIlen\fR
+.RE
+.PP
+\fIlen\fR
+.RS 4
+buffer size\*(Aqs length to align to
+\fIep\fR\*(Aqs maxpacketsize
+.RE
+.SH "DESCRIPTION"
+.PP
+This helper is used to align buffer\*(Aqs size to an ep\*(Aqs maxpacketsize\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

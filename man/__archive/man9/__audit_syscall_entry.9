@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: __audit_syscall_entry
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_SYSCALL_ENTR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_syscall_entry \- fill in an audit record at syscall entry
+.SH "SYNOPSIS"
+.HP \w'void\ __audit_syscall_entry('u
+.BI "void __audit_syscall_entry(int\ " "major" ", unsigned\ long\ " "a1" ", unsigned\ long\ " "a2" ", unsigned\ long\ " "a3" ", unsigned\ long\ " "a4" ");"
+.SH "ARGUMENTS"
+.PP
+\fImajor\fR
+.RS 4
+major syscall type (function)
+.RE
+.PP
+\fIa1\fR
+.RS 4
+additional syscall register 1
+.RE
+.PP
+\fIa2\fR
+.RS 4
+additional syscall register 2
+.RE
+.PP
+\fIa3\fR
+.RS 4
+additional syscall register 3
+.RE
+.PP
+\fIa4\fR
+.RS 4
+additional syscall register 4
+.RE
+.SH "DESCRIPTION"
+.PP
+Fill in audit context at syscall entry\&. This only happens if the audit context was created when the task was created and the state or filters demand the audit context be built\&. If the state from the per\-task filter or from the per\-syscall filter is AUDIT_RECORD_CONTEXT, then the record will be written at syscall exit time (otherwise, it will only be written if another part of the kernel requests that it be written)\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: __napi_alloc_skb
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__NAPI_ALLOC_SKB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__napi_alloc_skb \- allocate skbuff for rx in a specific NAPI instance
+.SH "SYNOPSIS"
+.HP \w'struct\ sk_buff\ *\ __napi_alloc_skb('u
+.BI "struct sk_buff * __napi_alloc_skb(struct\ napi_struct\ *\ " "napi" ", unsigned\ int\ " "len" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fInapi\fR
+.RS 4
+napi instance this buffer was allocated for
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length to allocate
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+get_free_pages mask, passed to alloc_skb and alloc_pages
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocate a new sk_buff for use in NAPI receive\&. This buffer will attempt to allocate the head from a special reserved region used only for NAPI Rx allocation\&. By doing this we can save several CPU cycles by avoiding having to disable and re\-enable IRQs\&.
+.PP
+\fBNULL\fR
+is returned if there is no free memory\&.
+.SH "COPYRIGHT"
+.br

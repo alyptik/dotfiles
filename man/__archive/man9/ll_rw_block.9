@@ -1,0 +1,80 @@
+'\" t
+.\"     Title: ll_rw_block
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "LL_RW_BLOCK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ll_rw_block \- level access to block devices (DEPRECATED)
+.SH "SYNOPSIS"
+.HP \w'void\ ll_rw_block('u
+.BI "void ll_rw_block(int\ " "op" ", int\ " "op_flags" ", int\ " "nr" ", struct\ buffer_head\ *\ " "bhs[]" ");"
+.SH "ARGUMENTS"
+.PP
+\fIop\fR
+.RS 4
+whether to
+\fBREAD\fR
+or
+\fBWRITE\fR
+.RE
+.PP
+\fIop_flags\fR
+.RS 4
+req_flag_bits
+.RE
+.PP
+\fInr\fR
+.RS 4
+number of
+struct buffer_heads
+in the array
+.RE
+.PP
+\fIbhs[]\fR
+.RS 4
+array of pointers to
+struct buffer_head
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBll_rw_block\fR
+takes an array of pointers to
+struct buffer_heads, and requests an I/O operation on them, either a
+\fBREQ_OP_READ\fR
+or a
+\fBREQ_OP_WRITE\fR\&.
+\fIop_flags\fR
+contains flags modifying the detailed I/O behavior, most notably
+\fBREQ_RAHEAD\fR\&.
+.PP
+This function drops any buffer that it cannot get a lock on (with the BH_Lock state bit), any buffer that appears to be clean when doing a write request, and any buffer that appears to be up\-to\-date when doing read request\&. Further it marks as clean buffers that are processed for writing (the buffer cache won\*(Aqt assume that they are actually clean until the buffer gets unlocked)\&.
+.PP
+ll_rw_block sets b_end_io to simple completion handler that marks the buffer up\-to\-date (if appropriate), unlocks the buffer and wakes any waiters\&.
+.PP
+All of the buffers must be for the same device, and must also be a multiple of the current approved size for the device\&.
+.SH "COPYRIGHT"
+.br

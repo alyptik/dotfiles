@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: mark_buffer_dirty
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MARK_BUFFER_DIRTY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mark_buffer_dirty \- mark a buffer_head as needing writeout
+.SH "SYNOPSIS"
+.HP \w'void\ mark_buffer_dirty('u
+.BI "void mark_buffer_dirty(struct\ buffer_head\ *\ " "bh" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbh\fR
+.RS 4
+the buffer_head to mark dirty
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBmark_buffer_dirty\fR
+will set the dirty bit against the buffer, then set its backing page dirty, then tag the page as dirty in its address_space\*(Aqs radix tree and then attach the address_space\*(Aqs inode to its superblock\*(Aqs dirty inode list\&.
+.PP
+\fBmark_buffer_dirty\fR
+is atomic\&. It takes bh\->b_page\->mapping\->private_lock, mapping\->tree_lock and mapping\->host\->i_lock\&.
+.SH "COPYRIGHT"
+.br

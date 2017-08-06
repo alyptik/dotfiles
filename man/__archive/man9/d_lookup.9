@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: d_lookup
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "D_LOOKUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+d_lookup \- search for a dentry
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ d_lookup('u
+.BI "struct dentry * d_lookup(const\ struct\ dentry\ *\ " "parent" ", const\ struct\ qstr\ *\ " "name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIparent\fR
+.RS 4
+parent dentry
+.RE
+.PP
+\fIname\fR
+.RS 4
+qstr of name we wish to find
+.RE
+.SH "RETURN"
+.PP
+dentry, or NULL
+.PP
+d_lookup searches the children of the parent dentry for the name in question\&. If the dentry is found its reference count is incremented and the dentry is returned\&. The caller must use dput to free the entry when it has finished using it\&.
+\fBNULL\fR
+is returned if the dentry does not exist\&.
+.SH "COPYRIGHT"
+.br

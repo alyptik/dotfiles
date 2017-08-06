@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: ata_slave_link_init
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SLAVE_LINK_INIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_slave_link_init \- initialize slave link
+.SH "SYNOPSIS"
+.HP \w'int\ ata_slave_link_init('u
+.BI "int ata_slave_link_init(struct\ ata_port\ *\ " "ap" ");"
+.SH "ARGUMENTS"
+.PP
+\fIap\fR
+.RS 4
+port to initialize slave link for
+.RE
+.SH "DESCRIPTION"
+.PP
+Create and initialize slave link for
+\fIap\fR\&. This enables slave link handling on the port\&.
+.PP
+In libata, a port contains links and a link contains devices\&. There is single host link but if a PMP is attached to it, there can be multiple fan\-out links\&. On SATA, there\*(Aqs usually a single device connected to a link but PATA and SATA controllers emulating TF based interface can have two \- master and slave\&.
+.PP
+However, there are a few controllers which don\*(Aqt fit into this abstraction too well \- SATA controllers which emulate TF interface with both master and slave devices but also have separate SCR register sets for each device\&. These controllers need separate links for physical link handling (e\&.g\&. onlineness, link speed) but should be treated like a traditional M/S controller for everything else (e\&.g\&. command issue, softreset)\&.
+.PP
+slave_link is libata\*(Aqs way of handling this class of controllers without impacting core layer too much\&. For anything other than physical link handling, the default host link is used for both master and slave\&. For physical link handling, separate
+\fIap\fR\->slave_link is used\&. All dirty details are implemented inside libata core layer\&. From LLD\*(Aqs POV, the only difference is that prereset, hardreset and postreset are called once more for the slave link, so the reset sequence looks like the following\&.
+.PP
+prereset(M) \-> prereset(S) \-> hardreset(M) \-> hardreset(S) \-> softreset(M) \-> postreset(M) \-> postreset(S)
+.PP
+Note that softreset is called only for the master\&. Softreset resets both M/S by definition, so SRST on master should handle both (the standard method will work just fine)\&.
+.PP
+LOCKING: Should be called before host is registered\&.
+.SH "RETURN"
+.PP
+0 on success, \-errno on failure\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

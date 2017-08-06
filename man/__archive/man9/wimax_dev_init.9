@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: wimax_dev_init
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_DEV_INIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_dev_init \- initialize a newly allocated instance
+.SH "SYNOPSIS"
+.HP \w'void\ wimax_dev_init('u
+.BI "void wimax_dev_init(struct\ wimax_dev\ *\ " "wimax_dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor to initialize\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Initializes fields of a freshly allocated
+\fIwimax_dev\fR
+instance\&. This function assumes that after allocation, the memory occupied by
+\fIwimax_dev\fR
+was zeroed\&.
+.SH "COPYRIGHT"
+.br

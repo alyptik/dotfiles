@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: eth_header
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ETH_HEADER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eth_header \- create the Ethernet header
+.SH "SYNOPSIS"
+.HP \w'int\ eth_header('u
+.BI "int eth_header(struct\ sk_buff\ *\ " "skb" ", struct\ net_device\ *\ " "dev" ", unsigned\ short\ " "type" ", const\ void\ *\ " "daddr" ", const\ void\ *\ " "saddr" ", unsigned\ int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+buffer to alter
+.RE
+.PP
+\fIdev\fR
+.RS 4
+source device
+.RE
+.PP
+\fItype\fR
+.RS 4
+Ethernet type field
+.RE
+.PP
+\fIdaddr\fR
+.RS 4
+destination address (NULL leave destination address)
+.RE
+.PP
+\fIsaddr\fR
+.RS 4
+source address (NULL use device source address)
+.RE
+.PP
+\fIlen\fR
+.RS 4
+packet length (<= skb\->len)
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Set the protocol type\&. For a packet of type ETH_P_802_3/2 we put the length in here instead\&.
+.SH "COPYRIGHT"
+.br

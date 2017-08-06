@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: sil_dev_config
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: sata_sil Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SIL_DEV_CONFIG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "sata_sil Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sil_dev_config \- Apply device/host\-specific errata fixups
+.SH "SYNOPSIS"
+.HP \w'void\ sil_dev_config('u
+.BI "void sil_dev_config(struct\ ata_device\ *\ " "dev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Device to be examined
+.RE
+.SH "DESCRIPTION"
+.PP
+After the IDENTIFY [PACKET] DEVICE step is complete, and a device is known to be present, this function is called\&. We apply two errata fixups which are specific to Silicon Image, a Seagate and a Maxtor fixup\&.
+.PP
+For certain Seagate devices, we must limit the maximum sectors to under 8K\&.
+.PP
+For certain Maxtor devices, we must not program the drive beyond udma5\&.
+.PP
+Both fixups are unfairly pessimistic\&. As soon as I get more information on these errata, I will create a more exhaustive list, and apply the fixups to only the specific devices/hosts/firmwares that need it\&.
+.PP
+20040111 \- Seagate drives affected by the Mod15Write bug are blacklisted The Maxtor quirk is in the blacklist, but I\*(Aqm keeping the original pessimistic fix for the following reasons\&.\&.\&. \- There seems to be less info on it, only one device gleaned off the Windows driver, maybe only one is affected\&. More info would be greatly appreciated\&. \- But then again UDMA5 is hardly anything to complain about
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: write_inode_now
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WRITE_INODE_NOW" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+write_inode_now \- write an inode to disk
+.SH "SYNOPSIS"
+.HP \w'int\ write_inode_now('u
+.BI "int write_inode_now(struct\ inode\ *\ " "inode" ", int\ " "sync" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+inode to write to disk
+.RE
+.PP
+\fIsync\fR
+.RS 4
+whether the write should be synchronous or not
+.RE
+.SH "DESCRIPTION"
+.PP
+This function commits an inode to disk immediately if it is dirty\&. This is primarily needed by knfsd\&.
+.PP
+The caller must either have a ref on the inode or must have set I_WILL_FREE\&.
+.SH "COPYRIGHT"
+.br

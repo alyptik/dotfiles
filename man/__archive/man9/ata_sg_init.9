@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: ata_sg_init
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_SG_INIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_sg_init \- Associate command with scatter\-gather table\&.
+.SH "SYNOPSIS"
+.HP \w'void\ ata_sg_init('u
+.BI "void ata_sg_init(struct\ ata_queued_cmd\ *\ " "qc" ", struct\ scatterlist\ *\ " "sg" ", unsigned\ int\ " "n_elem" ");"
+.SH "ARGUMENTS"
+.PP
+\fIqc\fR
+.RS 4
+Command to be associated
+.RE
+.PP
+\fIsg\fR
+.RS 4
+Scatter\-gather table\&.
+.RE
+.PP
+\fIn_elem\fR
+.RS 4
+Number of elements in s/g table\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Initialize the data\-related elements of queued_cmd
+\fIqc\fR
+to point to a scatter\-gather table
+\fIsg\fR, containing
+\fIn_elem\fR
+elements\&.
+.PP
+LOCKING: spin_lock_irqsave(host lock)
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

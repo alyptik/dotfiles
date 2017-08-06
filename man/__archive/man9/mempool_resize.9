@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: mempool_resize
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMPOOL_RESIZE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mempool_resize \- resize an existing memory pool
+.SH "SYNOPSIS"
+.HP \w'int\ mempool_resize('u
+.BI "int mempool_resize(mempool_t\ *\ " "pool" ", int\ " "new_min_nr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpool\fR
+.RS 4
+pointer to the memory pool which was allocated via
+\fBmempool_create\fR\&.
+.RE
+.PP
+\fInew_min_nr\fR
+.RS 4
+the new minimum number of elements guaranteed to be allocated for this pool\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function shrinks/grows the pool\&. In the case of growing, it cannot be guaranteed that the pool will be grown to the new size immediately, but new
+\fBmempool_free\fR
+calls will refill it\&. This function may sleep\&.
+.PP
+Note, the caller must guarantee that no mempool_destroy is called while this function is running\&.
+\fBmempool_alloc\fR
+&
+\fBmempool_free\fR
+might be called (eg\&. from IRQ contexts) while this function executes\&.
+.SH "COPYRIGHT"
+.br

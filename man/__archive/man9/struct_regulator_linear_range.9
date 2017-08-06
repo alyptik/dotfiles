@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: struct regulator_linear_range
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATOR_LIN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulator_linear_range \- specify linear voltage ranges
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulator_linear_range {
+  unsigned int min_uV;
+  unsigned int min_sel;
+  unsigned int max_sel;
+  unsigned int uV_step;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+min_uV
+.RS 4
+Lowest voltage in range
+.RE
+.PP
+min_sel
+.RS 4
+Lowest selector for range
+.RE
+.PP
+max_sel
+.RS 4
+Highest selector for range
+.RE
+.PP
+uV_step
+.RS 4
+Step size
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Specify a range of voltages for
+\fBregulator_map_linar_range\fR
+and
+\fBregulator_list_linear_range\fR\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

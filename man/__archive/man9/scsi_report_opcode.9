@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: scsi_report_opcode
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_REPORT_OPCODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_report_opcode \- Find out if a given command opcode is supported
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_report_opcode('u
+.BI "int scsi_report_opcode(struct\ scsi_device\ *\ " "sdev" ", unsigned\ char\ *\ " "buffer" ", unsigned\ int\ " "len" ", unsigned\ char\ " "opcode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+scsi device to query
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+scratch buffer (must be at least 20 bytes long)
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length of buffer
+.RE
+.PP
+\fIopcode\fR
+.RS 4
+opcode for command to look up
+.RE
+.SH "DESCRIPTION"
+.PP
+Uses the REPORT SUPPORTED OPERATION CODES to look up the given opcode\&. Returns \-EINVAL if RSOC fails, 0 if the command opcode is unsupported and 1 if the device claims to support the command\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: debugfs_rename
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_RENAME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_rename \- rename a file/directory in the debugfs filesystem
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ debugfs_rename('u
+.BI "struct dentry * debugfs_rename(struct\ dentry\ *\ " "old_dir" ", struct\ dentry\ *\ " "old_dentry" ", struct\ dentry\ *\ " "new_dir" ", const\ char\ *\ " "new_name" ");"
+.SH "ARGUMENTS"
+.PP
+\fIold_dir\fR
+.RS 4
+a pointer to the parent dentry for the renamed object\&. This should be a directory dentry\&.
+.RE
+.PP
+\fIold_dentry\fR
+.RS 4
+dentry of an object to be renamed\&.
+.RE
+.PP
+\fInew_dir\fR
+.RS 4
+a pointer to the parent dentry where the object should be moved\&. This should be a directory dentry\&.
+.RE
+.PP
+\fInew_name\fR
+.RS 4
+a pointer to a string containing the target name\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function renames a file/directory in debugfs\&. The target must not exist for rename to succeed\&.
+.PP
+This function will return a pointer to old_dentry (which is updated to reflect renaming) if it succeeds\&. If an error occurs,
+\fBNULL\fR
+will be returned\&.
+.PP
+If debugfs is not enabled in the kernel, the value \-\fBENODEV\fR
+will be returned\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: unlock_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "UNLOCK_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+unlock_page \- unlock a locked page
+.SH "SYNOPSIS"
+.HP \w'void\ unlock_page('u
+.BI "void unlock_page(struct\ page\ *\ " "page" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpage\fR
+.RS 4
+the page
+.RE
+.SH "DESCRIPTION"
+.PP
+Unlocks the page and wakes up sleepers in
+\fB___wait_on_page_locked\fR\&. Also wakes sleepers in
+\fBwait_on_page_writeback\fR
+because the wakeup mechanism between PageLocked pages and PageWriteback pages is shared\&. But that\*(Aqs OK \- sleepers in
+\fBwait_on_page_writeback\fR
+just go back to sleep\&.
+.PP
+Note that this depends on PG_waiters being the sign bit in the byte that contains PG_locked \- thus the
+\fBBUILD_BUG_ON\fR\&. That allows us to clear the PG_locked bit and test PG_waiters at the same time fairly portably (architectures that do LL/SC can test any bit, while x86 can test the sign bit)\&.
+.SH "COPYRIGHT"
+.br

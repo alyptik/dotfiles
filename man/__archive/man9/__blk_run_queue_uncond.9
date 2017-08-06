@@ -1,0 +1,46 @@
+'\" t
+.\"     Title: __blk_run_queue_uncond
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__BLK_RUN_QUEUE_UNCO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__blk_run_queue_uncond \- run a queue whether or not it has been stopped
+.SH "SYNOPSIS"
+.HP \w'void\ __blk_run_queue_uncond('u
+.BI "void __blk_run_queue_uncond(struct\ request_queue\ *\ " "q" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+The queue to run
+.RE
+.SH "DESCRIPTION"
+.PP
+Invoke request handling on a queue if there are any pending requests\&. May be used to restart request handling after a request has completed\&. This variant runs the queue whether or not the queue has been stopped\&. Must be called with the queue lock held and interrupts disabled\&. See also
+\fIblk_run_queue\fR\&.
+.SH "COPYRIGHT"
+.br

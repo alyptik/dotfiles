@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: regulator_get_hardware_vsel_register
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_GET_HARDWA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_get_hardware_vsel_register \- get the HW voltage selector register
+.SH "SYNOPSIS"
+.HP \w'int\ regulator_get_hardware_vsel_register('u
+.BI "int regulator_get_hardware_vsel_register(struct\ regulator\ *\ " "regulator" ", unsigned\ *\ " "vsel_reg" ", unsigned\ *\ " "vsel_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIregulator\fR
+.RS 4
+regulator source
+.RE
+.PP
+\fIvsel_reg\fR
+.RS 4
+voltage selector register, output parameter
+.RE
+.PP
+\fIvsel_mask\fR
+.RS 4
+mask for voltage selector bitfield, output parameter
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns the hardware register offset and bitmask used for setting the regulator voltage\&. This might be useful when configuring voltage\-scaling hardware or firmware that can make I2C requests behind the kernel\*(Aqs back, for example\&.
+.PP
+On success, the output parameters
+\fIvsel_reg\fR
+and
+\fIvsel_mask\fR
+are filled in and 0 is returned, otherwise a negative errno is returned\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

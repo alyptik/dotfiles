@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: ida_get_new_above
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IDA_GET_NEW_ABOVE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ida_get_new_above \- allocate new ID above or equal to a start id
+.SH "SYNOPSIS"
+.HP \w'int\ ida_get_new_above('u
+.BI "int ida_get_new_above(struct\ ida\ *\ " "ida" ", int\ " "starting_id" ", int\ *\ " "p_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIida\fR
+.RS 4
+ida handle
+.RE
+.PP
+\fIstarting_id\fR
+.RS 4
+id to start search at
+.RE
+.PP
+\fIp_id\fR
+.RS 4
+pointer to the allocated handle
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocate new ID above or equal to
+\fIstarting_id\fR\&. It should be called with any required locks\&.
+.PP
+If memory is required, it will return
+\fB\-EAGAIN\fR, you should unlock and go back to the
+\fBida_pre_get\fR
+call\&. If the ida is full, it will return
+\fB\-ENOSPC\fR\&.
+.PP
+Note that callers must ensure that concurrent access to
+\fIida\fR
+is not possible\&. See
+\fBida_simple_get\fR
+for a varaint which takes care of locking\&.
+.PP
+\fIp_id\fR
+returns a value in the range
+\fIstarting_id\fR
+\&.\&.\&.
+\fB0x7fffffff\fR\&.
+.SH "COPYRIGHT"
+.br

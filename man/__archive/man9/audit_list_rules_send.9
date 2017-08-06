@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: audit_list_rules_send
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "AUDIT_LIST_RULES_SEN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+audit_list_rules_send \- list the audit rules
+.SH "SYNOPSIS"
+.HP \w'int\ audit_list_rules_send('u
+.BI "int audit_list_rules_send(struct\ sk_buff\ *\ " "request_skb" ", int\ " "seq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrequest_skb\fR
+.RS 4
+skb of request we are replying to (used to target the reply)
+.RE
+.PP
+\fIseq\fR
+.RS 4
+netlink audit message sequence (serial) number
+.RE
+.SH "COPYRIGHT"
+.br

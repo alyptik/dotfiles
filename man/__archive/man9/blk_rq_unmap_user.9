@@ -1,0 +1,48 @@
+'\" t
+.\"     Title: blk_rq_unmap_user
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_RQ_UNMAP_USER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_rq_unmap_user \- unmap a request with user data
+.SH "SYNOPSIS"
+.HP \w'int\ blk_rq_unmap_user('u
+.BI "int blk_rq_unmap_user(struct\ bio\ *\ " "bio" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbio\fR
+.RS 4
+start of bio list
+.RE
+.SH "DESCRIPTION"
+.PP
+Unmap a rq previously mapped by
+\fBblk_rq_map_user\fR\&. The caller must supply the original rq\->bio from the
+\fBblk_rq_map_user\fR
+return, since the I/O completion may have changed rq\->bio\&.
+.SH "COPYRIGHT"
+.br

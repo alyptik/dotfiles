@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: __generic_file_write_iter
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__GENERIC_FILE_WRITE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__generic_file_write_iter \- write data to a file
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ __generic_file_write_iter('u
+.BI "ssize_t __generic_file_write_iter(struct\ kiocb\ *\ " "iocb" ", struct\ iov_iter\ *\ " "from" ");"
+.SH "ARGUMENTS"
+.PP
+\fIiocb\fR
+.RS 4
+IO state structure (file, offset, etc\&.)
+.RE
+.PP
+\fIfrom\fR
+.RS 4
+iov_iter with data to write
+.RE
+.SH "DESCRIPTION"
+.PP
+This function does all the work needed for actually writing data to a file\&. It does all basic checks, removes SUID from the file, updates modification times and calls proper subroutines depending on whether we do direct IO or a standard buffered write\&.
+.PP
+It expects i_mutex to be grabbed unless we work on a block device or similar object which does not need locking at all\&.
+.PP
+This function does *not* take care of syncing data in case of O_SYNC write\&. A caller has to handle it\&. This is mainly due to the fact that we want to avoid syncing under i_mutex\&.
+.SH "COPYRIGHT"
+.br

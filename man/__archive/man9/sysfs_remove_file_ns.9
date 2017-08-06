@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: sysfs_remove_file_ns
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Filesystem for Exporting Kernel Objects
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYSFS_REMOVE_FILE_NS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Filesystem for Exporting K"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sysfs_remove_file_ns \- remove an object attribute with a custom ns tag
+.SH "SYNOPSIS"
+.HP \w'void\ sysfs_remove_file_ns('u
+.BI "void sysfs_remove_file_ns(struct\ kobject\ *\ " "kobj" ", const\ struct\ attribute\ *\ " "attr" ", const\ void\ *\ " "ns" ");"
+.SH "ARGUMENTS"
+.PP
+\fIkobj\fR
+.RS 4
+object we\*(Aqre acting for
+.RE
+.PP
+\fIattr\fR
+.RS 4
+attribute descriptor
+.RE
+.PP
+\fIns\fR
+.RS 4
+namespace tag of the file to remove
+.RE
+.SH "DESCRIPTION"
+.PP
+Hash the attribute name and namespace tag and kill the victim\&.
+.SH "COPYRIGHT"
+.br

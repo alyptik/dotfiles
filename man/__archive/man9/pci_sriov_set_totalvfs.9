@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: pci_sriov_set_totalvfs
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_SRIOV_SET_TOTALV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_sriov_set_totalvfs \- \- reduce the TotalVFs available
+.SH "SYNOPSIS"
+.HP \w'int\ pci_sriov_set_totalvfs('u
+.BI "int pci_sriov_set_totalvfs(struct\ pci_dev\ *\ " "dev" ", u16\ " "numvfs" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the PCI PF device
+.RE
+.PP
+\fInumvfs\fR
+.RS 4
+number that should be used for TotalVFs supported
+.RE
+.SH "DESCRIPTION"
+.PP
+Should be called from PF driver\*(Aqs probe routine with device\*(Aqs mutex held\&.
+.PP
+Returns 0 if PF is an SRIOV\-capable device and value of numvfs valid\&. If not a PF return \-ENOSYS; if numvfs is invalid return \-EINVAL; if VFs already enabled, return \-EBUSY\&.
+.SH "COPYRIGHT"
+.br

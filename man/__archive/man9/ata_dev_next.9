@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: ata_dev_next
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_DEV_NEXT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_dev_next \- device iteration helper
+.SH "SYNOPSIS"
+.HP \w'struct\ ata_device\ *\ ata_dev_next('u
+.BI "struct ata_device * ata_dev_next(struct\ ata_device\ *\ " "dev" ", struct\ ata_link\ *\ " "link" ", enum\ ata_dev_iter_mode\ " "mode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the previous device, NULL to start
+.RE
+.PP
+\fIlink\fR
+.RS 4
+ATA link containing devices to iterate
+.RE
+.PP
+\fImode\fR
+.RS 4
+iteration mode, one of ATA_DITER_*
+.RE
+.SH "DESCRIPTION"
+.PP
+LOCKING: Host lock or EH context\&.
+.SH "RETURN"
+.PP
+Pointer to the next device\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

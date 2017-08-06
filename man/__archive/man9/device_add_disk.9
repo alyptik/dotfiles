@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: device_add_disk
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEVICE_ADD_DISK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+device_add_disk \- add partitioning information to kernel list
+.SH "SYNOPSIS"
+.HP \w'void\ device_add_disk('u
+.BI "void device_add_disk(struct\ device\ *\ " "parent" ", struct\ gendisk\ *\ " "disk" ");"
+.SH "ARGUMENTS"
+.PP
+\fIparent\fR
+.RS 4
+parent device for the disk
+.RE
+.PP
+\fIdisk\fR
+.RS 4
+per\-device partitioning information
+.RE
+.SH "DESCRIPTION"
+.PP
+This function registers the partitioning information in
+\fIdisk\fR
+with the kernel\&.
+.PP
+FIXME: error handling
+.SH "COPYRIGHT"
+.br

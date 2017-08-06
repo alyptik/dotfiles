@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: iunique
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IUNIQUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+iunique \- get a unique inode number
+.SH "SYNOPSIS"
+.HP \w'ino_t\ iunique('u
+.BI "ino_t iunique(struct\ super_block\ *\ " "sb" ", ino_t\ " "max_reserved" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+superblock
+.RE
+.PP
+\fImax_reserved\fR
+.RS 4
+highest reserved inode number
+.RE
+.SH "DESCRIPTION"
+.PP
+Obtain an inode number that is unique on the system for a given superblock\&. This is used by file systems that have no natural permanent inode numbering system\&. An inode number is returned that is higher than the reserved limit but unique\&.
+.PP
+BUGS: With a large number of inodes live on the file system this function currently becomes quite slow\&.
+.SH "COPYRIGHT"
+.br

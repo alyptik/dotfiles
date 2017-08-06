@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: bpf_prog_create_from_user
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BPF_PROG_CREATE_FROM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bpf_prog_create_from_user \- create an unattached filter from user buffer
+.SH "SYNOPSIS"
+.HP \w'int\ bpf_prog_create_from_user('u
+.BI "int bpf_prog_create_from_user(struct\ bpf_prog\ **\ " "pfp" ", struct\ sock_fprog\ *\ " "fprog" ", bpf_aux_classic_check_t\ " "trans" ", bool\ " "save_orig" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpfp\fR
+.RS 4
+the unattached filter that is created
+.RE
+.PP
+\fIfprog\fR
+.RS 4
+the filter program
+.RE
+.PP
+\fItrans\fR
+.RS 4
+post\-classic verifier transformation handler
+.RE
+.PP
+\fIsave_orig\fR
+.RS 4
+save classic BPF program
+.RE
+.SH "DESCRIPTION"
+.PP
+This function effectively does the same as
+\fBbpf_prog_create\fR, only that it builds up its insns buffer from user space provided buffer\&. It also allows for passing a bpf_aux_classic_check_t handler\&.
+.SH "COPYRIGHT"
+.br

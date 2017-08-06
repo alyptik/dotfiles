@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: sb_start_write
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SB_START_WRITE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sb_start_write \- get write access to a superblock
+.SH "SYNOPSIS"
+.HP \w'void\ sb_start_write('u
+.BI "void sb_start_write(struct\ super_block\ *\ " "sb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+the super we write to
+.RE
+.SH "DESCRIPTION"
+.PP
+When a process wants to write data or metadata to a file system (i\&.e\&. dirty a page or an inode), it should embed the operation in a
+\fBsb_start_write\fR
+\-
+\fBsb_end_write\fR
+pair to get exclusion against file system freezing\&. This function increments number of writers preventing freezing\&. If the file system is already frozen, the function waits until the file system is thawed\&.
+.PP
+Since freeze protection behaves as a lock, users have to preserve ordering of freeze protection and other filesystem locks\&. Generally, freeze protection should be the outermost lock\&. In particular, we have:
+.PP
+sb_start_write \-> i_mutex (write path, truncate, directory ops, \&.\&.\&.) \-> s_umount (freeze_super, thaw_super)
+.SH "COPYRIGHT"
+.br

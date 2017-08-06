@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: alloc_vm_area
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ALLOC_VM_AREA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+alloc_vm_area \- allocate a range of kernel address space
+.SH "SYNOPSIS"
+.HP \w'struct\ vm_struct\ *\ alloc_vm_area('u
+.BI "struct vm_struct * alloc_vm_area(size_t\ " "size" ", pte_t\ **\ " "ptes" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsize\fR
+.RS 4
+size of the area
+.RE
+.PP
+\fIptes\fR
+.RS 4
+returns the PTEs for the address space
+.RE
+.SH "RETURN"
+.PP
+NULL on failure, vm_struct on success
+.PP
+This function reserves a range of kernel address space, and allocates pagetables to map that range\&. No actual mappings are created\&.
+.PP
+If
+\fIptes\fR
+is non\-NULL, pointers to the PTEs (in init_mm) allocated for the VM area are returned\&.
+.SH "COPYRIGHT"
+.br

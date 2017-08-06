@@ -1,0 +1,46 @@
+'\" t
+.\"     Title: netdev_txq_bql_enqueue_prefetchw
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETDEV_TXQ_BQL_ENQUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netdev_txq_bql_enqueue_prefetchw \- prefetch bql data for write
+.SH "SYNOPSIS"
+.HP \w'void\ netdev_txq_bql_enqueue_prefetchw('u
+.BI "void netdev_txq_bql_enqueue_prefetchw(struct\ netdev_queue\ *\ " "dev_queue" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev_queue\fR
+.RS 4
+pointer to transmit queue
+.RE
+.SH "DESCRIPTION"
+.PP
+BQL enabled drivers might use this helper in their
+\fBndo_start_xmit\fR, to give appropriate hint to the CPU\&.
+.SH "COPYRIGHT"
+.br

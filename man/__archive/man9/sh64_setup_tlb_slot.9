@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: sh64_setup_tlb_slot
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SH64_SETUP_TLB_SLOT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sh64_setup_tlb_slot \- Load up a translation in a wired slot\&.
+.SH "SYNOPSIS"
+.HP \w'void\ sh64_setup_tlb_slot('u
+.BI "void sh64_setup_tlb_slot(unsigned\ long\ long\ " "config_addr" ", unsigned\ long\ " "eaddr" ", unsigned\ long\ " "asid" ", unsigned\ long\ " "paddr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIconfig_addr\fR
+.RS 4
+Address of TLB slot\&.
+.RE
+.PP
+\fIeaddr\fR
+.RS 4
+Virtual address\&.
+.RE
+.PP
+\fIasid\fR
+.RS 4
+Address Space Identifier\&.
+.RE
+.PP
+\fIpaddr\fR
+.RS 4
+Physical address\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Load up a virtual<\->physical translation for
+\fIeaddr\fR<\->\fIpaddr\fR
+in the pre\-allocated TLB slot
+\fIconfig_addr\fR
+(see sh64_get_wired_dtlb_entry)\&.
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

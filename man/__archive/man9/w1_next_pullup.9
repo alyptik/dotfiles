@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: w1_next_pullup
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: W1 API internal to the kernel
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "W1_NEXT_PULLUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "W1 API internal to the kernel"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+w1_next_pullup \- register for a strong pullup
+.SH "SYNOPSIS"
+.HP \w'void\ w1_next_pullup('u
+.BI "void w1_next_pullup(struct\ w1_master\ *\ " "dev" ", int\ " "delay" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the master device
+.RE
+.PP
+\fIdelay\fR
+.RS 4
+time in milliseconds
+.RE
+.SH "DESCRIPTION"
+.PP
+Put out a strong pull\-up of the specified duration after the next write operation\&. Not all hardware supports strong pullups\&. Hardware that doesn\*(Aqt support strong pullups will sleep for the given time after the write operation without a strong pullup\&. This is a one shot request for the next write, specifying zero will clear a previous request\&. The w1 master lock must be held\&.
+.SH "RETURN"
+.PP
+0=success, anything else=error
+.SH "AUTHOR"
+.PP
+\fBDavid Fries\fR <\&David@Fries.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

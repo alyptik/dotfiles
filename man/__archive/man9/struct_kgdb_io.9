@@ -1,0 +1,94 @@
+'\" t
+.\"     Title: struct kgdb_io
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT KGDB_IO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_kgdb_io \- Describe the interface for an I/O driver to talk with KGDB\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct kgdb_io {
+  const char * name;
+  int (* read_char) (void);
+  void (* write_char) (u8);
+  void (* flush) (void);
+  int (* init) (void);
+  void (* pre_exception) (void);
+  void (* post_exception) (void);
+  int is_console;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+name
+.RS 4
+Name of the I/O driver\&.
+.RE
+.PP
+read_char
+.RS 4
+Pointer to a function that will return one char\&.
+.RE
+.PP
+write_char
+.RS 4
+Pointer to a function that will write one char\&.
+.RE
+.PP
+flush
+.RS 4
+Pointer to a function that will flush any pending writes\&.
+.RE
+.PP
+init
+.RS 4
+Pointer to a function that will initialize the device\&.
+.RE
+.PP
+pre_exception
+.RS 4
+Pointer to a function that will do any prep work for the I/O driver\&.
+.RE
+.PP
+post_exception
+.RS 4
+Pointer to a function that will do any cleanup work for the I/O driver\&.
+.RE
+.PP
+is_console
+.RS 4
+1 if the end device is a console 0 if the I/O device is not a console
+.RE
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

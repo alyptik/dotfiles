@@ -1,0 +1,130 @@
+'\" t
+.\"     Title: enum wimax_st
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ENUM WIMAX_ST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+enum_wimax_st \- The different states of a WiMAX device
+.SH "SYNOPSIS"
+.sp
+.nf
+enum wimax_st {
+  __WIMAX_ST_NULL,
+  WIMAX_ST_DOWN,
+  __WIMAX_ST_QUIESCING,
+  WIMAX_ST_UNINITIALIZED,
+  WIMAX_ST_RADIO_OFF,
+  WIMAX_ST_READY,
+  WIMAX_ST_SCANNING,
+  WIMAX_ST_CONNECTING,
+  WIMAX_ST_CONNECTED,
+  __WIMAX_ST_INVALID
+};  
+.fi
+.SH "CONSTANTS"
+.PP
+__WIMAX_ST_NULL
+.RS 4
+The device structure has been allocated and zeroed, but still
+\fBwimax_dev_add\fR
+hasn\*(Aqt been called\&. There is no state\&.
+.RE
+.PP
+WIMAX_ST_DOWN
+.RS 4
+The device has been registered with the WiMAX and networking stacks, but it is not initialized (normally that is done with \*(Aqifconfig DEV up\*(Aq [or equivalent], which can upload firmware and enable communications with the device)\&. In this state, the device is powered down and using as less power as possible\&. This state is the default after a call to
+\fBwimax_dev_add\fR\&. It is ok to have drivers move directly to
+\fBWIMAX_ST_UNINITIALIZED\fR
+or
+\fBWIMAX_ST_RADIO_OFF\fR
+in
+\fB_probe\fR
+after the call to
+\fBwimax_dev_add\fR\&. It is recommended that the driver leaves this state when calling \*(Aqifconfig DEV up\*(Aq and enters it back on \*(Aqifconfig DEV down\*(Aq\&.
+.RE
+.PP
+__WIMAX_ST_QUIESCING
+.RS 4
+The device is being torn down, so no API operations are allowed to proceed except the ones needed to complete the device clean up process\&.
+.RE
+.PP
+WIMAX_ST_UNINITIALIZED
+.RS 4
+[optional] Communication with the device is setup, but the device still requires some configuration before being operational\&. Some WiMAX API calls might work\&.
+.RE
+.PP
+WIMAX_ST_RADIO_OFF
+.RS 4
+The device is fully up; radio is off (wether by hardware or software switches)\&. It is recommended to always leave the device in this state after initialization\&.
+.RE
+.PP
+WIMAX_ST_READY
+.RS 4
+The device is fully up and radio is on\&.
+.RE
+.PP
+WIMAX_ST_SCANNING
+.RS 4
+[optional] The device has been instructed to scan\&. In this state, the device cannot be actively connected to a network\&.
+.RE
+.PP
+WIMAX_ST_CONNECTING
+.RS 4
+The device is connecting to a network\&. This state exists because in some devices, the connect process can include a number of negotiations between user space, kernel space and the device\&. User space needs to know what the device is doing\&. If the connect sequence in a device is atomic and fast, the device can transition directly to CONNECTED
+.RE
+.PP
+WIMAX_ST_CONNECTED
+.RS 4
+The device is connected to a network\&.
+.RE
+.PP
+__WIMAX_ST_INVALID
+.RS 4
+This is an invalid state used to mark the maximum numeric value of states\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+Transitions from one state to another one are atomic and can only be caused in kernel space with
+\fBwimax_state_change\fR\&. To read the state, use
+\fBwimax_state_get\fR\&.
+.PP
+States starting with __ are internal and shall not be used or referred to by drivers or userspace\&. They look ugly, but that\*(Aqs the point \-\- if any use is made non\-internal to the stack, it is easier to catch on review\&.
+.PP
+All API operations [with well defined exceptions] will take the device mutex before starting and then check the state\&. If the state is
+\fB__WIMAX_ST_NULL\fR,
+\fBWIMAX_ST_DOWN\fR,
+\fBWIMAX_ST_UNINITIALIZED\fR
+or
+\fB__WIMAX_ST_QUIESCING\fR, it will drop the lock and quit with \-\fBEINVAL\fR, \-\fBENOMEDIUM\fR, \-\fBENOTCONN\fR
+or \-\fBESHUTDOWN\fR\&.
+.PP
+The order of the definitions is important, so we can do numerical comparisons (eg: <
+\fBWIMAX_ST_RADIO_OFF\fR
+means the device is not ready to operate)\&.
+.SH "COPYRIGHT"
+.br

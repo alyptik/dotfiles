@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: typedef handle_t
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux Journalling API
+.\"    Source: Kernel Hackers Manual
+.\"  Language: English
+.\"
+.TH "TYPEDEF HANDLE_T" "9" "January 2017" "Kernel Hackers Manual" "The Linux Journalling API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+typedef_handle_t \- The handle_t type represents a single atomic update being performed by some process\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+typedef handle_t;
+.fi
+.SH "DESCRIPTION"
+.PP
+.PP
+All filesystem modifications made by the process go through this handle\&. Recursive operations (such as quota operations) are gathered into a single update\&.
+.PP
+The buffer credits field is used to account for journaled buffers being modified by the running process\&. To ensure that there is enough log space for all outstanding operations, we need to limit the number of outstanding buffers possible at any time\&. When the operation completes, any buffer credits not used are credited back to the transaction, so that at all times we know how many buffers the outstanding updates on a transaction might possibly touch\&.
+.PP
+This is an opaque datatype\&.
+.SH "AUTHORS"
+.PP
+\fBRoger Gammans\fR <\&rgammans@computer-surgery.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBStephen Tweedie\fR <\&sct@redhat.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

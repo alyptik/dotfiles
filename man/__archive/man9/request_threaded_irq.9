@@ -1,0 +1,97 @@
+'\" t
+.\"     Title: request_threaded_irq
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REQUEST_THREADED_IRQ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+request_threaded_irq \- allocate an interrupt line
+.SH "SYNOPSIS"
+.HP \w'int\ request_threaded_irq('u
+.BI "int request_threaded_irq(unsigned\ int\ " "irq" ", irq_handler_t\ " "handler" ", irq_handler_t\ " "thread_fn" ", unsigned\ long\ " "irqflags" ", const\ char\ *\ " "devname" ", void\ *\ " "dev_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIirq\fR
+.RS 4
+Interrupt line to allocate
+.RE
+.PP
+\fIhandler\fR
+.RS 4
+Function to be called when the IRQ occurs\&. Primary handler for threaded interrupts If NULL and thread_fn != NULL the default primary handler is installed
+.RE
+.PP
+\fIthread_fn\fR
+.RS 4
+Function called from the irq handler thread If NULL, no irq thread is created
+.RE
+.PP
+\fIirqflags\fR
+.RS 4
+Interrupt type flags
+.RE
+.PP
+\fIdevname\fR
+.RS 4
+An ascii name for the claiming device
+.RE
+.PP
+\fIdev_id\fR
+.RS 4
+A cookie passed back to the handler function
+.RE
+.SH "DESCRIPTION"
+.PP
+This call allocates interrupt resources and enables the interrupt line and IRQ handling\&. From the point this call is made your handler function may be invoked\&. Since your handler function must clear any interrupt the board raises, you must take care both to initialise your hardware and to set up the interrupt handler in the right order\&.
+.PP
+If you want to set up a threaded irq handler for your device then you need to supply
+\fIhandler\fR
+and
+\fIthread_fn\fR\&.
+\fIhandler\fR
+is still called in hard interrupt context and has to check whether the interrupt originates from the device\&. If yes it needs to disable the interrupt on the device and return IRQ_WAKE_THREAD which will wake up the handler thread and run
+\fIthread_fn\fR\&. This split handler design is necessary to support shared interrupts\&.
+.PP
+Dev_id must be globally unique\&. Normally the address of the device data structure is used as the cookie\&. Since the handler receives this value it makes sense to use it\&.
+.PP
+If your interrupt is shared you must pass a non NULL dev_id as this is required when freeing the interrupt\&.
+.PP
+Flags:
+.PP
+IRQF_SHARED Interrupt is shared IRQF_TRIGGER_* Specify active edge(s) or level
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

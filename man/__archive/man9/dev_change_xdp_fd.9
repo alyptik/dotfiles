@@ -1,0 +1,55 @@
+'\" t
+.\"     Title: dev_change_xdp_fd
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEV_CHANGE_XDP_FD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dev_change_xdp_fd \- set or clear a bpf program for a device rx path
+.SH "SYNOPSIS"
+.HP \w'int\ dev_change_xdp_fd('u
+.BI "int dev_change_xdp_fd(struct\ net_device\ *\ " "dev" ", int\ " "fd" ", u32\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device
+.RE
+.PP
+\fIfd\fR
+.RS 4
+new program fd or negative value to clear
+.RE
+.PP
+\fIflags\fR
+.RS 4
+xdp\-related flags
+.RE
+.SH "DESCRIPTION"
+.PP
+Set or clear a bpf program for a device
+.SH "COPYRIGHT"
+.br

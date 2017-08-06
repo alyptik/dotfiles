@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: blk_rq_err_bytes
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_RQ_ERR_BYTES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_rq_err_bytes \- determine number of bytes till the next failure boundary
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ blk_rq_err_bytes('u
+.BI "unsigned int blk_rq_err_bytes(const\ struct\ request\ *\ " "rq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrq\fR
+.RS 4
+request to examine
+.RE
+.SH "DESCRIPTION"
+.PP
+A request could be merge of IOs which require different failure handling\&. This function determines the number of bytes which can be failed from the beginning of the request without crossing into area which need to be retried further\&.
+.SH "RETURN"
+.PP
+The number of bytes to fail\&.
+.SH "CONTEXT"
+.PP
+queue_lock must be held\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: __register_chrdev
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Char devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__REGISTER_CHRDEV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Char devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__register_chrdev \- create and register a cdev occupying a range of minors
+.SH "SYNOPSIS"
+.HP \w'int\ __register_chrdev('u
+.BI "int __register_chrdev(unsigned\ int\ " "major" ", unsigned\ int\ " "baseminor" ", unsigned\ int\ " "count" ", const\ char\ *\ " "name" ", const\ struct\ file_operations\ *\ " "fops" ");"
+.SH "ARGUMENTS"
+.PP
+\fImajor\fR
+.RS 4
+major device number or 0 for dynamic allocation
+.RE
+.PP
+\fIbaseminor\fR
+.RS 4
+first of the requested range of minor numbers
+.RE
+.PP
+\fIcount\fR
+.RS 4
+the number of minor numbers required
+.RE
+.PP
+\fIname\fR
+.RS 4
+name of this range of devices
+.RE
+.PP
+\fIfops\fR
+.RS 4
+file operations associated with this devices
+.RE
+.SH "DESCRIPTION"
+.PP
+If
+\fImajor\fR
+== 0 this functions will dynamically allocate a major and return its number\&.
+.PP
+If
+\fImajor\fR
+> 0 this function will attempt to reserve a device with the given major number and will return zero on success\&.
+.PP
+Returns a \-ve errno on failure\&.
+.PP
+The name of this device has nothing to do with the name of the device in /dev\&. It only helps to keep track of the different owners of devices\&. If your module name has only one type of devices it\*(Aqs ok to use e\&.g\&. the name of the module here\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: eventfd_ctx_remove_wait_queue
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Events based on file descriptors
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "EVENTFD_CTX_REMOVE_W" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Events based on file descripto"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+eventfd_ctx_remove_wait_queue \- Read the current counter and removes wait queue\&.
+.SH "SYNOPSIS"
+.HP \w'int\ eventfd_ctx_remove_wait_queue('u
+.BI "int eventfd_ctx_remove_wait_queue(struct\ eventfd_ctx\ *\ " "ctx" ", wait_queue_t\ *\ " "wait" ", __u64\ *\ " "cnt" ");"
+.SH "ARGUMENTS"
+.PP
+\fIctx\fR
+.RS 4
+[in] Pointer to eventfd context\&.
+.RE
+.PP
+\fIwait\fR
+.RS 4
+[in] Wait queue to be removed\&.
+.RE
+.PP
+\fIcnt\fR
+.RS 4
+[out] Pointer to the 64\-bit counter value\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns
+\fB0\fR
+if successful, or the following error codes:
+.PP
+\-EAGAIN : The operation would have blocked\&.
+.PP
+This is used to atomically remove a wait queue entry from the eventfd wait queue head, and read/reset the counter value\&.
+.SH "COPYRIGHT"
+.br

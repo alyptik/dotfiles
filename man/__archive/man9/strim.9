@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: strim
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRIM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+strim \- Removes leading and trailing whitespace from \fIs\fR\&.
+.SH "SYNOPSIS"
+.HP \w'char\ *\ strim('u
+.BI "char * strim(char\ *\ " "s" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+The string to be stripped\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Note that the first trailing whitespace is replaced with a
+\fBNUL\-terminator\fR
+in the given string
+\fIs\fR\&. Returns a pointer to the first non\-whitespace character in
+\fIs\fR\&.
+.SH "COPYRIGHT"
+.br

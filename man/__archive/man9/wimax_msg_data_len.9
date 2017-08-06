@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: wimax_msg_data_len
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_MSG_DATA_LEN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_msg_data_len \- Return a pointer and size of a message\*(Aqs payload
+.SH "SYNOPSIS"
+.HP \w'const\ void\ *\ wimax_msg_data_len('u
+.BI "const void * wimax_msg_data_len(struct\ sk_buff\ *\ " "msg" ", size_t\ *\ " "size" ");"
+.SH "ARGUMENTS"
+.PP
+\fImsg\fR
+.RS 4
+Pointer to a message created with
+\fBwimax_msg_alloc\fR
+.RE
+.PP
+\fIsize\fR
+.RS 4
+Pointer to where to store the message\*(Aqs size
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns the pointer to the message data\&.
+.SH "COPYRIGHT"
+.br

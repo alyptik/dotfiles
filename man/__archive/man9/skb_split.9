@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: skb_split
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_SPLIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_split \- Split fragmented skb to two parts at length len\&.
+.SH "SYNOPSIS"
+.HP \w'void\ skb_split('u
+.BI "void skb_split(struct\ sk_buff\ *\ " "skb" ", struct\ sk_buff\ *\ " "skb1" ", const\ u32\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+the buffer to split
+.RE
+.PP
+\fIskb1\fR
+.RS 4
+the buffer to receive the second part
+.RE
+.PP
+\fIlen\fR
+.RS 4
+new length for skb
+.RE
+.SH "COPYRIGHT"
+.br

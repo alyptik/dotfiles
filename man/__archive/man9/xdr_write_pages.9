@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: xdr_write_pages
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XDR_WRITE_PAGES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xdr_write_pages \- Insert a list of pages into an XDR buffer for sending
+.SH "SYNOPSIS"
+.HP \w'void\ xdr_write_pages('u
+.BI "void xdr_write_pages(struct\ xdr_stream\ *\ " "xdr" ", struct\ page\ **\ " "pages" ", unsigned\ int\ " "base" ", unsigned\ int\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIxdr\fR
+.RS 4
+pointer to xdr_stream
+.RE
+.PP
+\fIpages\fR
+.RS 4
+list of pages
+.RE
+.PP
+\fIbase\fR
+.RS 4
+offset of first byte
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length of data in bytes
+.RE
+.SH "COPYRIGHT"
+.br

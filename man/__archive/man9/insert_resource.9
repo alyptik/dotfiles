@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: insert_resource
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "INSERT_RESOURCE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+insert_resource \- Inserts a resource in the resource tree
+.SH "SYNOPSIS"
+.HP \w'int\ insert_resource('u
+.BI "int insert_resource(struct\ resource\ *\ " "parent" ", struct\ resource\ *\ " "new" ");"
+.SH "ARGUMENTS"
+.PP
+\fIparent\fR
+.RS 4
+parent of the new resource
+.RE
+.PP
+\fInew\fR
+.RS 4
+new resource to insert
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 on success, \-EBUSY if the resource can\*(Aqt be inserted\&.
+.PP
+This function is intended for producers of resources, such as FW modules and bus drivers\&.
+.SH "COPYRIGHT"
+.br

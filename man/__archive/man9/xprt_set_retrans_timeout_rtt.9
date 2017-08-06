@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: xprt_set_retrans_timeout_rtt
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XPRT_SET_RETRANS_TIM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xprt_set_retrans_timeout_rtt \- set a request\*(Aqs retransmit timeout
+.SH "SYNOPSIS"
+.HP \w'void\ xprt_set_retrans_timeout_rtt('u
+.BI "void xprt_set_retrans_timeout_rtt(struct\ rpc_task\ *\ " "task" ");"
+.SH "ARGUMENTS"
+.PP
+\fItask\fR
+.RS 4
+task whose timeout is to be set
+.RE
+.SH "DESCRIPTION"
+.PP
+Set a request\*(Aqs retransmit timeout using the RTT estimator\&.
+.SH "COPYRIGHT"
+.br

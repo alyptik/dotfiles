@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: gnet_stats_copy_rate_est
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GNET_STATS_COPY_RATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gnet_stats_copy_rate_est \- copy rate estimator statistics into statistics TLV
+.SH "SYNOPSIS"
+.HP \w'int\ gnet_stats_copy_rate_est('u
+.BI "int gnet_stats_copy_rate_est(struct\ gnet_dump\ *\ " "d" ", struct\ net_rate_estimator\ __rcu\ **\ " "rate_est" ");"
+.SH "ARGUMENTS"
+.PP
+\fId\fR
+.RS 4
+dumping handle
+.RE
+.PP
+\fIrate_est\fR
+.RS 4
+rate estimator
+.RE
+.SH "DESCRIPTION"
+.PP
+Appends the rate estimator statistics to the top level TLV created by
+\fBgnet_stats_start_copy\fR\&.
+.PP
+Returns 0 on success or \-1 with the statistic lock released if the room in the socket buffer was not sufficient\&.
+.SH "COPYRIGHT"
+.br

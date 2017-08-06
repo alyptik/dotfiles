@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: gen_replace_estimator
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GEN_REPLACE_ESTIMATO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gen_replace_estimator \- replace rate estimator configuration
+.SH "SYNOPSIS"
+.HP \w'int\ gen_replace_estimator('u
+.BI "int gen_replace_estimator(struct\ gnet_stats_basic_packed\ *\ " "bstats" ", struct\ gnet_stats_basic_cpu\ __percpu\ *\ " "cpu_bstats" ", struct\ net_rate_estimator\ __rcu\ **\ " "rate_est" ", spinlock_t\ *\ " "stats_lock" ", seqcount_t\ *\ " "running" ", struct\ nlattr\ *\ " "opt" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbstats\fR
+.RS 4
+basic statistics
+.RE
+.PP
+\fIcpu_bstats\fR
+.RS 4
+bstats per cpu
+.RE
+.PP
+\fIrate_est\fR
+.RS 4
+rate estimator statistics
+.RE
+.PP
+\fIstats_lock\fR
+.RS 4
+statistics lock
+.RE
+.PP
+\fIrunning\fR
+.RS 4
+qdisc running seqcount (might be NULL)
+.RE
+.PP
+\fIopt\fR
+.RS 4
+rate estimator configuration TLV
+.RE
+.SH "DESCRIPTION"
+.PP
+Replaces the configuration of a rate estimator by calling
+\fBgen_kill_estimator\fR
+and
+\fBgen_new_estimator\fR\&.
+.PP
+Returns 0 on success or a negative error code\&.
+.SH "COPYRIGHT"
+.br

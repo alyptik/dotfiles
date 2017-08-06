@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: fsl_local_config_write
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FSL_LOCAL_CONFIG_WRI" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fsl_local_config_write \- Generate a MPC85xx local config space write
+.SH "SYNOPSIS"
+.HP \w'int\ fsl_local_config_write('u
+.BI "int fsl_local_config_write(struct\ rio_mport\ *\ " "mport" ", int\ " "index" ", u32\ " "offset" ", int\ " "len" ", u32\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fImport\fR
+.RS 4
+RapidIO master port info
+.RE
+.PP
+\fIindex\fR
+.RS 4
+ID of RapdiIO interface
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+Offset into configuration space
+.RE
+.PP
+\fIlen\fR
+.RS 4
+Length (in bytes) of the maintenance transaction
+.RE
+.PP
+\fIdata\fR
+.RS 4
+Value to be written
+.RE
+.SH "DESCRIPTION"
+.PP
+Generates a MPC85xx local configuration space write\&. Returns
+\fB0\fR
+on success or
+\fB\-EINVAL\fR
+on failure\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

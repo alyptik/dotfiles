@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: ccw_device_tm_start_timeout_key
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CCW_DEVICE_TM_START_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ccw_device_tm_start_timeout_key \- perform start function
+.SH "SYNOPSIS"
+.HP \w'int\ ccw_device_tm_start_timeout_key('u
+.BI "int ccw_device_tm_start_timeout_key(struct\ ccw_device\ *\ " "cdev" ", struct\ tcw\ *\ " "tcw" ", unsigned\ long\ " "intparm" ", u8\ " "lpm" ", u8\ " "key" ", int\ " "expires" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcdev\fR
+.RS 4
+ccw device on which to perform the start function
+.RE
+.PP
+\fItcw\fR
+.RS 4
+transport\-command word to be started
+.RE
+.PP
+\fIintparm\fR
+.RS 4
+user defined parameter to be passed to the interrupt handler
+.RE
+.PP
+\fIlpm\fR
+.RS 4
+mask of paths to use
+.RE
+.PP
+\fIkey\fR
+.RS 4
+storage key to use for storage access
+.RE
+.PP
+\fIexpires\fR
+.RS 4
+time span in jiffies after which to abort request
+.RE
+.SH "DESCRIPTION"
+.PP
+Start the tcw on the given ccw device\&. Return zero on success, non\-zero otherwise\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

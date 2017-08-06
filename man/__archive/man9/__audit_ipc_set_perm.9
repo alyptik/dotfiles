@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: __audit_ipc_set_perm
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_IPC_SET_PERM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_ipc_set_perm \- record audit data for new ipc permissions
+.SH "SYNOPSIS"
+.HP \w'void\ __audit_ipc_set_perm('u
+.BI "void __audit_ipc_set_perm(unsigned\ long\ " "qbytes" ", uid_t\ " "uid" ", gid_t\ " "gid" ", umode_t\ " "mode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIqbytes\fR
+.RS 4
+msgq bytes
+.RE
+.PP
+\fIuid\fR
+.RS 4
+msgq user id
+.RE
+.PP
+\fIgid\fR
+.RS 4
+msgq group id
+.RE
+.PP
+\fImode\fR
+.RS 4
+msgq mode (permissions)
+.RE
+.SH "DESCRIPTION"
+.PP
+Called only after
+\fBaudit_ipc_obj\fR\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: mempool_free
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMPOOL_FREE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mempool_free \- return an element to the pool\&.
+.SH "SYNOPSIS"
+.HP \w'void\ mempool_free('u
+.BI "void mempool_free(void\ *\ " "element" ", mempool_t\ *\ " "pool" ");"
+.SH "ARGUMENTS"
+.PP
+\fIelement\fR
+.RS 4
+pool element pointer\&.
+.RE
+.PP
+\fIpool\fR
+.RS 4
+pointer to the memory pool which was allocated via
+\fBmempool_create\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+this function only sleeps if the
+\fBfree_fn\fR
+function sleeps\&.
+.SH "COPYRIGHT"
+.br

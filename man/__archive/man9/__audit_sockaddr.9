@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: __audit_sockaddr
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__AUDIT_SOCKADDR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__audit_sockaddr \- record audit data for sys_bind, sys_connect, sys_sendto
+.SH "SYNOPSIS"
+.HP \w'int\ __audit_sockaddr('u
+.BI "int __audit_sockaddr(int\ " "len" ", void\ *\ " "a" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlen\fR
+.RS 4
+data length in user space
+.RE
+.PP
+\fIa\fR
+.RS 4
+data address in kernel space
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 for success or NULL context or < 0 on error\&.
+.SH "COPYRIGHT"
+.br

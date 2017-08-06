@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: skb_copy_ubufs
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_COPY_UBUFS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_copy_ubufs \- copy userspace skb frags buffers to kernel
+.SH "SYNOPSIS"
+.HP \w'int\ skb_copy_ubufs('u
+.BI "int skb_copy_ubufs(struct\ sk_buff\ *\ " "skb" ", gfp_t\ " "gfp_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+the skb to modify
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+allocation priority
+.RE
+.SH "DESCRIPTION"
+.PP
+This must be called on SKBTX_DEV_ZEROCOPY skb\&. It will copy all frags into kernel and drop the reference to userspace pages\&.
+.PP
+If this function is called from an interrupt
+\fBgfp_mask\fR
+must be
+\fBGFP_ATOMIC\fR\&.
+.PP
+Returns 0 on success or a negative error code on failure to allocate kernel memory to copy to\&.
+.SH "COPYRIGHT"
+.br

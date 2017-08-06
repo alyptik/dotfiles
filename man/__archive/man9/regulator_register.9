@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: regulator_register
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_REGISTER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_register \- register regulator
+.SH "SYNOPSIS"
+.HP \w'struct\ regulator_dev\ *\ regulator_register('u
+.BI "struct regulator_dev * regulator_register(const\ struct\ regulator_desc\ *\ " "regulator_desc" ", const\ struct\ regulator_config\ *\ " "cfg" ");"
+.SH "ARGUMENTS"
+.PP
+\fIregulator_desc\fR
+.RS 4
+regulator to register
+.RE
+.PP
+\fIcfg\fR
+.RS 4
+runtime configuration for regulator
+.RE
+.SH "DESCRIPTION"
+.PP
+Called by regulator drivers to register a regulator\&. Returns a valid pointer to struct regulator_dev on success or an
+\fBERR_PTR\fR
+on error\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: inode_init_always
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "INODE_INIT_ALWAYS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+inode_init_always \- perform inode structure intialisation
+.SH "SYNOPSIS"
+.HP \w'int\ inode_init_always('u
+.BI "int inode_init_always(struct\ super_block\ *\ " "sb" ", struct\ inode\ *\ " "inode" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsb\fR
+.RS 4
+superblock inode belongs to
+.RE
+.PP
+\fIinode\fR
+.RS 4
+inode to initialise
+.RE
+.SH "DESCRIPTION"
+.PP
+These are initializations that need to be done on every inode allocation as the fields are not initialised by slab allocation\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: vfs_readlink
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VFS_READLINK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vfs_readlink \- copy symlink body into userspace buffer
+.SH "SYNOPSIS"
+.HP \w'int\ vfs_readlink('u
+.BI "int vfs_readlink(struct\ dentry\ *\ " "dentry" ", char\ __user\ *\ " "buffer" ", int\ " "buflen" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdentry\fR
+.RS 4
+dentry on which to get symbolic link
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+user memory pointer
+.RE
+.PP
+\fIbuflen\fR
+.RS 4
+size of buffer
+.RE
+.SH "DESCRIPTION"
+.PP
+Does not touch atime\&. That\*(Aqs up to the caller if necessary
+.PP
+Does not call security hook\&.
+.SH "COPYRIGHT"
+.br

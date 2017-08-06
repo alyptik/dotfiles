@@ -1,0 +1,236 @@
+'\" t
+.\"     Title: struct usb_gadget
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_GADGET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_gadget \- represents a usb slave device
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_gadget {
+  struct work_struct work;
+  struct usb_udc * udc;
+  const struct usb_gadget_ops * ops;
+  struct usb_ep * ep0;
+  struct list_head ep_list;
+  enum usb_device_speed speed;
+  enum usb_device_speed max_speed;
+  enum usb_device_state state;
+  const char * name;
+  struct device dev;
+  unsigned out_epnum;
+  unsigned in_epnum;
+  unsigned mA;
+  struct usb_otg_caps * otg_caps;
+  unsigned sg_supported:1;
+  unsigned is_otg:1;
+  unsigned is_a_peripheral:1;
+  unsigned b_hnp_enable:1;
+  unsigned a_hnp_support:1;
+  unsigned a_alt_hnp_support:1;
+  unsigned hnp_polling_support:1;
+  unsigned host_request_flag:1;
+  unsigned quirk_ep_out_aligned_size:1;
+  unsigned quirk_avoids_skb_reserve:1;
+  unsigned is_selfpowered:1;
+  unsigned deactivated:1;
+  unsigned connected:1;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+work
+.RS 4
+(internal use) Workqueue to be used for
+\fBsysfs_notify\fR
+.RE
+.PP
+udc
+.RS 4
+struct usb_udc pointer for this gadget
+.RE
+.PP
+ops
+.RS 4
+Function pointers used to access hardware\-specific operations\&.
+.RE
+.PP
+ep0
+.RS 4
+Endpoint zero, used when reading or writing responses to driver
+\fBsetup\fR
+requests
+.RE
+.PP
+ep_list
+.RS 4
+List of other endpoints supported by the device\&.
+.RE
+.PP
+speed
+.RS 4
+Speed of current connection to USB host\&.
+.RE
+.PP
+max_speed
+.RS 4
+Maximal speed the UDC can handle\&. UDC must support this and all slower speeds\&.
+.RE
+.PP
+state
+.RS 4
+the state we are now (attached, suspended, configured, etc)
+.RE
+.PP
+name
+.RS 4
+Identifies the controller hardware type\&. Used in diagnostics and sometimes configuration\&.
+.RE
+.PP
+dev
+.RS 4
+Driver model state for this abstract device\&.
+.RE
+.PP
+out_epnum
+.RS 4
+last used out ep number
+.RE
+.PP
+in_epnum
+.RS 4
+last used in ep number
+.RE
+.PP
+mA
+.RS 4
+last set mA value
+.RE
+.PP
+otg_caps
+.RS 4
+OTG capabilities of this gadget\&.
+.RE
+.PP
+sg_supported
+.RS 4
+true if we can handle scatter\-gather
+.RE
+.PP
+is_otg
+.RS 4
+True if the USB device port uses a Mini\-AB jack, so that the gadget driver must provide a USB OTG descriptor\&.
+.RE
+.PP
+is_a_peripheral
+.RS 4
+False unless is_otg, the
+\(lqA\(rq
+end of a USB cable is in the Mini\-AB jack, and HNP has been used to switch roles so that the
+\(lqA\(rq
+device currently acts as A\-Peripheral, not A\-Host\&.
+.RE
+.PP
+b_hnp_enable
+.RS 4
+OTG device feature flag, indicating that the A\-Host enabled HNP support\&.
+.RE
+.PP
+a_hnp_support
+.RS 4
+OTG device feature flag, indicating that the A\-Host supports HNP at this port\&.
+.RE
+.PP
+a_alt_hnp_support
+.RS 4
+OTG device feature flag, indicating that the A\-Host only supports HNP on a different root port\&.
+.RE
+.PP
+hnp_polling_support
+.RS 4
+OTG device feature flag, indicating if the OTG device in peripheral mode can support HNP polling\&.
+.RE
+.PP
+host_request_flag
+.RS 4
+OTG device feature flag, indicating if A\-Peripheral or B\-Peripheral wants to take host role\&.
+.RE
+.PP
+quirk_ep_out_aligned_size
+.RS 4
+epout requires buffer size to be aligned to MaxPacketSize\&.
+.RE
+.PP
+quirk_avoids_skb_reserve
+.RS 4
+udc/platform wants to avoid
+\fBskb_reserve\fR
+in u_ether\&.c to improve performance\&.
+.RE
+.PP
+is_selfpowered
+.RS 4
+if the gadget is self\-powered\&.
+.RE
+.PP
+deactivated
+.RS 4
+True if gadget is deactivated \- in deactivated state it cannot be connected\&.
+.RE
+.PP
+connected
+.RS 4
+True if gadget is connected\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Gadgets have a mostly\-portable
+\(lqgadget driver\(rq
+implementing device functions, handling all usb configurations and interfaces\&. Gadget drivers talk to hardware\-specific code indirectly, through ops vectors\&. That insulates the gadget driver from hardware details, and packages the hardware endpoints through generic i/o queues\&. The
+\(lqusb_gadget\(rq
+and
+\(lqusb_ep\(rq
+interfaces provide that insulation from the hardware\&.
+.PP
+Except for the driver data, all fields in this structure are read\-only to the gadget driver\&. That driver data is part of the
+\(lqdriver model\(rq
+infrastructure in 2\&.6 (and later) kernels, and for earlier systems is grouped in a similar structure that\*(Aqs not known to the rest of the kernel\&.
+.PP
+Values of the three OTG device feature flags are updated before the
+\fBsetup\fR
+call corresponding to USB_REQ_SET_CONFIGURATION, and before driver
+\fBsuspend\fR
+calls\&. They are valid only when is_otg, and when the device is acting as a B\-Peripheral (so is_a_peripheral is false)\&.
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

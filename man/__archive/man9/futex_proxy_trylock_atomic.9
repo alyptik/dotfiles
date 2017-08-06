@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: futex_proxy_trylock_atomic
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FUTEX_PROXY_TRYLOCK_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+futex_proxy_trylock_atomic \- Attempt an atomic lock for the top waiter
+.SH "SYNOPSIS"
+.HP \w'int\ futex_proxy_trylock_atomic('u
+.BI "int futex_proxy_trylock_atomic(u32\ __user\ *\ " "pifutex" ", struct\ futex_hash_bucket\ *\ " "hb1" ", struct\ futex_hash_bucket\ *\ " "hb2" ", union\ futex_key\ *\ " "key1" ", union\ futex_key\ *\ " "key2" ", struct\ futex_pi_state\ **\ " "ps" ", int\ " "set_waiters" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpifutex\fR
+.RS 4
+the user address of the to futex
+.RE
+.PP
+\fIhb1\fR
+.RS 4
+the from futex hash bucket, must be locked by the caller
+.RE
+.PP
+\fIhb2\fR
+.RS 4
+the to futex hash bucket, must be locked by the caller
+.RE
+.PP
+\fIkey1\fR
+.RS 4
+the from futex key
+.RE
+.PP
+\fIkey2\fR
+.RS 4
+the to futex key
+.RE
+.PP
+\fIps\fR
+.RS 4
+address to store the pi_state pointer
+.RE
+.PP
+\fIset_waiters\fR
+.RS 4
+force setting the FUTEX_WAITERS bit (1) or not (0)
+.RE
+.SH "DESCRIPTION"
+.PP
+Try and get the lock on behalf of the top waiter if we can do it atomically\&. Wake the top waiter if we succeed\&. If the caller specified set_waiters, then direct
+\fBfutex_lock_pi_atomic\fR
+to force setting the FUTEX_WAITERS bit\&. hb1 and hb2 must be held by the caller\&.
+.SH "RETURN"
+.PP
+0 \- failed to acquire the lock atomically; >0 \- acquired the lock, return value is vpid of the top_waiter <0 \- error
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

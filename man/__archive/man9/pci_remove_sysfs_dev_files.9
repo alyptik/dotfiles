@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: pci_remove_sysfs_dev_files
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_REMOVE_SYSFS_DEV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_remove_sysfs_dev_files \- cleanup PCI specific sysfs files
+.SH "SYNOPSIS"
+.HP \w'void\ pci_remove_sysfs_dev_files('u
+.BI "void pci_remove_sysfs_dev_files(struct\ pci_dev\ *\ " "pdev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpdev\fR
+.RS 4
+device whose entries we should free
+.RE
+.SH "DESCRIPTION"
+.PP
+Cleanup when
+\fIpdev\fR
+is removed from sysfs\&.
+.SH "COPYRIGHT"
+.br

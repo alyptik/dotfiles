@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: debugfs_create_automount
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_CREATE_AUTOM" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_create_automount \- create automount point in the debugfs filesystem
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ debugfs_create_automount('u
+.BI "struct dentry * debugfs_create_automount(const\ char\ *\ " "name" ", struct\ dentry\ *\ " "parent" ", struct\ vfsmount\ *(*" "f" ")\ (void\ *), void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+a pointer to a string containing the name of the file to create\&.
+.RE
+.PP
+\fIparent\fR
+.RS 4
+a pointer to the parent dentry for this file\&. This should be a directory dentry if set\&. If this parameter is NULL, then the file will be created in the root of the debugfs filesystem\&.
+.RE
+.PP
+\fIf\fR
+.RS 4
+function to be called when pathname resolution steps on that one\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+opaque argument to pass to
+\fBf\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fIf\fR
+should return what \->\fBd_automount\fR
+would\&.
+.SH "COPYRIGHT"
+.br

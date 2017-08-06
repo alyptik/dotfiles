@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: memset
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMSET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+memset \- Fill a region of memory with the given value
+.SH "SYNOPSIS"
+.HP \w'void\ *\ memset('u
+.BI "void * memset(void\ *\ " "s" ", int\ " "c" ", size_t\ " "count" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+Pointer to the start of the area\&.
+.RE
+.PP
+\fIc\fR
+.RS 4
+The byte to fill the area with
+.RE
+.PP
+\fIcount\fR
+.RS 4
+The size of the area\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Do not use
+\fBmemset\fR
+to access IO space, use
+\fBmemset_io\fR
+instead\&.
+.SH "COPYRIGHT"
+.br

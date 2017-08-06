@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: sysfs_streq
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYSFS_STREQ" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sysfs_streq \- return true if strings are equal, modulo trailing newline
+.SH "SYNOPSIS"
+.HP \w'bool\ sysfs_streq('u
+.BI "bool sysfs_streq(const\ char\ *\ " "s1" ", const\ char\ *\ " "s2" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs1\fR
+.RS 4
+one string
+.RE
+.PP
+\fIs2\fR
+.RS 4
+another string
+.RE
+.SH "DESCRIPTION"
+.PP
+This routine returns true iff two strings are equal, treating both NUL and newline\-then\-NUL as equivalent string terminations\&. It\*(Aqs geared for use with sysfs input strings, which generally terminate with newlines but are compared against values without newlines\&.
+.SH "COPYRIGHT"
+.br

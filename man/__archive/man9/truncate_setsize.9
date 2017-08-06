@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: truncate_setsize
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "TRUNCATE_SETSIZE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+truncate_setsize \- update inode and pagecache for a new file size
+.SH "SYNOPSIS"
+.HP \w'void\ truncate_setsize('u
+.BI "void truncate_setsize(struct\ inode\ *\ " "inode" ", loff_t\ " "newsize" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+inode
+.RE
+.PP
+\fInewsize\fR
+.RS 4
+new file size
+.RE
+.SH "DESCRIPTION"
+.PP
+truncate_setsize updates i_size and performs pagecache truncation (if necessary) to
+\fInewsize\fR\&. It will be typically be called from the filesystem\*(Aqs setattr function when ATTR_SIZE is passed in\&.
+.PP
+Must be called with a lock serializing truncates and writes (generally i_mutex but e\&.g\&. xfs uses a different lock) and before all filesystem specific block truncation has been performed\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: clk_round_rate
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Clock Framework
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CLK_ROUND_RATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Clock Framework"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+clk_round_rate \- adjust a rate to the exact rate a clock can provide
+.SH "SYNOPSIS"
+.HP \w'long\ clk_round_rate('u
+.BI "long clk_round_rate(struct\ clk\ *\ " "clk" ", unsigned\ long\ " "rate" ");"
+.SH "ARGUMENTS"
+.PP
+\fIclk\fR
+.RS 4
+clock source
+.RE
+.PP
+\fIrate\fR
+.RS 4
+desired clock rate in Hz
+.RE
+.SH "DESCRIPTION"
+.PP
+This answers the question
+\(lqif I were to pass \fIrate\fR to \fBclk_set_rate\fR, what clock rate would I end up with?\(rq
+without changing the hardware in any way\&. In other words:
+.PP
+rate = clk_round_rate(clk, r);
+.PP
+and:
+.PP
+clk_set_rate(clk, r); rate = clk_get_rate(clk);
+.PP
+are equivalent except the former does not modify the clock hardware in any way\&.
+.PP
+Returns rounded clock rate in Hz, or negative errno\&.
+.SH "COPYRIGHT"
+.br

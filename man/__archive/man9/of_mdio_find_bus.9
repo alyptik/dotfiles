@@ -1,0 +1,49 @@
+'\" t
+.\"     Title: of_mdio_find_bus
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "OF_MDIO_FIND_BUS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+of_mdio_find_bus \- Given an mii_bus node, find the mii_bus\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ mii_bus\ *\ of_mdio_find_bus('u
+.BI "struct mii_bus * of_mdio_find_bus(struct\ device_node\ *\ " "mdio_bus_np" ");"
+.SH "ARGUMENTS"
+.PP
+\fImdio_bus_np\fR
+.RS 4
+Pointer to the mii_bus\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns a reference to the mii_bus, or NULL if none found\&. The embedded struct device will have its reference count incremented, and this must be put once the bus is finished with\&.
+.PP
+Because the association of a device_node and mii_bus is made via
+\fBof_mdiobus_register\fR, the mii_bus cannot be found before it is registered with
+\fBof_mdiobus_register\fR\&.
+.SH "COPYRIGHT"
+.br

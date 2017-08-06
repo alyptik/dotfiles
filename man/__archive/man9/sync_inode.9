@@ -1,0 +1,53 @@
+'\" t
+.\"     Title: sync_inode
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYNC_INODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sync_inode \- write an inode and its pages to disk\&.
+.SH "SYNOPSIS"
+.HP \w'int\ sync_inode('u
+.BI "int sync_inode(struct\ inode\ *\ " "inode" ", struct\ writeback_control\ *\ " "wbc" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+the inode to sync
+.RE
+.PP
+\fIwbc\fR
+.RS 4
+controls the writeback mode
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBsync_inode\fR
+will write an inode and its pages to disk\&. It will also correctly update the inode on its superblock\*(Aqs dirty inode lists and will update inode\->i_state\&.
+.PP
+The caller must have a ref on the inode\&.
+.SH "COPYRIGHT"
+.br

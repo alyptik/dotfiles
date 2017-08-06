@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: debugfs_use_file_finish
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_USE_FILE_FIN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_use_file_finish \- mark the end of file data access
+.SH "SYNOPSIS"
+.HP \w'void\ debugfs_use_file_finish('u
+.BI "void debugfs_use_file_finish(int\ " "srcu_idx" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsrcu_idx\fR
+.RS 4
+the SRCU index
+\(lqcreated\(rq
+by a former call to
+\fBdebugfs_use_file_start\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Allow any ongoing concurrent call into
+\fBdebugfs_remove\fR
+or
+\fBdebugfs_remove_recursive\fR
+blocked by a former call to
+\fBdebugfs_use_file_start\fR
+to proceed and return to its caller\&.
+.SH "COPYRIGHT"
+.br

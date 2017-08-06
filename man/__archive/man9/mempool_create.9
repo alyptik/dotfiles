@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: mempool_create
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMPOOL_CREATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mempool_create \- create a memory pool
+.SH "SYNOPSIS"
+.HP \w'mempool_t\ *\ mempool_create('u
+.BI "mempool_t * mempool_create(int\ " "min_nr" ", mempool_alloc_t\ *\ " "alloc_fn" ", mempool_free_t\ *\ " "free_fn" ", void\ *\ " "pool_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fImin_nr\fR
+.RS 4
+the minimum number of elements guaranteed to be allocated for this pool\&.
+.RE
+.PP
+\fIalloc_fn\fR
+.RS 4
+user\-defined element\-allocation function\&.
+.RE
+.PP
+\fIfree_fn\fR
+.RS 4
+user\-defined element\-freeing function\&.
+.RE
+.PP
+\fIpool_data\fR
+.RS 4
+optional private data available to the user\-defined functions\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+this function creates and allocates a guaranteed size, preallocated memory pool\&. The pool can be used from the
+\fBmempool_alloc\fR
+and
+\fBmempool_free\fR
+functions\&. This function might sleep\&. Both the
+\fBalloc_fn\fR
+and the
+\fBfree_fn\fR
+functions might sleep \- as long as the
+\fBmempool_alloc\fR
+function is not called from IRQ contexts\&.
+.SH "COPYRIGHT"
+.br

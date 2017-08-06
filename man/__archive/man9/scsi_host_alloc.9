@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: scsi_host_alloc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_HOST_ALLOC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_host_alloc \- register a scsi host adapter instance\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ Scsi_Host\ *\ scsi_host_alloc('u
+.BI "struct Scsi_Host * scsi_host_alloc(struct\ scsi_host_template\ *\ " "sht" ", int\ " "privsize" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsht\fR
+.RS 4
+pointer to scsi host template
+.RE
+.PP
+\fIprivsize\fR
+.RS 4
+extra bytes to allocate for driver
+.RE
+.SH "NOTE"
+.PP
+Allocate a new Scsi_Host and perform basic initialization\&. The host is not published to the scsi midlayer until scsi_add_host is called\&.
+.PP
+Return value: Pointer to a new Scsi_Host
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

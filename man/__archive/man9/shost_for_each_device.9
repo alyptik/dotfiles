@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: shost_for_each_device
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SHOST_FOR_EACH_DEVIC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+shost_for_each_device \- iterate over all devices of a host
+.SH "SYNOPSIS"
+.HP \w'shost_for_each_device('u
+.BI "shost_for_each_device(" "sdev" ", " "shost" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsdev\fR
+.RS 4
+the
+struct scsi_device
+to use as a cursor
+.RE
+.PP
+\fIshost\fR
+.RS 4
+the
+struct scsi_host
+to iterate over
+.RE
+.SH "DESCRIPTION"
+.PP
+Iterator that returns each device attached to
+\fIshost\fR\&. This loop takes a reference on each device and releases it at the end\&. If you break out of the loop, you must call scsi_device_put(sdev)\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

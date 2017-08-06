@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: pci_enable_msix_range
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_ENABLE_MSIX_RANG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_enable_msix_range \- configure device\*(Aqs MSI\-X capability structure
+.SH "SYNOPSIS"
+.HP \w'int\ pci_enable_msix_range('u
+.BI "int pci_enable_msix_range(struct\ pci_dev\ *\ " "dev" ", struct\ msix_entry\ *\ " "entries" ", int\ " "minvec" ", int\ " "maxvec" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+pointer to the pci_dev data structure of MSI\-X device function
+.RE
+.PP
+\fIentries\fR
+.RS 4
+pointer to an array of MSI\-X entries
+.RE
+.PP
+\fIminvec\fR
+.RS 4
+minimum number of MSI\-X irqs requested
+.RE
+.PP
+\fImaxvec\fR
+.RS 4
+maximum number of MSI\-X irqs requested
+.RE
+.SH "DESCRIPTION"
+.PP
+Setup the MSI\-X capability structure of device function with a maximum possible number of interrupts in the range between
+\fIminvec\fR
+and
+\fImaxvec\fR
+upon its software driver call to request for MSI\-X mode enabled on its hardware device function\&. It returns a negative errno if an error occurs\&. If it succeeds, it returns the actual number of interrupts allocated and indicates the successful configuration of MSI\-X capability structure with new allocated MSI\-X interrupts\&.
+.SH "COPYRIGHT"
+.br

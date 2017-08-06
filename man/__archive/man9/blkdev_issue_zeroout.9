@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: blkdev_issue_zeroout
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLKDEV_ISSUE_ZEROOUT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blkdev_issue_zeroout \- zero\-fill a block range
+.SH "SYNOPSIS"
+.HP \w'int\ blkdev_issue_zeroout('u
+.BI "int blkdev_issue_zeroout(struct\ block_device\ *\ " "bdev" ", sector_t\ " "sector" ", sector_t\ " "nr_sects" ", gfp_t\ " "gfp_mask" ", bool\ " "discard" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+blockdev to write
+.RE
+.PP
+\fIsector\fR
+.RS 4
+start sector
+.RE
+.PP
+\fInr_sects\fR
+.RS 4
+number of sectors to write
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation flags (for bio_alloc)
+.RE
+.PP
+\fIdiscard\fR
+.RS 4
+whether to discard the block range
+.RE
+.SH "DESCRIPTION"
+.PP
+Zero\-fill a block range\&. If the discard flag is set and the block device guarantees that subsequent READ operations to the block range in question will return zeroes, the blocks will be discarded\&. Should the discard request fail, if the discard flag is not set, or if discard_zeroes_data is not supported, this function will resort to zeroing the blocks manually, thus provisioning (allocating, anchoring) them\&. If the block device supports WRITE ZEROES or WRITE SAME command(s),
+\fBblkdev_issue_zeroout\fR
+will use it to optimize the process of clearing the block range\&. Otherwise the zeroing will be performed using regular WRITE calls\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: fc_remote_port_rolechg
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FC_REMOTE_PORT_ROLEC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+fc_remote_port_rolechg \- notifies the fc transport that the roles on a remote may have changed\&.
+.SH "SYNOPSIS"
+.HP \w'void\ fc_remote_port_rolechg('u
+.BI "void fc_remote_port_rolechg(struct\ fc_rport\ *\ " "rport" ", u32\ " "roles" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrport\fR
+.RS 4
+The remote port that changed\&.
+.RE
+.PP
+\fIroles\fR
+.RS 4
+New roles for this port\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+The LLDD calls this routine to notify the transport that the roles on a remote port may have changed\&. The largest effect of this is if a port now becomes a FCP Target, it must be allocated a scsi target id\&. If the port is no longer a FCP target, any scsi target id value assigned to it will persist in case the role changes back to include FCP Target\&. No changes in the scsi midlayer will be invoked if the role changes (in the expectation that the role will be resumed\&. If it doesn\*(Aqt normal error processing will take place)\&.
+.PP
+Should not be called from interrupt context\&.
+.SH "NOTES"
+.PP
+This routine assumes no locks are held on entry\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

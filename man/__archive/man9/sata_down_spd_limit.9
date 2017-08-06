@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: sata_down_spd_limit
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SATA_DOWN_SPD_LIMIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sata_down_spd_limit \- adjust SATA spd limit downward
+.SH "SYNOPSIS"
+.HP \w'int\ sata_down_spd_limit('u
+.BI "int sata_down_spd_limit(struct\ ata_link\ *\ " "link" ", u32\ " "spd_limit" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+Link to adjust SATA spd limit for
+.RE
+.PP
+\fIspd_limit\fR
+.RS 4
+Additional limit
+.RE
+.SH "DESCRIPTION"
+.PP
+Adjust SATA spd limit of
+\fIlink\fR
+downward\&. Note that this function only adjusts the limit\&. The change must be applied using
+\fBsata_set_spd\fR\&.
+.PP
+If
+\fIspd_limit\fR
+is non\-zero, the speed is limited to equal to or lower than
+\fIspd_limit\fR
+if such speed is supported\&. If
+\fIspd_limit\fR
+is slower than any supported speed, only the lowest supported speed is allowed\&.
+.PP
+LOCKING: Inherited from caller\&.
+.SH "RETURN"
+.PP
+0 on success, negative errno on failure
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

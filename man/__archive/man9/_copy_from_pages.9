@@ -1,0 +1,60 @@
+'\" t
+.\"     Title: _copy_from_pages
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "_COPY_FROM_PAGES" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+_copy_from_pages \- 
+.SH "SYNOPSIS"
+.HP \w'void\ _copy_from_pages('u
+.BI "void _copy_from_pages(char\ *\ " "p" ", struct\ page\ **\ " "pages" ", size_t\ " "pgbase" ", size_t\ " "len" ");"
+.SH "ARGUMENTS"
+.PP
+\fIp\fR
+.RS 4
+pointer to destination
+.RE
+.PP
+\fIpages\fR
+.RS 4
+array of pages
+.RE
+.PP
+\fIpgbase\fR
+.RS 4
+offset of source data
+.RE
+.PP
+\fIlen\fR
+.RS 4
+length
+.RE
+.SH "DESCRIPTION"
+.PP
+Copies data into an arbitrary memory location from an array of pages The copy is assumed to be non\-overlapping\&.
+.SH "COPYRIGHT"
+.br

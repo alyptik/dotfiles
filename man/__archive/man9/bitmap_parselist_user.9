@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: bitmap_parselist_user
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_PARSELIST_USE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_parselist_user \- 
+.SH "SYNOPSIS"
+.HP \w'int\ bitmap_parselist_user('u
+.BI "int bitmap_parselist_user(const\ char\ __user\ *\ " "ubuf" ", unsigned\ int\ " "ulen" ", unsigned\ long\ *\ " "maskp" ", int\ " "nmaskbits" ");"
+.SH "ARGUMENTS"
+.PP
+\fIubuf\fR
+.RS 4
+pointer to user buffer containing string\&.
+.RE
+.PP
+\fIulen\fR
+.RS 4
+buffer size in bytes\&. If string is smaller than this then it must be terminated with a \e0\&.
+.RE
+.PP
+\fImaskp\fR
+.RS 4
+pointer to bitmap array that will contain result\&.
+.RE
+.PP
+\fInmaskbits\fR
+.RS 4
+size of bitmap, in bits\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Wrapper for
+\fBbitmap_parselist\fR, providing it with user buffer\&.
+.PP
+We cannot have this as an inline function in bitmap\&.h because it needs linux/uaccess\&.h to get the
+\fBaccess_ok\fR
+declaration and this causes cyclic dependencies\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: audit_compare_dname_path
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Audit Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "AUDIT_COMPARE_DNAME_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Audit Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+audit_compare_dname_path \- compare given dentry name with last component in given path\&. Return of 0 indicates a match\&.
+.SH "SYNOPSIS"
+.HP \w'int\ audit_compare_dname_path('u
+.BI "int audit_compare_dname_path(const\ char\ *\ " "dname" ", const\ char\ *\ " "path" ", int\ " "parentlen" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdname\fR
+.RS 4
+dentry name that we\*(Aqre comparing
+.RE
+.PP
+\fIpath\fR
+.RS 4
+full pathname that we\*(Aqre comparing
+.RE
+.PP
+\fIparentlen\fR
+.RS 4
+length of the parent if known\&. Passing in AUDIT_NAME_FULL here indicates that we must compute this value\&.
+.RE
+.SH "COPYRIGHT"
+.br

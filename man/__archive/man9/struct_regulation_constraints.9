@@ -1,0 +1,215 @@
+'\" t
+.\"     Title: struct regulation_constraints
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT REGULATION_CO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_regulation_constraints \- regulator operating constraints\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+struct regulation_constraints {
+  const char * name;
+  int min_uV;
+  int max_uV;
+  int uV_offset;
+  int min_uA;
+  int max_uA;
+  int ilim_uA;
+  int system_load;
+  unsigned int valid_modes_mask;
+  unsigned int valid_ops_mask;
+  int input_uV;
+  struct regulator_state state_disk;
+  struct regulator_state state_mem;
+  struct regulator_state state_standby;
+  suspend_state_t initial_state;
+  unsigned int initial_mode;
+  unsigned int ramp_delay;
+  unsigned int enable_time;
+  unsigned int active_discharge;
+  unsigned always_on:1;
+  unsigned boot_on:1;
+  unsigned apply_uV:1;
+  unsigned ramp_disable:1;
+  unsigned soft_start:1;
+  unsigned pull_down:1;
+  unsigned over_current_protection:1;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+name
+.RS 4
+Descriptive name for the constraints, used for display purposes\&.
+.RE
+.PP
+min_uV
+.RS 4
+Smallest voltage consumers may set\&.
+.RE
+.PP
+max_uV
+.RS 4
+Largest voltage consumers may set\&.
+.RE
+.PP
+uV_offset
+.RS 4
+Offset applied to voltages from consumer to compensate for voltage drops\&.
+.RE
+.PP
+min_uA
+.RS 4
+Smallest current consumers may set\&.
+.RE
+.PP
+max_uA
+.RS 4
+Largest current consumers may set\&.
+.RE
+.PP
+ilim_uA
+.RS 4
+Maximum input current\&.
+.RE
+.PP
+system_load
+.RS 4
+Load that isn\*(Aqt captured by any consumer requests\&.
+.RE
+.PP
+valid_modes_mask
+.RS 4
+Mask of modes which may be configured by consumers\&.
+.RE
+.PP
+valid_ops_mask
+.RS 4
+Operations which may be performed by consumers\&.
+.RE
+.PP
+input_uV
+.RS 4
+Input voltage for regulator when supplied by another regulator\&.
+.RE
+.PP
+state_disk
+.RS 4
+State for regulator when system is suspended in disk mode\&.
+.RE
+.PP
+state_mem
+.RS 4
+State for regulator when system is suspended in mem mode\&.
+.RE
+.PP
+state_standby
+.RS 4
+State for regulator when system is suspended in standby mode\&.
+.RE
+.PP
+initial_state
+.RS 4
+Suspend state to set by default\&.
+.RE
+.PP
+initial_mode
+.RS 4
+Mode to set at startup\&.
+.RE
+.PP
+ramp_delay
+.RS 4
+Time to settle down after voltage change (unit: uV/us)
+.RE
+.PP
+enable_time
+.RS 4
+Turn\-on time of the rails (unit: microseconds)
+.RE
+.PP
+active_discharge
+.RS 4
+Enable/disable active discharge\&. The enum regulator_active_discharge values are used for initialisation\&.
+.RE
+.PP
+always_on
+.RS 4
+Set if the regulator should never be disabled\&.
+.RE
+.PP
+boot_on
+.RS 4
+Set if the regulator is enabled when the system is initially started\&. If the regulator is not enabled by the hardware or bootloader then it will be enabled when the constraints are applied\&.
+.RE
+.PP
+apply_uV
+.RS 4
+Apply the voltage constraint when initialising\&.
+.RE
+.PP
+ramp_disable
+.RS 4
+Disable ramp delay when initialising or when setting voltage\&.
+.RE
+.PP
+soft_start
+.RS 4
+Enable soft start so that voltage ramps slowly\&.
+.RE
+.PP
+pull_down
+.RS 4
+Enable pull down when regulator is disabled\&.
+.RE
+.PP
+over_current_protection
+.RS 4
+Auto disable on over current event\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+This struct describes regulator and board/machine specific constraints\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

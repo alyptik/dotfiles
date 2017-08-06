@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: sleeping_thread_to_gdb_regs
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SLEEPING_THREAD_TO_G" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sleeping_thread_to_gdb_regs \- Convert ptrace regs to GDB regs
+.SH "SYNOPSIS"
+.HP \w'void\ sleeping_thread_to_gdb_regs('u
+.BI "void sleeping_thread_to_gdb_regs(unsigned\ long\ *\ " "gdb_regs" ", struct\ task_struct\ *\ " "p" ");"
+.SH "ARGUMENTS"
+.PP
+\fIgdb_regs\fR
+.RS 4
+A pointer to hold the registers in the order GDB wants\&.
+.RE
+.PP
+\fIp\fR
+.RS 4
+The
+struct task_struct
+of the desired process\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Convert the register values of the sleeping process in
+\fIp\fR
+to the format that GDB expects\&. This function is called when kgdb does not have access to the
+struct pt_regs
+and therefore it should fill the gdb registers
+\fIgdb_regs\fR
+with what has been saved in
+struct thread_struct
+thread field during switch_to\&.
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

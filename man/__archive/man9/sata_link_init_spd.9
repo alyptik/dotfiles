@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: sata_link_init_spd
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Core Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SATA_LINK_INIT_SPD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Core Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sata_link_init_spd \- Initialize link\->sata_spd_limit
+.SH "SYNOPSIS"
+.HP \w'int\ sata_link_init_spd('u
+.BI "int sata_link_init_spd(struct\ ata_link\ *\ " "link" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlink\fR
+.RS 4
+Link to configure sata_spd_limit for
+.RE
+.SH "DESCRIPTION"
+.PP
+Initialize
+\fIlink\fR\->[hw_]sata_spd_limit to the currently configured value\&.
+.PP
+LOCKING: Kernel thread context (may sleep)\&.
+.SH "RETURN"
+.PP
+0 on success, \-errno on failure\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

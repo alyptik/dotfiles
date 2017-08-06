@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: z8530_interrupt
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_INTERRUPT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_interrupt \- Handle an interrupt from a Z8530
+.SH "SYNOPSIS"
+.HP \w'irqreturn_t\ z8530_interrupt('u
+.BI "irqreturn_t z8530_interrupt(int\ " "irq" ", void\ *\ " "dev_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIirq\fR
+.RS 4
+Interrupt number
+.RE
+.PP
+\fIdev_id\fR
+.RS 4
+The Z8530 device that is interrupting\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+A Z85[2]30 device has stuck its hand in the air for attention\&. We scan both the channels on the chip for events and then call the channel specific call backs for each channel that has events\&. We have to use callback functions because the two channels can be in different modes\&.
+.PP
+Locking is done for the handlers\&. Note that locking is done at the chip level (the 5uS delay issue is per chip not per channel)\&. c\->lock for both channels points to dev\->lock
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

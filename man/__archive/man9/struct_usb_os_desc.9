@@ -1,0 +1,91 @@
+'\" t
+.\"     Title: struct usb_os_desc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT USB_OS_DESC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_usb_os_desc \- describes OS descriptors associated with one interface
+.SH "SYNOPSIS"
+.sp
+.nf
+struct usb_os_desc {
+  char * ext_compat_id;
+  struct list_head ext_prop;
+  int ext_prop_len;
+  int ext_prop_count;
+  struct mutex * opts_mutex;
+  struct config_group group;
+  struct module * owner;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+ext_compat_id
+.RS 4
+16 bytes of
+\(lqCompatible ID\(rq
+and
+\(lqSubcompatible ID\(rq
+.RE
+.PP
+ext_prop
+.RS 4
+Extended Properties list
+.RE
+.PP
+ext_prop_len
+.RS 4
+Total length of Extended Properties blobs
+.RE
+.PP
+ext_prop_count
+.RS 4
+Number of Extended Properties
+.RE
+.PP
+opts_mutex
+.RS 4
+Optional mutex protecting config data of a usb_function_instance
+.RE
+.PP
+group
+.RS 4
+Represents OS descriptors associated with an interface in configfs
+.RE
+.PP
+owner
+.RS 4
+Module associated with this OS descriptor
+.RE
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

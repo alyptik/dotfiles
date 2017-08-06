@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: vm_insert_page
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VM_INSERT_PAGE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vm_insert_page \- insert single page into user vma
+.SH "SYNOPSIS"
+.HP \w'int\ vm_insert_page('u
+.BI "int vm_insert_page(struct\ vm_area_struct\ *\ " "vma" ", unsigned\ long\ " "addr" ", struct\ page\ *\ " "page" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvma\fR
+.RS 4
+user vma to map to
+.RE
+.PP
+\fIaddr\fR
+.RS 4
+target user address of this page
+.RE
+.PP
+\fIpage\fR
+.RS 4
+source kernel page
+.RE
+.SH "DESCRIPTION"
+.PP
+This allows drivers to insert individual pages they\*(Aqve allocated into a user vma\&.
+.PP
+The page has to be a nice clean _individual_ kernel allocation\&. If you allocate a compound page, you need to have marked it as such (__GFP_COMP), or manually just split the page up yourself (see
+\fBsplit_page\fR)\&.
+.PP
+NOTE! Traditionally this was done with
+\(lq\fBremap_pfn_range\fR\(rq
+which took an arbitrary page protection parameter\&. This doesn\*(Aqt allow that\&. Your vma protection will have to be set up correctly, which means that if you want a shared writable mapping, you\*(Aqd better ask for a shared writable mapping!
+.PP
+The page does not need to be reserved\&.
+.PP
+Usually this function is called from f_op\->\fBmmap\fR
+handler under mm\->mmap_sem write\-lock, so it can change vma\->vm_flags\&. Caller must set VM_MIXEDMAP on vma if it wants to call this function from other places, for example from page\-fault handler\&.
+.SH "COPYRIGHT"
+.br

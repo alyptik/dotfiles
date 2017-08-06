@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: filemap_fault
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "FILEMAP_FAULT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+filemap_fault \- read in file data for page fault handling
+.SH "SYNOPSIS"
+.HP \w'int\ filemap_fault('u
+.BI "int filemap_fault(struct\ vm_area_struct\ *\ " "vma" ", struct\ vm_fault\ *\ " "vmf" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvma\fR
+.RS 4
+vma in which the fault was taken
+.RE
+.PP
+\fIvmf\fR
+.RS 4
+struct vm_fault containing details of the fault
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBfilemap_fault\fR
+is invoked via the vma operations vector for a mapped memory region to read in file data during a page fault\&.
+.PP
+The goto\*(Aqs are kind of ugly, but this streamlines the normal case of having it in the page cache, and handles the special cases reasonably without having a lot of duplicated code\&.
+.PP
+vma\->vm_mm\->mmap_sem must be held on entry\&.
+.PP
+If our return value has VM_FAULT_RETRY set, it\*(Aqs because
+\fBlock_page_or_retry\fR
+returned 0\&. The mmap_sem has usually been released in this case\&. See
+\fB__lock_page_or_retry\fR
+for the exception\&.
+.PP
+If our return value does not have VM_FAULT_RETRY set, the mmap_sem has not been released\&.
+.PP
+We never return with VM_FAULT_RETRY and a bit from VM_FAULT_ERROR set\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: scsi_queue_work
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_QUEUE_WORK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_queue_work \- Queue work to the Scsi_Host workqueue\&.
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_queue_work('u
+.BI "int scsi_queue_work(struct\ Scsi_Host\ *\ " "shost" ", struct\ work_struct\ *\ " "work" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+Pointer to Scsi_Host\&.
+.RE
+.PP
+\fIwork\fR
+.RS 4
+Work to queue for execution\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Return value: 1 \- work queued for execution 0 \- work is already queued \-EINVAL \- work queue doesn\*(Aqt exist
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

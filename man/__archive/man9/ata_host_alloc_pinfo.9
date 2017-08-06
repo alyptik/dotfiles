@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: ata_host_alloc_pinfo
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_HOST_ALLOC_PINFO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_host_alloc_pinfo \- alloc host and init with port_info array
+.SH "SYNOPSIS"
+.HP \w'struct\ ata_host\ *\ ata_host_alloc_pinfo('u
+.BI "struct ata_host * ata_host_alloc_pinfo(struct\ device\ *\ " "dev" ", const\ struct\ ata_port_info\ *const\ *\ " "ppi" ", int\ " "n_ports" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+generic device this host is associated with
+.RE
+.PP
+\fIppi\fR
+.RS 4
+array of ATA port_info to initialize host with
+.RE
+.PP
+\fIn_ports\fR
+.RS 4
+number of ATA ports attached to this host
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocate ATA host and initialize with info from
+\fIppi\fR\&. If NULL terminated,
+\fIppi\fR
+may contain fewer entries than
+\fIn_ports\fR\&. The last entry will be used for the remaining ports\&.
+.SH "RETURN"
+.PP
+Allocate ATA host on success, NULL on failure\&.
+.PP
+LOCKING: Inherited from calling layer (may sleep)\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

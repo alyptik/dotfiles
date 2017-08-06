@@ -1,0 +1,92 @@
+'\" t
+.\"     Title: struct irq_common_data
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Structures
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT IRQ_COMMON_DA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Structures"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_irq_common_data \- per irq data shared by all irqchips
+.SH "SYNOPSIS"
+.sp
+.nf
+struct irq_common_data {
+  unsigned int __private state_use_accessors;
+#ifdef CONFIG_NUMA
+  unsigned int node;
+#endif
+  void * handler_data;
+  struct msi_desc * msi_desc;
+  cpumask_var_t affinity;
+#ifdef CONFIG_GENERIC_IRQ_IPI
+  unsigned int ipi_offset;
+#endif
+};  
+.fi
+.SH "MEMBERS"
+.PP
+state_use_accessors
+.RS 4
+status information for irq chip functions\&. Use accessor functions to deal with it
+.RE
+.PP
+node
+.RS 4
+node index useful for balancing
+.RE
+.PP
+handler_data
+.RS 4
+per\-IRQ data for the irq_chip methods
+.RE
+.PP
+msi_desc
+.RS 4
+MSI descriptor
+.RE
+.PP
+affinity
+.RS 4
+IRQ affinity on SMP\&. If this is an IPI related irq, then this is the mask of the CPUs to which an IPI can be sent\&.
+.RE
+.PP
+ipi_offset
+.RS 4
+Offset of first IPI target cpu in
+\fIaffinity\fR\&. Optional\&.
+.RE
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

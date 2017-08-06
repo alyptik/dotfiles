@@ -1,0 +1,124 @@
+'\" t
+.\"     Title: struct sk_buff
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT SK_BUFF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_sk_buff \- socket buffer
+.SH "SYNOPSIS"
+.sp
+.nf
+struct sk_buff {
+  union {unnamed_union};
+  __u16 inner_transport_header;
+  __u16 inner_network_header;
+  __u16 inner_mac_header;
+  __be16 protocol;
+  __u16 transport_header;
+  __u16 network_header;
+  __u16 mac_header;
+  sk_buff_data_t tail;
+  sk_buff_data_t end;
+  unsigned char * head;
+  unsigned char * data;
+  unsigned int truesize;
+  atomic_t users;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+{unnamed_union}
+.RS 4
+anonymous
+.RE
+.PP
+inner_transport_header
+.RS 4
+Inner transport layer header (encapsulation)
+.RE
+.PP
+inner_network_header
+.RS 4
+Network layer header (encapsulation)
+.RE
+.PP
+inner_mac_header
+.RS 4
+Link layer header (encapsulation)
+.RE
+.PP
+protocol
+.RS 4
+Packet protocol from driver
+.RE
+.PP
+transport_header
+.RS 4
+Transport layer header
+.RE
+.PP
+network_header
+.RS 4
+Network layer header
+.RE
+.PP
+mac_header
+.RS 4
+Link layer header
+.RE
+.PP
+tail
+.RS 4
+Tail pointer
+.RE
+.PP
+end
+.RS 4
+End pointer
+.RE
+.PP
+head
+.RS 4
+Head of buffer
+.RE
+.PP
+data
+.RS 4
+Data head pointer
+.RE
+.PP
+truesize
+.RS 4
+Buffer size
+.RE
+.PP
+users
+.RS 4
+User count \- see {datagram,tcp}\&.c
+.RE
+.SH "COPYRIGHT"
+.br

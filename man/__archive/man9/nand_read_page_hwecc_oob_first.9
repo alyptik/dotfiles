@@ -1,0 +1,73 @@
+'\" t
+.\"     Title: nand_read_page_hwecc_oob_first
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_READ_PAGE_HWECC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_read_page_hwecc_oob_first \- [REPLACEABLE] hw ecc, read oob first
+.SH "SYNOPSIS"
+.HP \w'int\ nand_read_page_hwecc_oob_first('u
+.BI "int nand_read_page_hwecc_oob_first(struct\ mtd_info\ *\ " "mtd" ", struct\ nand_chip\ *\ " "chip" ", uint8_t\ *\ " "buf" ", int\ " "oob_required" ", int\ " "page" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+mtd info structure
+.RE
+.PP
+\fIchip\fR
+.RS 4
+nand chip info structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+buffer to store read data
+.RE
+.PP
+\fIoob_required\fR
+.RS 4
+caller requires OOB data read to chip\->oob_poi
+.RE
+.PP
+\fIpage\fR
+.RS 4
+page number to read
+.RE
+.SH "DESCRIPTION"
+.PP
+Hardware ECC for large page chips, require OOB to be read first\&. For this ECC mode, the write_page method is re\-used from ECC_HW\&. These methods read/write ECC from the OOB area, unlike the ECC_HW_SYNDROME support with multiple ECC steps, follows the
+\(lqinfix ECC\(rq
+scheme and reads/writes ECC from the data area, by overwriting the NAND manufacturer bad block markings\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

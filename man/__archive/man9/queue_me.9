@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: queue_me
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Futex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "QUEUE_ME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Futex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+queue_me \- Enqueue the futex_q on the futex_hash_bucket
+.SH "SYNOPSIS"
+.HP \w'void\ queue_me('u
+.BI "void queue_me(struct\ futex_q\ *\ " "q" ", struct\ futex_hash_bucket\ *\ " "hb" ");"
+.SH "ARGUMENTS"
+.PP
+\fIq\fR
+.RS 4
+The futex_q to enqueue
+.RE
+.PP
+\fIhb\fR
+.RS 4
+The destination hash bucket
+.RE
+.SH "DESCRIPTION"
+.PP
+The hb\->lock must be held by the caller, and is released here\&. A call to
+\fBqueue_me\fR
+is typically paired with exactly one call to
+\fBunqueue_me\fR\&. The exceptions involve the PI related operations, which may use
+\fBunqueue_me_pi\fR
+or nothing if the unqueue is done as part of the wake process and the unqueue state is implicit in the state of woken task (see
+\fBfutex_wait_requeue_pi\fR
+for an example)\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

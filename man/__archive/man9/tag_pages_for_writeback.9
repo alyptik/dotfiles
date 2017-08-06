@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: tag_pages_for_writeback
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "TAG_PAGES_FOR_WRITEB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+tag_pages_for_writeback \- tag pages to be written by write_cache_pages
+.SH "SYNOPSIS"
+.HP \w'void\ tag_pages_for_writeback('u
+.BI "void tag_pages_for_writeback(struct\ address_space\ *\ " "mapping" ", pgoff_t\ " "start" ", pgoff_t\ " "end" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+address space structure to write
+.RE
+.PP
+\fIstart\fR
+.RS 4
+starting page index
+.RE
+.PP
+\fIend\fR
+.RS 4
+ending page index (inclusive)
+.RE
+.SH "DESCRIPTION"
+.PP
+This function scans the page range from
+\fIstart\fR
+to
+\fIend\fR
+(inclusive) and tags all pages that have DIRTY tag set with a special TOWRITE tag\&. The idea is that write_cache_pages (or whoever calls this function) will then use TOWRITE tag to identify pages eligible for writeback\&. This mechanism is used to avoid livelocking of writeback by a process steadily creating new dirty pages in the file (thus it is important for this function to be quick so that it can tag pages faster than a dirtying process can create them)\&.
+.SH "COPYRIGHT"
+.br

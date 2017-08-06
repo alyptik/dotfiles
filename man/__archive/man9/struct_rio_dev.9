@@ -1,0 +1,220 @@
+'\" t
+.\"     Title: struct rio_dev
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT RIO_DEV" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_rio_dev \- RIO device info
+.SH "SYNOPSIS"
+.sp
+.nf
+struct rio_dev {
+  struct list_head global_list;
+  struct list_head net_list;
+  struct rio_net * net;
+  bool do_enum;
+  u16 did;
+  u16 vid;
+  u32 device_rev;
+  u16 asm_did;
+  u16 asm_vid;
+  u16 asm_rev;
+  u16 efptr;
+  u32 pef;
+  u32 swpinfo;
+  u32 src_ops;
+  u32 dst_ops;
+  u32 comp_tag;
+  u32 phys_efptr;
+  u32 phys_rmap;
+  u32 em_efptr;
+  u64 dma_mask;
+  struct rio_driver * driver;
+  struct device dev;
+  struct resource riores[RIO_MAX_DEV_RESOURCES];
+  int (* pwcback) (struct rio_dev *rdev, union rio_pw_msg *msg, int step);
+  u16 destid;
+  u8 hopcount;
+  struct rio_dev * prev;
+  atomic_t state;
+  struct rio_switch rswitch[0];
+};  
+.fi
+.SH "MEMBERS"
+.PP
+global_list
+.RS 4
+Node in list of all RIO devices
+.RE
+.PP
+net_list
+.RS 4
+Node in list of RIO devices in a network
+.RE
+.PP
+net
+.RS 4
+Network this device is a part of
+.RE
+.PP
+do_enum
+.RS 4
+Enumeration flag
+.RE
+.PP
+did
+.RS 4
+Device ID
+.RE
+.PP
+vid
+.RS 4
+Vendor ID
+.RE
+.PP
+device_rev
+.RS 4
+Device revision
+.RE
+.PP
+asm_did
+.RS 4
+Assembly device ID
+.RE
+.PP
+asm_vid
+.RS 4
+Assembly vendor ID
+.RE
+.PP
+asm_rev
+.RS 4
+Assembly revision
+.RE
+.PP
+efptr
+.RS 4
+Extended feature pointer
+.RE
+.PP
+pef
+.RS 4
+Processing element features
+.RE
+.PP
+swpinfo
+.RS 4
+Switch port info
+.RE
+.PP
+src_ops
+.RS 4
+Source operation capabilities
+.RE
+.PP
+dst_ops
+.RS 4
+Destination operation capabilities
+.RE
+.PP
+comp_tag
+.RS 4
+RIO component tag
+.RE
+.PP
+phys_efptr
+.RS 4
+RIO device extended features pointer
+.RE
+.PP
+phys_rmap
+.RS 4
+LP\-Serial Register Map Type (1 or 2)
+.RE
+.PP
+em_efptr
+.RS 4
+RIO Error Management features pointer
+.RE
+.PP
+dma_mask
+.RS 4
+Mask of bits of RIO address this device implements
+.RE
+.PP
+driver
+.RS 4
+Driver claiming this device
+.RE
+.PP
+dev
+.RS 4
+Device model device
+.RE
+.PP
+riores[RIO_MAX_DEV_RESOURCES]
+.RS 4
+RIO resources this device owns
+.RE
+.PP
+pwcback
+.RS 4
+port\-write callback function for this device
+.RE
+.PP
+destid
+.RS 4
+Network destination ID (or associated destid for switch)
+.RE
+.PP
+hopcount
+.RS 4
+Hopcount to this device
+.RE
+.PP
+prev
+.RS 4
+Previous RIO device connected to the current one
+.RE
+.PP
+state
+.RS 4
+device state
+.RE
+.PP
+rswitch[0]
+.RS 4
+struct rio_switch (if valid for this device)
+.RE
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

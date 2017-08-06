@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: ata_msense_caching
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata SCSI translation/emulation
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_MSENSE_CACHING" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata SCSI translation/emulat"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_msense_caching \- Simulate MODE SENSE caching info page
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ ata_msense_caching('u
+.BI "unsigned int ata_msense_caching(u16\ *\ " "id" ", u8\ *\ " "buf" ", bool\ " "changeable" ");"
+.SH "ARGUMENTS"
+.PP
+\fIid\fR
+.RS 4
+device IDENTIFY data
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+output buffer
+.RE
+.PP
+\fIchangeable\fR
+.RS 4
+whether changeable parameters are requested
+.RE
+.SH "DESCRIPTION"
+.PP
+Generate a caching info page, which conditionally indicates write caching to the SCSI layer, depending on device capabilities\&.
+.PP
+LOCKING: None\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

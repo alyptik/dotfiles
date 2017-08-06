@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: phy_connect_direct
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_CONNECT_DIRECT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_connect_direct \- connect an ethernet device to a specific phy_device
+.SH "SYNOPSIS"
+.HP \w'int\ phy_connect_direct('u
+.BI "int phy_connect_direct(struct\ net_device\ *\ " "dev" ", struct\ phy_device\ *\ " "phydev" ", void\ (*" "handler" ")\ (struct\ net_device\ *), phy_interface_t\ " "interface" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the network device to connect
+.RE
+.PP
+\fIphydev\fR
+.RS 4
+the pointer to the phy device
+.RE
+.PP
+\fIhandler\fR
+.RS 4
+callback function for state change notifications
+.RE
+.PP
+\fIinterface\fR
+.RS 4
+PHY device\*(Aqs interface
+.RE
+.SH "COPYRIGHT"
+.br

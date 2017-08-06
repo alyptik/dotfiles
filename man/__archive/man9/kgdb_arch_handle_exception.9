@@ -1,0 +1,84 @@
+'\" t
+.\"     Title: kgdb_arch_handle_exception
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Debugger Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "KGDB_ARCH_HANDLE_EXC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Debugger Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kgdb_arch_handle_exception \- Handle architecture specific GDB packets\&.
+.SH "SYNOPSIS"
+.HP \w'int\ kgdb_arch_handle_exception('u
+.BI "int kgdb_arch_handle_exception(int\ " "vector" ", int\ " "signo" ", int\ " "err_code" ", char\ *\ " "remcom_in_buffer" ", char\ *\ " "remcom_out_buffer" ", struct\ pt_regs\ *\ " "regs" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvector\fR
+.RS 4
+The error vector of the exception that happened\&.
+.RE
+.PP
+\fIsigno\fR
+.RS 4
+The signal number of the exception that happened\&.
+.RE
+.PP
+\fIerr_code\fR
+.RS 4
+The error code of the exception that happened\&.
+.RE
+.PP
+\fIremcom_in_buffer\fR
+.RS 4
+The buffer of the packet we have read\&.
+.RE
+.PP
+\fIremcom_out_buffer\fR
+.RS 4
+The buffer of
+\fBBUFMAX\fR
+bytes to write a packet into\&.
+.RE
+.PP
+\fIregs\fR
+.RS 4
+The
+struct pt_regs
+of the current process\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function MUST handle the \*(Aqc\*(Aq and \*(Aqs\*(Aq command packets, as well packets to set / remove a hardware breakpoint, if used\&. If there are additional packets which the hardware needs to handle, they are handled here\&. The code should return \-1 if it wants to process more packets, and a
+\fB0\fR
+or
+\fB1\fR
+if it wants to exit from the kgdb callback\&.
+.SH "AUTHOR"
+.PP
+\fBJason Wessel\fR <\&jason.wessel@windriver.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

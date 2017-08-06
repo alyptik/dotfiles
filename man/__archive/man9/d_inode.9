@@ -1,0 +1,45 @@
+'\" t
+.\"     Title: d_inode
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "D_INODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+d_inode \- Get the actual inode of this dentry
+.SH "SYNOPSIS"
+.HP \w'struct\ inode\ *\ d_inode('u
+.BI "struct inode * d_inode(const\ struct\ dentry\ *\ " "dentry" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdentry\fR
+.RS 4
+The dentry to query
+.RE
+.SH "DESCRIPTION"
+.PP
+This is the helper normal filesystems should use to get at their own inodes in their own dentries and ignore the layering superimposed upon them\&.
+.SH "COPYRIGHT"
+.br

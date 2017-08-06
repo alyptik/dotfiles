@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: strncpy
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRNCPY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+strncpy \- Copy a length\-limited, C\-string
+.SH "SYNOPSIS"
+.HP \w'char\ *\ strncpy('u
+.BI "char * strncpy(char\ *\ " "dest" ", const\ char\ *\ " "src" ", size_t\ " "count" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdest\fR
+.RS 4
+Where to copy the string to
+.RE
+.PP
+\fIsrc\fR
+.RS 4
+Where to copy the string from
+.RE
+.PP
+\fIcount\fR
+.RS 4
+The maximum number of bytes to copy
+.RE
+.SH "DESCRIPTION"
+.PP
+The result is not
+\fBNUL\-terminated\fR
+if the source exceeds
+\fIcount\fR
+bytes\&.
+.PP
+In the case where the length of
+\fIsrc\fR
+is less than that of count, the remainder of
+\fIdest\fR
+will be padded with
+\fBNUL\fR\&.
+.SH "COPYRIGHT"
+.br

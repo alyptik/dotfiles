@@ -1,0 +1,78 @@
+'\" t
+.\"     Title: dma_pool_create
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMA_POOL_CREATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dma_pool_create \- Creates a pool of consistent memory blocks, for dma\&.
+.SH "SYNOPSIS"
+.HP \w'struct\ dma_pool\ *\ dma_pool_create('u
+.BI "struct dma_pool * dma_pool_create(const\ char\ *\ " "name" ", struct\ device\ *\ " "dev" ", size_t\ " "size" ", size_t\ " "align" ", size_t\ " "boundary" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+name of pool, for diagnostics
+.RE
+.PP
+\fIdev\fR
+.RS 4
+device that will be doing the DMA
+.RE
+.PP
+\fIsize\fR
+.RS 4
+size of the blocks in this pool\&.
+.RE
+.PP
+\fIalign\fR
+.RS 4
+alignment requirement for blocks; must be a power of two
+.RE
+.PP
+\fIboundary\fR
+.RS 4
+returned blocks won\*(Aqt cross this power of two boundary
+.RE
+.SH "CONTEXT"
+.PP
+!\fBin_interrupt\fR
+.SH "DESCRIPTION"
+.PP
+Returns a dma allocation pool with the requested characteristics, or null if one can\*(Aqt be created\&. Given one of these pools,
+\fBdma_pool_alloc\fR
+may be used to allocate memory\&. Such memory will all have
+\(lqconsistent\(rq
+DMA mappings, accessible by the device and its driver without using cache flushing primitives\&. The actual size of blocks allocated may be larger than requested because of alignment\&.
+.PP
+If
+\fIboundary\fR
+is nonzero, objects returned from
+\fBdma_pool_alloc\fR
+won\*(Aqt cross that size boundary\&. This is useful for devices which have addressing restrictions on individual DMA transfers, such as not crossing boundaries of 4KBytes\&.
+.SH "COPYRIGHT"
+.br

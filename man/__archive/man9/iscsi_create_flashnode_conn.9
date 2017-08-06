@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: iscsi_create_flashnode_conn
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ISCSI_CREATE_FLASHNO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+iscsi_create_flashnode_conn \- Add flashnode conn entry in sysfs
+.SH "SYNOPSIS"
+.HP \w'struct\ iscsi_bus_flash_conn\ *\ iscsi_create_flashnode_conn('u
+.BI "struct iscsi_bus_flash_conn * iscsi_create_flashnode_conn(struct\ Scsi_Host\ *\ " "shost" ", struct\ iscsi_bus_flash_session\ *\ " "fnode_sess" ", struct\ iscsi_transport\ *\ " "transport" ", int\ " "dd_size" ");"
+.SH "ARGUMENTS"
+.PP
+\fIshost\fR
+.RS 4
+pointer to host data
+.RE
+.PP
+\fIfnode_sess\fR
+.RS 4
+pointer to the parent flashnode session entry
+.RE
+.PP
+\fItransport\fR
+.RS 4
+pointer to transport data
+.RE
+.PP
+\fIdd_size\fR
+.RS 4
+total size to allocate
+.RE
+.SH "DESCRIPTION"
+.PP
+Adds a sysfs entry for the flashnode connection attributes
+.SH "RETURN"
+.PP
+pointer to allocated flashnode conn on success
+\fBNULL\fR
+on failure
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

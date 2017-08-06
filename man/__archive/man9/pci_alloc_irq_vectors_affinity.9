@@ -1,0 +1,79 @@
+'\" t
+.\"     Title: pci_alloc_irq_vectors_affinity
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_ALLOC_IRQ_VECTOR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_alloc_irq_vectors_affinity \- allocate multiple IRQs for a device
+.SH "SYNOPSIS"
+.HP \w'int\ pci_alloc_irq_vectors_affinity('u
+.BI "int pci_alloc_irq_vectors_affinity(struct\ pci_dev\ *\ " "dev" ", unsigned\ int\ " "min_vecs" ", unsigned\ int\ " "max_vecs" ", unsigned\ int\ " "flags" ", const\ struct\ irq_affinity\ *\ " "affd" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+PCI device to operate on
+.RE
+.PP
+\fImin_vecs\fR
+.RS 4
+minimum number of vectors required (must be >= 1)
+.RE
+.PP
+\fImax_vecs\fR
+.RS 4
+maximum (desired) number of vectors
+.RE
+.PP
+\fIflags\fR
+.RS 4
+flags or quirks for the allocation
+.RE
+.PP
+\fIaffd\fR
+.RS 4
+optional description of the affinity requirements
+.RE
+.SH "DESCRIPTION"
+.PP
+Allocate up to
+\fImax_vecs\fR
+interrupt vectors for
+\fIdev\fR, using MSI\-X or MSI vectors if available, and fall back to a single legacy vector if neither is available\&. Return the number of vectors allocated, (which might be smaller than
+\fImax_vecs\fR) if successful, or a negative error code on error\&. If less than
+\fImin_vecs\fR
+interrupt vectors are available for
+\fIdev\fR
+the function will fail with \-ENOSPC\&.
+.PP
+To get the Linux IRQ number used for a vector that can be passed to
+\fBrequest_irq\fR
+use the
+\fBpci_irq_vector\fR
+helper\&.
+.SH "COPYRIGHT"
+.br

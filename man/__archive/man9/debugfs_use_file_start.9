@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: debugfs_use_file_start
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_USE_FILE_STA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_use_file_start \- mark the beginning of file data access
+.SH "SYNOPSIS"
+.HP \w'int\ debugfs_use_file_start('u
+.BI "int debugfs_use_file_start(const\ struct\ dentry\ *\ " "dentry" ", int\ *\ " "srcu_idx" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdentry\fR
+.RS 4
+the dentry object whose data is being accessed\&.
+.RE
+.PP
+\fIsrcu_idx\fR
+.RS 4
+a pointer to some memory to store a SRCU index in\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Up to a matching call to
+\fBdebugfs_use_file_finish\fR, any successive call into the file removing functions
+\fBdebugfs_remove\fR
+and
+\fBdebugfs_remove_recursive\fR
+will block\&. Since associated private file data may only get freed after a successful return of any of the removal functions, you may safely access it after a successful call to
+\fBdebugfs_use_file_start\fR
+without worrying about lifetime issues\&.
+.PP
+If \-\fBEIO\fR
+is returned, the file has already been removed and thus, it is not safe to access any of its data\&. If, on the other hand, it is allowed to access the file data, zero is returned\&.
+.PP
+Regardless of the return code, any call to
+\fBdebugfs_use_file_start\fR
+must be followed by a matching call to
+\fBdebugfs_use_file_finish\fR\&.
+.SH "COPYRIGHT"
+.br

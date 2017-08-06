@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: wimax_report_rfkill_sw
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_REPORT_RFKILL_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_report_rfkill_sw \- Reports changes in the software RF switch
+.SH "SYNOPSIS"
+.HP \w'void\ wimax_report_rfkill_sw('u
+.BI "void wimax_report_rfkill_sw(struct\ wimax_dev\ *\ " "wimax_dev" ", enum\ wimax_rf_state\ " "state" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor
+.RE
+.PP
+\fIstate\fR
+.RS 4
+New state of the RF kill switch\&.
+\fBWIMAX_RF_ON\fR
+radio on,
+\fBWIMAX_RF_OFF\fR
+radio off\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Reports changes in the software RF switch state to the WiMAX stack\&.
+.PP
+The main use is during initialization, so the driver can query the device for its current software radio kill switch state and feed it to the system\&.
+.PP
+On the side, the device does not change the software state by itself\&. In practice, this can happen, as the device might decide to switch (in software) the radio off for different reasons\&.
+.SH "COPYRIGHT"
+.br

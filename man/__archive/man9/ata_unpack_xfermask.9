@@ -1,0 +1,72 @@
+'\" t
+.\"     Title: ata_unpack_xfermask
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_UNPACK_XFERMASK" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_unpack_xfermask \- Unpack xfer_mask into pio, mwdma and udma masks
+.SH "SYNOPSIS"
+.HP \w'void\ ata_unpack_xfermask('u
+.BI "void ata_unpack_xfermask(unsigned\ long\ " "xfer_mask" ", unsigned\ long\ *\ " "pio_mask" ", unsigned\ long\ *\ " "mwdma_mask" ", unsigned\ long\ *\ " "udma_mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIxfer_mask\fR
+.RS 4
+xfer_mask to unpack
+.RE
+.PP
+\fIpio_mask\fR
+.RS 4
+resulting pio_mask
+.RE
+.PP
+\fImwdma_mask\fR
+.RS 4
+resulting mwdma_mask
+.RE
+.PP
+\fIudma_mask\fR
+.RS 4
+resulting udma_mask
+.RE
+.SH "DESCRIPTION"
+.PP
+Unpack
+\fIxfer_mask\fR
+into
+\fIpio_mask\fR,
+\fImwdma_mask\fR
+and
+\fIudma_mask\fR\&. Any NULL destination masks will be ignored\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

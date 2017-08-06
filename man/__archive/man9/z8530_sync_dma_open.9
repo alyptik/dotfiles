@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: z8530_sync_dma_open
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "Z8530_SYNC_DMA_OPEN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+z8530_sync_dma_open \- Open a Z8530 for DMA I/O
+.SH "SYNOPSIS"
+.HP \w'int\ z8530_sync_dma_open('u
+.BI "int z8530_sync_dma_open(struct\ net_device\ *\ " "dev" ", struct\ z8530_channel\ *\ " "c" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+The network device to attach
+.RE
+.PP
+\fIc\fR
+.RS 4
+The Z8530 channel to configure in sync DMA mode\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Set up a Z85x30 device for synchronous DMA in both directions\&. Two ISA DMA channels must be available for this to work\&. We assume ISA DMA driven I/O and PC limits on access\&.
+.SH "AUTHOR"
+.PP
+\fBAlan Cox\fR <\&alan@lxorguk.ukuu.org.uk\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

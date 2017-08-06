@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: init_rs_non_canonical
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "INIT_RS_NON_CANONICA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+init_rs_non_canonical \- Find a matching or allocate a new rs control structure, for fields with non\-canonical representation
+.SH "SYNOPSIS"
+.HP \w'struct\ rs_control\ *\ init_rs_non_canonical('u
+.BI "struct rs_control * init_rs_non_canonical(int\ " "symsize" ", int\ (*" "gffunc" ")\ (int), int\ " "fcr" ", int\ " "prim" ", int\ " "nroots" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsymsize\fR
+.RS 4
+the symbol size (number of bits)
+.RE
+.PP
+\fIgffunc\fR
+.RS 4
+pointer to function to generate the next field element, or the multiplicative identity element if given 0\&. Used instead of gfpoly if gfpoly is 0
+.RE
+.PP
+\fIfcr\fR
+.RS 4
+the first consecutive root of the rs code generator polynomial in index form
+.RE
+.PP
+\fIprim\fR
+.RS 4
+primitive element to generate polynomial roots
+.RE
+.PP
+\fInroots\fR
+.RS 4
+RS code generator polynomial degree (number of roots)
+.RE
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

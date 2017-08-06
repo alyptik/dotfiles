@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: lease_get_mtime
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "LEASE_GET_MTIME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+lease_get_mtime \- get the last modified time of an inode
+.SH "SYNOPSIS"
+.HP \w'void\ lease_get_mtime('u
+.BI "void lease_get_mtime(struct\ inode\ *\ " "inode" ", struct\ timespec\ *\ " "time" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+the inode
+.RE
+.PP
+\fItime\fR
+.RS 4
+pointer to a timespec which will contain the last modified time
+.RE
+.SH "DESCRIPTION"
+.PP
+This is to force NFS clients to flush their caches for files with exclusive leases\&. The justification is that if someone has an exclusive lease, then they could be modifying it\&.
+.SH "COPYRIGHT"
+.br

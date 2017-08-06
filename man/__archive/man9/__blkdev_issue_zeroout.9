@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: __blkdev_issue_zeroout
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__BLKDEV_ISSUE_ZEROO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__blkdev_issue_zeroout \- generate number of zero filed write bios
+.SH "SYNOPSIS"
+.HP \w'int\ __blkdev_issue_zeroout('u
+.BI "int __blkdev_issue_zeroout(struct\ block_device\ *\ " "bdev" ", sector_t\ " "sector" ", sector_t\ " "nr_sects" ", gfp_t\ " "gfp_mask" ", struct\ bio\ **\ " "biop" ", bool\ " "discard" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbdev\fR
+.RS 4
+blockdev to issue
+.RE
+.PP
+\fIsector\fR
+.RS 4
+start sector
+.RE
+.PP
+\fInr_sects\fR
+.RS 4
+number of sectors to write
+.RE
+.PP
+\fIgfp_mask\fR
+.RS 4
+memory allocation flags (for bio_alloc)
+.RE
+.PP
+\fIbiop\fR
+.RS 4
+pointer to anchor bio
+.RE
+.PP
+\fIdiscard\fR
+.RS 4
+discard flag
+.RE
+.SH "DESCRIPTION"
+.PP
+Generate and issue number of bios with zerofiled pages\&.
+.SH "COPYRIGHT"
+.br

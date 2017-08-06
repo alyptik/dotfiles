@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: blk_integrity_register
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_INTEGRITY_REGIST" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_integrity_register \- Register a gendisk as being integrity\-capable
+.SH "SYNOPSIS"
+.HP \w'void\ blk_integrity_register('u
+.BI "void blk_integrity_register(struct\ gendisk\ *\ " "disk" ", struct\ blk_integrity\ *\ " "template" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdisk\fR
+.RS 4
+struct gendisk pointer to make integrity\-aware
+.RE
+.PP
+\fItemplate\fR
+.RS 4
+block integrity profile to register
+.RE
+.SH "DESCRIPTION"
+.PP
+When a device needs to advertise itself as being able to send/receive integrity metadata it must use this function to register the capability with the block layer\&. The template is a blk_integrity struct with values appropriate for the underlying hardware\&. See Documentation/block/data\-integrity\&.txt\&.
+.SH "COPYRIGHT"
+.br

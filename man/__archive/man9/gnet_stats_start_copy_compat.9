@@ -1,0 +1,81 @@
+'\" t
+.\"     Title: gnet_stats_start_copy_compat
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "GNET_STATS_START_COP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gnet_stats_start_copy_compat \- start dumping procedure in compatibility mode
+.SH "SYNOPSIS"
+.HP \w'int\ gnet_stats_start_copy_compat('u
+.BI "int gnet_stats_start_copy_compat(struct\ sk_buff\ *\ " "skb" ", int\ " "type" ", int\ " "tc_stats_type" ", int\ " "xstats_type" ", spinlock_t\ *\ " "lock" ", struct\ gnet_dump\ *\ " "d" ", int\ " "padattr" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+socket buffer to put statistics TLVs into
+.RE
+.PP
+\fItype\fR
+.RS 4
+TLV type for top level statistic TLV
+.RE
+.PP
+\fItc_stats_type\fR
+.RS 4
+TLV type for backward compatibility struct tc_stats TLV
+.RE
+.PP
+\fIxstats_type\fR
+.RS 4
+TLV type for backward compatibility xstats TLV
+.RE
+.PP
+\fIlock\fR
+.RS 4
+statistics lock
+.RE
+.PP
+\fId\fR
+.RS 4
+dumping handle
+.RE
+.PP
+\fIpadattr\fR
+.RS 4
+padding attribute
+.RE
+.SH "DESCRIPTION"
+.PP
+Initializes the dumping handle, grabs the statistic lock and appends an empty TLV header to the socket buffer for use a container for all other statistic TLVS\&.
+.PP
+The dumping handle is marked to be in backward compatibility mode telling all
+\fBgnet_stats_copy_XXX\fR
+functions to fill a local copy of struct tc_stats\&.
+.PP
+Returns 0 on success or \-1 if the room in the socket buffer was not sufficient\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,86 @@
+'\" t
+.\"     Title: struct ccw_device
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT CCW_DEVICE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_ccw_device \- channel attached device
+.SH "SYNOPSIS"
+.sp
+.nf
+struct ccw_device {
+  spinlock_t * ccwlock;
+  struct ccw_device_id id;
+  struct ccw_driver * drv;
+  struct device dev;
+  int online;
+  void (* handler) (struct ccw_device *, unsigned long, struct irb *);
+};  
+.fi
+.SH "MEMBERS"
+.PP
+ccwlock
+.RS 4
+pointer to device lock
+.RE
+.PP
+id
+.RS 4
+id of this device
+.RE
+.PP
+drv
+.RS 4
+ccw driver for this device
+.RE
+.PP
+dev
+.RS 4
+embedded device structure
+.RE
+.PP
+online
+.RS 4
+online status of device
+.RE
+.PP
+handler
+.RS 4
+interrupt handler
+.RE
+.SH "DESCRIPTION"
+.PP
+\fIhandler\fR
+is a member of the device rather than the driver since a driver can have different interrupt handlers for different ccw devices (multi\-subchannel drivers)\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

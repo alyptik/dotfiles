@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: wimax_report_rfkill_hw
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "WIMAX_REPORT_RFKILL_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+wimax_report_rfkill_hw \- Reports changes in the hardware RF switch
+.SH "SYNOPSIS"
+.HP \w'void\ wimax_report_rfkill_hw('u
+.BI "void wimax_report_rfkill_hw(struct\ wimax_dev\ *\ " "wimax_dev" ", enum\ wimax_rf_state\ " "state" ");"
+.SH "ARGUMENTS"
+.PP
+\fIwimax_dev\fR
+.RS 4
+WiMAX device descriptor
+.RE
+.PP
+\fIstate\fR
+.RS 4
+New state of the RF Kill switch\&.
+\fBWIMAX_RF_ON\fR
+radio on,
+\fBWIMAX_RF_OFF\fR
+radio off\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+When the device detects a change in the state of thehardware RF switch, it must call this function to let the WiMAX kernel stack know that the state has changed so it can be properly propagated\&.
+.PP
+The WiMAX stack caches the state (the driver doesn\*(Aqt need to)\&. As well, as the change is propagated it will come back as a request to change the software state to mirror the hardware state\&.
+.PP
+If the device doesn\*(Aqt have a hardware kill switch, just report it on initialization as always on (\fBWIMAX_RF_ON\fR, radio on)\&.
+.SH "COPYRIGHT"
+.br

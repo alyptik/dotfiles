@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: ich_set_dmamode
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: ata_piix Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ICH_SET_DMAMODE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "ata_piix Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ich_set_dmamode \- Initialize host controller PATA DMA timings
+.SH "SYNOPSIS"
+.HP \w'void\ ich_set_dmamode('u
+.BI "void ich_set_dmamode(struct\ ata_port\ *\ " "ap" ", struct\ ata_device\ *\ " "adev" ");"
+.SH "ARGUMENTS"
+.PP
+\fIap\fR
+.RS 4
+Port whose timings we are configuring
+.RE
+.PP
+\fIadev\fR
+.RS 4
+um
+.RE
+.SH "DESCRIPTION"
+.PP
+Set MW/UDMA mode for device, in host controller PCI config space\&.
+.PP
+LOCKING: None (inherited from caller)\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

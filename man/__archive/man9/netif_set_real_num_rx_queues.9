@@ -1,0 +1,50 @@
+'\" t
+.\"     Title: netif_set_real_num_rx_queues
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETIF_SET_REAL_NUM_R" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netif_set_real_num_rx_queues \- set actual number of RX queues used
+.SH "SYNOPSIS"
+.HP \w'int\ netif_set_real_num_rx_queues('u
+.BI "int netif_set_real_num_rx_queues(struct\ net_device\ *\ " "dev" ", unsigned\ int\ " "rxq" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+Network device
+.RE
+.PP
+\fIrxq\fR
+.RS 4
+Actual number of RX queues
+.RE
+.SH "DESCRIPTION"
+.PP
+This must be called either with the rtnl_lock held or before registration of the net device\&. Returns 0 on success, or a negative error code\&. If called before registration, it always succeeds\&.
+.SH "COPYRIGHT"
+.br

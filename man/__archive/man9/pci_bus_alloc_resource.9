@@ -1,0 +1,80 @@
+'\" t
+.\"     Title: pci_bus_alloc_resource
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_BUS_ALLOC_RESOUR" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_bus_alloc_resource \- allocate a resource from a parent bus
+.SH "SYNOPSIS"
+.HP \w'int\ pci_bus_alloc_resource('u
+.BI "int pci_bus_alloc_resource(struct\ pci_bus\ *\ " "bus" ", struct\ resource\ *\ " "res" ", resource_size_t\ " "size" ", resource_size_t\ " "align" ", resource_size_t\ " "min" ", unsigned\ long\ " "type_mask" ", resource_size_t\ (*" "alignf" ")\ (void\ *,\ const\ struct\ resource\ *,\ resource_size_t,\ resource_size_t), void\ *\ " "alignf_data" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbus\fR
+.RS 4
+PCI bus
+.RE
+.PP
+\fIres\fR
+.RS 4
+resource to allocate
+.RE
+.PP
+\fIsize\fR
+.RS 4
+size of resource to allocate
+.RE
+.PP
+\fIalign\fR
+.RS 4
+alignment of resource to allocate
+.RE
+.PP
+\fImin\fR
+.RS 4
+minimum /proc/iomem address to allocate
+.RE
+.PP
+\fItype_mask\fR
+.RS 4
+IORESOURCE_* type flags
+.RE
+.PP
+\fIalignf\fR
+.RS 4
+resource alignment function
+.RE
+.PP
+\fIalignf_data\fR
+.RS 4
+data argument for resource alignment function
+.RE
+.SH "DESCRIPTION"
+.PP
+Given the PCI bus a device resides on, the size, minimum address, alignment and type, try to find an acceptable resource allocation for a specific device resource\&.
+.SH "COPYRIGHT"
+.br

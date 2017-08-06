@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: __mark_inode_dirty
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__MARK_INODE_DIRTY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__mark_inode_dirty \- internal function
+.SH "SYNOPSIS"
+.HP \w'void\ __mark_inode_dirty('u
+.BI "void __mark_inode_dirty(struct\ inode\ *\ " "inode" ", int\ " "flags" ");"
+.SH "ARGUMENTS"
+.PP
+\fIinode\fR
+.RS 4
+inode to mark
+.RE
+.PP
+\fIflags\fR
+.RS 4
+what kind of dirty (i\&.e\&. I_DIRTY_SYNC) Mark an inode as dirty\&. Callers should use mark_inode_dirty or mark_inode_dirty_sync\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Put the inode on the super block\*(Aqs dirty list\&.
+.PP
+CAREFUL! We mark it dirty unconditionally, but move it onto the dirty list only if it is hashed or if it refers to a blockdev\&. If it was not hashed, it will never be added to the dirty list even if it is later hashed, as it will have been marked dirty already\&.
+.PP
+In short, make sure you hash any inodes _before_ you start marking them dirty\&.
+.PP
+Note that for blockdevs, inode\->dirtied_when represents the dirtying time of the block\-special inode (/dev/hda1) itself\&. And the \->dirtied_when field of the kernel\-internal blockdev inode represents the dirtying time of the blockdev\*(Aqs pages\&. This is why for I_DIRTY_PAGES we always use page\->mapping\->host, so the page\-dirtying time is recorded in the internal blockdev inode\&.
+.SH "COPYRIGHT"
+.br

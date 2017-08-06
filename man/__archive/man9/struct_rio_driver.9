@@ -1,0 +1,109 @@
+'\" t
+.\"     Title: struct rio_driver
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internals
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT RIO_DRIVER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internals"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_rio_driver \- RIO driver info
+.SH "SYNOPSIS"
+.sp
+.nf
+struct rio_driver {
+  struct list_head node;
+  char * name;
+  const struct rio_device_id * id_table;
+  int (* probe) (struct rio_dev * dev, const struct rio_device_id * id);
+  void (* remove) (struct rio_dev * dev);
+  void (* shutdown) (struct rio_dev *dev);
+  int (* suspend) (struct rio_dev * dev, u32 state);
+  int (* resume) (struct rio_dev * dev);
+  int (* enable_wake) (struct rio_dev * dev, u32 state, int enable);
+  struct device_driver driver;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+node
+.RS 4
+Node in list of drivers
+.RE
+.PP
+name
+.RS 4
+RIO driver name
+.RE
+.PP
+id_table
+.RS 4
+RIO device ids to be associated with this driver
+.RE
+.PP
+probe
+.RS 4
+RIO device inserted
+.RE
+.PP
+remove
+.RS 4
+RIO device removed
+.RE
+.PP
+shutdown
+.RS 4
+shutdown notification callback
+.RE
+.PP
+suspend
+.RS 4
+RIO device suspended
+.RE
+.PP
+resume
+.RS 4
+RIO device awakened
+.RE
+.PP
+enable_wake
+.RS 4
+RIO device enable wake event
+.RE
+.PP
+driver
+.RS 4
+LDM driver struct
+.RE
+.SH "DESCRIPTION"
+.PP
+Provides info on a RIO device driver for insertion/removal and power management purposes\&.
+.SH "AUTHOR"
+.PP
+\fBMatt Porter\fR <\&mporter@kernel.crashing.org\&>, <\&mporter@mvista.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

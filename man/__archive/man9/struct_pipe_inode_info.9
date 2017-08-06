@@ -1,0 +1,136 @@
+'\" t
+.\"     Title: struct pipe_inode_info
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: pipes API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "STRUCT PIPE_INODE_IN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "pipes API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+struct_pipe_inode_info \- a linux kernel pipe
+.SH "SYNOPSIS"
+.sp
+.nf
+struct pipe_inode_info {
+  struct mutex mutex;
+  wait_queue_head_t wait;
+  unsigned int nrbufs;
+  unsigned int curbuf;
+  unsigned int buffers;
+  unsigned int readers;
+  unsigned int writers;
+  unsigned int files;
+  unsigned int waiting_writers;
+  unsigned int r_counter;
+  unsigned int w_counter;
+  struct page * tmp_page;
+  struct fasync_struct * fasync_readers;
+  struct fasync_struct * fasync_writers;
+  struct pipe_buffer * bufs;
+  struct user_struct * user;
+};  
+.fi
+.SH "MEMBERS"
+.PP
+mutex
+.RS 4
+mutex protecting the whole thing
+.RE
+.PP
+wait
+.RS 4
+reader/writer wait point in case of empty/full pipe
+.RE
+.PP
+nrbufs
+.RS 4
+the number of non\-empty pipe buffers in this pipe
+.RE
+.PP
+curbuf
+.RS 4
+the current pipe buffer entry
+.RE
+.PP
+buffers
+.RS 4
+total number of buffers (should be a power of 2)
+.RE
+.PP
+readers
+.RS 4
+number of current readers of this pipe
+.RE
+.PP
+writers
+.RS 4
+number of current writers of this pipe
+.RE
+.PP
+files
+.RS 4
+number of struct file referring this pipe (protected by \->i_lock)
+.RE
+.PP
+waiting_writers
+.RS 4
+number of writers blocked waiting for room
+.RE
+.PP
+r_counter
+.RS 4
+reader counter
+.RE
+.PP
+w_counter
+.RS 4
+writer counter
+.RE
+.PP
+tmp_page
+.RS 4
+cached released page
+.RE
+.PP
+fasync_readers
+.RS 4
+reader side fasync
+.RE
+.PP
+fasync_writers
+.RS 4
+writer side fasync
+.RE
+.PP
+bufs
+.RS 4
+the circular array of pipe buffers
+.RE
+.PP
+user
+.RS 4
+the user who created this pipe
+.RE
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: phy_config_interrupt
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PHY_CONFIG_INTERRUPT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+phy_config_interrupt \- configure the PHY device for the requested interrupts
+.SH "SYNOPSIS"
+.HP \w'int\ phy_config_interrupt('u
+.BI "int phy_config_interrupt(struct\ phy_device\ *\ " "phydev" ", u32\ " "interrupts" ");"
+.SH "ARGUMENTS"
+.PP
+\fIphydev\fR
+.RS 4
+the phy_device struct
+.RE
+.PP
+\fIinterrupts\fR
+.RS 4
+interrupt flags to configure for this
+\fIphydev\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+Returns 0 on success or < 0 on error\&.
+.SH "COPYRIGHT"
+.br

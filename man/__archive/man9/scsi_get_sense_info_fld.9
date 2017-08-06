@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: scsi_get_sense_info_fld
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: SCSI mid layer
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SCSI_GET_SENSE_INFO_" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "SCSI mid layer"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+scsi_get_sense_info_fld \- get information field from sense data (either fixed or descriptor format)
+.SH "SYNOPSIS"
+.HP \w'int\ scsi_get_sense_info_fld('u
+.BI "int scsi_get_sense_info_fld(const\ u8\ *\ " "sense_buffer" ", int\ " "sb_len" ", u64\ *\ " "info_out" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsense_buffer\fR
+.RS 4
+byte array of sense data
+.RE
+.PP
+\fIsb_len\fR
+.RS 4
+number of valid bytes in sense_buffer
+.RE
+.PP
+\fIinfo_out\fR
+.RS 4
+pointer to 64 integer where 8 or 4 byte information field will be placed if found\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Return value: 1 if information field found, 0 if not found\&.
+.SH "AUTHORS"
+.PP
+\fBJames Bottomley\fR <\&James.Bottomley@hansenpartnership.com\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBRob Landley\fR <\&rob@landley.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

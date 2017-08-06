@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: bio_associate_blkcg
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BIO_ASSOCIATE_BLKCG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bio_associate_blkcg \- associate a bio with the specified blkcg
+.SH "SYNOPSIS"
+.HP \w'int\ bio_associate_blkcg('u
+.BI "int bio_associate_blkcg(struct\ bio\ *\ " "bio" ", struct\ cgroup_subsys_state\ *\ " "blkcg_css" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbio\fR
+.RS 4
+target bio
+.RE
+.PP
+\fIblkcg_css\fR
+.RS 4
+css of the blkcg to associate
+.RE
+.SH "DESCRIPTION"
+.PP
+Associate
+\fIbio\fR
+with the blkcg specified by
+\fIblkcg_css\fR\&. Block layer will treat
+\fIbio\fR
+as if it were issued by a task which belongs to the blkcg\&.
+.PP
+This function takes an extra reference of
+\fIblkcg_css\fR
+which will be put when
+\fIbio\fR
+is released\&. The caller must own
+\fIbio\fR
+and is responsible for synchronizing calls to this function\&.
+.SH "COPYRIGHT"
+.br

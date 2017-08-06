@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: skb_cow_data
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_COW_DATA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_cow_data \- Check that a socket buffer\*(Aqs data buffers are writable
+.SH "SYNOPSIS"
+.HP \w'int\ skb_cow_data('u
+.BI "int skb_cow_data(struct\ sk_buff\ *\ " "skb" ", int\ " "tailbits" ", struct\ sk_buff\ **\ " "trailer" ");"
+.SH "ARGUMENTS"
+.PP
+\fIskb\fR
+.RS 4
+The socket buffer to check\&.
+.RE
+.PP
+\fItailbits\fR
+.RS 4
+Amount of trailing space to be added
+.RE
+.PP
+\fItrailer\fR
+.RS 4
+Returned pointer to the skb where the
+\fItailbits\fR
+space begins
+.RE
+.SH "DESCRIPTION"
+.PP
+Make sure that the data buffers attached to a socket buffer are writable\&. If they are not, private copies are made of the data buffers and the socket buffer is set to use these instead\&.
+.PP
+If
+\fItailbits\fR
+is given, make sure that there is space to write
+\fItailbits\fR
+bytes of data beyond current end of socket buffer\&.
+\fItrailer\fR
+will be set to point to the skb in which this space begins\&.
+.PP
+The number of scatterlist elements required to completely map the COW\*(Aqd and extended socket buffer will be returned\&.
+.SH "COPYRIGHT"
+.br

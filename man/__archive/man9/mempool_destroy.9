@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: mempool_destroy
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMPOOL_DESTROY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mempool_destroy \- deallocate a memory pool
+.SH "SYNOPSIS"
+.HP \w'void\ mempool_destroy('u
+.BI "void mempool_destroy(mempool_t\ *\ " "pool" ");"
+.SH "ARGUMENTS"
+.PP
+\fIpool\fR
+.RS 4
+pointer to the memory pool which was allocated via
+\fBmempool_create\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+Free all reserved elements in
+\fIpool\fR
+and
+\fIpool\fR
+itself\&. This function only sleeps if the
+\fBfree_fn\fR
+function sleeps\&.
+.SH "COPYRIGHT"
+.br

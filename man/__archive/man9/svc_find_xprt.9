@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: svc_find_xprt
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SVC_FIND_XPRT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+svc_find_xprt \- find an RPC transport instance
+.SH "SYNOPSIS"
+.HP \w'struct\ svc_xprt\ *\ svc_find_xprt('u
+.BI "struct svc_xprt * svc_find_xprt(struct\ svc_serv\ *\ " "serv" ", const\ char\ *\ " "xcl_name" ", struct\ net\ *\ " "net" ", const\ sa_family_t\ " "af" ", const\ unsigned\ short\ " "port" ");"
+.SH "ARGUMENTS"
+.PP
+\fIserv\fR
+.RS 4
+pointer to svc_serv to search
+.RE
+.PP
+\fIxcl_name\fR
+.RS 4
+C string containing transport\*(Aqs class name
+.RE
+.PP
+\fInet\fR
+.RS 4
+owner net pointer
+.RE
+.PP
+\fIaf\fR
+.RS 4
+Address family of transport\*(Aqs local address
+.RE
+.PP
+\fIport\fR
+.RS 4
+transport\*(Aqs IP port number
+.RE
+.SH "DESCRIPTION"
+.PP
+Return the transport instance pointer for the endpoint accepting connections/peer traffic from the specified transport class, address family and port\&.
+.PP
+Specifying 0 for the address family or port is effectively a wild\-card, and will result in matching the first transport in the service\*(Aqs list that has a matching class name\&.
+.SH "COPYRIGHT"
+.br

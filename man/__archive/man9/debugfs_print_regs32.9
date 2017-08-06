@@ -1,0 +1,65 @@
+'\" t
+.\"     Title: debugfs_print_regs32
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_PRINT_REGS32" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_print_regs32 \- use seq_print to describe a set of registers
+.SH "SYNOPSIS"
+.HP \w'void\ debugfs_print_regs32('u
+.BI "void debugfs_print_regs32(struct\ seq_file\ *\ " "s" ", const\ struct\ debugfs_reg32\ *\ " "regs" ", int\ " "nregs" ", void\ __iomem\ *\ " "base" ", char\ *\ " "prefix" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+the seq_file structure being used to generate output
+.RE
+.PP
+\fIregs\fR
+.RS 4
+an array if struct debugfs_reg32 structures
+.RE
+.PP
+\fInregs\fR
+.RS 4
+the length of the above array
+.RE
+.PP
+\fIbase\fR
+.RS 4
+the base address to be used in reading the registers
+.RE
+.PP
+\fIprefix\fR
+.RS 4
+a string to be prefixed to every output line
+.RE
+.SH "DESCRIPTION"
+.PP
+This function outputs a text block describing the current values of some 32\-bit hardware registers\&. It is meant to be used within debugfs files based on seq_file that need to show registers, intermixed with other information\&. The prefix argument may be used to specify a leading string, because some peripherals have several blocks of identical registers, for example configuration of dma channels
+.SH "COPYRIGHT"
+.br

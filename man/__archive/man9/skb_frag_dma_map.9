@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: skb_frag_dma_map
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_FRAG_DMA_MAP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_frag_dma_map \- maps a paged fragment via the DMA API
+.SH "SYNOPSIS"
+.HP \w'dma_addr_t\ skb_frag_dma_map('u
+.BI "dma_addr_t skb_frag_dma_map(struct\ device\ *\ " "dev" ", const\ skb_frag_t\ *\ " "frag" ", size_t\ " "offset" ", size_t\ " "size" ", enum\ dma_data_direction\ " "dir" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+the device to map the fragment to
+.RE
+.PP
+\fIfrag\fR
+.RS 4
+the paged fragment to map
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+the offset within the fragment (starting at the fragment\*(Aqs own offset)
+.RE
+.PP
+\fIsize\fR
+.RS 4
+the number of bytes to map
+.RE
+.PP
+\fIdir\fR
+.RS 4
+the direction of the mapping (\fBPCI_DMA_\fR*)
+.RE
+.SH "DESCRIPTION"
+.PP
+Maps the page associated with
+\fIfrag\fR
+to
+\fIdevice\fR\&.
+.SH "COPYRIGHT"
+.br

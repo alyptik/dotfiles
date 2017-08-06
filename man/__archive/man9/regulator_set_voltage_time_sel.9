@@ -1,0 +1,74 @@
+'\" t
+.\"     Title: regulator_set_voltage_time_sel
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_SET_VOLTAG" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_set_voltage_time_sel \- get raise/fall time
+.SH "SYNOPSIS"
+.HP \w'int\ regulator_set_voltage_time_sel('u
+.BI "int regulator_set_voltage_time_sel(struct\ regulator_dev\ *\ " "rdev" ", unsigned\ int\ " "old_selector" ", unsigned\ int\ " "new_selector" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrdev\fR
+.RS 4
+regulator source device
+.RE
+.PP
+\fIold_selector\fR
+.RS 4
+selector for starting voltage
+.RE
+.PP
+\fInew_selector\fR
+.RS 4
+selector for target voltage
+.RE
+.SH "DESCRIPTION"
+.PP
+Provided with the starting and target voltage selectors, this function returns time in microseconds required to rise or fall to this new voltage
+.PP
+Drivers providing ramp_delay in regulation_constraints can use this as their
+\fBset_voltage_time_sel\fR
+operation\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

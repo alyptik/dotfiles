@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: dmi_get_date
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Firmware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DMI_GET_DATE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Firmware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+dmi_get_date \- parse a DMI date
+.SH "SYNOPSIS"
+.HP \w'bool\ dmi_get_date('u
+.BI "bool dmi_get_date(int\ " "field" ", int\ *\ " "yearp" ", int\ *\ " "monthp" ", int\ *\ " "dayp" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfield\fR
+.RS 4
+data index (see enum dmi_field)
+.RE
+.PP
+\fIyearp\fR
+.RS 4
+optional out parameter for the year
+.RE
+.PP
+\fImonthp\fR
+.RS 4
+optional out parameter for the month
+.RE
+.PP
+\fIdayp\fR
+.RS 4
+optional out parameter for the day
+.RE
+.SH "DESCRIPTION"
+.PP
+The date field is assumed to be in the form resembling [mm[/dd]]/yy[yy] and the result is stored in the out parameters any or all of which can be omitted\&.
+.PP
+If the field doesn\*(Aqt exist, all out parameters are set to zero and false is returned\&. Otherwise, true is returned with any invalid part of date set to zero\&.
+.PP
+On return, year, month and day are guaranteed to be in the range of [0,9999], [0,12] and [0,31] respectively\&.
+.SH "COPYRIGHT"
+.br

@@ -1,0 +1,56 @@
+'\" t
+.\"     Title: ccw_device_get_mdc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The ccw bus
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CCW_DEVICE_GET_MDC" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The ccw bus"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ccw_device_get_mdc \- accumulate max data count
+.SH "SYNOPSIS"
+.HP \w'int\ ccw_device_get_mdc('u
+.BI "int ccw_device_get_mdc(struct\ ccw_device\ *\ " "cdev" ", u8\ " "mask" ");"
+.SH "ARGUMENTS"
+.PP
+\fIcdev\fR
+.RS 4
+ccw device for which the max data count is accumulated
+.RE
+.PP
+\fImask\fR
+.RS 4
+mask of paths to use
+.RE
+.SH "DESCRIPTION"
+.PP
+Return the number of 64K\-bytes blocks all paths at least support for a transport command\&. Return values <= 0 indicate failures\&.
+.SH "AUTHOR"
+.PP
+\fBCornelia Huck\fR <\&cornelia.huck@de.ibm.com\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

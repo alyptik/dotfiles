@@ -1,0 +1,63 @@
+'\" t
+.\"     Title: maple_getcond_callback
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Busses
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MAPLE_GETCOND_CALLBA" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Busses"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+maple_getcond_callback \- setup handling MAPLE_COMMAND_GETCOND
+.SH "SYNOPSIS"
+.HP \w'void\ maple_getcond_callback('u
+.BI "void maple_getcond_callback(struct\ maple_device\ *\ " "dev" ", void\ (*" "callback" ")\ (struct\ mapleq\ *mq), unsigned\ long\ " "interval" ", unsigned\ long\ " "function" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device responding
+.RE
+.PP
+\fIcallback\fR
+.RS 4
+handler callback
+.RE
+.PP
+\fIinterval\fR
+.RS 4
+interval in jiffies between callbacks
+.RE
+.PP
+\fIfunction\fR
+.RS 4
+the function code for the device
+.RE
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

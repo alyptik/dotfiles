@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: sync_mapping_buffers
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SYNC_MAPPING_BUFFERS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+sync_mapping_buffers \- write out & wait upon a mapping\*(Aqs \(lqassociated\(rq buffers
+.SH "SYNOPSIS"
+.HP \w'int\ sync_mapping_buffers('u
+.BI "int sync_mapping_buffers(struct\ address_space\ *\ " "mapping" ");"
+.SH "ARGUMENTS"
+.PP
+\fImapping\fR
+.RS 4
+the mapping which wants those buffers written
+.RE
+.SH "DESCRIPTION"
+.PP
+Starts I/O against the buffers at mapping\->private_list, and waits upon that I/O\&.
+.PP
+Basically, this is a convenience function for
+\fBfsync\fR\&.
+\fImapping\fR
+is a file or directory which needs those buffers to be written for a successful
+\fBfsync\fR\&.
+.SH "COPYRIGHT"
+.br

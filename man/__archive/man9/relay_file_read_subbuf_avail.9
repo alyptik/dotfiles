@@ -1,0 +1,47 @@
+'\" t
+.\"     Title: relay_file_read_subbuf_avail
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: relay interface support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "RELAY_FILE_READ_SUBB" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "relay interface support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+relay_file_read_subbuf_avail \- return bytes available in sub\-buffer
+.SH "SYNOPSIS"
+.HP \w'size_t\ relay_file_read_subbuf_avail('u
+.BI "size_t relay_file_read_subbuf_avail(size_t\ " "read_pos" ", struct\ rchan_buf\ *\ " "buf" ");"
+.SH "ARGUMENTS"
+.PP
+\fIread_pos\fR
+.RS 4
+file read position
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+relay channel buffer
+.RE
+.SH "COPYRIGHT"
+.br

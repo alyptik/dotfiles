@@ -1,0 +1,69 @@
+'\" t
+.\"     Title: bitmap_to_u32array
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic Kernel Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BITMAP_TO_U32ARRAY" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic Kernel Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+bitmap_to_u32array \- copy the contents of bitmap to a u32 array of bits
+.SH "SYNOPSIS"
+.HP \w'unsigned\ int\ bitmap_to_u32array('u
+.BI "unsigned int bitmap_to_u32array(u32\ *\ " "buf" ", unsigned\ int\ " "nwords" ", const\ unsigned\ long\ *\ " "bitmap" ", unsigned\ int\ " "nbits" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbuf\fR
+.RS 4
+array of u32 (in host byte order), the dest bitmap, non NULL
+.RE
+.PP
+\fInwords\fR
+.RS 4
+number of u32 words in
+\fIbuf\fR
+.RE
+.PP
+\fIbitmap\fR
+.RS 4
+array of unsigned longs, the source bitmap, non NULL
+.RE
+.PP
+\fInbits\fR
+.RS 4
+number of bits in
+\fIbitmap\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+copy min(nbits, 32*nwords) bits from
+\fIbitmap\fR
+to
+\fIbuf\fR\&. Remaining bits after nbits in
+\fIbuf\fR
+(if any) are cleared\&.
+.PP
+Return the number of bits effectively copied\&.
+.SH "COPYRIGHT"
+.br

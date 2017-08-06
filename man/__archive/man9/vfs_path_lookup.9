@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: vfs_path_lookup
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The Linux VFS
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VFS_PATH_LOOKUP" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The Linux VFS"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vfs_path_lookup \- lookup a file path relative to a dentry\-vfsmount pair
+.SH "SYNOPSIS"
+.HP \w'int\ vfs_path_lookup('u
+.BI "int vfs_path_lookup(struct\ dentry\ *\ " "dentry" ", struct\ vfsmount\ *\ " "mnt" ", const\ char\ *\ " "name" ", unsigned\ int\ " "flags" ", struct\ path\ *\ " "path" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdentry\fR
+.RS 4
+pointer to dentry of the base directory
+.RE
+.PP
+\fImnt\fR
+.RS 4
+pointer to vfs mount of the base directory
+.RE
+.PP
+\fIname\fR
+.RS 4
+pointer to file name
+.RE
+.PP
+\fIflags\fR
+.RS 4
+lookup flags
+.RE
+.PP
+\fIpath\fR
+.RS 4
+pointer to struct path to fill
+.RE
+.SH "COPYRIGHT"
+.br

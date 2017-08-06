@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: maple_add_packet
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Busses
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MAPLE_ADD_PACKET" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Busses"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+maple_add_packet \- add a single instruction to the maple bus queue
+.SH "SYNOPSIS"
+.HP \w'int\ maple_add_packet('u
+.BI "int maple_add_packet(struct\ maple_device\ *\ " "mdev" ", u32\ " "function" ", u32\ " "command" ", size_t\ " "length" ", void\ *\ " "data" ");"
+.SH "ARGUMENTS"
+.PP
+\fImdev\fR
+.RS 4
+maple device
+.RE
+.PP
+\fIfunction\fR
+.RS 4
+function on device being queried
+.RE
+.PP
+\fIcommand\fR
+.RS 4
+maple command to add
+.RE
+.PP
+\fIlength\fR
+.RS 4
+length of command string (in 32 bit words)
+.RE
+.PP
+\fIdata\fR
+.RS 4
+remainder of command string
+.RE
+.SH "AUTHOR"
+.PP
+\fBPaul Mundt\fR <\&lethal@linux-sh.org\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

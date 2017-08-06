@@ -1,0 +1,66 @@
+'\" t
+.\"     Title: config_ep_by_speed
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Kernel Mode Gadget API
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "CONFIG_EP_BY_SPEED" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Kernel Mode Gadget API"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+config_ep_by_speed \- configures the given endpoint according to gadget speed\&.
+.SH "SYNOPSIS"
+.HP \w'int\ config_ep_by_speed('u
+.BI "int config_ep_by_speed(struct\ usb_gadget\ *\ " "g" ", struct\ usb_function\ *\ " "f" ", struct\ usb_ep\ *\ " "_ep" ");"
+.SH "ARGUMENTS"
+.PP
+\fIg\fR
+.RS 4
+pointer to the gadget
+.RE
+.PP
+\fIf\fR
+.RS 4
+usb function
+.RE
+.PP
+\fI_ep\fR
+.RS 4
+the endpoint to configure
+.RE
+.SH "RETURN"
+.PP
+error code, 0 on success
+.PP
+This function chooses the right descriptors for a given endpoint according to gadget speed and saves it in the endpoint desc field\&. If the endpoint already has a descriptor assigned to it \- overwrites it with currently corresponding descriptor\&. The endpoint maxpacket field is updated according to the chosen descriptor\&.
+.SH "NOTE"
+.PP
+the supplied function should hold all the descriptors for supported speeds
+.SH "AUTHOR"
+.PP
+\fBDavid Brownell\fR <\&dbrownell@users.sourceforge.net\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

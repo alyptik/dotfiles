@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: pci_write_legacy_io
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Hardware Interfaces
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "PCI_WRITE_LEGACY_IO" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Hardware Interfaces"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pci_write_legacy_io \- write byte(s) to legacy I/O port space
+.SH "SYNOPSIS"
+.HP \w'ssize_t\ pci_write_legacy_io('u
+.BI "ssize_t pci_write_legacy_io(struct\ file\ *\ " "filp" ", struct\ kobject\ *\ " "kobj" ", struct\ bin_attribute\ *\ " "bin_attr" ", char\ *\ " "buf" ", loff_t\ " "off" ", size_t\ " "count" ");"
+.SH "ARGUMENTS"
+.PP
+\fIfilp\fR
+.RS 4
+open sysfs file
+.RE
+.PP
+\fIkobj\fR
+.RS 4
+kobject corresponding to file to read from
+.RE
+.PP
+\fIbin_attr\fR
+.RS 4
+struct bin_attribute for this file
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+buffer containing value to be written
+.RE
+.PP
+\fIoff\fR
+.RS 4
+offset into legacy I/O port space
+.RE
+.PP
+\fIcount\fR
+.RS 4
+number of bytes to write
+.RE
+.SH "DESCRIPTION"
+.PP
+Writes 1, 2, or 4 bytes from legacy I/O port space using an arch specific callback routine (pci_legacy_write)\&.
+.SH "COPYRIGHT"
+.br

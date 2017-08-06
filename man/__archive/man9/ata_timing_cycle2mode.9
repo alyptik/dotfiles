@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: ata_timing_cycle2mode
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: libata Library
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "ATA_TIMING_CYCLE2MOD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "libata Library"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ata_timing_cycle2mode \- find xfer mode for the specified cycle duration
+.SH "SYNOPSIS"
+.HP \w'u8\ ata_timing_cycle2mode('u
+.BI "u8 ata_timing_cycle2mode(unsigned\ int\ " "xfer_shift" ", int\ " "cycle" ");"
+.SH "ARGUMENTS"
+.PP
+\fIxfer_shift\fR
+.RS 4
+ATA_SHIFT_* value for transfer type to examine\&.
+.RE
+.PP
+\fIcycle\fR
+.RS 4
+cycle duration in ns
+.RE
+.SH "DESCRIPTION"
+.PP
+Return matching xfer mode for
+\fIcycle\fR\&. The returned mode is of the transfer type specified by
+\fIxfer_shift\fR\&. If
+\fIcycle\fR
+is too slow for
+\fIxfer_shift\fR, 0xff is returned\&. If
+\fIcycle\fR
+is faster than the fastest known mode, the fasted mode is returned\&.
+.PP
+LOCKING: None\&.
+.SH "RETURN"
+.PP
+Matching xfer_mode, 0xff if no match found\&.
+.SH "AUTHOR"
+.PP
+\fBJeff Garzik\fR
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

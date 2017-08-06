@@ -1,0 +1,51 @@
+'\" t
+.\"     Title: xprt_wait_for_buffer_space
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "XPRT_WAIT_FOR_BUFFER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xprt_wait_for_buffer_space \- wait for transport output buffer to clear
+.SH "SYNOPSIS"
+.HP \w'void\ xprt_wait_for_buffer_space('u
+.BI "void xprt_wait_for_buffer_space(struct\ rpc_task\ *\ " "task" ", rpc_action\ " "action" ");"
+.SH "ARGUMENTS"
+.PP
+\fItask\fR
+.RS 4
+task to be put to sleep
+.RE
+.PP
+\fIaction\fR
+.RS 4
+function pointer to be executed after wait
+.RE
+.SH "DESCRIPTION"
+.PP
+Note that we only set the timer for the case of
+\fBRPC_IS_SOFT\fR, since we don\*(Aqt in general want to force a socket disconnection due to an incomplete RPC call transmission\&.
+.SH "COPYRIGHT"
+.br

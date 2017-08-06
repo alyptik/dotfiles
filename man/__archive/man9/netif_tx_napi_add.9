@@ -1,0 +1,62 @@
+'\" t
+.\"     Title: netif_tx_napi_add
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Network device support
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NETIF_TX_NAPI_ADD" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Network device support"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+netif_tx_napi_add \- initialize a NAPI context
+.SH "SYNOPSIS"
+.HP \w'void\ netif_tx_napi_add('u
+.BI "void netif_tx_napi_add(struct\ net_device\ *\ " "dev" ", struct\ napi_struct\ *\ " "napi" ", int\ (*" "poll" ")\ (struct\ napi_struct\ *,\ int), int\ " "weight" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+network device
+.RE
+.PP
+\fInapi\fR
+.RS 4
+NAPI context
+.RE
+.PP
+\fIpoll\fR
+.RS 4
+polling function
+.RE
+.PP
+\fIweight\fR
+.RS 4
+default weight
+.RE
+.SH "DESCRIPTION"
+.PP
+This variant of
+\fBnetif_napi_add\fR
+should be used from drivers using NAPI to exclusively poll a TX queue\&. This will avoid we add it into napi_hash[], thus polluting this hash table\&.
+.SH "COPYRIGHT"
+.br

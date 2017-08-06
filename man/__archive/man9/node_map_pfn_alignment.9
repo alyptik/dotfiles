@@ -1,0 +1,52 @@
+'\" t
+.\"     Title: node_map_pfn_alignment
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Memory Management in Linux
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NODE_MAP_PFN_ALIGNME" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Memory Management in Linux"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+node_map_pfn_alignment \- determine the maximum internode alignment
+.SH "SYNOPSIS"
+.HP \w'unsigned\ long\ node_map_pfn_alignment('u
+.BI "unsigned long node_map_pfn_alignment(" "void" ");"
+.SH "ARGUMENTS"
+.PP
+\fIvoid\fR
+.RS 4
+no arguments
+.RE
+.SH "DESCRIPTION"
+.PP
+.PP
+This function should be called after node map is populated and sorted\&. It calculates the maximum power of two alignment which can distinguish all the nodes\&.
+.PP
+For example, if all nodes are 1GiB and aligned to 1GiB, the return value would indicate 1GiB alignment with (1 << (30 \- PAGE_SHIFT))\&. If the nodes are shifted by 256MiB, 256MiB\&. Note that if only the last node is shifted, 1GiB is enough and this function will indicate so\&.
+.PP
+This is used to test whether pfn \-> nid mapping of the chosen memory model has fine enough granularity to avoid incorrect mapping for the populated node map\&.
+.PP
+Returns the determined alignment in pfn\*(Aqs\&. 0 if there is no alignment requirement (single node)\&.
+.SH "COPYRIGHT"
+.br

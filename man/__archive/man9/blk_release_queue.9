@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: blk_release_queue
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "BLK_RELEASE_QUEUE" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+blk_release_queue \- release a struct request_queue when it is no longer needed
+.SH "SYNOPSIS"
+.HP \w'void\ blk_release_queue('u
+.BI "void blk_release_queue(struct\ kobject\ *\ " "kobj" ");"
+.SH "ARGUMENTS"
+.PP
+\fIkobj\fR
+.RS 4
+the kobj belonging to the request queue to be released
+.RE
+.SH "DESCRIPTION"
+.PP
+blk_release_queue is the pair to
+\fBblk_init_queue\fR
+or
+\fBblk_queue_make_request\fR\&. It should be called when a request queue is being released; typically when a block device is being de\-registered\&. Currently, its primary task it to free all the
+struct request
+structures that were allocated to the queue and the queue itself\&.
+.SH "NOTE"
+.PP
+The low level driver must have finished any outstanding requests first via
+\fBblk_cleanup_queue\fR\&.
+.SH "COPYRIGHT"
+.br

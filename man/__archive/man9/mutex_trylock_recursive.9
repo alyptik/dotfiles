@@ -1,0 +1,54 @@
+'\" t
+.\"     Title: mutex_trylock_recursive
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Mutex API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MUTEX_TRYLOCK_RECURS" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Mutex API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mutex_trylock_recursive \- trylock variant that allows recursive locking
+.SH "SYNOPSIS"
+.HP \w'enum\ mutex_trylock_recursive_enum\ mutex_trylock_recursive('u
+.BI "enum mutex_trylock_recursive_enum mutex_trylock_recursive(struct\ mutex\ *\ " "lock" ");"
+.SH "ARGUMENTS"
+.PP
+\fIlock\fR
+.RS 4
+mutex to be locked
+.RE
+.SH "DESCRIPTION"
+.PP
+This function should not be used, _ever_\&. It is purely for hysterical GEM raisins, and once those are gone this will be removed\&.
+.SH "RETURN"
+.PP
+MUTEX_TRYLOCK_FAILED \- trylock failed, MUTEX_TRYLOCK_SUCCESS \- lock acquired, MUTEX_TRYLOCK_RECURSIVE \- we already owned the lock\&.
+.SH "AUTHOR"
+.PP
+\fBRusty Russell\fR <\&rusty@rustcorp.com.au\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

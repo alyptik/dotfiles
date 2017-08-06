@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: regulator_set_current_limit
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_SET_CURREN" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_set_current_limit \- set regulator output current limit
+.SH "SYNOPSIS"
+.HP \w'int\ regulator_set_current_limit('u
+.BI "int regulator_set_current_limit(struct\ regulator\ *\ " "regulator" ", int\ " "min_uA" ", int\ " "max_uA" ");"
+.SH "ARGUMENTS"
+.PP
+\fIregulator\fR
+.RS 4
+regulator source
+.RE
+.PP
+\fImin_uA\fR
+.RS 4
+Minimum supported current in uA
+.RE
+.PP
+\fImax_uA\fR
+.RS 4
+Maximum supported current in uA
+.RE
+.SH "DESCRIPTION"
+.PP
+Sets current sink to the desired output current\&. This can be set during any regulator state\&. IOW, regulator can be disabled or enabled\&.
+.PP
+If the regulator is enabled then the current will change to the new value immediately otherwise if the regulator is disabled the regulator will output at the new current when enabled\&.
+.SH "NOTE"
+.PP
+Regulator system constraints must be set for this regulator before calling this function otherwise this call will fail\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

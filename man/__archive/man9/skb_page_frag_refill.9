@@ -1,0 +1,57 @@
+'\" t
+.\"     Title: skb_page_frag_refill
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Linux Networking
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "SKB_PAGE_FRAG_REFILL" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Linux Networking"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+skb_page_frag_refill \- check that a page_frag contains enough room
+.SH "SYNOPSIS"
+.HP \w'bool\ skb_page_frag_refill('u
+.BI "bool skb_page_frag_refill(unsigned\ int\ " "sz" ", struct\ page_frag\ *\ " "pfrag" ", gfp_t\ " "gfp" ");"
+.SH "ARGUMENTS"
+.PP
+\fIsz\fR
+.RS 4
+minimum size of the fragment we want to get
+.RE
+.PP
+\fIpfrag\fR
+.RS 4
+pointer to page_frag
+.RE
+.PP
+\fIgfp\fR
+.RS 4
+priority for memory allocation
+.RE
+.SH "NOTE"
+.PP
+While this allocator tries to use high order pages, there is no guarantee that allocations succeed\&. Therefore,
+\fIsz\fR
+MUST be less or equal than PAGE_SIZE\&.
+.SH "COPYRIGHT"
+.br

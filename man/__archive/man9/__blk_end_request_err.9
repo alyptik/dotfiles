@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: __blk_end_request_err
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Block Devices
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "__BLK_END_REQUEST_ER" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Block Devices"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+__blk_end_request_err \- Finish a request till the next failure boundary\&.
+.SH "SYNOPSIS"
+.HP \w'bool\ __blk_end_request_err('u
+.BI "bool __blk_end_request_err(struct\ request\ *\ " "rq" ", int\ " "error" ");"
+.SH "ARGUMENTS"
+.PP
+\fIrq\fR
+.RS 4
+the request to finish till the next failure boundary for
+.RE
+.PP
+\fIerror\fR
+.RS 4
+must be negative errno
+.RE
+.SH "DESCRIPTION"
+.PP
+Complete
+\fIrq\fR
+till the next failure boundary\&. Must be called with queue lock held\&.
+.SH "RETURN"
+.PP
+\fBfalse\fR
+\- we are done with this request
+\fBtrue\fR
+\- still buffers pending for this request
+.SH "COPYRIGHT"
+.br

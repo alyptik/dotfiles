@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: regulator_register_supply_alias
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: API reference
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "REGULATOR_REGISTER_S" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "API reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regulator_register_supply_alias \- Provide device alias for supply lookup
+.SH "SYNOPSIS"
+.HP \w'int\ regulator_register_supply_alias('u
+.BI "int regulator_register_supply_alias(struct\ device\ *\ " "dev" ", const\ char\ *\ " "id" ", struct\ device\ *\ " "alias_dev" ", const\ char\ *\ " "alias_id" ");"
+.SH "ARGUMENTS"
+.PP
+\fIdev\fR
+.RS 4
+device that will be given as the regulator
+\(lqconsumer\(rq
+.RE
+.PP
+\fIid\fR
+.RS 4
+Supply name or regulator ID
+.RE
+.PP
+\fIalias_dev\fR
+.RS 4
+device that should be used to lookup the supply
+.RE
+.PP
+\fIalias_id\fR
+.RS 4
+Supply name or regulator ID that should be used to lookup the supply
+.RE
+.SH "DESCRIPTION"
+.PP
+All lookups for id on dev will instead be conducted for alias_id on alias_dev\&.
+.SH "AUTHORS"
+.PP
+\fBLiam Girdwood\fR <\&lrg@slimlogic.co.uk\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBMark Brown\fR <\&broonie@opensource.wolfsonmicro.com\&>
+.br
+Wolfson Microelectronics, 
+      
+     
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

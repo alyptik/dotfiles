@@ -1,0 +1,59 @@
+'\" t
+.\"     Title: memzero_explicit
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MEMZERO_EXPLICIT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+memzero_explicit \- Fill a region of memory (e\&.g\&. sensitive keying data) with 0s\&.
+.SH "SYNOPSIS"
+.HP \w'void\ memzero_explicit('u
+.BI "void memzero_explicit(void\ *\ " "s" ", size_t\ " "count" ");"
+.SH "ARGUMENTS"
+.PP
+\fIs\fR
+.RS 4
+Pointer to the start of the area\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+The size of the area\&.
+.RE
+.SH "NOTE"
+.PP
+usually using
+\fBmemset\fR
+is just fine (!), but in cases where clearing out _local_ data at the end of a scope is necessary,
+\fBmemzero_explicit\fR
+should be used instead in order to prevent the compiler from optimising away zeroing\&.
+.PP
+\fBmemzero_explicit\fR
+doesn\*(Aqt need an arch\-specific version as it just invokes the one of
+\fBmemset\fR
+implicitly\&.
+.SH "COPYRIGHT"
+.br

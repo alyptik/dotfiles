@@ -1,0 +1,71 @@
+'\" t
+.\"     Title: nand_read_page_raw
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Internal Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "NAND_READ_PAGE_RAW" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Internal Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+nand_read_page_raw \- [INTERN] read raw page data without ecc
+.SH "SYNOPSIS"
+.HP \w'int\ nand_read_page_raw('u
+.BI "int nand_read_page_raw(struct\ mtd_info\ *\ " "mtd" ", struct\ nand_chip\ *\ " "chip" ", uint8_t\ *\ " "buf" ", int\ " "oob_required" ", int\ " "page" ");"
+.SH "ARGUMENTS"
+.PP
+\fImtd\fR
+.RS 4
+mtd info structure
+.RE
+.PP
+\fIchip\fR
+.RS 4
+nand chip info structure
+.RE
+.PP
+\fIbuf\fR
+.RS 4
+buffer to store read data
+.RE
+.PP
+\fIoob_required\fR
+.RS 4
+caller requires OOB data read to chip\->oob_poi
+.RE
+.PP
+\fIpage\fR
+.RS 4
+page number to read
+.RE
+.SH "DESCRIPTION"
+.PP
+Not for syndrome calculating ECC controllers, which use a special oob layout\&.
+.SH "AUTHOR"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

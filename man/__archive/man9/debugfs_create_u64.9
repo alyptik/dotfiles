@@ -1,0 +1,76 @@
+'\" t
+.\"     Title: debugfs_create_u64
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: The debugfs filesystem
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "DEBUGFS_CREATE_U64" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "The debugfs filesystem"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+debugfs_create_u64 \- create a debugfs file that is used to read and write an unsigned 64\-bit value
+.SH "SYNOPSIS"
+.HP \w'struct\ dentry\ *\ debugfs_create_u64('u
+.BI "struct dentry * debugfs_create_u64(const\ char\ *\ " "name" ", umode_t\ " "mode" ", struct\ dentry\ *\ " "parent" ", u64\ *\ " "value" ");"
+.SH "ARGUMENTS"
+.PP
+\fIname\fR
+.RS 4
+a pointer to a string containing the name of the file to create\&.
+.RE
+.PP
+\fImode\fR
+.RS 4
+the permission that the file should have
+.RE
+.PP
+\fIparent\fR
+.RS 4
+a pointer to the parent dentry for this file\&. This should be a directory dentry if set\&. If this parameter is
+\fBNULL\fR, then the file will be created in the root of the debugfs filesystem\&.
+.RE
+.PP
+\fIvalue\fR
+.RS 4
+a pointer to the variable that the file should read to and write from\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function creates a file in debugfs with the given name that contains the value of the variable
+\fIvalue\fR\&. If the
+\fImode\fR
+variable is so set, it can be read from, and written to\&.
+.PP
+This function will return a pointer to a dentry if it succeeds\&. This pointer must be passed to the
+\fBdebugfs_remove\fR
+function when the file is to be removed (no automatic cleanup happens if your module is unloaded, you are responsible here\&.) If an error occurs,
+\fBNULL\fR
+will be returned\&.
+.PP
+If debugfs is not enabled in the kernel, the value \-\fBENODEV\fR
+will be returned\&. It is not wise to check for this value, but rather, check for
+\fBNULL\fR
+or !\fBNULL\fR
+instead as to eliminate the need for #ifdef in the calling code\&.
+.SH "COPYRIGHT"
+.br

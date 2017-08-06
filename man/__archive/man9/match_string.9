@@ -1,0 +1,61 @@
+'\" t
+.\"     Title: match_string
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "MATCH_STRING" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+match_string \- matches given string in an array
+.SH "SYNOPSIS"
+.HP \w'int\ match_string('u
+.BI "int match_string(const\ char\ *const\ *\ " "array" ", size_t\ " "n" ", const\ char\ *\ " "string" ");"
+.SH "ARGUMENTS"
+.PP
+\fIarray\fR
+.RS 4
+array of strings
+.RE
+.PP
+\fIn\fR
+.RS 4
+number of strings in the array or \-1 for NULL terminated arrays
+.RE
+.PP
+\fIstring\fR
+.RS 4
+string to match with
+.RE
+.SH "RETURN"
+.PP
+index of a
+\fIstring\fR
+in the
+\fIarray\fR
+if matches, or
+\fB\-EINVAL\fR
+otherwise\&.
+.SH "COPYRIGHT"
+.br

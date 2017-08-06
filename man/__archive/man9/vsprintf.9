@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: vsprintf
+.\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Basic C Library Functions
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "VSPRINTF" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Basic C Library Functions"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+vsprintf \- Format a string and place it in a buffer
+.SH "SYNOPSIS"
+.HP \w'int\ vsprintf('u
+.BI "int vsprintf(char\ *\ " "buf" ", const\ char\ *\ " "fmt" ", va_list\ " "args" ");"
+.SH "ARGUMENTS"
+.PP
+\fIbuf\fR
+.RS 4
+The buffer to place the result into
+.RE
+.PP
+\fIfmt\fR
+.RS 4
+The format string to use
+.RE
+.PP
+\fIargs\fR
+.RS 4
+Arguments for the format string
+.RE
+.SH "DESCRIPTION"
+.PP
+The function returns the number of characters written into
+\fIbuf\fR\&. Use
+\fBvsnprintf\fR
+or
+\fBvscnprintf\fR
+in order to avoid buffer overflows\&.
+.PP
+If you\*(Aqre not already dealing with a va_list consider using
+\fBsprintf\fR\&.
+.PP
+See the
+\fBvsnprintf\fR
+documentation for format string extensions over C99\&.
+.SH "COPYRIGHT"
+.br

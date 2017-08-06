@@ -1,0 +1,70 @@
+'\" t
+.\"     Title: irq_set_irqchip_state
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: January 2017
+.\"    Manual: Public Functions Provided
+.\"    Source: Kernel Hackers Manual 4.10.0-rc1
+.\"  Language: English
+.\"
+.TH "IRQ_SET_IRQCHIP_STAT" "9" "January 2017" "Kernel Hackers Manual 4\&.10\&" "Public Functions Provided"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+irq_set_irqchip_state \- set the state of a forwarded interrupt\&.
+.SH "SYNOPSIS"
+.HP \w'int\ irq_set_irqchip_state('u
+.BI "int irq_set_irqchip_state(unsigned\ int\ " "irq" ", enum\ irqchip_irq_state\ " "which" ", bool\ " "val" ");"
+.SH "ARGUMENTS"
+.PP
+\fIirq\fR
+.RS 4
+Interrupt line that is forwarded to a VM
+.RE
+.PP
+\fIwhich\fR
+.RS 4
+State to be restored (one of IRQCHIP_STATE_*)
+.RE
+.PP
+\fIval\fR
+.RS 4
+Value corresponding to
+\fIwhich\fR
+.RE
+.SH "DESCRIPTION"
+.PP
+This call sets the internal irqchip state of an interrupt, depending on the value of
+\fIwhich\fR\&.
+.PP
+This function should be called with preemption disabled if the interrupt controller has per\-cpu registers\&.
+.SH "AUTHORS"
+.PP
+\fBThomas Gleixner\fR <\&tglx@linutronix.de\&>
+.RS 4
+Author.
+.RE
+.PP
+\fBIngo Molnar\fR <\&mingo@elte.hu\&>
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br
