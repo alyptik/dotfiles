@@ -131,8 +131,8 @@ class Cobe(callbacks.Plugin):
 
         if len(text) > 1:
             # So we don't get an error if the text is too small
-            
-            text = text[0].upper() + text[1:]       # Capitalize first letter of the string.
+            text = text[0].lower() + text[1:]       # Capitalize first letter of the string.
+            #  text = text[0].upper() + text[1:]       # Capitalize first letter of the string.
             
         text = utils.str.normalizeWhitespace(text)  # Normalize the whitespace in the string.
         

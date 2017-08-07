@@ -4,14 +4,14 @@
 #
 # bash shell functions
 
-0x0() {
+function 0x0() {
 	curl https://0x0.st --progress-bar -F"file=@-" | \
 	tee >(awk '/https/ {sub("url: ",""); print}' | \
 		awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' | \
 		xsel -ib)
 }
 
-abexpac() {
+function abexpac() {
 	echo -n "$@" '[perform alphabetical search for:] '; read -r
 	expac -s "%-25n %v" | grep "$REPLY"
 }
@@ -27,7 +27,7 @@ abexpac() {
 #
 # }
 
-act() {
+function act() {
 	awk 'BEGIN{
 		s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
 		for (colnum = 0; colnum<77; colnum++) {
@@ -43,7 +43,7 @@ act() {
 	}'
 }
 
-ajack() {
+function ajack() {
 	#alsa_out -j DeckA_Out -d "hw:2,0" &> /dev/null &
 	#alsa_in -j DeckA_In -d "hw:2,0" &> /dev/null &
 	#alsa_out -j DeckB_Out -d "hw:3,0" &> /dev/null &
@@ -60,7 +60,7 @@ ajack() {
 	#alsa_in -j Cue_In -d "hw:5,0" &>/dev/null &
 }
 
-arec() {
+function arec() {
 	asciinema rec -y "/tmp/$$.json"
 	asciinema upload "/tmp/$$.json" | \
 		grep --line-buffered -o 'http.*' | \
@@ -68,41 +68,37 @@ arec() {
 		xsel -ib)
 }
 
-au() {
+function au() {
 	[[ -z "$*" ]] && return 1
 	autoload -Uz +X "$@"
 }
 
-bd-btrfs() {
-	[[ ${#} -ge 1 ]] && local dpercent="$1" || local dpercent=100
-	[[ ${#} -ge 2 ]] && local mpercent="$2" || local mpercent=0
-	[[ ${#} -ge 3 ]] && local target="$3" || local target='/'
-	echo "Running balance on \"${target}\" with -dusage=${dpercent} and -musage=${mpercent}..."
-	sudo btrfs balance start -v -dusage="${dpercent}" -musage="${mpercent}" "${target}"
-	return 0
+function bd-btrfs() {
+	echo "Running balance on \"${target}\" with -dusage=${1:-100} and -musage=${2:-0}..."
+	sudo btrfs balance start -v -dusage="${1:-100}" -musage="${2:-0}" "${3:-/}"
 }
 
-bfg() {
+function bfg() {
 	## Resume a background job
 	 if [ "${#1}" -ne 1 ]; then echo 'attempting to resume job "%1"'; local j=1; else local j="${1}"; fi; %"${j}" &
 }
 
-book() {
+function book() {
 	 chromium "http://b-ok.org/s/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-bptpb() {
+function bptpb() {
 	for c in "$@"; do
 	printf "\n$ %s\n" "$c" && eval "$c"
 	done 2>&1 | \
 	tee >(curl -sF'c=@-' 'https://pb.gehidore.net/?u=1' | xsel -ib) >&2
 }
 
-calc() {
+function calc() {
 	 bc -l <<<"${*}"
 }
 
-ccffmpeg() {
+function ccffmpeg() {
 	local input output
 	local -a ext
 	if [[ -z "$2" ]]; then
@@ -125,11 +121,11 @@ ccffmpeg() {
 
 }
 
-cdg() {
+function cdg() {
 	pushd "${CONF:-/store/config}" >/dev/null
 }
 
-certfp() {
+function certfp() {
 	pushd . &>/dev/null
 	cd "${HOME}/certs/irc"
 	local nick="${1:-alyptik}"
@@ -155,7 +151,7 @@ certfp() {
 #                 fi
 #         fi
 # }
-cgfix() {
+function cgfix() {
 	## fix for broken cgmanager
 	while :; do
 	if mount | grep -wq cgmfs; then
@@ -169,7 +165,7 @@ cgfix() {
 	done
 
 }
-chgrep() {
+function chgrep() {
 	if [[ "$1" =~ ^[0-9][0-9]*$ ]]; then
 		local context="$1"
 		shift
@@ -181,13 +177,13 @@ chgrep() {
 		less -FJMRXs
 }
 
-chr() {
+function chr() {
 	{ for i in "$@"; do printf \\"$(printf '%03o' "$1")" ' '; done } | \
 	sed 's/ *$//' | \
 	tee >(xsel -ib)
 }
 
-chud() {
+function chud() {
 	#killall conky && sleep 2
 	#conky -c /home/alyptik/.conky/.clockconky
 	#conky -c /home/alyptik/.conky/.netconky
@@ -202,14 +198,14 @@ chud() {
 	conky -c /home/alyptik/.conky/.conkyrc2;
 }
 
-ckpdf() {
+function ckpdf() {
 	<<<$'\n' k2pdfopt -c -bpc 1 -dev kp2 -x "$1" >/dev/null 2>&1 &
 	[[ -z "$2" ]] && return 0
 	shift
 	ckpdf "$@"
 }
 
-cmixxx() {
+function cmixxx() {
 	pump scons asmlib=0 virtualize=0 localecompare=1 qt_sqlite_plugin=0 opus=1 faad=1 wv=1 ffmpeg=1 \
 		optimize=native build=release battery=1 perftools=0 perftools_profiler=0 modplug=1 \
 		qtdir=/usr/lib/qt4  install_root="${1:-/opt/mixxx}" prefix="${2:-/opt/mixxx}"
@@ -219,7 +215,7 @@ cmixxx() {
 #         printf 'U+%04X ' "${@/#/'}" | tee >(xsel -ib)
 # }
 
-color() {
+function color() {
 	for c in "$@"; do
 		printf '\e[48;5;%dm%03d' "$c" "$c"
 	done
@@ -227,7 +223,7 @@ color() {
 
 }
 
-colortest() {
+function colortest() {
 		local fgc bgc vals seq0
 		printf "Color escapes are %s\n" '\e[${value};...;${value}m'
 		printf "Values 30..37 are \e[33mforeground colors\e[m\n"
@@ -250,7 +246,7 @@ colortest() {
 
 }
 
-colortput() {
+function colortput() {
 	local colorcount=${1:-25}
 	for ((i=0;i<${colorcount};i++)); do
 		#[[ "$colorcount" -lt 10 ]] && {
@@ -261,7 +257,7 @@ colortput() {
 	done
 }
 
-conf-setup() {
+function conf-setup() {
 	local orig="$PWD"
 	[[ "$orig" != "${CONF:-/store/config}" ]] && pushd "${CONF:-/store/config}" >/dev/null 2>&1 || local dirvar=1
 	git init .
@@ -271,7 +267,7 @@ conf-setup() {
 	[[ "$dirvar" -eq 0 ]] && pushd "$orig" >/dev/null 2>&1 || return 0
 }
 
-cptpb() {
+function cptpb() {
 	local pchar
 	[[ "$EUID" -eq 0 ]] && pchar='# ' || pchar='$ '
 	if [[ -n "$ZSH_NAME" ]]; then
@@ -315,12 +311,12 @@ cptpb() {
 	# esac
 }
 
-cr() {
+function cr() {
 	# chromium "https://google.com/search?q=site:en.cppreference.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 	 chromium "http://en.cppreference.com/mwiki/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-crf() {
+function crf() {
 	## c(crf) - browse chrome history
 	local cols sep
 	cols=$(( COLUMNS / 3 ))
@@ -334,8 +330,8 @@ crf() {
 	awk -F "$sep" '{ printf "%-'$cols's  \x1b[36m%s\n", $1, $2 }' | \
 	fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs xdg-open
 }
-`
-csox() {
+
+function csox() {
 	if ( [[ "$#" -gt 3 ]] || [[ ! "$3" =~ ^([0-9][0-9]?|)$ ]] ); then
 	return 1
 	fi
@@ -395,7 +391,7 @@ csox() {
 #         fi
 # }
 
-ctput() {
+function ctput() {
 	## List Termcap colors'
 	local colorcount=${1:-16}
 	printf "Listing %s colors:\n" "$colorcount"
@@ -404,7 +400,7 @@ ctput() {
 	done
 }
 
-cue() {
+function cue() {
 	if [[ -e "image.toc" ]] || [[ -e "image.bin" ]] || [[ -e "image.cue" ]]; then
 		printf " \033[31m %s\n\033[0m" 'Error: image.(toc|bin|cue) exists!'
 		return 1
@@ -418,7 +414,7 @@ cue() {
 	fi
 }
 
-dbr() {
+function dbr() {
 	find /@media/microSDXC/audio -maxdepth 1 -name "*TSL*" -type d -print | \
 		sed 's/^.*\/\(TSL.*\)$/\1/' | \
 		while read -r; do
@@ -439,46 +435,46 @@ dbr() {
 	#rclone move /@media/microSDXC/Practice\ Mixes/ dropbox:/EDM/practice/
 }
 
-dco() {
+function dco() {
 	 mkdir "/tmp/aur" &>/dev/null
 	 cower -t "/tmp/aur" -dd "$@"
 	 cd "/tmp/aur/$1" || cd "/tmp/aur"
 }
 
-ddg() {
+function ddg() {
 	 chromium "https://www.duckduckgo.com/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-dgbtrfs() {
+function dgbtrfs() {
 	 find / -xdev -type d -print -exec sudo btrfs filesystem defragment -r -v -clzo "{}" \;
 }
 
-dgpg() {
+function dgpg() {
 	[[ -z "$*" ]] && return 1
 	for i; do
 	gpg2 --armor --export "$i" | gpg2 --list-packets --verbose
 	done
 }
 
-dirlinks() {
+function dirlinks() {
 	[[ -z "$1" ]] && dlist=( "${PWD}" ) || dlist=( "${@}" )
 	for ((i=1;i<$((${#dlist[@]}+1));i++)); do
 		echo find "$dlist[$i]" -maxdepth 1 -type l -exec ls {} \;
 	done
 }
 
-dkpdf() {
+function dkpdf() {
 	<<<$'\n' k2pdfopt -bpc 1 -d- -dev kp2 -x "$1" >/dev/null 2>&1 &
 	[[ -z "$2" ]] && return 0
 	shift
 	dkpdf "$@"
 }
 
-dloader() {
+function dloader() {
 	 node /@media/microSDXC/deezloader/app.js & disown
 }
 
-dsgenkey() {
+function dsgenkey() {
 	if [[ -z "${1}" ]]; then
 		printf '%s\n' 'No zone specified!'
 	else
@@ -497,7 +493,7 @@ dsgenkey() {
 	fi
 }
 
-dssign() {
+function dssign() {
 	[[ ${PWD} != /etc/bind ]] && pushd . >/dev/null 2>&1
 	cd "/etc/bind"
 	if [[ -z "${1}" ]]; then
@@ -536,7 +532,7 @@ dssign() {
 	return 0
 }
 
-dtexpac() {
+function dtexpac() {
 	echo -n "$@" '[# of recently installed entries to list:] '; read -r
 	expac --timefmt='%y-%m-%d %T' '%l\t%n' | sort | tail "-$REPLY"
 	#expac --timefmt=%s '%l\t%n' | sort -n | tail -20 | grep "$ans"
@@ -546,7 +542,7 @@ dtexpac() {
 #          eval cat $( printf '%s' `eval "{ <<<"${@}" sed 's/\<\([a-zA-Z0-9]*\)\>/<(<<<\"\1\")/g;s@\-@/dev/stdin@g' }"`)
 # }
 
-__ehc() {
+function __ehc() {
 	if [[ -n $1 ]]; then
 		bind '"\er": redraw-current-line'
 		bind '"\e^": magic-space'
@@ -558,7 +554,7 @@ __ehc() {
 	fi
 }
 
-empty() {
+function empty() {
 	(
 		local arg
 		arg="$1"
@@ -575,12 +571,12 @@ empty() {
 	)
 }
 
-eptpb() {
+function eptpb() {
 	cat <(printf '%s ' '$ ' "$@" $'\n\n') <(eval "$@" 2>&1) | \
 	tee >(curl -sF'c=@-' 'https://pb.gehidore.net/?u=1' | xsel -ib) >&2
 }
 
-epub() {
+function epub() {
 	[[ -z "$*" ]] && return
 	(( $# < 2 )) && \
 	ebook-convert "$1" .epub --enable-heuristics || \
@@ -589,7 +585,7 @@ epub() {
 	epub "$@"
 }
 
-eurl() {
+function eurl() {
 	local LC_ALL=C c
 	while IFS= read -r -n1 -d '' c
 	do
@@ -602,14 +598,14 @@ eurl() {
 	done
 }
 
-f0x0() {
+function f0x0() {
 	curl -H "User-Agent: Mozilla/5.0 \
 	(Macintosh; Intel Mac OS X 10_10_3) \
 	AppleWebKit/537.36 (KHTML, like Gecko) \
 	Chrome/44.0.2403.89 Safari/537.36" https://0x0.st --progress-bar -F"file=@${*}"
 }
 
-favicon() {
+function favicon() {
 	local ico
 	touch "./favicon.ico" && ico="./favicon.ico" || ico="/tmp/favicon.ico"
 	convert -resize x16 -gravity center -crop 16x16+0+0 \
@@ -623,7 +619,7 @@ favicon() {
 	<<<"$ico" tee >(xclip -i -selection clipboard)
 }
 
-fbr() {
+function fbr() {
 	## fbr - checkout git branch (including remote branches)
 	local branches branch
 	branches=$(git branch --all | grep -v HEAD) && \
@@ -632,7 +628,7 @@ fbr() {
 	git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
-fco() {
+function fco() {
 	## fco - checkout git branch/tag
 	local tags branches target
 	tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
@@ -644,7 +640,7 @@ fco() {
 	git checkout $(echo "$target" | awk '{print $2}')
 }
 
-fcs() {
+function fcs() {
 	## fcs - get git commit sha
 	## example usage: git rebase -i `fcs`
 	local commits commit
@@ -653,22 +649,22 @@ fcs() {
 	printf '%s' $(echo "$commit" | sed "s/ .*//") | tee >(xclip -i -selection clipboard)
 }
 
-fh() {
+function fh() {
 	## fh - repeat history
 	 print -z $( ( [[ -n "$ZSH_NAME" ]] && fc -l 1 || history ) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
-fhe() {
+function fhe() {
 	## fhe - repeat history edit
 	 ( [[ -n "$ZSH_NAME" ]] && fc -l 1 || history ) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
 }
 
-fkill() {
+function fkill() {
 	## fkill - kill process
 	 local pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}'); [ -n "$pid" ] && kill -"${1:-15}" "$pid"
 }
 
-flacsplit() {
+function flacsplit() {
 	local cuef="$1"
 	local flacf="$2"
 	[[ -z "${1?Error: No cue file specifed}" || -z "${2?Error: No flac file specified}" ]] && return 1
@@ -677,7 +673,7 @@ flacsplit() {
 		kid3-cli -c 'select [0-9]*.*.flac' -c 'fromtag "%{artist} - %{title}" 2' -c 'ls' -c 'save'
 }
 
-flip() {
+function flip() {
 	declare -a input
 	[[ ! -t 0 ]] && readarray -t input </dev/stdin ||
 	input+=("$@")
@@ -688,7 +684,7 @@ flip() {
 	unset input
 }
 
-fman() {
+function fman() {
 	#
 	# Alternate manpage search function
 	local width pager query page section
@@ -723,7 +719,7 @@ fman() {
 	man "$section" "$page"
 }
 
-fmpc() {
+function fmpc() {
 	local song_position
 	song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
 	fzf-tmux --query="$1" --reverse --select-1 --exit-0 | \
@@ -731,7 +727,7 @@ fmpc() {
 	[ -n "$song_position" ] && mpc -q play "$song_position"
 }
 
-fo() {
+function fo() {
 	local out file key
 	IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
 	key=$(head -1 <<< "$out")
@@ -741,7 +737,7 @@ fo() {
 	fi
 }
 
-fptpb() {
+function fptpb() {
 	# curl --progress-bar -F"c=@${*}" https://ptpb.pw/ | \
 	curl --progress-bar -F"c=@${*}" https://pb.gehidore.net/ | \
 	tee >(awk '/http/ {sub("url: ",""); print}' | \
@@ -749,7 +745,7 @@ fptpb() {
 	xsel -ib)
 }
 
-fromhex() {
+function fromhex() {
 	local hex r g b
 	hex=${1#"#"}
 	r=$(printf '0x%0.2s' "$hex")
@@ -762,14 +758,14 @@ fromhex() {
 	echo
 }
 
-fs() {
+function fs() {
 	local session
 	session=$(tmux list-sessions -F "#{session_name}" | \
 	fzf --query="$1" --select-1 --exit-0) && \
 	tmux switch-client -t "$session"
 }
 
-fshow() {
+function fshow() {
 	## fshow - git commit browser
 	git log --graph --boundary --all --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" | \
 	fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind \
@@ -780,7 +776,7 @@ fshow() {
 	#         < <(printf '\n%s\n' {})"
 }
 
-fstash() {
+function fstash() {
 	local out q k sha
 	while out=$(git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" | \
 		fzf --ansi --no-sort --query="$q" --print-query \
@@ -803,7 +799,7 @@ fstash() {
 	done
 }
 
-ftags() {
+function ftags() {
 	## ftags - search ctags
 	local line
 	[ -e tags ] && \
@@ -811,7 +807,7 @@ ftags() {
 	${EDITOR:-vim} $(cut -f3 <<< "$line") -c "set nocst" -c "silent tag $(cut -f2 <<< "$line")"
 }
 
-ftpane() {
+function ftpane() {
 	local panes current_window current_pane target target_window target_pane
 	panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
 	current_pane=$(tmux display-message -p '#I:#P')
@@ -827,7 +823,7 @@ ftpane() {
 	fi
 }
 
-fv() {
+function fv() {
 	local files
 	files=$(grep '^>' ~/.viminfo | cut -c3- | \
 	while read line; do [ -f "${line/\~/$HOME}" ] && echo "$line"; done | \
@@ -835,7 +831,7 @@ fv() {
 	unset files
 }
 
-__fzf-edit-history() {
+function __fzf-edit-history() {
 	builtin history -a
 	builtin history -c
 	builtin history -r
@@ -863,10 +859,10 @@ __fzf-edit-history() {
 	fi
 }
 
-__fzf_history() {
+function __fzf_history() {
 	 __ehc $(history | fzf --tac --tiebreak=index | perl -ne 'm/^\s*([0-9]+)/ and print "!$1"')
 }
-__fzf_readline() {
+function __fzf_readline() {
 	builtin eval "
 	builtin bind ' \
 		\"\C-x3\": $(
@@ -876,7 +872,7 @@ __fzf_readline() {
 	"
 }
 
-gcd() {
+function gcd() {
 	local clonedir
 	[[ -z "$*" ]] && return 1
 	cd "${HOME}/git" || return 2
@@ -889,7 +885,7 @@ gcd() {
 	done
 }
 
-genchee() {
+function genchee() {
 	#awk -F'\t' $'$3 ~ /^what if/ {print $3}' $HOME/.weechat/logs/irc.znc.\#archlinux-offtopic.weechatlog
 	[[ "${#}" -lt 2 ]] && return 1
 	local logfile="$1"
@@ -897,28 +893,28 @@ genchee() {
 	awk -F'\t' $'$3 ~ /^'"${*}"$'/ {print $3}' "$logfile"
 }
 
-gg() {
+function gg() {
 	 chromium "https://google.com/search?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-gh() {
+function gh() {
 	 chromium "https://github.com/search?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-gif() {
+function gif() {
 	 ffmpeg -i "${1:?Error: no input file specified!}" "${2:-${1%.*}.gif}" -threads 0
 }
-gnpm() {
+function gnpm() {
 	 npm -g install --prefix "${HOME}/.node_modules" "$@"
 }
 
-gs-pdf() {
+function gs-pdf() {
 	printf '%b' "Input file: $1\nOutput file: ${1/.pdf/-gs.pdf}\n"
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen \
 		-dNOPAUSE -dQUIET -dBATCH -sOutputFile="${1/.pdf/-gs.pdf}" "$1"
 }
 
-gt() {
+function gt() {
 	chromium "https://translate.google.com/#auto/en/$(<<<${*} sed 's/http:\/\//☃/g
 		s/https:\/\//⛇/g
 		s/\//∞/g
@@ -960,35 +956,35 @@ gt() {
 		s/∞/\//g')"
 }
 
-gzdecode() {
+function gzdecode() {
 	## decode a base64 string to plaintext
 	[[ -z "$*" ]] && local str="$(</dev/stdin)" || local str="$*"
 	<<<"$str" base64 -d | gzip -d
 	#<<<"$str" tr '-' '\n' | base64 -d | gzip -d
 }
 
-gzencode() {
+function gzencode() {
 	## base64 encode a file to store in an env variable
 	[[ -z "$*" ]] && local fname="/dev/stdin" || local fname="$*"
 	gzip -c --best "$*" | base64 | perl -pe 'chomp if eof'
 }
 
-h() {
+function h() {
 	## Fix zsh annoying history behavior
 	 if [[ -z "$*" ]]; then history; else egrep "$*" <(fc -l 1); fi
 }
 
-:h() {
+function :h() {
 	## Open vim help page
 	for i in "$@"; do vim +"help $i" -c 'bunload! 1'; done
 }
 
-:help() {
+function :help() {
 	## Open vim help page
 	for i in "$@"; do vim +"help $i" -c 'bunload! 1'; done
 }
 
-hex() {
+function hex() {
 	local input="$(cat "${@:-/dev/stdin}")"
 	printf '%s' "$input" | \
 		od -tx1 | \
@@ -996,7 +992,7 @@ hex() {
 		tr -d '\n'
 }
 
-hexc() {
+function hexc() {
 	local input="$(cat "${@:-/dev/stdin}")"
 	printf '%s' "$input" | \
 		od -tx1 | \
@@ -1004,11 +1000,11 @@ hexc() {
 		perl -pe 's/$/ / if not eof; chomp'
 }
 
-hgdb() {
+function hgdb() {
 	 vim -c "tab h gdbmgr.txt | tabn | q"
 }
 
-hi() {
+function hi() {
 	local file
 	if [[ ! -t 0 || "$*" =~ - ]]; then
 	file="/dev/stdin"
@@ -1021,7 +1017,7 @@ hi() {
 	less -CJRMXs
 }
 
-high() {
+function high() {
 	local theme syn out file
 	if (( $# > 1 )); then theme="$1"; shift; fi
 	if (( $# > 1 )); then syn="$1"; shift; fi
@@ -1045,7 +1041,7 @@ high() {
 	# highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style=anotherdark "$file"
 }
 
-homepushdcheck() {
+function homepushdcheck() {
 	if [[ "${EUID}" -ne 0 ]]; then
 	[[ "${PWD}" != ${HOME} ]] && {
 	printf '%s' "[Move to home folder? (y/N)] "; read -r
@@ -1058,7 +1054,7 @@ homepushdcheck() {
 	fi
 }
 
-ico() {
+function ico() {
 	if [[ "${1##*.}" =~ ^jp[e]?g$ ]]; then
 	convert -resize x16 -gravity center -crop 16x16+0+0 \
 		"${1:?Error: no input file specified!}" \
@@ -1072,7 +1068,7 @@ ico() {
 	fi
 }
 
-imgurredirect() {
+function imgurredirect() {
 	url="$(curl "$1" | grep '<meta property="og:image"')"
 	url="${url/*content=\"/}"
 	url="${url/*\" \/>$/}"
@@ -1082,7 +1078,7 @@ imgurredirect() {
 	imgurredirect "$@"
 }
 
-isempty() {
+function isempty() {
 	(
 	# if [[ "$0" == ?zsh ]]; then setopt nullglob; elif [[ "$0" == ?bash ]]; then shopt nullglob; else return 64; fi
 	if [[ -n "$ZSH_NAME" ]]; then setopt nullglob; elif [[ -n "$BASH" ]]; then shopt nullglob; else return 64; fi
@@ -1093,7 +1089,7 @@ isempty() {
 	)
 }
 
-ix() {
+function ix() {
 	local opts
 	local OPTIND
 	[ -f "$HOME/.netrc" ] && opts='-n'
@@ -1122,21 +1118,21 @@ ix() {
 			Chrome/44.0.2403.89 Safari/537.36' --progress-bar $opts -F f:1='<-' $* ix.io/$id"
 }
 
-j() {
+function j() {
 	local dir
 	dir="$(fasd -Rld "$*" 2>&1 | fzf -1 -0 --no-sort +m)" && \
 		cd "$dir" || cd "$(fasd -Rld 2>&1 | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 	unset dir
 }
 
-jc() {
+function jc() {
 	[[ -z "$*" ]] && return 1
 	for i in "$@"; do
 	javac "$i" && java -cp . "${i:r}"
 	done
 }
 
-jcd() {
+function jcd() {
 	if [[ -z "$*" ]]; then
 	printf '%s' "No packages specified!"
 	return 1
@@ -1147,14 +1143,14 @@ jcd() {
 	done
 }
 
-jpg2ico() {
+function jpg2ico() {
 	convert -resize x16 -gravity center -crop 16x16+0+0 \
 	"${1:?Error: no input file specified!}" \
 	-transparent white -colors 256 \
 	"${2:-${1%.*}.ico}"
 }
 
-kpdf() {
+function kpdf() {
 	<<<$'\n' k2pdfopt -bpc 1 -dev kp2 -x "$1" >/dev/null 2>&1 &
 	[[ -z "$2" ]] && return 0
 	shift
@@ -1180,11 +1176,11 @@ kpdf() {
 #         # -net nic -net bridge,br=virbr0,smb=/mnt/shared -device intel-iommu -monitor stdio -monitor pty
 # }
 
-l() {
+function l() {
 	less -CJRMXs "$@"
 }
 
-ldas() {
+function ldas() {
 		[[ "${#}" -ne 3 ]] && { printf " \033[31m %s \n\033[0m" "Need 3 arguments..."; return 1; } || {
 				as "$1" -o "$2"
 				ld --dynamic-linker="/lib64/ld-linux-x86-64.so.2" \
@@ -1197,7 +1193,7 @@ ldas() {
 	}
 }
 
-ldr() {
+function ldr() {
 	 ls -dCX --color=auto "${*:-./}/"*/
 }
 
@@ -1212,7 +1208,7 @@ ldr() {
 #         [[ "$#dirs" -ne 0 ]] && \ls --color=auto -d $dirs[@]
 #         [[ "$#files" -ne 0 ]] && \ls --color=auto $files[@]
 # }
-lnc() {
+function lnc() {
 	[[ -z "$*" ]] && return 1
 	for i in "$@"; do
 	mv -i "$i" "${CONF:-/store/config}/" || continue
@@ -1220,11 +1216,11 @@ lnc() {
 	done
 }
 
-lpman() {
+function lpman() {
 	 man -t "${1?Error: No manpage provided.}" | groff -man -Tps | lpr
 }
 
-lstput() {
+function lstput() {
 	local text="
 		$(tput sgr0)	creset - [sgr0]
 		$(tput setaf 1)	cred - [setaf 1]
@@ -1243,19 +1239,19 @@ lstput() {
 	printf '%s\n' "${text//	/}"
 }
 
-lsupd() {
+function lsupd() {
 	 checkupdates; cower -ub
 }
 
-mattach() {
+function mattach() {
 	echo | mutt -a "$*" -- alyptik@kindle.com
 }
 
-mcd() {
+function mcd() {
 	 [ -d "$*" ] || mkdir -p "$*"; pushd "$*"
 }
 
-mobi() {
+function mobi() {
 	[[ -z "$*" ]] && return
 	(( $# < 2 )) && \
 	ebook-convert "$1" .mobi --enable-heuristics || \
@@ -1264,7 +1260,7 @@ mobi() {
 	mobi "$@"
 }
 
-mode2colors() {
+function mode2colors() {
 	#### For 16 Million colors use \e[0;38;2;R;G;Bm each RGB is {0..255}
 	## reset the colors.
 	printf '\e[0m%59s\n' "Some samples of colors for r;g;b. Each one may be 000..255"
@@ -1283,11 +1279,11 @@ mode2colors() {
 	done; printf '\e[m Reset\n'
 }
 
-mp() {
-	 chromium "https://metacpan.org/search?size=50&q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+function mp() {
+	 chromium 'https://metacpan.org/search?size=50&q='"$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-mptpb() {
+function mptpb() {
 	local comp id
 	comp=1
 	pidof compton >/dev/null && killall compton || comp=0
@@ -1300,16 +1296,16 @@ mptpb() {
 	[[ "$comp" -ne 0 ]] && compton -cCGfF -b -i 0.85
 }
 
-mpvcmd() {
+function mpvcmd() {
 	 notify-send "mpv: loading..." "$@"
 	 mpv --loop-file=inf "$@"
 }
 
-myt() {
+function myt() {
 	 mpv --no-video --ytdl-format=bestaudio "ytdl://ytsearch10:$*"
 }
 
-newpl() {
+function newpl() {
 	## newpl - creates a basic Perl script file and opens it with vim
 	[[ -z "$*" ]] && return 1
 	## if the file exists, just open it
@@ -1320,7 +1316,7 @@ newpl() {
 	"${EDITOR:-vim}" "$1"
 }
 
-newpost() {
+function newpost() {
 	[[ -z "$1" ]] && return 1
 	[[ ! -d "/store/config/code/projects/website-pelican/content" ]] && return 1
 	printf '%s' 'Title: '"$1"'
@@ -1338,7 +1334,7 @@ newpost() {
 	)
 }
 
-news_long() {
+function news_long() {
 	echo -e "$(echo $(curl -m 5 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
 		sed -e ':a;N;$!ba;s/\n/ /g') | \
 			sed -e '
@@ -1367,7 +1363,7 @@ news_long() {
 		sed '/^$/d'
 }
 
-news_short() {
+function news_short() {
 	echo -e "$(echo $(curl -m 5 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
 		sed -e ':a;N;$!ba;s/\n/ /g') | \
 			sed -e '
@@ -1396,13 +1392,13 @@ news_short() {
 		awk '{ line[NR] = $0 } END { for (i = NR; i > 0; i -= 2) { print line[i-1]; print line[i] } }'
 }
 
-o() {
+function o() {
 	[[ -z "$*" ]] && return
 	gio open "$1" &>/dev/null & disown
 	shift
 	"$0" "$@"
 }
-odkms() {
+function odkms() {
 	# for i in /var/lib/dkms/*/[^k]*/source; do [ -e "$i" ] || printf '%s\n' "$i"; done
 	find /var/lib/dkms/ \
 		\( \
@@ -1413,20 +1409,20 @@ odkms() {
 		-exec ls -Al --color=always {} \;
 }
 
-open_command() {
+function open_command() {
 	[[ -z "$*" ]] && return
 	gio open "$1" &>/dev/null & disown
 	shift
 	"$0" "$@"
 }
 
-ord() {
+function ord() {
 	{ for i; do printf '%d' "'$1" ' '; done } | \
 	sed 's/ *$//' | \
 	tee >(xsel -ib)
 }
 
-par() {
+function par() {
 	pulseaudio --check && pulseaudio --kill
 	sleep 1
 	[ $# -eq 0 ] && {
@@ -1440,7 +1436,7 @@ par() {
 		}
 }
 
-pcd() {
+function pcd() {
 	local clonedir
 	[[ -z "$*" ]] && return 1
 	cd "${CONF:-/store/config}/code/projects" || return 2
@@ -1453,7 +1449,7 @@ pcd() {
 	done
 }
 
-pdeps() {
+function pdeps() {
 	pacaur --color=never -Si "$@" | \
 		sed -r '/Optional/,/Conflicts/!d
 			/Conflicts/d
@@ -1473,7 +1469,7 @@ pdeps() {
 		#         print $b }' | xargs -n1 | sort -u
 }
 
-pdf() {
+function pdf() {
 	[[ -z "$*" ]] && return
 	(( $# < 2 )) && \
 	ebook-convert "$1" .pdf --enable-heuristics || \
@@ -1482,7 +1478,7 @@ pdf() {
 	pdf "$@"
 }
 
-plu() {
+function plu() {
 	#
 	# Use a different browser depending on url
 	function imgurredirect () {
@@ -1578,23 +1574,23 @@ plu() {
 	# plu "$@"
 }
 
-png2ico() {
+function png2ico() {
 	convert -resize x16 -gravity center -crop 16x16+0+0 \
 	"${1:?Error: no input file specified!}" \
 	-flatten -colors 256 \
 	"${2:-${1%.*}.ico}"
 }
 
-ppid() {
+function ppid() {
 	 sudo ps -p ${1:-$$} -o ppid=
 }
 
-prep() {
+function prep() {
 	## Perl grep, because 'grep -P' is terrible. Lets you work with pipes or files.
 	 perl -nle 'print if /'"$1"'/;' "$2"
 }
 
-prompt_confirm() {
+function prompt_confirm() {
 	while true; do
 	echo -n "${1:-Continue?} [y/n]: "; read -r -q REPLY
 	case $REPLY in
@@ -1614,7 +1610,7 @@ prompt_confirm() {
 	# [[ $REPLY =~ ^(yes|y)$ ]] && true || false
 }
 
-prun() {
+function prun() {
 	[[ -z "$*" ]] && return 1
 	objs=()
 	cflags=
@@ -1633,7 +1629,7 @@ prun() {
 	unset objs cflags args idx
 }
 
-pscg() {
+function pscg() {
 	function TRAPINT () {
 	(( nopopd )) || popd >/dev/null 2>&1
 	trap - INT
@@ -1654,27 +1650,27 @@ pscg() {
 	trap - INT
 }
 
-pscrs() {
+function pscrs() {
 	 { sudo parallel --will-cite systemctl ::: restart status ::: "$@"; } | less -FJKMRX
 }
 
-pspc() {
+function pspc() {
 	 pacaur -Ss --color="always" "${@/-S/-}" 2>&1 | less -CJRMXs
 }
 
-puscrs() {
+function puscrs() {
 	 { parallel --will-cite systemctl --user ::: restart status ::: "$@"; } | less -FJKMRX
 }
 
-pwait() {
+function pwait() {
 	 [[ "$1" =~ ^[0-9][0-9]*$ ]] && tail --pid="$1" -f /dev/null || return 1
 }
 
-pwns() {
+function pwns() {
 	 pacman -Qo "$@" 2>/dev/null || pacman -Qo $(which "$@" | sed 's/ .*//g')
 }
 
-qpc() {
+function qpc() {
 	[[ -z "$*" ]] && return 1
 	pacman -Ql "$@" | \
 	highlight --out-format=truecolor --syntax=conf --style=xoria256 | \
@@ -1688,7 +1684,7 @@ qpc() {
 #         printf '"$@":\t'; printf '"%s" ' "$@"; echo
 # }
 
-rchgrep() {
+function rchgrep() {
 	if [[ "$1" =~ ^[0-9][0-9]*$ ]]; then
 		local context="$1"
 		shift
@@ -1700,7 +1696,7 @@ rchgrep() {
 		less -FJMRXs
 }
 
-rd() {
+function rd() {
 	 chromium "https://www.google.com/search?q=site:reddit.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 # rmtorrents() {
@@ -1724,77 +1720,77 @@ rd() {
 #         unset list dir
 # }
 
-rmv() {
-	[[ "$#" -eq 0 ]] && return 1
-	local -a src flags cmd
-	local dest num
-	cmd=( "rsync" )
-	for i in "$@"; do case "$i" in
-	--)
-	shift
-	break ;;
-	-???*)
-	printf "\033[31m%s\033[0m\n" 'Error: malformed flags';
-	return 4 ;;
-	-*)
-	shift
-	flags+=( "${(s::@u)${i//-/}//[^nt]/}" ) ;;
-	# if [[ "$i" =~ t ]]; dest="${@[-1]}" && shift -p; fi ;;
-	esac; done
-	if [[ "$flags" =~ n ]]; then
-	cmd=( "echo" "$cmd[@]" )
-	fi
-	if [[ "$flags" =~ t ]]; then
-	dest="$1" && shift
-	else
-	dest="${@[-1]}" && shift -p
-	fi
-	if [[ ! -e "$dest" ]]; then
-	printf "\033[31m%s\033[0m\n" 'Error: target file/directory not found!'
-	return 2
-	elif ( [[ -d "$dest" ]] && [[ ! -x "$dest" ]] ) || ( [[ -f "$dest" ]] && [[ ! -w "$dest" ]] ); then
-	printf "\033[31m%s\033[0m\n" 'Error: target file/directory not writeable!'
-	return 3
-	fi
-	num="$#"
-	for ((i=0; i<num; i++)); do
-	if [[ ! -e "$1" ]]; then
-		printf "\033[31m%s\033[0m\n" 'Error: one or more source files/directories not found!'
-		return 4
-	elif ( [[ -d "$1" ]] && [[ ! -x "$1" ]] ) || ( [[ -f "$1" ]] && [[ ! -r "$1" ]] ); then
-		printf "\033[31m%s\033[0m\n" 'Error: one or more source files/directories not readable!'
-		return 5
-	fi
-	# test -d "$1" && src+=( "$1/" ) || src+=( "$1" )
-	src+=( "$1" )
-	shift
-	done
-	# test -d "$dest" && dest="$dest/"
-	for d in "${src[@]}"; do
-	"${cmd[@]}" -avP --remove-source-files --info=progress2 "$d" "$dest"
-	done
-}
-rpt() {
-	local pidlist
-	pidlist=$(for i in "$@"; do
-			ps -C "$i" -o pid=
-			#ps c -u ${USER} -o pid= | uniq
-		done)
-	if [[ `<<<"$pidlist" wc -w` -eq 0 ]]; then
-		echo "No PIDs found."
-	elif [[ `<<<"$pidlist" wc -w` -eq 1 ]]; then
-		echo sudo reptyr -T "$pidlist"
-	else
-		echo `<<<"$pidlist" wc -w`" PIDs found:"
-		printf '\n%s\n' "$pidlist"
-	fi
-}
+# rmv() {
+#         [[ "$#" -eq 0 ]] && return 1
+#         local -a src flags cmd
+#         local dest num
+#         cmd=( "rsync" )
+#         for i in "$@"; do case "$i" in
+#         --)
+#         shift
+#         break ;;
+#         -???*)
+#         printf "\033[31m%s\033[0m\n" 'Error: malformed flags';
+#         return 4 ;;
+#         -*)
+#         shift
+#         flags+=( "${(s::@u)${i//-/}//[^nt]/}" ) ;;
+#         # if [[ "$i" =~ t ]]; dest="${@[-1]}" && shift -p; fi ;;
+#         esac; done
+#         if [[ "$flags" =~ n ]]; then
+#         cmd=( "echo" "$cmd[@]" )
+#         fi
+#         if [[ "$flags" =~ t ]]; then
+#         dest="$1" && shift
+#         else
+#         dest="${@[-1]}" && shift -p
+#         fi
+#         if [[ ! -e "$dest" ]]; then
+#         printf "\033[31m%s\033[0m\n" 'Error: target file/directory not found!'
+#         return 2
+#         elif ( [[ -d "$dest" ]] && [[ ! -x "$dest" ]] ) || ( [[ -f "$dest" ]] && [[ ! -w "$dest" ]] ); then
+#         printf "\033[31m%s\033[0m\n" 'Error: target file/directory not writeable!'
+#         return 3
+#         fi
+#         num="$#"
+#         for ((i=0; i<num; i++)); do
+#         if [[ ! -e "$1" ]]; then
+#                 printf "\033[31m%s\033[0m\n" 'Error: one or more source files/directories not found!'
+#                 return 4
+#         elif ( [[ -d "$1" ]] && [[ ! -x "$1" ]] ) || ( [[ -f "$1" ]] && [[ ! -r "$1" ]] ); then
+#                 printf "\033[31m%s\033[0m\n" 'Error: one or more source files/directories not readable!'
+#                 return 5
+#         fi
+#         # test -d "$1" && src+=( "$1/" ) || src+=( "$1" )
+#         src+=( "$1" )
+#         shift
+#         done
+#         # test -d "$dest" && dest="$dest/"
+#         for d in "${src[@]}"; do
+#         "${cmd[@]}" -avP --remove-source-files --info=progress2 "$d" "$dest"
+#         done
+# }
+# rpt() {
+#         local pidlist
+#         pidlist=$(for i in "$@"; do
+#                         ps -C "$i" -o pid=
+#                         #ps c -u ${USER} -o pid= | uniq
+#                 done)
+#         if [[ `<<<"$pidlist" wc -w` -eq 0 ]]; then
+#                 echo "No PIDs found."
+#         elif [[ `<<<"$pidlist" wc -w` -eq 1 ]]; then
+#                 echo sudo reptyr -T "$pidlist"
+#         else
+#                 echo `<<<"$pidlist" wc -w`" PIDs found:"
+#                 printf '\n%s\n' "$pidlist"
+#         fi
+# }
 
-runcmd() {
+function runcmd() {
 	 perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>'
 }
 
-safetytoggle() {
+function safetytoggle() {
 	## Safety nets - originally commented out to build good habits
 	## usage variable containing help/command usage
 	usagedoc='Usage: safetytoggle [option(s)]
@@ -1846,7 +1842,7 @@ safetytoggle() {
 	}
 }
 
-scg() {
+function scg() {
 	function TRAPINT () {
 	(( nopopd )) || popd >/dev/null 2>&1
 	trap - INT
@@ -1877,23 +1873,23 @@ scg() {
 	trap - INT
 }
 
-scrs() {
+function scrs() {
 	sudo parallel --will-cite systemctl ::: restart ::: "$@"
 	systemctl status --full --no-pager "$@"
 	echo
 }
 
-sd() {
+function sd() {
 	printf '%s' "$* $(fasd -ld | fzf +s --tac)" | \
 		perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'
 }
 
-sdbus() {
+function sdbus() {
 	[[ ! -z "$XDG_RUNTIME_DIR" ]] || export XDG_RUNTIME_DIR="/run/user/$UID"
 	[[ ! -z "$DBUS_SESSION_BUS_ADDRESS" ]] || export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
 }
 
-search() {
+function search() {
 	declare -A urls
 	urls[so]="https://stackoverflow.com/search?q="
 	urls[stack]="https://stackoverflow.com/search?q="
@@ -1927,7 +1923,7 @@ search() {
 		/usr/bin/chromium "$url" >/dev/null 2>&1
 	fi
 }
-set_prompt() {
+function set_prompt() {
 	Last_Command=$? # Must come first!
 	White='\[\e[1;37m\]'
 	Red='\[\e[0;31m\]'
@@ -1960,23 +1956,23 @@ set_prompt() {
 	PS1+="$Blue\\w \\\$$Reset "
 }
 
-setsched() {
+function setsched() {
 	if [[ -n "$1" ]]; then
 	printf "%s\n" "$1" | sudo tee /sys/block/sd*/queue/scheduler
 	fi
 	cat /sys/block/sd*/queue/scheduler
 }
 
-sf() {
+function sf() {
 	printf '%s' "$* $(fasd -lf | fzf +s --tac)" | \
 		perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'
 }
 
-sgm() {
+function sgm() {
 	 gm import -window ${1:-root} /tmp/$$.png && <<<"/tmp/$$.png" xclip -i -selection clipboard
 }
 
-shcurl() {
+function shcurl() {
 	if [[ "${#}" -lt 1 ]]; then
 		printf "\033[31m %s \n\033[0m" "Error: no arguments..."
 		return 1
@@ -1994,18 +1990,18 @@ shcurl() {
 	fi
 }
 
-showfingerprint() {
+function showfingerprint() {
 	openssl s_client -connect ${1?No IP specified!}:${2?No IP specified!} -showcerts 2>&1 | \
 		openssl x509 -sha1 -noout -fingerprint 2>&1 | \
 		sed -e ' s/^.*=//p; 1 s/://g; $ y/ABCDEF/abcdef/'
 }
 
-si() {
+function si() {
 	printf '%s' "$* $(fasd -l | fzf +s --tac)" | \
 		perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'
 }
 
-smaim() {
+function smaim() {
 	local comp id
 	comp=1
 	pidof compton >/dev/null && killall compton || comp=0
@@ -2018,7 +2014,7 @@ smaim() {
 	[[ "$comp" -ne 0 ]] && compton -cCGfF -b -i 0.85
 }
 
-snft() {
+function snft() {
 	if [[ -e "/tmp/nft" ]]; then
 		printf '%s\n' '/tmp/nft exists!'
 	else
@@ -2029,18 +2025,18 @@ snft() {
 	fi
 }
 
-so() {
+function so() {
 	 chromium "https://google.com/search?q=site:stackexchange.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-spice-kvm() {
+function spice-kvm() {
 	## Usage: spice-kvm <disk.img> <(cd.iso|-)> <#>[memory (MB)] <#>[number of CPUs] <(#|tmp)>[spice port or tmp for socket]
 	local -a args
 	args=("$1" "$1" "${@:3}")
 	[[ "$(file -Lb "${args[2]}")" == data ]] && \
 	args[2]="raw" || \
 	args[2]="qcow2,l2-cache-size=4M"
-	[[ -z "$2" || "$2" =~ '^(-|[Nn]|[Nn][Uu][Ll][Ll])$' ]] && \
+	[[ -z "$2" || "$2" =~ ^(-|[Nn]|[Nn][Uu][Ll][Ll])$ ]] && \
 	args+=("-boot" "order=d") || \
 	args+=("-cdrom" "$2")
 	[[ "${args[5]:-tmp}" =~ ^[0-9*]$ ]] && \
@@ -2103,14 +2099,14 @@ spice-kvm() {
 #                 # -net nic -net bridge,br=virbr0,smb=/mnt/shared -device intel-iommu -monitor stdio -monitor pty \
 # }
 
-sprintf() {
+function sprintf() {
 	local sep=$'\n'
 	[[ ! -z "$2" ]] && { local sep="$1"; shift; }
 	[[ -z "${1?Error: No arguments}" ]] && return 1
 	printf "%s${sep}" "$@"
 
 }
-sslpkeygen() {
+function sslpkeygen() {
 	echo -n '[input directory to store certificates:] ' ; read keydir
 			#([~.]|${HOME})/*[^/]+ ) echo 'using '"${keydir}"'/private.'  | sed -r 's@\/\/+@\/@g' ;;
 			#([~.]|${HOME}|[^/)* ) echo 'using '"${keydir}"'/private.' | sed -r 's@\/\/+@\/@g' ;;
@@ -2191,7 +2187,7 @@ sslpkeygen() {
 	popd
 }
 
-szexpac() {
+function szexpac() {
 	echo -n "$@" '[perform size-sorted search for:] '; read -r
 	expac -s "%-30n %m" | sort -hk 2 | awk '{printf "%s %.0f MiB\n", $1, $2/1024/1024}' | column -t | grep "$REPLY"
 	#case "$ans" in
@@ -2200,7 +2196,7 @@ szexpac() {
 	#esac
 }
 
-test256() {
+function test256() {
 	(
 	x=`tput op` y=`printf %76s`
 	for i in {0..256}; do
@@ -2210,12 +2206,12 @@ test256() {
 	)
 }
 
-tgv() {
+function tgv() {
 	[[ -z "$(pgrep -fx "gvim --servername GVIM")" ]] || gvim --servername GVIM
 	[[ -z "$1" ]] || gvim --servername GVIM --remote-tab-silent "${@}"
 }
 
-tohex() {
+function tohex() {
 	# for i in $(seq 0 255); do
 	#         tohex ${i}
 	# done
@@ -2247,7 +2243,7 @@ tohex() {
 	done
 }
 
-tpanning() {
+function tpanning() {
 	#xrandr -q | grep "eDP1" | grep "panning"
 	#xrandr --fb 4096x2560 --output eDP1 --mode 2160x1440 --panning 4096x2560+0+0/4096x2560+0+0/0/0/0/0
 	local vres
@@ -2260,7 +2256,7 @@ tpanning() {
 	#xrandr --fb 2160x1440 --output eDP1 --panning 2160x1440+0+0/2160x1440+0+0/0/0/0/0/
 }
 
-truecolor() {
+function truecolor() {
 	if [[ "$#" -eq 0 ]]; then
 		printf '%s\n' '\x1b[38;5;<R>;<G>;<B>m'
 		return 1
@@ -2269,8 +2265,8 @@ truecolor() {
 	hex="${*// }"
 	hex="${hex#\#}"
 	r=$(printf '0x%0.2s' "$hex")
-	g=$(printf '0x%0.2s' ${hex#??})
-	b=$(printf '0x%0.2s' ${hex#????})
+	g=$(printf '0x%0.2s' "${hex#?}")
+	b=$(printf '0x%0.2s' "${hex#????}")
 	# r="$( <<<$(( r & 0x99 [#16] )) | sed 's/16#/0x/' )"
 	# g="$( <<<$(( g & 0x99 [#16] )) | sed 's/16#/0x/' )"
 	# b="$( <<<$(( b & 0x99 [#16] )) | sed 's/16#/0x/')"
@@ -2311,11 +2307,11 @@ truecolor() {
 #         done
 # }
 
-tunssh() {
+function tunssh() {
 	 sshuttle -r "${1?Erro: no host specified.}"  "${2:-0.0.0.0/0}" -vv --dns
 }
 
-u0x0() {
+function u0x0() {
 	curl -H "User-Agent: Mozilla/5.0 \
 	(Macintosh; Intel Mac OS X 10_10_3) \
 	AppleWebKit/537.36 (KHTML, like Gecko) \
@@ -2341,7 +2337,7 @@ u0x0() {
 #         -bios "${8:-/usr/share/ovmf/x64/ovmf_x64.bin}"
 #         # -net nic -net bridge,br=virbr0,smb=/mnt/shared -device intel-iommu -monitor stdio -monitor pty
 # }
-urldecode() {
+function urldecode() {
 	<<<$* sed 's/%25/%/gi
 		s/%20/ /gi
 		s/%09/ /gi
@@ -2378,7 +2374,7 @@ urldecode() {
 		s/%09/	  /gi'
 }
 
-urlencode() {
+function urlencode() {
 	<<<$* sed 's/http:\/\//☃/g
 		s/https:\/\//⛇/g
 		s/\//∞/g
@@ -2420,13 +2416,13 @@ urlencode() {
 		s/∞/\//g'
 }
 
-uscrs() {
+function uscrs() {
 	parallel --will-cite systemctl --user ::: restart ::: "$@"
 	systemctl status --user --full --no-pager "$@"
 	echo
 }
 
-v() {
+function v() {
 	[[ -f "$*" ]] && file="$*"|| file="$(fasd -lf "$*" 2>&1 | fzf -1 -0 --no-sort +m)"
 	[[ -f "$file" ]] || file="$(fasd -lf 2>&1 | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 	[[ -n "$file" ]] && { vim --servername VIM "$file" || vim "$file"; } || return 130
@@ -2447,7 +2443,7 @@ v() {
 	# vim --servername VIM "${file[@]}" || vim "${file[@]}"
 }
 
-vbinit() {
+function vbinit() {
 	sudo modprobe vboxnetadp vboxnetflt vboxpci vboxdrv
 	sudo vboxreload
 	#VBoxManage hostonlyif create
@@ -2463,7 +2459,7 @@ vbinit() {
 #         fi
 # }
 
-vk() {
+function vk() {
 	local search="$1"
 	while [[ ! -z "$2" ]]; do shift && search="$search+$1"; done
 	local vkurl='http://vk.com/audios361427414?act=popular&q='"$search"
@@ -2471,7 +2467,7 @@ vk() {
 	open_command "$vkurl"
 }
 
-vkfix() {
+function vkfix() {
 	#amp; becomes & (ampersand)
 	#quot; becomes " (double quote)
 	##039; becomes ' (single quote)
@@ -2505,7 +2501,7 @@ vkfix() {
 	while read -r final; do eval "mv --verbose ${final}" 2> /dev/null; done
 }
 
-vkfix2() {
+function vkfix2() {
 	find . -maxdepth 1 -name "*.mp3" -print0 | while IFS= read -r -d '' first; do
 	printf '"%s" ' "${first}"; printf \"; printf "${first}" | sed  -n 's/\bem\([A-Za-z0-9\;\#]*\)em\b/\1/gp'; printf "\"\n"
 	done | \
@@ -2578,7 +2574,7 @@ vkfix2() {
 	done
 }
 
-wau() {
+function wau() {
 	[[ -z "$*" ]] && return 1
 	for i; do
 	case "$(type $i)" in
@@ -2591,11 +2587,11 @@ wau() {
 	} 2>/dev/null | less -CJRMXs
 }
 
-wi() {
+function wi() {
 	 chromium " https://en.wikipedia.org/w/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
-wordcloud() {
+function wordcloud() {
 	[[ -z "$*" ]] && return 1
 	local logf="${1?No log specified}"
 	local target="${2:-aot}"
@@ -2607,7 +2603,7 @@ wordcloud() {
 			ssh rarch chown http:http /srv/http/${target}-wordcloud.png
 }
 
-writecmd() {
+function writecmd() {
 	 perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'
 }
 
@@ -2629,7 +2625,7 @@ writecmd() {
 #                 # -net nic -net bridge,br=virbr0,smb=/mnt/shared -device intel-iommu -monitor stdio -monitor pty
 # }
 
-xfptpb() {
+function xfptpb() {
 	curl https://0x0.st/ \
 	--progress-bar -F"c=@${*}" | \
 	tee >(awk '/http/ {sub("url: ",""); print}' | \
@@ -2637,22 +2633,22 @@ xfptpb() {
 	xclip -i -selection clipboard)
 }
 
-xid2pid() {
+function xid2pid() {
 	[[ -z "$*" ]] && return 1
 	for i in "$@"; do
 	printf "id %s: %s\n" "$i" "$(xprop -id "$i" _NET_WM_PID | cut -d' ' -f3)"
 	done
 }
 
-xlog() {
+function xlog() {
 	 grep -i --color "$*" /var/log/Xorg.0.log
 }
 
-xo() {
+function xo() {
 	xsel -ob "$@" 2>/dev/null
 }
 
-xrec() {
+function xrec() {
 	local comp
 	comp=1
 	pidof compton >/dev/null && killall compton || comp=0
@@ -2665,18 +2661,18 @@ xrec() {
 	[[ "$comp" -ne 0 ]] && compton -b
 }
 
-xs() {
+function xs() {
 	 xsel "$@" 2>/dev/null
 }
 
-yay() {
+function yay() {
 	mpv --lavfi-complex="[aid1] asplit [ao], afifo, \
 	showcqt=fps=60:size=2160x1280:count=2:bar_g=2:sono_g=4:sono_v=9:text=1:tc=0.33:tlength='st(0,0.17); \
 	384*tc / (384 / ld(0) + tc*f /(1-ld(0))) + 384*tc / (tc*f / ld(0) + 384 /(1-ld(0)))', \
 	format=yuv420p [vo]" "$@"
 }
 
-ytconv() {
+function ytconv() {
 	if [[ "$#" -lt 2 ]]; then
 		printf "\n %s \n" 'Usage: ytconv <image> <audio> <extension> (Extension is optional: defaults to .mkv)'
 		return 1
@@ -2692,7 +2688,7 @@ ytconv() {
 	fi
 }
 
-ytdl() {
+function ytdl() {
 	if [[ "$#" -eq 0 ]]; then
 	youtube-dl --help | less -CJRMXs
 	return 1
@@ -2700,7 +2696,7 @@ ytdl() {
 	youtube-dl --get-url "$@" | paste -sd' ' | perl -pe 'chomp if eof' | tee >(xsel -ib)
 }
 
-z() {
+function z() {
 	if [[ -z "$*" ]]; then
 		cd "$(fasd -ld 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
 	else
@@ -2712,7 +2708,7 @@ z() {
 	fi
 }
 
-zhelp() {
+function zhelp() {
 	[[ -z "$*" ]] && return 1
 	for i in "$@"; do
 	[[ -r "${ZSH:-/usr/share/oh-my-zsh}/plugins/${i}/" ]] && \
@@ -2757,7 +2753,7 @@ zhelp() {
 #         open_command "$url"
 # }
 
-zwc() {
+function zwc() {
 	( cd "${ZDOTDIR:-$HOME/.zsh.d}/zfunctions" && \
 	rm -fv ../zfuncs.zwc && zcompile -MUz ../zfuncs.zwc * || \
 	return 1 )
@@ -2766,6 +2762,6 @@ zwc() {
 	return 1 )
 }
 
-zz() {
+function zz() {
 	 cd "$(fasd -Rld 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")"
 }
