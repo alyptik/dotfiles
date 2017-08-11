@@ -7,7 +7,7 @@
 function zle-fman {
 	local -a cmdline
 	local cmd glob section
-	cmdline=("${(z)BUFFER}")
+	cmdline=("${(z)=BUFFER}")
 	if [[ -z "$BUFFER" ]]; then
 		LBUFFER="fman zshall "
 		return
@@ -18,7 +18,7 @@ function zle-fman {
 		shift cmdline
 		cmd="${cmdline[1]}" ;;
 	(*)
-		# Brute force search because 'man -w'
+		# Brute force search because “man -w”
 		# breaks when stdin isn't a terminal
 		cmd="${cmdline[1]}"
 		for i in ${^manpath}/man?/${(q)cmd}.*; do
@@ -26,13 +26,13 @@ function zle-fman {
 		done ;;
 	esac
 	[[ "$cmd" == zsh ]] && cmd="zshall"
-	# Setting 'section="zshall"' is a bit misleading but
-	# this approach removes the need for 'if' nesting
+	# Setting “section=zshall” is a bit misleading but
+	# this approach removes the need for “if” nesting
 	(( ${#cmdline[@]} > 1 )) && \
 		BUFFER="fman ${section:-zshall} $cmd '${cmdline[@]:1}'" || \
 		BUFFER="fman ${section:-zshall} '$cmd'"
 	zle redisplay
-	zle accept-line
+	# zle accept-line
 }
 
 function zle-zaw-help {
@@ -44,7 +44,7 @@ function zle-zaw-help {
 function zle-less {
 	local -a args
 	[[ -z "$BUFFER" ]] && args=("${(z)=history[$((HISTCMD-1))]}") || args=("${(z)=BUFFER}")
-	# eval eeded to resovle static named directories
+	# eval eeded to resolve static named directories
 	until ( [[ ! "${args[1]}" =~ ^..?$ ]] && eval "[[ -e ${args[1]} ]]" ); do
 		# Prevent infinite loop
 		((${#args} > 1)) || return
@@ -57,7 +57,7 @@ function zle-less {
 function zle-vim {
 	local -a args
 	[[ -z "$BUFFER" ]] && args=("${(z)=history[$((HISTCMD-1))]}") || args=("${(z)=BUFFER}")
-	# eval eeded to resovle static named directories
+	# eval eeded to resolve static named directories
 	until ( [[ ! "${args[1]}" =~ ^..?$ ]] && eval "[[ -e ${args[1]} ]]" ); do
 		# Prevent infinite loop
 		((${#args} > 1)) || return
