@@ -1,3 +1,3 @@
- mkdir "/tmp/aur" &>/dev/null
- cower -t "/tmp/aur" -dd "$@"
- cd "/tmp/aur/$1" || cd "/tmp/aur"
+mkdir -p /tmp/aur &>/dev/null
+cower -t /tmp/aur -dd "$@"
+cd "/tmp/aur/$1" &>/dev/null || cd /tmp/aur

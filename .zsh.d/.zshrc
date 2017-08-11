@@ -20,7 +20,7 @@ exec 2<>"$ZSH_ERROR"
 unsetopt alwaystoend autolist automenu caseglob casematch checkjobs \
 	correctall extendedhistory flowcontrol histfcntllock globalexport \
 	globcomplete globsubst histignorespace histsavebycopy \
-	histverify nomatch printexitvalue sharehistory verbose
+	histverify multios nomatch printexitvalue sharehistory verbose
 setopt appendhistory autocd autopushd bareglobqual beep casematch cbases \
 	chaselinks clobber completeinword correct cprecedences equals \
 	extendedglob globassign globdots globstarshort histexpiredupsfirst \
@@ -288,10 +288,11 @@ if type zplug >/dev/null 2>&1; then
 	zplug "zsh-users/zsh-syntax-highlighting"
 	zplug "zsh-users/zsh-autosuggestions"
 	zplug "oknowton/zsh-dwim"
+	zplug "aeruder/zirc"
 	if ! zplug check --verbose; then
-		printf "Install? [y/N]: "
-		if read -q; then echo; zplug install; fi
-	fi; echo
+		print -- "Install? [y/N]: "
+		if read -sq; then zplug install; fi
+	fi
 	zplug load --verbose
 fi
 
@@ -610,13 +611,13 @@ fi
 
 # more uglyness soz
 #
-# custom compdefs
+# custom compdefs with generated and hardcoded arrays
 () {
-	local -a defargcmds=( as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl seq shred sox split stat st stjerm strings swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel )
-	local -a asmcmds=( ${(o)$(cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split / /, lc $F[0] =~ y|/| |r; END{ print join " ", sort @cmds; };' 2>/dev/null)} )
-	local -a seckeys=( ${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/} )
-	local -a pubkeys=( ${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/} )
-	local -a pkgs=( ${(of@)$(pacman -Qq 2>/dev/null)} )
+	local -a defargcmds=(as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pacconf pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl seq shred sox split stat st stjerm strings swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel youtube-dl)
+	local -a asmcmds=(${(o)$({ cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split(/ /, lc $F[0] =~ y|/| |r); END{ print join " ", @cmds; };'; } 2>/dev/null)})
+	local -a seckeys=(${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
+	local -a pubkeys=(${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
+	local -a pkgs=(${(of@)$(pacman -Qq 2>/dev/null)})
 
 	for i in "${defargcmds[@]}"; do compdef _gnu_generic "$i"; done
 

@@ -181,10 +181,10 @@ class Cobe(callbacks.Plugin):
             # If first word is nick, switch with the callers nick.
             if self.magicnick in response:
                 response = response.replace(self.magicnick,
-                                            re.sub(r'(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                            re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
             if self.magicnick.lower() in response:
                 response = response.replace(self.magicnick.lower(),
-                                            re.sub(r'(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                            re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
 
 
         cobeBrain.learn(response) # Let's have the bot learn the wacky things it says
@@ -385,13 +385,13 @@ class Cobe(callbacks.Plugin):
                             # If first word is nick, switch with the callers nick.
                             if self.magicnick in response:
                                 response = response.replace(self.magicnick,
-                                                            re.sub(r'(.)', r'\1​',
-                                                                   random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                            re.sub(r'^(.)', r'\1​',
+                                                                   random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
                             if self.magicnick.lower() in response:
                                 response = response.replace(self.magicnick.lower(),
-                                                            re.sub(r'(.)',
+                                                            re.sub(r'^(.)',
                                                                    r'\1​',
-                                                                   random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                                   random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
 
                     else:
 
@@ -415,12 +415,12 @@ class Cobe(callbacks.Plugin):
                         # If first word is nick, switch with the callers nick.
                         if self.magicnick in response:
                             response = response.replace(self.magicnick,
-                                                        re.sub(r'(.)', r'\1​',
-                                                               random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                        re.sub(r'^(.)', r'\1​',
+                                                               random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
                         if self.magicnick.lower() in response:
                             response = response.replace(self.magicnick.lower(),
-                                                        re.sub(r'(.)', r'\1​',
-                                                               random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                        re.sub(r'^(.)', r'\1​',
+                                                               random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
 
                     # lowercase first letter of the string.
                     response = response[0].lower() + response[1:]
@@ -442,12 +442,12 @@ class Cobe(callbacks.Plugin):
                 # If first word is nick, switch with the callers nick.
                 if self.magicnick in response:
                     response = response.replace(self.magicnick,
-                                                re.sub(r'(.)', r'\1​',
-                                                       random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                re.sub(r'^(.)', r'\1​',
+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
                 if self.magicnick.lower() in response:
                     response = response.replace(self.magicnick.lower(),
-                                                re.sub(r'(.)', r'\1​',
-                                                       random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                re.sub(r'^(.)', r'\1​',
+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
 
                 # lowercase first letter of the string.
                 response = response[0].lower() + response[1:]
@@ -474,12 +474,12 @@ class Cobe(callbacks.Plugin):
                 # If first word is nick, switch with the callers nick.
                 if self.magicnick in response:
                     response = response.replace(self.magicnick,
-                                                re.sub(r'(.)', r'\1​',
-                                                       random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                re.sub(r'^(.)', r'\1​',
+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
                 if self.magicnick.lower() in response:
                     response = response.replace(self.magicnick.lower(),
-                                                re.sub(r'(.)', r'\1​',
-                                                       random.choice(list(irc.state.channels[msg.args[0]].users))))
+                                                re.sub(r'^(.)', r'\1​',
+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
                 cobeBrain.learn(text)
 
             else:

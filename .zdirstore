@@ -1,1 +1,1 @@
-if [ -d /run/media/alyptik/vmimages ]; then pushd -q /run/media/alyptik/vmimages; fi
+if [ -d ~ ]; then pushd -q ~; fi

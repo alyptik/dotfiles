@@ -1,20 +1,20 @@
 [[ -z "$1" ]] && return 1
-[[ ! -d "/store/config/code/projects/website-pelican/content" ]] && return 1
+[[ ! -d "/store/code/projects/website-pelican/content" ]] && return 1
 
 printf '%s' 'Title: '"$1"'
 Date: '"$(date +'%Y-%m-%d %H:%M')"'
 Category: '"${2:-Misc}"'
 
-' >> "/store/config/code/projects/website-pelican/content/${1}.md"
+' >> "/store/code/projects/website-pelican/content/${1}.md"
 
-vim "/store/config/code/projects/website-pelican/content/${1}.md"
+vim "/store/code/projects/website-pelican/content/${1}.md"
 
-if [[ ! -s "/store/config/code/projects/website-pelican/content/${1}.md" ]]; then
-	rm -v "/store/config/code/projects/website-pelican/content/${1}.md"
+if [[ ! -s "/store/code/projects/website-pelican/content/${1}.md" ]]; then
+	rm -v "/store/code/projects/website-pelican/content/${1}.md"
 	return 1
 fi
 
 (
-	cd /store/config/code/projects/website-pelican || return 1
+	cd /store/code/projects/website-pelican || return 1
 	make ssh_upload
 )

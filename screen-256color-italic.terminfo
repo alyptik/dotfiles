@@ -9,11 +9,12 @@
 #   export TERM=screen-256color-italic
 #
 # am, bce, hs, km, mir, msgr, npc, xenl,
+# am, bce, hs, km, mir, msgr, npc, xenl,
 # ich=\E[%p1%d@, il=\E[%p1%dL, il1=\E[L, ind=^J, is2=\E)0,
 # rs2=\Ec\E[?1000l\E[?25h, sc=\E7,
 
 screen-256color-italic|screen-256color with BCE and italics support,
-	am, bce, hs, km, mir, msgr, npc, xenl,
+	am, km, mir, msgr, xenl,
         colors#256, cols#80, it#8, lines#24, pairs#32767,
         acsc=++\,\,--..00``aaffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
         bel=^G, blink=\E[5m, bold=\E[1m, cbt=\E[Z, civis=\E[?25l,

@@ -1,12 +1,16 @@
-local clonedir
+local -a clonedir
+
 [[ -z "$*" ]] && return 1
 cd "${HOME}/git" || return 2
 
 for i in "$@"; do
-	git clone --recurse-submodules "$i"
+	git clone --recurse-submodules "$i" || continue
+	# clonedir+=("${i:r:t}")
+	i="${i##*/}"
+	clonedir+=("${i%%.git}")
 done
 
-for i in "$@"; do
-	clonedir="${${i##*/}%%.git}"
-	cd "$clonedir" &>/dev/null && break
+while :; do
+	cd "${clonedir[1]}" &>/dev/null && break
+	shift clonedir || return 1
 done
