@@ -75,13 +75,13 @@ Xft.rgba: rgb
 ! st.font:		SourceCodePro:style=Regular:pixelsize=28:antialias=true:hinting=true
 ! st.font:		Fira Code:style=Retina:pixelsize=28:antialias=true:hinting=true
 ! st.font:		SauceCodePro Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true
-st.font:		Fura Code Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true
-! st.font:		Fura Code Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true,\
-!                                 Noto Emoji:style=Regular:pixelsize=28:antialias=true:hinting=true,\
-!                                 Symbola:style=Regular:pixelsize=28:antialias=true:hinting=true,\
-!                                 Unifont:style=Medium:pixelsize=28:antialias=true:hinting=true,\
-!                                 FreeSerif:style=Regular:pixelsize=28:antialias=true:hinting=true,\
-!                                 WenQuanYi Micro Hei Mono:style=Light:pixelsize=28:antialias=true:hinting=true
+st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true
+! st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true,\
+!                                 Noto Emoji:style=Regular:pixelsize=30:antialias=true:hinting=true,\
+!                                 Symbola:style=Regular:pixelsize=30:antialias=true:hinting=true,\
+!                                 Unifont:style=Medium:pixelsize=30:antialias=true:hinting=true,\
+!                                 FreeSerif:style=Regular:pixelsize=30:antialias=true:hinting=true,\
+!                                 WenQuanYi Micro Hei Mono:style=Light:pixelsize=30:antialias=true:hinting=true
 
 st.bold_font:			1
 st.italic_font:			1
@@ -96,12 +96,12 @@ st.chscale:			1.0
 ! URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 ! URxvt*font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=24:antialias=true:hinting=true,\
 ! URxvt*font:		xft:FuraCode NF:style=Light:pixelsize=24:antialias=true:hinting=true,\
-URxvt*font:		xft:FuraCode Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true,\
-				xft:Noto Emoji:style=Regular:pixelsize=28:antialias=true:hinting=true,\
-				xft:Symbola:style=Regular:pixelsize=28:antialias=true:hinting=true,\
-				xft:Unifont:style=Medium:pixelsize=28:antialias=true:hinting=true,\
-				xft:FreeSerif:style=Regular:pixelsize=28:antialias=true:hinting=true,\
-				xft:WenQuanYi Micro Hei Mono:style=Light:pixelsize=28:antialias=true:hinting=true
+URxvt*font:		xft:FuraCode Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true,\
+				xft:Noto Emoji:style=Regular:pixelsize=30:antialias=true:hinting=true,\
+				xft:Symbola:style=Regular:pixelsize=30:antialias=true:hinting=true,\
+				xft:Unifont:style=Medium:pixelsize=30:antialias=true:hinting=true,\
+				xft:FreeSerif:style=Regular:pixelsize=30:antialias=true:hinting=true,\
+				xft:WenQuanYi Micro Hei Mono:style=Light:pixelsize=30:antialias=true:hinting=true
 
 URxvt*letterSpace:		-1
 ! URxvt*letterSpace:		1

@@ -1,0 +1,129 @@
+{
+  "_from": "file:/tmp/d-117711-21576-wa87li.rb6bj/package.tgz",
+  "_id": "busy-signal@1.4.3",
+  "_inBundle": false,
+  "_integrity": "sha1-a683o4v5Ro2b/UkYFxAqcLUOBfM=",
+  "_location": "/busy-signal",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "file",
+    "where": "/tmp/apm-install-dir-117711-21576-ihwg5t.j847",
+    "raw": "/tmp/d-117711-21576-wa87li.rb6bj/package.tgz",
+    "rawSpec": "/tmp/d-117711-21576-wa87li.rb6bj/package.tgz",
+    "saveSpec": "file:/tmp/d-117711-21576-wa87li.rb6bj/package.tgz",
+    "fetchSpec": "/tmp/d-117711-21576-wa87li.rb6bj/package.tgz"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "/tmp/d-117711-21576-wa87li.rb6bj/package.tgz",
+  "_spec": "/tmp/d-117711-21576-wa87li.rb6bj/package.tgz",
+  "_where": "/tmp/apm-install-dir-117711-21576-ihwg5t.j847",
+  "bugs": {
+    "url": "https://github.com/steelbrain/busy-signal/issues"
+  },
+  "bundleDependencies": false,
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
+  },
+  "dependencies": {
+    "disposify": "^1.0.0",
+    "escape-html": "^1.0.3",
+    "ms": "^2.0.0"
+  },
+  "deprecated": false,
+  "description": "A package that provides an easy to use API to show your package is performing a task",
+  "devDependencies": {
+    "eslint-config-steelbrain": "^3.0.1",
+    "flow-bin": "^0.47.0",
+    "jasmine-fix": "^1.0.1"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/steelbrain/busy-signal#readme",
+  "keywords": [
+    "busy",
+    "signal"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "name": "busy-signal",
+  "providedServices": {
+    "busy-signal": {
+      "versions": {
+        "1.0.0": "providerRegistry"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steelbrain/busy-signal.git"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "apm test"
+  },
+  "version": "1.4.3",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "disposify",
+        "version": "1.0.0",
+        "path": "node_modules/disposify/lib/index.js"
+      },
+      {
+        "name": "escape-html",
+        "version": "1.0.3",
+        "path": "node_modules/escape-html/index.js"
+      },
+      {
+        "name": "ms",
+        "version": "2.0.0",
+        "path": "node_modules/ms/index.js"
+      }
+    ],
+    "extensions": {
+      ".json": [
+        ".eslintrc.json",
+        "node_modules/disposify/package.json",
+        "node_modules/escape-html/package.json",
+        "node_modules/ms/package.json",
+        "package-lock.json",
+        "package.json"
+      ],
+      ".js": [
+        "lib/element.js",
+        "lib/helpers.js",
+        "lib/index.js",
+        "lib/main.js",
+        "lib/provider.js",
+        "lib/registry.js",
+        "lib/types.js",
+        "node_modules/disposify/lib/index.js",
+        "node_modules/escape-html/index.js",
+        "node_modules/ms/index.js"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "",
+          "decls",
+          "lib",
+          "spec"
+        ],
+        "dependencies": {
+          "disposify": "^1.0.0",
+          "escape-html": "^1.0.3",
+          "ms": "^2.0.0"
+        }
+      }
+    ]
+  }
+}
