@@ -1,0 +1,58 @@
+{
+  "_from": "file:/tmp/d-117711-23438-k82sop.o1ohe/package.tgz",
+  "_id": "camel-case-mode@0.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-Q8j4LJLWWYia61O/43iBm1o7LP0=",
+  "_location": "/camel-case-mode",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "file",
+    "where": "/tmp/apm-install-dir-117711-23438-j41unb.t3n2k",
+    "raw": "/tmp/d-117711-23438-k82sop.o1ohe/package.tgz",
+    "rawSpec": "/tmp/d-117711-23438-k82sop.o1ohe/package.tgz",
+    "saveSpec": "file:/tmp/d-117711-23438-k82sop.o1ohe/package.tgz",
+    "fetchSpec": "/tmp/d-117711-23438-k82sop.o1ohe/package.tgz"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "/tmp/d-117711-23438-k82sop.o1ohe/package.tgz",
+  "_spec": "/tmp/d-117711-23438-k82sop.o1ohe/package.tgz",
+  "_where": "/tmp/apm-install-dir-117711-23438-j41unb.t3n2k",
+  "activationCommands": {
+    "atom-workspace": "camel-case-mode:toggle"
+  },
+  "bugs": {
+    "url": "https://github.com/chee/atom-camel-case-mode/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "type camel case words with space bar like normal word person",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/chee/atom-camel-case-mode#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./lib/camel-case-mode",
+  "name": "camel-case-mode",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chee/atom-camel-case-mode.git"
+  },
+  "version": "0.0.1",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".js": [
+        "lib/camel-case-mode.js"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

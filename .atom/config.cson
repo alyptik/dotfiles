@@ -23,6 +23,7 @@
     ]
   editor:
     fontFamily: "FuraCode Nerd Font"
+    fontSize: 11
     showIndentGuide: true
     softTabs: false
     softWrap: true
@@ -32,3 +33,6 @@
   "exception-reporting":
     userId: "4ced45b7-e570-447a-a28b-59dc65d1692b"
   "gruvbox-plus-syntax": {}
+  "language-archlinux":
+    checkPKGBUILDOnSave: true
+    updateCheckSumsOnSave: true
