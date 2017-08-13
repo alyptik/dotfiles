@@ -531,6 +531,7 @@ au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
 au BufNewFile,BufRead */.zsh.d/zfunctions/* setf zsh
 au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
 au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
+au BufNewFile,BufRead makepkg.conf* set filetype=sh
 
 " Fallback
 "au BufNewFile,BufRead * setf erlang
