@@ -2,7 +2,7 @@ local syn file
 
 if (( $# > 1 )); then syn="$1"; shift; fi
 
-if [[ ! -t 0 || "$*" =~ - ]]; then
+if [[ ! -t 0 || "$1" == - ]]; then
 	file="/dev/stdin"
 else
 	file="$1"
