@@ -5,15 +5,18 @@
 # ZLE shell function section
 
 function zle-fman {
-	local -a cmdline
+	local -a cmdline mansects
 	local cmd glob section
+	[[ -z "$MANSECT" ]] && \
+		mansects=(${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//}) || \
+		mansects=(${(s|:|)MANSECT[@]})
 	cmdline=("${(z)=BUFFER}")
 	if [[ -z "$BUFFER" ]]; then
 		LBUFFER="fman zshall "
 		return
 	fi
 	case "${cmdline[1]}" in
-	([0-9lnpx]*)
+	(${~${(j:|:)mansects[@]}})
 		section="${cmdline[1]}"
 		shift cmdline
 		cmd="${cmdline[1]}" ;;
@@ -21,7 +24,7 @@ function zle-fman {
 		# Brute force search because “man -w”
 		# breaks when stdin isn't a terminal
 		cmd="${cmdline[1]}"
-		for i in ${^manpath}/man?/${(q)cmd}.*; do
+		for i in ${^manpath}/man*/${(q)cmd}.*(N); do
 			test -f "$i" && section="${${i%/*}##*/man}" && break
 		done ;;
 	esac
