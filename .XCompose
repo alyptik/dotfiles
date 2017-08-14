@@ -2,11 +2,12 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 
 ## start alyptik
 
+<Multi_key> <p> <e> <n>			: "🍆" U1F346 # EGGPLANT
 <Multi_key> <h> <o> <t>			: "🔥" U1F525 # FIRE
 <Multi_key> <k> <t> <r> <e> <e>		: "🐨" UFf428 # KOALA
 <Multi_key> <o> <c> <t> <o>		: "🐙" U1F419 # OCTOPUS
 <Multi_key> <s> <a> <x>			: "🎷" U1F3b7 # SAX
-<Multi_key> <h> <h> <e> <y> <e> <s>	: "❤.❤" # HEART EYES
+<Multi_key> <h> <h> <e> <y> <e> <s>	: "❤  υ ❤" # HEART EYES
 <Multi_key> <h> <e> <y> <e> <s>		: "😍" U1F60D # HEART EYES SMILEY
 <Multi_key> <p> <s> <u> <b>		: "⊂" U2282 # PROPER SUBSET
 <Multi_key> <s> <u> <b>			: "⊆" U2286 # SUBSET
@@ -473,3 +474,5 @@ include "%L"
 <Multi_key> <g> <z>    : "ζ"   U03B6    # GREEK SMALL LETTER ZETA
 
 ## End phillid
+
+# vi:ft=xkb:
