@@ -1,5 +1,5 @@
-set disassembly intel
-source /home/alyptik/.gdbinit-gef.py
+# set disassembly intel
+# source /home/alyptik/.gdbinit-gef.py
 
 define locals-up
 	set $n    = ($arg0)

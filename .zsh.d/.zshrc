@@ -27,7 +27,7 @@ setopt appendhistory autocd autopushd bareglobqual beep casematch cbases \
 	histignorealldups histignoredups histlexwords histreduceblanks \
 	hup incappendhistory interactivecomments kshglob kshoptionprint \
 	listambiguous longlistjobs magicequalsubst octalzeroes \
-	markdirs menucomplete monitor multibyte notify pipefail \
+	markdirs menucomplete monitor multibyte notify pathdirs pipefail \
 	promptsubst pushdignoredups pushdminus pushdtohome rematchpcre
 
 # Emacs 19.29 or thereabouts stopped using a terminal type of "emacs" in

@@ -157,3 +157,19 @@ Host alyp.tk
     User http
     CheckHostIP yes
     IdentityFile ~/.ssh/id_gpg
+
+Host deb
+    HostName 162.243.141.90
+    Port 22
+    User root
+    CheckHostIP no
+    IdentityFile ~/.ssh/id_gpg
+
+Host bsd
+    HostName 192.241.218.176
+    Port 22
+    User root
+    CheckHostIP no
+    IdentityFile ~/.ssh/id_gpg
+
+# vi:ft=sshconfig:
