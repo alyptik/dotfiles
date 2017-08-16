@@ -707,8 +707,8 @@ WORDCHARS=
 # WORDCHARS='_-*~'
 
 # Completion tweaks
-zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z)${${(f)"$(<${HOME}/.ssh/known_hosts)"}%%\ *}%%,*}"
-# zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z)${${${(f)"$(<${HOME}/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*}"
+zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z@)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%\ *}%%,*}"
+# zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z@)${${${(f@)$(<${HOME}/.ssh/known_hosts)}:#[0-9]*}%%\ *}%%,*}"
 zstyle ':acceptline'			nocompwarn true
 # allow one error for every two characters typed in approximate completer
 zstyle ':completion:*:approximate:'	max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'

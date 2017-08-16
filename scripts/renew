@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+trap '{ sudo systemctl restart nginx; trap -; kill -INT $$; }' INT
+trap '{ sudo systemctl restart nginx; trap -; }' ERR EXIT
+
+# subdomains
+prefixes=(www mail webmail cube stream)
+# root hosts
+hosts=(alyp.tk ohfu.tk fsckingfu.tk hewillnotdivide.tk youlosethega.me)
+# add the primary domains
+domains=($hosts)
+# append the generated domain list
+domains+=(${^prefixes}.${^hosts})
+
+sudo systemctl stop nginx
+sudo certbot certonly --standalone -d "${(j:,:)domains}"
