@@ -1,0 +1,9 @@
+[build]
+board-model = mega
+
+[upload]
+board-model = mega
+serial-port = /dev/ttyACM1
+
+[serial]
+serial-port = /dev/ttyACM1

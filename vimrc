@@ -24,13 +24,13 @@ elseif (!has("nvim") && empty(glob('~/.vim/autoload/plug.vim')))
 endif
 
 function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if (a:info.status== 'installed' || a:info.force)
-	  silent !./install.py
-  endif
+	" info is a dictionary with 3 fields
+	" - name:   name of the plugin
+	" - status: 'installed', 'updated', or 'unchanged'
+	" - force:  set on PlugInstall! or PlugUpdate!
+	if (a:info.status== 'installed' || a:info.force)
+		silent !./install.py
+	endif
 endfunction
 
 if has("nvim") | let g:plugdir='~/.config/nvim/plugged' | else | let g:plugdir='~/.vim/plugged' | endif
@@ -45,6 +45,9 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'sudar/vim-arduino-syntax'
+	" Plug 'jplaut/vim-arduino-ino'
+	Plug 'stevearc/vim-arduino'
 	Plug 'eagletmt/ghcmod-vim'
 	Plug 'eagletmt/neco-ghc'
 	" Plug 'lervag/vimtex'
@@ -213,7 +216,8 @@ highlight ColorColumn guibg=#282828
 highlight SpecialKey guifg=#282828
 set shell=/bin/zsh
 set background=dark
-set keywordprg=man\ -s
+" set keywordprg=man\ -s
+set keywordprg=man\ -Pmost
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
@@ -279,13 +283,13 @@ let &showbreak="        "
 
 " filetype marks
 augroup VIMRC
-  autocmd!
-  autocmd BufLeave *.c    normal! mC
-  autocmd BufLeave *.h    normal! mH
-  " autocmd BufLeave *.css  normal! mC
-  " autocmd BufLeave *.html normal! mH
-  autocmd BufLeave *.js   normal! mJ
-  autocmd BufLeave *.php  normal! mP
+	autocmd!
+	autocmd BufLeave *.c    normal! mC
+	autocmd BufLeave *.h    normal! mH
+	" autocmd BufLeave *.css  normal! mC
+	" autocmd BufLeave *.html normal! mH
+	autocmd BufLeave *.js   normal! mJ
+	autocmd BufLeave *.php  normal! mP
 augroup END
 
 " mark-colors mark-highlight-color
@@ -501,6 +505,8 @@ let g:ctrlp_user_command=['.git', 'cd %s && git ls-files -co --exclude-standard'
 au QuickFixCmdPost *grep* cwindow
 
 "formal: au BufNewFile,BufRead * setf {filetype}
+au BufNewFile,BufRead *.h set filetype=c
+au BufNewFile,BufRead *.c set filetype=c
 au BufNewFile,BufRead *.jq setf javascript
 au BufNewFile,BufRead *tmux.conf set filetype=tmux
 au BufNewFile,BufRead *nanorc setf nanorc
@@ -513,9 +519,7 @@ au BufNewFile,BufRead *toxic.conf* set filetype=cfg
 "au BufNewFile,BufRead *conf setf conf
 au BufNewFile,BufRead db.* set filetype=bindzone
 au BufNewFile,BufRead *grub* set filetype=grub
-au BufNewFile,BufRead *.c\(c\|pp\) set filetype=cpp
-au BufNewFile,BufRead *.h set filetype=c
-au BufNewFile,BufRead *.c set filetype=c
+au BufNewFile,BufRead *.\(cc\|cpp\) set filetype=cpp
 au BufNewFile,BufRead proftpd.\(con\|conf\) set filetype=cterm
 au BufNewFile,BufRead i3.conf set filetype=i3
 au BufNewFile,BufRead *.md set filetype=markdown
@@ -533,6 +537,8 @@ au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
 au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
 au BufNewFile,BufRead makepkg.conf* set filetype=sh
 au BufNewFile,BufRead *.conf* setf cfg
+au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
+
 
 " Fallback
 "au BufNewFile,BufRead * setf erlang
@@ -581,15 +587,15 @@ au FileType html let b:mdnquery_topics= ['css', 'html']
 
 let g:CtrlSpaceSearchTiming=500
 if executable('ag')
-    let g:CtrlSpaceGlobCommand='ag -l --nocolor -g ""'
+	let g:CtrlSpaceGlobCommand='ag -l --nocolor -g ""'
 endif
 
 " This is the default extra key bindings
 let g:fzf_command_prefix='Fzf'
 let g:fzf_action={
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+	\ 'ctrl-t': 'tab split',
+	\ 'ctrl-x': 'split',
+	\ 'ctrl-v': 'vsplit' }
 " Default fzf layout
 " - down / up / left / right
 let g:fzf_layout={ 'down': '~40%' }
@@ -652,11 +658,11 @@ inoremap <expr> <C-x><C-s> fzf#complete({
 	\ 'left':    20
 	\ })
 function! s:fzf_statusline()
-  " Override statusline as you like
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+	" Override statusline as you like
+	highlight fzf1 ctermfg=161 ctermbg=251
+	highlight fzf2 ctermfg=23 ctermbg=251
+	highlight fzf3 ctermfg=237 ctermbg=251
+	setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 au! User FzfStatusLine call <SID>fzf_statusline()
 
@@ -745,23 +751,23 @@ let g:NERDTreeIndicatorMapCustom={
 
 function! Hashbang(portable, permission, RemExt)
 let shells={
-        \    'awk': "awk",
-        \     'sh': "bash",
-        \     'hs': "runhaskell",
-        \     'jl': "julia",
-        \    'lua': "lua",
-        \    'mak': "make",
-        \     'js': "node",
-        \      'm': "octave",
-        \     'pl': "perl",
-        \    'php': "php",
-        \     'py': "python",
-        \      'r': "Rscript",
-        \     'rb': "ruby",
-        \  'scala': "scala",
-        \    'tcl': "tclsh",
-        \     'tk': "wish"
-        \ }
+	\    'awk': "awk",
+	\     'sh': "bash",
+	\     'hs': "runhaskell",
+	\     'jl': "julia",
+	\    'lua': "lua",
+	\    'mak': "make",
+	\     'js': "node",
+	\      'm': "octave",
+	\     'pl': "perl",
+	\    'php': "php",
+	\     'py': "python",
+	\      'r': "Rscript",
+	\     'rb': "ruby",
+	\  'scala': "scala",
+	\    'tcl': "tclsh",
+	\     'tk': "wish"
+	\ }
 
 let extension=expand("%:e")
 if has_key(shells,extension)
@@ -788,57 +794,57 @@ endfunction
 autocmd! BufNewFile *.* call Hashbang(0,1,1)
 
 function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
+	if line("'\"") <= line("$")
+		normal! g`"
+		return 1
+	endif
 endfunction
 if has("folding")
-  function! UnfoldCur()
-    if !&foldenable
-      return
-    endif
-    let cl=line(".")
-    if cl <= 1
-      return
-    endif
-    let cf=foldlevel(cl)
-    let uf=foldlevel(cl - 1)
-    let min=(cf > uf ? uf : cf)
-    if min
-      execute "normal!" min . "zo"
-      return 1
-    endif
-  endfunction
+	function! UnfoldCur()
+		if !&foldenable
+			return
+		endif
+		let cl=line(".")
+		if cl <= 1
+			return
+		endif
+		let cf=foldlevel(cl)
+		let uf=foldlevel(cl - 1)
+		let min=(cf > uf ? uf : cf)
+		if min
+			execute "normal!" min . "zo"
+			return 1
+		endif
+	endfunction
 endif
 augroup resCur
-  autocmd!
-  if has("folding")
-    au VimEnter * if ResCur() | call UnfoldCur() | endif
-    au BufWinEnter * if ResCur() | call UnfoldCur() | endif
-  else
+	autocmd!
+	if has("folding")
+		au VimEnter * if ResCur() | call UnfoldCur() | endif
+		au BufWinEnter * if ResCur() | call UnfoldCur() | endif
+	else
 "  au VimEnter * silent loadview
-  au VimEnter * loadview
+	au VimEnter * loadview
 "  au BufWinEnter * silent loadview
-  au BufWinEnter * loadview
-  au BufWinEnter * call ResCur()
+	au BufWinEnter * loadview
+	au BufWinEnter * call ResCur()
 "  au BufReadPost * call setpos(".", getpos("'\""))
-  au BufWinLeave * mkview
-  endif
-  au BufWinEnter * silent! 0,$foldo!
-  au VimEnter * silent! 0,$foldo!
+	au BufWinLeave * mkview
+	endif
+	au BufWinEnter * silent! 0,$foldo!
+	au VimEnter * silent! 0,$foldo!
 augroup END
 
 " vim -b : edit binary using xxd-format!
 augroup Binary
-  au!
-  au BufReadPre  *.bin let &bin=1
-  au BufReadPost *.bin if &bin | %!xxd
-  au BufReadPost *.bin set ft=xxd | endiF
-  au BufWritePre *.bin if &bin | %!xxd -r
-  au BufWritePre *.bin endif
-  au BufWritePost *.bin if &bin | %!xxd
-  au BufWritePost *.bin set nomod | endif
+	au!
+	au BufReadPre  *.bin let &bin=1
+	au BufReadPost *.bin if &bin | %!xxd
+	au BufReadPost *.bin set ft=xxd | endiF
+	au BufWritePre *.bin if &bin | %!xxd -r
+	au BufWritePre *.bin endif
+	au BufWritePost *.bin if &bin | %!xxd
+	au BufWritePost *.bin set nomod | endif
 augroup END
 "augroup myvimrc
 "    au!
@@ -869,12 +875,12 @@ let g:promptline_preset='full'
 let g:promptline_theme='jelly'
 " other themes available in autoload/promptline/themes/*
 let g:promptline_preset={
-        \'a'	: [ promptline#slices#host() ],
-        \'b'    : [ promptline#slices#cwd() ],
-        \'c'	: [ promptline#slices#vcs_branch(), '$(git rev-parse --short HEAD 2>/dev/null)'],
-        \'warn' : [ promptline#slices#last_exit_code() ],
-        \'z'    : [ promptline#slices#host() ]
-\}
+	\'a'	: [ promptline#slices#host() ],
+	\'b'    : [ promptline#slices#cwd() ],
+	\'c'	: [ promptline#slices#vcs_branch(), '$(git rev-parse --short HEAD 2>/dev/null)'],
+	\'warn' : [ promptline#slices#last_exit_code() ],
+	\'z'    : [ promptline#slices#host() ]
+	\}
 
 " let g:ascii= [
 "   \ '        __',
@@ -972,17 +978,17 @@ vnoremap <silent> # :<C-U>
 " When using ^r/ in INSERT mode what one most of the time wants is to paste the
 " matched text not the regex used to search the text.
 function! Del_word_delims()
-   let reg = getreg('/')
-   " After * i^r/ will give me pattern instead of \<pattern\>
-   let res = substitute(reg, '^\\<\(.*\)\\>$', '\1', '' )
-   if res != reg
-      return res
-   endif
-   " After * on a selection i^r/ will give me pattern instead of \Vpattern
-   let res = substitute(reg, '^\\V'          , ''  , '' )
-   let res = substitute(res, '\\\\'          , '\\', 'g')
-   let res = substitute(res, '\\n'           , '\n', 'g')
-   return res
+	let reg = getreg('/')
+	" After * i^r/ will give me pattern instead of \<pattern\>
+	let res = substitute(reg, '^\\<\(.*\)\\>$', '\1', '' )
+	if res != reg
+		return res
+	endif
+	" After * on a selection i^r/ will give me pattern instead of \Vpattern
+	let res = substitute(reg, '^\\V'          , ''  , '' )
+	let res = substitute(res, '\\\\'          , '\\', 'g')
+	let res = substitute(res, '\\n'           , '\n', 'g')
+	return res
 endfunction
 inoremap <silent> <C-r>/ <C-r>=Del_word_delims()<CR>
 cnoremap <C-r>/ <C-r>=Del_word_delims()<CR>
@@ -1107,7 +1113,7 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 " map ][ /}<CR>b99]}
 " map ]] j0[[%/{<CR>
 " map [] k$][%?}<CR>
-" map ' %
+map ' %
 
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>f :find *
@@ -1157,46 +1163,46 @@ noremap <Leader>q :s/^\(>*\) */\1> /<CR>
 noremap <Leader>Q :s/^> *//<CR>
 
 function! MoveToPrevTab()
-  "there is only one window
-  if tabpagenr('$')== 1 && winnr('$')== 1
-    return
-  endif
-  "preparing new window
-  let l:tab_nr=tabpagenr('$')
-  let l:cur_buf=bufnr('%')
-  if tabpagenr() != 1
-    close!
-    if l:tab_nr== tabpagenr('$')
-      tabprev
-    endif
-    vert topleft split
-  else
-    close!
-    exe "0tabnew"
-  endif
-  "opening current buffer in new window
-  exe "b".l:cur_buf
+	"there is only one window
+	if tabpagenr('$')== 1 && winnr('$')== 1
+		return
+	endif
+	"preparing new window
+	let l:tab_nr=tabpagenr('$')
+	let l:cur_buf=bufnr('%')
+	if tabpagenr() != 1
+		close!
+		if l:tab_nr== tabpagenr('$')
+			tabprev
+		endif
+		vert topleft split
+	else
+		close!
+		exe "0tabnew"
+	endif
+	"opening current buffer in new window
+	exe "b".l:cur_buf
 endfunc
 function! MoveToNextTab()
-  "there is only one window
-  if tabpagenr('$')== 1 && winnr('$')== 1
-    return
-  endif
-  "preparing new window
-  let l:tab_nr=tabpagenr('$')
-  let l:cur_buf=bufnr('%')
-  if tabpagenr() < tab_nr
-    close!
-    if l:tab_nr== tabpagenr('$')
-      tabnext
-    endif
-    vert topleft split
-  else
-    close!
-    tabnew
-  endif
-  "opening current buffer in new window
-  exe "b".l:cur_buf
+	"there is only one window
+	if tabpagenr('$')== 1 && winnr('$')== 1
+		return
+	endif
+	"preparing new window
+	let l:tab_nr=tabpagenr('$')
+	let l:cur_buf=bufnr('%')
+	if tabpagenr() < tab_nr
+		close!
+		if l:tab_nr== tabpagenr('$')
+			tabnext
+		endif
+		vert topleft split
+	else
+		close!
+		tabnew
+	endif
+	"opening current buffer in new window
+	exe "b".l:cur_buf
 endfunc
 nnoremap <Leader>mt <Esc>:call MoveToNextTab()<CR>
 nnoremap <Leader>mT <Esc>:call MoveToPrevTab()<CR>
@@ -1266,15 +1272,15 @@ nmap <F8> <Esc>:<C-r>=('verbose map' . ' ')<CR>
 
 " Fix for Backspace with Caps Lock on
 function! Backspace()
-  if col('.') == 1
-    if line('.')  != 1
-      return  "\<ESC>kA\<Del>"
-    else
-      return ""
-    endif
-  else
-    return "\<Left>\<Del>"
-  endif
+	if col('.') == 1
+		if line('.')  != 1
+			return  "\<ESC>kA\<Del>"
+		else
+			return ""
+		endif
+	else
+		return "\<Left>\<Del>"
+	endif
 endfunction
 inoremap  <c-r>=Backspace()<CR>
 
@@ -1316,63 +1322,63 @@ nnoremap <C-F8> :call ToggleFold()<CR>
 " nnoremap <Esc><F8> :call ToggleHex()<CR>
 let g:tindent=0
 function! ToggleIndent()
-    if g:tindent== 0
+		if g:tindent== 0
 	set shiftwidth=4
 	let g:tindent=1
-    elseif g:tindent== 1
+		elseif g:tindent== 1
 	set shiftwidth=1
 	let g:tindent=2
-    else
+		else
 	set shiftwidth=8
 	let g:tindent=0
-    endif
+		endif
 endfunction
 nnoremap <C-F9> :call ToggleIndent()<CR>
 let g:txxd=0
 function! ToggleXXD()
-    if g:txxd
+		if g:txxd
 	edit!
 	let g:txxd=0
-    else
+		else
 	%!xxd
 	let g:txxd=1
-    endi
+		endi
 endfunction
 nnoremap <Esc><F9> :call ToggleXXD()<CR>
 
 "There are no default mappings for toggling all marks and for the |:MarkClear|
 "command, but you can define some yourself: >
-    nmap <Leader>M <Plug>MarkToggle
-    "nmap <Leader>N <Plug>MarkAllClear
+		nmap <Leader>M <Plug>MarkToggle
+		"nmap <Leader>N <Plug>MarkAllClear
 "As the latter is irreverible, there's also an alternative with an additional
 "confirmation: >
-    nmap <silent> <Leader>N <Plug>MarkConfirmAllClear
+		nmap <silent> <Leader>N <Plug>MarkConfirmAllClear
 "To remove the default overriding of * and #, use: >
-    nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
-    nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+		nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+		nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 "If you don't want the * and # mappings remember the last search type and
 "instead always search for the next occurrence of the current mark, with a
 "fallback to Vim's original * command, use: >
-    nmap * <Plug>MarkSearchOrCurNext
-    nmap # <Plug>MarkSearchOrCurPrev
+		nmap * <Plug>MarkSearchOrCurNext
+		nmap # <Plug>MarkSearchOrCurPrev
 "The search mappings (*, #, etc.) interpret [count] as the number of
 "occurrences to jump over. If you don't want to use the separate
 "|mark-keypad-searching| mappings, and rather want [count] select the highlight
 "group to target (and you can live with jumps restricted to the very next
 "match), (re-)define to these mapping targets: >
-    "nmap * <Plug>MarkSearchGroupNext
-    "nmap # <Plug>MarkSearchGroupPrev
+		"nmap * <Plug>MarkSearchGroupNext
+		"nmap # <Plug>MarkSearchGroupPrev
 "You can remap the direct group searches (by default via the keypad 1-9 keys): >
-    nmap <Leader>1  <Plug>MarkSearchGroup1Next
-    nmap <Leader>!  <Plug>MarkSearchGroup1Prev
-    nmap <Leader>2  <Plug>MarkSearchGroup2Next
-    nmap <Leader>3  <Plug>MarkSearchGroup2Next
-    nmap <Leader>4  <Plug>MarkSearchGroup2Next
-    nmap <Leader>5  <Plug>MarkSearchGroup2Next
-    nmap <Leader>6  <Plug>MarkSearchGroup2Next
-    nmap <Leader>7  <Plug>MarkSearchGroup2Next
-    nmap <Leader>8  <Plug>MarkSearchGroup2Next
-    nmap <Leader>9  <Plug>MarkSearchGroup2Next
+		nmap <Leader>1  <Plug>MarkSearchGroup1Next
+		nmap <Leader>!  <Plug>MarkSearchGroup1Prev
+		nmap <Leader>2  <Plug>MarkSearchGroup2Next
+		nmap <Leader>3  <Plug>MarkSearchGroup2Next
+		nmap <Leader>4  <Plug>MarkSearchGroup2Next
+		nmap <Leader>5  <Plug>MarkSearchGroup2Next
+		nmap <Leader>6  <Plug>MarkSearchGroup2Next
+		nmap <Leader>7  <Plug>MarkSearchGroup2Next
+		nmap <Leader>8  <Plug>MarkSearchGroup2Next
+		nmap <Leader>9  <Plug>MarkSearchGroup2Next
 "+g:mwDirectGroupJumpMappingNum*
 " *mark-whitespace-indifferent*
 "Some people like to create a mark based on the visual selection, like
@@ -1383,8 +1389,8 @@ nnoremap <Esc><F9> :call ToggleXXD()<CR>
 "    http://vim.wikia.com/wiki/Search_for_visually_selected_text
 "You can achieve ye with the Mark plugin through the <Plug>MarkIWhiteSet
 "mapping target: Using this, you can assign a new visual mode mapping <Leader>* >
-    " xmap <Leader>* <Plug>MarkIWhiteSet
+		" xmap <Leader>* <Plug>MarkIWhiteSet
 "or override the default |v_<Leader>m| mapping, in case you always want this
 "behavior: >
-    vmap <Plug>IgnoreMarkSet <Plug>MarkSet
-    xmap <Leader>m <Plug>MarkIWhiteSet
+		vmap <Plug>IgnoreMarkSet <Plug>MarkSet
+		xmap <Leader>m <Plug>MarkIWhiteSet

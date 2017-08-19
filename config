@@ -158,7 +158,14 @@ Host alyp.tk
     CheckHostIP yes
     IdentityFile ~/.ssh/id_gpg
 
-Host deb
+Host fedora
+    HostName 107.170.203.174
+    Port 22
+    User root
+    CheckHostIP no
+    IdentityFile ~/.ssh/id_gpg
+
+Host debian
     HostName 162.243.141.90
     Port 22
     User root
