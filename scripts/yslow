@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+file="$(youtube-dl --audio-format flac -x "$*" | grep ffmpeg | perl -pe 's/.*?: (.*flac)/\1/')"
+sox "$file" "${file%%.flac}.wav" speed 0.74 reverb 10 90 74 80 2 -5
+rm -i "$file"
