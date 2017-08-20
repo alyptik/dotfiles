@@ -27,7 +27,7 @@
 
 (
 	if [[ -d /store/code/projects ]]; then
-		cd /store/dotfiles || return 1
+		cd /store/code/projects || return 1
 	elif [[ -d "${HOME}/projects" ]]; then
 		cd "${HOME}/projects" || return 1
 	fi
