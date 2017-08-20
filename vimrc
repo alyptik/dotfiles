@@ -45,6 +45,8 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'kien/rainbow_parentheses.vim'
+	Plug 'edkolev/promptline.vim'
 	Plug 'sudar/vim-arduino-syntax'
 	" Plug 'jplaut/vim-arduino-ino'
 	Plug 'stevearc/vim-arduino'
