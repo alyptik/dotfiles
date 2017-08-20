@@ -1,29 +1,54 @@
-function TRAPINT () {
-	(( nopopd )) || popd >/dev/null 2>&1
-	trap - INT
-	return "$(( 128 + $1 ))"
-}
+(
+	if [[ -d "${CONF:-/store/config}" ]]; then
+		cd "${CONF:-/store/config}" || return 1
+	elif [[ -d /store/dotfiles ]]; then
+		cd /store/dotfiles || return 1
+	fi
 
-local nopopd orig
-orig="$PWD"
-[[ "$orig" != "${CONF:-/store/config}" ]] && pushd "${CONF:-/store/config}" >/dev/null 2>&1 || nopopd=1
-git add .
-if [[ -z "$*" ]]; then
-	if git commit -a -S; then
-		git push && \
-			printf '\n \033[32m %s \n\033[0m' "Commit successful!" || \
-			printf '\n \033[31m %s \n\033[0m' "Error during push..."
+	git add .
+	if [[ -z "$1" ]]; then
+		if git commit -a -S; then
+			git push && \
+				printf '\n \033[32m %s \n\033[0m' "Dotfiles commit successful!" || \
+				printf '\n \033[31m %s \n\033[0m' "Error during dotfiles push..."
+		else
+			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+		fi
 	else
-		printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+		if git commit -a -S -m "$1"; then
+			git push && \
+				printf '\n \033[32m %s \n\033[0m' "Dotfiles commit successful!" || \
+				printf '\n \033[31m %s \n\033[0m' "Error during dotfiles push..."
+		else
+			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+		fi
 	fi
-else
-	if git commit -a -S -m "$*"; then
-		git push && \
-			printf '\n \033[32m %s \n\033[0m' "Commit successful!" || \
-			printf '\n \033[31m %s \n\033[0m' "Error during push..."
+)
+
+(
+	if [[ -d /store/code/projects ]]; then
+		cd /store/dotfiles || return 1
+	elif [[ -d "${HOME}/projects" ]]; then
+		cd "${HOME}/projects" || return 1
+	fi
+
+	cd /store/code/projects || return 1
+	git add .
+	if [[ -z "$2" ]]; then
+		if git commit -a -S; then
+			git push && \
+				printf '\n \033[32m %s \n\033[0m' "Projects commit successful!" || \
+				printf '\n \033[31m %s \n\033[0m' "Error during project push..."
+		else
+			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+		fi
 	else
-		printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+		if git commit -a -S -m "$2"; then
+			git push && \
+				printf '\n \033[32m %s \n\033[0m' "Projects commit successful!" || \
+				printf '\n \033[31m %s \n\033[0m' "Error during project push..."
+		else
+			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+		fi
 	fi
-fi
-(( nopopd )) || popd >/dev/null 2>&1
-trap - INT
+)

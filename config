@@ -161,6 +161,13 @@ Host alyp.tk
 Host fedora
     HostName 107.170.203.174
     Port 22
+    User alyptik
+    CheckHostIP no
+    IdentityFile ~/.ssh/id_gpg
+
+Host rfedora
+    HostName 107.170.203.174
+    Port 22
     User root
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
@@ -173,7 +180,7 @@ Host debian
     IdentityFile ~/.ssh/id_gpg
 
 Host bsd
-    HostName 192.241.218.176
+    HostName 104.236.172.97
     Port 22
     User root
     CheckHostIP no
