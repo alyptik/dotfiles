@@ -218,8 +218,8 @@ highlight ColorColumn guibg=#282828
 highlight SpecialKey guifg=#282828
 set shell=/bin/zsh
 set background=dark
-" set keywordprg=man\ -s
-set keywordprg=man\ -Pmost
+set keywordprg=man\ -s
+" set keywordprg=man\ -Pmost
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
@@ -1090,6 +1090,9 @@ command! Wqall wqall
 " command! SudoWrite silent w !sudo sponge %
 command! SudoWrite silent w !sudo sponge %
 cabbrev w!! <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SudoWrite' : 'w!!')<CR>
+
+command! P PlugUpdate
+cabbrev pu PlugUpdate
 
 "<C-b> <Home>
 "<C-e> <End>
