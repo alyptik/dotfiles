@@ -1,7 +1,5 @@
 #compdef man apropos whatis
 
- _arguments '*:arg: _default' --
-
  _man() {
   local dirs expl mrd awk
 
@@ -145,5 +143,7 @@ _man_pages() {
     compadd "$@" -P "$sopt$sect_dirname " - ${pages%$~suf}
   fi
 }
+
+_arguments '*:arg: _default' --
 
 _man "$@"
