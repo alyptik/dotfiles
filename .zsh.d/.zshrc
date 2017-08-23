@@ -729,7 +729,7 @@ zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 zstyle ':completion:*:expand:*'		tag-order all-expansions
 zstyle ':completion:*:history-words'	list true
 # activate menu
-zstyle ':completion:*:history-words'	menu yes
+zstyle ':completion:*:history-words'	menu yes select
 # ignore duplicate entries
 zstyle ':completion:*:history-words'	remove-all-dups yes
 zstyle ':completion:*:history-words'	stop yes
@@ -775,8 +775,8 @@ zstyle ':completion:*:processes-names'  command 'ps c -u ${USER} -o command | un
 zstyle ':completion:*:killall:*'	command 'ps -u ${USER} -o cmd'
 # complete manual by their section
 zstyle ':completion:*:manuals'		separate-sections true
-zstyle ':completion:*:manuals:*'	insert-sections   true
-zstyle ':completion:*:man:*'		menu yes select
+zstyle ':completion:*:manuals*'		insert-sections   true
+zstyle ':completion:*:man*'		menu yes select
 # provide .. as a completion
 # zstyle ':completion:*'			special-dirs ..
 
