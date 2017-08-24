@@ -294,6 +294,21 @@ augroup VIMRC
 	autocmd BufLeave *.php  normal! mP
 augroup END
 
+" arduino commands
+let g:arduino_cmd='/usr/share/arduino/arduino'
+let g:arduino_dir='/usr/share/arduino'
+let g:arduino_run_headless=1
+let g:arduino_args='--verbose-upload'
+let g:arduino_board='archlinux-arduino:avr:mega'
+" let g:arduino_board='archlinux-arduino:avr:atmegang:atmega168'
+let g:arduino_serial_port_globs=[
+			\ '/dev/ttyACM*',
+			\ '/dev/ttyUSB*',
+			\ '/dev/tty.usbmodem*',
+			\ '/dev/tty.usbserial*'
+			\ ]
+
+
 " mark-colors mark-highlight-color
 let g:mwDefaultHighlightingPalette='maximum'
 "let g:mwDefaultHighlightingPalette='extended'
