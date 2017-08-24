@@ -254,6 +254,8 @@ autoload -U +X bashcompinit && bashcompinit -u
 	. /etc/profile.d/cnf.sh
 [[ -f /usr/share/bash-completion/completions/dkms ]] && \
 	. /usr/share/bash-completion/completions/dkms
+# [[ -d /usr/share/bash-completion/completions ]] && \
+#         { for i in /usr/share/bash-completion/completions/*; do . "$i"; done; }
 
 # zsh specific
 [[ -d "${ZDOTDIR:-$HOME/.zsh.d}/plugins" ]] && \
@@ -618,6 +620,7 @@ fi
 	local -a seckeys=(${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
 	local -a pubkeys=(${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
 	local -a pkgs=(${(of@)$(pacman -Qq 2>/dev/null)})
+	local -a kmods=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz')%.ko.gz}##*/})
 
 	for i in "${defargcmds[@]}"; do compdef _gnu_generic "$i"; done
 
@@ -629,6 +632,7 @@ fi
 	compdef $'_arguments "*:arg:_default" ":info page:_texinfo" -- ' pinfo
 	compdef $'_arguments "*:packages:('"${pkgs[*]}"')" -- ' qpc
 	compdef $'_arguments "*:arg:_default" ":processe:_pids" -- ' reptyr
+	compdef $'_arguments "*:arg:_default" ":modules:('"${kmods[*]}"')" -- ' modprobe
 }
 
 compdef _fman fman
