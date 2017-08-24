@@ -6,6 +6,9 @@
 # Disable toggling XON/XOFF with ^S/^Q
 if [ -t 0 ]; then stty -ixon; fi
 
+# VPS config
+if [ "$(hostname)" == "fedora" ]; then export TERM=screen-256color; fi
+
 # Environment variables
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
