@@ -58,6 +58,7 @@
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = diff --patience --cached
 	dc = diff --cached --patience
+	p = push --progress -v
 [web]
 	browser = w3m
 [instaweb]
