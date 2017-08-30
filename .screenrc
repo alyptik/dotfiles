@@ -103,8 +103,8 @@ vbell on
 vbell_msg "🐶 woof!!! ——— woof!!! 🐶 "
 nethack on
 autodetach on
-altscreen off
-# altscreen on
+# altscreen off
+altscreen on
 cjkwidth off
 log off
 msgminwait 2

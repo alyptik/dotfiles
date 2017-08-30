@@ -226,7 +226,7 @@ set clipboard=unnamedplus,autoselectplus
 " set clipboard+=unnamedplus
 set ofu=syntaxcomplete#Complete
 set magic nostartofline
-set termguicolors
+" set termguicolors
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 " set tags=~/.vimtags;./tags;/
@@ -255,7 +255,9 @@ set number
 set wildmenu showfulltag lbr ruler magic hidden
 set incsearch ignorecase smartcase autoread
 " Turn off alternate screen
-set t_ti= t_te=
+" set t_ti= t_te=
+" Turn on alternate screen
+" set t_ti=7[?47h t_te=[2J[?47l8
 set matchpairs=(:),{:},[:],<:>,=:;
 "au FileType c,cpp,java set mps+==:;
 set backspace=indent,eol,start
