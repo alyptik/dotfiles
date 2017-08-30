@@ -282,8 +282,8 @@ set wildignore+=*.tar.*,*.zip
 set path=.,**
 "set nowrap
 set wrap
-"set showbreak=++++
-let &showbreak="        "
+set showbreak=++++
+" let &showbreak="        "
 
 " filetype marks
 augroup VIMRC

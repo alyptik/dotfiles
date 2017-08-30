@@ -1,0 +1,23 @@
+#!/bin/perl
+
+my @phrases1 = qw/What the hell what the hell Stop! Holy shit holy shit Oh my god Oh my God oh my god oh my Go/;
+my @phrases2 =  qw/What the herr what the herr YAAAAMETEEEE! HORRY SHEEET HORRY SHEEET OH MAI GOOOD OH MAI GOOOD OH MAI GOOOD OH MAI GOOOD/;
+my @words1 =  qw/ever crystal away bitch crazy driving each fuck fucker fucking guest mind must my no shit so thank through time to united what who write/;
+my @words2 =  qw/ever kurrīstar awey beetchu kurraisy durraiving eech fahk fakker fakking gest maind mast mai no sheet so thenk thrū taim tū unaited nani who wraite/;
+my @intraword1 =  qw/tu wy bl cky ls high sun ful gr dr l/;
+
+# tu wy bl cky ls high sun ful gr dr l
+# tsu wai burr kky rs haigh san furr gur dur r
+my %int = (tu=>"tsu",wy=>"wai",bl=>"burr",cky=>"kky",ls=>"rs",high=>"haigh",sun=>"san",ful=>"furr",gr=>"gur",dr=>"dur",l=>"r")
+my @intraword2 =  qw/tsu wai burr kky rs haigh san furr gur dur r/;
+my @prefixes1 =  qw/spl wy uni un l dr tr/;
+my @prefixes2 =  qw/suppur wai uni unnu r durr turr/;
+my @suffixes1 =  qw/ool r rt ls ll t's ts ck rit k oo l o/;
+my @suffixes2 =  qw/ooru ru rto rs rr tsu tsu kku rittu ku ū r ó/;
+my @regex1 =  qw//;
+my @regex2 =  qw//;
+my @rev_regex1 =  qw//;
+my @rev_regex2 =  qw//;
+my @ordering1 =  qw//;
+my @ordering2 = qw//;
+my $str = @ARGV;
