@@ -1,1 +1,1 @@
-if [ -d ~ ]; then pushd -q ~; fi
+if [ -d /run/media/alyptik/microSDXC/stuff ]; then pushd -q /run/media/alyptik/microSDXC/stuff; fi

@@ -25,7 +25,7 @@
 	followTags = true
 [alias]
 	br = branch
-	co = commit
+	co = commit -v -S
 	st = status
 	l = log --show-signature --stat
 	lu = log --show-signature -u
@@ -71,6 +71,6 @@
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
-	gpgsign = true
+	gpgsign = false
 [rerere]
 	enabled = true
