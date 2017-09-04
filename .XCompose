@@ -2,6 +2,7 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 
 ## start alyptik
 
+<Multi_key> <semicolon> <apostrophe>	: "“”"		# curly quotes
 <Multi_key> <l> <o> <v> <e>		: "💗" U1f497	# love
 <Multi_key> <s> <p> <o> <t>		: "🍠" U1f360	# sweet potato
 <Multi_key> <p> <o> <t>			: "🥔" U1f954	# potato
