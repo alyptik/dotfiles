@@ -1,1 +1,1 @@
-if [ -d /run/media/alyptik/microSDXC/stuff ]; then pushd -q /run/media/alyptik/microSDXC/stuff; fi
+if [ -d /store/code/aur/cepl-git ]; then pushd -q /store/code/aur/cepl-git; fi
