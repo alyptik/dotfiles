@@ -1,6 +1,12 @@
 # set disassembly intel
 # source /home/alyptik/.gdbinit-gef.py
 
+set history filename ~/.gdb_history
+set history save on
+set history size unlimited
+set history remove-duplicates unlimited
+set history expansion on
+
 define locals-up
 	set $n    = ($arg0)
 	set $upto = $n
