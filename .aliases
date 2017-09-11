@@ -6,6 +6,8 @@ unalias {1..9} c f gbr gco gcs gg gm h history l md o rd ru s sd sf si u v z zz 
 
 ## Custom aliases
 
+alias sb='scan-build'
+alias vg='valgrind'
 alias ip='ip -c'
 alias rline=$'python -c \'import os; import random; os.system("vim %s +%s" % (lambda f: (f, random.randint(1,len(open(f).readlines())+1)))(random.choice([f for f in sum([[os.path.join(p, f) for f in fs] for (p, ds, fs) in os.walk(".")], []) if not ".git" in f])))\''
 alias rng='ranger'
