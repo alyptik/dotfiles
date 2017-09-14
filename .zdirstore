@@ -1,1 +1,1 @@
-if [ -d /store/code/aur/cepl-git ]; then pushd -q /store/code/aur/cepl-git; fi
+if [ -d ~ ]; then pushd -q ~; fi
