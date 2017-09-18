@@ -286,11 +286,12 @@ if type zplug >/dev/null 2>&1; then
 	# zplug "kennethreitz/autoenv"
 	# zplug "jocelynmallon/zshmarks"
 	# zplug "StackExchange/blackbox"
-	zplug "zsh-users/zsh-history-substring-search"
-	zplug "zsh-users/zsh-syntax-highlighting"
-	zplug "zsh-users/zsh-autosuggestions"
+	# zplug "aeruder/zirc"
+	# zplug "tj/git-extras"
 	zplug "oknowton/zsh-dwim"
-	zplug "aeruder/zirc"
+	zplug "zsh-users/zsh-autosuggestions"
+	zplug "zsh-users/zsh-syntax-highlighting"
+	zplug "zsh-users/zsh-history-substring-search"
 	if ! zplug check --verbose; then
 		print -- "Install? [y/N]: "
 		if read -sq; then zplug install; fi
@@ -332,6 +333,9 @@ bindkey -sM viins "\e[23~" "*"
 bindkey -M emacs "\ep" expand-absolute-path
 bindkey -M viins "\ep" expand-absolute-path
 bindkey -M vicmd "\ep" expand-absolute-path
+bindkey -M emacs "\eo" zle-less
+bindkey -M viins "\eo" zle-less
+bindkey -M vicmd "\eo" zle-less
 # insert the last word from the previous history event at the cursor position
 bindkey -M emacs "\e\\" insert-last-word
 bindkey -M viins "\e\\" insert-last-word
@@ -560,6 +564,12 @@ bindkey -M viins "\e[17~" yank-x-selection
 bindkey -M emacs "\e[18~" insert-x-selection
 bindkey -M vicmd "\e[18~" insert-x-selection
 bindkey -M viins "\e[18~" insert-x-selection
+bindkey -M emacs "\e[" yank-x-selection
+bindkey -M viins "\e[" yank-x-selection
+bindkey -M vicmd "\e[" yank-x-selection
+bindkey -M emacs "\e]" insert-x-selection
+bindkey -M viins "\e]" insert-x-selection
+bindkey -M vicmd "\e]" insert-x-selection
 # bindkey -M emacs "\e[18~" append-x-selection
 # bindkey -M vicmd "\e[18~" append-x-selection
 # bindkey -M viins "\e[18~" append-x-selection
@@ -615,7 +625,7 @@ fi
 #
 # custom compdefs with generated and hardcoded arrays
 () {
-	local -a defargcmds=(as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fusermount-glusterfs fusermount3 fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pacconf pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl scan-build seq shred sox split stat st stjerm strings swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel youtube-dl)
+	local -a defargcmds=(as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cppcheck cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fusermount-glusterfs fusermount3 fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pacconf pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl scan-build seq shred sox split stat st stjerm strings swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel youtube-dl)
 	local -a asmcmds=(${(o)$({ cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split(/ /, lc $F[0] =~ y|/| |r); END{ print join " ", @cmds; };'; } 2>/dev/null)})
 	local -a seckeys=(${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
 	local -a pubkeys=(${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
