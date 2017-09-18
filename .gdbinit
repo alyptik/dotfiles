@@ -7,6 +7,18 @@ set history size unlimited
 set history remove-duplicates unlimited
 set history expansion on
 
+set print symbol-filename on
+set print symbol on
+set print array on
+set print array-indexes on
+set print frame-arguments all
+set print entry-values both
+
+set tui border-kind acs
+set tui border-mode normal
+# set tui active-border-mode bold-standout
+set tui active-border-mode reverse
+
 define locals-up
 	set $n    = ($arg0)
 	set $upto = $n

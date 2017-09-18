@@ -47,7 +47,7 @@ function zle-zaw-help {
 function zle-less {
 	local -a args
 	[[ -z "$BUFFER" ]] && args=("${(z)=history[$((HISTCMD-1))]}") || args=("${(z)=BUFFER}")
-	# eval eeded to resolve static named directories
+	# eval needed to resolve static named directories
 	until ( [[ ! "${args[1]}" =~ ^..?$ ]] && eval "[[ -e ${args[1]} ]]" ); do
 		# Prevent infinite loop
 		((${#args} > 1)) || return
@@ -60,7 +60,7 @@ function zle-less {
 function zle-vim {
 	local -a args
 	[[ -z "$BUFFER" ]] && args=("${(z)=history[$((HISTCMD-1))]}") || args=("${(z)=BUFFER}")
-	# eval eeded to resolve static named directories
+	# eval needed to resolve static named directories
 	until ( [[ ! "${args[1]}" =~ ^..?$ ]] && eval "[[ -e ${args[1]} ]]" ); do
 		# Prevent infinite loop
 		((${#args} > 1)) || return
