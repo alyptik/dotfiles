@@ -392,8 +392,8 @@ let g:ale_lint_on_text_changed=0
 " You can disable this option too if you don't want linters to run on opening a file
 let g:ale_lint_on_enter=0
 
-let g:ale_c_clang_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wfatal-errors -Wfloat-equal -Wshadow'
-let g:ale_c_gcc_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wfatal-errors -Wfloat-equal -Wshadow'
+let g:ale_c_clang_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-unused-const-variable -Wfatal-errors -Wfloat-equal -Wshadow'
+let g:ale_c_gcc_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-unused-const-variable -Wfatal-errors -Wfloat-equal -Wshadow'
 " let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
 let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
 let g:ale_fixers={'c': ['clang-format']}
@@ -780,6 +780,7 @@ au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
 au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
 au BufNewFile,BufRead makepkg.conf* set filetype=sh
 au BufNewFile,BufRead *.conf* setf cfg
+au BufNewFile,BufRead /etc/* setf cfg
 au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
 
 
