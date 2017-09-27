@@ -3,7 +3,7 @@
 
 printf '%s' 'Title: '"$1"'
 Date: '"$(date +'%Y-%m-%d %H:%M')"'
-Category: '"${2:-Misc}"'
+Category: '"${2:-misc}"'
 
 ' >> "/store/code/projects/website-pelican/content/${1}.md"
 
