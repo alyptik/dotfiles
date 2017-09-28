@@ -9,4 +9,4 @@ done
 
 { (alias; declare -f) | \
 	command which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
-} 2>/dev/null | less -CJRMXis
+} 2>/dev/null | less -CRMXis

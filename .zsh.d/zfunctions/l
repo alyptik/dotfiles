@@ -1,1 +1,1 @@
-less -CJRMXis "$@"
+less -CMRXis "$@"

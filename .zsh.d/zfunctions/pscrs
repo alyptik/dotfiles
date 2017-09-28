@@ -1,1 +1,1 @@
- { sudo parallel --will-cite systemctl ::: restart status ::: "$@"; } | less -FJKMRX
+ { sudo parallel --will-cite systemctl ::: restart status ::: "$@"; } | less -FKMRX

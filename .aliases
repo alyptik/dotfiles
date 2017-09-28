@@ -1,11 +1,15 @@
 #!/bin/zsh
 
 # Unset previous function/alias instances
-unset -f bfg define defrag fc h wd which 2>/dev/null
-unalias {1..9} c f gbr gco gcs gg gm h history l md o rd ru s sd sf si u v z zz 2>/dev/null
+unset -f bfg define defrag fc java wd which 2>/dev/null
+unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
 
+# silence 'Picked up _JAVA_OPTIONS' message on command line
+_SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
+unset _JAVA_OPTIONS
+alias java='java "$_SILENT_JAVA_OPTIONS"'
 alias sb='scan-build'
 alias vg='valgrind'
 alias ip='ip -c'
