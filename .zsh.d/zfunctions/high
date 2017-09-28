@@ -12,4 +12,4 @@ else
 fi
 
 highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style="${theme:-xoria256}" "$file" | \
-	less -CJRMXis
+	less -CMRXis

@@ -7,4 +7,4 @@
 	fi
 	grep --group-separator=$'\n\n' -wRC"$context" "$*" /usr/include/ 2>/dev/null | \
 		highlight --syntax=c --out-format=ansi | \
-		less -FJMRXis
+		less -FMRXis
