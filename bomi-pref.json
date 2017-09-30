@@ -804,7 +804,7 @@
         },
         "swdec": {
             "doubler": true,
-            "method": "CubicBob",
+            "method": "Yadif",
             "processor": "CPU"
         }
     },
