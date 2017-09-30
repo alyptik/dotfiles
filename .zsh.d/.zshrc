@@ -80,46 +80,26 @@ type zshreadhist >/dev/null 2>&1 && \
 
 # History search
 # autoload -Uz bracketed-paste-magic
-autoload -Uz expand-absolute-path
-autoload -Uz up-line-or-beginning-search
-autoload -Uz down-line-or-beginning-search
-autoload -Uz run-help
-autoload -Uz regexp-replace
-autoload -Uz edit-command-line
-autoload -Uz insert-unicode-char
-autoload -Uz insert-composed-char
-autoload -Uz tetriscurses
-autoload -Uz tetris
-autoload -Uz zargs
-autoload -Uz zed
-autoload -Uz zmv
-# zle -N bracketed-paste bracketed-paste-magic
-zle -N edit-command-line
-zle -N expand-absolute-path
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-zle -N znt-history-widget
-zle -N znt-cd-widget
-zle -N znt-kill-widget
-zle -N insert-unicode-char
-zle -N tetris
-zle -N zmv
-zmodload zsh/datetime
-zmodload zsh/mapfile
-zmodload zsh/mathfunc
-zmodload zsh/terminfo
-zmodload zsh/deltochar
-zmodload zsh/curses
-zmodload zsh/net/socket
-zmodload zsh/system
-zmodload zsh/net/tcp
-zmodload zsh/zftp
-zmodload zsh/zprof
-zmodload zsh/zpty
-zmodload zsh/zselect
-zmodload zsh/pcre
-zmodload zsh/db/gdbm
-zmodload zsh/deltochar
+() {
+	local -a au_arr zle_arr zmod_arr
+	au_arr+=(expand-absolute-path up-line-or-beginning-search)
+	au_arr+=(down-line-or-beginning-search run-help regexp-replace)
+	au_arr+=(edit-command-line nsert-unicode-char insert-composed-char)
+	au_arr+=(tetriscurses tetris zargs zed zmv)
+	# zle_arr+=(bracketed-paste bracketed-paste-magic)
+	zle_arr+=(edit-command-line expand-absolute-path)
+	zle_arr+=(up-line-or-beginning-search down-line-or-beginning-search)
+	zle_arr+=(znt-history-widget znt-cd-widget znt-kill-widget insert-unicode-char)
+	zle_arr+=(tetris zmv)
+	zmod_arr+=(zsh/datetime zsh/mapfile zsh/mathfunc)
+	zmod_arr+=(zsh/terminfo zsh/deltochar zsh/curses)
+	zmod_arr+=(zsh/net/socket zsh/system zsh/net/tcp)
+	zmod_arr+=(zsh/zftp zsh/zprof zsh/zpty zsh/zselect)
+	zmod_arr+=(zsh/pcre zsh/db/gdbm zsh/deltochar)
+	() for 1 { autoload -Uz "$1"; } $au_arr
+	() for 1 { zle -N "$1"; } $zle_arr
+	() for 1 { zmodload "$1"; } $zmod_arr
+}
 
 ## equiv of bash's "help"
 unalias run-help help 2>/dev/null
@@ -322,153 +302,16 @@ zle -N zle-less
 zle -N zle-vim
 zle -N zle-fh
 
-# F11 inserts a literal '*'
-bindkey -sM emacs "\e[23~" "*"
-bindkey -sM vicmd "\e[23~" "*"
-bindkey -sM viins "\e[23~" "*"
+# FZF fuzzy completion
+export fzf_default_completion="expand-or-complete-prefix"
+# 'literal trigger' & fzf-completion keybind to start fuzzy completion
+export FZF_COMPLETION_TRIGGER='//'
+# export FZF_COMPLETION_TRIGGER='**'
 
-# oh god prepare yourself
-#
-# custom bindkey commands
-bindkey -M emacs "\ep" expand-absolute-path
-bindkey -M viins "\ep" expand-absolute-path
-bindkey -M vicmd "\ep" expand-absolute-path
-bindkey -M emacs "\eo" zle-less
-bindkey -M viins "\eo" zle-less
-bindkey -M vicmd "\eo" zle-less
-# insert the last word from the previous history event at the cursor position
-bindkey -M emacs "\e\\" insert-last-word
-bindkey -M viins "\e\\" insert-last-word
-bindkey -M vicmd "\e\\" insert-last-word
-bindkey -M emacs "\eE" tetris
-bindkey -M viins "\eE" tetris
-bindkey -M vicmd "\eE" tetris
-bindkey -M emacs "\e\er" znt-history-widget
-bindkey -M viins "\e\er" znt-history-widget
-bindkey -M vicmd "\e\er" znt-history-widget
-bindkey -M emacs "\e\et" znt-cd-widget
-bindkey -M viins "\e\et" znt-cd-widget
-bindkey -M vicmd "\e\et" znt-cd-widget
-bindkey -M emacs "\e\ek" znt-kill-widget
-bindkey -M viins "\e\ek" znt-kill-widget
-bindkey -M vicmd "\e\ek" znt-kill-widget
-## Ctrl+x h will show the completion context
-bindkey -M emacs "\C-x\C-h" _complete_help
-bindkey -M vicmd "\C-x\C-h" _complete_help
-bindkey -M viins "\C-x\C-h" _complete_help
-bindkey -M emacs "\C-xh" _complete_help
-bindkey -M vicmd "\C-xh" _complete_help
-bindkey -M viins "\C-xh" _complete_help
-
-# bind UP and DOWN arrow keys (compatibility fallback
-# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
-bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
-bindkey -M vicmd "$terminfo[kcuu1]" history-substring-search-up
-bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
-bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
-bindkey -M vicmd "$terminfo[kcud1]" history-substring-search-down
-bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
-bindkey -M emacs "\e[5~" history-substring-search-up
-bindkey -M vicmd "\e[5~" history-substring-search-up
-bindkey -M viins "\e[5~" history-substring-search-up
-bindkey -M emacs "\e[6~" history-substring-search-down
-bindkey -M vicmd "\e[6~" history-substring-search-down
-bindkey -M viins "\e[6~" history-substring-search-down
-bindkey -M emacs "\e-" history-substring-search-up
-bindkey -M viins "\e-" history-substring-search-up
-bindkey -M vicmd "\e-" history-substring-search-up
-bindkey -M emacs "\e=" history-substring-search-down
-bindkey -M viins "\e=" history-substring-search-down
-bindkey -M vicmd "\e=" history-substring-search-down
-
-# Fixes from http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
-bindkey -M emacs "$(echotc kl)" backward-char
-bindkey -M vicmd "$(echotc kl)" vi-backward-char
-bindkey -M viins "$(echotc kl)" vi-backward-char
-bindkey -M emacs "$(echotc kr)" forward-char
-bindkey -M vicmd "$(echotc kr)" vi-forward-char
-bindkey -M viins "$(echotc kr)" vi-forward-char
-bindkey -M emacs "$(echotc ku)" up-line-or-beginning-search
-bindkey -M vicmd "$(echotc ku)" up-line-or-beginning-search
-bindkey -M viins "$(echotc ku)" up-line-or-beginning-search
-bindkey -M emacs "$(echotc kd)" down-line-or-beginning-search
-bindkey -M vicmd "$(echotc kd)" down-line-or-beginning-search
-bindkey -M viins "$(echotc kd)" down-line-or-beginning-search
-
-bindkey '\eOA' up-line-or-beginning-search
-bindkey '\e[A' up-line-or-beginning-search
-bindkey '\eOB' down-line-or-beginning-search
-bindkey '\e[B' down-line-or-beginning-search
-bindkey -M emacs '^[[A' up-line-or-beginning-search
-bindkey -M vicmd '^[[A' up-line-or-beginning-search
-bindkey -M viins '^[[A' up-line-or-beginning-search
-bindkey -M emacs '^[[B' down-line-or-beginning-search
-bindkey -M vicmd '^[[B' down-line-or-beginning-search
-bindkey -M viins '^[[B' down-line-or-beginning-search
 # bind P and N for EMACS mode
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
-
-bindkey -M emacs "\eOD" backward-word
-bindkey -M vicmd "\eOD" backward-word
-bindkey -M viins "\eOD" backward-word
-bindkey -M emacs "\e\e[D" backward-word
-bindkey -M vicmd "\e\e[D" backward-word
-bindkey -M viins "\e\e[D" backward-word
-bindkey -M emacs "\e[1;5D" backward-word
-bindkey -M vicmd "\e[1;5D" backward-word
-bindkey -M viins "\e[1;5D" backward-word
-bindkey -M emacs "\e[1;3D" backward-word
-bindkey -M vicmd "\e[1;3D" backward-word
-bindkey -M viins "\e[1;3D" backward-word
-bindkey -M emacs "\e[1;2D" backward-word
-bindkey -M vicmd "\e[1;2D" backward-word
-bindkey -M viins "\e[1;2D" backward-word
-bindkey -M emacs "\eOC" forward-word
-bindkey -M vicmd "\eOC" forward-word
-bindkey -M viins "\eOC" forward-word
-bindkey -M emacs "\e\e[C" forward-word
-bindkey -M vicmd "\e\e[C" forward-word
-bindkey -M viins "\e\e[C" forward-word
-bindkey -M emacs "\e[1;5C" forward-word
-bindkey -M vicmd "\e[1;5C" forward-word
-bindkey -M viins "\e[1;5C" forward-word
-bindkey -M emacs "\e[1;3C" forward-word
-bindkey -M vicmd "\e[1;3C" forward-word
-bindkey -M viins "\e[1;3C" forward-word
-bindkey -M emacs "\e[1;2C" forward-word
-bindkey -M vicmd "\e[1;2C" forward-word
-bindkey -M viins "\e[1;2C" forward-word
-
-bindkey -M emacs "\e[7~" beginning-of-line
-bindkey -M vicmd "\e[7~" beginning-of-line
-bindkey -M viins "\e[7~" beginning-of-line
-bindkey -M emacs "\e[1;5B" beginning-of-line
-bindkey -M vicmd "\e[1;5B" beginning-of-line
-bindkey -M viins "\e[1;5B" beginning-of-line
-bindkey -M emacs "\e[1;3B" beginning-of-line
-bindkey -M vicmd "\e[1;3B" beginning-of-line
-bindkey -M viins "\e[1;3B" beginning-of-line
-bindkey -M emacs "\e[8~" end-of-line
-bindkey -M vicmd "\e[8~" end-of-line
-bindkey -M viins "\e[8~" end-of-line
-bindkey -M emacs "\e[1;5A" end-of-line
-bindkey -M vicmd "\e[1;5A" end-of-line
-bindkey -M viins "\e[1;5A" end-of-line
-bindkey -M emacs "\e[1;3A" end-of-line
-bindkey -M vicmd "\e[1;3A" end-of-line
-bindkey -M viins "\e[1;3A" end-of-line
-bindkey -M emacs "\e[1;2B" beginning-of-line
-bindkey -M vicmd "\e[1;2B" beginning-of-line
-bindkey -M viins "\e[1;2B" beginning-of-line
-bindkey -M emacs "\e[1;2A" end-of-line
-bindkey -M vicmd "\e[1;2A" end-of-line
-bindkey -M viins "\e[1;2A" end-of-line
-bindkey -M emacs "\e[3~" delete-char
-bindkey -M vicmd "\e[3~" delete-char
-bindkey -M viins "\e[3~" delete-char
-
-## for inside tmux
+# for inside tmux
 bindkey -M emacs "\e[1~" beginning-of-line
 bindkey -M emacs "\e\e[A" beginning-of-line
 bindkey -M emacs "\e[4~" end-of-line
@@ -486,140 +329,115 @@ bindkey -M vicmd 'j' down-line-or-beginning-search
 bindkey -M vicmd "\e[3~" delete-char
 bindkey -M viins "\e[3~" delete-char
 
-bindkey -M emacs "\ek" describe-key-briefly
-bindkey -M viins "\ek" describe-key-briefly
-bindkey -M vicmd "\ek" describe-key-briefly
-bindkey -M emacs "\C-xe" edit-command-line
-bindkey -M vicmd "\C-xe" edit-command-line
-bindkey -M viins "\C-xe" edit-command-line
-bindkey -M emacs "\C-x\C-e" edit-command-line
-bindkey -M vicmd "\C-x\C-e" edit-command-line
-bindkey -M viins "\C-x\C-e" edit-command-line
+# oh god prepare yourself
+#
+# custom bindkey commands
+() for 1 {
+	# F11 inserts a literal '*'
+	bindkey -sM "$1" "\e[23~" "*"
 
-bindkey -M emacs "\e\ey" zle-youtube-helper
-bindkey -M vicmd "\e\ey" zle-youtube-helper
-bindkey -M viins "\e\ey" zle-youtube-helper
-bindkey -M emacs "\eU" up-case-word
-bindkey -M vicmd "\eU" up-case-word
-bindkey -M viins "\eU" up-case-word
-bindkey -M emacs "\e\e\e" _history-complete-newer
-bindkey -M vicmd "\e\e\e" _history-complete-newer
-bindkey -M viins "\e\e\e" _history-complete-newer
-bindkey -M emacs "\e," zaw
-bindkey -M vicmd "\e," zaw
-bindkey -M viins "\e," zaw
-bindkey -M emacs "\e<" zle-zaw-help
-bindkey -M vicmd "\e<" zle-zaw-help
-bindkey -M viins "\e<" zle-zaw-help
-bindkey -M emacs "\ew" zle-backwards-delete-to-char
-bindkey -M vicmd "\ew" zle-backwards-delete-to-char
-bindkey -M viins "\ew" zle-backwards-delete-to-char
-bindkey -M emacs "\ee" delete-to-char
-bindkey -M vicmd "\ee" delete-to-char
-bindkey -M viins "\ee" delete-to-char
-bindkey -M emacs "\eOP" zle-less
-bindkey -M viins "\eOP" zle-less
-bindkey -M vicmd "\eOP" zle-less
-bindkey -M emacs "\eOQ" zle-vim
-bindkey -M vicmd "\eOQ" zle-vim
-bindkey -M viins "\eOQ" zle-vim
-bindkey -M emacs "\eOR" insert-unicode-char
-bindkey -M vicmd "\eOR" insert-unicode-char
-bindkey -M viins "\eOR" insert-unicode-char
-bindkey -M emacs "\eOS" zle-compdef
-bindkey -M vicmd "\eOS" zle-compdef
-bindkey -M viins "\eOS" zle-compdef
-bindkey -M emacs "\e[P" delete-char
-bindkey -M vicmd "\e[P" delete-char
-bindkey -M viins "\e[P" delete-char
-bindkey -M emacs "\C-r" redo
-bindkey -M vicmd "\C-r" redo
-bindkey -M viins "\C-r" redo
-## Call fman() on current cmdline after word-splitting
-bindkey -M emacs "\e/" zle-fman
-bindkey -M vicmd "\e/" zle-fman
-bindkey -M viins "\e/" zle-fman
-bindkey -M emacs "\e?" where-is
-bindkey -M vicmd "\e?" where-is
-bindkey -M viins "\e?" where-is
-bindkey -M emacs "^Xi" insert-unicode-char
-bindkey -M vicmd "^Xi" insert-unicode-char
-bindkey -M viins "^Xi" insert-unicode-char
-bindkey -M emacs "\C-x\C-i" insert-unicode-char
-bindkey -M vicmd "\C-x\C-i" insert-unicode-char
-bindkey -M viins "\C-x\C-i" insert-unicode-char
-bindkey -M emacs "\e>" autosuggest-clear
-bindkey -M vicmd "\e>" autosuggest-clear
-bindkey -M viins "\e>" autosuggest-clear
-## F5: Toggle keymap
-# bindkey -M emacs "\ek" zle-toggle-keymap
-# bindkey -M vicmd "\ek" zle-toggle-keymap
-# bindkey -M viins "\ek" zle-toggle-keymap
-bindkey -M emacs "\e[15~" zle-toggle-keymap
-bindkey -M vicmd "\e[15~" zle-toggle-keymap
-bindkey -M viins "\e[15~" zle-toggle-keymap
-bindkey -M emacs "\e[17~" yank-x-selection
-bindkey -M vicmd "\e[17~" yank-x-selection
-bindkey -M viins "\e[17~" yank-x-selection
-bindkey -M emacs "\e[18~" insert-x-selection
-bindkey -M vicmd "\e[18~" insert-x-selection
-bindkey -M viins "\e[18~" insert-x-selection
-bindkey -M emacs "\e[" yank-x-selection
-bindkey -M viins "\e[" yank-x-selection
-bindkey -M vicmd "\e[" yank-x-selection
-bindkey -M emacs "\e]" insert-x-selection
-bindkey -M viins "\e]" insert-x-selection
-bindkey -M vicmd "\e]" insert-x-selection
-# bindkey -M emacs "\e[18~" append-x-selection
-# bindkey -M vicmd "\e[18~" append-x-selection
-# bindkey -M viins "\e[18~" append-x-selection
-# F9: Insert composed character
-# bindkey -M emacs "\e[19~" insert-composed-char
+	bindkey -M "$1" "\ep" expand-absolute-path
+	bindkey -M "$1" "\eo" zle-less
+	# insert the last word from the previous history event at the cursor position
+	bindkey -M "$1" "\e\\" insert-last-word
+	bindkey -M "$1" "\eE" tetris
+	bindkey -M "$1" "\e\er" znt-history-widget
+	bindkey -M "$1" "\e\et" znt-cd-widget
+	bindkey -M "$1" "\e\ek" znt-kill-widget
+	## Ctrl+x h will show the completion context
+	bindkey -M "$1" "\C-x\C-h" _complete_help
+	bindkey -M "$1" "\C-xh" _complete_help
 
-# FZF fuzzy completion
-export fzf_default_completion="expand-or-complete-prefix"
-# 'literal trigger' & fzf-completion keybind to start fuzzy completion
-export FZF_COMPLETION_TRIGGER='//'
-# export FZF_COMPLETION_TRIGGER=
-# export FZF_COMPLETION_TRIGGER='**'
-bindkey -M emacs "\e;" fzf-completion
-bindkey -M vicmd "\e;" fzf-completion
-bindkey -M viins "\e;" fzf-completion
-bindkey -M emacs "\e\C-i" fasd-complete
-bindkey -M vicmd "\e\C-i" fasd-complete
-bindkey -M viins "\e\C-i" fasd-complete
-# bindkey -M emacs "\e[Z" fzf-complete-f
-# bindkey -M vicmd "\e[Z" fzf-complete-f
-# bindkey -M viins "\e[Z" fzf-complete-f
-bindkey -M emacs "\e[Z" fasd-complete-d
-bindkey -M vicmd "\e[Z" fasd-complete-d
-bindkey -M viins "\e[Z" fasd-complete-d
-bindkey -M emacs "\C-i" "$fzf_default_completion"
-bindkey -M vicmd "\C-i" "$fzf_default_completion"
-bindkey -M viins "\C-i" "$fzf_default_completion"
-bindkey -M emacs "\ei" fzf-locate-widget
-bindkey -M vicmd "\ei" fzf-locate-widget
-bindkey -M viins "\ei" fzf-locate-widget
-bindkey -M emacs "\er" fzf-history-widget
-bindkey -M vicmd "\er" fzf-history-widget
-bindkey -M viins "\er" fzf-history-widget
-bindkey -M emacs "\C-t" transpose-words
-bindkey -M vicmd "\C-t" transpose-words
-bindkey -M viins "\C-t" transpose-words
-bindkey -M emacs "\et" fzf-file-widget
-bindkey -M vicmd "\et" fzf-file-widget
-bindkey -M viins "\et" fzf-file-widget
+	# movement
+	bindkey -M "$1" "\eOA" up-line-or-beginning-search
+	bindkey -M "$1" "\e[A" up-line-or-beginning-search
+	bindkey -M "$1" "\eOB" down-line-or-beginning-search
+	bindkey -M "$1" "\e[B" down-line-or-beginning-search
+	bindkey -M "$1" '^[[A' up-line-or-beginning-search
+	bindkey -M "$1" '^[[B' down-line-or-beginning-search
+	bindkey -M "$1" "\eOD" backward-word
+	bindkey -M "$1" "\e\e[D" backward-word
+	bindkey -M "$1" "\e[1;5D" backward-word
+	bindkey -M "$1" "\e[1;3D" backward-word
+	bindkey -M "$1" "\e[1;2D" backward-word
+	bindkey -M "$1" "\eOC" forward-word
+	bindkey -M "$1" "\e\e[C" forward-word
+	bindkey -M "$1" "\e[1;5C" forward-word
+	bindkey -M "$1" "\e[1;3C" forward-word
+	bindkey -M "$1" "\e[1;2C" forward-word
+	bindkey -M "$1" "\e[7~" beginning-of-line
+	bindkey -M "$1" "\e[1;5B" beginning-of-line
+	bindkey -M "$1" "\e[1;3B" beginning-of-line
+	bindkey -M "$1" "\e[8~" end-of-line
+	bindkey -M "$1" "\e[1;5A" end-of-line
+	bindkey -M "$1" "\e[1;3A" end-of-line
+	bindkey -M "$1" "\e[1;2B" beginning-of-line
+	bindkey -M "$1" "\e[1;2A" end-of-line
+	# bind UP and DOWN arrow keys (compatibility fallback
+	# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
+	bindkey -M "$1" "$terminfo[kcuu1]" history-substring-search-up
+	bindkey -M "$1" "$terminfo[kcud1]" history-substring-search-down
+	bindkey -M "$1" "\e[5~" history-substring-search-up
+	bindkey -M "$1" "\e[6~" history-substring-search-down
+	bindkey -M "$1" "\e-" history-substring-search-up
+	bindkey -M "$1" "\e=" history-substring-search-down
+	# Fixes from http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
+	bindkey -M "$1" "$(echotc kl)" backward-char
+	bindkey -M "$1" "$(echotc kr)" forward-char
+	bindkey -M "$1" "$(echotc ku)" up-line-or-beginning-search
+	bindkey -M "$1" "$(echotc kd)" down-line-or-beginning-search
 
-## A Zsh Do What I Mean key. Attempts to predict what you will want to do next.
-## Usage: Type a command and hit control-u and zsh-dwim will attempt to transform your command.
-if zle -la | grep -q dwim; then
-	bindkey -M emacs "\C-u" dwim
-	bindkey -M vicmd "\C-u" dwim
-	bindkey -M viins "\C-u" dwim
-	bindkey -M emacs "\e[19~" dwim
-	bindkey -M vicmd "\e[19~" dwim
-	bindkey -M viins "\e[19~" dwim
-fi
+	bindkey -M "$1" "\e[3~" delete-char
+	bindkey -M "$1" "\ek" describe-key-briefly
+	bindkey -M "$1" "\C-xe" edit-command-line
+	bindkey -M "$1" "\C-x\C-e" edit-command-line
+	bindkey -M "$1" "\e\ey" zle-youtube-helper
+	bindkey -M "$1" "\eU" up-case-word
+	bindkey -M "$1" "\e\e\e" _history-complete-newer
+	bindkey -M "$1" "\e," zaw
+	bindkey -M "$1" "\e<" zle-zaw-help
+	bindkey -M "$1" "\ew" zle-backwards-delete-to-char
+	bindkey -M "$1" "\ee" delete-to-char
+	bindkey -M "$1" "\eOP" zle-less
+	bindkey -M "$1" "\eOQ" zle-vim
+	bindkey -M "$1" "\eOR" insert-unicode-char
+	bindkey -M "$1" "\eOS" zle-compdef
+	bindkey -M "$1" "\e[P" delete-char
+	bindkey -M "$1" "\C-r" redo
+	## Call fman() on current cmdline after word-splitting
+	bindkey -M "$1" "\e/" zle-fman
+	bindkey -M "$1" "\e?" where-is
+	bindkey -M "$1" "^Xi" insert-unicode-char
+	bindkey -M "$1" "\C-x\C-i" insert-unicode-char
+	bindkey -M "$1" "\e>" autosuggest-clear
+	## F5: Toggle keymap
+	# bindkey -M "$1" "\ek" zle-toggle-keymap
+	bindkey -M "$1" "\e[15~" zle-toggle-keymap
+	bindkey -M "$1" "\e[17~" yank-x-selection
+	bindkey -M "$1" "\e[18~" insert-x-selection
+	bindkey -M "$1" "\e[" yank-x-selection
+	bindkey -M "$1" "\e]" insert-x-selection
+	# bindkey -M "$1" "\e[18~" append-x-selection
+	# F9: Insert composed character
+	# bindkey -M emacs "\e[19~" insert-composed-char
+
+	bindkey -M "$1" "\e;" fzf-completion
+	bindkey -M "$1" "\e\C-i" fasd-complete
+	# bindkey -M "$1" "\e[Z" fzf-complete-f
+	bindkey -M "$1" "\e[Z" fasd-complete-d
+	bindkey -M "$1" "\C-i" "$fzf_default_completion"
+	bindkey -M "$1" "\ei" fzf-locate-widget
+	bindkey -M "$1" "\er" fzf-history-widget
+	bindkey -M "$1" "\C-t" transpose-words
+	bindkey -M "$1" "\et" fzf-file-widget
+
+	## A Zsh Do What I Mean key. Attempts to predict what you will want to do next.
+	## Usage: Type a command and hit control-u and zsh-dwim will attempt to transform your command.
+	if zle -la | grep -q dwim; then
+		bindkey -M "$1" "\C-u" dwim
+		bindkey -M "$1" "\e[19~" dwim
+	fi
+} emacs vicmd viins
 
 # more uglyness soz
 #
