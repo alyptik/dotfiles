@@ -783,7 +783,6 @@ au BufNewFile,BufRead *.conf* setf cfg
 au BufNewFile,BufRead /etc/* setf cfg
 au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
 
-
 " Fallback
 "au BufNewFile,BufRead * setf erlang
 
