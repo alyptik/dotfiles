@@ -625,24 +625,77 @@ fi
 #
 # custom compdefs with generated and hardcoded arrays
 () {
-	local -a defargcmds=(as auracle autopep8 autopep8-python2 basename bash bsdtar calcc canto-curses canto-daemon canto-remote catdoc cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium col colordiff compton configure conky cower cpanm cppcheck cpulimit crontab ctags curl define dmidecode elftoc expac fasd file fusermount-glusterfs fusermount3 fzf gnome-keyring-daemon gpg-agent help2man highlight highlight hping hsetroot install keyring kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint mv named netstat netstat newsbeuter node nohup objconv objdump optipng pacconf pactree paste pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir rmlint rst2man rst2man2 saldl scan-build seq shred sox split stat st stjerm strings supybot swapon systool termite test tic tload transmission-cli transmission-create transmission-daemon transmission-edit transmission-get transmission-gtk transmission-qt transmission-remote transmission-remote-cli transmission-remote-cli transmission-remote-gtk transmission-show transset-df updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc xbindkeys xsel youtube-dl)
-	local -a asmcmds=(${(o)$({ cgasm -f '.*' | perl -alne 'BEGIN { my @cmds; }; push @cmds, split(/ /, lc $F[0] =~ y|/| |r); END{ print join " ", @cmds; };'; } 2>/dev/null)})
-	local -a seckeys=(${${(Mo)$(gpg2 --no-default-keyring --list-secret-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
-	local -a pubkeys=(${${(Mo)$(gpg2 --no-default-keyring --list-public-keys --list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
-	local -a pkgs=(${(of@)$(pacman -Qq 2>/dev/null)})
-	local -a kmods=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz')%.ko.gz}##*/})
+	local -a defargcmds asmcmds dbpkgs kmods pubkeys seckeys
+
+	defargcmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
+	defargcmds+=(calcc canto-curses canto-daemon canto-remote catdoc cd2raw)
+	defargcmds+=(cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium)
+	defargcmds+=(col colordiff compton configure conky cower cpanm cppcheck)
+	defargcmds+=(cpulimit crontab ctags curl define dmidecode elftoc)
+	defargcmds+=(expac fasd file flac2all fusermount-glusterfs fusermount3)
+	defargcmds+=(fzf gnome-keyring-daemon gpg-agent help2man highlight)
+	defargcmds+=(highlight hping hsetroot install keyring kid3-cli)
+	defargcmds+=(kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint)
+	defargcmds+=(mv named netstat netstat newsbeuter node nohup)
+	defargcmds+=(objconv objdump optipng pacconf pactree paste pstree)
+	defargcmds+=(qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir)
+	defargcmds+=(rmlint rst2man rst2man2 saldl scan-build seq shred)
+	defargcmds+=(sox split stat st stjerm strings supybot swapon)
+	defargcmds+=(systool termite test tic tload transmission-cli)
+	defargcmds+=(transmission-create transmission-daemon transmission-edit)
+	defargcmds+=(transmission-get transmission-gtk transmission-qt)
+	defargcmds+=(transmission-remote transmission-remote-cli transmission-remote-cli)
+	defargcmds+=(transmission-remote-gtk transmission-show transset-df)
+	defargcmds+=(updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc)
+	defargcmds+=(xbindkeys xsel youtube-dl)
+
+	asmcmds+=(${(o)$(cgasm -f '.*' | perl -alne '
+			BEGIN{ my @cmds; }
+			push @cmds, split(/ /, lc $F[0] =~ y|/| |r);
+			END{ print join " ", @cmds;}'
+		)})
+	dbpkgs+=(${(fo@)$(pacman -Qq)})
+	kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz')%.ko.gz}##*/})
+	pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring --list-options no-show-photos):%<*>}//(<|>)/})
+	seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring --list-options no-show-photos):%<*>}//(<|>)/})
+
+	cgasm_str+=$'_arguments "*:arg:_default" ":assembly instruction:('
+	cgasm_str+="${asmcmds[*]}"
+	cgasm_str+=')" -- '
+	dgpg_str+=$'_arguments "*:arg:_default" ":secret keys:('
+	# dgpg_str+=$'_arguments "*:arg:_default" ":public key:('
+	dgpg_str+="${seckeys[*]}"
+	# dgpg_str+="${pubkeys[*]}"
+	dgpg_str+=$')" -- '
+	hi_str+=$'_arguments "*:file:_files" ":syntax:_files '
+	hi_str+=$'-W \'/usr/share/highlight/langDefs/\' '
+	hi_str+=$'-g \'*.lang(:r)\'" -- '
+	high_str+=$'_arguments "*:file:_files" ":theme:_files '
+	high_str+=$'-W \'/usr/share/highlight/themes\''
+	high_str+=$'-g \'*.theme(:r)\'" ":syntax:_files'
+	high_str+=$'-W \'/usr/share/highlight/langDefs\''
+	high_str+=$'-g \'*.lang(:r)\'" ":out format:'
+	high_str+=$'(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- '
+	pinfo_str+=$'_arguments "*:arg:_default" ":info page:_texinfo" -- '
+	qpc_str+=$'_arguments "*:packages:('
+	qpc_str+="${dbpkgs[*]}"
+	qpc_str+=$')" -- '
+	reptyr_str+=$'_arguments "*:arg:_default" ":processe:_pids" -- '
+	modprobe_str+=$'_arguments "*:arg:_default" ":modules:('
+	modprobe_str+="${kmods[*]}"
+	modprobe_str+=$')" -- '
 
 	for i in "${defargcmds[@]}"; do compdef _gnu_generic "$i"; done
 
-	compdef $'_arguments "*:arg:_default" ":assembly instruction:('"${asmcmds[*]}"')" -- ' cgasm
-	# compdef $'_arguments "*:arg:_default" ":secret keys:('"${seckeys[*]}"')" -- ' dgpg
-	compdef $'_arguments "*:arg:_default" ":public key:('"${pubkeys[*]}"')" -- ' dgpg
-	compdef $'_arguments "*:file:_files" ":syntax:_files -W \'/usr/share/highlight/langDefs/\' -g \'*.lang(:r)\'" -- ' hi
-	compdef $'_arguments "*:file:_files" ":theme:_files -W \'/usr/share/highlight/themes\' -g \'*.theme(:r)\'" ":syntax:_files -W \'/usr/share/highlight/langDefs\' -g \'*.lang(:r)\'" ":out format:(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- ' high
-	compdef $'_arguments "*:arg:_default" ":info page:_texinfo" -- ' pinfo
-	compdef $'_arguments "*:packages:('"${pkgs[*]}"')" -- ' qpc
-	compdef $'_arguments "*:arg:_default" ":processe:_pids" -- ' reptyr
-	compdef $'_arguments "*:arg:_default" ":modules:('"${kmods[*]}"')" -- ' modprobe
+	compdef "$cgasm_str" cgasm
+	compdef "$dgpg_str" dgpg
+	compdef "$hi_str" hi
+	compdef "$high_str" high
+	compdef "$modprobe_str" modprobe
+	compdef "$pinfo_str" pinfo
+	compdef "$qpc_str" qpc
+	compdef "$reptyr_str" reptyr
+
 }
 
 compdef _fman fman

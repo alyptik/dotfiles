@@ -1,0 +1,12 @@
+[Unit]
+Description="pineboat irc bot"
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=30
+ExecStart=%h/.local/bin/supybot -d %h/.supy/mnrmbaught.conf
+
+[Install]
+WantedBy=default.target
