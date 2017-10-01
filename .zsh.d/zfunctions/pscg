@@ -6,7 +6,7 @@ function TRAPINT () {
 
 local nopopd orig
 orig="$PWD"
-[[ "$orig" != "${CONF:-/store/config}" ]] && pushd "${CONF:-/store/config}" >/dev/null 2>&1 || nopopd=1
+[[ "$orig" != "${C:-/store/dotfiles}" ]] && pushd "${C:-/store/dotfiles}" >/dev/null 2>&1 || nopopd=1
 if git pull 2>/dev/null; then
 	printf '\n \033[32m %s \n\033[0m' "Pull successful!"
 else

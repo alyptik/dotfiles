@@ -1,6 +1,6 @@
 (
-	if [[ -d "${CONF:-/store/config}" ]]; then
-		cd "${CONF:-/store/config}" || return 1
+	if [[ -d "${C:-/store/dotfiles}" ]]; then
+		cd "${C:-/store/dotfiles}" || return 1
 	elif [[ -d /store/dotfiles ]]; then
 		cd /store/dotfiles || return 1
 	fi

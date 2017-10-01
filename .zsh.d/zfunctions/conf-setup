@@ -1,6 +1,6 @@
 
 	local orig="$PWD"
-	[[ "$orig" != "${CONF:-/store/config}" ]] && pushd "${CONF:-/store/config}" >/dev/null 2>&1 || local dirvar=1
+	[[ "$orig" != "${C:-/store/dotfiles}" ]] && pushd "${C:-/store/dotfiles}" >/dev/null 2>&1 || local dirvar=1
 	git init .
 	git remote add origin "git+ssh://git@github.com/alyptik/config.git" 2>/dev/null || \
 		git remote set-url origin "git+ssh://git@github.com/alyptik/config.git"
