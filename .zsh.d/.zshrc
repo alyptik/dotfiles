@@ -473,7 +473,7 @@ bindkey -M viins "\e[3~" delete-char
 			END{ print join " ", @cmds;}'
 		)})
 	dbpkgs+=(${(fo@)$(pacman -Qq)})
-	kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz')%.ko.gz}##*/})
+	kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
 	pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring --list-options no-show-photos):%<*>}//(<|>)/})
 	seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring --list-options no-show-photos):%<*>}//(<|>)/})
 

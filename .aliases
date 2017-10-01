@@ -6,6 +6,8 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias cdg='pushd "${C:-/store/dotfiles}" >/dev/null'
+alias cdp='pushd "${P:-/store/code/projects}" >/dev/null'
 # silence 'Picked up _JAVA_OPTIONS' message on command line
 _SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
 unset _JAVA_OPTIONS

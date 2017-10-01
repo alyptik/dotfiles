@@ -3,11 +3,14 @@
 #
 # Environment configuration
 
+# conditionals
+if [ "$(hostname)" == "fedora" ]; then
+	TERM=screen-256color
+fi
 # Disable toggling XON/XOFF with ^S/^Q
-if [ -t 0 ]; then stty -ixon; fi
-
-# VPS config
-if [ "$(hostname)" == "fedora" ]; then export TERM=screen-256color; fi
+if [ -t 0 ]; then
+	stty -ixon
+fi
 
 # Environment variables
 # Compilation flags
@@ -18,7 +21,7 @@ export ARCHFLAGS="-arch x86_64"
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PATH=/usr/lib/distcc/bin:/usr/bin
 # export CCACHE_PREFIX="distcc"
-export CONF="/store/config"
+export C="/store/dotfiles" c="${C}"
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 # Audio plugins
@@ -28,14 +31,14 @@ export EDITOR=vim
 export FCEDIT="$EDITOR" VISUAL="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR"
 # Setting ag as the default source for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
+# export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || \
+#         find . -path "*/\.*" -prune -o -type f -print -o -type l -print | \
+#         sed s/^..//) 2> /dev/null'
 export FZF_DEFAULT_OPTS='
 	--color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
 	--color info:150,prompt:110,spinner:150,pointer:167,marker:174
 	--height 40%
 '
-# export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || \
-#         find . -path "*/\.*" -prune -o -type f -print -o -type l -print | \
-#         sed s/^..//) 2> /dev/null'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden --bind '?:toggle-preview'"
 # To apply the command to CTRL-T as well
@@ -51,7 +54,7 @@ export GOPATH="${HOME}/code/go"
 # Gtk themes
 export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
 export GTK_DEBUG=1
-export home="$HOME"
+export H="$HOME" h="${H}"
 # export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:${HOME}/.linuxbrew/share/info:${HOME}/GNUstep/Library/Documentation/info:${INFOPATH}"
 export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:/home/alyptik/.linuxbrew/share/info:/home/alyptik/GNUstep/Library/Documentation/info"
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -83,7 +86,7 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 # export LIBVA_DRIVER_NAME="i965"
 # export VDPAU_DRIVER="va_gl"
 export MAKEFLAGS="-j -l5"
-export MANPATH="${CONF:-/store/config}/man:/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man"
+export MANPATH="${C}/man:/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man"
 export MANSECT="3:2:0:9:7:5:4:1:n:l:8:6:3f"
 export npm_config_prefix="${HOME}/.node_modules"
 export PAGER=less
@@ -107,7 +110,9 @@ export PERLDOC_PAGER="less -CMRis"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH}:${PLAN9}/bin"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Libraries/pkgconfig:/usr/lib/pkgconfig"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:${PLAN9}/bin"
-export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:$PLAN9/share/man"
+export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man" p9="${PLAN9}"
+export P="/store/code/projects" p="${P}"
+export PRE="${HOME}/.local" pre="${PRE}"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2.7"
 # export PYTHON='/store/config/scripts/python2'
