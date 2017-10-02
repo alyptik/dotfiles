@@ -4,51 +4,40 @@
 	elif [[ -d /store/dotfiles ]]; then
 		cd /store/dotfiles || return 1
 	fi
-
 	git add .
 	if [[ -z "$1" ]]; then
-		if git commit -a -S; then
-			git push && \
-				printf '\n \033[32m %s \n\033[0m' "Dotfiles commit successful!" || \
-				printf '\n \033[31m %s \n\033[0m' "Error during dotfiles push..."
+		if (git commit -v -a -S && git push); then
+			print "\n $(tput setaf 10) dotfiles commit successful! \n$(tput sgr0)"
 		else
-			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
 		fi
 	else
-		if git commit -a -S -m "$1"; then
-			git push && \
-				printf '\n \033[32m %s \n\033[0m' "Dotfiles commit successful!" || \
-				printf '\n \033[31m %s \n\033[0m' "Error during dotfiles push..."
+		if (git commit -v -a -S -m "$2" && git push); then
+			print "\n $(tput setaf 10) dotfiles commit successful! \n$(tput sgr0)"
 		else
-			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
 		fi
 	fi
 )
 
 (
-	if [[ -d /store/code/projects ]]; then
-		cd /store/code/projects || return 1
+	if [[ -d "${P:-/store/code/projects}" ]]; then
+		cd "${P:-/store/code/projects}" || return 1
 	elif [[ -d "${HOME}/projects" ]]; then
 		cd "${HOME}/projects" || return 1
 	fi
-
-	cd /store/code/projects || return 1
 	git add .
 	if [[ -z "$2" ]]; then
-		if git commit -a -S; then
-			git push && \
-				printf '\n \033[32m %s \n\033[0m' "Projects commit successful!" || \
-				printf '\n \033[31m %s \n\033[0m' "Error during project push..."
+		if (git commit -v -a -S && git push); then
+			print "\n $(tput setaf 10) projects commit successful! \n$(tput sgr0)"
 		else
-			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
 		fi
 	else
-		if git commit -a -S -m "$2"; then
-			git push && \
-				printf '\n \033[32m %s \n\033[0m' "Projects commit successful!" || \
-				printf '\n \033[31m %s \n\033[0m' "Error during project push..."
+		if (git commit -v -a -S -m "$2" && git push); then
+			print "\n $(tput setaf 10) projects commit successful! \n$(tput sgr0)"
 		else
-			printf '\n \033[31m %s \n\033[0m' "Nothing to commit..."
+			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
 		fi
 	fi
 )
