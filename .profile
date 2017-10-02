@@ -55,6 +55,8 @@ export GOPATH="${HOME}/code/go"
 export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
 export GTK_DEBUG=1
 export H="$HOME" h="${H}"
+# get more colors
+export HH_CONFIG=hicolor
 # export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:${HOME}/.linuxbrew/share/info:${HOME}/GNUstep/Library/Documentation/info:${INFOPATH}"
 export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:/home/alyptik/.linuxbrew/share/info:/home/alyptik/GNUstep/Library/Documentation/info"
 export _JAVA_AWT_WM_NONREPARENTING=1

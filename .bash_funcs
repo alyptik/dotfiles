@@ -1,8 +1,6 @@
 #!/bin/bash
 #
-# ~/.bash_funcs
-#
-# bash shell functions
+# ~/.bash_funcs - bash shell functions
 
 function 0x0() {
 	curl https://0x0.st --progress-bar -F"file=@-" | \
@@ -16,16 +14,20 @@ function abexpac() {
 	expac -s "%-25n %v" | grep "$REPLY"
 }
 
-# acp() {
-#         [[ -z "$*" ]] && return 1
-#         arg1="${${1:t}// /_}"
-#         for i in "$@"; do
-#         scp "$i" "rarch:/srv/http/uhr/${${i:t}// /_}" && \
-#                 ssh rarch chown -v http:http "/srv/http/uhr/${${i:t}// /_}" && \
-#         done
-#         <<<"https://alyp.tk/uhr/${arg1}" tee >(perl -pe 'chomp if eof' | xsel -ib)
-#
-# }
+acp() {
+	local arg1 i1
+	[[ -z "$*" ]] && return 1
+	arg1="${1##*/}"
+	arg1="${arg1// /_}"
+	for i in "$@"; do
+		i1="${i##*/}"
+		i1="${i1// /_}"
+		scp "$i" "http:/srv/http/uhr/${i1}"
+	done
+	printf "%s\n" "https://alyp.tk/uhr/${arg1}" | \
+		tee >(perl -pe 'chomp if eof' | xsel -ib)
+
+}
 
 function act() {
 	awk 'BEGIN{
@@ -79,12 +81,15 @@ function bd-btrfs() {
 }
 
 function bfg() {
+	local job
 	## Resume a background job
-	 if [ "${#1}" -ne 1 ]; then echo 'attempting to resume job "%1"'; local j=1; else local j="${1}"; fi; %"${j}" &
+	((${#1} != 1)) && job=1 || job="$1"
+	printf 'attempting to resume job "%s"\n' "$job"
+	%"$job" &
 }
 
 function book() {
-	 chromium "http://b-ok.org/s/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "http://b-ok.org/s/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function bptpb() {
@@ -95,7 +100,7 @@ function bptpb() {
 }
 
 function calc() {
-	 bc -l <<<"${*}"
+	bc -l <<<"${*}"
 }
 
 function ccffmpeg() {
@@ -127,9 +132,9 @@ function cdg() {
 
 function certfp() {
 	pushd . &>/dev/null
-	cd "${HOME}/certs/irc"
+	cd "${HOME}/certs/irc" || return 1
 	local nick="${1:-alyptik}"
-	openssl req -newkey rsa:2048 -days 730 -x509 -keyout ${nick}.key -out ${nick}.cert
+	openssl req -newkey rsa:2048 -days 730 -x509 -keyout "${nick}.key" -out "${nick}.cert"
 	#touch "./${nick}"'.pem'
 	cat "${nick}.cert" "${nick}.key" >"${nick}.pem"
 	#openssl x509 -sha1 -noout -fingerprint -in "$1" | sed -e 's/^.*=//;s/://g;y/ABCDEF/abcdef/'
@@ -151,6 +156,7 @@ function certfp() {
 #                 fi
 #         fi
 # }
+
 function cgfix() {
 	## fix for broken cgmanager
 	while :; do
@@ -178,9 +184,9 @@ function chgrep() {
 }
 
 function chr() {
-	{ for i in "$@"; do printf \\"$(printf '%03o' "$1")" ' '; done } | \
-	sed 's/ *$//' | \
-	tee >(xsel -ib)
+	{ for i in "$@"; do printf '%s' "$(printf '%03o' "$1")" ' '; done } | \
+		sed 's/ *$//' | \
+		tee >(xsel -ib)
 }
 
 function chud() {
@@ -238,8 +244,8 @@ function colortest() {
 						vals="${fgc:+$fgc;}${bgc}"
 						vals=${vals%%;}
 		printf "  %-9s" "${seq0:-(default)}"
-						printf " ${seq0}TEXT\e[m"
-						printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+						printf '%b' " ${seq0}TEXT\e[m"
+						printf '%b' " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
 				done
 				echo; echo
 		done
@@ -248,7 +254,7 @@ function colortest() {
 
 function colortput() {
 	local colorcount=${1:-25}
-	for ((i=0;i<${colorcount};i++)); do
+	for ((i=0;i<colorcount;i++)); do
 		#[[ "$colorcount" -lt 10 ]] && {
 			#printf "\e[38;4;29m[%d]$(tput sgr0)$(tput setaf $i)%s\t" "$i" "derp"
 			#printf '%s' "\e[38;4;29m[%d]$(tput sgr0)$(tput setaf $i)%s" "$i" "derp"; } || {
@@ -271,49 +277,30 @@ function cptpb() {
 	local pchar
 	[[ "$EUID" -eq 0 ]] && pchar='# ' || pchar='$ '
 	if [[ -n "$ZSH_NAME" ]]; then
-	cat <(printf "\n%s\n" "${pchar}${history[$HISTCMD]}" | sed "s/ *| *cptpb.*//") - <(echo) | \
-		tee /dev/stderr | \
-		curl -F"c=@-" https://pb.gehidore.net 2>/dev/null | \
-		tee >(awk '/http/ {sub("url: ",""); print}' | \
-		awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' | \
-		xsel -ib)
+		cat <(printf "\n%s\n" "${pchar}${history[$HISTCMD]}" | \
+			sed "s/ *| *cptpb.*//") - <(echo) | \
+			tee /dev/stderr | \
+			curl -F"c=@-" https://pb.gehidore.net 2>/dev/null | \
+			tee >(awk '/http/ {sub("url: ",""); print}' | \
+			awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' | \
+			xsel -ib)
 	elif [[ -n "$BASh" ]]; then
-	cat <(printf "\n%s\n" "${pchar}$(history 1 | sed "s/[0-9]* *\(.*[^ ]\) *| *cptpb.*/\1/")") - <(echo) | \
-		tee /dev/stderr | \
-		curl -F"c=@-" https://pb.gehidore.net 2>/dev/null | \
-		tee >(awk '/http/ {sub("url: ",""); print}' | \
-		awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' | \
-		xsel -ib)
+		cat <(printf "\n%s\n" "${pchar}$(history 1 | \
+			sed "s/[0-9]* *\(.*[^ ]\) *| *cptpb.*/\1/")") - <(echo) | \
+			tee /dev/stderr | \
+			curl -F"c=@-" https://pb.gehidore.net 2>/dev/null | \
+			tee >(awk '/http/ {sub("url: ",""); print}' | \
+			awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' | \
+			xsel -ib)
 	else
-	printf "$(tput setaf 9)$(tput bold)%s$(tput sgr0)\n" 'Error: bash/zsh not found!'
-	return 1
+		printf "$(tput setaf 9)$(tput bold)%s$(tput sgr0)\n" 'Error: bash/zsh not found!'
+		return 1
 	fi
-	# TODO: history doesn't work right with "$shell" -c; figure out how to fix
-	# local bashcmd zshcmd shell
-	# shell="$(sh -c 'type -P zsh' || sh -c 'type -P bash')"
-	# zshcmd='cat <(printf "%s\n" "${pchar}${history[$HISTCMD]}" | sed "s/ *| *cptpb.*//") - <(echo) | \
-	#         tee /dev/stderr | \
-	#         curl -F"c=@-" https://pb.gehidore.net 2>/dev/null | \
-	#         tee >(awk '\''/https/ {sub("url: ",""); print}'\'' | \
-	#         awk '\''NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}'\'' | \
-	#         xsel -ib)'
-	# bashcmd='cat <(printf "%s\n" "${pchar}$(history 1 | sed "s/[0-9]* *\(.*[^ ]\) *| \
-	#         *cptpb.*/\1/")") - <(echo) | \
-	#         tee /dev/stderr | \
-	#         curl -F"c=@-" https://pb.gehidore.net 2>/dev/null | \
-	#         tee >(awk '\''/https/ {sub("url: ",""); print}'\'' | \
-	#         awk '\''NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}'\'' | \
-	#         xsel -ib)'
-	# case "$shell" in
-	#         *zsh) "$shell" -c "$zshcmd" ;;
-	#         *bash) "$shell" -c "$bashcmd" ;;
-	#         *) printf "\033[31m%s\033[0m\n" 'Error: bash/zsh not found!'; return 1;;
-	# esac
 }
 
 function cr() {
 	# chromium "https://google.com/search?q=site:en.cppreference.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
-	 chromium "http://en.cppreference.com/mwiki/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "http://en.cppreference.com/mwiki/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function crf() {
@@ -436,17 +423,17 @@ function dbr() {
 }
 
 function dco() {
-	 mkdir "/tmp/aur" &>/dev/null
-	 cower -t "/tmp/aur" -dd "$@"
-	 cd "/tmp/aur/$1" || cd "/tmp/aur"
+	mkdir "/tmp/aur" &>/dev/null
+	cower -t "/tmp/aur" -dd "$@"
+	cd "/tmp/aur/$1" || cd "/tmp/aur"
 }
 
 function ddg() {
-	 chromium "https://www.duckduckgo.com/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "https://www.duckduckgo.com/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function dgbtrfs() {
-	 find / -xdev -type d -print -exec sudo btrfs filesystem defragment -r -v -clzo "{}" \;
+	find / -xdev -type d -print -exec sudo btrfs filesystem defragment -r -v -clzo "{}" \;
 }
 
 function dgpg() {
@@ -471,7 +458,7 @@ function dkpdf() {
 }
 
 function dloader() {
-	 node /@media/microSDXC/deezloader/app.js & disown
+	node /@media/microSDXC/deezloader/app.js & disown
 }
 
 function dsgenkey() {
@@ -651,17 +638,17 @@ function fcs() {
 
 function fh() {
 	## fh - repeat history
-	 print -z $( ( [[ -n "$ZSH_NAME" ]] && fc -l 1 || history ) | fzf +s --tac | sed 's/ *[0-9]* *//')
+	print -z $( ( [[ -n "$ZSH_NAME" ]] && fc -l 1 || history ) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
 function fhe() {
 	## fhe - repeat history edit
-	 ( [[ -n "$ZSH_NAME" ]] && fc -l 1 || history ) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
+	( [[ -n "$ZSH_NAME" ]] && fc -l 1 || history ) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
 }
 
 function fkill() {
 	## fkill - kill process
-	 local pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}'); [ -n "$pid" ] && kill -"${1:-15}" "$pid"
+	local pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}'); [ -n "$pid" ] && kill -"${1:-15}" "$pid"
 }
 
 function flacsplit() {
@@ -860,7 +847,7 @@ function __fzf-edit-history() {
 }
 
 function __fzf_history() {
-	 __ehc $(history | fzf --tac --tiebreak=index | perl -ne 'm/^\s*([0-9]+)/ and print "!$1"')
+	__ehc $(history | fzf --tac --tiebreak=index | perl -ne 'm/^\s*([0-9]+)/ and print "!$1"')
 }
 function __fzf_readline() {
 	builtin eval "
@@ -894,18 +881,18 @@ function genchee() {
 }
 
 function gg() {
-	 chromium "https://google.com/search?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "https://google.com/search?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function gh() {
-	 chromium "https://github.com/search?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "https://github.com/search?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function gif() {
-	 ffmpeg -i "${1:?Error: no input file specified!}" "${2:-${1%.*}.gif}" -threads 0
+	ffmpeg -i "${1:?Error: no input file specified!}" "${2:-${1%.*}.gif}" -threads 0
 }
 function gnpm() {
-	 npm -g install --prefix "${HOME}/.node_modules" "$@"
+	npm -g install --prefix "${HOME}/.node_modules" "$@"
 }
 
 function gs-pdf() {
@@ -971,7 +958,7 @@ function gzencode() {
 
 function h() {
 	## Fix zsh annoying history behavior
-	 if [[ -z "$*" ]]; then history; else egrep "$*" <(fc -l 1); fi
+	if [[ -z "$*" ]]; then history; else egrep "$*" <(fc -l 1); fi
 }
 
 function :h() {
@@ -1001,7 +988,7 @@ function hexc() {
 }
 
 function hgdb() {
-	 vim -c "tab h gdbmgr.txt | tabn | q"
+	vim -c "tab h gdbmgr.txt | tabn | q"
 }
 
 function hi() {
@@ -1194,7 +1181,7 @@ function ldas() {
 }
 
 function ldr() {
-	 ls -dCX --color=auto "${*:-./}/"*/
+	ls -dCX --color=auto "${*:-./}/"*/
 }
 
 # ll() {
@@ -1217,7 +1204,7 @@ function lnc() {
 }
 
 function lpman() {
-	 man -t "${1?Error: No manpage provided.}" | groff -man -Tps | lpr
+	man -t "${1?Error: No manpage provided.}" | groff -man -Tps | lpr
 }
 
 function lstput() {
@@ -1240,7 +1227,7 @@ function lstput() {
 }
 
 function lsupd() {
-	 checkupdates; cower -ub
+	checkupdates; cower -ub
 }
 
 function mattach() {
@@ -1248,7 +1235,7 @@ function mattach() {
 }
 
 function mcd() {
-	 [ -d "$*" ] || mkdir -p "$*"; pushd "$*"
+	[ -d "$*" ] || mkdir -p "$*"; pushd "$*"
 }
 
 function mobi() {
@@ -1280,7 +1267,7 @@ function mode2colors() {
 }
 
 function mp() {
-	 chromium 'https://metacpan.org/search?size=50&q='"$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium 'https://metacpan.org/search?size=50&q='"$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function mptpb() {
@@ -1297,12 +1284,12 @@ function mptpb() {
 }
 
 function mpvcmd() {
-	 notify-send "mpv: loading..." "$@"
-	 mpv --loop-file=inf "$@"
+	notify-send "mpv: loading..." "$@"
+	mpv --loop-file=inf "$@"
 }
 
 function myt() {
-	 mpv --no-video --ytdl-format=bestaudio "ytdl://ytsearch10:$*"
+	mpv --no-video --ytdl-format=bestaudio "ytdl://ytsearch10:$*"
 }
 
 function newpl() {
@@ -1398,6 +1385,7 @@ function o() {
 	shift
 	"$0" "$@"
 }
+
 function odkms() {
 	# for i in /var/lib/dkms/*/[^k]*/source; do [ -e "$i" ] || printf '%s\n' "$i"; done
 	find /var/lib/dkms/ \
@@ -1478,100 +1466,77 @@ function pdf() {
 	pdf "$@"
 }
 
+# Use a different browser depending on url
 function plu() {
-	#
-	# Use a different browser depending on url
 	function imgurredirect () {
-	    url="$(curl "$1" 2>/dev/null | grep '<meta property="og:image"')"
-	    url="${url/*content=\"/}"
-	    url="${url/*\" \/>$/}"
-	    feh "$url"
-	    # gio open "$@"
-	    # chromium "$url"
-	    # pyb.py "$url"
+		url="$(curl "$1" 2>/dev/null | grep '<meta property="og:image"')"
+		url="${url/*content=\"/}"
+		url="${url/*\" \/>$/}"
+		feh "$url"
+		# gio open "$@"
+		# chromium "$url"
+		# pyb.py "$url"
 	}
+
 	function mpvcmd () {
-	    notify-send "mpv: loading..." "$1"
-	    mpv --loop-file=inf "$@"
+		notify-send "mpv: loading..." "$1"
+		mpv --loop-file=inf "$@"
 	}
+
 	function _plu () {
-	local pb pbalt
-	pb="ptpb.pw" pbalt="pb.gehidore.net"
-	{ case "$1" in
-	(*://nibbler*/*)
-		gio open "$1" ;;
-	(*://i.imgur.com/*.gifv|*://imgur.com/*.gifv)
-		mpvcmd "${1/.gifv/.gif}" ;;
-	(*.webm|*.gif|*.gifv|*.mp4|*.avi|*.mkv|*.mov|*.flv)
-		mpvcmd "$1" ;;
-	(*://i.imgur.com/*)
-		feh "$1" ;;
-	(*://imgur.com/*)
-		imgurredirect "$1" ;;
-	(*.jpg|*.jpeg|*.png)
-		feh "$1" ;;
-	(*://dpaste.de/*)
-		pyb.py "$1" ;;
-	(*://*youtube.com/*)
-		mpvcmd "$1" ;;
-	(*://*youtu.be/*)
-		mpvcmd "$1" ;;
-	(*://$pbalt/pb/*.sh|*://$pbalt/pb/*.bash|*://$pbalt/pb/*.zsh|*://$pbalt/pb/*/text|*://$pbalt/pb/*/bash)
-		gvim -c "setf sh" -p "${1%/*}" ;;
-	(*://$pbalt/pb/*/*)
-		gvim -c "setf ${1##*/}" -p "${1%/*}" ;;
-	(*://$pbalt/pb/*.*|*://$pbalt/pb/\~*)
-		gio open "$1" ;;
-	(*://$pbalt/pb/*)
-		gvim -c "setf sh" -p "${1}" ;;
-	(*://$pb/*.sh|*://$pb/*.bash|*://$pb/*.zsh|*://$pb/*/text*|*://$pb/*/bash)
-		gvim -c "setf sh" -p "${1%/*}" ;;
-	(*://$pb/*/*)
-		gvim -c "setf ${1##*/}" -p "${1%/*}" ;;
-	(*://$pb/*.*|*://$pb/\~*)
-		gio open "$1" ;;
-	(*://$pb/*)
-		gvim -c "setf sh" -p "${1}" ;;
-	(*://pastebin.com/raw*)
-		gvim -c "setf sh" -p "$1" ;;
-	(*://)
-		gio open "$1" ;;
-	(*)
-		gio open "$1" ;;
-	esac; } >/dev/null 2>&1
-	[[ -z "$2" ]] && return 0
-	shift
-	_plu "$@"
+		local pb pbalt
+		pb="ptpb.pw" pbalt="pb.gehidore.net"
+		{ case "$1" in
+		(*://nibbler*/*)
+			gio open "$1" ;;
+		(*://i.imgur.com/*.gifv|*://imgur.com/*.gifv)
+			mpvcmd "${1/.gifv/.gif}" ;;
+		(*.webm|*.gif|*.gifv|*.mp4|*.avi|*.mkv|*.mov|*.flv)
+			mpvcmd "$1" ;;
+		(*://i.imgur.com/*)
+			feh "$1" ;;
+		(*://imgur.com/*)
+			imgurredirect "$1" ;;
+		(*.jpg|*.jpeg|*.png)
+			feh "$1" ;;
+		(*://dpaste.de/*)
+			pyb.py "$1" ;;
+		(*://*youtube.com/*)
+			mpvcmd "$1" ;;
+		(*://*youtu.be/*)
+			mpvcmd "$1" ;;
+		(*://$pbalt/pb/*.sh|*://$pbalt/pb/*.bash|*://$pbalt/pb/*.zsh|*://$pbalt/pb/*/text|*://$pbalt/pb/*/bash)
+			gvim -c "setf sh" -p "${1%/*}" ;;
+		(*://$pbalt/pb/*/*)
+			gvim -c "setf ${1##*/}" -p "${1%/*}" ;;
+		(*://$pbalt/pb/*.*|*://$pbalt/pb/\~*)
+			gio open "$1" ;;
+		(*://$pbalt/pb/*)
+			gvim -c "setf sh" -p "${1}" ;;
+		(*://$pb/*.sh|*://$pb/*.bash|*://$pb/*.zsh|*://$pb/*/text*|*://$pb/*/bash)
+			gvim -c "setf sh" -p "${1%/*}" ;;
+		(*://$pb/*/*)
+			gvim -c "setf ${1##*/}" -p "${1%/*}" ;;
+		(*://$pb/*.*|*://$pb/\~*)
+			gio open "$1" ;;
+		(*://$pb/*)
+			gvim -c "setf sh" -p "${1}" ;;
+		(*://pastebin.com/raw*)
+			gvim -c "setf sh" -p "$1" ;;
+		(*://)
+			gio open "$1" ;;
+		(*)
+			gio open "$1" ;;
+		esac; } >/dev/null 2>&1
+
+		[[ -z "$2" ]] && return 0
+		shift
+		_plu "$@"
 	}
+
 	[[ -z "$*" ]] && read -rA argv
+	export argv
 	_plu "$@"
-	# { case "$1" in
-	#         *://nibbler*/*) gio open "$1" ;;
-	#         *://i.imgur.com/*.gifv|*://imgur.com/*.gifv) mpvcmd "${1/.gifv/.gif}" ;;
-	#         *.webm|*.gif|*.gifv|*.mp4|*.avi|*.mkv|*.mov|*.flv) mpvcmd "$1" ;;
-	#         *://i.imgur.com/*) feh "$1" ;;
-	#         *://imgur.com/*) imgurredirect "$1" ;;
-	#         *.jpg|*.jpeg|*.png) feh "$1" ;;
-	#         *://dpaste.de/*) pyb.py "$1" ;;
-	#         *://*youtube.com/*) mpvcmd "$1" ;;
-	#         *://*youtu.be/*) mpvcmd "$1" ;;
-	#         *://alyp.tk/pb/*.sh|*://alyp.tk/pb/*.bash|*://alyp.tk/pb/*.zsh) gvim -c "setf sh" -p "${1%/*}" ;;
-	#         *://ptpb.pw/*.sh|*://ptpb.pw/*.bash|*://ptpb.pw/*.zsh) gvim -c "setf sh" -p "${1%/*}" ;;
-	#         *://alyp.tk/pb/*.sh|*://ptpb.pw/*.sh) gvim -c "setf sh" -p "${1%/*}" ;;
-	#         *://alyp.tk/pb/*.*|*://ptpb.pw/*.*) gio open "$1" ;;
-	#         *://alyp.tk/pb/*/text|*://alyp.tk/pb/*/sh|*://alyp.tk/pb/*/bash) gvim -c "setf sh" -p "${1%/*}" ;;
-	#         *://ptpb.pw/*/text*|*://ptpb.pw/*/sh|*://ptpb.pw/*/bash) gvim -c "setf sh" -p "${1%/*}" ;;
-	#         *://alyp.tk/pb/\~*|*://ptpb.pw/\~*) gio open "$1" ;;
-	#         *://alyp.tk/pb/*/*|*://ptpb.pw/*/*) gvim -c "setf sh" -p "${1%/*}" ;;
-	#         *://alyp.tk/pb/*|*://ptpb.pw/*) gvim -c "setf sh" -p "${1}" ;;
-	#         *://pastebin.com/raw*) gvim -c "setf sh" -p "$1" ;;
-	#         *://) gio open "$1" ;;
-	#         *) gio open "$1" ;;
-	#
-	# esac; } >/dev/null 2>&1
-	# [[ -z "$2" ]] && return 0
-	# shift
-	# plu "$@"
 }
 
 function png2ico() {
@@ -1582,12 +1547,12 @@ function png2ico() {
 }
 
 function ppid() {
-	 sudo ps -p ${1:-$$} -o ppid=
+	sudo ps -p ${1:-$$} -o ppid=
 }
 
 function prep() {
 	## Perl grep, because 'grep -P' is terrible. Lets you work with pipes or files.
-	 perl -nle 'print if /'"$1"'/;' "$2"
+	perl -nle 'print if /'"$1"'/;' "$2"
 }
 
 function prompt_confirm() {
@@ -1651,23 +1616,23 @@ function pscg() {
 }
 
 function pscrs() {
-	 { sudo parallel --will-cite systemctl ::: restart status ::: "$@"; } | less -FJKMRX
+	{ sudo parallel --will-cite systemctl ::: restart status ::: "$@"; } | less -FJKMRX
 }
 
 function pspc() {
-	 pacaur -Ss --color="always" "${@/-S/-}" 2>&1 | less -CJRMXs
+	pacaur -Ss --color="always" "${@/-S/-}" 2>&1 | less -CJRMXs
 }
 
 function puscrs() {
-	 { parallel --will-cite systemctl --user ::: restart status ::: "$@"; } | less -FJKMRX
+	{ parallel --will-cite systemctl --user ::: restart status ::: "$@"; } | less -FJKMRX
 }
 
 function pwait() {
-	 [[ "$1" =~ ^[0-9][0-9]*$ ]] && tail --pid="$1" -f /dev/null || return 1
+	[[ "$1" =~ ^[0-9][0-9]*$ ]] && tail --pid="$1" -f /dev/null || return 1
 }
 
 function pwns() {
-	 pacman -Qo "$@" 2>/dev/null || pacman -Qo $(which "$@" | sed 's/ .*//g')
+	pacman -Qo "$@" 2>/dev/null || pacman -Qo $(which "$@" | sed 's/ .*//g')
 }
 
 function qpc() {
@@ -1697,7 +1662,7 @@ function rchgrep() {
 }
 
 function rd() {
-	 chromium "https://www.google.com/search?q=site:reddit.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "https://www.google.com/search?q=site:reddit.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 # rmtorrents() {
 #         local -a list
@@ -1787,7 +1752,7 @@ function rd() {
 # }
 
 function runcmd() {
-	 perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>'
+	perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>'
 }
 
 function safetytoggle() {
@@ -1969,7 +1934,7 @@ function sf() {
 }
 
 function sgm() {
-	 gm import -window ${1:-root} /tmp/$$.png && <<<"/tmp/$$.png" xclip -i -selection clipboard
+	gm import -window ${1:-root} /tmp/$$.png && <<<"/tmp/$$.png" xclip -i -selection clipboard
 }
 
 function shcurl() {
@@ -2026,7 +1991,7 @@ function snft() {
 }
 
 function so() {
-	 chromium "https://google.com/search?q=site:stackexchange.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium "https://google.com/search?q=site:stackexchange.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function spice-kvm() {
@@ -2308,7 +2273,7 @@ function truecolor() {
 # }
 
 function tunssh() {
-	 sshuttle -r "${1?Erro: no host specified.}"  "${2:-0.0.0.0/0}" -vv --dns
+	sshuttle -r "${1?Erro: no host specified.}"  "${2:-0.0.0.0/0}" -vv --dns
 }
 
 function u0x0() {
@@ -2588,7 +2553,7 @@ function wau() {
 }
 
 function wi() {
-	 chromium " https://en.wikipedia.org/w/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+	chromium " https://en.wikipedia.org/w/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
 }
 
 function wordcloud() {
@@ -2604,7 +2569,7 @@ function wordcloud() {
 }
 
 function writecmd() {
-	 perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'
+	perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'
 }
 
 # x86kvm() {
@@ -2641,7 +2606,7 @@ function xid2pid() {
 }
 
 function xlog() {
-	 grep -i --color "$*" /var/log/Xorg.0.log
+	grep -i --color "$*" /var/log/Xorg.0.log
 }
 
 function xo() {
@@ -2662,7 +2627,7 @@ function xrec() {
 }
 
 function xs() {
-	 xsel "$@" 2>/dev/null
+	xsel "$@" 2>/dev/null
 }
 
 function yay() {
@@ -2763,5 +2728,5 @@ function zwc() {
 }
 
 function zz() {
-	 cd "$(fasd -Rld 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")"
+	cd "$(fasd -Rld 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")" || return 1
 }
