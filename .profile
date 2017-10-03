@@ -21,7 +21,7 @@ export ARCHFLAGS="-arch x86_64"
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PATH=/usr/lib/distcc/bin:/usr/bin
 # export CCACHE_PREFIX="distcc"
-export C="/store/dotfiles" c="${C}"
+export C="/store/dotfiles" c="$C"
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 # Audio plugins
@@ -54,9 +54,11 @@ export GOPATH="${HOME}/code/go"
 # Gtk themes
 export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
 export GTK_DEBUG=1
-export H="$HOME" h="${H}"
+export H="$HOME" h="$H"
 # get more colors
 export HH_CONFIG=hicolor
+# increase history size (default is 500)
+export HISTSIZE=20000000 HISTFILESIZE="$HISTSIZE"
 # export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:${HOME}/.linuxbrew/share/info:${HOME}/GNUstep/Library/Documentation/info:${INFOPATH}"
 export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:/home/alyptik/.linuxbrew/share/info:/home/alyptik/GNUstep/Library/Documentation/info"
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -113,8 +115,8 @@ export PERLDOC_PAGER="less -CMRis"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Libraries/pkgconfig:/usr/lib/pkgconfig"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:${PLAN9}/bin"
 export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man" p9="${PLAN9}"
-export P="/store/code/projects" p="${P}"
-export PRE="${HOME}/.local" pre="${PRE}"
+export P="/store/code/projects" p="$P"
+export PRE="${HOME}/.local" pre="$PRE"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2.7"
 # export PYTHON='/store/config/scripts/python2'
@@ -129,6 +131,7 @@ export QT_PLUGIN_PATH="${HOME}/.kde4/lib/kde4/plugins:/usr/lib/kde4/plugins"
 export QT_QPA_PLATFORMTHEME=qt5ct
 # export QT_SCALE_FACTOR=2.25
 # export QT_SCREEN_SCALE_FACTORS=2.25
+export SAVEHIST="$HISTSIZE"
 export SDL_AUDIODRIVER=alsa
 export SSH_KEY_PATH="${HOME}/.ssh/id_gpg"
 export SURF_USERAGENT="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MOB3OD) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.105 Mobile Safari/537.36"

@@ -34,11 +34,8 @@ bind "TAB:menu-complete"; bind "set show-all-if-ambiguous on"
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f "${HOME}/.bash_funcs" ]] && . "${HOME}/.bash_funcs"
 
-# Last bash command as tab title
 HISTIGNORE='history*'
 HISTCONTROL='ignoreboth:erasedups'
-# increase history file size (default is 500)
-HISTSIZE=20000000
 HISTFILE="${HOME}/.bash_history"
 
 declare __statstr
