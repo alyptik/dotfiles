@@ -66,20 +66,16 @@ zstyle ':history-search-multi-word' page-size 5
 autoload -U colors && colors
 eval "$(dircolors -b)"
 export CLICOLOR=1
+export REPORTTIME=5
 
 ## History stuff
 [[ -f "${CONF:-/store/config}/.zsh_history" ]] && \
 	HISTFILE="${CONF:-/store/config}/.zsh_history" || \
 	HISTFILE="${HOME}/.zsh_history"
-# Maximum number history events to save in the history file.
-HISTFILESIZE=10000000 SAVEHIST=20000000
-# increase history size (default is 500)
-REPORTTIME=5 HH_CONFIG="hicolor" HISTSIZE="$HISTFILESIZE"
 type zshreadhist >/dev/null 2>&1 && \
 	precmd_functions=( zshreadhist $precmd_functions )
 
 # History search
-# autoload -Uz bracketed-paste-magic
 () {
 	local -a au_arr zle_arr zmod_arr
 	au_arr+=(expand-absolute-path up-line-or-beginning-search)
@@ -101,7 +97,7 @@ type zshreadhist >/dev/null 2>&1 && \
 	() for 1 { zmodload "$1"; } $zmod_arr
 }
 
-## equiv of bash's "help"
+# equiv of bash's "help"
 unalias run-help help 2>/dev/null
 alias help='run-help'
 
