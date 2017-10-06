@@ -9,7 +9,6 @@ trap '{ cleanup; trap -; }' TRAP EXIT
 trap '{ cleanup; trap -; kill -INT $$; }' INT
 trap '{ cleanup; trap -; kill -QUIT $$; }' QUIT
 trap '{ cleanup; trap -; kill -TERM $$; }' TERM
-
 # Redirect errors to a temporary fd, and then append them to a log file
 ZSH_ERROR="$(mktemp)"
 exec 9>&2
@@ -57,7 +56,7 @@ esac
 
 # Cache setup
 ZSH_CACHE_DIR="${ZDOTDIR:-$HOME/.zsh.d}/cache"
-[[ -d "$ZSH_CACHE_DIR" ]] || mkdir "$ZSH_CACHE_DIR"
+[[ ! -d "$ZSH_CACHE_DIR" ]] && mkdir "$ZSH_CACHE_DIR"
 zstyle ':completion:*'			rehash true
 zstyle ':completion:*'			use-cache yes
 zstyle ':completion::complete:*'	cache-path "$ZSH_CACHE_DIR"
@@ -68,11 +67,8 @@ eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
 
 # History stuff
-[[ -f "${CONF:-/store/config}/.zsh_history" ]] && \
-	HISTFILE="${CONF:-/store/config}/.zsh_history" || \
-	HISTFILE="${HOME}/.zsh_history"
-type zshreadhist >/dev/null 2>&1 && \
-	precmd_functions=( zshreadhist $precmd_functions )
+HISTFILE="${HOME}/.zsh_history"
+type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 
 # zmodules
 () {
@@ -182,8 +178,7 @@ case "$_theme" in
 
 (*)
 	# ?????????? wut how did you hit this wtf
-	type prompt_clint_setup >/dev/null 2>&1 && \
-		prompt_clint_setup
+	type prompt_clint_setup >/dev/null 2>&1 && prompt_clint_setup
 	;;
 esac
 
@@ -220,22 +215,21 @@ fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc"
 autoload -U promptinit && promptinit
 autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit -u
-
 # bash specific
 [[ -f /etc/profile.d/cnf.sh ]] && \
 	. /etc/profile.d/cnf.sh
-# [[ -d /usr/share/bash-completion/completions ]] && \
-#         { for i in /usr/share/bash-completion/completions/*; do . "$i"; done; }
 [[ -f /usr/share/bash-completion/completions/dkms ]] && \
 	. /usr/share/bash-completion/completions/dkms
 # zsh specific
+[[ -d "${ZDOTDIR:-$HOME/.zsh.d}"/plugins ]] && \
+	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}"/plugins/enabled/*.zsh; do . "$i"; done; }
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
 [[ -f "${HOME}/.aliases" ]] && \
 	. "${HOME}/.aliases"
 # autoload functions/completions in *.zwc files
-() for 1 { autoload -Uz "${(f@)${(f@)$(zcompile -t "$1")}[2,-1]}"; } "${(M@z)fpath%%*.zwc}"
-() for 1 { . "$1"; } "${ZDOTDIR:-$HOME/.zsh.d}/plugins/enabled"/*.zsh
+() for 1 { autoload -Uwz "$1"; } "${(M@z)fpath%%*.zwc}"
+#for 1 { autoload -Uz "${(f@)${(f@)$(zcompile -t "$1")}[2,-1]}"; } "${(M@z)fpath%%*.zwc}"
 
 news_short
 safetytoggle -n
@@ -244,10 +238,6 @@ safetytoggle -n
 	local muhcow="$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)"
 	host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
 }
-
-if type fasd >/dev/null 2>&1; then
-	eval "$(fasd --init auto)"
-fi
 
 if type zplug >/dev/null 2>&1; then
 	# zplug "hlissner/zsh-autopair"
@@ -266,11 +256,9 @@ if type zplug >/dev/null 2>&1; then
 	fi
 	zplug load --verbose
 fi
-
 # autoload completion for systemctl subcommand compdefs
-if [[ "$(type _systemctl)" =~ "autoload" ]]; then
-	autoload -Uz +X _systemctl
-fi
+[[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
+type fasd &>/dev/null && eval "$(fasd --init auto)"
 
 zle -N zle-youtube-helper
 zle -N zle-fman
