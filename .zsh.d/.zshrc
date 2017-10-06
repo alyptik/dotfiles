@@ -17,18 +17,23 @@ exec 2<>"$ZSH_ERROR"
 [[ -f "$ZSH_ERROR" ]] && rm -f "$ZSH_ERROR" || cleanup
 
 ## Set/unset options
-unsetopt alwaystoend autolist automenu caseglob casematch checkjobs \
-	correctall extendedhistory flowcontrol histfcntllock globalexport \
-	globcomplete globsubst histignorespace histsavebycopy \
-	histverify multios nomatch printexitvalue sharehistory verbose
-setopt appendhistory autocd autopushd bareglobqual beep casematch cbases \
-	chaselinks clobber completeinword correct cprecedences equals \
-	extendedglob globassign globdots globstarshort histexpiredupsfirst \
-	histignorealldups histignoredups histlexwords histreduceblanks \
-	hup incappendhistory interactivecomments kshglob kshoptionprint \
-	listambiguous longlistjobs magicequalsubst octalzeroes \
-	markdirs menucomplete monitor multibyte notify pathdirs pipefail \
-	promptsubst pushdignoredups pushdminus pushdtohome rematchpcre
+() {
+	local -a unsetarr setarr
+	unsetarr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
+	unsetarr+=(correctall extendedhistory flowcontrol histfcntllock globalexport)
+	unsetarr+=(globcomplete globsubst histignorespace histsavebycopy)
+	unsetarr+=(histverify multios nomatch printexitvalue sharehistory verbose)
+	setarr+=(appendhistory autocd autopushd bareglobqual beep casematch cbases)
+	setarr+=(chaselinks clobber completeinword correct cprecedences equals)
+	setarr+=(extendedglob globassign globdots globstarshort histexpiredupsfirst)
+	setarr+=(histignorealldups histignoredups histlexwords histreduceblanks)
+	setarr+=(hup incappendhistory interactivecomments kshglob kshoptionprint)
+	setarr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
+	setarr+=(markdirs menucomplete monitor multibyte notify pathdirs pipefail)
+	setarr+=(promptsubst pushdignoredups pushdminus pushdtohome rematchpcre)
+	() for 1 { unsetopt "$1"; }  $unsetarr
+	() for 1 { setopt "$1"; } $setarr
+}
 
 # Emacs 19.29 or thereabouts stopped using a terminal type of "emacs" in
 # shell buffers, and instead sets it to "dumb". Zsh only kicks in its special
@@ -37,45 +42,39 @@ setopt appendhistory autocd autopushd bareglobqual beep casematch cbases \
 
 ## Set emacs or vi as default
 bindkey -e
-zle -N zle-keymap-select
-zle -N zle-line-init
-zle -N zle-line-finish
-
+() for 1 { zle -N "$1" } zle-keymap-select zle-line-init zle-line-finish
 # theme: 0 = clint / 1 = custom PS1 / * = wtf are u doing
 _theme=1
 # Initialize _km for ZLE widgets and set initial cursor color
-_km=emacs
-_emacs=main
-_vi=
+_km=emacs _emacs=main _vi=
 setescapes
 case "$_km" in
-vi)
+(vi)
 	printf "$cblock"; printf "$cgrey" ;;
-emacs)
+(emacs)
 	printf "$cblock"; printf "$cyellow" ;;
 esac
 
 # Cache setup
 ZSH_CACHE_DIR="${ZDOTDIR:-$HOME/.zsh.d}/cache"
 [[ -d "$ZSH_CACHE_DIR" ]] || mkdir "$ZSH_CACHE_DIR"
-zstyle ':completion:*' use-cache yes
-zstyle ':completion::complete:*' cache-path "$ZSH_CACHE_DIR"
-zstyle ':completion:*' rehash true
-zstyle ':history-search-multi-word' page-size 5
+zstyle ':completion:*'			rehash true
+zstyle ':completion:*'			use-cache yes
+zstyle ':completion::complete:*'	cache-path "$ZSH_CACHE_DIR"
+zstyle ':history-search-multi-word'	page-size 5
 # Enable colors in prompt
 autoload -U colors && colors
 eval "$(dircolors -b)"
-export CLICOLOR=1
-export REPORTTIME=5
+export CLICOLOR=1 REPORTTIME=5
 
-## History stuff
+# History stuff
 [[ -f "${CONF:-/store/config}/.zsh_history" ]] && \
 	HISTFILE="${CONF:-/store/config}/.zsh_history" || \
 	HISTFILE="${HOME}/.zsh_history"
 type zshreadhist >/dev/null 2>&1 && \
 	precmd_functions=( zshreadhist $precmd_functions )
 
-# History search
+# zmodules
 () {
 	local -a au_arr zle_arr zmod_arr
 	au_arr+=(expand-absolute-path up-line-or-beginning-search)
@@ -85,8 +84,8 @@ type zshreadhist >/dev/null 2>&1 && \
 	# zle_arr+=(bracketed-paste bracketed-paste-magic)
 	zle_arr+=(edit-command-line expand-absolute-path)
 	zle_arr+=(up-line-or-beginning-search down-line-or-beginning-search)
-	zle_arr+=(znt-history-widget znt-cd-widget znt-kill-widget insert-unicode-char)
-	zle_arr+=(tetris zmv)
+	zle_arr+=(znt-history-widget znt-cd-widget znt-kill-widget)
+	zle_arr+=(insert-unicode-char tetris zmv)
 	zmod_arr+=(zsh/datetime zsh/mapfile zsh/mathfunc)
 	zmod_arr+=(zsh/terminfo zsh/deltochar zsh/curses)
 	zmod_arr+=(zsh/net/socket zsh/system zsh/net/tcp)
@@ -110,7 +109,7 @@ AUTOPAIR_PAIRS=('`' '`' "'" "'" '"' '"' '{' '}' '[' ']' '(' ')')
 ## {([) won't be autopaired if the cursor follows an alphabetical character.
 ## Individual delimiters can be used too. Setting
 ## $AUTOPAIR_RBOUNDS['{']="[0-9]" will cause { specifically to not be
-#H,# autopaired when the cursor precedes a number.
+## autopaired when the cursor precedes a number.
 typeset -gA AUTOPAIR_LBOUNDS
 AUTOPAIR_LBOUNDS=('`' '`')
 AUTOPAIR_LBOUNDS[all]='[.:/\!]'
@@ -131,7 +130,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
 ZSH_AUTOSUGGEST_STRATEGY=default
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=25
-
 # Adapted from code found at <https://gist.github.com/1712320>.
 # Modify the colors and symbols in these variables as desired.
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
@@ -144,42 +142,37 @@ GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
 GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
 GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 
-# Autoloadable functions and completions
-fpath=( ${ZDOTDIR:-$HOME/.zsh.d}/zcomps.zwc $fpath )
-fpath=( ${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc $fpath )
-
 case "$_theme" in
 (0)
-	type prompt_clint_setup >/dev/null 2>&1 && \
-		prompt_clint_setup || \
-		_theme=1
+	type prompt_clint_setup &>/dev/null && prompt_clint_setup || _theme=1
 	;| # continue scanning
 
 (1)
 	# common PS1 section
 	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(($(:
-		)$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))"$(:
+		)$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" $(:
+		)/proc/meminfo)/1024))"$(:
 		)$reset_color$fg[yellow]/"$(($(:
-		)$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024))MB$(:
-		)"		$reset_color$fg[magenta]$(</proc/loadavg)")$(:
+		)$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" $(:
+		)/proc/meminfo)/1024))MB"		$(:
+		)$reset_color$fg[magenta]$(</proc/loadavg)")$(:
 		)$prompt_newline$bold_color$fg[grey]%}[%{$(:
 		)$reset_color$fg[white]%}$$:$PPID %j:%l%{$(:
-		)$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	%D{%a %d %b %I:%M:%S%P}'
+		)$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	$(:
+		)%D{%a %d %b %I:%M:%S%P}'
 	# fallback theme if no /proc
 	if [[ ! -d /proc ]]; then
-		type prompt_clint_setup >/dev/null 2>&1 && \
-			prompt_clint_setup
-		break
+		type prompt_clint_setup &>/dev/null && prompt_clint_setup
 	elif (( EUID != 0 )); then
 		# normal colors
-		PS1="$PS1"'$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
+		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
 			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[red]%}+${SHLVL}%{$(:
 			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
 			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
 			)$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
 	else
 		# If root, print the prompt character in red. Otherwise, print the prompt in cyan.
-		PS1="$PS1"'$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
+		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
 			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[green]%}+${SHLVL}%{$(:
 			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
 			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
@@ -188,7 +181,7 @@ case "$_theme" in
 	;;
 
 (*)
-	# ??????????
+	# ?????????? wut how did you hit this wtf
 	type prompt_clint_setup >/dev/null 2>&1 && \
 		prompt_clint_setup
 	;;
@@ -200,12 +193,12 @@ if type vcs_info >/dev/null 2>&1; then
 	zstyle ':vcs_info:*' enable git cvs svn
 	zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
 	zstyle ':vcs_info:*' check-for-changes true
-	zstyle ':vcs_info:*:prompt:*'     check-for-changes true
-	zstyle ':vcs_info:*:prompt:*'     stagedstr         "%{$fg[green]%}*%{$reset_color%}"
-	zstyle ':vcs_info:*:prompt:*'     unstagedstr       "%{$fg[red]%}*%{$reset_color%}"
-	zstyle ':vcs_info:*:prompt:*'     branchformat      "%r"
-	zstyle ':vcs_info:*:prompt:*'     formats           "%u%c%{$fg[green]%}[%b]%{$reset_color%}"
-	zstyle ':vcs_info:*:prompt:*'     nvcsformats       ""
+	zstyle ':vcs_info:*:prompt:*' check-for-changes true
+	zstyle ':vcs_info:*:prompt:*' stagedstr "%{$fg[green]%}*%{$reset_color%}"
+	zstyle ':vcs_info:*:prompt:*' unstagedstr "%{$fg[red]%}*%{$reset_color%}"
+	zstyle ':vcs_info:*:prompt:*' branchformat "%r"
+	zstyle ':vcs_info:*:prompt:*' formats "%u%c%{$fg[green]%}[%b]%{$reset_color%}"
+	zstyle ':vcs_info:*:prompt:*' nvcsformats ""
 	zstyle ':vcs_info:*' actionformats \
 		'%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
 	zstyle ':vcs_info:*' formats \
@@ -221,6 +214,9 @@ else
 	RPS1='$(check_last_exit_code)%(?,%F{green},%F{red} ┐❨ツ❩┌ )%f$(git_prompt_string)'
 fi
 
+# prepend zcompiled functions/completions to fpath
+fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zcomps.zwc"
+fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc"
 autoload -U promptinit && promptinit
 autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit -u
@@ -228,30 +224,26 @@ autoload -U +X bashcompinit && bashcompinit -u
 # bash specific
 [[ -f /etc/profile.d/cnf.sh ]] && \
 	. /etc/profile.d/cnf.sh
-[[ -f /usr/share/bash-completion/completions/dkms ]] && \
-	. /usr/share/bash-completion/completions/dkms
 # [[ -d /usr/share/bash-completion/completions ]] && \
 #         { for i in /usr/share/bash-completion/completions/*; do . "$i"; done; }
-
+[[ -f /usr/share/bash-completion/completions/dkms ]] && \
+	. /usr/share/bash-completion/completions/dkms
 # zsh specific
-[[ -d "${ZDOTDIR:-$HOME/.zsh.d}/plugins" ]] && \
-	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}/plugins/enabled"/*.zsh; do . "$i"; done; }
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
 [[ -f "${HOME}/.aliases" ]] && \
 	. "${HOME}/.aliases"
-[[ -n "${${(M@z)fpath[@]%%*.zwc}[1]:t}" ]] && \
-	autoload -Uz "${(f@)${(f@)$(zcompile -t "${${(M@z)fpath[@]%%*.zwc}[1]}")}[2,-1]}"
-[[ -n "${${(M@z)fpath[@]%%*.zwc}[2]:t}" ]] && \
-	autoload -Uz "${(f@)${(f@)$(zcompile -t "${${(M@z)fpath[@]%%*.zwc}[2]}")}[2,-1]}"
+# autoload functions/completions in *.zwc files
+() for 1 { autoload -Uz "${(f@)${(f@)$(zcompile -t "$1")}[2,-1]}"; } "${(M@z)fpath%%*.zwc}"
+() for 1 { . "$1"; } "${ZDOTDIR:-$HOME/.zsh.d}/plugins/enabled"/*.zsh
 
 news_short
 safetytoggle -n
-# "Is the internet on fire?" status reports
-host -t txt istheinternetonfire.com | cut -f 2 -d '"' | \
-	cowsay -f "$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)" -W 50
-# muhcow="$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-# host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
+() {
+	# "Is the internet on fire?" status reports
+	local muhcow="$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)"
+	host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
+}
 
 if type fasd >/dev/null 2>&1; then
 	eval "$(fasd --init auto)"
@@ -331,7 +323,6 @@ bindkey -M viins "\e[3~" delete-char
 () for 1 {
 	# F11 inserts a literal '*'
 	bindkey -sM "$1" "\e[23~" "*"
-
 	bindkey -M "$1" "\ep" expand-absolute-path
 	bindkey -M "$1" "\eo" zle-less
 	# insert the last word from the previous history event at the cursor position
@@ -426,7 +417,6 @@ bindkey -M viins "\e[3~" delete-char
 	bindkey -M "$1" "\er" fzf-history-widget
 	bindkey -M "$1" "\C-t" transpose-words
 	bindkey -M "$1" "\et" fzf-file-widget
-
 	## A Zsh Do What I Mean key. Attempts to predict what you will want to do next.
 	## Usage: Type a command and hit control-u and zsh-dwim will attempt to transform your command.
 	if zle -la | grep -q dwim; then
@@ -499,7 +489,7 @@ bindkey -M viins "\e[3~" delete-char
 	modprobe_str+="${kmods[*]}"
 	modprobe_str+=$')" -- '
 
-	for i in "${defargcmds[@]}"; do compdef _gnu_generic "$i"; done
+	() for 1 { compdef _gnu_generic "$1"; } $defargcmds
 
 	compdef "$cgasm_str" cgasm
 	compdef "$dgpg_str" dgpg
@@ -509,7 +499,6 @@ bindkey -M viins "\e[3~" delete-char
 	compdef "$pinfo_str" pinfo
 	compdef "$qpc_str" qpc
 	compdef "$reptyr_str" reptyr
-
 }
 
 compdef _fman fman
@@ -530,7 +519,6 @@ compdef _pip pip
 compdef _au au
 compdef _au wau
 compdef _pwns pwns
-
 compdef azle=autoload
 compdef gnpm=npm
 compdef p=perl
@@ -589,78 +577,80 @@ WORDCHARS=
 # WORDCHARS='_-*~'
 
 # Completion tweaks
-zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z@)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%\ *}%%,*}"
-# zstyle ':completion:*:(ssh|scp|sftp|rsync):*' hosts "${(z@)${${${(f@)$(<${HOME}/.ssh/known_hosts)}:#[0-9]*}%%\ *}%%,*}"
-zstyle ':acceptline'			nocompwarn true
+zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
+	"${(z@)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%\ *}%%,*}"
+# zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
+#         "${(z@)${${${(f@)$(<${HOME}/.ssh/known_hosts)}:#[0-9]*}%%\ *}%%,*}"
+zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
-zstyle ':completion:*:approximate:'	max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
-# zstyle ':completion:*:approximate:'	max-errors 5 numeric
+zstyle ':completion:*:approximate:'			max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+# zstyle ':completion:*:approximate:'			max-errors 5 numeric
 # don't complete backup files as executables
-zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
+zstyle ':completion:*:complete:-command-::commands'	ignored-patterns '(aptitude-*|*\~)'
 # start menu completion only if it could find no unambiguous initial string
-zstyle ':completion:*:correct:*'	insert-unambiguous true
-zstyle ':completion:*:corrections'	format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
-zstyle ':completion:*:correct:*'	original true
+zstyle ':completion:*:correct:*'			insert-unambiguous true
+zstyle ':completion:*:corrections'			format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*:correct:*'			original true
 # activate color-completion
-zstyle ':completion:*:default'		list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:default'				list-colors "${(s.:.)LS_COLORS}"
 # format on completion
-zstyle ':completion:*:descriptions'	format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+zstyle ':completion:*:descriptions'			format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
 # complete 'cd -<tab>' with menu
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:*:cd:*:directory-stack'		menu yes select
 # insert all expansions for expand completer
-zstyle ':completion:*:expand:*'		tag-order all-expansions
-zstyle ':completion:*:history-words'	list true
+zstyle ':completion:*:expand:*'				tag-order all-expansions
+zstyle ':completion:*:history-words'			list true
 # activate menu
-zstyle ':completion:*:history-words'	menu yes select
+zstyle ':completion:*:history-words'			menu yes select
 # ignore duplicate entries
-zstyle ':completion:*:history-words'	remove-all-dups yes
-zstyle ':completion:*:history-words'	stop yes
+zstyle ':completion:*:history-words'			remove-all-dups yes
+zstyle ':completion:*:history-words'			stop yes
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
 # 2 -- word flex completion (abc => A-big-Car)
 # 3 -- full flex completion (abc => ABraCadabra)
-zstyle ':completion:*' matcher-list '' \
+zstyle ':completion:*'					matcher-list '' \
 	'm:{a-z\-}={A-Z\_}' \
 	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
 	'r:|?=** m:{a-z\-}={A-Z\_}'
 # match uppercase from lowercase
-# zstyle ':completion:*'			matcher-list 'm:{a-zA-Z}={A-Za-z}'
-# zstyle ':completion:*'			matcher-list 'm:{a-z}={A-Z}'
+# zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
 # separate matches into groups
-zstyle ':completion:*:matches'		group 'yes'
-zstyle ':completion:*'			group-name ''
-zstyle ':completion:*'			menu select
-zstyle ':completion:*:messages'		format '%d'
-zstyle ':completion:*:options'		auto-description '%d'
+zstyle ':completion:*:matches'				group 'yes'
+zstyle ':completion:*'					group-name ''
+zstyle ':completion:*'					menu select
+zstyle ':completion:*:messages'				format '%d'
+zstyle ':completion:*:options'				auto-description '%d'
 # describe options in full
-zstyle ':completion:*:options'		description 'yes'
+zstyle ':completion:*:options'				description 'yes'
 # on processes completion complete all user processes
-zstyle ':completion:*:processes'	command 'ps -au$USER'
+zstyle ':completion:*:processes'			command 'ps -au$USER'
 # offer indexes before parameters in subscripts
-zstyle ':completion:*:*:-subscript-:*'	tag-order indexes parameters
+zstyle ':completion:*:*:-subscript-:*'			tag-order indexes parameters
 # provide verbose completion information
-zstyle ':completion:*'			verbose true
+zstyle ':completion:*'					verbose true
 # recent (as of Dec 2007) zsh versions are able to provide descriptions
 # for commands (read: 1st word in the line) that it will list for the user
 # to choose from. The following disables that, because it's not exactly fast.
-zstyle ':completion:*:-command-:*:'	verbose true
+zstyle ':completion:*:-command-:*:'			verbose true
 # set format for warnings
-zstyle ':completion:*:warnings'		format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
+zstyle ':completion:*:warnings'				format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
 # define files to ignore for zcompile
-zstyle ':completion:*:*:zcompile:*'	ignored-patterns '(*~|*.sw[a-p])'
-# zstyle ':completion:*:*:zcompile:*'	ignored-patterns '(*~|*.zwc)'
-zstyle ':completion:correct:'		prompt 'correct to: %e'
+zstyle ':completion:*:*:zcompile:*'			ignored-patterns '(*~|*.sw[a-p])'
+# zstyle ':completion:*:*:zcompile:*'			ignored-patterns '(*~|*.zwc)'
+zstyle ':completion:correct:'				prompt 'correct to: %e'
 # Ignore completion functions for commands you don't have:
 # zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
 # Provide more processes in completion of programs like killall:
-zstyle ':completion:*:processes-names'  command 'ps c -u ${USER} -o command | uniq'
-zstyle ':completion:*:killall:*'	command 'ps -u ${USER} -o cmd'
+zstyle ':completion:*:processes-names'			command 'ps c -u ${USER} -o command | uniq'
+zstyle ':completion:*:killall:*'			command 'ps -u ${USER} -o cmd'
 # complete manual by their section
-zstyle ':completion:*:manuals'		separate-sections true
-zstyle ':completion:*:manuals*'		insert-sections   true
-zstyle ':completion:*:man*'		menu yes select
+zstyle ':completion:*:manuals'				separate-sections true
+zstyle ':completion:*:manuals*'				insert-sections   true
+zstyle ':completion:*:man*'				menu yes select
 # provide .. as a completion
-# zstyle ':completion:*'			special-dirs ..
+zstyle ':completion:*'					special-dirs ..
 
 # run rehash on completion so new installed program are found automatically:
 _force_rehash() {
@@ -670,7 +660,7 @@ _force_rehash() {
 
 # correction
 # try to be smart about when to use what completer...
-zstyle -e ':completion:*' completer '
+zstyle -e ':completion:*'				completer '
 	if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
 		_last_try="$HISTNO$BUFFER$CURSOR"
 		reply=(_complete _correct _approximate _expand _match _ignored _prefix _files)
@@ -683,22 +673,22 @@ zstyle -e ':completion:*' completer '
 	fi'
 
 # command for process lists, the local web server details and host completion
-zstyle ':completion:*:urls' local 'www' 'public_html'
-zstyle ':filter-select:highlight' matched fg=yellow,standout
+zstyle ':completion:*:urls'				local 'www' 'public_html'
+zstyle ':filter-select:highlight'			matched fg=yellow,standout
 # use 10 lines for filter-select
-zstyle ':filter-select' max-lines 10
+zstyle ':filter-select'					max-lines 10
 # use $LINES - 10 for filter-select
-zstyle ':filter-select' max-lines -10
+zstyle ':filter-select'					max-lines -10
 # enable rotation for filter-select
-zstyle ':filter-select' rotate-list yes
+zstyle ':filter-select'					rotate-list yes
 # enable case-insensitive search
-zstyle ':filter-select' case-insensitive yes
+zstyle ':filter-select'					case-insensitive yes
 # see below
-zstyle ':filter-select' extended-search yes
+zstyle ':filter-select'					extended-search yes
 # ignore duplicates in history source
-zstyle ':filter-select' hist-find-no-dups yes
+zstyle ':filter-select'					ist-find-no-dups yes
 # display literal newlines, not \n, etc
-zstyle ':filter-select' escape-descriptions no
+zstyle ':filter-select'					scape-descriptions no
 
 # cleanup
 kill -TRAP $$
