@@ -29,22 +29,25 @@ export DSSI_PATH="/usr/lib/dssi:/usr/local/lib/dssi:${HOME}/dssi:/store/audio/ds
 # Add vim as default editor
 export EDITOR=vim
 export FCEDIT="$EDITOR" VISUAL="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR"
-# Setting ag as the default source for fzf
-export FZF_DEFAULT_COMMAND='ag -g ""'
-# export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || \
-#         find . -path "*/\.*" -prune -o -type f -print -o -type l -print | \
-#         sed s/^..//) 2> /dev/null'
-export FZF_DEFAULT_OPTS='
+# export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND="
+	(git ls-tree -r --name-only HEAD ||
+	find . -path '*/\.*' -prune -o \( -type f -o -type l \) -print |
+	sed s/^..//) 2>/dev/null
+"
+export FZF_DEFAULT_OPTS="
 	--color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
 	--color info:150,prompt:110,spinner:150,pointer:167,marker:174
 	--height 40%
-'
+"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden --bind '?:toggle-preview'"
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
-export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_CTRL_T_OPTS="
+	--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'
+"
 # Color GCC
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 # export GDK_DPI_SCALE=0.4

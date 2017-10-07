@@ -1,1 +1,2 @@
 if [ -d ~ ]; then pushd -q ~; fi
+if [ -d ~conf ]; then pushd -q ~conf; fi
