@@ -152,5 +152,3 @@ zle -N dirhistory_zle_dirhistory_future
 
 bindkey "\e[" dirhistory_zle_dirhistory_back
 bindkey "\e]" dirhistory_zle_dirhistory_future
-
-

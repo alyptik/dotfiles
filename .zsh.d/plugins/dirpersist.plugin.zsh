@@ -5,13 +5,13 @@
 #
 # $zdirstore is the file used to persist the stack
 
-export zdirstore=${HOME}/.zdirstore
+export zdirstore="${ZDOTDIR:-$HOME}/.zdirstore"
 
 dirpersistinstall () {
-    if grep 'dirpersiststore' ~/.zlogout > /dev/null; then
+    if grep 'dirpersiststore' "${ZDOTDIR:-$HOME}/.zlogout" >/dev/null; then
     else
         if read -q \?"Would you like to set up your .zlogout file for use with dirspersist? (y/n) "; then
-            echo "# Store dirs stack\n# See ~/.oh-my-zsh/plugins/dirspersist.plugin.zsh\ndirpersiststore" >> ~/.zlogout
+            echo "# Store dirs stack\n\n" >> "${ZDOTDIR:-$HOME}/.zlogout"
         else
             echo "If you don't want this message to appear, remove dirspersist from \$plugins"
         fi
@@ -19,12 +19,12 @@ dirpersistinstall () {
 }
 
 dirpersiststore () {
-    dirs -p | perl -e 'foreach (reverse <STDIN>) {chomp;s/([& ])/\\$1/g ;print "if [ -d $_ ]; then pushd -q $_; fi\n"}' > $zdirstore
+    dirs -p | perl -e 'foreach (reverse <STDIN>) {chomp;s/([& ])/\\$1/g ;print "if [ -d $_ ]; then pushd -q $_; fi\n"}' > "$zdirstore"
 }
 
 dirpersistrestore () {
-    if [ -f $zdirstore ]; then
-        source $zdirstore
+    if [[ -f "$zdirstore" ]]; then
+        source "$zdirstore"
     fi
 }
 
@@ -36,5 +36,5 @@ dirpersistinstall
 dirpersistrestore
 
 # Make popd changes permanent without having to wait for logout
-#alias popd="popd; dirpersiststore"
+alias popd="popd; dirpersiststore"
 chpwd_functions+=(dirpersiststore)
