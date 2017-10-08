@@ -5,7 +5,7 @@
 # Zsh configuration file
 
 # Catch EXIT, SIGINT, SIGQUIT, SIGTERM, and SIGTRAP signals for clean up
-trap '{ cleanup; trap -; }' TRAP EXIT
+trap '{ cleanup; trap -; }' USR1 EXIT
 trap '{ cleanup; trap -; kill -INT $$; }' INT
 trap '{ cleanup; trap -; kill -QUIT $$; }' QUIT
 trap '{ cleanup; trap -; kill -TERM $$; }' TERM
@@ -74,9 +74,9 @@ type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 () {
 	local -a au_arr zle_arr zmod_arr
 	au_arr+=(expand-absolute-path up-line-or-beginning-search)
-	au_arr+=(down-line-or-beginning-search run-help regexp-replace)
-	au_arr+=(edit-command-line nsert-unicode-char insert-composed-char)
-	au_arr+=(tetriscurses tetris zargs zed zmv)
+	au_arr+=(down-line-or-beginning-search filter-select run-help)
+	au_arr+=(regexp-replace edit-command-line nsert-unicode-char)
+	au_arr+=(insert-composed-char tetriscurses tetris zargs zed zmv)
 	# zle_arr+=(bracketed-paste bracketed-paste-magic)
 	zle_arr+=(edit-command-line expand-absolute-path)
 	zle_arr+=(up-line-or-beginning-search down-line-or-beginning-search)
@@ -255,6 +255,10 @@ if type zplug >/dev/null 2>&1; then
 		if read -sq; then zplug install; fi
 	fi
 	zplug load --verbose
+fi
+if type filter-select &>/dev/null; then
+	filter-select -i
+	bindkey -M filterselect '^E' accept-search
 fi
 # autoload completion for systemctl subcommand compdefs
 [[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
@@ -514,39 +518,38 @@ compdef run=gcc
 compdef xs=xsel
 
 # named directories
-hash -d audio="/run/media/alyptik/microSDXC/audio"
+hash -d audio="/media/microSDXC/audio"
+hash -d b="${HOME}/bin/"
 hash -d aur="${HOME}/code/aur"
 hash -d calibre="/media/microSDXC/calibre"
-hash -d code="${HOME}/code"
-hash -d comp="${HOME}/bin/completions"
-hash -d conf="${CONF:-/store/config}"
+hash -d code="${P:-/store/code/projects}/school"
+hash -d c="${CONF:-/store/dotfiles}"
 hash -d djzomg="/media/microSDXC/Music/djzomg"
-hash -d d="/store/config/docs"
+hash -d d="${CONF:-/store/dotfiles}/docs"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
 hash -d g="${HOME}/git"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
-hash -d magnets="/store/config/magnets"
-hash -d man="/store/config/man"
+hash -d magnets="${CONF:-/store/dotfiles}/magnets"
+hash -d man="${CONF:-/store/dotfiles}/man"
 hash -d music="/store/music"
 hash -d nginx="/etc/nginx"
 hash -d omz="/usr/share/oh-my-zsh"
 hash -d plugins="/usr/share/oh-my-zsh/plugins"
-hash -d p="${HOME}/code/projects"
+hash -d p="${P:-/store/code/projects}"
 hash -d prose="/store/writing"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
-hash -d school="/run/media/alyptik/microSDXC/school"
-hash -d scripts="/store/config/scripts"
-hash -d sr="/usr/lib/surfraw"
-hash -d stuff="/run/media/alyptik/toshiba1TB"
+hash -d s="/media/microSDXC/school"
+hash -d surfraw="/usr/lib/surfraw"
+hash -d stuff="/media/toshiba1TB"
 hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
-hash -d tt="/run/media/alyptik/toshiba1TB/torrents"
+hash -d tt="/media/toshiba1TB/torrents"
 hash -d vim="${HOME}/.vim"
 hash -d wanderlust="/hdd/wanderlust"
-hash -d words="/store/config/unixstories"
+hash -d words="${CONF:-/store/dotfiles}/unixstories"
 hash -d www="/srv/http"
 hash -d z="${ZDOTDIR:-$HOME/.zsh.d}"
 hash -d zf="${ZDOTDIR:-$HOME/.zsh.d}/zfunctions"
@@ -557,18 +560,11 @@ hash -d zsh="$ZSH"
 
 # Define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
 WORDCHARS=
-# WORDCHARS='.'
-# WORDCHARS='*?_[]~=&;!#$%^ (){}'
-# WORDCHARS='*?_[]~=&;!#$%^ (){}<>'
-# WORDCHARS='*?_-.[]~=/&;!#$%^ (){}<>'
-# WORDCHARS='${WORDCHARS:s@/@}'
 # WORDCHARS='_-*~'
+# WORDCHARS='*?_-.[]~=/&;!#$%^ (){}<>'
 
 # Completion tweaks
-zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
-	"${(z@)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%\ *}%%,*}"
-# zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
-#         "${(z@)${${${(f@)$(<${HOME}/.ssh/known_hosts)}:#[0-9]*}%%\ *}%%,*}"
+zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \ "${(z@)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%\ *}%%,*}"
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
 zstyle ':completion:*:approximate:'			max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
@@ -593,17 +589,18 @@ zstyle ':completion:*:history-words'			menu yes select
 # ignore duplicate entries
 zstyle ':completion:*:history-words'			remove-all-dups yes
 zstyle ':completion:*:history-words'			stop yes
+# match uppercase from lowercase
+# zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
+# zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
 # 2 -- word flex completion (abc => A-big-Car)
 # 3 -- full flex completion (abc => ABraCadabra)
-zstyle ':completion:*'					matcher-list '' \
+zstyle ':completion:*'					matcher-list \
+	'' \
 	'm:{a-z\-}={A-Z\_}' \
 	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
 	'r:|?=** m:{a-z\-}={A-Z\_}'
-# match uppercase from lowercase
-# zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
-# zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
 # separate matches into groups
 zstyle ':completion:*:matches'				group 'yes'
 zstyle ':completion:*'					group-name ''
@@ -638,7 +635,7 @@ zstyle ':completion:*:manuals'				separate-sections true
 zstyle ':completion:*:manuals*'				insert-sections   true
 zstyle ':completion:*:man*'				menu yes select
 # provide .. as a completion
-zstyle ':completion:*'					special-dirs ..
+# zstyle ':completion:*'					special-dirs ..
 
 # run rehash on completion so new installed program are found automatically:
 _force_rehash() {
@@ -662,24 +659,20 @@ zstyle -e ':completion:*'				completer '
 
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:urls'				local 'www' 'public_html'
+
+# filter-select options
 zstyle ':filter-select:highlight'			matched fg=yellow,standout
-# use 10 lines for filter-select
-zstyle ':filter-select'					max-lines 10
 # use $LINES - 10 for filter-select
-zstyle ':filter-select'					max-lines -10
+zstyle ':filter-select'					max-lines 10
 # enable rotation for filter-select
 zstyle ':filter-select'					rotate-list yes
 # enable case-insensitive search
 zstyle ':filter-select'					case-insensitive yes
 # see below
 zstyle ':filter-select'					extended-search yes
-# ignore duplicates in history source
-zstyle ':filter-select'					ist-find-no-dups yes
-# display literal newlines, not \n, etc
-zstyle ':filter-select'					scape-descriptions no
 
 # cleanup
-kill -TRAP $$
+kill -USR1 $$
 
 # end of .zshrc config
 #

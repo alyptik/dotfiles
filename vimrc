@@ -296,48 +296,50 @@ augroup VIMRC
 	autocmd BufLeave *.php  normal! mP
 augroup END
 
+" let g:easytags_opts=['--fields=+l --c-kinds=-p']
+
 " airline
-let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#enabled=1
 " useful to call for particular file types (e.g., in "ftplugin/*")
 " silent! call airline#extensions#whitespace#disable()
 
 " must be all spaces or all tabs before the first non-whitespace character
-" let g:airline#extensions#whitespace#mixed_indent_algo = 0 (default)
+" let g:airline#extensions#whitespace#mixed_indent_algo=0 (default)
 " certain number of spaces are allowed after tabs, but not in between
 " this algorithm works well for /** */ style comments in a tab-indented file
-let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline#extensions#whitespace#mixed_indent_algo=1
 " spaces are allowed after tabs, but not in between
 " this algorithm works well with programming styles that use tabs for
 " indentation and spaces for alignment
-" let g:airline#extensions#whitespace#mixed_indent_algo = 2
+" let g:airline#extensions#whitespace#mixed_indent_algo=2
 
-" let g:airline#extensions#whitespace#symbol = '!'
+" let g:airline#extensions#whitespace#symbol='!'
 
 " indent: mixed indent within a line
 " long:   overlong lines
 " trailing: trailing whitespace
 " mixed-indent-file: different indentation in different lines
-let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'mixed-indent-file' ]
+let g:airline#extensions#whitespace#checks=[ 'indent', 'trailing', 'mixed-indent-file' ]
 " this can also be configured for an individual buffer
-" let b:airline_whitespace_checks = [ 'indent', 'trailing', 'long', 'mixed-indent-file' ]
+" let b:airline_whitespace_checks=[ 'indent', 'trailing', 'long', 'mixed-indent-file' ]
 "
-" let g:airline#extensions#whitespace#max_lines = 20000
-let g:airline#extensions#whitespace#show_message = 1
-let g:airline#extensions#whitespace#trailing_format = 'trailing[%s]'
-let g:airline#extensions#whitespace#mixed_indent_format = 'mixed-indent[%s]'
-let g:airline#extensions#whitespace#long_format = 'long[%s]'
-let g:airline#extensions#whitespace#mixed_indent_file_format = 'mix-indent-file[%s]'
-let g:airline#extensions#whitespace#trailing_regexp = '\s$'
+" let g:airline#extensions#whitespace#max_lines=20000
+let g:airline#extensions#whitespace#show_message=1
+let g:airline#extensions#whitespace#trailing_format='trailing[%s]'
+let g:airline#extensions#whitespace#mixed_indent_format='mixed-indent[%s]'
+let g:airline#extensions#whitespace#long_format='long[%s]'
+let g:airline#extensions#whitespace#mixed_indent_file_format='mix-indent-file[%s]'
+let g:airline#extensions#whitespace#trailing_regexp='\s$'
 " configure, which filetypes have special treatment of /* */ comments,
 " matters for mix-indent-file algorithm: >
-let airline#extensions#c_like_langs = ['c', 'cpp', 'cuda', 'go', 'java', 'javascript', 'ld', 'php']
+let airline#extensions#c_like_langs=['c', 'cpp', 'cuda', 'go', 'java', 'javascript', 'ld', 'php']
 
 " Checking is enabled by default because b:airline_whitespace_disabled
 " is by default not defined:
 " unlet b:airline_whitespace_disabled
 " If b:airline_whitespace_disabled is defined and is non-zero for a buffer,
 " then whitespace checking will be disabled for that buffer; for example:
-" let b:airline_whitespace_disabled = 1
+" let b:airline_whitespace_disabled=1
 
 " arduino commands
 let g:arduino_cmd='/usr/share/arduino/arduino'
@@ -432,7 +434,8 @@ let g:ale_keep_list_window_open=0
 " Write this in your vimrc file
 let g:ale_lint_on_save=1
 let g:ale_lint_on_text_changed=0
-" You can disable this option too if you don't want linters to run on opening a file
+" You can disable this option too if you don't want linters to run
+" on opening a file
 let g:ale_lint_on_enter=0
 
 let g:ale_c_clang_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-unused-const-variable -Wfatal-errors -Wfloat-equal -Wshadow'
