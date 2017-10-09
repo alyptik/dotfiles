@@ -258,6 +258,7 @@ if type zplug >/dev/null 2>&1; then
 	zplug "zsh-users/zsh-autosuggestions"
 	zplug "zsh-users/zsh-syntax-highlighting"
 	zplug "zsh-users/zsh-history-substring-search"
+	zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then
 		print -- "Install? [y/N]: "
 		if read -sq; then zplug install; fi
