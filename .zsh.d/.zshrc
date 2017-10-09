@@ -101,10 +101,10 @@ alias help='run-help'
 typeset -gA AUTOPAIR_PAIRS
 #AUTOPAIR_PAIRS=('`' '`' "'" "'" '"' '"' '{' '}' '[' ']' '(' ')' '<' '>')
 AUTOPAIR_PAIRS=('`' '`' "'" "'" '"' '"' '{' '}' '[' ']' '(' ')')
-## For example, if $AUTOPAIR_LBOUNDS[braces]="[a-zA-Z]", then braces
+## For example, if AUTOPAIR_LBOUNDS[braces]="[a-zA-Z]", then braces
 ## {([) won't be autopaired if the cursor follows an alphabetical character.
 ## Individual delimiters can be used too. Setting
-## $AUTOPAIR_RBOUNDS['{']="[0-9]" will cause { specifically to not be
+## AUTOPAIR_RBOUNDS['{']="[0-9]" will cause { specifically to not be
 ## autopaired when the cursor precedes a number.
 typeset -gA AUTOPAIR_LBOUNDS
 AUTOPAIR_LBOUNDS=('`' '`')
@@ -140,8 +140,8 @@ GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 
 case "$_theme" in
 (0)
-	type prompt_clint_setup &>/dev/null && prompt_clint_setup || _theme=1
-	;| # continue scanning
+	# continue scanning
+	type prompt_clint_setup &>/dev/null && prompt_clint_setup || _theme=1 ;|
 
 (1)
 	# common PS1 section
@@ -173,13 +173,11 @@ case "$_theme" in
 			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
 			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
 			)$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
-	fi
-	;;
+	fi ;;
 
 (*)
-	# ?????????? wut how did you hit this wtf
-	type prompt_clint_setup >/dev/null 2>&1 && prompt_clint_setup
-	;;
+	# ?????????? how did you hit this wtf
+	type prompt_clint_setup >/dev/null 2>&1 && prompt_clint_setup ;;
 esac
 
 ## load VCS module
@@ -228,8 +226,7 @@ autoload -U +X bashcompinit && bashcompinit -u
 [[ -f "${HOME}/.aliases" ]] && \
 	. "${HOME}/.aliases"
 # autoload functions/completions in *.zwc files
-() for 1 { autoload -Uwz "$1"; } "${(M@z)fpath%%*.zwc}"
-#for 1 { autoload -Uz "${(f@)${(f@)$(zcompile -t "$1")}[2,-1]}"; } "${(M@z)fpath%%*.zwc}"
+() for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(M@z)fpath%%*.zwc}"
 
 news_short
 safetytoggle -n
@@ -239,6 +236,15 @@ safetytoggle -n
 	host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
 }
 
+# autoload completion for systemctl subcommand compdefs
+[[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
+type fasd &>/dev/null && eval "$(fasd --init auto)"
+
+if type filter-select &>/dev/null; then
+	filter-select -i
+	bindkey -M filterselect '^E' accept-search
+fi
+
 if type zplug >/dev/null 2>&1; then
 	# zplug "hlissner/zsh-autopair"
 	# zplug "kennethreitz/autoenv"
@@ -246,6 +252,8 @@ if type zplug >/dev/null 2>&1; then
 	# zplug "StackExchange/blackbox"
 	# zplug "aeruder/zirc"
 	# zplug "tj/git-extras"
+	# zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
+	# zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
 	zplug "oknowton/zsh-dwim"
 	zplug "zsh-users/zsh-autosuggestions"
 	zplug "zsh-users/zsh-syntax-highlighting"
@@ -256,13 +264,6 @@ if type zplug >/dev/null 2>&1; then
 	fi
 	zplug load --verbose
 fi
-if type filter-select &>/dev/null; then
-	filter-select -i
-	bindkey -M filterselect '^E' accept-search
-fi
-# autoload completion for systemctl subcommand compdefs
-[[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
-type fasd &>/dev/null && eval "$(fasd --init auto)"
 
 zle -N zle-youtube-helper
 zle -N zle-fman
@@ -494,6 +495,7 @@ bindkey -M viins "\e[3~" delete-char
 }
 
 compdef _fman fman
+compdef _gem gem
 compdef _git fshow
 compdef _man cppman
 compdef _man tldr
