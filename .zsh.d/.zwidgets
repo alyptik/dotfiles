@@ -4,6 +4,10 @@
 #
 # ZLE shell function section
 
+# inline calculator `= 4 * 2`
+function = () { print -r -- "$(($@))"; }
+aliases[=]='noglob ='
+
 function zle-fman {
 	local -a cmdline mansects
 	local cmd glob section
