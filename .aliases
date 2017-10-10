@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias p='print'
 alias cdg='pushd "${C:-/store/dotfiles}" >/dev/null'
 alias cdp='pushd "${P:-/store/code/projects}" >/dev/null'
 # silence 'Picked up _JAVA_OPTIONS' message on command line
@@ -105,7 +106,6 @@ alias uniq-sed="sed 'h;:b;$ b;N;/^\(.*\)\n\1$/{g;bb};$ b;P;D'"
 alias uniqu-sed="sed '$ b;N;/^\(.*\)\n\1$/!{P;D;};:c;$ d;s/.*\n//;N;/^\(.*\)\n\1$/{bc;};D'"
 alias fzero='find . -size 0'
 alias objd='objdump -Mintel,i8086 -D'
-alias p='perl'
 alias cg='cgasm'
 # alias cg='grep --color=always'
 alias ngcc="gcc -v -E -x c -march=native - < /dev/null 2>&1 | grep cc1 | perl -pe 's/ -mno-\S+//g; s/^.* - //g;'"
