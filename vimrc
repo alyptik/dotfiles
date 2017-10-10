@@ -696,7 +696,8 @@ inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
 inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
 "let g:slime_paste_file=tempname()
 let g:slime_paste_file='~/.slime_paste'
-let g:ale_asm_gcc_options='-m32'
+" 32-bit assembly
+" let g:ale_asm_gcc_options='-m32'
 let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warnings'
 let g:instant_markdown_autostart=0
 let g:instant_markdown_slow=1

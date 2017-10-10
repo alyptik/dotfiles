@@ -567,10 +567,12 @@ WORDCHARS=
 # WORDCHARS='*?_-.[]~=/&;!#$%^ (){}<>'
 
 # Completion tweaks
-zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \ "${(z@)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%\ *}%%,*}"
+zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
+	${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts})}%%,*}##*/}##*@}##*.*}%%:*}
+	# ${(Mu)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%,*}%%*.*}
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
-zstyle ':completion:*:approximate:'			max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+zstyle ':completion:*:approximate:'			max-errors 'reply=("$(( ($#PREFIX+$#SUFFIX)/2 ))" numeric)'
 # zstyle ':completion:*:approximate:'			max-errors 5 numeric
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands'	ignored-patterns '(aptitude-*|*\~)'
