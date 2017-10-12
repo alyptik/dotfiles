@@ -1,4 +1,19 @@
-e scr.color=1    ; enable color screen
-e file.id=1      ; identify files when opened
-e file.flag=1    ; automatically add bookmarks (flags) to syms, strings..
-e file.analyze=1 ; perform basic code analysis
+; enable color screen
+e scr.color = 1
+; identify files when opened
+e file.id = 1
+; automatically add bookmarks (flags) to syms, strings..
+e file.flag = 1
+; perform basic code analysis
+e file.analyze = 1
+; entry breakpoint
+e dbg.bep = main
+; e dbg.bep = entry
+; e dbg.bep = loader
+; asm style
+asm.syntax = att
+; asm.syntax = intel
+; enables or disables "fortune" messages displayed at each radare start
+cfg.fortunes = 1
+
+; vi:ft=lisp:
