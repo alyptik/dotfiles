@@ -201,6 +201,7 @@ endif
 
 " colorscheme solarized
 " colorscheme seoul256
+" colorscheme pablo
 colorscheme gruvbox
 syntax on
 syntax enable
@@ -216,6 +217,10 @@ let &colorcolumn=join(range(81,250), ',')
 highlight ColorColumn guibg=#282828
 " so listchars are only visible on the current line
 highlight SpecialKey guifg=#282828
+" my own indentation for C using the coding styles
+set smartindent cindent
+" set cino=:0,+0,(2,J0,{1,}0,>4,)1,m2
+set foldmethod=marker
 set shell=/bin/zsh
 set background=dark
 set keywordprg=man\ -s
@@ -829,6 +834,10 @@ au BufNewFile,BufRead makepkg.conf* set filetype=sh
 au BufNewFile,BufRead *.conf* setf cfg
 au BufNewFile,BufRead /etc/* setf cfg
 au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
+au BufNewFile,BufRead *.vala setf cs
+au BufNewFile,BufRead *.vapi setf cs
+au BufNewFile,BufRead *.gtkaml setf cs
+au BufNewFile,BufRead *.gtkon setf cs
 
 " Fallback
 "au BufNewFile,BufRead * setf erlang
@@ -1542,10 +1551,34 @@ nnoremap -- [c
 nnoremap == ]c
 nnoremap =- :diffget<CR>]c
 nnoremap -= :diffput<CR>]c
-nnoremap <F4> :diffget<CR>]c
-nnoremap <F5> :diffput<CR>]c
-vnoremap <F4> :'<,'>diffget<CR>]c
-vnoremap <F5> :'<,'>diffput<CR>]c
+" nnoremap <F4> :diffget<CR>]c
+" nnoremap <F5> :diffput<CR>]c
+" vnoremap <F4> :'<,'>diffget<CR>]c
+" vnoremap <F5> :'<,'>diffput<CR>]c
+nnoremap <F4> :cprevious<CR>
+vnoremap <F4> :cprevious<CR>
+nnoremap <F5> :cnext<CR>
+vnoremap <F5> :cnext<CR>
+" nnoremap <C-F10> <C-w>=
+" vnoremap <C-F10> <C-w>=
+
+" pancake's exposee for vim:
+let g:fs=0
+function! Exposee()
+	if (g:fs == 0)
+		res 1000
+		vertical res 1000
+		let g:fs=1
+	else
+		exe "normal \<C-W>="
+		let g:fs=0
+	endif
+endfun
+nnoremap <F11> :call Exposee()<CR>
+vnoremap <F11> :call Exposee()<CR>
+nnoremap <C-F11> :make<CR>
+vnoremap <C-F11> :make<CR>
+
 noremap <Esc><F4> [c
 noremap <Esc><F5> ]c
 " nnoremap <F4> :ls<CR>

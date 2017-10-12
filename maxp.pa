@@ -1,0 +1,21 @@
+➜ ~ cat .config/pulse/default.pa 
+load-module module-native-protocol-unix
+load-module module-x11-bell
+load-module module-x11-publish
+#load-module module-x11-xsmp
+
+.fail
+	#load-module module-alsa-card card_name=usb device_id=U0x41e0x30d3 sink_name=usb.out source_name=usb.in tsched=0 fragment_size=512 fragments=4 fixed_latency_range=yes ignore_dB=yes
+	load-module module-alsa-card card_name=internal device_id=0 sink_name=internal.out source_name=internal.in tsched=0 fragment_size=512 fragments=2 fixed_latency_range=yes
+	load-module module-ladspa-sink sink_name=eq.internal.out master=internal.out plugin=mbeq_1197 label=mbeq control=-2,-2,-10,-12,-12,-12,-12,-12,-12,-11,-11,-10,-8,-7,-7
+	load-module module-alsa-card name=hdmi sink_name=hdmi.out device_id=1 tsched=0
+	
+	set-card-profile alsa_card.hdmi off
+
+	set-default-sink eq.internal.out
+	set-default-source internal.in
+.nofail
+
+load-module module-rescue-streams
+load-module module-always-sink
+load-module module-suspend-on-idle

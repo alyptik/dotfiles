@@ -1,0 +1,72 @@
+.zshrc(1)
+=========
+:compat-mode!:
+
+NAME
+----
+.zshrc - a shell script
+
+SYNOPSIS
+--------
+Documentation automatically generated with `zshelldoc'
+
+FUNCTIONS
+---------
+
+AUTOLOAD bashcompinit
+AUTOLOAD colors
+AUTOLOAD compinit
+AUTOLOAD promptinit
+AUTOLOAD _systemctl
+AUTOLOAD vcs_info
+
+DETAILS
+-------
+
+Script Body
+~~~~~~~~~~~
+
+Has 584 line(s). No functions are called (may attach to Zle or do hooks, etc.).
+
+bashcompinit
+~~~~~~~~~~~~
+
+Has 179 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+colors
+~~~~~~
+
+Has 117 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+compinit
+~~~~~~~~
+
+Has 547 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+promptinit
+~~~~~~~~~~
+
+Has 263 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+_systemctl
+~~~~~~~~~~
+
+Has 393 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+vcs_info
+~~~~~~~~
+
+Has 148 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
