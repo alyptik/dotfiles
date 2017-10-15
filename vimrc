@@ -84,7 +84,7 @@ call plug#begin(g:plugdir)
 	Plug 'terryma/vim-expand-region'
 	Plug 'tpope/vim-abolish'
 	Plug 'tpope/vim-commentary'
-	" Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-repeat'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-unimpaired'
@@ -531,7 +531,6 @@ let g:ale_c_clangtidy_checks=[
 	\ 'google-readability-function-size',
 	\ 'google-readability-namespace-comments',
 	\ 'google-readability-redundant-smartptr-get',
-	\ 'google-readability-todo',
 	\ 'google-runtime-int',
 	\ 'google-runtime-member-string-references',
 	\ 'google-runtime-operator',
