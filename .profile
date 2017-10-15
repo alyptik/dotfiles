@@ -4,7 +4,10 @@
 # Environment configuration
 
 # conditionals
-if [ "$(hostname)" == "fedora" ]; then
+if [ x"$(hostname)" = x"fedora" ]; then
+	TERM=screen-256color
+fi
+if [ x"$(hostname)" = x"compiler" ]; then
 	TERM=screen-256color
 fi
 # Disable toggling XON/XOFF with ^S/^Q

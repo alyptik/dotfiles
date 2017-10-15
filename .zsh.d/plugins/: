@@ -228,7 +228,7 @@ autoload -U +X bashcompinit && bashcompinit -u
 # autoload functions/completions in *.zwc files
 () for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(M@z)fpath%%*.zwc}"
 
-[[ "$(hostname)" != compiler ]] && news_short
+news_short
 safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
@@ -447,16 +447,15 @@ bindkey -M viins "\e[3~" delete-char
 	defargcmds+=(updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc)
 	defargcmds+=(xbindkeys xsel youtube-dl)
 
-	asmcmds+=(${(o)$({
-		cgasm -f '.*' | perl -alne '
+	asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
 			BEGIN{ my @cmds; }
 			push @cmds, split(/ /, lc $F[0] =~ y|/| |r);
 			END{ print join " ", @cmds;}'
 		} 2>/dev/null)})
 	dbpkgs+=(${(fo@)$(pacman -Qq 2>/dev/null)})
 	kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
-	pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring --list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
-	seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring --list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
+	pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring --list-options no-show-photos):%<*>}//(<|>)/})
+	seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring --list-options no-show-photos):%<*>}//(<|>)/})
 
 	cgasm_str+=$'_arguments "*:arg:_default" ":assembly instruction:('
 	cgasm_str+="${asmcmds[*]}"
