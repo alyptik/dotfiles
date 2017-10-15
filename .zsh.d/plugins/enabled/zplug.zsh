@@ -1,1 +1,1 @@
-/home/alyptik/.zplug/repos/zplug/zplug/init.zsh
+../zplug/init.zsh
