@@ -508,7 +508,6 @@ compdef _systemctl_status pscrs
 compdef _systemctl_status uscrs
 compdef _systemctl_status puscrs
 compdef _texinfo info
-compdef _uscrs uscrs
 compdef _vim v
 compdef _pip pip
 compdef _au au
