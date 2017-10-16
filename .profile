@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # .profile
 #
@@ -89,8 +90,10 @@ export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:${HOME}/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:${HOME}/lxvst:/store/audio/lxvst"
 export GROFF_NO_SGR=1 LESS='CMRis' LESS='CMRXis' man man git
+# shellcheck disable=SC2039
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43;5m' LESS_TERMCAP_md=$'\E[1;31m'
+# shellcheck disable=SC2039
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME="i965"
@@ -108,9 +111,13 @@ export PATH="${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/ass
 # export PATH="/usr/local/sbin:/usr/local/bin:/bin:/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 # prepend cross compiler to PATH
 export PATH="/opt/cross/bin:$PATH"
+# shellcheck disable=SC2039
 export PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
+# shellcheck disable=SC2039
 export PERL5LIB="${PERL5LIB:+${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
+# shellcheck disable=SC2039
 export PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT//:${HOME}\/perl5}}"
+# shellcheck disable=SC2039
 export PERL_LOCAL_LIB_ROOT="${PERL_LOCAL_LIB_ROOT:+${PERL_LOCAL_LIB_ROOT//:${HOME}\/perl5}}"
 export PERL_MB_OPT="--install_base \"${HOME}/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"
@@ -121,9 +128,11 @@ export PERLDOC_PAGER="less -CMRis"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH}:${PLAN9}/bin"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Libraries/pkgconfig:/usr/lib/pkgconfig"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:${PLAN9}/bin"
+# shellcheck disable=SC2039
 export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man" p9="${PLAN9}"
 export P="/store/code/projects" p="$P"
 export PRE="${HOME}/.local" pre="$PRE"
+export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,cmd"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2.7"
 # export PYTHON='/store/config/scripts/python2'
