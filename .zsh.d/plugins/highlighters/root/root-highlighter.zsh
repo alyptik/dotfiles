@@ -40,5 +40,5 @@ _zsh_highlight_highlighter_root_predicate()
 # root highlighting function.
 _zsh_highlight_highlighter_root_paint()
 {
-  if (( EUID == 0 )) { _zsh_highlight_add_highlight 0 $#BUFFER root }
+  if (( EUID == 0 )) { _zsh_highlight_add_highlight 0 $#BUFFER root; }
 }
