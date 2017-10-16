@@ -132,7 +132,8 @@ export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Librari
 export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man" p9="${PLAN9}"
 export P="/store/code/projects" p="$P"
 export PRE="${HOME}/.local" pre="$PRE"
-export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,cmd"
+# export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,comm"
+export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,args"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2.7"
 # export PYTHON='/store/config/scripts/python2'
