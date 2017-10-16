@@ -9,11 +9,12 @@ trap '{ cleanup; trap -; }' USR1 EXIT
 trap '{ cleanup; trap -; kill -INT $$; }' INT
 trap '{ cleanup; trap -; kill -QUIT $$; }' QUIT
 trap '{ cleanup; trap -; kill -TERM $$; }' TERM
+# theme: 0 = clint / 1 = custom PS1 / * = wtf are u doing
+_show_news=0 _theme=1 _zsh_error="$(mktemp)"
 # Redirect errors to a temporary fd, and then append them to a log file
-ZSH_ERROR="$(mktemp)"
 exec 9>&2
-exec 2<>"$ZSH_ERROR"
-[[ -f "$ZSH_ERROR" ]] && rm -f "$ZSH_ERROR" || cleanup
+exec 2<>"$_zsh_error"
+[[ -f "$_zsh_error" ]] && rm -f "$_zsh_error" || cleanup
 
 ## Set/unset options
 () {
@@ -26,14 +27,16 @@ exec 2<>"$ZSH_ERROR"
 	setarr+=(chaselinks clobber completeinword correct cprecedences equals)
 	setarr+=(extendedglob globassign globdots globstarshort histexpiredupsfirst)
 	setarr+=(histignorealldups histignoredups histlexwords histreduceblanks)
-	setarr+=(hup incappendhistory interactivecomments kshglob kshoptionprint)
-	setarr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
-	setarr+=(markdirs menucomplete monitor multibyte notify pathdirs pipefail)
-	setarr+=(promptsubst pushdignoredups pushdminus pushdtohome rematchpcre)
+	setarr+=(hup incappendhistory interactivecomments)
+	setarr+=(kshglob kshoptionprint listambiguous longlistjobs)
+	setarr+=(magicequalsubst octalzeroes markdirs menucomplete monitor)
+	setarr+=(multibyte notify pathdirs pipefail promptsubst pushdignoredups)
+	setarr+=(pushdminus pushdtohome rematchpcre)
+	# `setopt IGNORE_CLOSE_BRACES` breaks too many things :'(
+	# setarr+=(ignoreclosebraces)
 	() for 1 { unsetopt "$1"; }  $unsetarr
 	() for 1 { setopt "$1"; } $setarr
 }
-
 # Emacs 19.29 or thereabouts stopped using a terminal type of "emacs" in
 # shell buffers, and instead sets it to "dumb". Zsh only kicks in its special
 # I'm-inside-emacs initialization when the terminal type is "emacs".
@@ -41,9 +44,7 @@ exec 2<>"$ZSH_ERROR"
 
 ## Set emacs or vi as default
 bindkey -e
-() for 1 { zle -N "$1" } zle-keymap-select zle-line-init zle-line-finish
-# theme: 0 = clint / 1 = custom PS1 / * = wtf are u doing
-_theme=1
+() for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
 # Initialize _km for ZLE widgets and set initial cursor color
 _km=emacs _emacs=main _vi=
 setescapes
@@ -65,7 +66,6 @@ zstyle ':history-search-multi-word'	page-size 5
 autoload -U colors && colors
 eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
-
 # History stuff
 HISTFILE="${HOME}/.zsh_history"
 type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
@@ -90,11 +90,10 @@ type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 	() for 1 { autoload -Uz "$1"; } $au_arr
 	() for 1 { zle -N "$1"; } $zle_arr
 	() for 1 { zmodload "$1"; } $zmod_arr
+	# equiv of bash's "help"
+	unalias run-help help 2>/dev/null
+	alias help='run-help'
 }
-
-# equiv of bash's "help"
-unalias run-help help 2>/dev/null
-alias help='run-help'
 
 #AUTOPAIR_INHIBIT_INIT=${AUTOPAIR_INHIBIT_INIT:-}
 #AUTOPAIR_BETWEEN_WHITESPACE=${AUTOPAIR_BETWEEN_WHITESPACE:-}
@@ -182,7 +181,7 @@ esac
 
 ## load VCS module
 autoload -Uz vcs_info
-if type vcs_info >/dev/null 2>&1; then
+if type vcs_info &>/dev/null; then
 	zstyle ':vcs_info:*' enable git cvs svn
 	zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
 	zstyle ':vcs_info:*' check-for-changes true
@@ -228,7 +227,8 @@ autoload -U +X bashcompinit && bashcompinit -u
 # autoload functions/completions in *.zwc files
 () for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(M@z)fpath%%*.zwc}"
 
-[[ "$(hostname)" != compiler ]] && news_short
+# prompt rice
+[[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
 safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
@@ -237,8 +237,13 @@ safetytoggle -n
 }
 
 # autoload completion for systemctl subcommand compdefs
+[[ "$(type _git)" =~ "autoload" ]] && autoload -Uz +X _git
+[[ "$(type _pacman)" =~ "autoload" ]] && autoload -Uz +X _pacman
 [[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
-type fasd &>/dev/null && eval "$(fasd --init auto)"
+
+if type fasd &>/dev/null; then
+	eval "$(fasd --init auto)"
+fi
 
 if type filter-select &>/dev/null; then
 	filter-select -i
@@ -447,16 +452,25 @@ bindkey -M viins "\e[3~" delete-char
 	defargcmds+=(updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc)
 	defargcmds+=(xbindkeys xsel youtube-dl)
 
-	asmcmds+=(${(o)$({
-		cgasm -f '.*' | perl -alne '
-			BEGIN{ my @cmds; }
-			push @cmds, split(/ /, lc $F[0] =~ y|/| |r);
-			END{ print join " ", @cmds;}'
-		} 2>/dev/null)})
-	dbpkgs+=(${(fo@)$(pacman -Qq 2>/dev/null)})
-	kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) -type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
-	pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring --list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
-	seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring --list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
+	if type cgasm &>/dev/null; then
+		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
+				BEGIN{ my @cmds; }
+				push @cmds, split(/ /, lc $F[0] =~ y|/| |r);
+				END{ print join " ", @cmds;}'; } 2>/dev/null)})
+	fi
+	if type pacman &>/dev/null; then
+		dbpkgs+=(${(fo@)$(pacman -Qq 2>/dev/null)})
+	fi
+	if type gpg2 &>/dev/null; then
+		pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring \
+			--list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
+		seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring \
+			--list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
+	fi
+	if type find &>/dev/null; then
+		kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) \
+			-type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
+	fi
 
 	cgasm_str+=$'_arguments "*:arg:_default" ":assembly instruction:('
 	cgasm_str+="${asmcmds[*]}"
@@ -532,6 +546,7 @@ hash -d d="${CONF:-/store/dotfiles}/docs"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
 hash -d g="${HOME}/git"
+hash -d hdd="/run/media/alyptik/toshiba1TB"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
 hash -d magnets="${CONF:-/store/dotfiles}/magnets"
@@ -545,12 +560,14 @@ hash -d prose="/store/writing"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
 hash -d s="/media/microSDXC/school"
+hash -d sdxc="/run/media/alyptik/microSDXC"
 hash -d surfraw="/usr/lib/surfraw"
 hash -d stuff="/media/toshiba1TB"
 hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
 hash -d tt="/media/toshiba1TB/torrents"
 hash -d vim="${HOME}/.vim"
+hash -d vm="/run/media/alyptik/vm"
 hash -d wanderlust="/hdd/wanderlust"
 hash -d words="${CONF:-/store/dotfiles}/unixstories"
 hash -d www="/srv/http"

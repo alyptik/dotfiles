@@ -130,10 +130,10 @@ _filter_units_by_property() {
   echo -E - "${(@g:o:)${(k@)props[(Re)$property=$value]}#Id=}"
 }
 
-_systemctl_get_template_names() { echo -E - ${^${(M)${(f)"$(__systemctl list-unit-files)"}##*@.[^[:space:]]##}%%@.*}\@ }
+_systemctl_get_template_names() { echo -E - ${^${(M)${(f)"$(__systemctl list-unit-files)"}##*@.[^[:space:]]##}%%@.*}\@; }
 
 
-_systemctl_active_units()  {_sys_active_units=(  ${${(f)"$(__systemctl list-units)"}%% *} )}
+_systemctl_active_units()  { _sys_active_units=(  ${${(f)"$(__systemctl list-units)"}%% *} ); }
 
 _systemctl_startable_units(){
     _sys_startable_units=( $( _filter_units_by_property ActiveState inactive $(
@@ -152,8 +152,8 @@ _systemctl_restartable_units(){
                                { while read -r a b; do echo -E - " $a"; done; } )) )
 }
 
-_systemctl_failed_units()  {_sys_failed_units=( ${${(f)"$(__systemctl list-units --state=failed)"}%% *} ) }
-_systemctl_unit_state() { typeset -gA _sys_unit_state; _sys_unit_state=( $(__systemctl list-unit-files) ) }
+_systemctl_failed_units() { _sys_failed_units=( ${${(f)"$(__systemctl list-units --state=failed)"}%% *} ); }
+_systemctl_unit_state() { typeset -gA _sys_unit_state; _sys_unit_state=( $(__systemctl list-unit-files) ); }
 
 local fun
 # Completion functions for ALL_UNITS

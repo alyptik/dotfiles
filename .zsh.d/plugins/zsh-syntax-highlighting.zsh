@@ -299,7 +299,7 @@ _zsh_highlight_bind_widgets()
       # Incomplete or nonexistent widget: Bind to z-sy-h directly.
       *) 
          if [[ $cur_widget == zle-* ]] && [[ -z $widgets[$cur_widget] ]]; then
-           _zsh_highlight_widget_${cur_widget}() { :; _zsh_highlight }
+           _zsh_highlight_widget_${cur_widget}() { :; _zsh_highlight; }
            zle -N $cur_widget _zsh_highlight_widget_$cur_widget
          else
       # Default: unhandled case.
