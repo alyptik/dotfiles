@@ -174,19 +174,19 @@ __git_reassemble_comp_words_by_ref()
 			fi
 			first=
 			words_[$j]=${words_[j]}${COMP_WORDS[i]}
-			if [ $i = $COMP_CWORD ]; then
+			if [ "$i" = "$COMP_CWORD" ]; then
 				cword_=$j
 			fi
-			if (($i < ${#COMP_WORDS[@]} - 1)); then
+			if ((i < ${#COMP_WORDS[@]} - 1)); then
 				((i++))
 			else
 				# Done.
 				return
 			fi
 		done
-		words_[$j]=${words_[j]}${COMP_WORDS[i]}
-		if [ $i = $COMP_CWORD ]; then
-			cword_=$j
+		words_["$j"]="${words_[j]}${COMP_WORDS[i]}"
+		if [ "$i" = "$COMP_CWORD" ]; then
+			cword_="$j"
 		fi
 	done
 }
@@ -336,7 +336,7 @@ __git_ls_files_helper ()
 		__git -C "$1" diff-index --name-only --relative HEAD
 	else
 		# NOTE: $2 is not quoted in order to support multiple options
-		__git -C "$1" ls-files --exclude-standard $2
+		__git -C "$1" ls-files --exclude-standard "$2"
 	fi
 }
 
@@ -480,6 +480,7 @@ __git_refs ()
 		;;
 	*)
 		if [ "$list_refs_from" = remote ]; then
+			# shellcheck disable=SC2194
 			case "HEAD" in
 			$match*)	echo "${pfx}HEAD$sfx" ;;
 			esac
@@ -488,6 +489,7 @@ __git_refs ()
 				"refs/remotes/$remote/$match*/**"
 		else
 			local query_symref
+			# shellcheck disable=SC2194
 			case "HEAD" in
 			$match*)	query_symref="HEAD" ;;
 			esac
@@ -571,6 +573,7 @@ __git_refs_remotes ()
 	__git ls-remote "$1" 'refs/heads/*' | \
 	while read -r hash i; do
 		echo "$i:refs/remotes/$1/${i#refs/heads/}"
+		hash="$hash"
 	done
 }
 
@@ -646,18 +649,18 @@ __git_complete_revlist_file ()
 
 		__gitcomp_nl "$(__git ls-tree "$ls" \
 				| sed '/^100... blob /{
-				           s,^.*	,,
-				           s,$, ,
-				       }
-				       /^120000 blob /{
-				           s,^.*	,,
-				           s,$, ,
-				       }
-				       /^040000 tree /{
-				           s,^.*	,,
-				           s,$,/,
-				       }
-				       s/^.*	//')" \
+						s,^.*	,,
+						s,$, ,
+					}
+					/^120000 blob /{
+						s,^.*	,,
+						s,$, ,
+					}
+					/^040000 tree /{
+						s,^.*	,,
+						s,$,/,
+					}
+					s/^.*	//')" \
 			"$pfx" "$cur_" ""
 		;;
 	*...*)
@@ -801,7 +804,7 @@ __git_commands () {
 	then
 		printf "%s" "${GIT_TESTING_COMMAND_COMPLETION}"
 	else
-		git help -a|egrep '^  [a-zA-Z0-9]'
+		git help -a | grep -E '^  [a-zA-Z0-9]'
 	fi
 }
 
@@ -812,7 +815,7 @@ __git_list_all_commands ()
 	do
 		case $i in
 		*--*)             : helper pattern;;
-		*) echo $i;;
+		*) echo "$i";;
 		esac
 	done
 }
@@ -906,7 +909,7 @@ __git_list_porcelain_commands ()
 		var)              : infrequent;;
 		verify-pack)      : infrequent;;
 		verify-tag)       : plumbing;;
-		*) echo $i;;
+		*) echo "$i";;
 		esac
 	done
 }
@@ -941,7 +944,8 @@ __git_aliases ()
 # __git_aliased_command requires 1 argument
 __git_aliased_command ()
 {
-	local word cmdline=$(__git config --get "alias.$1")
+	local word cmdline
+	cmdline="$(__git config --get "alias.$1")"
 	for word in $cmdline; do
 		case "$word" in
 		\!gitk|gitk)
@@ -953,9 +957,9 @@ __git_aliased_command ()
 		*=*)	: setting env ;;
 		git)	: git itself ;;
 		\(\))   : skip parens of shell function definition ;;
-		{)	: skip start of shell helper function ;;
+		\{)	: skip start of shell helper function ;;
 		:)	: skip null command ;;
-		\'*)	: skip opening quote after sh -c ;;
+		"'"*)	: skip opening quote after sh -c ;;
 		*)
 			echo "$word"
 			return
@@ -996,14 +1000,14 @@ __git_find_on_cmdline ()
 __git_get_option_value ()
 {
 	local c short_opt long_opt val
-	local result= values config_key word
+	local result="" values config_key word
 
 	short_opt="$1"
 	long_opt="$2"
 	values="$3"
 	config_key="$4"
 
-	((c = $cword - 1))
+	((c = cword - 1))
 	while [ $c -ge 0 ]; do
 		word="${words[c]}"
 		for val in $values; do
@@ -1163,7 +1167,8 @@ _git_bisect ()
 	__git_has_doubledash && return
 
 	local subcommands="start bad good skip reset visualize replay log run"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		__git_find_repo_path
 		if [ -f "$__git_repo_path"/BISECT_START ]; then
@@ -1210,7 +1215,7 @@ _git_branch ()
 			"
 		;;
 	*)
-		if [ $only_local_ref = "y" -a $has_r = "n" ]; then
+		if [ $only_local_ref = "y" ] && [ "$has_r" = "n" ]; then
 			__gitcomp_direct "$(__git_heads "" "$cur" " ")"
 		else
 			__git_complete_refs
@@ -1848,7 +1853,7 @@ _git_mv ()
 		;;
 	esac
 
-	if [ $(__git_count_arguments "mv") -gt 0 ]; then
+	if [ "$(__git_count_arguments "mv")" -gt 0 ]; then
 		# We need to show both cached and untracked files (including
 		# empty directories) since this may not be the last argument.
 		__git_complete_index_file "--cached --others --directory"
@@ -1865,7 +1870,8 @@ _git_name_rev ()
 _git_notes ()
 {
 	local subcommands='add append copy edit list prune remove show'
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 
 	case "$subcommand,$cur" in
 	,--*)
@@ -2025,7 +2031,8 @@ _git_rebase ()
 _git_reflog ()
 {
 	local subcommands="show delete expire"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
@@ -2148,7 +2155,7 @@ _git_status ()
 
 __git_config_get_set_variables ()
 {
-	local prevword word config_file= c=$cword
+	local prevword word config_file="" c="$cword"
 	while [ $c -gt 1 ]; do
 		word="${words[c]}"
 		case "$word" in
@@ -2165,7 +2172,7 @@ __git_config_get_set_variables ()
 		c=$((--c))
 	done
 
-	__git config $config_file --name-only --list
+	__git config "$config_file" --name-only --list
 }
 
 _git_config ()
@@ -2626,11 +2633,13 @@ _git_config ()
 
 _git_remote ()
 {
-	local subcommands="
+	local subcommands
+	subcommands="
 		add rename remove set-head set-branches
 		get-url set-url show prune update
 		"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		case "$cur" in
 		--*)
@@ -2693,7 +2702,8 @@ _git_replace ()
 _git_rerere ()
 {
 	local subcommands="clear forget diff remaining status gc"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if test -z "$subcommand"
 	then
 		__gitcomp "$subcommands"
@@ -2811,7 +2821,8 @@ _git_stash ()
 {
 	local save_opts='--all --keep-index --no-keep-index --quiet --patch --include-untracked'
 	local subcommands='save list show apply clear drop pop create branch'
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		case "$cur" in
 		--*)
@@ -2859,7 +2870,8 @@ _git_submodule ()
 	__git_has_doubledash && return
 
 	local subcommands="add status init deinit update summary foreach sync"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		case "$cur" in
 		--*)
@@ -2908,7 +2920,8 @@ _git_svn ()
 		proplist show-ignore show-externals branch tag blame
 		migrate mkdirs reset gc
 		"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
 	else
@@ -3047,7 +3060,8 @@ _git_whatchanged ()
 _git_worktree ()
 {
 	local subcommands="add list lock prune unlock"
-	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	local subcommand
+	subcommand="$(__git_find_on_cmdline "$subcommands")"
 	if [ -z "$subcommand" ]; then
 		__gitcomp "$subcommands"
 	else
@@ -3130,13 +3144,14 @@ __git_main ()
 	fi
 
 	local completion_func="_git_${command//-/_}"
-	declare -f $completion_func >/dev/null 2>/dev/null && $completion_func && return
+	declare -f "$completion_func" >/dev/null 2>/dev/null && $completion_func && return
 
-	local expansion=$(__git_aliased_command "$command")
+	local expansion
+	expansion="$(__git_aliased_command "$command")"
 	if [ -n "$expansion" ]; then
 		words[1]=$expansion
 		completion_func="_git_${expansion//-/_}"
-		declare -f $completion_func >/dev/null 2>/dev/null && $completion_func
+		declare -f "$completion_func" >/dev/null 2>/dev/null && $completion_func
 	fi
 }
 
@@ -3164,10 +3179,10 @@ __gitk_main ()
 	__git_complete_revlist
 }
 
-if [[ -n ${ZSH_VERSION-} ]]; then
+if [[ -n "${ZSH_VERSION-}" ]]; then
 	echo "WARNING: this script is deprecated, please see git-completion.zsh" 1>&2
 
-	autoload -U +X compinit && compinit
+	autoload -U +X compinit && compinit -u
 
 	__gitcomp ()
 	{
@@ -3201,7 +3216,7 @@ if [[ -n ${ZSH_VERSION-} ]]; then
 
 		local IFS=$'\n'
 		compset -P '*[=:]'
-		compadd -Q -- ${=1} && _ret=0
+		compadd -Q -- "${=1}" && _ret=0
 	}
 
 	__gitcomp_nl ()
@@ -3210,7 +3225,7 @@ if [[ -n ${ZSH_VERSION-} ]]; then
 
 		local IFS=$'\n'
 		compset -P '*[=:]'
-		compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
+		compadd -Q -S "${4- }" -p "${2-}" -- "${=1}" && _ret=0
 	}
 
 	__gitcomp_file ()
@@ -3219,18 +3234,19 @@ if [[ -n ${ZSH_VERSION-} ]]; then
 
 		local IFS=$'\n'
 		compset -P '*[=:]'
-		compadd -Q -p "${2-}" -f -- ${=1} && _ret=0
+		compadd -Q -p "${2-}" -f -- "${=1}" && _ret=0
 	}
 
 	_git ()
 	{
 		local _ret=1 cur cword prev
-		cur=${words[CURRENT]}
-		prev=${words[CURRENT-1]}
+		service="$service"
+		cur="${words[CURRENT]}"
+		prev="${words[CURRENT-1]}"
 		let cword=CURRENT-1
-		emulate ksh -c __${service}_main
+		emulate ksh -c __"${service}"_main
 		let _ret && _default && _ret=0
-		return _ret
+		return "$((_ret % 256))"
 	}
 
 	compdef _git git gitk
@@ -3251,8 +3267,8 @@ __git_complete ()
 {
 	local wrapper="__git_wrap${2}"
 	eval "$wrapper () { __git_func_wrap $2 ; }"
-	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/null \
-		|| complete -o default -o nospace -F $wrapper $1
+	complete -o bashdefault -o default -o nospace -F "$wrapper" "$1" 2>/dev/null \
+		|| complete -o default -o nospace -F "$wrapper" "$1"
 }
 
 # wrapper for backwards compatibility
