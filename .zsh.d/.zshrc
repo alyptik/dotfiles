@@ -410,7 +410,8 @@ bindkey -M viins "\e[3~" delete-char
 	bindkey -M "$1" "\e;" fzf-completion
 	bindkey -M "$1" "\e\C-i" fasd-complete
 	# bindkey -M "$1" "\e[Z" fzf-complete-f
-	bindkey -M "$1" "\e[Z" fasd-complete-d
+	# bindkey -M "$1" "\e[Z" fasd-complete-d
+	bindkey -M "$1" "\e[Z" reverse-menu-complete
 	bindkey -M "$1" "\C-i" "$fzf_default_completion"
 	bindkey -M "$1" "\ei" fzf-locate-widget
 	bindkey -M "$1" "\er" fzf-history-widget

@@ -439,6 +439,7 @@ typeset _i_wdirs _i_wfiles
 
 _i_wdirs=()
 _i_wfiles=()
+_i_fail=use
 
 autoload -Uz compaudit
 if [[ -n "$_i_check" ]]; then
