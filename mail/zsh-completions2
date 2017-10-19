@@ -1,0 +1,13 @@
+Oliver Kiddle wrote:
+> That might work. Not sure I like there then being three projects (plus
+> upstreams). The whole idea is to make it less confusing for someone
+> wanting to contribute. Maybe the "incubator" completions could be pulled
+> in to the zsh repository with the others but excluded from a zsh release
+> tarball. Or we could use a separate orphan git branch.
+
+Yeah, I mean no matter what is decided on, there is bound to be at least a
+little bit of messiness involved. I do sort of like that "incubator" idea,
+though; I don't really see any obvious problems with that sort of approach.
+
+Joey Pabalinas
+<alyptik@protonmail.com>

@@ -45,6 +45,8 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
+	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
 	Plug 'edkolev/promptline.vim'
 	Plug 'sudar/vim-arduino-syntax'
@@ -91,7 +93,6 @@ call plug#begin(g:plugdir)
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'w0rp/ale'
-	Plug 'xolox/vim-misc'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 	Plug 'Terryma/vim-multiple-cursors'
 	Plug 'xolox/vim-notes'
@@ -345,6 +346,52 @@ let airline#extensions#c_like_langs=['c', 'cpp', 'cuda', 'go', 'java', 'javascri
 " If b:airline_whitespace_disabled is defined and is non-zero for a buffer,
 " then whitespace checking will be disabled for that buffer; for example:
 " let b:airline_whitespace_disabled=1
+let g:airline#extensions#tabline#enabled=1
+" let g:airline_theme='zenburn'
+" let g:airline_theme='gruvbox'
+let g:airline_theme='hybrid'
+let g:airline#extensions#ale#enabled=1
+let airline#extensions#ale#error_symbol='E:'
+let airline#extensions#ale#warning_symbol='W:'
+if !exists('g:airline_symbols')
+	let g:airline_symbols={}
+endif
+" unicode symbols
+let g:airline_left_sep='»'
+let g:airline_left_sep='▶'
+let g:airline_right_sep='«'
+let g:airline_right_sep='◀'
+let g:airline_symbols.crypt='🔒'
+let g:airline_symbols.linenr='☰'
+let g:airline_symbols.linenr='␊'
+let g:airline_symbols.linenr='␤'
+let g:airline_symbols.linenr='¶'
+let g:airline_symbols.maxlinenr=''
+let g:airline_symbols.maxlinenr='㏑'
+let g:airline_symbols.branch='⎇'
+let g:airline_symbols.paste='ρ'
+let g:airline_symbols.paste='Þ'
+let g:airline_symbols.paste='∥'
+let g:airline_symbols.spell='Ꞩ'
+let g:airline_symbols.notexists='∄'
+let g:airline_symbols.whitespace='Ξ'
+" powerline symbols
+let g:airline_left_sep=''
+let g:airline_left_alt_sep=''
+let g:airline_right_sep=''
+let g:airline_right_alt_sep=''
+let g:airline_symbols.branch=''
+let g:airline_symbols.readonly=''
+let g:airline_symbols.linenr='☰'
+let g:airline_symbols.maxlinenr=''
+" old vim-powerline symbols
+let g:airline_left_sep='⮀'
+let g:airline_left_alt_sep='⮁'
+let g:airline_right_sep='⮂'
+let g:airline_right_alt_sep='⮃'
+let g:airline_symbols.branch='⭠'
+let g:airline_symbols.readonly='⭤'
+let g:airline_symbols.linenr='⭡'
 
 " arduino commands
 let g:arduino_cmd='/usr/share/arduino/arduino'
@@ -398,20 +445,18 @@ let g:easytags_always_enabled=0
 let g:easytags_async=1
 let g:easytags_auto_highlight=1
 "let g:easytags_syntax_keyword='always'
-"let g:easytags_syntax_keyword='auto'
-let g:easytags_dynamic_files=1
+let g:easytags_syntax_keyword='auto'
+let g:easytags_dynamic_files=0
 let g:easytags_resolve_links=1
 let g:easytags_include_members=1
+let g:easytags_autorecurse=0
+let g:easytags_by_filetype='~/.vim/tags'
 "let g:easytags_events=['BufWritePost', 'CursorHold']
 "let g:easytags_events=['BufWritePost', 'CursorHold', 'CursorHoldI']
 "let g:easytags_events=['BufWritePost', 'CursorHoldI']
 let g:netrw_silent=1
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
-let g:airline#extensions#tabline#enabled=1
-"let g:airline#extensions#tabline#left_sep=' '
-"let g:airline#extensions#tabline#left_alt_sep='|'
-let g:airline_theme='zenburn'
 "let g:syntastic_stl_format="[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]"
 "let g:syntastic_always_populate_loc_list=1
 "let g:syntastic_auto_loc_list=1
