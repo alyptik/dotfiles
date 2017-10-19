@@ -1,0 +1,35 @@
+On October 16, 2017 5:49PM UTC, GI <gi1242+zsh@gmail.com> wrote:
+
+> > It's easy to have additional repositories at Sourceforge --- the
+> > question is whether they can be set up conveniently for the desired
+> > model, which I don"t know.
+>
+> If this is the path you are choosing, then take a look at "git
+> subtrees". With this someone can simply clone the "whole source" and
+> make changes anywhere (including completions), without even knowing
+> there is a separate completion repository.
+
+Although subtrees have their uses, in my opinion, uses them would result in
+nearly the same issues as we are currently having.
+
+Git subtrees lend themselves better when developing both main project
+and sub-project within the same directory (a "system approach"). This, however,
+would be more akin to a "vendor branch": a branch which allows you to access
+a well-defined version of a vendor external component or VCS subdirectory, and
+which is only updated with the new version of every release of that external
+component. I often hear this referred to as a "component-approach", where the
+*all* system is viewed as a collection of separate components developed on
+their own.
+
+In this case, we have a project and a sub-project with their own respective
+lifecycles; neither of which are developed at the same rhythm, tagged together
+at the same time, nor even tagged with the same name.
+
+I feel like a good compromise would be for there to be a seperate, isolated
+`zsh-completions` repository that both projects can submodule; this would
+slightly relieve the pressures of trying to keep development rhythms in
+sync, and will, in my opinion, make it simpler, not to mention much less
+painful, to share changes between the two projects.
+
+Joey Pabalinas
+<alyptik@protonmail.com>

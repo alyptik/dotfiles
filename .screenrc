@@ -95,10 +95,11 @@ backtick 5 5 5 true
 startup_message off
 attrcolor b ".I"
 attrcolor i "+b"
-rendition so "-b dw"
 # sorendition "-b dw"
+# rendition bell "=bu"
+rendition so "+biu Dw"
 layout autosave on
-# vbell off
+#Vell off
 vbell on
 vbell_msg "🐶 woof!!! ——— woof!!! 🐶 "
 nethack on
