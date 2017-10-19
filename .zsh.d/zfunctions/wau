@@ -7,6 +7,6 @@ for i; do
 	esac
 done
 
-{ (alias; declare -f) | \
-	command which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
-} 2>/dev/null | less -CRMXis
+(alias; declare -f) | command which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
+# { (alias; declare -f) | \
+# } 2>/dev/null | less -CRMXis
