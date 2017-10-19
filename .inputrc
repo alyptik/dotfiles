@@ -1,26 +1,3 @@
-# (+) The sting to display for vi insert mode
-# set vi-mode-str1 ->
-# (:) The sting to display for vi command mode
-# set vi-mode-str2 !]
-# The following line may also be placed in bashrc to set the mode string
-# #bind "set vi-mode-str1 $(echo -e 001033[37m002+001033[0m002)"
-
-# I prefer vi-style editing:
-# set editing-mode vi
-# set editing-mode emacs
-#
-# # Edit using a single line:
-# # set horizontal-scroll-mode on
-# set horizontal-scroll-mode off
-#
-# # Rebind some keys:
-# "\eh": tilde-expand
-# "\eu": undo
-# # "\C-u": universal-argument
-# "\C-x\C-r": re-read-init-file
-# "\e[1;5C": forward-word
-# "\e[1;5D": backward-word
-
 # do not bell on tab-completion
 
 set meta-flag on
@@ -28,25 +5,55 @@ set input-meta on
 set convert-meta off
 set output-meta on
 
-set bell-style none
-#set bell-style visible
+# set bell-style none
+set bell-style visible
+set bind-tty-special-chars on
+set blink-matching-paren off
+set colored-completion-prefix on
 set colored-stats on
-#set completion-ignore-case on
-set completion-ignore-case off
+set completion-ignore-case on
+set completion-map-case on
+set enable-bracketed-paste off
 set expand-tilde on
+set history-preserve-point on
+set menu-complete-display-prefix on
+set page-completions off
+set show-all-if-ambiguous on
 set show-mode-in-prompt on
-set visible-stats off
-set bind-tty-special-chars off
-set enable-bracketed-paste on
+set visible-stats on
 
-$if mode=emacs
-
+# custom bindings
+"\C-k": kill-whole-line
+"\C-u": universal-argument
+"\C-w": backward-kill-word
+"\C-x\C-r": re-read-init-file
 "\eh": tilde-expand
 "\eu": undo
-# "\C-u": universal-argument
-"\C-x\C-r": re-read-init-file
+"\e[": start-kbd-macro
+"\e]": end-kbd-macro
+"\e\\": call-last-kbd-macro
+$if mode=emacs
+	"\e[15~": vi-editing-mode
+$endif
+$if mode=vi
+	"\e[15~": emacs-editing-mode'
+$endif
+# ctrl
+"\e[1;5A": beginning-of-line
+"\e[1;5B": end-of-line
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+# shift
+"\e[1;2A": beginning-of-line
+"\e[1;2B": end-of-line
+"\e[1;2C": forward-word
+"\e[1;2D": backward-word
+# alt/meta
+"\e[1;3A": beginning-of-line
+"\e[1;3B": end-of-line
+"\e[1;3C": forward-word
+"\e[1;3D": backward-word
 
-"\C-k": kill-whole-line
 # for linux console and RH/Debian xterm
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
@@ -59,18 +66,11 @@ $if mode=emacs
 "\e[5D": backward-word
 "\e\e[C": forward-word
 "\e\e[D": backward-word
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
-
 # for rxvt
 "\e[8~": end-of-line
-
 # for non RH/Debian xterm, can't hurt for RH/DEbian xterm
 "\eOH": beginning-of-line
 "\eOF": end-of-line
-
 # for freebsd console
 "\e[H": beginning-of-line
 "\e[F": end-of-line
-
-$endif
