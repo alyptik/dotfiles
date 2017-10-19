@@ -6,6 +6,9 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias xbi='xbps-install'
+alias xbq='xbps-install'
+alias xbr='xbps-install'
 alias p='print'
 alias cdg='pushd "${C:-/store/dotfiles}" >/dev/null'
 alias cdp='pushd "${P:-/store/code/projects}" >/dev/null'
