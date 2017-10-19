@@ -586,7 +586,7 @@ WORDCHARS=
 
 # Completion tweaks
 zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
-	${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts})}%%,*}##*/}##*@}##*.*}%%:*}
+	${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts} 2>/dev/null)}%%,*}##*/}##*@}##*.*}%%:*}
 	# ${(Mu)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%,*}%%*.*}
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
