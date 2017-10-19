@@ -53,7 +53,7 @@ Host nh
 
 Host vm
     Hostname 192.168.10.2
-    User alyptik
+    User root
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
@@ -109,10 +109,10 @@ Host wifi
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
-Host ayyy
+Host ayy
     HostName alyp.tk
     Port 22
-    User ayyy
+    User ayy
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
