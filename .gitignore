@@ -45,3 +45,5 @@ oprofile_data/
 rfc/
 kbox3/
 .nicotine/
+misc/.emacs.d.spacemacs/
+misc/.homesick/
