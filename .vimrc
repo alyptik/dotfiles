@@ -1477,8 +1477,6 @@ nnoremap <leader>T :tabfind *
 nnoremap <F1> <Esc>:help <C-r>=(expand('<cword>').' ')<CR>
 vnoremap <F1> <Esc>:help <C-r>=(getreg().' ')<CR>
 
-nmap <silent> <Leader>K <Plug>(ale_previous_wrap)
-nmap <silent> <Leader>J <Plug>(ale_next_wrap)
 noremap <Leader>; <Esc>:cclose<CR>
 noremap <Leader>' <Esc>:copen<CR>
 nnoremap <C-\|> :SCCompileRun<CR>
@@ -1488,8 +1486,14 @@ vnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 vnoremap g<C-]> <C-]>
 
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" nmap <silent> <C-k> k<Plug>(ale_previous_wrap)
+" nmap <silent> <Leader>K k<Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" nmap <silent> <Leader>J <Plug>(ale_next_wrap)
+nmap <silent> <C-k> k<Plug>(ale_previous)
+nmap <silent> <Leader>K k<Plug>(ale_previous)
+nmap <silent> <C-j> <Plug>(ale_next)
+nmap <silent> <Leader>J <Plug>(ale_next)
 
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
