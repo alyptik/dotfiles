@@ -1,0 +1,56 @@
+On Mon, 23 Oct 2017, Joey Pabalinas wrote:
+> Hello!
+>
+> My name is Joey Pabalinas, a student at the University of Hawaii, and
+> although I am an avid C programmer, there has always been one kind of
+> nagging question regarding the C programming language that has always sort
+> of confused me:
+>
+> namely, the reasoning behind having *`*char`*, *`signed char`*, and *`unsigned
+> char`* being three distinct types.
+>
+> I have googled the heck out of it, and although there are a few conjectures
+> floating about, none of them are really authoritative. The best explanation
+> I have found so far is that *`char`* needed to support *`unsigned char`* ranges
+> for EBCDIC, and having only *`char`* be compatible with *`unsigned char`*
+> whereas *`int`* was compatible with *`signed int`* and *`long`* with
+> *`signed long` *etc. would be very asymmetrical and just sort of odd.
+>
+> After discussing it with other programmers at length and finding no one
+> with a truly satisfying rationale behind this, I decided, "Why not just ask
+> the father of C?"
+>
+> So I am hoping you will finally be able to provide me with a concrete
+> explanation of ***why***, haha; this has been bugging me for a very, very
+>
+>
+> long time and it would be truly appreciated.
+>
+> So thank you for taking the time to read this; I am eagerly awaiting
+> your response!
+>
+> Cordially,
+> Joey Pabalinas
+
+Hi, Joey --
+
+Good question.
+
+I honestly don't know the answer; C is entirely Dennis Ritchie's
+invention and sadly we can't ask him now.  My best guess is that
+"char" was originally signed or unsigned implicitly, depending on
+what the hardware supported (e.g., signed for PDP-11), and when
+unsigned types were added explicitly in the mid-1970s, that converted
+one indeterminate type into three, two of which were explicit.
+
+Some of this can be teased out of Dennis's HOPL paper, which is
+here:
+  www.bell-labs.com/usr/dmr/www/chist.html
+There are other sources in that directory that you might find
+interesting as well.  I also wonder whether the Rationale section
+of the C standard has something to say about this, but I am far away
+from my copy at the moment.
+
+I hope you find out more; good luck.
+
+Brian Kernighan

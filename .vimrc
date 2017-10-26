@@ -814,10 +814,10 @@ let g:UltiSnipsJumpBackwardTrigger = '<Left>'
 let g:UltiSnipsListSnippets='<C-l>'
 
 let g:move_key_modifier = 'M'
-nmap <Esc>j <Plug>MoveLineDown
-nmap <Esc>k <Plug>MoveLineUp
-xmap <Esc>j <Plug>MoveBlockDown
-xmap <Esc>k <Plug>MoveBlockUp
+nmap <C-j> <Plug>MoveLineDown
+nmap <C-k> <Plug>MoveLineUp
+xmap <C-j> <Plug>MoveBlockDown
+xmap <C-k> <Plug>MoveBlockUp
 " Move visual block <http://vimrcfu.com/snippet/77>
 xnoremap J :m '>+1<CR>gv
 xnoremap K :m '<-2<CR>gv
@@ -1490,10 +1490,14 @@ vnoremap g<C-]> <C-]>
 " nmap <silent> <Leader>K k<Plug>(ale_previous_wrap)
 " nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " nmap <silent> <Leader>J <Plug>(ale_next_wrap)
-nmap <silent> <C-k> k<Plug>(ale_previous)
+nmap <silent> <Esc>k k<Plug>(ale_previous)
+nmap <silent> <Esc>j j<Plug>(ale_next)
 nmap <silent> <Leader>K k<Plug>(ale_previous)
-nmap <silent> <C-j> <Plug>(ale_next)
-nmap <silent> <Leader>J <Plug>(ale_next)
+nmap <silent> <Leader>J j<Plug>(ale_next)
+xmap <silent> <Esc>k k<Plug>(ale_previous)
+xmap <silent> <Esc>j j<Plug>(ale_next)
+xmap <silent> <Leader>K k<Plug>(ale_previous)
+xmap <silent> <Leader>J j<Plug>(ale_next)
 
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
