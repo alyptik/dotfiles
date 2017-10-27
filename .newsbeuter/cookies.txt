@@ -4,4 +4,3 @@
 
 www.linuxinsider.com	FALSE	/	FALSE	1522128369	Apache	98.150.136.16.224951490592369301
 #HttpOnly_.jvns.ca	TRUE	/	FALSE	1522128369	__cfduid	d00d290f63fffc981bb74478e347341b81490592369
-#HttpOnly_.linuxjournal.com	TRUE	/	FALSE	1499582264	SESS1dda8a7eaa4dd454d4cc453392f9c0ce	gd5oagchcduapo45d8e0nii9qa3hfu30

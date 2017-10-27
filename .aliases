@@ -5,7 +5,11 @@ unset -f bfg define defrag fc java wd which 2>/dev/null
 unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
-
+alias ra='racket'
+alias rl='rlwrap'
+alias ch='rlwrap csi'
+alias gu='rlwrap guile'
+alias mit='rlwrap mit-scheme-native'
 alias xbi='xbps-install'
 alias xbq='xbps-install'
 alias xbr='xbps-install'
@@ -104,7 +108,7 @@ alias vpd='PERLDOC_PAGER=vimpager perldoc'
 alias excuse='curl -s http://programmingexcuses.com/ | awk -F ">" "/a href/ {print substr(\$3,1,length(\$3)-3)}"'
 alias e-pump='eval $(pump --startup) && . ~/.aliases && . ~/.zsh.d/.zshenv'
 alias r-certs='certbot --standalone certonly -d alyp.tk -d cube.alyp.tk -d mail.alyp.tk -d fsckingfu.tk -d cube.fsckingfu.tk -d mail.fsckingfu.tk -d ohfu.tk -d ohfu.tk -d cube.ohfu.tk -d mail.ohfu.tk'
-alias nb='newsbeuter -r'
+alias nb='newsboat -r'
 alias uniq-sed="sed 'h;:b;$ b;N;/^\(.*\)\n\1$/{g;bb};$ b;P;D'"
 alias uniqu-sed="sed '$ b;N;/^\(.*\)\n\1$/!{P;D;};:c;$ d;s/.*\n//;N;/^\(.*\)\n\1$/{bc;};D'"
 alias fzero='find . -size 0'
