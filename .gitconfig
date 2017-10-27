@@ -59,6 +59,7 @@
 	s = diff --patience --cached
 	dc = diff --cached --patience
 	p = push --progress -v
+	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 [web]
 	browser = w3m
 [instaweb]
@@ -74,3 +75,5 @@
 	gpgsign = false
 [rerere]
 	enabled = true
+[pretty]
+	colorful-oneline = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset

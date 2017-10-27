@@ -30,6 +30,7 @@ bind/bind.keys.v9_8
 **/openvpn/
 .homesick/repos/homeshick/
 .newsbeuter/urls
+.newsboat/urls
 .vimtags
 .weechat/nicks.db
 tags

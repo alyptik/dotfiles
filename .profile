@@ -99,7 +99,7 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 # export LIBVA_DRIVER_NAME="i965"
 # export VDPAU_DRIVER="va_gl"
 export MAKEFLAGS="-j -l5"
-export MANPATH="${C}/man:/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man"
+export MANPATH="/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man:${C}/man"
 export MANSECT="2:3:0:9:7:5:4:1:n:l:8:6:3f"
 export npm_config_prefix="${HOME}/.node_modules"
 export PAGER=less
