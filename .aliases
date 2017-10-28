@@ -5,6 +5,8 @@ unset -f bfg define defrag fc java wd which 2>/dev/null
 unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
+
+alias gb='(cd "${P:-/store/code/projects}/glowing-bear" && python -m http.server)'
 alias ra='racket'
 alias rl='rlwrap'
 alias ch='rlwrap csi'
@@ -413,10 +415,10 @@ alias upc='sudo pacman -Syu'
 alias sspc='pacaur --color=always -Ss'
 alias qspc='pacaur --color=always -Qs'
 # alias sspc='> >(less -BFJKRMXs) pacaur -Ss --color=always'
-alias sco='cower --color=always -s'
+alias scow='cower --color=always -s'
 alias pa='pacaur'
 alias pm='sudo pacman'
-alias co='cower'
+alias cow='cower'
 alias upc='sudo pacman -U'
 alias gpc='sudo apacman -G'
 #alias npac='pacaur --noconfirm --noedit -S'
