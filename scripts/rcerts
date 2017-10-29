@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+domains=(alyp.tk sigfu.tk fsckingfu.tk hewillnotdivide.tk)
+subs=(mail cube www webmail stream)
+list=($(print $domains $(printf '%s.%s\n' {${^subs},${^domains}})))
+
+sudo certbot certonly --standalone -d "$list"
