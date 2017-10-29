@@ -57,7 +57,7 @@ call plug#begin(g:plugdir)
 	" Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview'
-	" Plug 'Rip-Rip/clang_complete'
+	Plug 'Rip-Rip/clang_complete'
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
@@ -94,8 +94,8 @@ call plug#begin(g:plugdir)
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'w0rp/ale'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
-	Plug 'Terryma/vim-multiple-cursors'
-	Plug 'xolox/vim-notes'
+	" Plug 'Terryma/vim-multiple-cursors'
+	" Plug 'xolox/vim-notes'
 	" Group dependencies, vim-snippets depends on ultisnips
 	" Plug 'SirVer/ultisnips'
 	Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -103,8 +103,8 @@ call plug#begin(g:plugdir)
 	" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 	" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 	" Plug 'ervandew/supertab'
-	Plug 'maralla/completor.vim'
 	Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+	Plug 'maralla/completor.vim'
 	" Plug 'FredKSchott/CoVim'
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'Rykka/riv.vim'
@@ -740,6 +740,7 @@ let g:completor_node_binary='/usr/bin/node'
 let g:completor_clang_binary='/usr/bin/clang'
 let g:completor_gocode_binary='/usr/bin/gocode'
 let g:completor_css_omni_trigger='([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
+let g:completor_disable_ultisnips=1
 let g:completor_auto_trigger=1
 inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
 if (!g:completor_auto_trigger) | inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>") | endif
@@ -890,15 +891,19 @@ au BufNewFile,BufRead *.gtkon setf cs
 
 "au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
 au FileType cpp set keywordprg=cppman
+" au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+" au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+" au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
+au FileType c setl ofu=ClangComplete cfu=ClangComplete
+au FileType h setl ofu=ClangComplete cfu=ClangComplete
+" au FileType cpp setl ofu=ClangComplete
+" au FileType c setl ofu=ccomplete#CompleteCpp
+" au FileType h setl ofu=ccomplete#CompleteCpp
 "au FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 au FileType php setl ofu=phpcomplete#CompletePHP
 au FileType ruby,eruby setl ofu=rubycomplete#Complete
 au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
-" au FileType h setl ofu=ccomplete#CompleteCpp
-au FileType h setl ofu=ClangComplete cfu=ClangComplete
-" au FileType c setl ofu=ccomplete#CompleteCpp
-au FileType c setl ofu=ClangComplete cfu=ClangComplete
 au FileType css setl ofu=csscomplete#CompleteCSS
 au FileType udev set filetype=udevrules
 au FileType pandoc set filetype=markdown
