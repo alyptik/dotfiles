@@ -233,7 +233,8 @@ safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
 	local muhcow="$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
+	# host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
+	dig +short txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
 }
 
 # autoload completion for systemctl subcommand compdefs
