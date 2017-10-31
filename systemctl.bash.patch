@@ -1,0 +1,39 @@
+diff --git a/systemctl b/systemctl
+index 9417bc7..7cdde13 100644
+--- a/systemctl
++++ b/systemctl
+@@ -19,7 +19,7 @@
+ 
+ __systemctl() {
+         local mode=$1; shift 1
+-        systemctl $mode --full --no-legend "$@" 2>/dev/null
++	systemctl $mode --full --no-legend --no-pager "$@" 2>/dev/null
+ }
+ 
+ __systemd_properties() {
+@@ -42,13 +42,21 @@ __filter_units_by_property () {
+         local mode=$1 property=$2 value=$3 ; shift 3
+         local units=("$@")
+         local props i
++
++#
++# UHU PATCH Tue Mar 14 18:50:31 CET 2017 {
++#
+         IFS=$'\n' read -rd '' -a props < \
+-            <(__systemctl $mode show --property "$property" -- "${units[@]}")
+-        for ((i=0; $i < ${#units[*]}; i++)); do
+-                if [[ "${props[i]}" = "$property=$value" ]]; then
+-                        echo " ${units[i]}"
++            <(__systemctl $mode show --property Names,"$property" -- \*)
++        for ((i=0; $i < ${#props[*]}; i=i+2)); do
++                if [[ "${props[i+1]}" = "$property=$value" ]]; then
++                        echo " ${props[i]#Names=}"
+                 fi
+         done
++#
++# } UHU PATCH Tue Mar 14 18:50:31 CET 2017
++#
++
+ }
+ 
+ __filter_units_by_properties () {
