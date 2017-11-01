@@ -1,17 +1,17 @@
-diff --git a/pastebuf.lua b/pastebuf.lua
-index 327ca50..e9912e2 100644
---- a/pastebuf.lua
+diff --git a/pastebuf.lua.orig b/pastebuf.lua
+index 327ca508b..b31345d26 100644
+--- a/pastebuf.lua.orig
 +++ b/pastebuf.lua
 @@ -47,7 +47,7 @@ local g = {
     script = {
        name = "pastebuf",
        author = "tomoe-mami <rumia.youkai.of.dusk@gmail.com>",
 -      version = "0.3",
-+      version = "0.9",
++      version = "9.9",
        license = "WTFPL",
        description = "View text from various pastebin sites inside a buffer.",
        url = "https://github.com/tomoe-mami/weechat-scripts/tree/master/pastebuf"
-@@ -110,13 +110,53 @@ local g = {
+@@ -110,13 +110,58 @@ local g = {
     },
     sites = {
        __generic__ = {
@@ -19,6 +19,11 @@ index 327ca50..e9912e2 100644
 +         pattern = "^([^:/]+://[^/]+)/(.+)$",
           id = "%2",
 -         raw = "%1%2"
++         raw = "%1/%2"
++      },
++      ["paste.snoonet.org"] = {
++         pattern = "^([^:/]+://[^/]+/paste)/(.+)(/download)*/$",
++         id = "%2",
 +         raw = "%1/%2"
 +      },
 +      ["ix.xo"] = {
@@ -42,7 +47,7 @@ index 327ca50..e9912e2 100644
 +         raw = "%1/%2"
 +      },
 +      ["pb.gehidore.net"] = {
-+         pattern = "^([^:/]+://[^/]+)/([^/]+)",
++         pattern = "^([^:/]+://[^/]+)/([^/]+)\x2e?[^/]*/%w*",
 +         id = "%2",
 +         raw = "%1/%2"
 +      },
@@ -68,3 +73,12 @@ index 327ca50..e9912e2 100644
           raw = "%1/raw/%2"
        },
        ["codepad.org"] = {
+@@ -167,7 +212,7 @@ local g = {
+       ["pastebin.com"] = {
+          pattern = "^([^:/]+://[^/]+)/(%w+)",
+          id = "%2",
+-         raw = "%1/raw.php?i=%2"
++         raw = "%1/raw/%2"
+       },
+       ["pastebin.osuosl.org"] = {
+          pattern = "^([^:/]+://[^/]+)/(%w+)",
