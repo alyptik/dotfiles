@@ -1,0 +1,12 @@
+diff --git b/upside_down.py.orig a/upside_down.py
+index e07a7bf56..8a2933303 100644
+--- b/upside_down.py.orig
++++ a/upside_down.py
+@@ -120,6 +120,7 @@ def flip_cmd_cb(data, buffer, args):
+     translate_input = args
+     if not translate_input:
+         translate_input = w.buffer_get_string(w.current_buffer(), "input")
++    translate_input = translate_input[::-1]
+     outstring = ''
+     for char  in translate_input:
+         if char in replacements:
