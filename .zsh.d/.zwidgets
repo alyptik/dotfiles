@@ -126,11 +126,14 @@ function zle-keymap-select {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
-		printf "$cblock"; printf "$cred" ;;
+		printf "$cblock"
+		printf "$cred" ;;
 	emacs|$_emacs)
-		printf "$cblock"; printf "$cyellow" ;;
+		printf "$cblock"
+		printf "$cyellow" ;;
 	viins|$_vi)
-		printf "$cline"; printf "$cgrey" ;;
+		printf "$cline"
+		printf "$cgrey" ;;
 	esac
 	zle -R
 }

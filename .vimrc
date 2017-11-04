@@ -1504,18 +1504,18 @@ vnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 vnoremap g<C-]> <C-]>
 
-" nmap <silent> <C-k> k<Plug>(ale_previous_wrap)
-" nmap <silent> <Leader>K k<Plug>(ale_previous_wrap)
-" nmap <silent> <C-j> <Plug>(ale_next_wrap)
-" nmap <silent> <Leader>J <Plug>(ale_next_wrap)
-nmap <silent> <Esc>k k<Plug>(ale_previous)
-nmap <silent> <Esc>j j<Plug>(ale_next)
-nmap <silent> <Leader>K k<Plug>(ale_previous)
-nmap <silent> <Leader>J j<Plug>(ale_next)
-xmap <silent> <Esc>k k<Plug>(ale_previous)
-xmap <silent> <Esc>j j<Plug>(ale_next)
-xmap <silent> <Leader>K k<Plug>(ale_previous)
-xmap <silent> <Leader>J j<Plug>(ale_next)
+" nmap <silent> <C-j> j<Plug>(ale_previous_wrap)
+" nmap <silent> <Leader>J j<Plug>(ale_previous_wrap)
+" nmap <silent> <C-k> k<Plug>(ale_next_wrap)
+" nmap <silent> <Leader>K k<Plug>(ale_next_wrap)
+nmap <silent> <Esc>j j<Plug>(ale_previous)
+nmap <silent> <Esc>k k<Plug>(ale_next)
+nmap <silent> <Leader>J j<Plug>(ale_previous)
+nmap <silent> <Leader>K k<Plug>(ale_next)
+xmap <silent> <Esc>j j<Plug>(ale_previous)
+xmap <silent> <Esc>k k<Plug>(ale_next)
+xmap <silent> <Leader>J j<Plug>(ale_previous)
+xmap <silent> <Leader>K k<Plug>(ale_next)
 
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>

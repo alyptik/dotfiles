@@ -43,10 +43,12 @@ exec 2<>"$_zsh_error"
 [[ "$EMACS" == t ]] && unsetopt zle
 
 ## Set emacs or vi as default
-bindkey -v
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
 # Initialize _km for ZLE widgets and set initial cursor color
-_km=emacs _emacs=main _vi=
+bindkey -v
+_km=vi _emacs= _vi=main
+# bindkey -e
+# _km=emacs _emacs=main _vi=
 setescapes
 case "$_km" in
 (vi)
@@ -316,18 +318,20 @@ bindkey -M vicmd "\eu" undo
 #bindkey -M vicmd 'j' history-substring-search-down
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
-bindkey -M vicmd "\e[3~" delete-char
-bindkey -M viins "\e[3~" delete-char
 bindkey -M viins "jj" vi-cmd-mode
 
 # oh god prepare yourself
 #
 # custom bindkey commands
 () for 1 {
+	bindkey -M "$1" "\C-k" kill-whole-line
+	bindkey -M "$1" "\C-h" backward-delete-char
+	bindkey -M "$1" "\C-?" backward-delete-char
+	bindkey -M "$1" "\e[3~" delete-char
+	bindkey -M "$1" "\e\C-?" backward-kill-word
 	bindkey -M "$1" "\ed" kill-word
-	bindkey -M "$1" "\e[23~" zle-list-binds
-	bindkey -M "$1" "\e" backward-kill-word
 	# bindkey -sM "$1" "\e[23~" "*"
+	bindkey -M "$1" "\e[23~" zle-list-binds
 	bindkey -M "$1" "\C-z" fancy-ctrl-z
 	bindkey -M "$1" "\ep" expand-absolute-path
 	bindkey -M "$1" "\eo" zle-less

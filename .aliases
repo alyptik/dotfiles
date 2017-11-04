@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias bk='bindkey'
 alias gb='(cd "${P:-/store/code/projects}/glowing-bear" && python -m http.server)'
 alias ra='racket'
 alias rl='rlwrap'
