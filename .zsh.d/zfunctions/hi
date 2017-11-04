@@ -9,5 +9,5 @@ else
 	shift
 fi
 
-highlight --out-format=truecolor --syntax="${syn:-conf}" --style=xoria256 "$file" | \
+highlight --out-format=truecolor --syntax="${syn:-conf}" --style=orion "$file" | \
 	less -CMRXis

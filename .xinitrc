@@ -34,8 +34,9 @@ compton -b
 hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 # xsetroot -mod 16 16 -fg '#343d46' -bg '#2b303b'
 
-setxkbmap -option "terminate:ctrl_alt_bksp" &
-setxkbmap -option "compose:caps" &
+setxkbmap -option compose:caps
+setxkbmap -option terminate:ctrl_alt_bksp
+xmodmap "/home/alyptik/.Xmodmap"
 # stjerm -k F12 -ah false -o 90 -b none -w 95% -h 90% -ar -tf true -tp bottom -fn "FuraCode Nerd Font" &
 # stjerm -k F12 -ah false -o 95 -b none -w 95% -h 90% -ar -tf true -tp bottom -fn "Source Code Pro Light 9" &
 stjerm -k F12 -ah false -o 90 -b none -w 85% -h 80% -ar -tf true -tp bottom -fn "SauceCodePro Nerd Font Light" &

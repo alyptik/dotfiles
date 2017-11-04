@@ -1,0 +1,33 @@
+.TH RFC 1 "February 20, 2016" Linux "USER COMMANDS"
+.SH NAME
+rfc \- download internet RFCs and display them on screen, man-style
+.SH SYNOPSIS
+.B rfc [rfc number or search string]
+.SH DESCRIPTION
+.PP
+rfc downloads internet RFCs and displays them on screen. In interactive mode,
+screen display is delegated to less(1) which means that less commands such as
+regexp searches are available.
+.PP
+A simple regex search function is also available to search the titles of
+released RFCs.
+.PP
+Some attempt is made to remove unnecessary formatting. The RFCs are all
+formatted for printing on US letter, which means that there are a lot of extra
+line-feeds and form-feeds between pages. rfc tries to remove as much of it as
+possible to allow for pleasant reading on screen. Due to the impressive amount
+of ASCII art present in RFCs, reflowing the text is hard or impossible, so
+readers should set their terminal widths to at least 80 characters wide to read
+them comfortably.
+.SH SOURCES
+.PP
+Currently, rfc fetches RFCs from their source, the rfc-editor.org website.  My
+intention is to add support for the RFC packages that many distros contain, so
+that the program can operate offline as well.
+.SH AUTHOR
+.PP
+Johan Förberg,
+.B <johan@forberg.se>
+.SH SEE ALSO
+.PP
+less(1), man(1)

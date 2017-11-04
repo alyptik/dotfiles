@@ -2,6 +2,7 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 
 ## start alyptik
 
+<Multi_key> <n> <i> <g>			: "씨발 제발!"	# wigga, please!
 <Multi_key> <semicolon> <apostrophe>	: "“”"		# curly quotes
 <Multi_key> <l> <o> <v> <e>		: "💗" U1f497	# love
 <Multi_key> <s> <p> <o> <t>		: "🍠" U1f360	# sweet potato
@@ -22,7 +23,7 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 <Multi_key> <x> <o> <r>			: "⊕" U2295	# or
 <Multi_key> <c> <o> <n> <t>		: "∈" U2208	# contains
 <Multi_key> <a> <l> <l>			: "∀" U2220	# for every in
-<Multi_key> <o> <n> <e>			: "∃" U2203	$ for at least one in
+<Multi_key> <o> <n> <e>			: "∃" U2203	# for at least one in
 <Multi_key> <i> <i> <f>			: "↔" U2194	# if and only if
 <Multi_key> <colon> <equal>		: "≔" U2254	# defined as
 <Multi_key> <b> <o> <o> <l>		: "⇒⊃⇔∃∀≔⊤⊥⊢⊨"		# boolean operators

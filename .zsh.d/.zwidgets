@@ -115,6 +115,13 @@ function insert-x-selection { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/nu
 function append-x-selection { RBUFFER="$(xsel -op </dev/null 2>/dev/null)${RBUFFER}"; }
 function yank-x-selection { print -rn -- "$CUTBUFFER" | xsel -ib; }
 
+function zle-list-binds {
+	zle push-input
+	BUFFER="bindkey -L | hi tcsh -"
+	zle accept-line
+	zle -R
+}
+
 function zle-keymap-select {
 	setescapes
 	case "$KEYMAP" in
@@ -168,13 +175,38 @@ function zle-line-finish {
 	zle -R
 }
 
+function zle-refresh-keymap {
+	setescapes
+	case "$_km" in
+	vi)
+		bindkey -e
+		bindkey -v
+		printf "$cline"
+		printf "$cgrey";
+		_km=vi _vi=main _emacs= ;;
+	emacs)
+		bindkey -v
+		bindkey -e
+		printf "$cblock"
+		printf "$cyellow";
+		_km=emacs _vi= _emacs=main ;;
+	esac
+	zle -R
+}
+
 function zle-toggle-keymap {
 	setescapes
 	case "$_km" in
 	vi)
-		bindkey -e; printf "$cblock"; printf "$cyellow"; _km=emacs; _vi=; _emacs=main ;;
+		bindkey -e
+		printf "$cblock"
+		printf "$cyellow";
+		_km=emacs _vi= _emacs=main ;;
 	emacs)
-		bindkey -v; printf "$cline"; printf "$cgrey"; _km=vi; _vi=main; _emacs= ;;
+		bindkey -v
+		printf "$cline"
+		printf "$cgrey"
+		_km=vi _vi=main _emacs= ;;
 	esac
 	zle -R
 }
