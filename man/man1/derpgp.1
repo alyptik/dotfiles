@@ -1,22 +1,22 @@
-.TH CEPL: "7" "June 2017" "cepl: CEPL v4\&.8\&.2" "User Commands"
+.TH DERPGP: "7" "June 2017" "derpgp: DERPGP v0\&.0\&.1" "User Commands"
 
 .SH "NAME"
-cepl \- a C11 Read\-Eval\-Print Loop
+derpgp \- derp.
 
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIcepl\fR [\-hptvw] [(\-a|\-i)\fI“<asm\&.s>”\fR] [\-c\fI“<compiler>”\fR] [\-e\fI“<code>”\fR] [\-l\fI“<libs>”\fR] [\-I\fI“<includes>”\fR] [\-o\fI“<out\&.c>”\fR]
+\fIderpgp\fR [\-hptvw] [(\-a|\-i)\fI“<asm\&.s>”\fR] [\-c\fI“<compiler>”\fR] [\-e\fI“<code>”\fR] [\-l\fI“<libs>”\fR] [\-I\fI“<includes>”\fR] [\-o\fI“<out\&.c>”\fR]
 .fi
 
 .SH "DESCRIPTION"
 .sp
-C11 (\fBISO/IEC 9899:2011\fR) read\-eval\-print loop (\fBREPL\fR) currently supporting multiple compilers, readline key\-bindings/tab\-completion, variable tracking, and incremental undo\&.
+boop.
 .fi
 
 .SH "USAGE"
 .sp
-Command history is read from and saved to \fI~/\&.cepl_history\fR\&.
+oink.
 .fi
 
 .SS "OPTIONS"
@@ -70,9 +70,9 @@ Input lines prefixed with a \fB;\fR are used to control internal state\&.
 .HP
 \fB;p[arse]\fR:		Toggle -p (shared library parsing) flag
 .HP
-\fB;q[uit]\fR:		Exit CEPL
+\fB;q[uit]\fR:		Exit DERPGP
 .HP
-\fB;r[eset]\fR:		Reset CEPL to its initial program state
+\fB;r[eset]\fR:		Reset DERPGP to its initial program state
 .HP
 \fB;t[racking]\fR:	Toggle variable tracking
 .HP
@@ -83,7 +83,7 @@ Input lines prefixed with a \fB;\fR are used to control internal state\&.
 
 .SH "NOTES"
 .sp
-Please direct any bug/issue reports, as well as any feature requests, to <\fIhttps://github\&.com/alyptik/cepl\fR>
+Please direct any bug/issue reports, as well as any feature requests, to <\fIhttps://github\&.com/alyptik/derpgp\fR>
 .fi
 
 .SH "AUTHORS"
@@ -94,4 +94,12 @@ Please direct any bug/issue reports, as well as any feature requests, to <\fIhtt
 .IP \(bu 2\&.3
 .\}
 Joey Pabalinas <\fIalyptik@protonmail\&\&.com\fR>
+.fi
+.ie n \{\
+ \h'-04'\(bu\h'+03'\c \&.\}
+.el \{\
+.sp -1
+.IP \(bu 2\&.3
+.\}
+Santiago Torres <\fIsangy@riseup\&\&.net\fR>
 .fi

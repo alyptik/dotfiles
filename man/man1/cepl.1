@@ -1,0 +1,97 @@
+.TH CEPL: "1" "June 2017" "cepl: CEPL v4\&.8\&.4" "User Commands"
+
+.SH "NAME"
+cepl \- a C11 Read\-Eval\-Print Loop
+
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIcepl\fR [\-hptvw] [(\-a|\-i)\fI“<asm\&.s>”\fR] [\-c\fI“<compiler>”\fR] [\-e\fI“<code>”\fR] [\-l\fI“<libs>”\fR] [\-I\fI“<includes>”\fR] [\-o\fI“<out\&.c>”\fR]
+.fi
+
+.SH "DESCRIPTION"
+.sp
+C11 (\fBISO/IEC 9899:2011\fR) read\-eval\-print loop (\fBREPL\fR) currently supporting multiple compilers, readline key\-bindings/tab\-completion, variable tracking, and incremental undo\&.
+.fi
+
+.SH "USAGE"
+.sp
+Command history is read from and saved to \fI~/\&.cepl_history\fR\&.
+.fi
+
+.SS "OPTIONS"
+.sp
+Command line options:
+.fi
+
+.HP
+\fB\-a\fR,\fB\-\-att\fR:	Name of the file to output AT\&T\-dialect assembler code to
+.HP
+\fB\-c\fR,\fB\-\-cc\fR:		Specify alternate compiler
+.HP
+\fB\-e\fR,\fB\-\-eval\fR:	Evaluate argument as C code
+.HP
+\fB\-h\fR,\fB\-\-help\fR:	Show help/usage information
+.HP
+\fB\-i\fR,\fB\-\-intel\fR:	Name of the file to output Intel\-dialect assembler code to
+.HP
+\fB\-o\fR,\fB\-\-output\fR:	Name of the file to write C code to
+.HP
+\fB\-p\fR,\fB\-\-parse\fR:	Disable addition of dynamic library symbols to readline completion
+.HP
+\fB\-t\fR,\fB\-\-tracking\fR:	Toggle variable tracking
+.HP
+\fB\-v\fR,\fB\-\-version\fR:	Show version information
+.HP
+\fB\-w\fR,\fB\-\-warnings\fR:	Compile with \fB\-pedantic\fR \fB\-Wall\fR \fB\-Wextra\fR flags
+.HP
+\fB\-l\fR:			Link against specified library (flag can be repeated)
+.HP
+\fB\-I\fR:			Search directory for header files (flag can be repeated)
+.fi
+
+.SS "COMMANDS"
+.sp
+Input lines prefixed with a \fB;\fR are used to control internal state\&.
+.fi
+
+.HP
+\fB;a[tt]\fR:		Toggle -a (output AT\&T\-dialect asembler code) flag
+.HP
+\fB;f[unction]\fR:	Define a function (e\&.g\&. \fB;f void bork(void) { puts("wark"); }\fR)
+.HP
+\fB;h[elp]\fR:		Show help
+.HP
+\fB;i[ntel]\fR:		Toggle -i (output Intel\-dialect asembler code) flag
+.HP
+\fB;m[acro]\fR:		Define a macro (e\&.g\&. \fB;m #define SWAP2(X) ((((X) >> 8) & 0xff) | (((X) & 0xff) << 8))\fR)
+.HP
+\fB;o[utput]\fR:	Toggle -o (output C source code) flag
+.HP
+\fB;p[arse]\fR:		Toggle -p (shared library parsing) flag
+.HP
+\fB;q[uit]\fR:		Exit CEPL
+.HP
+\fB;r[eset]\fR:		Reset CEPL to its initial program state
+.HP
+\fB;t[racking]\fR:	Toggle variable tracking
+.HP
+\fB;u[ndo]\fR:		Incremental undo (can be repeated)
+.HP
+\fB;w[arnings]\fR:	Toggle -w (pedantic warnings) flag
+.fi
+
+.SH "NOTES"
+.sp
+Please direct any bug/issue reports, as well as any feature requests, to <\fIhttps://github\&.com/alyptik/cepl\fR>
+.fi
+
+.SH "AUTHORS"
+.ie n \{\
+ \h'-04'\(bu\h'+03'\c \&.\}
+.el \{\
+.sp -1
+.IP \(bu 2\&.3
+.\}
+Joey Pabalinas <\fIalyptik@protonmail\&\&.com\fR>
+.fi

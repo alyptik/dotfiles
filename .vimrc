@@ -41,7 +41,7 @@ call plug#begin(g:plugdir)
 		function! DoRemote(arg)
 			UpdateRemotePlugins
 		endfunction
-		Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+		Plug 'Shougo/deoplete.nvim', {'do': function('DoRemote')}
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
@@ -66,23 +66,23 @@ call plug#begin(g:plugdir)
 	Plug 'rhysd/conflict-marker.vim'
 	" Plug 'vim-voom/VOoM'
 	" Plug 'thinca/vim-visualstar'
-	" Plug 'wincent/command-t', { 'do': 'cd ruby/command-t && ruby extconf.rb && make' }
+	" Plug 'wincent/command-t', {'do': 'cd ruby/command-t && ruby extconf.rb && make'}
 	Plug 'airblade/vim-gitgutter'
 	Plug 'editorconfig/editorconfig-vim'
-	" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install -no-update-rc' }
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+	" Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install -no-update-rc'}
+	Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 	Plug 'junegunn/fzf.vim'
-	Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+	Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	" Plug 'junegunn/limelight.vim'
 	Plug 'maksimr/vim-jsbeautify'
 	Plug 'mileszs/ack.vim'
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'roblillack/vim-bufferlist'
-	Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'subosito/nginx.vim'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-	Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
+	Plug 'ternjs/tern_for_vim', {'do': 'npm install && npm install -g tern'}
 	Plug 'terryma/vim-expand-region'
 	Plug 'tpope/vim-abolish'
 	Plug 'tpope/vim-commentary'
@@ -100,10 +100,10 @@ call plug#begin(g:plugdir)
 	" Plug 'SirVer/ultisnips'
 	Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 	" Plug 'drmingdrmer/xptemplate'
-	" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-	" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+	" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+	" Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
 	" Plug 'ervandew/supertab'
-	Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+	Plug 'Shougo/vimproc.vim', {'do': 'make'}
 	Plug 'maralla/completor.vim'
 	" Plug 'FredKSchott/CoVim'
 	Plug 'ctrlpvim/ctrlp.vim'
@@ -116,18 +116,18 @@ call plug#begin(g:plugdir)
 	Plug 'powerman/vim-plugin-AnsiEsc'
 	Plug 'tpope/vim-rhubarb'
 	Plug 'mhinz/vim-signify'
-	Plug 'jpalardy/vim-slime', { 'for': ['clojure', 'scheme'] }
+	Plug 'jpalardy/vim-slime', {'for': ['clojure', 'scheme']}
 	" Plug 'tpope/vim-vinegar'
 	Plug 'junegunn/seoul256.vim'
 	" Plug 'junegunn/vim-easy-align'
-	Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+	Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 	" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-	Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-	Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
-	Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-	Plug 'kovisoft/paredit', { 'for': ['clojure', 'scheme'] }
-	Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
+	Plug 'nsf/gocode', {'tag': 'v.20150303', 'rtp': 'vim'}
+	Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+	Plug 'junegunn/vim-github-dashboard', {'on': ['GHDashboard', 'GHActivity']}
+	Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+	Plug 'kovisoft/paredit', {'for': ['clojure', 'scheme']}
+	Plug 'junegunn/vader.vim',  {'on': 'Vader', 'for': 'vader'}
 	" Unmanaged plugin (manually installed and updated)
 	" Plug '~/my-prototype-plugin'
 call plug#end()
@@ -754,13 +754,17 @@ let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warning
 let g:instant_markdown_autostart=0
 let g:instant_markdown_slow=1
 nnoremap <Leader>im :InstantMarkdownPreview<CR>
+" This option  affects visual-block mode commenting. If this option is turned
+" on, lines that begin outside the right boundary of the selection block will be
+" ignored.
+let g:NERDBlockComIgnoreEmpty=1
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims=1
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs=0
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign='left'
-" let g:NERDDefaultAlign='left'
+" let g:NERDDefaultAlign='start'
 " Allow commenting ad inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines=1
 " Enable trimming of trailing whitespace when uncommenting
@@ -773,7 +777,10 @@ let g:NERDAltDelims_java=1
 let g:NERDAltDelims_c=0
 let g:NERDAltDelims_cpp=0
 " Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters={ 'nftables': { 'left': '#','right': '' } }
+let g:NERDCustomDelimiters={
+	\ 'xcb': {'left': '#', 'right': ''},
+	\ 'nftables': {'left': '#', 'right': ''},
+	\ }
 inoremap <C-c> <plug>NERDCommenterInsert
 let g:xptemplate_minimal_prefix=1
 let g:ycm_complete_in_comments=1
@@ -786,12 +793,18 @@ let g:CoVim_default_name="covim"
 let g:CoVim_default_port="999"
 let g:instant_rst_browser="chromium"
 let g:multicursor_insert_maps={}
-let g:multicursor_normal_maps={'!':1, '@':1, '=':1, 'q':1, 'r':1, 't':1, 'T':1, 'y':1, '[':1, ']':1, '\':1, 'd':1, 'f':1, 'F':1, 'g':1, '"':1, 'z':1, 'c':1, 'm':1, '<':1, '>':1}
+let g:multicursor_normal_maps={
+	\ '!':1, '@':1, '=':1, 'q':1, 'r':1,
+	\ 't':1, 'T':1, 'y':1, '[':1, ']':1,
+	\ '\':1, 'd':1, 'f':1, 'F':1, 'g':1,
+	\ '"':1, 'z':1, 'c':1, 'm':1, '<':1,
+	\ '>':1
+	\ }
 let g:multi_cursor_visual_maps={'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1}
 " Default highlighting (see help :highlight and help :highlight-link)
 highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
 highlight link multiple_cursors_visual Visual
-let g:github_dashboard= { 'username': 'alyptik' }
+let g:github_dashboard= {'username': 'alyptik'}
 " UltiSnips setup
 let g:UltiSnipsSnippetsDir=g:plugdir.'/vim-snippets/UltiSnips'
 let g:UltiSnipsSnippetDirectories=['UltiSnips']

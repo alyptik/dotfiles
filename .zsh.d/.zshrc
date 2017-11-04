@@ -43,7 +43,7 @@ exec 2<>"$_zsh_error"
 [[ "$EMACS" == t ]] && unsetopt zle
 
 ## Set emacs or vi as default
-bindkey -e
+bindkey -v
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
 # Initialize _km for ZLE widgets and set initial cursor color
 _km=emacs _emacs=main _vi=
@@ -275,12 +275,14 @@ fi
 zle -N zle-youtube-helper
 zle -N zle-fman
 zle -N zle-compdef
+zle -N zle-refresh-keymap
 zle -N zle-toggle-keymap
 zle -N zle-emacs-keymap
 zle -N zle-vi-keymap
 zle -N append-x-selection
 zle -N insert-x-selection
 zle -N yank-x-selection
+zle -N zle-list-binds
 zle -N fzf-locate-widget
 zle -N insert-composed-char
 zle -N zle-backwards-delete-to-char
@@ -316,13 +318,17 @@ bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
 bindkey -M vicmd "\e[3~" delete-char
 bindkey -M viins "\e[3~" delete-char
+bindkey -M viins "jj" vi-cmd-mode
 
 # oh god prepare yourself
 #
 # custom bindkey commands
 () for 1 {
-	# F11 inserts a literal '*'
-	bindkey -sM "$1" "\e[23~" "*"
+	bindkey -M "$1" "\ed" kill-word
+	bindkey -M "$1" "\e[23~" zle-list-binds
+	bindkey -M "$1" "\e" backward-kill-word
+	# bindkey -sM "$1" "\e[23~" "*"
+	bindkey -M "$1" "\C-z" fancy-ctrl-z
 	bindkey -M "$1" "\ep" expand-absolute-path
 	bindkey -M "$1" "\eo" zle-less
 	# insert the last word from the previous history event at the cursor position
@@ -355,11 +361,13 @@ bindkey -M viins "\e[3~" delete-char
 	bindkey -M "$1" "\e[7~" beginning-of-line
 	bindkey -M "$1" "\e[1;5B" beginning-of-line
 	bindkey -M "$1" "\e[1;3B" beginning-of-line
+	bindkey -M "$1" "\e[1;2B" beginning-of-line
+	bindkey -M "$1" "\C-a" beginning-of-line
 	bindkey -M "$1" "\e[8~" end-of-line
 	bindkey -M "$1" "\e[1;5A" end-of-line
 	bindkey -M "$1" "\e[1;3A" end-of-line
-	bindkey -M "$1" "\e[1;2B" beginning-of-line
 	bindkey -M "$1" "\e[1;2A" end-of-line
+	bindkey -M "$1" "\C-e" end-of-line
 	# bind UP and DOWN arrow keys (compatibility fallback
 	# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
 	bindkey -M "$1" "$terminfo[kcuu1]" history-substring-search-up
