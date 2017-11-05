@@ -2,6 +2,8 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 
 ## start alyptik
 
+<Multi_key> <f> <p>			: "🤦" U1f926	# face palm
+<Multi_key> <f> <a> <c> <e>		: "🤦" U1f926	# face palm
 <Multi_key> <n> <i> <g>			: "씨발 제발!"	# wigga, please!
 <Multi_key> <semicolon> <apostrophe>	: "“”"		# curly quotes
 <Multi_key> <l> <o> <v> <e>		: "💗" U1f497	# love
