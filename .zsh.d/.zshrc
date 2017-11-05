@@ -312,16 +312,20 @@ bindkey -M emacs "\C-k" kill-whole-line
 ## bind k and j for VI mode
 #bindkey -M vicmd 'k' history-substring-search-up
 #bindkey -M vicmd 'j' history-substring-search-down
-bindkey -M vicmd "u" vi-undo-change
+bindkey -M vicmd "u" undo
+# bindkey -M vicmd "u" vi-undo-change
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
 bindkey -M vicmd 'Y' vi-yank-eol
+bindkey -M vicmd "P" insert-x-selection
+bindkey -M vicmd "p" append-x-selection
 bindkey -M viins "jj" vi-cmd-mode
 
 # oh god prepare yourself
 #
 # custom bindkey commands
 () for 1 {
+	bindkey -M "$1" "\eu" undo
 	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\ey" yank-pop
 	bindkey -M "$1" "\C-q" push-line
