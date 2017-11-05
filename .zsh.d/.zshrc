@@ -309,27 +309,29 @@ bindkey -M emacs "\e\e[A" beginning-of-line
 bindkey -M emacs "\e[4~" end-of-line
 bindkey -M emacs "\e\e[B" end-of-line
 bindkey -M emacs "\C-k" kill-whole-line
-bindkey -M emacs "\eu" undo
-bindkey -M vicmd "u" vi-undo-change
-bindkey -M viins "\eu" vi-undo-change
-bindkey -M vicmd "\eu" undo
 ## bind k and j for VI mode
 #bindkey -M vicmd 'k' history-substring-search-up
 #bindkey -M vicmd 'j' history-substring-search-down
+bindkey -M vicmd "u" vi-undo-change
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
+bindkey -M vicmd 'Y' vi-yank-eol
 bindkey -M viins "jj" vi-cmd-mode
 
 # oh god prepare yourself
 #
 # custom bindkey commands
 () for 1 {
+	bindkey -M "$1" "\C-y" yank
+	bindkey -M "$1" "\ey" yank-pop
+	bindkey -M "$1" "\C-q" push-line
 	bindkey -M "$1" "\C-k" kill-whole-line
+	bindkey -M "$1" "\ed" kill-word
+	bindkey -M "$1" "\e[3~" delete-char
 	bindkey -M "$1" "\C-h" backward-delete-char
 	bindkey -M "$1" "\C-?" backward-delete-char
-	bindkey -M "$1" "\e[3~" delete-char
 	bindkey -M "$1" "\e\C-?" backward-kill-word
-	bindkey -M "$1" "\ed" kill-word
+	bindkey -M "$1" "\C-o" accept-line-and-down-history
 	# bindkey -sM "$1" "\e[23~" "*"
 	bindkey -M "$1" "\e[23~" zle-list-binds
 	bindkey -M "$1" "\C-z" fancy-ctrl-z

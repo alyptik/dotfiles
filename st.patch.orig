@@ -118,8 +118,8 @@ index 877afab..5774f5f 100644
  /* frames per second st should at maximum draw to the screen */
 -unsigned int xfps = 120;
 -unsigned int actionfps = 30;
-+static uint xfps = 30;
-+static uint actionfps = 30;
++static uint xfps = 60;
++static uint actionfps = 60;
  
  /*
   * blinking timeout (set to 0 to disable blinking) for the terminal blinking

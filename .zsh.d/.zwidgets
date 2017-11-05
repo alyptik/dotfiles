@@ -263,10 +263,13 @@ function setescapes () {
 	typeset -g cblock cline cred cgrey cyellow
 	cblock='\033[1 q'
 	cline='\033[5 q'
+	# cgrey='\033]12;##d7d7d7\007'
+	# cgrey='\033]12;Grey\007'
+	# cred='\033]12;Red\007'
 	# cred='\033]12;#ff0000\007'
-	# cgrey='\033]12;#a0a0a0\007'
-	cgrey='\033]12;Grey\007'
-	cred='\033]12;Red\007'
+	# cred='\033]12;#cc241d\007'
+	cred='\033]12;#fb4934\007'
+	cgrey='\033]12;#a0a0a0\007'
 	cyellow='\033]12;#b58900\007'
 	if (pstree -s "$$" | grep -wq '\(termite\|stjerm\|qterminal\)' || [[ "$TERM" =~ linux ]]); then
 		cblock= cline=
