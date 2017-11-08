@@ -325,6 +325,8 @@ bindkey -M viins "jj" vi-cmd-mode
 #
 # custom bindkey commands
 () for 1 {
+	bindkey -M "$1" "\e\C-m" self-insert-unmeta
+	bindkey -M "$1" "\eh" run-help
 	bindkey -M "$1" "\eu" undo
 	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\ey" yank-pop

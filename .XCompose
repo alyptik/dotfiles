@@ -2,69 +2,71 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 
 ## start alyptik
 
-<Multi_key> <f> <p>			: "🤦" U1f926	# face palm
-<Multi_key> <f> <a> <c> <e>		: "🤦" U1f926	# face palm
-<Multi_key> <n> <i> <g>			: "씨발 제발!"	# wigga, please!
-<Multi_key> <semicolon> <apostrophe>	: "“”"		# curly quotes
-<Multi_key> <l> <o> <v> <e>		: "💗" U1f497	# love
-<Multi_key> <s> <p> <o> <t>		: "🍠" U1f360	# sweet potato
-<Multi_key> <p> <o> <t>			: "🥔" U1f954	# potato
-<Multi_key> <p> <e> <n>			: "🍆" U1f346	# eggplant
-<Multi_key> <h> <o> <t>			: "🔥" U1f525	# fire
-<Multi_key> <k> <t> <r> <e> <e>		: "🐨" Uff428	# koala
-<Multi_key> <o> <c> <t> <o>		: "🐙" U1f419	# octopus
-<Multi_key> <s> <a> <x>			: "🎷" U1f3b7	# sax
-<Multi_key> <h> <h> <e> <y> <e> <s>	: "❤υ❤"		# heart eyes
-<Multi_key> <h> <e> <y> <e> <s>		: "😍" U1f60d	# heart eyes smiley
-<Multi_key> <p> <s> <u> <b>		: "⊂" U2282	# proper subset
-<Multi_key> <s> <u> <b>			: "⊆" U2286	# subset
-<Multi_key> <u> <n> <i>			: "∪" U222a	# union
-<Multi_key> <i> <n> <t>			: "∩" U2229	# intersection
-<Multi_key> <p> <r> <o>			: "∝" U221d	# proportional
-<Multi_key> <n> <o> <t>			: "¬"		# not
-<Multi_key> <x> <o> <r>			: "⊕" U2295	# or
-<Multi_key> <c> <o> <n> <t>		: "∈" U2208	# contains
-<Multi_key> <a> <l> <l>			: "∀" U2220	# for every in
-<Multi_key> <o> <n> <e>			: "∃" U2203	# for at least one in
-<Multi_key> <i> <i> <f>			: "↔" U2194	# if and only if
-<Multi_key> <colon> <equal>		: "≔" U2254	# defined as
-<Multi_key> <b> <o> <o> <l>		: "⇒⊃⇔∃∀≔⊤⊥⊢⊨"		# boolean operators
-<Multi_key> <s> <t> <a> <r>		: "♫☆ヾ(*´Д｀*)ﾉ☆♪♩"		# stars
-<Multi_key> <f> <r> <o> <g>		: "🐸"	U1f43	# frog face
-<Multi_key> <m> <o> <o>			: "🐮"	U1f42e	# cow
-<Multi_key> <c> <o> <w>			: "🐄"	U1f404	# cow
-<Multi_key> <p> <i> <g>			: "🐷"	U1f437	# pig
-<Multi_key> <t> <u> <r>			: "🐢"	U1f422	# turle
-<Multi_key> <m> <i> <n>		    	: "−"	U2212	# minus
-<Multi_key> <c> <a> <t>		    	: "🐈"	U1f408	# cat
-<Multi_key> <d> <u> <c> <k>	    	: "🦆"	U1f98	# duck
-<Multi_key> <d> <o> <g>		    	: "🐶"	U1f436	# dog
-<Multi_key> <U> <p>		    	: "↑"	u2191	# up
-<Multi_key> <D> <O> <W> <N>	    	: "↓"	U2193	# down
-<Multi_key> <L> <E> <F> <T>	    	: "←"	U2190	# left
-<Multi_key> <R> <I> <G>	<H> <T>	    	: "→"	U2192	# right
-<Multi_key> <u> <p>		    	: "↑"	U2191	# up
-<Multi_key> <d> <o> <w> <n>	    	: "↓"	U2193	# down
-<Multi_key> <l> <e> <f> <t>	    	: "←"	U2190	# left
-<Multi_key> <r> <i> <g>	<h> <t>	    	: "→"	U2192	# right
-<Multi_key> <p> <i> <n> <e>	   	: "🍍"	U1f34d	# pineapple
-<Multi_key> <p> <r> <i>		    	: "Ƭ̵̬̊"	# U01ac U0335 U032c U030a # prince symbol
-<Multi_key> <k> <l> <o> <l>	    	: "헐"	Ud5d0	# lol in korean
-<Multi_key> <k> <k> <l> <o> <l>	 	: "ㅋㅋㅋㅋㅋㅋㅋ"
-<Multi_key> <l> <e> <n> <n> <y>		: "( ͡° ͜ʖ ͡°)"
+<Multi_key> <c> <o> <o> <l>				: "🆒" U1f192	# cool
+<Multi_key> <asterisk> <asterisk> <asterisk>		: "⁂" U2042	# asterism
+<Multi_key> <f> <p>					: "🤦" U1f926	# face palm
+<Multi_key> <f> <a> <c> <e>				: "🤦" U1f926	# face palm
+<Multi_key> <n> <i> <g>					: "씨발 제발!"	# wigga, please!
+<Multi_key> <semicolon> <apostrophe>			: "“”"		# curly quotes
+<Multi_key> <l> <o> <v> <e>				: "💗" U1f497	# love
+<Multi_key> <s> <p> <o> <t>				: "🍠" U1f360	# sweet potato
+<Multi_key> <p> <o> <t>					: "🥔" U1f954	# potato
+<Multi_key> <p> <e> <n>					: "🍆" U1f346	# eggplant
+<Multi_key> <h> <o> <t>					: "🔥" U1f525	# fire
+<Multi_key> <k> <t> <r> <e> <e>				: "🐨" Uff428	# koala
+<Multi_key> <o> <c> <t> <o>				: "🐙" U1f419	# octopus
+<Multi_key> <s> <a> <x>					: "🎷" U1f3b7	# sax
+<Multi_key> <h> <h> <e> <y> <e> <s>			: "❤υ❤"		# heart eyes
+<Multi_key> <h> <e> <y> <e> <s>				: "😍" U1f60d	# heart eyes smiley
+<Multi_key> <p> <s> <u> <b>				: "⊂" U2282	# proper subset
+<Multi_key> <s> <u> <b>					: "⊆" U2286	# subset
+<Multi_key> <u> <n> <i>					: "∪" U222a	# union
+<Multi_key> <i> <n> <t>					: "∩" U2229	# intersection
+<Multi_key> <p> <r> <o>					: "∝" U221d	# proportional
+<Multi_key> <n> <o> <t>					: "¬"		# not
+<Multi_key> <x> <o> <r>					: "⊕" U2295	# or
+<Multi_key> <c> <o> <n> <t>				: "∈" U2208	# contains
+<Multi_key> <a> <l> <l>					: "∀" U2220	# for every in
+<Multi_key> <o> <n> <e>					: "∃" U2203	# for at least one in
+<Multi_key> <i> <i> <f>					: "↔" U2194	# if and only if
+<Multi_key> <colon> <equal>				: "≔" U2254	# defined as
+<Multi_key> <b> <o> <o> <l>				: "⇒⊃⇔∃∀≔⊤⊥⊢⊨"		# boolean operators
+<Multi_key> <s> <t> <a> <r>				: "♫☆ヾ(*´Д｀*)ﾉ☆♪♩"		# stars
+<Multi_key> <f> <r> <o> <g>				: "🐸"	U1f43	# frog face
+<Multi_key> <m> <o> <o>					: "🐮"	U1f42e	# cow
+<Multi_key> <c> <o> <w>					: "🐄"	U1f404	# cow
+<Multi_key> <p> <i> <g>					: "🐷"	U1f437	# pig
+<Multi_key> <t> <u> <r>					: "🐢"	U1f422	# turle
+<Multi_key> <m> <i> <n>					: "−"	U2212	# minus
+<Multi_key> <c> <a> <t>					: "🐈"	U1f408	# cat
+<Multi_key> <d> <u> <c> <k>				: "🦆"	U1f98	# duck
+<Multi_key> <d> <o> <g>					: "🐶"	U1f436	# dog
+<Multi_key> <U> <p>					: "↑"	u2191	# up
+<Multi_key> <D> <O> <W> <N>				: "↓"	U2193	# down
+<Multi_key> <L> <E> <F> <T>				: "←"	U2190	# left
+<Multi_key> <R> <I> <G>	<H> <T>				: "→"	U2192	# right
+<Multi_key> <u> <p>					: "↑"	U2191	# up
+<Multi_key> <d> <o> <w> <n>				: "↓"	U2193	# down
+<Multi_key> <l> <e> <f> <t>				: "←"	U2190	# left
+<Multi_key> <r> <i> <g>	<h> <t>				: "→"	U2192	# right
+<Multi_key> <p> <i> <n> <e>				: "🍍"	U1f34d	# pineapple
+<Multi_key> <p> <r> <i>					: "Ƭ̵̬̊"	# U01ac U0335 U032c U030a # prince symbol
+<Multi_key> <k> <l> <o> <l>				: "헐"	Ud5d0	# lol in korean
+<Multi_key> <k> <k> <l> <o> <l>				: "ㅋㅋㅋㅋㅋㅋㅋ"
+<Multi_key> <l> <e> <n> <n> <y>				: "( ͡° ͜ʖ ͡°)"
 
-<Multi_key> <c> <e> <l>		    	: "℃" U2018	# celsius
-<Multi_key> <f> <a> <h>		    	: "℉" U2019	# fahrenheit
-<Multi_key> <n> <p> <i>		    	: "ℼ" U213c	# pi
-<Multi_key> <n> <e> <u>		    	: "ℯ" U212f	# euler's number
-<Multi_key> <asciicircum> <t>    	: "ᶿ" U0dbf	# superscript theta
-<Multi_key> <asciicircum> <n>    	: "ⁿ" U207f	# superscript n
-<Multi_key> <asciicircum> <i>    	: "ⁱ" U2071	# superscript i
-<Multi_key> <s> <n> <o> <w>	 	: "☃" U2603	# snowman
-<Multi_key> <b> <s> <n> <o> <w>	 	: "⛇" U26c7	# black snowman
-<Multi_key> <p> <i> <z> <z> <a>	 	: "🍕" U26c7	# pizza
-<Multi_key> <z> <a>			: "🍕" U1f355	# pizza alt
-<Multi_key> <p> <o> <o> <p>	        : "💩" U1f4a9	# poop
+<Multi_key> <c> <e> <l>					: "℃" U2018	# celsius
+<Multi_key> <f> <a> <h>					: "℉" U2019	# fahrenheit
+<Multi_key> <n> <p> <i>					: "ℼ" U213c	# pi
+<Multi_key> <n> <e> <u>					: "ℯ" U212f	# euler's number
+<Multi_key> <asciicircum> <t>				: "ᶿ" U0dbf	# superscript theta
+<Multi_key> <asciicircum> <n>				: "ⁿ" U207f	# superscript n
+<Multi_key> <asciicircum> <i>				: "ⁱ" U2071	# superscript i
+<Multi_key> <s> <n> <o> <w>				: "☃" U2603	# snowman
+<Multi_key> <b> <s> <n> <o> <w>				: "⛇" U26c7	# black snowman
+<Multi_key> <p> <i> <z> <z> <a>				: "🍕" U26c7	# pizza
+<Multi_key> <z> <a>					: "🍕" U1f355	# pizza alt
+<Multi_key> <p> <o> <o> <p>				: "💩" U1f4a9	# poop
 
 <Multi_key> <asciicircum> <asciicircum> <underscore>	: "₋" U208b	# subcript ₋
 <Multi_key> <asciicircum> <asciicircum> <a>	 	: "ₐ" U2090	# subcript a
@@ -287,7 +289,7 @@ include "%L"
 <Multi_key> <less> <e>                  : "❥" U2765 	# rotated heavy black heart bullet
 
 # stars and misc symbols
-<Multi_key> <asterisk> <asterisk>       : "★" U2605 	# black star
+<Multi_key> <asterisk> <9>       : "★" U2605 	# black star
 <Multi_key> <asterisk> <0>              : "☆" U2606 	# white star
 <Multi_key> <asterisk> <minus>          : "✪" U272a 	# circled white star
 <Multi_key> <y> <y>                     : "☯" U262f 	# yin yang
@@ -320,6 +322,7 @@ include "%L"
 <Multi_key> <d> <o> <t>                        : "·"		# mid dot for multiplication or units
 <Multi_key> <0> <space>                        : "﻿" Ufeff	# zero width space non-breaking
 <Multi_key> <0> <0> <space>                    : "​" U200b	# zero width space
+<Multi_key> <0> <0> <j>                        : "‍" U200d	# zero width joiner
 
 # emoticons
 <Multi_key> <less> <3>                         : "❤"  	# nicer heart than default (♥)
