@@ -2,7 +2,7 @@
 
 RFC_URL='http://www.rfc-editor.org/rfc/rfc%d.txt'
 # INDEX_FILE='/usr/share/rfc-get/rfc-index.txt'
-INDEX_FILE='rfc-get/rfc-index.txt'
+INDEX_FILE="$(<<<"$0" sed "s/\/[a-z]*$//")"'/rfc-index.txt'
 
 online_rfc()
 {

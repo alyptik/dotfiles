@@ -5,7 +5,7 @@ function imgurredirect () {
     url="$(curl "$1" 2>/dev/null | grep '<meta property="og:image"')"
     url="${url/*content=\"/}"
     url="${url/*\" \/>$/}"
-    feh "$url"
+    feh --insecure "$url"
     # gio open "$@"
     # chromium "$url"
     # pyb.py "$url"
@@ -27,11 +27,11 @@ function _plu () {
 	(*.webm|*.gif|*.gifv|*.mp4|*.avi|*.mkv|*.mov|*.flv)
 		mpvcmd "$1" ;;
 	(*://i.imgur.com/*)
-		feh "$1" ;;
+		feh --insecure "$1" ;;
 	(*://imgur.com/*)
 		imgurredirect "$1" ;;
 	(*.jpg|*.jpeg|*.png)
-		feh "$1" ;;
+		feh --insecure "$1" ;;
 	(*://dpaste.de/*)
 		pyb.py "$1" ;;
 	(*://*youtube.com/*)

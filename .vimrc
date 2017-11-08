@@ -490,10 +490,13 @@ let g:ale_lint_on_text_changed=0
 " on opening a file
 let g:ale_lint_on_enter=0
 
-let g:ale_c_clang_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-unused-const-variable -Wfatal-errors -Wfloat-equal -Wshadow'
-let g:ale_c_gcc_options='-std=c11 -pedantic-errors -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-unused-const-variable -Wfatal-errors -Wfloat-equal -Wshadow'
-" let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
+let g:ale_c_clang_options='-std=c11 -pedantic -Wall -Wextra'
+	\ . ' -Wno-missing-field-initializers -Wno-unused-function'
+	\ . ' -Wno-unused-parameter -Wno-unused-const-variable'
+	\ . ' -Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow'
+let g:ale_c_gcc_options=g:ale_c_clang_options
 let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
+" let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
 let g:ale_fixers={'c': ['clang-format']}
 let g:ale_c_clangtidy_checks=[
 	\ 'bugprone-integer-division',
@@ -1504,18 +1507,18 @@ vnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 vnoremap g<C-]> <C-]>
 
-" nmap <silent> <C-j> j<Plug>(ale_previous_wrap)
-" nmap <silent> <Leader>J j<Plug>(ale_previous_wrap)
-" nmap <silent> <C-k> k<Plug>(ale_next_wrap)
-" nmap <silent> <Leader>K k<Plug>(ale_next_wrap)
-nmap <silent> <Esc>j j<Plug>(ale_previous)
-nmap <silent> <Esc>k k<Plug>(ale_next)
-nmap <silent> <Leader>J j<Plug>(ale_previous)
-nmap <silent> <Leader>K k<Plug>(ale_next)
-xmap <silent> <Esc>j j<Plug>(ale_previous)
-xmap <silent> <Esc>k k<Plug>(ale_next)
-xmap <silent> <Leader>J j<Plug>(ale_previous)
-xmap <silent> <Leader>K k<Plug>(ale_next)
+" nmap <silent> <C-j> k<Plug>(ale_previous_wrap)
+" nmap <silent> <C-k> j<Plug>(ale_next_wrap)
+" nmap <silent> <Leader>J k<Plug>(ale_previous_wrap)
+" nmap <silent> <Leader>K j<Plug>(ale_next_wrap)
+nmap <silent> <Esc>j k<Plug>(ale_previous)
+nmap <silent> <Esc>k j<Plug>(ale_next)
+nmap <silent> <Leader>J k<Plug>(ale_previous)
+nmap <silent> <Leader>K j<Plug>(ale_next)
+xmap <silent> <Esc>j k<Plug>(ale_previous)
+xmap <silent> <Esc>k j<Plug>(ale_next)
+xmap <silent> <Leader>J k<Plug>(ale_previous)
+xmap <silent> <Leader>K j<Plug>(ale_next)
 
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
