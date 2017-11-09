@@ -234,7 +234,7 @@ autoload -U +X bashcompinit && bashcompinit -u
 safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
-	local muhcow="$(print -l -- /usr/share/cows/*(.:r:t) | sort -R | head -1)"
+	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
 	# host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
 	dig +short txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
 }
@@ -268,7 +268,7 @@ if type zplug >/dev/null 2>&1; then
 	zplug "zsh-users/zsh-history-substring-search"
 	# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then
-		print -- "Install? [y/N]: "
+		print - "Install? [y/N]: "
 		if read -sq; then zplug install; fi
 	fi
 	zplug load --verbose
@@ -297,12 +297,12 @@ zle -N zle-fh
 # FZF fuzzy completion
 export fzf_default_completion="expand-or-complete-prefix"
 # 'literal trigger' & fzf-completion keybind to start fuzzy completion
-export FZF_COMPLETION_TRIGGER='//'
-# export FZF_COMPLETION_TRIGGER='**'
+export FZF_COMPLETION_TRIGGER="//"
+# export FZF_COMPLETION_TRIGGER="**"
 
 # bind P and N for EMACS mode
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
+bindkey -M emacs "\C-p" history-substring-search-up
+bindkey -M emacs "\C-n" history-substring-search-down
 # for inside tmux
 bindkey -M emacs "\e[1~" beginning-of-line
 bindkey -M emacs "\e\e[A" beginning-of-line
@@ -310,13 +310,13 @@ bindkey -M emacs "\e[4~" end-of-line
 bindkey -M emacs "\e\e[B" end-of-line
 bindkey -M emacs "\C-k" kill-whole-line
 ## bind k and j for VI mode
-#bindkey -M vicmd 'k' history-substring-search-up
-#bindkey -M vicmd 'j' history-substring-search-down
+#bindkey -M vicmd "k" history-substring-search-up
+#bindkey -M vicmd "j" history-substring-search-down
 bindkey -M vicmd "u" undo
 # bindkey -M vicmd "u" vi-undo-change
-bindkey -M vicmd 'k' up-line-or-beginning-search
-bindkey -M vicmd 'j' down-line-or-beginning-search
-bindkey -M vicmd 'Y' vi-yank-eol
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+bindkey -M vicmd "Y" vi-yank-eol
 bindkey -M vicmd "P" insert-x-selection
 bindkey -M vicmd "p" append-x-selection
 bindkey -M viins "jj" vi-cmd-mode
@@ -325,6 +325,7 @@ bindkey -M viins "jj" vi-cmd-mode
 #
 # custom bindkey commands
 () for 1 {
+	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" run-help
 	bindkey -M "$1" "\eu" undo
@@ -358,8 +359,6 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e[A" up-line-or-beginning-search
 	bindkey -M "$1" "\eOB" down-line-or-beginning-search
 	bindkey -M "$1" "\e[B" down-line-or-beginning-search
-	bindkey -M "$1" '^[[A' up-line-or-beginning-search
-	bindkey -M "$1" '^[[B' down-line-or-beginning-search
 	bindkey -M "$1" "\eOD" backward-word
 	bindkey -M "$1" "\e\e[D" backward-word
 	bindkey -M "$1" "\e[1;5D" backward-word
