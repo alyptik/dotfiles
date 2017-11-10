@@ -20,9 +20,10 @@ exec 2<>"$_zsh_error"
 () {
 	local -a unsetarr setarr
 	unsetarr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
-	unsetarr+=(correctall extendedhistory flowcontrol histfcntllock globalexport)
-	unsetarr+=(globcomplete globsubst histignorespace histsavebycopy)
-	unsetarr+=(histverify multios nomatch printexitvalue sharehistory verbose)
+	unsetarr+=(correctall extendedhistory flowcontrol)
+	unsetarr+=(histfcntllock globalexport globcomplete globsubst)
+	unsetarr+=(histignorespace histsavebycopy histverify multios nomatch)
+	unsetarr+=(printexitvalue sharehistory verbose)
 	setarr+=(appendhistory autocd autopushd bareglobqual beep casematch cbases)
 	setarr+=(chaselinks clobber completeinword correct cprecedences equals)
 	setarr+=(extendedglob globassign globdots globstarshort histexpiredupsfirst)
@@ -70,6 +71,8 @@ eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
 # History stuff
 HISTFILE="${HOME}/.zsh_history"
+# ^b: history expansion ^f: quick history substitution #: comment character
+histchars=$'\2\6#'
 type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 
 # zmodules
@@ -295,7 +298,8 @@ zle -N zle-vim
 zle -N zle-fh
 
 # FZF fuzzy completion
-export fzf_default_completion="expand-or-complete-prefix"
+export fzf_default_completion="complete-word"
+# export fzf_default_completion="expand-or-complete-prefix"
 # 'literal trigger' & fzf-completion keybind to start fuzzy completion
 export FZF_COMPLETION_TRIGGER="//"
 # export FZF_COMPLETION_TRIGGER="**"
@@ -325,6 +329,9 @@ bindkey -M viins "jj" vi-cmd-mode
 #
 # custom bindkey commands
 () for 1 {
+	# use \2 and \6 for history expansion
+	bindkey -M "$1" "\C-b" self-insert
+	bindkey -M "$1" "\C-f" self-insert
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" run-help
