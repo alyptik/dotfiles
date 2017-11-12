@@ -6,6 +6,9 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias m='make clean && PREFIX=~/.local make install && scan-build make -B debug && /lib/ld-linux-x86-64.so.2'
+## quick opening files with mpv
+# alias m='f -e mpv'
 alias urb='define -u'
 alias thes='define -t'
 alias syn='define -t'
@@ -72,8 +75,6 @@ alias fort='fortune'
 alias pe='noglob perl -pe'
 ## quick opening files with xdg-open
 alias x='a -e xdg-open'
-## quick opening files with mpv
-alias m='f -e mpv'
 alias fpass='lpass show -c --password $(lpass ls | fzf | awk "{print \$(NF)}" | sed "s/\]//g")'
 alias t='transmission-remote'
 alias rs='rsync -avP --info=progress2'

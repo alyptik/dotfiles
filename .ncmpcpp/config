@@ -442,7 +442,7 @@ allow_for_physical_item_deletion = yes
 #
 display_bitrate = yes
 #
-display_remaining_time = yes
+# display_remaining_time = yes
 #
 ## Available values: none, basic, extended, perl.
 ##
@@ -469,7 +469,7 @@ tag_editor_extended_numeration = yes
 #
 media_library_sort_by_mtime = yes
 #
-#enable_window_title = yes
+enable_window_title = yes
 #
 ##
 ## Note: You can choose default search mode for search
