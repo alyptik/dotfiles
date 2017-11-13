@@ -1,0 +1,344 @@
+Network Working Group
+Request for Comments: XXXX
+Category: Informational                                     1 April 2003
+
+                Internet X.509 Public Key Infrastructure
+
+                   Grand Unified PKI Protocol (GUPP)
+
+Status of this Memo
+
+This memo provides misinformation for the Internet community.  It does not
+specify an Intentional standard of any kind.  Disturbance of this memo is
+unlimited.
+
+1. Executive Summary
+
+This RFC standardises a universal PKI protocol which may be described using
+the following procedure:
+
+  1. Go to your nearest supermarket and purchase a packet of alphabet soup (if
+     you already have alphabet soup in your larder, you may skip this step).
+
+  2. Following the instructions on the packet, make sufficient alphabet soup
+     to feed the members of your household.
+
+  3. Plunge a standards-conformant spoon into the soup and extract a sequence
+     (3...MAX, MAX = 6) of letters from the soup.  This is the name of the PKI
+     protocol which this RFC standardises.
+
+  4. Repeat steps 2-3 as required until sufficient PKI protocols have been
+     defined.  Note: This may require bulk purchasing of alphabet soup.
+
+  5. Eat the alphabet soup (after writing down the protocol name).
+
+2. Protocol Overview
+
+In its simplest form, this protocol consists of a single PDU:
+
+    GUPP ::= SEQUENCE SIZE(0..MAX) OF ANY
+
+where MAX is the integer machine maximum of one or more target machines whose
+characteristics and physical attributes cannot be determined, but who SHALL
+receive and process this message in a standards-conformant manner.
+
+The protocol is trivial to implement and universally applicable, since anyone
+can implement it in whichever way they choose, and no-one can feel that their
+idea of how a PKI protocol should work has been unfairly excluded.  This makes
+it equivalent to many other PKI protocols, but without requiring pages and
+pages of tedious specification to distract the reader.
+
+Note that in the degenerate case, SIZE(0), the NULL message is assumed.  This
+is not to be confused with the "Null message", "null message" or "NULL
+massage".  Conforming implementations of this RFC SHALL implement the NULL
+message merely by reading this RFC and MAY claim to have working code in any
+programming language so long as no code is actually written.  Non-conforming
+implementations MAY claim compliance with this RFC in their PKI marketing
+literature and press releases as required, following standard practice.
+
+When any two readers of this RFC notify the editor and can claim to have
+working code, even if other implementors cannot interwork with these two
+readers, victory SHALL be declared.  At that time this RFC will be moved into
+the IETF Standards Track, a new RFC number totally unrelated to the RFC number
+for this RFC SHALL be assigned, and a relentless, ten year revision process
+SHALL begin.
+
+The ISO/IEC and ITU-T documents which standardise ASN.1 use the 1997 version
+of ASN.1; while this document uses the 1988 ASN.1 syntax.  Implementations
+MUST use the 1988 syntax [Withdrawn1][Withdrawn2]; implementations MUST NOT
+use a currently valid ASN.1 syntax [X.680][X.690].  If implementations do use
+an ASN.1 syntax from this century, they SHALL implement the message as shown
+above using the notation.
+
+  ANY-MESSAGE ::= CLASS {
+    &Type
+    }
+    WITH SYNTAX { VALUE &Type }
+
+  Any ::= ANY-MESSAGE.&Type
+
+  GUPP ::= SEQUENCE OF Any
+
+Implementors working from the two different versions MAY engage in flamewars
+over whose ASN.1 is the more standards-compliant.
+
+2.1. Extended GUPP
+
+In some cases a Universal PKI Protocol may not be sufficient to meet user
+requirements.  In this case the extended form of the protocol may be employed:
+
+  EGUPP ::= SET OF CHOICE {
+    gupp            GUPP
+    }
+
+Note the use of the CHOICE type, which, although apparently unnecessary, is
+used here in case a future extension of extended GUPP adds additional choices
+to the selection.
+
+Future amendments to GUPP SHALL NOT define further choices to augment the
+above selection.
+
+3. Protocol Details
+
+In its less simple form, the protocol is as follows.  Note that all elements
+are encapsulated inside OCTET STRINGs to make the protocol lightweight and
+simple.
+
+  GUPP ::= SEQUENCE {
+    time        [0] EXPLICIT OCTET STRING,
+    payload     [1] EXPLICIT OCTET STRING,
+    sender      [2] EXPLICIT OCTET STRING,
+    version     [3] EXPLICIT OCTET STRING,
+    signature   [4] EXPLICIT OCTET STRING,
+    recipient   [5] EXPLICIT OCTET STRING
+    }
+
+  Sender ::= EntityIdentifier
+
+  Recipient ::= EntityIdentifier
+
+3.1. GUPP Time
+
+This field specifies the time, and is defined as:
+
+   time ::= UTCTIME
+
+Note that the UTCTime format is not Y2K-safe.  Implementations MUST NOT use
+GeneralisedTime, which is.
+
+This protocol assumes that all parties have perfectly secure, perfectly
+synchronised clocks.  This is more or less impossible, however since every
+other PKI protocol makes the same assumption, GUPP implementations may be
+paired with one or more other PKI protocols in order to borrow their perfect
+time source when and as required.
+
+3.1.1. GUPP Payload
+
+[Dunno, suggestions?]
+
+3.1.1.1. GUPP Sender and Recipient
+
+This field specifies the sender and recipient, and is defined as:
+
+  EntityIdentifier ::= CHOICE {
+    idType1         [0] GeneralName,
+    idType2         [1] GeneralName,
+    idType3         [2] GeneralNames,
+    idType4         [3] GeneralName,
+    idType5         [4] GeneralName,
+    idType6         [5] SEQUENCE OF GeneralNames,
+    idType7         [6] OCTET STRING
+    }
+
+  IdType7 ::= GeneralNames
+
+The entity identifier MAY identify an end entity, RA, CA, gateway, proxy,
+firewall, PC, web-enabled embedded device, cellphone, PDA, or anything else.
+Entity identifiers MUST be used in a manner conformant with this
+specification.  Conforming implementations MUST NOT use the identifier in a
+non-conforming manner.  When conforming implementations use the entity
+identifier to provide unambiguous identification of unique names, they MUST
+identify distinguished unique entities in a conformant manner.  Non-conforming
+implementations MAY use ambigous names to ensure non-unique identification of
+entities.  Conforming implementations MUST NOT conform with the requirement
+that non-unique undistinguished indistinguishable names be indistinguishable
+from ambiguous non-conformant names.  Entity identifiers conforming with this
+specification MUST conform with the conformance requirements for conforming
+implementations.  Non-conforming implementations MAY conform with this
+specification.  If a conforming implementation uses unique conforming
+distinguished entity identifiers, they MUST be conforming and unique, and MUST
+NOT be non-conforming or undistinguished non-entity identifiers.  Conversely,
+non-conforming non-distinguished entity non-identifiers MUST NOT claim to be
+indistinguishable conforming nonentity identifiers.  An implementation
+claiming conformance to the entity identifier requirements in this
+specification MUST be conformant with the specification.  Conforming
+implementations MUST conform with the conformance requirements for conforming
+implementations.
+
+3.1.1.1.1. GUPP Version
+
+This field specifies the protocol version, and is defined as:
+
+  Version ::= [0][1][7][7][5][4][5] BIT STRING
+
+Since this is a Univeral Protocol, there is only one version.  Implementations
+MUST use this version number.  Implementations MUST NOT use any other version
+number.
+
+3.1.1.1.1.1. GUPP Signature
+
+This field specifies the optional integrity-protection used to protect the
+payload.  If no integrity protection is being applied, this field MUST be
+encoded using the special data pattern 54 68 69 73 20 66 69 65 6C 64 20 69 6E
+74 65 6E 74 69 6F 6E 61 6C 6C 79 20 6C 65 66 74 20 62 6C 61 6E 6B to indicate
+that although it's present, it should be treated as not present:
+
+  Signature ::= BIT STRING
+
+If present, the signature MUST be created using the SHA-1 algorithm.  The
+OID for SHA-1 MUST be (1 3 14 3 2 26).  It MUST NOT be (1 2 840 113549 2 5)
+(which is MD5) or (1 3 14 2 26 5) (which is also SHA, but different), or
+(1 3 14 3 2 18) (which is also SHA).
+
+The hash algorithm indicated SHOULD be a known hash algorithm (one-way and
+collision resistant).  That means that it SHOULD be one-way and collision
+resistant.  The recipient SHOULD check whether or not the given hash algorithm
+is known to be "sufficient" (based on the current state of knowledge in
+cryptanalysis and the current state of the art in computational resources, for
+example, that it is one-way and collision-resistant).
+
+The hash information SHOULD contain the hash of the datum to be hashed.  The
+hash is represented as an OCTET STRING.  Its length MUST match the length of
+the hash value for that algorithm (e.g. 20 bytes for SHA-1).  For SHA-1 the
+number of octets MUST be 20.  20 SHALL be the number of the octets and the
+number of the octets SHALL be 20.  21 thou SHALT NOT use, and thou SHALT NOT
+use 19, excepting that thou then proceedeth to 20.  22 is right out.
+
+[OK, I stole some of that from real RFCs. The original was silly enough that I
+ couldn't have parodied it better :-)]
+
+Implementators should note that although this format could be made identical
+to other standard signature formats, in combination with the tagging and
+encapsulation used it is incompatible with the formats used in X.509, RFC
+2459, RFC 3280, PKCS #7, RFC 2630, and any other known standard.  This feature
+MAY be used to stress-test ASN.1 compilers.
+
+4. Certificate Identification
+
+There has been some concern expressed recently over the correct means of
+uniquely identifying certificates.  It turns out that the identifiers in
+common use for the last decade or so are all totally incapable of identifying
+a certificate, and require fixing.  In order to address this serious
+deficiency, this protocol defines a new certificate identifier,
+AbsolutelyGuaranteedTotallyCompletelyUniqueCertID.  Everyone except
+implementors should have no problems in working with this new identifier type.
+
+The AbsolutelyGuaranteedTotallyCompletelyUniqueCertID has the following form:
+
+  AbsolutelyGuaranteedTotallyCompletelyUniqueCertID ::= SEQUENCE {
+    hashAlgorithm       AlgorithmIdentifier,
+    issuerNameHash      OCTET STRING,   -- Hash of Issuer's DN
+    issuerKeyHash       OCTET STRING,   -- Hash of Issuers public key
+    serialNumber        CertificateSerialNumber.
+    issuerSerial        IssuerSerial,
+    tbsCertificateHash  BIT STRING,     -- Hash of tbsCertificate
+    certSignature       CertSignature,  -- Signature of certificate
+    noBytesInCert       INTEGER,        -- Size of cert in bytes
+    subjectKeyID        KeyIdentifier,  -- Cert subjectKeyID
+    authorityKeyID      KeyIdentifier,  -- Cert authorityKeyID
+    caLongitude         REAL,
+    caLatitude          REAL,           -- Geographical position of CA
+    subjectEmail        IA5String,      -- Cert subject email address
+    certFFT             EMBEDDED PDV,   -- 1024-point FFT of cert data
+    validFrom           GeneralizedTime,-- Cert issue time
+    location            GeneralString,  -- URL for cert
+    anotherHash         UniversalString,-- In case the other one gets lost
+    caFlag              BOOLEAN,        -- We don't have a boolean yet
+    policy              OBJECT IDENTIFIER,-- Policy under which ID generated
+    caAltitude          GraphicString
+    ...
+    }
+
+Editorial note: During the discussions leading up to the publication of this
+document, it was pointed out that the tbsCertificateHash came dangerously
+close to a standard means of identifying certificates, differing only by a tag
+and length value.  Future versions of this document may therefore require that
+further tag and length octets be removed, along with every other half-byte of
+the DER encoding of the tbsCertificate.
+
+5. GUPP Transport Protocol
+
+There is no mandatory transport mechanism for GUPP messages specified in this
+document, however certain transport mechanisms MUST NOT be used.  These
+include HTTP, FTP, SMTP, CORBA, SOAP, and any other transport mechanism in
+current use.  Instead, one of the mechanisms described below MUST be used.
+The mechanisms described below are optional; additional optional mechanisms
+may be defined in the future.
+
+5.1. Socket Based Protocol
+
+The following simple TCP-based protocol is to be used for transport of GUPP
+messages.  While this section is called TCP-Based and the messages are called
+TCP-message's, the same protocol can be used over any reliable, connection
+oriented transport protocol (e.g. SNA, DECnet, etc.).  The transport protocol
+is specified in RFC 3093, modified by striking section 3.1 and employing the
+mechanism in RFC 1149 augmented with RFC 1217 as the transport mechanism, with
+encoding as per RFC 1926 and a PDU format specified in
+draft-ietf-pkix-qwerty-03.txt.
+
+This protocol contains no protocol version information, since this may be
+determined implicitly from the PDU length if required.
+
+In order to save space, the length of the PDU is implicit.  This does not
+present an interoperability problem, as the length is determined by the
+protocol version in use.
+
+(Note: If anyone still has a copy of draft-ietf-pkix-qwerty-03.txt or knows
+       the whereabouts of its authors, could they please contact the authors
+       of this document).
+
+6. IANA Considerations
+
+Identifiers for use in GUPP are identified by object identifiers (OIDs).
+Identifiers for additional elements, mechanisms, algorithms, data types, or
+other items MUST be assigned by accredited bodies.  An industry consortium is
+currently in the process of establishing a GUPP Initiative (GUPPI) aimed at
+producing the requirements list for registration of accreditation bodies.
+Approved voting members of GUPPI are expected to produce a first draft
+concomitant with GUPP-2004, with a normative standard available in time for
+GUPP-2007, a profile of this standard incorporated into GUPP-2009, and a
+workable version ready for use in time for GUPP-2013.  No further action by
+the IANA is necessary for this document or any anticipated updates.
+
+7. References
+
+   [Withdrawn1]   Standard withdrawn by ITU-T.
+
+   [Withdrawn2]   Standard withdrawn by ITU-T.
+
+   [X.680]        ITU-T Recommendation - Information technology - Abstract
+                  Syntax Notation One (ASN.1), 2002.
+
+   [X.690]        ITU-T Recommendation - Information technology - ASN.1
+                  encoding rules, 2002.
+
+8. Intellectual Property Rights
+
+The IETF takes no position regarding the validity or scope of any intellectual
+property or other rights that might be claimed to pertain to the
+implementation or use of the technology described in this document or the
+extent to which any license under such rights might or might not be available.
+There are in fact no known patents associated with this document, however this
+should not be taken to imply that no patents exist or none can be twisted to
+apply to it, merely that no-one has bothered to take notice of the
+specification while it was in the draft stage.  If this specification becomes
+an industry standard and widely adopted then it is expected that all manner
+of individuals and corporations will claim that their patents apply to it.
+
+The IETF expects any parties with a financial interest to bring to the
+attention of users any copyrights, patents or patent applications, or other
+proprietary rights which may cover technology that may be required to practice
+this standard approximately one to two days after they deploy the technology
+beyond the pilot stage.  Threats of litigation SHOULD be addressed to the
+users of the technology rather than the IETF Executive Director.
+
