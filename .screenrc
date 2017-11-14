@@ -3,9 +3,11 @@
 escape ^a^a
 bind a other
 bind A other
+bind , prev
+bind / next
 bind . focus
-bind , focus prev
-bind / focus next
+bind p focus prev
+bind n focus next
 bind ; focus top
 bind \' focus bottom
 bind \" windowlist -m -b

@@ -462,7 +462,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	defargcmds+=(calcc canto-curses canto-daemon canto-remote catdoc cd2raw)
 	defargcmds+=(cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium)
 	defargcmds+=(ci co col colordiff compton configure conky cower cpanm)
-	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode)
+	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode dumpasn1)
 	defargcmds+=(expac fasd file flac2all fusermount-glusterfs fusermount3)
 	defargcmds+=(elftoc fzf gnome-keyring-daemon gpg-agent help2man)
 	defargcmds+=(highlight hping hsetroot install keyring kid3-cli)
