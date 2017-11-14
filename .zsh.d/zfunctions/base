@@ -10,9 +10,9 @@ for i in "$@"; do
 	perl -e '
 		my $a = shift;
 		while ($a =~ m/^[^_]{2}/) {
-		$a =~ s/([^_]{2})(_|$)/_$1$2/;
+			$a =~ s/([^_]{2})(_|$)/_$1$2/;
 		}
-		$a =~ s/0x_//;
+		$a =~ s/^[^x]*x_?//;
 		my @b = split /_/, $a;
 		$b[0] = sprintf "%02s", $b[0] unless !$b[0];
 		print "0x" . lc join("", @b) . " - ";
