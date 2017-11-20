@@ -124,7 +124,7 @@ deflogin on
 defmousetrack off
 defnonblock on
 defobuflimit 2048
-defscrollback 10000
+defscrollback 5000
 
 ## Informs screen that all terminals that begin with “xterm” have firm auto-margins that allow the last
 ## position on the screen to be updated (LP), but they don't really have a status line (no hs - append @
