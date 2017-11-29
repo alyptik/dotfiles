@@ -144,7 +144,7 @@ if &term =~ '^\(xterm\|st\|rxvt\|tmux\)'
 	" " use a red cursor otherwise
 	let &t_EI .= "\<Esc>[1 q\<Esc>]12;Red\x7"
 	silent !echo -ne "\033]12;Red\007"
-	autocmd VimLeave * silent !echo -ne "\033]112\007"
+	" autocmd VimLeave * silent !echo -ne "\033]112\007"
 elseif &term =~ '^screen'
 	" let &t_SI .= "\<Esc>P\<Esc>[5 q\<Esc>\\"
 	" let &t_EI .= "\<Esc>P\<Esc>[1 q\<Esc>\\"
@@ -152,7 +152,7 @@ elseif &term =~ '^screen'
 	let &t_SI .= "\<Esc>P\<Esc>[5 q\<Esc>\\\<Esc>P\<Esc>]12;#b58900\x7\<Esc>\\"
 	let &t_EI .= "\<Esc>P\<Esc>[1 q\<Esc>\\\<Esc>P\<Esc>]12;Red\x7\<Esc>\\"
 	silent !echo -ne "\033P\033]12;Red\007\033\\"
-	autocmd VimLeave * silent !echo -ne "\033P\033]112\007\033\\"
+	" autocmd VimLeave * silent !echo -ne "\033P\033]112\007\033\\"
 endif
 
 " disable Background Color Erase (BCE) so that color schemes

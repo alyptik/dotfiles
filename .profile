@@ -98,7 +98,8 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME="i965"
 # export VDPAU_DRIVER="va_gl"
-export MAKEFLAGS="-j -l5"
+# export MAKEFLAGS="-j -l5"
+export MAKEFLAGS="-j5"
 export MANPATH="/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man:${C}/man"
 export MANSECT="2:3:0:9:7:5:4:1:n:l:8:6:3f"
 export MESA_GL_VERSION_OVERRIDE="4.5COMPAT"

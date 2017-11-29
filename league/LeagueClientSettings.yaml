@@ -1,0 +1,32 @@
+install:
+    game-settings:
+        accountId: 33665878
+        modified: false
+        timestamp: 1511380956388
+    gameflow-patcher-lock: 1511381808524
+    gameflow-process-info: null
+    gameflow-spectate-reconnect-info: null
+    globals:
+        locale: "en_US"
+        region: "NA"
+    icon_version: 2
+    last-valid-login-splash:
+        theme: "project2017"
+        version: "1.26"
+    lcu-settings:
+        accountId: 33665878
+        modified: false
+        timestamp: 1511380056498
+    licensesAgreedTo:
+        BAB01EBF2B9BD188EB8076017D6808B5: null
+    login-remember-me:
+        rememberMe: true
+        username: "Kirarik"
+    perks-settings:
+        accountId: 33665878
+        modified: false
+        timestamp: 1511156271348
+    rso-auth:
+        install-identifier: "274bb375e9f73f4197ca6e6c21498e0d"
+    telemetry:
+        installation_id: "H1tM9A=="

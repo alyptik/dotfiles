@@ -85,7 +85,8 @@ st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=t
 
 st.bold_font:			1
 st.italic_font:			1
-st.alpha:			250
+! st.alpha:			250
+st.alpha:			255
 st.termname:			st-256color
 st.shell:			/bin/sh
 st.bellvolume:			0

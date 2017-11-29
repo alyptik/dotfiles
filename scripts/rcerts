@@ -1,7 +1,8 @@
 #!/bin/zsh
 
-domains=(alyp.tk sigfu.tk fsckingfu.tk hewillnotdivide.tk)
+domains=(alyp.tk sigfu.tk fsckingfu.tk)
 subs=(mail cube www webmail stream)
-list=($(print $domains $(printf '%s.%s\n' {${^subs},${^domains}})))
+list=($(print ${(j:,:)domains},$(printf '%s.%s,' {${^subs},${^domains}})))
 
-sudo certbot certonly --standalone -d "$list"
+sudo certbot certonly --standalone -d "${list%%,}"
+# sudo certbot certonly --standalone -d "${list%%,},hewillnotdivide.tk"
