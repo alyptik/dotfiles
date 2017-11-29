@@ -1,0 +1,19 @@
+lol-audio:
+    data:
+        loginMusicEnabled: false
+        masterVolume: 50
+        musicVolume: 0
+        sfxVolume: 100
+        voiceVolume: 50
+    schemaVersion: 5
+lol-user-experience:
+    data:
+        hasBeenPromptedForUxUnloadMode: true
+        lastKnownMachineSpec: 1
+        potatoModeEnabled: true
+        unloadUxInGameEnabled: true
+    schemaVersion: 2
+video:
+    data:
+        ZoomScale: 1.250000
+    schemaVersion: 1

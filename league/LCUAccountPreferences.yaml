@@ -1,0 +1,21 @@
+lol-leagues:
+    data:
+        betterRewardsDayOneSeen: true
+    schemaVersion: 1
+lol-loot:
+    data:
+        betterRewardsDayOneSeen: true
+    schemaVersion: 1
+lol-notifications:
+    data:
+        rgmNotificationTimestamp: 1511379795142
+    schemaVersion: 1
+lol-tutorial:
+    data:
+        championSelectRunesTooltipSeenCount: 6
+        emotesTutotorialModalDisplayed: true
+        perksCreateNewPageSeen: true
+        perksPresetPagesSeen: true
+        perksPrimaryPathSeen: true
+        perksSecondaryPathSeen: true
+    schemaVersion: 1

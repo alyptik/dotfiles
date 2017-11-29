@@ -1,0 +1,197 @@
+{
+    "pages": [
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 1325495116,
+            "isActive": false,
+            "isDeletable": true,
+            "isEditable": true,
+            "isValid": true,
+            "name": "AD Carry",
+            "order": 6,
+            "primaryStyleId": 8100,
+            "selectedPerkIds": [
+                8124,
+                8139,
+                8120,
+                8105,
+                8014,
+                9103
+            ],
+            "subStyleId": 8000
+        },
+        {
+            "current": true,
+            "formatVersion": 4,
+            "id": 626493527,
+            "isActive": false,
+            "isDeletable": true,
+            "isEditable": true,
+            "isValid": true,
+            "name": "Support",
+            "order": 7,
+            "primaryStyleId": 8300,
+            "selectedPerkIds": [
+                8359,
+                8306,
+                8304,
+                8347,
+                8237,
+                8234
+            ],
+            "subStyleId": 8200
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 735521195,
+            "isActive": false,
+            "isDeletable": true,
+            "isEditable": true,
+            "isValid": true,
+            "name": "Top",
+            "order": 8,
+            "primaryStyleId": 8100,
+            "selectedPerkIds": [
+                8124,
+                8139,
+                8120,
+                8134,
+                8451,
+                8242
+            ],
+            "subStyleId": 8400
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 1249394527,
+            "isActive": false,
+            "isDeletable": true,
+            "isEditable": true,
+            "isValid": true,
+            "name": "Mid",
+            "order": 8,
+            "primaryStyleId": 8200,
+            "selectedPerkIds": [
+                8214,
+                8243,
+                8210,
+                8236,
+                8134,
+                8139
+            ],
+            "subStyleId": 8100
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 54,
+            "isActive": false,
+            "isDeletable": false,
+            "isEditable": false,
+            "isValid": true,
+            "name": "Inspiration: The Timeless",
+            "order": 2147483638,
+            "primaryStyleId": 8300,
+            "selectedPerkIds": [
+                8326,
+                8345,
+                8321,
+                8347,
+                8451,
+                8430
+            ],
+            "subStyleId": 8400
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 53,
+            "isActive": false,
+            "isDeletable": false,
+            "isEditable": false,
+            "isValid": true,
+            "name": "Sorcery: The Calamity",
+            "order": 2147483639,
+            "primaryStyleId": 8200,
+            "selectedPerkIds": [
+                8229,
+                8226,
+                8210,
+                8236,
+                8138,
+                8105
+            ],
+            "subStyleId": 8100
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 52,
+            "isActive": false,
+            "isDeletable": false,
+            "isEditable": false,
+            "isValid": true,
+            "name": "Precision: The Perfect",
+            "order": 2147483640,
+            "primaryStyleId": 8000,
+            "selectedPerkIds": [
+                8005,
+                9111,
+                9104,
+                8014,
+                8234,
+                8236
+            ],
+            "subStyleId": 8200
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 51,
+            "isActive": false,
+            "isDeletable": false,
+            "isEditable": false,
+            "isValid": true,
+            "name": "Domination: The Executioner",
+            "order": 2147483641,
+            "primaryStyleId": 8100,
+            "selectedPerkIds": [
+                8112,
+                8126,
+                8120,
+                8135,
+                9111,
+                8014
+            ],
+            "subStyleId": 8000
+        },
+        {
+            "current": false,
+            "formatVersion": 4,
+            "id": 50,
+            "isActive": false,
+            "isDeletable": false,
+            "isEditable": false,
+            "isValid": true,
+            "name": "Resolve: The Colossus",
+            "order": 2147483642,
+            "primaryStyleId": 8400,
+            "selectedPerkIds": [
+                8437,
+                8242,
+                8430,
+                8451,
+                8224,
+                8237
+            ],
+            "subStyleId": 8200
+        }
+    ],
+    "settings": {
+        "gridModeEnabled": false,
+        "showLongDescriptions": false
+    }
+}
