@@ -13,6 +13,7 @@ if [ -f "$usermodmap" ]; then xmodmap "$usermodmap"; fi
 ## start some nice programs
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
+		# shellcheck disable=SC1090
 		test -x "$f" && . "$f"
 	done
 	unset f
@@ -46,120 +47,122 @@ stjerm -k F12 -ah false -o 90 -b none -w 85% -h 80% -ar -tf true -tp bottom -fn 
 # urxvt -kuake-hotkey F10 &
 # urxvtcd -kuake-hotkey F10 &
 # scpuled &
+udisksctl mount -b "$(findfs LABEL=vm)" &
 xrandr --dpi 216 &
 
-# eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null`
-eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null`
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null)
+# shellcheck disable=SC2046
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 default_session="i3";
 
 if [ "$1" = xterm ] && [ -n "$2" ]; then
-    session="$2";
+	session="$2";
 elif [ "$1"x = x ]; then
-    if [ -e ~/.WM.default ]; then
-        session="$(cat ~/.WM.default)";
-    else
-        session="$default_session";
-    fi;
+	if [ -e ~/.WM.default ]; then
+		session="$(cat ~/.WM.default)";
+	else
+		session="$default_session";
+	fi;
 else
-    session="$1";
+	session="$1";
 fi;
 
 printf '%s\n' "$session" > ~/.WM.last;
 
 case $session in
-    awesome )
-        xscreensaver &
-        exec awesome;;
+awesome )
+	xscreensaver &
+	exec awesome;;
 
-    bspwm )
-        xscreensaver &
-        exec bspwm;;
+bspwm )
+	xscreensaver &
+	exec bspwm;;
 
-    budgie-desktop )
-        gnome-screensaver &
-        exec budgie-desktop;;
+budgie-desktop )
+	gnome-screensaver &
+	exec budgie-desktop;;
 
-    catwm )
-        xscreensaver &
-        exec catwm;;
+catwm )
+	xscreensaver &
+	exec catwm;;
 
-    cinnamon )
-        xscreensaver &
-        exec cinnamon-session;;
+cinnamon )
+	xscreensaver &
+	exec cinnamon-session;;
 
-    dwm )
-        xscreensaver &
-        exec dwm;;
+dwm )
+	xscreensaver &
+	exec dwm;;
 
-    ede )
-        xscreensaver &
-        exec startede;;
+ede )
+	xscreensaver &
+	exec startede;;
 
-    enlightenment )
-        xscreensaver &
-        exec enlightenment_start;;
+enlightenment )
+	xscreensaver &
+	exec enlightenment_start;;
 
-    fluxbox )
-        xscreensaver &
-        exec startfluxbox;;
+fluxbox )
+	xscreensaver &
+	exec startfluxbox;;
 
-    gnome )
-        gnome-screensaver &
-        exec gnome-session;;
+gnome )
+	gnome-screensaver &
+	exec gnome-session;;
 
-    gnome-classic )
-        gnome-screensaver &
-        exec gnome-session --session=gnome-classic;;
+gnome-classic )
+	gnome-screensaver &
+	exec gnome-session --session=gnome-classic;;
 
-    i3|i3wm )
-	/home/alyptik/bin/i3-focus-last &
-        xscreensaver &
-        exec i3;;
+i3|i3wm )
+/home/alyptik/bin/i3-focus-last &
+	xscreensaver &
+	exec i3;;
 
-    icewm )
-        xscreensaver &
-        exec icewm-session;;
+icewm )
+	xscreensaver &
+	exec icewm-session;;
 
-    jwm )
-        xscreensaver &
-        exec jwm;;
+jwm )
+	xscreensaver &
+	exec jwm;;
 
-    kde )
-        xscreensaver &
-        exec startkde;;
+kde )
+	xscreensaver &
+	exec startkde;;
 
-    mate )
-        xscreensaver &
-        exec mate-session;;
+mate )
+	xscreensaver &
+	exec mate-session;;
 
-    monster|monsterwm )
-        xscreensaver &
-        exec monsterwm;;
+monster|monsterwm )
+	xscreensaver &
+	exec monsterwm;;
 
-    notion )
-        xscreensaver &
-        exec notion;;
+notion )
+	xscreensaver &
+	exec notion;;
 
-    openbox )
-        xscreensaver &
-        exec openbox-session;;
+openbox )
+	xscreensaver &
+	exec openbox-session;;
 
-    unity )
-        xscreensaver &
-        exec unity;;
+unity )
+	xscreensaver &
+	exec unity;;
 
-    xfce|xfce4 )
-        xscreensaver &
-        exec startxfce4;;
+xfce|xfce4 )
+	xscreensaver &
+	exec startxfce4;;
 
-    xmonad )
-        xscreensaver &
-        exec xmonad;;
+xmonad )
+	xscreensaver &
+	exec xmonad;;
 
-    # No known session, try to run it as command
-    * )
-        xscreensaver &
-        exec "$session";;
-esac;
+# No known session, try to run it as command
+* )
+	xscreensaver &
+	exec "$session";;
+esac

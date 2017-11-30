@@ -90,7 +90,7 @@ function zle-compdef {
 		LBUFFER="compdef _gnu_generic "
 	else
 		# isolate the actual command
-		cmd="${${${BUFFER#*_[[:blank:]]}##(*)(;|&|\(|\)|\{|\}|\`|do|then|else|time|sudo)}%%[[:blank:]]*}"
+		cmd="${${${BUFFER##(*)(;|\||&|\(|\)|\{|\}|\`|do|then|else|time|sudo)}#*[[:blank:]]}%%[[:blank:]]*}"
 		zle push-input
 		BUFFER="compdef _gnu_generic $cmd"
 		zle accept-line
