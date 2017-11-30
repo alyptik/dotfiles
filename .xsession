@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# Here i3 is kept as default
-
 xbindkeys &
 xset s noblank &
 xset s off -b -dpms &
@@ -30,9 +28,11 @@ stjerm -k F12 -ah false -o 90 -b none -w 85% -h 80% -ar -tf true -tp bottom -fn 
 # urxvt -kuake-hotkey F10 &
 # urxvtcd -kuake-hotkey F10 &
 # scpuled &
+udisksctl mount -b "$(findfs LABEL=vm)" &
 xrandr --dpi 216 &
 xscreensaver &
 
-# eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null`
-eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null`
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null)
+# shellcheck disable=SC2046
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
