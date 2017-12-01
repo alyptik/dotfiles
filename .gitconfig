@@ -5,6 +5,7 @@
 [diff]
 	tool = vimdiff2
 	renameLimit = 24167
+	algorithm = histogram
 [difftool]
 	prompt = false
 [merge]
@@ -51,13 +52,13 @@
 	r = rm --cached
 	cached = diff --cached
 	stat = status -sb
-	d = diff --patience
-	dr = diff --patience --patch --relative --no-index
+	d = diff --histogram
+	dr = diff --histogram --patch --relative --no-index
 	fa = fetch --all --jobs=4 --recurse-submodules=on-demand
 	reb = rebase -S --autostash
 	lgp = log --graph --oneline --decorate --boundary --first-parent
-	s = diff --patience --cached
-	dc = diff --cached --patience
+	s = diff --histogram --cached
+	dc = diff --cached --histogram
 	p = push --progress -v
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
