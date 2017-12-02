@@ -63,6 +63,11 @@
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
 	pl = pull
+	g = grep -Pn --color=auto --break
+	gw = grep -PWn --color=auto --break
+	gp = grep -Pnp --color=auto --break
+	gf = grep -Fn --color=auto --break
+	gr = grep -Pn --color=auto --break --no-index
 [web]
 	browser = w3m
 [instaweb]
@@ -82,3 +87,8 @@
 	colorful-oneline = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [pull]
 	rebase = false
+[grep]
+	lineNumber = true
+	patternType = perl
+	extendedRegexp = true
+	fullname = true
