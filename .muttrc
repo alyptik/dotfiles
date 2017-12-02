@@ -5,18 +5,21 @@ set ssl_force_tls = yes
 set ssl_use_sslv3 = yes
 set certificate_file = "~/.mutt/certificates"
 set mail_check = 120
+set header_cache = "~/.cache/mutt"
 set message_cachedir = "~/.cache/mutt"
 set send_charset = "utf-8"
 bind index "^"	imap-fetch-mail
 set signature = "~/.mutt/.signature"
 set editor = "vim"
-set prompt_after = no
+set prompt_after = yes
 auto_view text/html
 alternative_order text/plain text/enriched text/html
 set send_charset = "us-ascii:utf-8"
 bind attach <return> view-mailcap
-set sidebar_visible = yes
+
+set sidebar_visible = no
 set sidebar_short_path = yes
+set sidebar_width = 20
 bind index,pager B sidebar-toggle-visible
 # Ctrl-n, Ctrl-p to select next, previous folder.
 # Ctrl-o to open selected folder.
@@ -27,50 +30,83 @@ bind index,pager \CO sidebar-open
 source "gpg2 -dq $HOME/.passwords.gpg |"
 # source "gpg2 -dq $HOME/.passwords.asc |"
 
-set from = "kinchahoy@gmail.com"
-set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
-# set from = "alyptik@alyp.tk"
-# set smtp_url = "smtp://$my_user:$my_pass@mail.alyp.tk:587"
+# set from = "kinchahoy@gmail.com"
+# set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
+set from = "alyptik@hawaii.rr.com"
+set smtp_url = "smtp://$my_user:$my_pass@mail.twc.com:587"
 
-macro index c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro pager c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro index C "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk<enter>" "open a different folder"
-macro pager C "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk<enter>" "open a different folder"
-macro index Y "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
-macro pager Y "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
+macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
+macro index,pager C "<change-folder>imaps://$my_user:$my_pass@mail.twc.com<enter>" "open a different folder"
+macro index,pager Y "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
+macro index A \
+    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "mark all new as read"
 
-macro index y "<change-folder>?<toggle-mailboxes>" "open a different folder"
-macro pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
 # macro pager \cb "urlview" "Follow links with urlview"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
+# imitate the old search-body function
+macro index \eb "<search>~b " "search in message bodies"
+# simulate the old url menu
+macro index,pager,attach,compose \cb "\
+<enter-command> set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
+<pipe-message> urlview<Enter>\
+<enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
+"call urlview to extract URLs out of a message"
+# Show documentation when pressing F1
+macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
+# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
+macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
+bind browser y exit
 
-set header_cache = ~/.cache/mutt
-set mbox_type=Maildir
+set mbox_type = Maildir
+set spoolfile = "~/Maildir/"
+set folder = "~/Maildir/"
 # the default mask hides dotfiles and maildirs are dotfiles now.
 set mask = ".*"
-
-mailboxes ! + `\
-	for file in ~/Maildir/.*; do \
-		box=$(basename "$file"); \
-		if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
-			-a ! "$box" = '.subscriptions' ]; then \
-			echo -n "\"+$box\" "; \
-		fi; \
-	done`
-
-set folder = "~/Maildir/"
-set spoolfile = "~/Maildir/"
+# this line intentionally commented out
+# set mask = "!^\.[^.]"
+# set postponed = "+Drafts"
+# set record = "+Sent"
 set record = "+.Sent"
 set postponed = "+.Drafts"
 
-set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
-set spoolfile = "+INBOX"
-# set postponed = "+Drafts"
-# set record = "+Sent"
+# mailboxes ! + ` \
+#         for file in ~/Maildir/.*; do \
+#                 box=$(basename "$file"); \
+#                 if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
+#                                 -a ! "$box" = '.subscriptions' ]; then \
+#                         echo -n "\"+$box\" "; \
+#                 fi; \
+#         done`
 
-#mailboxes "imaps://$my_user:$my_pass@mail.alyp.tk/INBOX"
-#mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
-#mailboxes "~/Maildir"
+mailboxes + ` \
+ for file in ~/Maildir/.*; do \
+   box=$(basename "$file"); \
+   if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
+       -a ! "$box" = '.subscriptions' ]; then \
+     echo -n "\"+$box\" "; \
+   fi; \
+done; \
+ for folder in ~/Maildir/*; do \
+   if [ -x $folder ]; then \
+         box=$(basename "$folder"); \
+         for file in ~/Maildir/$box/.*; do \
+                box2=$(basename "$file"); \
+                if [ ! "$box2" = '.' -a ! "$box2" = '..' -a ! "$box2" = '.customflags' \
+                 -a ! "$box2" = '.subscriptions' ]; then \
+                   echo -n "\"+$box/$box2\" "; \
+                fi; \
+         done; \
+    fi; \
+  done`
+
+# mailboxes "~/Maildir"
+# mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
+# mailboxes "imaps://$my_user:$my_pass@mail.twc.com/INBOX"
+
+set folder = "imaps://$my_user:$my_pass@mail.twc.com/"
+# set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
+set spoolfile = "+INBOX"
 
 color hdrdefault color252 black
 color quoted color69 black
@@ -99,23 +135,6 @@ unignore from: subject to cc date x-mailer x-url user-agent
 
 # Display the fields in this order
 hdr_order date from to cc subject
-
-# imitate the old search-body function
-macro index \eb "<search>~b " "search in message bodies"
-
-# simulate the old url menu
-macro index,pager,attach,compose \cb "\
-<enter-command> set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
-<pipe-message> urlview<Enter>\
-<enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
-"call urlview to extract URLs out of a message"
-
-# Show documentation when pressing F1
-macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
-
-# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
-macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
-bind browser y exit
 
 # If Mutt is unable to determine your site's domain name correctly, you can
 # set the default here.
@@ -3477,7 +3496,7 @@ set include=ask-yes
 # If set, all folders are opened in read-only mode.
 #
 #
-# set realname=""
+set realname="Joey Pabalinas"
 #
 # Name: realname
 # Type: string
@@ -4086,7 +4105,7 @@ set include=ask-yes
 # See also: $sidebar_format, $sidebar_width
 #
 #
-# set sidebar_width=0
+# set sidebar_width=20
 #
 # Name: sidebar_width
 # Type: number
