@@ -178,12 +178,14 @@ autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit -u
 
 case "$_theme" in
+# builtin clint prompt
 (0)
 	# continue scanning
 	if type prompt_clint_setup &>/dev/null; then
 		prompt_clint_setup || _theme=1
 	fi ;|
 
+# custom PS1
 (1)
 	# fallback theme if no /proc
 	if [[ ! -d /proc ]]; then
@@ -219,10 +221,10 @@ case "$_theme" in
 		PS1+='$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
 	fi ;;
 
+# ?????????? how did you hit this wtf
 (*)
-	# ?????????? how did you hit this wtf
-	prompt_clint_setup
-	(sleep 5; print -r - $'\n\nwat\n') &! ;;
+	(sleep 5; print -r - $'\n\nwat\n') &!
+	prompt_clint_setup ;;
 esac
 
 # bash specific
