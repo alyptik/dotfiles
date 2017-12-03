@@ -156,8 +156,8 @@ termcapinfo vt* "xn"
 termcapinfo vt100  ""  "l0=PF1:l1=PF2:l2=PF3:l3=PF4"
 termcapinfo xterm*|xs "ti@:te@:xn:hs@:Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 
-# term screen-256color-italic
-term screen-256color-it
+term screen-256color-italic
+# term screen-256color-it
 # term screen-256color-bce-it
 # term screen-256color-bce-s-it
 # term st
