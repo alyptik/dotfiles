@@ -46,7 +46,7 @@ exec 2<>"$_zsh_error"
 ## Set emacs or vi as default
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
 # Initialize _km for ZLE widgets and set initial cursor color
-KEYTIMEOUT=1
+KEYTIMEOUT=20
 # bindkey -e
 bindkey -v
 # _km=emacs _emacs=main _vi=
