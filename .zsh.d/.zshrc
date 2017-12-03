@@ -46,10 +46,11 @@ exec 2<>"$_zsh_error"
 ## Set emacs or vi as default
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
 # Initialize _km for ZLE widgets and set initial cursor color
-bindkey -v
-_km=vi _emacs= _vi=main
+KEYTIMEOUT=1
 # bindkey -e
+bindkey -v
 # _km=emacs _emacs=main _vi=
+_km=vi _emacs= _vi=main
 setescapes
 case "$_km" in
 (vi)
@@ -142,48 +143,6 @@ GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
 GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
 GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 
-case "$_theme" in
-(0)
-	# continue scanning
-	type prompt_clint_setup &>/dev/null && prompt_clint_setup || _theme=1 ;|
-
-(1)
-	# common PS1 section
-	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(($(:
-		)$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" $(:
-		)/proc/meminfo)/1024))"$(:
-		)$reset_color$fg[yellow]/"$(($(:
-		)$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" $(:
-		)/proc/meminfo)/1024))MB"		$(:
-		)$reset_color$fg[magenta]$(</proc/loadavg)")$(:
-		)$prompt_newline$bold_color$fg[grey]%}[%{$(:
-		)$reset_color$fg[white]%}$$:$PPID %j:%l%{$(:
-		)$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	$(:
-		)%D{%a %d %b %I:%M:%S%P}'
-	# fallback theme if no /proc
-	if [[ ! -d /proc ]]; then
-		type prompt_clint_setup &>/dev/null && prompt_clint_setup
-	elif (( EUID != 0 )); then
-		# normal colors
-		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
-			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[red]%}+${SHLVL}%{$(:
-			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
-			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
-			)$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
-	else
-		# If root, print the prompt character in red. Otherwise, print the prompt in cyan.
-		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{$(:
-			)$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[green]%}+${SHLVL}%{$(:
-			)$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{$(:
-			)$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{$(:
-			)$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
-	fi ;;
-
-(*)
-	# ?????????? how did you hit this wtf
-	type prompt_clint_setup >/dev/null 2>&1 && prompt_clint_setup ;;
-esac
-
 ## load VCS module
 autoload -Uz vcs_info
 if type vcs_info &>/dev/null; then
@@ -217,6 +176,55 @@ fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc"
 autoload -U promptinit && promptinit
 autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit -u
+
+case "$_theme" in
+(0)
+	# continue scanning
+	if type prompt_clint_setup &>/dev/null; then
+		prompt_clint_setup || _theme=1
+	fi ;|
+
+(1)
+	# fallback theme if no /proc
+	if [[ ! -d /proc ]]; then
+		prompt_clint_setup
+		break
+	fi
+
+	# common PS1 section
+	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(('
+	PS1+='$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1+='/proc/meminfo)/1024))"'
+	PS1+='$reset_color$fg[yellow]/"$(('
+	PS1+='$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1+='/proc/meminfo)/1024))MB"		'
+	PS1+='$reset_color$fg[magenta]$(</proc/loadavg)")'
+	PS1+='$prompt_newline$bold_color$fg[grey]%}['
+	PS1+='$reset_color$fg[white]%}$$:$PPID %j:%l'
+	PS1+='$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	'
+	PS1+='%D{%a %d %b %I:%M:%S%P}'
+	# If root, print the prompt character in red. Otherwise, print the prompt in cyan.
+	if (( EUID == 0 )); then
+		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{'
+		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[green]%}+${SHLVL}%{'
+		PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{'
+		PS1+='$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{'
+		PS1+='$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
+	# normal colors
+	else
+		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{'
+		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[red]%}+${SHLVL}%{'
+		PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{'
+		PS1+='$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{'
+		PS1+='$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
+	fi ;;
+
+(*)
+	# ?????????? how did you hit this wtf
+	prompt_clint_setup
+	(sleep 5; print -r - $'\n\nwat\n') &! ;;
+esac
+
 # bash specific
 [[ -f /etc/profile.d/cnf.sh ]] && \
 	. /etc/profile.d/cnf.sh
