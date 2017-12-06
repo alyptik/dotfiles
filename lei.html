@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HI LEI</title>
+<style>
+	body,pre,a{background:#f25;color:#fff;font-size:3vw;text-decoration:none;text-shadow:-.04em .04em #3cf
+</style>
+<script type="text/javascript">
+	function complimentLei() {
+		var qualifiers = ["absolutely", "definitely", "certainly", "easily"];
+		qualifiers = qualifiers.concat(["emphatically", "firmly", "undoubtedly"]);
+		qualifiers = qualifiers.concat(["assuredly", "categorically", "doubtlessly"]);
+		qualifiers = qualifiers.concat(["flat-out", "indubitably", "no holds barred"]);
+		adjectives = qualifiers.concat(["no-ifs-ands-or-buts", "really", "truly", "surely"]);
+		adjectives = qualifiers.concat(["unequivocally", "unmistakably", "undeniably"]);
+		adjectives = qualifiers.concat(["unquastionably", "ridiculously", "awe-inspiringly"]);
+		adjectives = qualifiers.concat(["sinfully", "goddamned", "sweet-mother-mary"]);
+		var adjectives = ["attractive", "alluring", "appealing"];
+		adjectives = adjectives.concat(["charming", "cute", "dazzling", "delicate", "delightful"]);
+		adjectives = adjectives.concat(["elegant", "exquisite", "fine", "good-looking"]);
+		adjectives = adjectives.concat(["gorgeous", "graceful", "grand", "comely", "lovely"]);
+		adjectives = adjectives.concat(["magnificent", "marvelous", "pleasing", "pretty", "splendid"]);
+		adjectives = adjectives.concat(["stunning", "superb", "wonderful", "admirable", "angelic"]);
+		adjectives = adjectives.concat(["beauteous", "bewitching", "classy", "comely", "divine"]);
+		adjectives = adjectives.concat(["pulchritudinous", "radiant", "ravishing", "refined"]);
+		adjectives = adjectives.concat(["statuesque", "sublime", "symmetrical", "resplendent"]);
+		adjectives = adjectives.concat(["enticing", "excellent", "fair", "foxy"]);
+		var terminal = ["!", "!!", "!!!", "!!!!", "!!!!!", ".", "..."];
+		var start = "Why, Loreta Hayashi, you are looking ";
+		for (var i = 0; i < Math.floor(Math.random() * 2) + 2; i++) {
+			start += qualifiers[Math.floor(Math.random() * qualifiers.length)];
+			start += ", ";
+		}
+		start += qualifiers[Math.floor(Math.random() * qualifiers.length)];
+		start += " ";
+		start += adjectives[Math.floor(Math.random() * adjectives.length)];
+		start += " today";
+		start += terminal[Math.floor(Math.random() * terminal.length)];
+
+		document.getElementById("sentence").innerHTML = start;
+		document.getElementById("buttonThing").innerHTML = "Click me again :D";
+	}
+</script>
+</head>
+
+<body>
+<p>
+	<h2 id="sentence">That button thing! Click it!</h2>
+	<button id="buttonThing" type="button" onclick="complimentLei()">Click meeeeeeeee</button>
+</p>
+</body>
+
+</html>
