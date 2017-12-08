@@ -1,8 +1,10 @@
 
 set imap_check_subscribed
 unset imap_passive
+# These two lines appear to be needed on some Linux distros, like Arch Linux
+set ssl_starttls = yes
 set ssl_force_tls = yes
-set ssl_use_sslv3 = yes
+set ssl_use_sslv3 = no
 set certificate_file = "~/.mutt/certificates"
 set mail_check = 120
 set header_cache = "~/.cache/mutt"
@@ -17,31 +19,39 @@ alternative_order text/plain text/enriched text/html
 set send_charset = "us-ascii:utf-8"
 bind attach <return> view-mailcap
 
-set sidebar_visible = no
+set sidebar_visible = yes
 set sidebar_short_path = yes
-set sidebar_width = 20
+set sidebar_width = 15
 bind index,pager B sidebar-toggle-visible
 # Ctrl-n, Ctrl-p to select next, previous folder.
 # Ctrl-o to open selected folder.
 bind index,pager \CP sidebar-prev
 bind index,pager \CN sidebar-next
 bind index,pager \CO sidebar-open
+bind generic,index,pager,browser \C? previous-line
+bind index,pager,browser b previous-page
+bind index,pager,browser <Space> next-page
 
 source "gpg2 -dq $HOME/.passwords.gpg |"
 # source "gpg2 -dq $HOME/.passwords.asc |"
 
-# set from = "kinchahoy@gmail.com"
-# set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
-set from = "alyptik@hawaii.rr.com"
-set smtp_url = "smtp://$my_user:$my_pass@mail.twc.com:587"
+set from = "joeypabalinas@gmail.com"
+set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
+# set from = "alyptik@hawaii.rr.com"
+# set smtp_url = "smtp://$my_user:$my_pass@mail.twc.com:587"
 
 macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro index,pager C "<change-folder>imaps://$my_user:$my_pass@mail.twc.com<enter>" "open a different folder"
-macro index,pager Y "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
+macro index,pager C "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
+macro index,pager Y "<change-folder>imaps://$my_user:$my_pass@mail.twc.com<enter>" "open a different folder"
+# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
+macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
+bind browser y exit
+
+# Show documentation when pressing F1
+macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 macro index A \
     "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
     "mark all new as read"
-
 # macro pager \cb "urlview" "Follow links with urlview"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
 # imitate the old search-body function
@@ -52,11 +62,6 @@ macro index,pager,attach,compose \cb "\
 <pipe-message> urlview<Enter>\
 <enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
 "call urlview to extract URLs out of a message"
-# Show documentation when pressing F1
-macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
-# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
-macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
-bind browser y exit
 
 set mbox_type = Maildir
 set spoolfile = "~/Maildir/"
@@ -104,8 +109,8 @@ done; \
 # mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
 # mailboxes "imaps://$my_user:$my_pass@mail.twc.com/INBOX"
 
-set folder = "imaps://$my_user:$my_pass@mail.twc.com/"
-# set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
+# set folder = "imaps://$my_user:$my_pass@mail.twc.com/"
+set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
 set spoolfile = "+INBOX"
 
 color hdrdefault color252 black
