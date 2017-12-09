@@ -63,16 +63,19 @@ bindkey -m -k kP stuff \;
 bindkey -m -k kN stuff \'
 ## PgUp | Enter copy/scrollback mode and page up
 ## PgDown | Enter copy/scrollback mode and page down
-#
+
 #bindkey "\033[5~" eval 'copy' 'stuff ^b'
 #bindkey "\033[6~" eval 'copy' 'stuff ^f'
 ## special hack for C-e, since it should go *past*
 ## the last char. -m means this is for copy mode only.
-#
+
+# exit copy mode
+bindkey -m , stuff "\033"
+
 bindkey -m ^e stuff "$^f"
 ## control arrows move by words. (set B, e, and w to F keys so that i can
 ## use them to move by words, but they themselves still quit copy mode.)
-#
+
 markkeys "B={:E=}:b=[:e=]:w=>:B=<"
 #bindkey -m "\033[1;5D" stuff "["
 #bindkey -m "\033[1;5C" stuff "]"

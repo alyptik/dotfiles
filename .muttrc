@@ -113,6 +113,63 @@ done; \
 set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
 set spoolfile = "+INBOX"
 
+auto_view text/x-diff
+auto_view text/x-patch
+set allow_ansi
+set pager_stop=no
+
+# Patch syntax highlighting
+# color body green default "^diff \-.*"
+# color body green default "^index [a-f0-9].*"
+# color body green default "^\-\-\- .*"
+# color body green default "^[\+]{3} .*"
+# color body cyan default "^[\+][^\+]+.*"
+# color body red  default "^\-[^\-]+.*"
+# color body brightblue default "^@@ .*"
+
+# Patch syntax highlighting
+# color   normal  white           default
+# color   body    brightwhite     default         ^[[:space:]].*
+# color   body    brightwhite     default         ^(diff).*
+# color   body    white           default         ^[\-\-\-].*
+# color   body    white           default         ^[\+\+\+].*
+# color   body    green           default         ^[\+].*
+# color   body    red             default         ^[\-].*
+# color   body    brightblue      default         [@@].*
+# color   body    brightwhite     default         ^(\s).*
+# color   body    brightwhite     default         ^(Signed-off-by).*
+# color   body    brightwhite     default         ^(Cc)
+
+# Patch syntax highlighting
+# color   normal  white           default
+# color   body    brightwhite     black         "^(\s).*"
+# color   body    white           black         ^[\-\-\-].*
+# color   body    white           black         ^[\+\+\+].*
+# color   body    green           black         ^[\+].*
+# color   body    red             black         ^[\-].*
+# color   body    brightblue      black         [@@].*
+color	normal	color252	black
+color   body    brightwhite     black         "^[[:space:]].*"
+color   body    yellow          black         "^(diff).*"
+color   body    cyan            black         "^(Signed-off-by).*"
+color   body    cyan            black         "^(Docker-DCO-1.1-Signed-off-by).*"
+color   body    brightwhite     black         "^(Cc)"
+color   body    yellow          black         "^diff \-.*"
+color   body    brightwhite     black         "^index [a-f0-9].*"
+color   body    brightblue      black         "^---$"
+color   body    white           black         "^\-\-\- .*"
+color   body    white           black         "^[\+]{3} .*"
+color   body    green           black         "^[\+][^\+]+.*"
+color   body    red             black         "^\-[^\-]+.*"
+color   body    brightblue      black         "^@@ .*"
+color   body    green           black         "LGTM"
+color   body    brightmagenta   black         "-- Commit Summary --"
+color   body    brightmagenta   black         "-- File Changes --"
+color   body    brightmagenta   black         "-- Patch Links --"
+color   body    green           black         "^Merged #.*"
+color   body    red             black         "^Closed #.*"
+color   body    brightblue      black         "^Reply to this email.*"
+
 color hdrdefault color252 black
 color quoted color69 black
 color signature blue black
@@ -126,6 +183,21 @@ color normal color252 black
 color markers color197 black
 color search color46 black
 color tilde brightmagenta black
+color hdrdefault color252 black
+color quoted color69 black
+color signature blue black
+color attachment magenta black
+color message color46 black
+color error color197 black
+color indicator color247 color233
+color status color247 color233
+color tree white black
+color normal color252 black
+color markers color197 black
+color search color46 black
+color tilde brightmagenta black
+color index black color197 "~N"
+
 color index black color197 "~N"
 
 set pgp_verify_command="gpg2 --no-verbose --batch --output - --verify %s %f"
@@ -2596,7 +2668,7 @@ set pager_index_lines=0
 # many lines as it needs.
 #
 #
-set pager_stop=yes
+# set pager_stop=yes
 #
 # Name: pager_stop
 # Type: boolean
