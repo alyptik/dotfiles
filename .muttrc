@@ -128,6 +128,26 @@ color search color46 black
 color tilde brightmagenta black
 color index black color197 "~N"
 
+set pgp_verify_command="gpg2 --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg2 --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg2 --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg2 --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_decode_command="gpg2 %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+set pgp_import_command="gpg2 --no-verbose --import -v %f"
+set pgp_export_command="gpg2 --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg2 --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg2 --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg2 --no-verbose --batch --with-colons --list-secr et-keys %r"
+set pgp_autosign=yes
+set pgp_replyencrypt=yes
+set pgp_timeout=0
+set pgp_good_sign="^gpg: Good signature from"
+set pgp_create_traditional=no
+set pgp_use_gpg_agent=yes
+set pgp_ignore_subkeys=no
+
 # System configuration file for Mutt
 #
 
@@ -2526,7 +2546,7 @@ set include=ask-yes
 # the screen width to be badly formatted in the help menu.
 #
 #
-# set pager_context=0
+set pager_context=10
 #
 # Name: pager_context
 # Type: number
@@ -2556,7 +2576,7 @@ set include=ask-yes
 # section.
 #
 #
-# set pager_index_lines=0
+set pager_index_lines=0
 #
 # Name: pager_index_lines
 # Type: number
@@ -2576,7 +2596,7 @@ set include=ask-yes
 # many lines as it needs.
 #
 #
-# set pager_stop=no
+set pager_stop=yes
 #
 # Name: pager_stop
 # Type: boolean
@@ -2641,7 +2661,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_clearsign_command=""
+# set pgp_clearsign_command="gpg2 --clearsign"
 #
 # Name: pgp_clearsign_command
 # Type: string
@@ -2684,7 +2704,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_decrypt_command=""
+# set pgp_decrypt_command="gpg2 -d"
 #
 # Name: pgp_decrypt_command
 # Type: string
@@ -2714,7 +2734,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_encrypt_only_command=""
+# set pgp_encrypt_only_command="gpg2 -e"
 #
 # Name: pgp_encrypt_only_command
 # Type: string
@@ -2810,7 +2830,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_ignore_subkeys=yes
+# set pgp_ignore_subkeys=no
 #
 # Name: pgp_ignore_subkeys
 # Type: boolean
@@ -2983,7 +3003,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_sign_command=""
+# set pgp_sign_command="gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
 #
 # Name: pgp_sign_command
 # Type: string
@@ -3044,7 +3064,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_use_gpg_agent=no
+# set pgp_use_gpg_agent=yes
 #
 # Name: pgp_use_gpg_agent
 # Type: boolean
@@ -3057,7 +3077,7 @@ set include=ask-yes
 # (PGP only)
 #
 #
-# set pgp_verify_command=""
+# set pgp_verify_command= "gpg2 --no-verbose --batch --output - --verify %s"
 #
 # Name: pgp_verify_command
 # Type: string
