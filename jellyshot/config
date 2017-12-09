@@ -1,9 +1,11 @@
 #!/bin/bash
 # Config file for jellyshot
 
-SERVER='sigfu.tk'
-# SERVER_PATH='/srv/http/uhr'
-SERVER_PATH='uhr'
+# shellcheck disable=SC2034
+# SERVER='sigfu.tk'
+SERVER='alyp.tk'
+# SERVER_PATH='uhr'
+SERVER_PATH='/srv/http/uhr'
 SUFFIX='uhr'
 
 # Used if no SERVER_PATH
