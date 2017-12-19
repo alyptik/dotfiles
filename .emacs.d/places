@@ -1,5 +1,6 @@
 ;;; -*- coding: utf-8 -*-
-(("/home/alyptik/"
+(("/mnt/shared/init" . 177)
+ ("/home/alyptik/"
   (dired-filename . "/home/alyptik/.emacs.d"))
  ("/home/alyptik/.emacs.d/"
   (dired-filename . "/home/alyptik/.emacs.d/evil"))

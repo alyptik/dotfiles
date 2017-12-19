@@ -1,4 +1,4 @@
 for c in "$@"; do
 	printf "\n$ %s\n" "$c" && eval "$c"
 done 2>&1 | \
-	tee >(curl -sF'c=@-' 'https://pb.gehidore.net/?u=1' | xsel -ib) >&2
+	tee >(curl -sF'c=@-' 'https://ptpb.pw/?u=1' | xsel -ib) >&2

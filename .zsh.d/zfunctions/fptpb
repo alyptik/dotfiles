@@ -1,5 +1,4 @@
-# curl --progress-bar -F"c=@${*}" https://ptpb.pw/ | \
-curl --progress-bar -F"c=@${*}" https://pb.gehidore.net/ | \
+curl --progress-bar -F"c=@${*}" https://ptpb.pw/ | \
 	tee >(awk '/http/ {sub("url: ",""); print}' | \
 	awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' | \
 	xsel -ib)
