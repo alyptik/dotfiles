@@ -19,6 +19,13 @@ alternative_order text/plain text/enriched text/html
 set send_charset = "us-ascii:utf-8"
 bind attach <return> view-mailcap
 
+set sort = "threads"
+# set sort = "reverse-threads"
+set sort_aux = "last-date-received"
+set sort_re
+set uncollapse_jump
+set text_flowed = yes
+
 set sidebar_visible = yes
 set sidebar_short_path = yes
 set sidebar_width = 25
@@ -170,8 +177,12 @@ bind browser y exit
 # Show documentation when pressing F1
 macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 macro index A \
-    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
-    "mark all new as read"
+	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+	      "mark all new as read"
+# macro index A \
+#     "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+#     "mark all new as read"
+
 # macro pager \cb "urlview" "Follow links with urlview"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
 # imitate the old search-body function
@@ -205,25 +216,25 @@ set postponed = "+.Drafts"
 #         done`
 
 mailboxes + ` \
- for file in ~/Maildir/.*; do \
-   box=$(basename "$file"); \
-   if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
-       -a ! "$box" = '.subscriptions' ]; then \
-     echo -n "\"+$box\" "; \
-   fi; \
-done; \
- for folder in ~/Maildir/*; do \
-   if [ -x $folder ]; then \
-         box=$(basename "$folder"); \
-         for file in ~/Maildir/$box/.*; do \
-                box2=$(basename "$file"); \
-                if [ ! "$box2" = '.' -a ! "$box2" = '..' -a ! "$box2" = '.customflags' \
-                 -a ! "$box2" = '.subscriptions' ]; then \
-                   echo -n "\"+$box/$box2\" "; \
-                fi; \
-         done; \
-    fi; \
-  done`
+	for file in ~/Maildir/.*; do \
+		box=$(basename "$file"); \
+		if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
+		-a ! "$box" = '.subscriptions' ]; then \
+			echo -n "\"+$box\" "; \
+		fi; \
+	done; \
+	for folder in ~/Maildir/*; do \
+		if [ -x $folder ]; then \
+			box=$(basename "$folder"); \
+				for file in ~/Maildir/$box/.*; do \
+					box2=$(basename "$file"); \
+					if [ ! "$box2" = '.' -a ! "$box2" = '..' -a ! "$box2" = '.customflags' \
+						-a ! "$box2" = '.subscriptions' ]; then \
+					echo -n "\"+$box/$box2\" "; \
+				fi; \
+			done; \
+		fi; \
+	done`
 
 # mailboxes "~/Maildir"
 # mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"

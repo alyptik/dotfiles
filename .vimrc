@@ -45,6 +45,8 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'SidOfc/mkdx', {'for': 'markdown'}
+	Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
 	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
@@ -72,7 +74,6 @@ call plug#begin(g:plugdir)
 	" Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install -no-update-rc'}
 	Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 	Plug 'junegunn/fzf.vim'
-	Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	" Plug 'junegunn/limelight.vim'
 	Plug 'maksimr/vim-jsbeautify'
 	Plug 'mileszs/ack.vim'

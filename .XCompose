@@ -2,6 +2,8 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 
 ## start alyptik
 
+<Multi_key> <p> <a> <n> <t> <s>				: "👖" U1f456	# pants
+<Multi_key> <p> <e> <p> <e>				: "🐸" U1f438	# pepe
 <Multi_key> <c> <o> <o> <l>				: "🆒" U1f192	# cool
 <Multi_key> <asterisk> <asterisk> <asterisk>		: "⁂" U2042	# asterism
 <Multi_key> <f> <p>					: "🤦" U1f926	# face palm
