@@ -19,7 +19,8 @@ alternative_order text/plain text/enriched text/html
 set send_charset = "us-ascii:utf-8"
 bind attach <return> view-mailcap
 
-set sort = "threads"
+set sort = last-date-received
+# set sort = "threads"
 # set sort = "reverse-threads"
 set sort_aux = "last-date-received"
 set sort_re
@@ -167,6 +168,10 @@ set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
 # set from = "alyptik@hawaii.rr.com"
 # set smtp_url = "smtp://$my_user:$my_pass@mail.twc.com:587"
 
+macro index , "<enter-command>set sort = threads<enter>"
+macro index . "<enter-command>set sort = last-date-received<enter>"
+
+macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
 macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
 macro index,pager C "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
 macro index,pager Y "<change-folder>imaps://$my_user:$my_pass@mail.twc.com<enter>" "open a different folder"

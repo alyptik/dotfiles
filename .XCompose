@@ -3,6 +3,7 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 ## start alyptik
 
 <Multi_key> <p> <a> <n> <t> <s>				: "👖" U1f456	# pants
+<Multi_key> <f> <r> <o> <g>				: "🐸" U1f438	# frog
 <Multi_key> <p> <e> <p> <e>				: "🐸" U1f438	# pepe
 <Multi_key> <c> <o> <o> <l>				: "🆒" U1f192	# cool
 <Multi_key> <asterisk> <asterisk> <asterisk>		: "⁂" U2042	# asterism
@@ -32,9 +33,8 @@ include "/usr/share/X11/locale/en_Us.utf-8/compose"
 <Multi_key> <o> <n> <e>					: "∃" U2203	# for at least one in
 <Multi_key> <i> <i> <f>					: "↔" U2194	# if and only if
 <Multi_key> <colon> <equal>				: "≔" U2254	# defined as
-<Multi_key> <b> <o> <o> <l>				: "⇒⊃⇔∃∀≔⊤⊥⊢⊨"		# boolean operators
+<Multi_key> <b> <o> <o> <l>				: "⇒⊃⇔∃∀≔⊤⊥⊢⊨"			# boolean operators
 <Multi_key> <s> <t> <a> <r>				: "♫☆ヾ(*´Д｀*)ﾉ☆♪♩"		# stars
-<Multi_key> <f> <r> <o> <g>				: "🐸"	U1f43	# frog face
 <Multi_key> <m> <o> <o>					: "🐮"	U1f42e	# cow
 <Multi_key> <c> <o> <w>					: "🐄"	U1f404	# cow
 <Multi_key> <p> <i> <g>					: "🐷"	U1f437	# pig

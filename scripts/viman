@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#set -vx
+# Define variables
+dir=
+args=
+page=
+section=
+valid=0
+MANPATH="${MANPATH:-/usr/share/man}"
+
+
+# Define Sub Functions
+validate(){
+#[[ -n $(find /usr/man -name ${page}*.gz 2>/dev/null) ]] \
+#if [[ "$section" == [0-9] ]]; then
+for dir in $(tr : ' ' <<<$MANPATH); do
+[[ -n $(find "$dir" -name "${page}"."${section}"* 2>/dev/null) ]] && valid=1
+done
+#fi
+}
+
+
+# Parse args
+for x in "$@"; do
+
+[[ "$1" == [0-9] ]] \
+&& args="$1 $2" section="$1" page="$2" \
+|| args="$1" page="$1"
+
+shift ${#args}
+
+done
+
+export page
+
+
+# Ensure requested page exists
+[[ -f "$*" ]] && valid=1 || validate $page
+(( $valid == 0 )) && echo 'page not found!' >&2 && return 1
+
+
+#-c 'au CursorMoved * :silent !printf "\033]12;rgb:0000/0000/0000\007" ' \
+#-c 'let g:scrollfix = 98' \
+# Run vim plugin, OMan means only window
+#vim -c "OMan $args" \
+man -P cat $args | vim - --not-a-term -c "let manpagename = \"${args/[0-9]* /}\"" \
+-c 'au VimEnter * :set nonumber nocursorline laststatus=0 virtualedit=all scrolloff=1000 sidescroll=1000 sidescrolloff=0 ft=man dy="" nomore nomod nolist nonu nosc nocursorline' \
+-c 'echo ""' \
+-c 'nnoremap q :q!<cr>' \
+-c 'nnoremap qq :q!<cr>' \
+-c 'hi User1 cterm=none ctermbg=8 ctermfg=231' \
+-c 'hi User2 cterm=bold ctermbg=4 ctermfg=none' \
+-c 'hi User3 cterm=none ctermbg=4 ctermfg=7' \
+-c 'hi User4 ctermbg=none ctermfg=0' \
+-c "set rulerformat=%40(%=%-1*\ Manual\:%-3*\ %{\$page}\ %-3*\ \ \ line\ %-l/%-L\ \ [%p%%]\ %<%4*%)"
+
+
+# Clean up
+unset -v page
+unset -f validate die
+
+#set +xv

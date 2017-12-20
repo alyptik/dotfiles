@@ -276,7 +276,7 @@ function setescapes () {
 	cred='\033]12;#fb4934\007'
 	cgrey='\033]12;#a0a0a0\007'
 	cyellow='\033]12;#b58900\007'
-	if (pstree -s "$$" | grep -wq '\(termite\|stjerm\|qterminal\)' || [[ "$TERM" =~ linux ]]); then
+	if (pstree -s "$$" | grep -wq '\(termite\|stjerm\|qterminal\)' || [[ "$TERM" =~ (linux|xterm.*) ]]); then
 		cblock= cline=
 		return
 	elif pstree -s "$$" | grep -wq 'screen'; then
