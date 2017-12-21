@@ -35,7 +35,7 @@ set sidebar_folder_indent = no
 set sidebar_indent_string = '  '
 set sidebar_new_mail_only = no
 set sidebar_next_new_wrap = yes
-set sidebar_on_right = no
+# set sidebar_on_right = no
 set sidebar_divider_char = ' ▐ '
 set sidebar_format = '%B %?N?(%N)?%* %S'
 set sidebar_sort_method = 'path'
@@ -46,7 +46,7 @@ color sidebar_highlight     color250    color65
 color sidebar_divider       color235    color235
 color sidebar_flagged       default     color160
 color sidebar_new           color243    color235
-color sidebar_ordinary      default     default
+# color sidebar_ordinary      default     default
 
 # Patch syntax highlighting
 # color body green default "^diff \-.*"
@@ -109,8 +109,8 @@ color attachment    color6              color235
 
 color index         brightcolor65       color235    ~N      #new
 color index         color244            color235    ~R      #replied
-color index_date    brightcolor244	color235
-color index_flags   brightcolor239      color235 	%A
+# color index_date    brightcolor244	color235
+# color index_flags   brightcolor239      color235 	%A
 
 color header        brightcolor101      default     "^from:"
 color header        brightcolor101      default     "^to:"
