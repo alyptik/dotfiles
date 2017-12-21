@@ -45,6 +45,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'xtal8/traces.vim'
 	Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
