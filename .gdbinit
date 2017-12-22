@@ -1,5 +1,10 @@
+
 # set disassembly intel
-# source /home/alyptik/.gdbinit-gef.py
+# source ~/.gdbinit-gef.py
+# add-auto-load-safe-path /usr/lib/libthread_db-1.0.so
+set auto-load safe-path /
+directory ./src
+directory ./t
 
 set history filename ~/.gdb_history
 set history save on
