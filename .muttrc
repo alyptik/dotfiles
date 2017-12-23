@@ -48,34 +48,12 @@ set sidebar_format = '%B %?N?(%N)?%* %S'
 set sidebar_sort_method = 'path'
 set mail_check_stats
 
-color indicator             color235    color65
-color sidebar_highlight     color250    color65
-color sidebar_divider       color235    color235
-color sidebar_flagged       default     color160
-color sidebar_new           color243    color235
+# sidebar
+# color sidebar_highlight color250    color65
+# color sidebar_divider color235    color235
+# color sidebar_flagged default     color160
+# color sidebar_new     color243    color235
 # color sidebar_ordinary      default     default
-
-# Patch syntax highlighting
-# color body green default "^diff \-.*"
-# color body green default "^index [a-f0-9].*"
-# color body green default "^\-\-\- .*"
-# color body green default "^[\+]{3} .*"
-# color body cyan default "^[\+][^\+]+.*"
-# color body red  default "^\-[^\-]+.*"
-# color body brightblue default "^@@ .*"
-
-# Patch syntax highlighting
-# color   normal  white           default
-# color   body    brightwhite     default         ^[[:space:]].*
-# color   body    brightwhite     default         ^(diff).*
-# color   body    white           default         ^[\-\-\-].*
-# color   body    white           default         ^[\+\+\+].*
-# color   body    green           default         ^[\+].*
-# color   body    red             default         ^[\-].*
-# color   body    brightblue      default         [@@].*
-# color   body    brightwhite     default         ^(\s).*
-# color   body    brightwhite     default         ^(Signed-off-by).*
-# color   body    brightwhite     default         ^(Cc)
 
 # Patch syntax highlighting
 # color   normal  white           default
@@ -110,23 +88,22 @@ color   body    brightblue      black         "^Reply to this email.*"
 # ox's colors
 color normal	    white               color235
 color status        white               color234
-color indicator     color7              color237
+# color indicator     color7              color237
+color indicator     color235            color65
 color tree          color238            color235
 color attachment    color6              color235
-
-color index         brightcolor65       color235    ~N      #new
-color index         color244            color235    ~R      #replied
+color index         color65       color235    ~O      # unread
+color index         brightcolor65       color235    ~N      # new
+color index         color244            color235    ~R      # replied
 # color index_date    brightcolor244	color235
 # color index_flags   brightcolor239      color235 	%A
-
 color header        brightcolor101      default     "^from:"
 color header        brightcolor101      default     "^to:"
 color header        yellow              default     "^cc:"
 color header        magenta             default     "^date:"
 color header        brightcolor101      default     "^subject:"
-
-color body          brightred           black       [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
-color body          brightblue          black       (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
+color body          brightred           black       "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"
+color body          brightblue          black       "(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+"
 
 # voidead's colors
 # color hdrdefault color252 black
@@ -157,18 +134,30 @@ color body          brightblue          black       (https?|ftp)://[\-\.,/%~_:?&
 # color tilde brightmagenta black
 # color index black color197 "~N"
 
-bind index,pager B sidebar-toggle-visible
 # Ctrl-n, Ctrl-p to select next, previous folder.
 # Ctrl-o to open selected folder.
-bind index,pager \CP sidebar-prev
-bind index,pager \CN sidebar-next
-bind index,pager \CO sidebar-open
-bind generic,index,pager,browser \C? previous-line
-bind index,pager,browser b previous-page
-bind index,pager,browser <Space> next-page
+bind generic,index,pager B sidebar-toggle-visible
+bind generic,index,pager \cP sidebar-prev
+bind generic,index,pager \cN sidebar-next
+bind generic,index,pager \cO sidebar-open
+bind generic,index,pager [ sidebar-prev
+bind generic,index,pager ] sidebar-next
+bind generic,index,pager \\ sidebar-open
+bind generic,index,pager \e[ sidebar-prev
+bind generic,index,pager \e] sidebar-next
+bind generic,index,pager \e\\ sidebar-open
+bind generic,index,pager,browser ";" half-up
+bind generic,index,pager,browser "'" half-down
+bind generic,index,pager,browser "\e;" half-up
+bind generic,index,pager,browser "\e'" half-down
+bind generic,index,pager,browser - first-entry
+bind generic,index,pager,browser = last-entry
+bind generic,index,pager,browser \e- first-entry
+bind generic,index,pager,browser \e= last-entry
+bind generic,index,pager,browser \c? previous-line
+bind generic,index,pager,browser b previous-page
 
-source "gpg2 -dq $HOME/.passwords.gpg |"
-# source "gpg2 -dq $HOME/.passwords.asc |"
+source "gpg2 -dq $HOME/.passwords.asc |"
 
 set realname="Joey Pabalinas"
 set from = "joeypabalinas@gmail.com"
@@ -192,15 +181,9 @@ macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Ent
 macro index A \
 	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
 	      "mark all new as read"
-# macro index A \
-#     "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
-#     "mark all new as read"
 
-# macro pager \cb "urlview" "Follow links with urlview"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
-# imitate the old search-body function
 macro index \eb "<search>~b " "search in message bodies"
-# simulate the old url menu
 macro index,pager,attach,compose \cb "\
 <enter-command> set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
 <pipe-message> urlview<Enter>\
@@ -214,19 +197,8 @@ set folder = "~/Maildir/"
 set mask = ".*"
 # this line intentionally commented out
 # set mask = "!^\.[^.]"
-# set postponed = "+Drafts"
-# set record = "+Sent"
 set record = "+.Sent"
 set postponed = "+.Drafts"
-
-# mailboxes ! + ` \
-#         for file in ~/Maildir/.*; do \
-#                 box=$(basename "$file"); \
-#                 if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
-#                                 -a ! "$box" = '.subscriptions' ]; then \
-#                         echo -n "\"+$box\" "; \
-#                 fi; \
-#         done`
 
 mailboxes + ` \
 	for file in ~/Maildir/.*; do \
