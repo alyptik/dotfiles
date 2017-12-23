@@ -17,10 +17,13 @@ set print symbol on
 set print array on
 set print array-indexes on
 set print frame-arguments all
-set print entry-values both
+set print entry-values if-needed
+set print object on
 
+# set tui border-kind ascii
 set tui border-kind acs
-set tui border-mode normal
+# set tui border-mode normal
+set tui border-mode bold
 # set tui active-border-mode bold-standout
 set tui active-border-mode reverse
 
