@@ -260,6 +260,7 @@ alias fgr='fgrep --color=auto'
 ## Generate sha1 digest
 alias sha1='openssl sha1'
 alias mkdir='mkdir -pv'
+alias rm='rm -v'
 
 ## Stop after sending count ECHO_REQUEST packets
 alias pong='ping -c 5'

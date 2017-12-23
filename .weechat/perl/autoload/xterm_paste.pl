@@ -1,0 +1,1 @@
+../xterm_paste.pl

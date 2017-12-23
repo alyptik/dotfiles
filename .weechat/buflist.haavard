@@ -1,0 +1,36 @@
+#
+# weechat -- buflist.conf
+#
+# WARNING: It is NOT recommended to edit this file by hand,
+# especially if WeeChat is running.
+#
+# Use /set or similar command to change settings in WeeChat.
+#
+# For more info, see: https://weechat.org/doc/quickstart
+#
+
+[look]
+display_conditions = "${buffer.hidden}==0&&${buffer.full_name}!=perl.highmon"
+enabled = on
+mouse_jump_visited_buffer = off
+mouse_move_buffer = on
+mouse_wheel = on
+nick_prefix = off
+nick_prefix_empty = on
+signals_refresh = "irc_server_connected,irc_server_disconnected,nicklist_group_added,nicklist_group_removed"
+sort = "number,-active"
+
+[format]
+buffer = "${format_number}${indent}${format_nick_prefix}${if:(${buffer.local_variables.type}==server&&${irc_server.is_connected}==0)||(${buffer.local_variables.type}==channel&&${irc_channel.nicks_count}==0)?${color:red}✘:}${color_hotlist}${cut:12,…,${name}}${format_hotlist}"
+buffer_current = "${color:,black}${format_buffer}"
+hotlist = " ${color:green}(${hotlist}${color:green})"
+hotlist_highlight = "${color:magenta}"
+hotlist_low = "${color:white}"
+hotlist_message = "${color:white}"
+hotlist_none = "${color:default}"
+hotlist_private = "${color:magenta}"
+hotlist_separator = "${color:default},"
+indent = "  "
+lag = " ${color:green}[${color:brown}${lag}${color:green}]"
+nick_prefix = "${color_nick_prefix}${nick_prefix}"
+number = "${color:lightgreen}${number}${if:${number_displayed}?.: }"

@@ -2,6 +2,9 @@
 
 shopt -s extglob
 
+# printf "%s\n" "/store/cores/core.%e.%p.%P" | tee /proc/sys/kernel/core_pattern
+printf "%s\n" "/store/cores/core.%e.%p" | tee /proc/sys/kernel/core_pattern
+
 # Analog stereo card
 # eg. SOUND_CARD_PCI_ID=03:00.0 (use `lspci | grep -i audio`)
 SOUND_CARD_PCI_ID=00:1b.0

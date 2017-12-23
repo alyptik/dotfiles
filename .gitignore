@@ -33,6 +33,8 @@ openvpn/
 .newsboat/urls
 .vimtags
 .weechat/nicks.db
+*.weechatlog
+*.log
 tags
 /gifs/thewire/
 /rfc/
@@ -47,3 +49,4 @@ kbox3/
 vimfiles/
 .nicotine/
 .emacs.d.spacemacs/
+.emacs.d/undo-tree
