@@ -92,7 +92,7 @@ color status        white               color234
 color indicator     color235            color65
 color tree          color238            color235
 color attachment    color6              color235
-color index         color65       color235    ~O      # unread
+color index         white               color235    ~O      # unread
 color index         brightcolor65       color235    ~N      # new
 color index         color244            color235    ~R      # replied
 # color index_date    brightcolor244	color235
