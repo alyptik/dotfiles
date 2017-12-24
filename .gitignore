@@ -9,6 +9,7 @@ account_key.json
 account_key.json
 bind/account_key.json
 bind/bind.keys.v9_8
+.mutt_certificates
 .distcc/
 !.distcc/hosts
 urls.log
@@ -50,3 +51,5 @@ vimfiles/
 .nicotine/
 .emacs.d.spacemacs/
 .emacs.d/undo-tree
+.mutt.d/ox_config/
+.mutt_history

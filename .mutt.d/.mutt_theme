@@ -1,0 +1,96 @@
+#
+# ~/.mutt.d/.mutt_theme
+#
+# Mutt colors
+
+# sidebar
+# color sidebar_highlight color250    color65
+# color sidebar_divider   color235    color235
+# color sidebar_divider   white       color235
+color sidebar_flagged       default     color160
+color sidebar_new           default     default
+# color sidebar_new           color243    color235
+# color sidebar_new       default     color160
+color sidebar_ordinary      color243    color235
+# color sidebar_ordinary      default     default
+
+# Patch syntax highlighting
+# color   normal  white           default
+# color   body    brightwhite     black         "^(\s).*"
+# color   body    white           black         ^[\-\-\-].*
+# color   body    white           black         ^[\+\+\+].*
+# color   body    green           black         ^[\+].*
+# color   body    red             black         ^[\-].*
+# color   body    brightblue      black         [@@].*
+color	normal	color252	black
+color   body    brightwhite     black         "^[[:space:]].*"
+color   body    yellow          black         "^(diff).*"
+color   body    cyan            black         "^(Signed-off-by).*"
+color   body    cyan            black         "^(Docker-DCO-1.1-Signed-off-by).*"
+color   body    brightwhite     black         "^(Cc)"
+color   body    yellow          black         "^diff \-.*"
+color   body    brightwhite     black         "^index [a-f0-9].*"
+color   body    brightblue      black         "^---$"
+color   body    white           black         "^\-\-\- .*"
+color   body    white           black         "^[\+]{3} .*"
+color   body    green           black         "^[\+][^\+]+.*"
+color   body    red             black         "^\-[^\-]+.*"
+color   body    brightblue      black         "^@@ .*"
+color   body    green           black         "LGTM"
+color   body    brightmagenta   black         "-- Commit Summary --"
+color   body    brightmagenta   black         "-- File Changes --"
+color   body    brightmagenta   black         "-- Patch Links --"
+color   body    green           black         "^Merged #.*"
+color   body    red             black         "^Closed #.*"
+color   body    brightblue      black         "^Reply to this email.*"
+
+# ox's colors
+color normal	    white               color235
+color status        white               color234
+# color indicator     color7              color237
+color indicator     color235            color65
+color tree          color238            color235
+color attachment    color6              color235
+color index         white               color235    ~O      # unread
+color index         brightcolor65       color235    ~N      # new
+color index         color244            color235    ~R      # replied
+# color index_date    brightcolor244	color235
+# color index_flags   brightcolor239      color235 	%A
+color header        brightcolor101      default     "^from:"
+color header        brightcolor101      default     "^to:"
+color header        yellow              default     "^cc:"
+color header        magenta             default     "^date:"
+color header        brightcolor101      default     "^subject:"
+color body          brightred           black       "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"
+color body          brightblue          black       "(https?|ftp)://[\-\.,/%~_:?& = \#a-zA-Z0-9]+"
+
+# voidead's colors
+# color hdrdefault color252 black
+# color quoted color69 black
+# color signature blue black
+# color attachment magenta black
+# color message color46 black
+# color error color197 black
+# color indicator color247 color233
+# color status color247 color233
+# color tree white black
+# color normal color252 black
+# color markers color197 black
+# color search color46 black
+# color tilde brightmagenta black
+# color hdrdefault color252 black
+# color quoted color69 black
+# color signature blue black
+# color attachment magenta black
+# color message color46 black
+# color error color197 black
+# color indicator color247 color233
+# color status color247 color233
+# color tree white black
+# color normal color252 black
+# color markers color197 black
+# color search color46 black
+# color tilde brightmagenta black
+# color index black color197 "~N"
+
+# vi:ft=muttrc:

@@ -1,194 +1,94 @@
+#
+# ~/.muttrc
+#
+# Mutt configuration
 
-# These two lines appear to be needed on some Linux distros, like Arch Linux
-bind index "^"	imap-fetch-mail
-bind attach <return> view-mailcap
+set my_cfgdir = "~/.mutt.d"
+source "gpg2 -dq $HOME/.passwords.asc |"
+source "$my_cfgdir/.mutt_theme"
+source "$my_cfgdir/.mutt_keybinds"
+source "$my_cfgdir/.mutt_aliases"
+
+alternative_order text/plain text/enriched text/html
+auto_view text/html
+auto_view text/x-diff
+auto_view text/x-patch
+
 set imap_check_subscribed
 unset imap_passive
-auto_view text/html
-alternative_order text/plain text/enriched text/html
-set ssl_starttls = yes
-set ssl_force_tls = yes
-set ssl_use_sslv3 = no
-set certificate_file = "~/.mutt/certificates"
+set ssl_starttls
+set ssl_force_tls
+unset ssl_use_sslv3
 set header_cache = "~/.cache/mutt"
 set message_cachedir = "~/.cache/mutt"
-set send_charset = "utf-8"
-set signature = "~/.mutt/.signature"
-set history_file="~/.mutthistory"
-set entropy_file="/dev/urandom"
-set editor = "vim"
-set prompt_after = yes
+set signature = "$my_cfgdir/.signature"
+set alias_file = "$my_cfgdir/.mutt_aliases"
+set history_file = "$my_cfgdir/.mutt_history"
+set certificate_file = "$my_cfgdir/.mutt_certificates"
+set entropy_file = "/dev/urandom"
+set charset = "utf-8"
 set send_charset = "us-ascii:utf-8"
-set implicit_autoview=yes
-set include=ask-yes
-set abort_nosubject=ask-yes
+set editor = "vim"
+set prompt_after
+set implicit_autoview
+set include
+set abort_nosubject = ask-yes
 set mail_check = 120
-set save_history=10000
-set history=10000
+set save_history = 10000
+set history = 10000
+set history_remove_dups
 
+set sidebar_visible
+set sidebar_short_path
+set sidebar_width = 25
+set sidebar_delim_chars = "/."
+unset sidebar_folder_indent
+set sidebar_indent_string = "  "
+unset sidebar_new_mail_only
+set sidebar_next_new_wrap
+# set sidebar_divider_char = " ▐ "
+set sidebar_divider_char = " │ "
+set sidebar_format = "%B %?N?(%N)?%* %S"
+set sidebar_sort_method = "path"
+# set sidebar_on_right = no
+
+set mail_check_stats
+set allow_ansi
+unset pager_stop
 set sort = last-date-received
 # set sort = "threads"
 # set sort = "reverse-threads"
 set sort_aux = "last-date-received"
 set sort_re
 set uncollapse_jump
-set text_flowed = yes
+unset text_flowed
+set indent_string = "> "
 
-set sidebar_visible = yes
-set sidebar_short_path = yes
-set sidebar_width = 25
-set sidebar_delim_chars = '/.'
-set sidebar_folder_indent = no
-set sidebar_indent_string = '  '
-set sidebar_new_mail_only = no
-set sidebar_next_new_wrap = yes
-# set sidebar_on_right = no
-set sidebar_divider_char = ' ▐ '
-set sidebar_format = '%B %?N?(%N)?%* %S'
-set sidebar_sort_method = 'path'
-set mail_check_stats
+set pgp_verify_command = "gpg2 --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command = "gpg2 --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command = "gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command = "gpg2 --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command = "pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command = "pgpewrap gpg2 --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_decode_command = "gpg2 %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+set pgp_import_command = "gpg2 --no-verbose --import -v %f"
+set pgp_export_command = "gpg2 --no-verbose --export --armor %r"
+set pgp_verify_key_command = "gpg2 --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command = "gpg2 --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command = "gpg2 --no-verbose --batch --with-colons --list-secr et-keys %r"
+set pgp_autosign
+set pgp_replyencrypt
+set pgp_timeout = 1
+set pgp_good_sign = "^gpg: Good signature from"
+unset pgp_create_traditional
+set pgp_use_gpg_agent
+unset pgp_ignore_subkeys
 
-# sidebar
-# color sidebar_highlight color250    color65
-# color sidebar_divider color235    color235
-# color sidebar_flagged default     color160
-# color sidebar_new     color243    color235
-# color sidebar_ordinary      default     default
-
-# Patch syntax highlighting
-# color   normal  white           default
-# color   body    brightwhite     black         "^(\s).*"
-# color   body    white           black         ^[\-\-\-].*
-# color   body    white           black         ^[\+\+\+].*
-# color   body    green           black         ^[\+].*
-# color   body    red             black         ^[\-].*
-# color   body    brightblue      black         [@@].*
-color	normal	color252	black
-color   body    brightwhite     black         "^[[:space:]].*"
-color   body    yellow          black         "^(diff).*"
-color   body    cyan            black         "^(Signed-off-by).*"
-color   body    cyan            black         "^(Docker-DCO-1.1-Signed-off-by).*"
-color   body    brightwhite     black         "^(Cc)"
-color   body    yellow          black         "^diff \-.*"
-color   body    brightwhite     black         "^index [a-f0-9].*"
-color   body    brightblue      black         "^---$"
-color   body    white           black         "^\-\-\- .*"
-color   body    white           black         "^[\+]{3} .*"
-color   body    green           black         "^[\+][^\+]+.*"
-color   body    red             black         "^\-[^\-]+.*"
-color   body    brightblue      black         "^@@ .*"
-color   body    green           black         "LGTM"
-color   body    brightmagenta   black         "-- Commit Summary --"
-color   body    brightmagenta   black         "-- File Changes --"
-color   body    brightmagenta   black         "-- Patch Links --"
-color   body    green           black         "^Merged #.*"
-color   body    red             black         "^Closed #.*"
-color   body    brightblue      black         "^Reply to this email.*"
-
-# ox's colors
-color normal	    white               color235
-color status        white               color234
-# color indicator     color7              color237
-color indicator     color235            color65
-color tree          color238            color235
-color attachment    color6              color235
-color index         white               color235    ~O      # unread
-color index         brightcolor65       color235    ~N      # new
-color index         color244            color235    ~R      # replied
-# color index_date    brightcolor244	color235
-# color index_flags   brightcolor239      color235 	%A
-color header        brightcolor101      default     "^from:"
-color header        brightcolor101      default     "^to:"
-color header        yellow              default     "^cc:"
-color header        magenta             default     "^date:"
-color header        brightcolor101      default     "^subject:"
-color body          brightred           black       "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"
-color body          brightblue          black       "(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+"
-
-# voidead's colors
-# color hdrdefault color252 black
-# color quoted color69 black
-# color signature blue black
-# color attachment magenta black
-# color message color46 black
-# color error color197 black
-# color indicator color247 color233
-# color status color247 color233
-# color tree white black
-# color normal color252 black
-# color markers color197 black
-# color search color46 black
-# color tilde brightmagenta black
-# color hdrdefault color252 black
-# color quoted color69 black
-# color signature blue black
-# color attachment magenta black
-# color message color46 black
-# color error color197 black
-# color indicator color247 color233
-# color status color247 color233
-# color tree white black
-# color normal color252 black
-# color markers color197 black
-# color search color46 black
-# color tilde brightmagenta black
-# color index black color197 "~N"
-
-# Ctrl-n, Ctrl-p to select next, previous folder.
-# Ctrl-o to open selected folder.
-bind generic,index,pager B sidebar-toggle-visible
-bind generic,index,pager \cP sidebar-prev
-bind generic,index,pager \cN sidebar-next
-bind generic,index,pager \cO sidebar-open
-bind generic,index,pager [ sidebar-prev
-bind generic,index,pager ] sidebar-next
-bind generic,index,pager \\ sidebar-open
-bind generic,index,pager \e[ sidebar-prev
-bind generic,index,pager \e] sidebar-next
-bind generic,index,pager \e\\ sidebar-open
-bind generic,index,pager,browser ";" half-up
-bind generic,index,pager,browser "'" half-down
-bind generic,index,pager,browser "\e;" half-up
-bind generic,index,pager,browser "\e'" half-down
-bind generic,index,pager,browser - first-entry
-bind generic,index,pager,browser = last-entry
-bind generic,index,pager,browser \e- first-entry
-bind generic,index,pager,browser \e= last-entry
-bind generic,index,pager,browser \c? previous-line
-bind generic,index,pager,browser b previous-page
-
-source "gpg2 -dq $HOME/.passwords.asc |"
-
-set realname="Joey Pabalinas"
+set realname = "Joey Pabalinas"
 set from = "joeypabalinas@gmail.com"
 set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
 # set from = "alyptik@hawaii.rr.com"
 # set smtp_url = "smtp://$my_user:$my_pass@mail.twc.com:587"
-
-macro index , "<enter-command>set sort = threads<enter>"
-macro index . "<enter-command>set sort = last-date-received<enter>"
-
-macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro index,pager C "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
-macro index,pager Y "<change-folder>imaps://$my_user:$my_pass@mail.twc.com<enter>" "open a different folder"
-# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
-macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
-bind browser y exit
-
-# Show documentation when pressing F1
-macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
-macro index A \
-	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
-	      "mark all new as read"
-
-macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
-macro index \eb "<search>~b " "search in message bodies"
-macro index,pager,attach,compose \cb "\
-<enter-command> set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
-<pipe-message> urlview<Enter>\
-<enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
-"call urlview to extract URLs out of a message"
 
 set mbox_type = Maildir
 set spoolfile = "~/Maildir/"
@@ -229,31 +129,6 @@ mailboxes + ` \
 set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
 set spoolfile = "+INBOX"
 
-auto_view text/x-diff
-auto_view text/x-patch
-set allow_ansi
-set pager_stop=no
-
-set pgp_verify_command="gpg2 --no-verbose --batch --output - --verify %s %f"
-set pgp_decrypt_command="gpg2 --passphrase-fd 0 --no-verbose --batch --output - %f"
-set pgp_sign_command="gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_clearsign_command="gpg2 --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
-set pgp_encrypt_sign_command="pgpewrap gpg2 --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
-set pgp_decode_command="gpg2 %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
-set pgp_import_command="gpg2 --no-verbose --import -v %f"
-set pgp_export_command="gpg2 --no-verbose --export --armor %r"
-set pgp_verify_key_command="gpg2 --no-verbose --batch --fingerprint --check-sigs %r"
-set pgp_list_pubring_command="gpg2 --no-verbose --batch --with-colons --list-keys %r"
-set pgp_list_secring_command="gpg2 --no-verbose --batch --with-colons --list-secr et-keys %r"
-set pgp_autosign=yes
-set pgp_replyencrypt=yes
-set pgp_timeout=0
-set pgp_good_sign="^gpg: Good signature from"
-set pgp_create_traditional=no
-set pgp_use_gpg_agent=yes
-set pgp_ignore_subkeys=no
-
 # System configuration file for Mutt
 #
 
@@ -270,7 +145,7 @@ hdr_order date from to cc subject
 # If Mutt is unable to determine your site's domain name correctly, you can
 # set the default here.
 #
-# set hostname=cs.hmc.edu
+# set hostname = cs.hmc.edu
 
 # If your sendmail supports the -B8BITMIME flag, enable the following
 #
@@ -280,11 +155,11 @@ set use_8bitmime
 # be undone with unmime_lookup.
 mime_lookup application/octet-stream
 
-set print=ask-yes
-set print_command="muttprint -P letter -C lpr -x -a /Date/_To_From_*/Subject/* "
-#set print_command="lpr"
-#set print_command="muttprint -P letter -C lpr -x -F helvetica -a /Date/_To_From_X-Mailer_*/Subject/* "
-#set print_command="muttprint -P A4 -p TO_FILE:/tmp/$USER.ps && okular /tmp/$USER.ps"
+set print = ask-yes
+set print_command = "muttprint -P letter -C lpr -x -a /Date/_To_From_*/Subject/* "
+#set print_command = "lpr"
+#set print_command = "muttprint -P letter -C lpr -x -F helvetica -a /Date/_To_From_X-Mailer_*/Subject/* "
+#set print_command = "muttprint -P A4 -p TO_FILE:/tmp/$USER.ps && okular /tmp/$USER.ps"
 
 ##
 ## *** DEFAULT SETTINGS FOR THE ATTACHMENTS PATCH ***
@@ -345,7 +220,7 @@ attachments   -I message/external-body
 ## More settings
 ##
 
-# set abort_nosubject=ask-yes
+# set abort_nosubject = ask-yes
 #
 # Name: abort_nosubject
 # Type: quadoption
@@ -358,7 +233,7 @@ attachments   -I message/external-body
 # prompt will never be aborted.
 #
 #
-# set abort_unmodified=yes
+# set abort_unmodified
 #
 # Name: abort_unmodified
 # Type: quadoption
@@ -371,7 +246,7 @@ attachments   -I message/external-body
 # to no, composition will never be aborted.
 #
 #
-# set alias_file="~/.muttrc"
+# set alias_file = "~/.muttrc"
 #
 # Name: alias_file
 # Type: path
@@ -391,7 +266,7 @@ attachments   -I message/external-body
 # ``~/.muttrc'' if no user muttrc was found.
 #
 #
-# set alias_format="%4n %2f %t %-10a   %r"
+# set alias_format = "%4n %2f %t %-10a   %r"
 #
 # Name: alias_format
 # Type: string
@@ -407,7 +282,7 @@ attachments   -I message/external-body
 # %t      character which indicates if the alias is tagged for inclusion
 #
 #
-# set allow_8bit=yes
+# set allow_8bit
 #
 # Name: allow_8bit
 # Type: boolean
@@ -418,7 +293,7 @@ attachments   -I message/external-body
 # Printable or Base64 encoding when sending mail.
 #
 #
-# set allow_ansi=no
+# set allow_ansi = no
 #
 # Name: allow_ansi
 # Type: boolean
@@ -437,7 +312,7 @@ attachments   -I message/external-body
 # $crypt_timestamp).
 #
 #
-# set arrow_cursor=no
+# set arrow_cursor = no
 #
 # Name: arrow_cursor
 # Type: boolean
@@ -451,7 +326,7 @@ attachments   -I message/external-body
 # in the menu.
 #
 #
-# set ascii_chars=no
+# set ascii_chars = no
 #
 # Name: ascii_chars
 # Type: boolean
@@ -462,7 +337,7 @@ attachments   -I message/external-body
 # and attachment trees, instead of the default ACS characters.
 #
 #
-# set askbcc=no
+# set askbcc = no
 #
 # Name: askbcc
 # Type: boolean
@@ -473,7 +348,7 @@ attachments   -I message/external-body
 # before editing an outgoing message.
 #
 #
-# set askcc=no
+# set askcc = no
 #
 # Name: askcc
 # Type: boolean
@@ -484,7 +359,7 @@ attachments   -I message/external-body
 # editing the body of an outgoing message.
 #
 #
-# set assumed_charset=""
+# set assumed_charset = ""
 #
 # Name: assumed_charset
 # Type: string
@@ -499,12 +374,12 @@ attachments   -I message/external-body
 # indication are assumed to be in ``us-ascii''.
 #
 # For example, Japanese users might prefer this:
-# set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+# set assumed_charset = "iso-2022-jp:euc-jp:shift_jis:utf-8"
 #
 # However, only the first content is valid for the message body.
 #
 #
-# set attach_charset=""
+# set attach_charset = ""
 #
 # Name: attach_charset
 # Type: string
@@ -519,13 +394,13 @@ attachments   -I message/external-body
 # If unset, the value of $charset will be used instead.
 # For example, the following configuration would work for Japanese
 # text handling:
-# set attach_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+# set attach_charset = "iso-2022-jp:euc-jp:shift_jis:utf-8"
 #
 # Note: for Japanese users, ``iso-2022-*'' must be put at the head
 # of the value as shown above if included.
 #
 #
-# set attach_format="%u%D%I %t%4n %T%.40d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "
+# set attach_format = "%u%D%I %t%4n %T%.40d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "
 #
 # Name: attach_format
 # Type: string
@@ -548,7 +423,7 @@ attachments   -I message/external-body
 # %s      size
 # %t      tagged flag
 # %T      graphic tree characters
-# %u      unlink (=to delete) flag
+# %u      unlink ( = to delete) flag
 # %X      number of qualifying MIME parts in this part and its children
 #         (please see the ``attachments'' section for possible speed effects)
 # %>X     right justify the rest of the string and pad with character ``X''
@@ -559,7 +434,7 @@ attachments   -I message/external-body
 # For an explanation of ``soft-fill'', see the $index_format documentation.
 #
 #
-# set attach_sep="\n"
+# set attach_sep = "\n"
 #
 # Name: attach_sep
 # Type: string
@@ -570,7 +445,7 @@ attachments   -I message/external-body
 # printing, piping, etc) on a list of tagged attachments.
 #
 #
-# set attach_split=yes
+# set attach_split
 #
 # Name: attach_split
 # Type: boolean
@@ -584,7 +459,7 @@ attachments   -I message/external-body
 # Mutt will operate on the attachments one by one.
 #
 #
-# set attribution="On %d, %n wrote:"
+# set attribution = "On %d, %n wrote:"
 #
 # Name: attribution
 # Type: string
@@ -596,7 +471,7 @@ attachments   -I message/external-body
 # the section on $index_format.
 #
 #
-# set auto_tag=no
+# set auto_tag = no
 #
 # Name: auto_tag
 # Type: boolean
@@ -609,7 +484,7 @@ attachments   -I message/external-body
 # by default) to make the next function apply to all tagged messages.
 #
 #
-# set autoedit=no
+# set autoedit = no
 #
 # Name: autoedit
 # Type: boolean
@@ -629,7 +504,7 @@ attachments   -I message/external-body
 # Also see $fast_reply.
 #
 #
-# set beep=yes
+# set beep
 #
 # Name: beep
 # Type: boolean
@@ -639,7 +514,7 @@ attachments   -I message/external-body
 # When this variable is set, mutt will beep when an error occurs.
 #
 #
-# set beep_new=no
+# set beep_new = no
 #
 # Name: beep_new
 # Type: boolean
@@ -651,7 +526,7 @@ attachments   -I message/external-body
 # $beep variable.
 #
 #
-# set bounce=ask-yes
+# set bounce = ask-yes
 #
 # Name: bounce
 # Type: quadoption
@@ -664,7 +539,7 @@ attachments   -I message/external-body
 # and thus not recommended, because you are unable to bounce messages.
 #
 #
-# set bounce_delivered=yes
+# set bounce_delivered
 #
 # Name: bounce_delivered
 # Type: boolean
@@ -675,7 +550,7 @@ attachments   -I message/external-body
 # bouncing messages.  Postfix users may wish to unset this variable.
 #
 #
-# set braille_friendly=no
+# set braille_friendly = no
 #
 # Name: braille_friendly
 # Type: boolean
@@ -689,7 +564,7 @@ attachments   -I message/external-body
 # visual terminals don't permit making the cursor invisible.
 #
 #
-# set certificate_file="~/.mutt_certificates"
+# set certificate_file = "~/.mutt_certificates"
 #
 # Name: certificate_file
 # Type: path
@@ -707,10 +582,10 @@ attachments   -I message/external-body
 # also automatically accepted.
 #
 # Example:
-# set certificate_file=~/.mutt/certificates
+# set certificate_file = ~/.mutt/certificates
 #
 #
-# set charset=""
+# set charset = ""
 #
 # Name: charset
 # Type: string
@@ -727,7 +602,7 @@ attachments   -I message/external-body
 # character set used correctly.
 #
 #
-# set check_mbox_size=no
+# set check_mbox_size = no
 #
 # Name: check_mbox_size
 # Type: boolean
@@ -747,7 +622,7 @@ attachments   -I message/external-body
 # Afterwards the new mail status is tracked by file size changes.
 #
 #
-# set check_new=yes
+# set check_new
 #
 # Name: check_new
 # Type: boolean
@@ -765,7 +640,7 @@ attachments   -I message/external-body
 # while the mailbox is open.
 #
 #
-# set collapse_unread=yes
+# set collapse_unread
 #
 # Name: collapse_unread
 # Type: boolean
@@ -776,7 +651,7 @@ attachments   -I message/external-body
 # unread messages.
 #
 #
-# set compose_format="-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
+# set compose_format = "-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
 #
 # Name: compose_format
 # Type: string
@@ -796,7 +671,7 @@ attachments   -I message/external-body
 # information on how to set $compose_format.
 #
 #
-# set config_charset=""
+# set config_charset = ""
 #
 # Name: config_charset
 # Type: string
@@ -815,7 +690,7 @@ attachments   -I message/external-body
 # side effects (for example in regular expressions).
 #
 #
-# set confirmappend=yes
+# set confirmappend
 #
 # Name: confirmappend
 # Type: boolean
@@ -826,7 +701,7 @@ attachments   -I message/external-body
 # an existing mailbox.
 #
 #
-# set confirmcreate=yes
+# set confirmcreate
 #
 # Name: confirmcreate
 # Type: boolean
@@ -837,7 +712,7 @@ attachments   -I message/external-body
 # mailbox which does not yet exist before creating it.
 #
 #
-# set connect_timeout=30
+# set connect_timeout = 30
 #
 # Name: connect_timeout
 # Type: number
@@ -849,7 +724,7 @@ attachments   -I message/external-body
 # value causes Mutt to wait indefinitely for the connection attempt to succeed.
 #
 #
-# set content_type="text/plain"
+# set content_type = "text/plain"
 #
 # Name: content_type
 # Type: string
@@ -859,7 +734,7 @@ attachments   -I message/external-body
 # Sets the default Content-Type for the body of newly composed messages.
 #
 #
-# set copy=yes
+# set copy
 #
 # Name: copy
 # Type: quadoption
@@ -871,7 +746,7 @@ attachments   -I message/external-body
 # $save_name, $force_name and ``fcc-hook''.
 #
 #
-# set crypt_autoencrypt=no
+# set crypt_autoencrypt = no
 #
 # Name: crypt_autoencrypt
 # Type: boolean
@@ -888,7 +763,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_autopgp=yes
+# set crypt_autopgp
 #
 # Name: crypt_autopgp
 # Type: boolean
@@ -901,7 +776,7 @@ attachments   -I message/external-body
 # $crypt_autosign, $crypt_replysign and $smime_is_default.
 #
 #
-# set crypt_autosign=no
+# set crypt_autosign = no
 #
 # Name: crypt_autosign
 # Type: boolean
@@ -917,7 +792,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_autosmime=yes
+# set crypt_autosmime
 #
 # Name: crypt_autosmime
 # Type: boolean
@@ -930,7 +805,7 @@ attachments   -I message/external-body
 # $crypt_autosign, $crypt_replysign and $smime_is_default.
 #
 #
-# set crypt_confirmhook=yes
+# set crypt_confirmhook
 #
 # Name: crypt_confirmhook
 # Type: boolean
@@ -943,7 +818,7 @@ attachments   -I message/external-body
 # typos are concerned.
 #
 #
-# set crypt_opportunistic_encrypt=no
+# set crypt_opportunistic_encrypt = no
 #
 # Name: crypt_opportunistic_encrypt
 # Type: boolean
@@ -969,7 +844,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_replyencrypt=yes
+# set crypt_replyencrypt
 #
 # Name: crypt_replyencrypt
 # Type: boolean
@@ -981,7 +856,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_replysign=no
+# set crypt_replysign = no
 #
 # Name: crypt_replysign
 # Type: boolean
@@ -996,7 +871,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_replysignencrypted=no
+# set crypt_replysignencrypted = no
 #
 # Name: crypt_replysignencrypted
 # Type: boolean
@@ -1012,7 +887,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_timestamp=yes
+# set crypt_timestamp
 #
 # Name: crypt_timestamp
 # Type: boolean
@@ -1026,7 +901,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set crypt_use_gpgme=no
+# set crypt_use_gpgme = no
 #
 # Name: crypt_use_gpgme
 # Type: boolean
@@ -1043,7 +918,7 @@ attachments   -I message/external-body
 # (traditional) PGP encrypted or signed messages (see $pgp_autoinline).
 #
 #
-# set crypt_use_pka=no
+# set crypt_use_pka = no
 #
 # Name: crypt_use_pka
 # Type: boolean
@@ -1055,7 +930,7 @@ attachments   -I message/external-body
 # verification (only supported by the GPGME backend).
 #
 #
-# set crypt_verify_sig=yes
+# set crypt_verify_sig
 #
 # Name: crypt_verify_sig
 # Type: quadoption
@@ -1068,7 +943,7 @@ attachments   -I message/external-body
 # (Crypto only)
 #
 #
-# set date_format="!%a, %b %d, %Y at %I:%M:%S%p %Z"
+# set date_format = "!%a, %b %d, %Y at %I:%M:%S%p %Z"
 #
 # Name: date_format
 # Type: string
@@ -1087,7 +962,7 @@ attachments   -I message/external-body
 # English).
 #
 #
-# set default_hook="~f %s !~P | (~P ~C %s)"
+# set default_hook = "~f %s !~P | (~P ~C %s)"
 #
 # Name: default_hook
 # Type: string
@@ -1108,7 +983,7 @@ attachments   -I message/external-body
 # regular expression.
 #
 #
-# set delete=ask-yes
+# set delete = ask-yes
 #
 # Name: delete
 # Type: quadoption
@@ -1121,7 +996,7 @@ attachments   -I message/external-body
 # no, messages marked for deletion will be kept in the mailbox.
 #
 #
-# set delete_untag=yes
+# set delete_untag
 #
 # Name: delete_untag
 # Type: boolean
@@ -1133,7 +1008,7 @@ attachments   -I message/external-body
 # or when you save it to another folder.
 #
 #
-# set digest_collapse=yes
+# set digest_collapse
 #
 # Name: digest_collapse
 # Type: boolean
@@ -1144,7 +1019,7 @@ attachments   -I message/external-body
 # individual messages in a multipart/digest.  To see these subparts, press ``v'' on that menu.
 #
 #
-# set display_filter=""
+# set display_filter = ""
 #
 # Name: display_filter
 # Type: path
@@ -1156,7 +1031,7 @@ attachments   -I message/external-body
 # filtered message is read from the standard output.
 #
 #
-# set dotlock_program="/usr/bin/mutt_dotlock"
+# set dotlock_program = "/usr/bin/mutt_dotlock"
 #
 # Name: dotlock_program
 # Type: path
@@ -1167,7 +1042,7 @@ attachments   -I message/external-body
 # mutt.
 #
 #
-# set dsn_notify=""
+# set dsn_notify = ""
 #
 # Name: dsn_notify
 # Type: string
@@ -1182,7 +1057,7 @@ attachments   -I message/external-body
 # notified of successful transmission.
 #
 # Example:
-# set dsn_notify="failure,delay"
+# set dsn_notify = "failure,delay"
 #
 # Note: when using $sendmail for delivery, you should not enable
 # this unless you are either using Sendmail 8.8.x or greater or a MTA
@@ -1191,7 +1066,7 @@ attachments   -I message/external-body
 # depends on the server whether DSN will be used or not.
 #
 #
-# set dsn_return=""
+# set dsn_return = ""
 #
 # Name: dsn_return
 # Type: string
@@ -1203,7 +1078,7 @@ attachments   -I message/external-body
 # message header, or full to return the full message.
 #
 # Example:
-# set dsn_return=hdrs
+# set dsn_return = hdrs
 #
 # Note: when using $sendmail for delivery, you should not enable
 # this unless you are either using Sendmail 8.8.x or greater or a MTA
@@ -1212,7 +1087,7 @@ attachments   -I message/external-body
 # depends on the server whether DSN will be used or not.
 #
 #
-# set duplicate_threads=yes
+# set duplicate_threads
 #
 # Name: duplicate_threads
 # Type: boolean
@@ -1225,7 +1100,7 @@ attachments   -I message/external-body
 # in the thread tree.
 #
 #
-# set edit_headers=no
+# set edit_headers = no
 #
 # Name: edit_headers
 # Type: boolean
@@ -1239,7 +1114,7 @@ attachments   -I message/external-body
 # ignored for interoperability reasons.
 #
 #
-# set editor=""
+# set editor = ""
 #
 # Name: editor
 # Type: path
@@ -1260,7 +1135,7 @@ attachments   -I message/external-body
 # where string is the expansion of $editor described above.
 #
 #
-# set encode_from=no
+# set encode_from = no
 #
 # Name: encode_from
 # Type: boolean
@@ -1274,7 +1149,7 @@ attachments   -I message/external-body
 # misinterpreting the line as a mbox message separator).
 #
 #
-# set entropy_file=""
+# set entropy_file = ""
 #
 # Name: entropy_file
 # Type: path
@@ -1285,7 +1160,7 @@ attachments   -I message/external-body
 # library functions.
 #
 #
-# set envelope_from_address=""
+# set envelope_from_address = ""
 #
 # Name: envelope_from_address
 # Type: e-mail address
@@ -1296,7 +1171,7 @@ attachments   -I message/external-body
 # This value is ignored if $use_envelope_from is unset.
 #
 #
-# set escape="~"
+# set escape = "~"
 #
 # Name: escape
 # Type: string
@@ -1306,7 +1181,7 @@ attachments   -I message/external-body
 # Escape character to use for functions in the built-in editor.
 #
 #
-# set fast_reply=no
+# set fast_reply = no
 #
 # Name: fast_reply
 # Type: boolean
@@ -1321,7 +1196,7 @@ attachments   -I message/external-body
 # variable is set.
 #
 #
-# set fcc_attach=yes
+# set fcc_attach
 #
 # Name: fcc_attach
 # Type: quadoption
@@ -1332,7 +1207,7 @@ attachments   -I message/external-body
 # are saved along with the main body of your message.
 #
 #
-# set fcc_clear=no
+# set fcc_clear = no
 #
 # Name: fcc_clear
 # Type: boolean
@@ -1345,22 +1220,22 @@ attachments   -I message/external-body
 # (PGP only)
 #
 #
-# set folder="~/Mail"
+# set folder = "~/Mail"
 #
 # Name: folder
 # Type: path
 # Default: "~/Mail"
 #
 #
-# Specifies the default location of your mailboxes.  A ``+'' or ``='' at the
+# Specifies the default location of your mailboxes.  A ``+'' or `` = '' at the
 # beginning of a pathname will be expanded to the value of this
 # variable.  Note that if you change this variable (from the default)
 # value you need to make sure that the assignment occurs before
-# you use ``+'' or ``='' for any other variables since expansion takes place
+# you use ``+'' or `` = '' for any other variables since expansion takes place
 # when handling the ``mailboxes'' command.
 #
 #
-# set folder_format="%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"
+# set folder_format = "%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"
 #
 # Name: folder_format
 # Type: string
@@ -1391,7 +1266,7 @@ attachments   -I message/external-body
 # For an explanation of ``soft-fill'', see the $index_format documentation.
 #
 #
-# set followup_to=yes
+# set followup_to
 #
 # Name: followup_to
 # Type: boolean
@@ -1417,7 +1292,7 @@ attachments   -I message/external-body
 # of the same email for you.
 #
 #
-# set force_name=no
+# set force_name = no
 #
 # Name: force_name
 # Type: boolean
@@ -1431,7 +1306,7 @@ attachments   -I message/external-body
 # Also see the $record variable.
 #
 #
-# set forward_decode=yes
+# set forward_decode
 #
 # Name: forward_decode
 # Type: boolean
@@ -1444,7 +1319,7 @@ attachments   -I message/external-body
 # otherwise $mime_forward_decode is used instead.
 #
 #
-# set forward_decrypt=yes
+# set forward_decrypt
 #
 # Name: forward_decrypt
 # Type: boolean
@@ -1458,7 +1333,7 @@ attachments   -I message/external-body
 # (PGP only)
 #
 #
-# set forward_edit=yes
+# set forward_edit
 #
 # Name: forward_edit
 # Type: quadoption
@@ -1470,7 +1345,7 @@ attachments   -I message/external-body
 # to forward with no modification, use a setting of ``no''.
 #
 #
-# set forward_format="[%a: %s]"
+# set forward_format = "[%a: %s]"
 #
 # Name: forward_format
 # Type: string
@@ -1481,7 +1356,7 @@ attachments   -I message/external-body
 # It uses the same format sequences as the $index_format variable.
 #
 #
-# set forward_quote=no
+# set forward_quote = no
 #
 # Name: forward_quote
 # Type: boolean
@@ -1493,7 +1368,7 @@ attachments   -I message/external-body
 # $indent_string.
 #
 #
-# set from=""
+# set from = ""
 #
 # Name: from
 # Type: e-mail address
@@ -1507,7 +1382,7 @@ attachments   -I message/external-body
 # This setting defaults to the contents of the environment variable $EMAIL.
 #
 #
-# set gecos_mask="^[^,]*"
+# set gecos_mask = "^[^,]*"
 #
 # Name: gecos_mask
 # Type: regular expression
@@ -1527,7 +1402,7 @@ attachments   -I message/external-body
 # ``Franklin'' to ``Franklin, Steve''.
 #
 #
-# set hdrs=yes
+# set hdrs
 #
 # Name: hdrs
 # Type: boolean
@@ -1540,7 +1415,7 @@ attachments   -I message/external-body
 # the user defined header fields are added to every new message.
 #
 #
-# set header=no
+# set header = no
 #
 # Name: header
 # Type: boolean
@@ -1552,7 +1427,7 @@ attachments   -I message/external-body
 # The $weed setting applies.
 #
 #
-# set header_cache=""
+# set header_cache = ""
 #
 # Name: header_cache
 # Type: path
@@ -1569,7 +1444,7 @@ attachments   -I message/external-body
 # MH or Maildir folders, see ``caching'' for details.
 #
 #
-# set header_cache_compress=yes
+# set header_cache_compress
 #
 # Name: header_cache_compress
 # Type: boolean
@@ -1584,7 +1459,7 @@ attachments   -I message/external-body
 # much faster than opening non header cached folders.
 #
 #
-# set header_cache_pagesize="16384"
+# set header_cache_pagesize = "16384"
 #
 # Name: header_cache_pagesize
 # Type: string
@@ -1597,7 +1472,7 @@ attachments   -I message/external-body
 # or less optimal for most use cases.
 #
 #
-# set help=yes
+# set help
 #
 # Name: help
 # Type: boolean
@@ -1614,7 +1489,7 @@ attachments   -I message/external-body
 # of these should present a major problem.
 #
 #
-# set hidden_host=no
+# set hidden_host = no
 #
 # Name: hidden_host
 # Type: boolean
@@ -1627,7 +1502,7 @@ attachments   -I message/external-body
 # cut-off of first-level domains.
 #
 #
-# set hide_limited=no
+# set hide_limited = no
 #
 # Name: hide_limited
 # Type: boolean
@@ -1638,7 +1513,7 @@ attachments   -I message/external-body
 # by limiting, in the thread tree.
 #
 #
-# set hide_missing=yes
+# set hide_missing
 #
 # Name: hide_missing
 # Type: boolean
@@ -1649,7 +1524,7 @@ attachments   -I message/external-body
 # thread tree.
 #
 #
-# set hide_thread_subject=yes
+# set hide_thread_subject
 #
 # Name: hide_thread_subject
 # Type: boolean
@@ -1661,7 +1536,7 @@ attachments   -I message/external-body
 # displayed sibling.
 #
 #
-# set hide_top_limited=no
+# set hide_top_limited = no
 #
 # Name: hide_top_limited
 # Type: boolean
@@ -1673,7 +1548,7 @@ attachments   -I message/external-body
 # $hide_limited is set, this option will have no effect.
 #
 #
-# set hide_top_missing=yes
+# set hide_top_missing
 #
 # Name: hide_top_missing
 # Type: boolean
@@ -1685,7 +1560,7 @@ attachments   -I message/external-body
 # set, this option will have no effect.
 #
 #
-# set history=10
+# set history = 10
 #
 # Name: history
 # Type: number
@@ -1697,7 +1572,7 @@ attachments   -I message/external-body
 # variable is set.
 #
 #
-# set history_file="~/.mutthistory"
+# set history_file = "~/.mutthistory"
 #
 # Name: history_file
 # Type: path
@@ -1707,7 +1582,7 @@ attachments   -I message/external-body
 # The file in which Mutt will save its history.
 #
 #
-# set honor_disposition=no
+# set honor_disposition = no
 #
 # Name: honor_disposition
 # Type: boolean
@@ -1723,7 +1598,7 @@ attachments   -I message/external-body
 # properly transform to plain text.
 #
 #
-# set honor_followup_to=yes
+# set honor_followup_to
 #
 # Name: honor_followup_to
 # Type: quadoption
@@ -1734,7 +1609,7 @@ attachments   -I message/external-body
 # honored when group-replying to a message.
 #
 #
-# set hostname=""
+# set hostname = ""
 #
 # Name: hostname
 # Type: string
@@ -1757,7 +1632,7 @@ attachments   -I message/external-body
 # Also see $use_domain and $hidden_host.
 #
 #
-# set idn_decode=yes
+# set idn_decode
 #
 # Name: idn_decode
 # Type: boolean
@@ -1769,7 +1644,7 @@ attachments   -I message/external-body
 # This variable only affects decoding. (IDN only)
 #
 #
-# set idn_encode=yes
+# set idn_encode
 #
 # Name: idn_encode
 # Type: boolean
@@ -1781,7 +1656,7 @@ attachments   -I message/external-body
 # UTF-8 encoded domains. (IDN only)
 #
 #
-# set ignore_linear_white_space=no
+# set ignore_linear_white_space = no
 #
 # Name: ignore_linear_white_space
 # Type: boolean
@@ -1793,7 +1668,7 @@ attachments   -I message/external-body
 # ``Subject:'' field from being divided into multiple lines.
 #
 #
-# set ignore_list_reply_to=no
+# set ignore_list_reply_to = no
 #
 # Name: ignore_list_reply_to
 # Type: boolean
@@ -1811,7 +1686,7 @@ attachments   -I message/external-body
 # list.
 #
 #
-# set imap_authenticators=""
+# set imap_authenticators = ""
 #
 # Name: imap_authenticators
 # Type: string
@@ -1821,20 +1696,20 @@ attachments   -I message/external-body
 # This is a colon-delimited list of authentication methods mutt may
 # attempt to use to log in to an IMAP server, in the order mutt should
 # try them.  Authentication methods are either ``login'' or the right
-# side of an IMAP ``AUTH=xxx'' capability string, e.g. ``digest-md5'', ``gssapi''
+# side of an IMAP ``AUTH = xxx'' capability string, e.g. ``digest-md5'', ``gssapi''
 # or ``cram-md5''. This option is case-insensitive. If it's
 # unset (the default) mutt will try all available methods,
 # in order from most-secure to least-secure.
 #
 # Example:
-# set imap_authenticators="gssapi:cram-md5:login"
+# set imap_authenticators = "gssapi:cram-md5:login"
 #
 # Note: Mutt will only fall back to other authentication methods if
 # the previous methods are unavailable. If a method is available but
 # authentication fails, mutt will not connect to the IMAP server.
 #
 #
-# set imap_check_subscribed=no
+# set imap_check_subscribed = no
 #
 # Name: imap_check_subscribed
 # Type: boolean
@@ -1847,7 +1722,7 @@ attachments   -I message/external-body
 # commands.
 #
 #
-# set imap_delim_chars="/."
+# set imap_delim_chars = "/."
 #
 # Name: imap_delim_chars
 # Type: string
@@ -1856,10 +1731,10 @@ attachments   -I message/external-body
 #
 # This contains the list of characters which you would like to treat
 # as folder separators for displaying IMAP paths. In particular it
-# helps in using the ``='' shortcut for your folder variable.
+# helps in using the `` = '' shortcut for your folder variable.
 #
 #
-# set imap_headers=""
+# set imap_headers = ""
 #
 # Name: imap_headers
 # Type: string
@@ -1878,7 +1753,7 @@ attachments   -I message/external-body
 # ``X-Bogosity:'' and ``X-Spam-Status:'' header fields.
 #
 #
-# set imap_idle=no
+# set imap_idle = no
 #
 # Name: imap_idle
 # Type: boolean
@@ -1892,7 +1767,7 @@ attachments   -I message/external-body
 # up periodically, try unsetting this.
 #
 #
-# set imap_keepalive=300
+# set imap_keepalive = 300
 #
 # Name: imap_keepalive
 # Type: number
@@ -1908,7 +1783,7 @@ attachments   -I message/external-body
 # getting disconnected from your IMAP server due to inactivity.
 #
 #
-# set imap_list_subscribed=no
+# set imap_list_subscribed = no
 #
 # Name: imap_list_subscribed
 # Type: boolean
@@ -1920,7 +1795,7 @@ attachments   -I message/external-body
 # IMAP browser with the <toggle-subscribed> function.
 #
 #
-# set imap_login=""
+# set imap_login = ""
 #
 # Name: imap_login
 # Type: string
@@ -1932,7 +1807,7 @@ attachments   -I message/external-body
 # This variable defaults to the value of $imap_user.
 #
 #
-# set imap_pass=""
+# set imap_pass = ""
 #
 # Name: imap_pass
 # Type: string
@@ -1948,7 +1823,7 @@ attachments   -I message/external-body
 # if you are the only one who can read the file.
 #
 #
-# set imap_passive=yes
+# set imap_passive
 #
 # Name: imap_passive
 # Type: boolean
@@ -1962,7 +1837,7 @@ attachments   -I message/external-body
 # is slow.
 #
 #
-# set imap_peek=yes
+# set imap_peek
 #
 # Name: imap_peek
 # Type: boolean
@@ -1975,7 +1850,7 @@ attachments   -I message/external-body
 # exists to appease speed freaks.
 #
 #
-# set imap_pipeline_depth=15
+# set imap_pipeline_depth = 15
 #
 # Name: imap_pipeline_depth
 # Type: number
@@ -1991,7 +1866,7 @@ attachments   -I message/external-body
 # Note: Changes to this variable have no effect on open connections.
 #
 #
-# set imap_servernoise=yes
+# set imap_servernoise
 #
 # Name: imap_servernoise
 # Type: boolean
@@ -2005,7 +1880,7 @@ attachments   -I message/external-body
 # them at some point.
 #
 #
-# set imap_user=""
+# set imap_user = ""
 #
 # Name: imap_user
 # Type: string
@@ -2031,7 +1906,7 @@ attachments   -I message/external-body
 # form.
 #
 #
-# set include=yes
+# set include
 #
 # Name: include
 # Type: quadoption
@@ -2042,7 +1917,7 @@ attachments   -I message/external-body
 # is included in your reply.
 #
 #
-# set include_onlyfirst=no
+# set include_onlyfirst = no
 #
 # Name: include_onlyfirst
 # Type: boolean
@@ -2053,7 +1928,7 @@ attachments   -I message/external-body
 # of the message you are replying.
 #
 #
-# set indent_string="> "
+# set indent_string = "> "
 #
 # Name: indent_string
 # Type: string
@@ -2065,13 +1940,13 @@ attachments   -I message/external-body
 # change this value, as it tends to agitate the more fanatical netizens.
 #
 # The value of this option is ignored if $text_flowed is set, too because
-# the quoting mechanism is strictly defined for format=flowed.
+# the quoting mechanism is strictly defined for format = flowed.
 #
 # This option is a format string, please see the description of
 # $index_format for supported printf(3)-style sequences.
 #
 #
-# set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
+# set index_format = "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
 #
 # Name: index_format
 # Type: string
@@ -2156,7 +2031,7 @@ attachments   -I message/external-body
 # ``save-hook'', ``fcc-hook'' and ``fcc-save-hook'', too.
 #
 #
-# set ispell="ispell"
+# set ispell = "ispell"
 #
 # Name: ispell
 # Type: path
@@ -2166,7 +2041,7 @@ attachments   -I message/external-body
 # How to invoke ispell (GNU's spell-checking software).
 #
 #
-# set keep_flagged=no
+# set keep_flagged = no
 #
 # Name: keep_flagged
 # Type: boolean
@@ -2178,7 +2053,7 @@ attachments   -I message/external-body
 # a ``mbox-hook'' command.
 #
 #
-# set locale="C"
+# set locale = "C"
 #
 # Name: locale
 # Type: string
@@ -2189,7 +2064,7 @@ attachments   -I message/external-body
 # the strings your system accepts for the locale environment variable $LC_TIME.
 #
 #
-# set mail_check=5
+# set mail_check = 5
 #
 # Name: mail_check
 # Type: number
@@ -2200,7 +2075,7 @@ attachments   -I message/external-body
 # new mail. Also see the $timeout variable.
 #
 #
-# set mail_check_recent=yes
+# set mail_check_recent
 #
 # Name: mail_check_recent
 # Type: boolean
@@ -2216,7 +2091,7 @@ attachments   -I message/external-body
 # mail if only old messages exist.
 #
 #
-# set mail_check_stats=no
+# set mail_check_stats = no
 #
 # Name: mail_check_stats
 # Type: boolean
@@ -2231,7 +2106,7 @@ attachments   -I message/external-body
 # control how often to update these counts.
 #
 #
-# set mail_check_stats_interval=60
+# set mail_check_stats_interval = 60
 #
 # Name: mail_check_stats_interval
 # Type: number
@@ -2242,7 +2117,7 @@ attachments   -I message/external-body
 # how often (in seconds) mutt will update message counts.
 #
 #
-# set mailcap_path=""
+# set mailcap_path = ""
 #
 # Name: mailcap_path
 # Type: string
@@ -2253,7 +2128,7 @@ attachments   -I message/external-body
 # display MIME bodies not directly supported by Mutt.
 #
 #
-# set mailcap_sanitize=yes
+# set mailcap_sanitize
 #
 # Name: mailcap_sanitize
 # Type: boolean
@@ -2268,7 +2143,7 @@ attachments   -I message/external-body
 # DOING!
 #
 #
-# set maildir_header_cache_verify=yes
+# set maildir_header_cache_verify
 #
 # Name: maildir_header_cache_verify
 # Type: boolean
@@ -2281,7 +2156,7 @@ attachments   -I message/external-body
 # folders).
 #
 #
-# set maildir_trash=no
+# set maildir_trash = no
 #
 # Name: maildir_trash
 # Type: boolean
@@ -2294,7 +2169,7 @@ attachments   -I message/external-body
 # mailbox types.
 #
 #
-# set maildir_check_cur=no
+# set maildir_check_cur = no
 #
 # Name: maildir_check_cur
 # Type: boolean
@@ -2309,7 +2184,7 @@ attachments   -I message/external-body
 # to scan all cur messages.
 #
 #
-# set mark_old=yes
+# set mark_old
 #
 # Name: mark_old
 # Type: boolean
@@ -2323,7 +2198,7 @@ attachments   -I message/external-body
 # indicating that they are old.
 #
 #
-# set markers=yes
+# set markers
 #
 # Name: markers
 # Type: boolean
@@ -2336,7 +2211,7 @@ attachments   -I message/external-body
 # Also see the $smart_wrap variable.
 #
 #
-# set mask="!^\\.[^.]"
+# set mask = "!^\\.[^.]"
 #
 # Name: mask
 # Type: regular expression
@@ -2348,7 +2223,7 @@ attachments   -I message/external-body
 # will be shown. The match is always case-sensitive.
 #
 #
-# set mbox="~/mbox"
+# set mbox = "~/mbox"
 #
 # Name: mbox
 # Type: path
@@ -2361,7 +2236,7 @@ attachments   -I message/external-body
 # Also see the $move variable.
 #
 #
-# set mbox_type=mbox
+# set mbox_type = mbox
 #
 # Name: mbox_type
 # Type: folder magic
@@ -2373,7 +2248,7 @@ attachments   -I message/external-body
 # -m command-line option.
 #
 #
-# set menu_context=0
+# set menu_context = 0
 #
 # Name: menu_context
 # Type: number
@@ -2384,7 +2259,7 @@ attachments   -I message/external-body
 # when scrolling through menus. (Similar to $pager_context.)
 #
 #
-# set menu_move_off=yes
+# set menu_move_off
 #
 # Name: menu_move_off
 # Type: boolean
@@ -2396,7 +2271,7 @@ attachments   -I message/external-body
 # When set, the bottom entry may move off the bottom.
 #
 #
-# set menu_scroll=no
+# set menu_scroll = no
 #
 # Name: menu_scroll
 # Type: boolean
@@ -2409,7 +2284,7 @@ attachments   -I message/external-body
 # (useful for slow links to avoid many redraws).
 #
 #
-# set message_cache_clean=no
+# set message_cache_clean = no
 #
 # Name: message_cache_clean
 # Type: boolean
@@ -2422,7 +2297,7 @@ attachments   -I message/external-body
 # (especially for large folders).
 #
 #
-# set message_cachedir=""
+# set message_cachedir = ""
 #
 # Name: message_cachedir
 # Type: path
@@ -2440,7 +2315,7 @@ attachments   -I message/external-body
 # Also see the $message_cache_clean variable.
 #
 #
-# set message_format="%s"
+# set message_format = "%s"
 #
 # Name: message_format
 # Type: string
@@ -2452,7 +2327,7 @@ attachments   -I message/external-body
 # printf(3)-like sequences see the section on $index_format.
 #
 #
-# set meta_key=no
+# set meta_key = no
 #
 # Name: meta_key
 # Type: boolean
@@ -2468,7 +2343,7 @@ attachments   -I message/external-body
 # ``x''.
 #
 #
-# set metoo=no
+# set metoo = no
 #
 # Name: metoo
 # Type: boolean
@@ -2479,7 +2354,7 @@ attachments   -I message/external-body
 # command) from the list of recipients when replying to a message.
 #
 #
-# set mh_purge=no
+# set mh_purge = no
 #
 # Name: mh_purge
 # Type: boolean
@@ -2495,7 +2370,7 @@ attachments   -I message/external-body
 # This option is similar to $maildir_trash for Maildir folders.
 #
 #
-# set mh_seq_flagged="flagged"
+# set mh_seq_flagged = "flagged"
 #
 # Name: mh_seq_flagged
 # Type: string
@@ -2505,7 +2380,7 @@ attachments   -I message/external-body
 # The name of the MH sequence used for flagged messages.
 #
 #
-# set mh_seq_replied="replied"
+# set mh_seq_replied = "replied"
 #
 # Name: mh_seq_replied
 # Type: string
@@ -2515,7 +2390,7 @@ attachments   -I message/external-body
 # The name of the MH sequence used to tag replied messages.
 #
 #
-# set mh_seq_unseen="unseen"
+# set mh_seq_unseen = "unseen"
 #
 # Name: mh_seq_unseen
 # Type: string
@@ -2525,7 +2400,7 @@ attachments   -I message/external-body
 # The name of the MH sequence used for unseen messages.
 #
 #
-# set mime_forward=no
+# set mime_forward = no
 #
 # Name: mime_forward
 # Type: quadoption
@@ -2542,7 +2417,7 @@ attachments   -I message/external-body
 # Also see $forward_decode and $mime_forward_decode.
 #
 #
-# set mime_forward_decode=no
+# set mime_forward_decode = no
 #
 # Name: mime_forward_decode
 # Type: boolean
@@ -2554,7 +2429,7 @@ attachments   -I message/external-body
 # $forward_decode is used instead.
 #
 #
-# set mime_forward_rest=yes
+# set mime_forward_rest
 #
 # Name: mime_forward_rest
 # Type: quadoption
@@ -2566,7 +2441,7 @@ attachments   -I message/external-body
 # be attached to the newly composed message if this option is set.
 #
 #
-# set mix_entry_format="%4n %c %-16s %a"
+# set mix_entry_format = "%4n %c %-16s %a"
 #
 # Name: mix_entry_format
 # Type: string
@@ -2582,7 +2457,7 @@ attachments   -I message/external-body
 # %a      The remailer's e-mail address.
 #
 #
-# set mixmaster="mixmaster"
+# set mixmaster = "mixmaster"
 #
 # Name: mixmaster
 # Type: path
@@ -2595,7 +2470,7 @@ attachments   -I message/external-body
 # mixmaster chain.
 #
 #
-# set move=no
+# set move = no
 #
 # Name: move
 # Type: quadoption
@@ -2607,7 +2482,7 @@ attachments   -I message/external-body
 # a ``mbox-hook'' command.
 #
 #
-# set narrow_tree=no
+# set narrow_tree = no
 #
 # Name: narrow_tree
 # Type: boolean
@@ -2618,7 +2493,7 @@ attachments   -I message/external-body
 # deeper threads to fit on the screen.
 #
 #
-# set net_inc=10
+# set net_inc = 10
 #
 # Name: net_inc
 # Type: number
@@ -2632,7 +2507,7 @@ attachments   -I message/external-body
 # See also $read_inc, $write_inc and $net_inc.
 #
 #
-# set pager="builtin"
+# set pager = "builtin"
 #
 # Name: pager
 # Type: path
@@ -2650,7 +2525,7 @@ attachments   -I message/external-body
 # the screen width to be badly formatted in the help menu.
 #
 #
-set pager_context=10
+set pager_context = 10
 #
 # Name: pager_context
 # Type: number
@@ -2667,7 +2542,7 @@ set pager_context=10
 # if 0, the match will be top-aligned.
 #
 #
-# set pager_format="-%Z- %C/%m: %-20.20n   %s%*  -- (%P)"
+# set pager_format = "-%Z- %C/%m: %-20.20n   %s%*  -- (%P)"
 #
 # Name: pager_format
 # Type: string
@@ -2680,7 +2555,7 @@ set pager_context=10
 # section.
 #
 #
-set pager_index_lines=0
+set pager_index_lines = 0
 #
 # Name: pager_index_lines
 # Type: number
@@ -2700,7 +2575,7 @@ set pager_index_lines=0
 # many lines as it needs.
 #
 #
-# set pager_stop=yes
+# set pager_stop
 #
 # Name: pager_stop
 # Type: boolean
@@ -2712,7 +2587,7 @@ set pager_index_lines=0
 # function.
 #
 #
-# set pgp_auto_decode=no
+# set pgp_auto_decode = no
 #
 # Name: pgp_auto_decode
 # Type: boolean
@@ -2727,7 +2602,7 @@ set pager_index_lines=0
 # check the message for traditional pgp.
 #
 #
-# set pgp_autoinline=no
+# set pgp_autoinline = no
 #
 # Name: pgp_autoinline
 # Type: boolean
@@ -2752,7 +2627,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_check_exit=yes
+# set pgp_check_exit
 #
 # Name: pgp_check_exit
 # Type: boolean
@@ -2765,7 +2640,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_clearsign_command="gpg2 --clearsign"
+# set pgp_clearsign_command = "gpg2 --clearsign"
 #
 # Name: pgp_clearsign_command
 # Type: string
@@ -2781,7 +2656,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_decode_command=""
+# set pgp_decode_command = ""
 #
 # Name: pgp_decode_command
 # Type: string
@@ -2792,7 +2667,7 @@ set pager_index_lines=0
 # application/pgp attachments.
 #
 # The PGP command formats have their own set of printf(3)-like sequences:
-# %p      Expands to PGPPASSFD=0 when a pass phrase is needed, to an empty
+# %p      Expands to PGPPASSFD = 0 when a pass phrase is needed, to an empty
 #         string otherwise. Note: This may be used with a %? construct.
 # %f      Expands to the name of a file containing a message.
 # %s      Expands to the name of a file containing the signature part
@@ -2808,7 +2683,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_decrypt_command="gpg2 -d"
+# set pgp_decrypt_command = "gpg2 -d"
 #
 # Name: pgp_decrypt_command
 # Type: string
@@ -2822,7 +2697,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_decryption_okay=""
+# set pgp_decryption_okay = ""
 #
 # Name: pgp_decryption_okay
 # Type: regular expression
@@ -2838,7 +2713,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_encrypt_only_command="gpg2 -e"
+# set pgp_encrypt_only_command = "gpg2 -e"
 #
 # Name: pgp_encrypt_only_command
 # Type: string
@@ -2852,7 +2727,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_encrypt_sign_command=""
+# set pgp_encrypt_sign_command = ""
 #
 # Name: pgp_encrypt_sign_command
 # Type: string
@@ -2866,7 +2741,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_entry_format="%4n %t%f %4l/0x%k %-4a %2c %u"
+# set pgp_entry_format = "%4n %t%f %4l/0x%k %-4a %2c %u"
 #
 # Name: pgp_entry_format
 # Type: string
@@ -2890,7 +2765,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_export_command=""
+# set pgp_export_command = ""
 #
 # Name: pgp_export_command
 # Type: string
@@ -2905,7 +2780,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_getkeys_command=""
+# set pgp_getkeys_command = ""
 #
 # Name: pgp_getkeys_command
 # Type: string
@@ -2920,7 +2795,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_good_sign=""
+# set pgp_good_sign = ""
 #
 # Name: pgp_good_sign
 # Type: regular expression
@@ -2934,7 +2809,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_ignore_subkeys=no
+# set pgp_ignore_subkeys = no
 #
 # Name: pgp_ignore_subkeys
 # Type: boolean
@@ -2947,7 +2822,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_import_command=""
+# set pgp_import_command = ""
 #
 # Name: pgp_import_command
 # Type: string
@@ -2962,7 +2837,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_list_pubring_command=""
+# set pgp_list_pubring_command = ""
 #
 # Name: pgp_list_pubring_command
 # Type: string
@@ -2985,7 +2860,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_list_secring_command=""
+# set pgp_list_secring_command = ""
 #
 # Name: pgp_list_secring_command
 # Type: string
@@ -3008,7 +2883,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_long_ids=yes
+# set pgp_long_ids
 #
 # Name: pgp_long_ids
 # Type: boolean
@@ -3022,7 +2897,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_mime_auto=ask-yes
+# set pgp_mime_auto = ask-yes
 #
 # Name: pgp_mime_auto
 # Type: quadoption
@@ -3038,7 +2913,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_replyinline=no
+# set pgp_replyinline = no
 #
 # Name: pgp_replyinline
 # Type: boolean
@@ -3065,7 +2940,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_retainable_sigs=no
+# set pgp_retainable_sigs = no
 #
 # Name: pgp_retainable_sigs
 # Type: boolean
@@ -3081,7 +2956,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_show_unusable=yes
+# set pgp_show_unusable
 #
 # Name: pgp_show_unusable
 # Type: boolean
@@ -3094,7 +2969,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_sign_as=""
+# set pgp_sign_as = ""
 #
 # Name: pgp_sign_as
 # Type: string
@@ -3107,7 +2982,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_sign_command="gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+# set pgp_sign_command = "gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
 #
 # Name: pgp_sign_command
 # Type: string
@@ -3122,7 +2997,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_sort_keys=address
+# set pgp_sort_keys = address
 #
 # Name: pgp_sort_keys
 # Type: sort order
@@ -3142,7 +3017,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_strict_enc=yes
+# set pgp_strict_enc
 #
 # Name: pgp_strict_enc
 # Type: boolean
@@ -3156,7 +3031,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_timeout=300
+# set pgp_timeout = 300
 #
 # Name: pgp_timeout
 # Type: number
@@ -3168,7 +3043,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_use_gpg_agent=yes
+# set pgp_use_gpg_agent
 #
 # Name: pgp_use_gpg_agent
 # Type: boolean
@@ -3195,7 +3070,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pgp_verify_key_command=""
+# set pgp_verify_key_command = ""
 #
 # Name: pgp_verify_key_command
 # Type: string
@@ -3210,7 +3085,7 @@ set pager_index_lines=0
 # (PGP only)
 #
 #
-# set pipe_decode=no
+# set pipe_decode = no
 #
 # Name: pipe_decode
 # Type: boolean
@@ -3223,7 +3098,7 @@ set pager_index_lines=0
 # first.
 #
 #
-# set pipe_sep="\n"
+# set pipe_sep = "\n"
 #
 # Name: pipe_sep
 # Type: string
@@ -3234,7 +3109,7 @@ set pager_index_lines=0
 # messages to an external Unix command.
 #
 #
-# set pipe_split=no
+# set pipe_split = no
 #
 # Name: pipe_split
 # Type: boolean
@@ -3249,7 +3124,7 @@ set pager_index_lines=0
 # and the $pipe_sep separator is added after each message.
 #
 #
-# set pop_auth_try_all=yes
+# set pop_auth_try_all
 #
 # Name: pop_auth_try_all
 # Type: boolean
@@ -3262,7 +3137,7 @@ set pager_index_lines=0
 # available but authentication fails, Mutt will not connect to the POP server.
 #
 #
-# set pop_authenticators=""
+# set pop_authenticators = ""
 #
 # Name: pop_authenticators
 # Type: string
@@ -3278,10 +3153,10 @@ set pager_index_lines=0
 # most-secure to least-secure.
 #
 # Example:
-# set pop_authenticators="digest-md5:apop:user"
+# set pop_authenticators = "digest-md5:apop:user"
 #
 #
-# set pop_checkinterval=60
+# set pop_checkinterval = 60
 #
 # Name: pop_checkinterval
 # Type: number
@@ -3292,7 +3167,7 @@ set pager_index_lines=0
 # new mail in the currently selected mailbox if it is a POP mailbox.
 #
 #
-# set pop_delete=ask-no
+# set pop_delete = ask-no
 #
 # Name: pop_delete
 # Type: quadoption
@@ -3304,7 +3179,7 @@ set pager_index_lines=0
 # download messages but also leave them on the POP server.
 #
 #
-# set pop_host=""
+# set pop_host = ""
 #
 # Name: pop_host
 # Type: string
@@ -3318,7 +3193,7 @@ set pager_index_lines=0
 # where ``[...]'' denotes an optional part.
 #
 #
-# set pop_last=no
+# set pop_last = no
 #
 # Name: pop_last
 # Type: boolean
@@ -3330,7 +3205,7 @@ set pager_index_lines=0
 # the <fetch-mail> function.
 #
 #
-# set pop_pass=""
+# set pop_pass = ""
 #
 # Name: pop_pass
 # Type: string
@@ -3345,7 +3220,7 @@ set pager_index_lines=0
 # even if you are the only one who can read the file.
 #
 #
-# set pop_reconnect=ask-yes
+# set pop_reconnect = ask-yes
 #
 # Name: pop_reconnect
 # Type: quadoption
@@ -3356,7 +3231,7 @@ set pager_index_lines=0
 # the connection is lost.
 #
 #
-# set pop_user=""
+# set pop_user = ""
 #
 # Name: pop_user
 # Type: string
@@ -3368,7 +3243,7 @@ set pager_index_lines=0
 # This variable defaults to your user name on the local machine.
 #
 #
-# set post_indent_string=""
+# set post_indent_string = ""
 #
 # Name: post_indent_string
 # Type: string
@@ -3379,7 +3254,7 @@ set pager_index_lines=0
 # string after the inclusion of a message which is being replied to.
 #
 #
-# set postpone=ask-yes
+# set postpone = ask-yes
 #
 # Name: postpone
 # Type: quadoption
@@ -3392,7 +3267,7 @@ set pager_index_lines=0
 # Also see the $recall variable.
 #
 #
-# set postponed="~/postponed"
+# set postponed = "~/postponed"
 #
 # Name: postponed
 # Type: path
@@ -3406,7 +3281,7 @@ set pager_index_lines=0
 # Also see the $postpone variable.
 #
 #
-# set postpone_encrypt=no
+# set postpone_encrypt = no
 #
 # Name: postpone_encrypt
 # Type: boolean
@@ -3418,7 +3293,7 @@ set pager_index_lines=0
 # (Crypto only)
 #
 #
-# set postpone_encrypt_as=""
+# set postpone_encrypt_as = ""
 #
 # Name: postpone_encrypt_as
 # Type: string
@@ -3431,7 +3306,7 @@ set pager_index_lines=0
 # (Crypto only)
 #
 #
-# set preconnect=""
+# set preconnect = ""
 #
 # Name: preconnect
 # Type: string
@@ -3442,7 +3317,7 @@ set pager_index_lines=0
 # a connection to the server. This is useful for setting up secure
 # connections, e.g. with ssh(1). If the command returns a  nonzero
 # status, mutt gives up opening the server. Example:
-# set preconnect="ssh -f -q -L 1234:mailhost.net:143 mailhost.net \
+# set preconnect = "ssh -f -q -L 1234:mailhost.net:143 mailhost.net \
 # sleep 20 < /dev/null > /dev/null"
 #
 # Mailbox ``foo'' on ``mailhost.net'' can now be reached
@@ -3452,7 +3327,7 @@ set pager_index_lines=0
 # remote machine without having to enter a password.
 #
 #
-# set print=ask-no
+# set print = ask-no
 #
 # Name: print
 # Type: quadoption
@@ -3464,7 +3339,7 @@ set pager_index_lines=0
 # accidentally hit ``p'' often.
 #
 #
-# set print_command="lpr"
+# set print_command = "lpr"
 #
 # Name: print_command
 # Type: path
@@ -3474,7 +3349,7 @@ set pager_index_lines=0
 # This specifies the command pipe that should be used to print messages.
 #
 #
-# set print_decode=yes
+# set print_decode
 #
 # Name: print_decode
 # Type: boolean
@@ -3490,7 +3365,7 @@ set pager_index_lines=0
 # e-mail messages for printing.
 #
 #
-# set print_split=no
+# set print_split = no
 #
 # Name: print_split
 # Type: boolean
@@ -3508,7 +3383,7 @@ set pager_index_lines=0
 # most likely want to set this option.
 #
 #
-# set prompt_after=yes
+# set prompt_after
 #
 # Name: prompt_after
 # Type: boolean
@@ -3521,7 +3396,7 @@ set pager_index_lines=0
 # index menu when the external pager exits.
 #
 #
-# set query_command=""
+# set query_command = ""
 #
 # Name: query_command
 # Type: path
@@ -3537,7 +3412,7 @@ set pager_index_lines=0
 # See ``query'' for more information.
 #
 #
-# set query_format="%4c %t %-25.25a %-25.25n %?e?(%e)?"
+# set query_format = "%4c %t %-25.25a %-25.25n %?e?(%e)?"
 #
 # Name: query_format
 # Type: string
@@ -3561,7 +3436,7 @@ set pager_index_lines=0
 # * = can be optionally printed if nonzero, see the $status_format documentation.
 #
 #
-# set quit=yes
+# set quit
 #
 # Name: quit
 # Type: quadoption
@@ -3574,7 +3449,7 @@ set pager_index_lines=0
 # prompted for confirmation when you try to quit.
 #
 #
-# set quote_regexp="^([ \t]*[|>:}#])+"
+# set quote_regexp = "^([ \t]*[|>:}#])+"
 #
 # Name: quote_regexp
 # Type: regular expression
@@ -3594,7 +3469,7 @@ set pager_index_lines=0
 # Match detection may be overridden by the $smileys regular expression.
 #
 #
-# set read_inc=10
+# set read_inc = 10
 #
 # Name: read_inc
 # Type: number
@@ -3615,7 +3490,7 @@ set pager_index_lines=0
 # ``tuning'' section of the manual for performance considerations.
 #
 #
-# set read_only=no
+# set read_only = no
 #
 # Name: read_only
 # Type: boolean
@@ -3625,7 +3500,7 @@ set pager_index_lines=0
 # If set, all folders are opened in read-only mode.
 #
 #
-# set realname=""
+# set realname = ""
 #
 # Name: realname
 # Type: string
@@ -3640,7 +3515,7 @@ set pager_index_lines=0
 # in the $from variable.
 #
 #
-# set recall=ask-yes
+# set recall = ask-yes
 #
 # Name: recall
 # Type: quadoption
@@ -3657,7 +3532,7 @@ set pager_index_lines=0
 # Also see $postponed variable.
 #
 #
-# set record="~/sent"
+# set record = "~/sent"
 #
 # Name: record
 # Type: path
@@ -3673,14 +3548,14 @@ set pager_index_lines=0
 # $save_name variables, and the ``fcc-hook'' command.
 #
 #
-# set reflow_space_quotes=yes
+# set reflow_space_quotes
 #
 # Name: reflow_space_quotes
 # Type: boolean
 # Default: yes
 #
 #
-# This option controls how quotes from format=flowed messages are displayed
+# This option controls how quotes from format = flowed messages are displayed
 # in the pager and when replying (with $text_flowed unset).
 # When set, this option adds spaces after each level of quote marks, turning
 # ">>>foo" into "> > > foo".
@@ -3689,7 +3564,7 @@ set pager_index_lines=0
 # Also, this option does not affect replies when $text_flowed is set.
 #
 #
-# set reflow_text=yes
+# set reflow_text
 #
 # Name: reflow_text
 # Type: boolean
@@ -3697,14 +3572,14 @@ set pager_index_lines=0
 #
 #
 # When set, Mutt will reformat paragraphs in text/plain
-# parts marked format=flowed.  If unset, Mutt will display paragraphs
+# parts marked format = flowed.  If unset, Mutt will display paragraphs
 # unaltered from how they appear in the message body.  See RFC3676 for
-# details on the format=flowed format.
+# details on the format = flowed format.
 #
 # Also see $reflow_wrap, and $wrap.
 #
 #
-# set reflow_wrap=78
+# set reflow_wrap = 78
 #
 # Name: reflow_wrap
 # Type: number
@@ -3720,7 +3595,7 @@ set pager_index_lines=0
 # Also see $wrap.
 #
 #
-# set reply_regexp="^(re([\\[0-9\\]+])*|aw):[ \t]*"
+# set reply_regexp = "^(re([\\[0-9\\]+])*|aw):[ \t]*"
 #
 # Name: reply_regexp
 # Type: regular expression
@@ -3732,7 +3607,7 @@ set pager_index_lines=0
 # the German "Aw:".
 #
 #
-# set reply_self=no
+# set reply_self = no
 #
 # Name: reply_self
 # Type: boolean
@@ -3746,7 +3621,7 @@ set pager_index_lines=0
 # Also see the ``alternates'' command.
 #
 #
-# set reply_to=ask-yes
+# set reply_to = ask-yes
 #
 # Name: reply_to
 # Type: quadoption
@@ -3761,7 +3636,7 @@ set pager_index_lines=0
 # message to the author of a message.
 #
 #
-# set resolve=yes
+# set resolve
 #
 # Name: resolve
 # Type: boolean
@@ -3773,7 +3648,7 @@ set pager_index_lines=0
 # current message is executed.
 #
 #
-# set resume_draft_files=no
+# set resume_draft_files = no
 #
 # Name: resume_draft_files
 # Type: boolean
@@ -3787,7 +3662,7 @@ set pager_index_lines=0
 # and signatures are not added to the message.
 #
 #
-# set resume_edited_draft_files=yes
+# set resume_edited_draft_files
 #
 # Name: resume_edited_draft_files
 # Type: boolean
@@ -3808,7 +3683,7 @@ set pager_index_lines=0
 # made multiple times to the draft file.
 #
 #
-# set reverse_alias=no
+# set reverse_alias = no
 #
 # Name: reverse_alias
 # Type: boolean
@@ -3829,7 +3704,7 @@ set pager_index_lines=0
 # address is not human friendly.
 #
 #
-# set reverse_name=no
+# set reverse_name = no
 #
 # Name: reverse_name
 # Type: boolean
@@ -3848,7 +3723,7 @@ set pager_index_lines=0
 # Also see the ``alternates'' command.
 #
 #
-# set reverse_realname=yes
+# set reverse_realname
 #
 # Name: reverse_realname
 # Type: boolean
@@ -3861,7 +3736,7 @@ set pager_index_lines=0
 # override any such real names with the setting of the $realname variable.
 #
 #
-# set rfc2047_parameters=no
+# set rfc2047_parameters = no
 #
 # Name: rfc2047_parameters
 # Type: boolean
@@ -3871,7 +3746,7 @@ set pager_index_lines=0
 # When this variable is set, Mutt will decode RFC2047-encoded MIME
 # parameters. You want to set this variable when mutt suggests you
 # to save attachments to files named like:
-# =?iso-8859-1?Q?file=5F=E4=5F991116=2Ezip?=
+# =?iso-8859-1?Q?file = 5F = E4 = 5F991116 = 2Ezip?=
 #
 # When this variable is set interactively, the change won't be
 # active until you change folders.
@@ -3885,7 +3760,7 @@ set pager_index_lines=0
 # unconditionally use the encoding specified in RFC2231.
 #
 #
-# set save_address=no
+# set save_address = no
 #
 # Name: save_address
 # Type: boolean
@@ -3897,7 +3772,7 @@ set pager_index_lines=0
 # is set too, the selection of the Fcc folder will be changed as well.
 #
 #
-# set save_empty=yes
+# set save_empty
 #
 # Name: save_empty
 # Type: boolean
@@ -3912,7 +3787,7 @@ set pager_index_lines=0
 # delete MH and Maildir directories.
 #
 #
-# set save_history=0
+# set save_history = 0
 #
 # Name: save_history
 # Type: number
@@ -3923,7 +3798,7 @@ set pager_index_lines=0
 # $history_file file.
 #
 #
-# set save_name=no
+# set save_name = no
 #
 # Name: save_name
 # Type: boolean
@@ -3941,7 +3816,7 @@ set pager_index_lines=0
 # Also see the $force_name variable.
 #
 #
-# set score=yes
+# set score
 #
 # Name: score
 # Type: boolean
@@ -3953,7 +3828,7 @@ set pager_index_lines=0
 # $score_threshold_delete variable and related are used.
 #
 #
-# set score_threshold_delete=-1
+# set score_threshold_delete = -1
 #
 # Name: score_threshold_delete
 # Type: number
@@ -3966,7 +3841,7 @@ set pager_index_lines=0
 # of this variable will never mark a message for deletion.
 #
 #
-# set score_threshold_flag=9999
+# set score_threshold_flag = 9999
 #
 # Name: score_threshold_flag
 # Type: number
@@ -3977,7 +3852,7 @@ set pager_index_lines=0
 # variable's value are automatically marked "flagged".
 #
 #
-# set score_threshold_read=-1
+# set score_threshold_read = -1
 #
 # Name: score_threshold_read
 # Type: number
@@ -3990,7 +3865,7 @@ set pager_index_lines=0
 # of this variable will never mark a message read.
 #
 #
-# set search_context=0
+# set search_context = 0
 #
 # Name: search_context
 # Type: number
@@ -4001,7 +3876,7 @@ set pager_index_lines=0
 # before search results. By default, search results will be top-aligned.
 #
 #
-# set send_charset="us-ascii:iso-8859-1:utf-8"
+# set send_charset = "us-ascii:iso-8859-1:utf-8"
 #
 # Name: send_charset
 # Type: string
@@ -4020,7 +3895,7 @@ set pager_index_lines=0
 # mutt uses $charset as a fallback.
 #
 #
-# set sendmail="/bin/sendmail -oem -oi"
+# set sendmail = "/bin/sendmail -oem -oi"
 #
 # Name: sendmail
 # Type: path
@@ -4032,7 +3907,7 @@ set pager_index_lines=0
 # arguments as recipient addresses.
 #
 #
-# set sendmail_wait=0
+# set sendmail_wait = 0
 #
 # Name: sendmail_wait
 # Type: number
@@ -4053,7 +3928,7 @@ set pager_index_lines=0
 # will be informed as to where to find the output.
 #
 #
-# set shell=""
+# set shell = ""
 #
 # Name: shell
 # Type: path
@@ -4064,7 +3939,7 @@ set pager_index_lines=0
 # shell from /etc/passwd is used.
 #
 #
-# set sidebar_divider_char="|"
+# set sidebar_divider_char = "|"
 #
 # Name: sidebar_divider_char
 # Type: string
@@ -4076,7 +3951,7 @@ set pager_index_lines=0
 # characters are supported.
 #
 #
-# set sidebar_delim_chars="/."
+# set sidebar_delim_chars = "/."
 #
 # Name: sidebar_delim_chars
 # Type: string
@@ -4087,15 +3962,15 @@ set pager_index_lines=0
 # as folder separators for displaying paths in the sidebar.
 #
 # Local mail is often arranged in directories: `dir1/dir2/mailbox'.
-# set sidebar_delim_chars='/'
+# set sidebar_delim_chars = '/'
 #
 # IMAP mailboxes are often named: `folder1.folder2.mailbox'.
-# set sidebar_delim_chars='.'
+# set sidebar_delim_chars = '.'
 #
 # See also: $sidebar_short_path, $sidebar_folder_indent, $sidebar_indent_string.
 #
 #
-# set sidebar_folder_indent=no
+# set sidebar_folder_indent = no
 #
 # Name: sidebar_folder_indent
 # Type: boolean
@@ -4107,7 +3982,7 @@ set pager_index_lines=0
 # See also: $sidebar_short_path, $sidebar_indent_string, $sidebar_delim_chars.
 #
 #
-# set sidebar_format="%B%*  %n"
+# set sidebar_format = "%B%*  %n"
 #
 # Name: sidebar_format
 # Type: string
@@ -4142,7 +4017,7 @@ set pager_index_lines=0
 # "%B%?F? [%F]?%* %?N?%N/?%S".
 #
 #
-# set sidebar_indent_string="  "
+# set sidebar_indent_string = "  "
 #
 # Name: sidebar_indent_string
 # Type: string
@@ -4155,7 +4030,7 @@ set pager_index_lines=0
 # See also: $sidebar_short_path, $sidebar_folder_indent, $sidebar_delim_chars.
 #
 #
-# set sidebar_new_mail_only=no
+# set sidebar_new_mail_only = no
 #
 # Name: sidebar_new_mail_only
 # Type: boolean
@@ -4168,7 +4043,7 @@ set pager_index_lines=0
 # See also: sidebar_whitelist.
 #
 #
-# set sidebar_next_new_wrap=no
+# set sidebar_next_new_wrap = no
 #
 # Name: sidebar_next_new_wrap
 # Type: boolean
@@ -4181,7 +4056,7 @@ set pager_index_lines=0
 # the end of the list.
 #
 #
-# set sidebar_short_path=no
+# set sidebar_short_path = no
 #
 # Name: sidebar_short_path
 # Type: boolean
@@ -4189,9 +4064,9 @@ set pager_index_lines=0
 #
 #
 # By default the sidebar will show the mailbox's path, relative to the
-# $folder variable. Setting sidebar_shortpath=yes will shorten the
+# $folder variable. Setting sidebar_shortpath = yes will shorten the
 # names relative to the previous name. Here's an example:
-# shortpath=no shortpath=yes shortpath=yes, folderindent=yes, indentstr=".."
+# shortpath = no shortpath = yes shortpath = yes, folderindent = yes, indentstr = ".."
 # fruit           fruit         fruit
 # fruit.apple  apple         ..apple
 # fruit.banana banana        ..banana
@@ -4201,7 +4076,7 @@ set pager_index_lines=0
 # See also: $sidebar_delim_chars, $sidebar_folder_indent, $sidebar_indent_string.
 #
 #
-# set sidebar_sort_method=order
+# set sidebar_sort_method = order
 #
 # Name: sidebar_sort_method
 # Type: sort order
@@ -4218,10 +4093,10 @@ set pager_index_lines=0
 #
 #
 # You may optionally use the ``reverse-'' prefix to specify reverse sorting
-# order (example: ``set sort_browser=reverse-date'').
+# order (example: ``set sort_browser = reverse-date'').
 #
 #
-# set sidebar_visible=no
+# set sidebar_visible = no
 #
 # Name: sidebar_visible
 # Type: boolean
@@ -4234,7 +4109,7 @@ set pager_index_lines=0
 # See also: $sidebar_format, $sidebar_width
 #
 #
-# set sidebar_width=20
+# set sidebar_width = 20
 #
 # Name: sidebar_width
 # Type: number
@@ -4242,11 +4117,11 @@ set pager_index_lines=0
 #
 #
 # This controls the width of the sidebar.  It is measured in screen columns.
-# For example: sidebar_width=20 could display 20 ASCII characters, or 10
+# For example: sidebar_width = 20 could display 20 ASCII characters, or 10
 # Chinese characters.
 #
 #
-# set sig_dashes=yes
+# set sig_dashes
 #
 # Name: sig_dashes
 # Type: boolean
@@ -4261,7 +4136,7 @@ set pager_index_lines=0
 # the signature in a different color in the built-in pager.
 #
 #
-# set sig_on_top=no
+# set sig_on_top = no
 #
 # Name: sig_on_top
 # Type: boolean
@@ -4274,7 +4149,7 @@ set pager_index_lines=0
 # some heat from netiquette guardians.
 #
 #
-# set signature="~/.signature"
+# set signature = "~/.signature"
 #
 # Name: signature
 # Type: path
@@ -4287,7 +4162,7 @@ set pager_index_lines=0
 # its standard output.
 #
 #
-# set simple_search="~f %s | ~s %s"
+# set simple_search = "~f %s | ~s %s"
 #
 # Name: simple_search
 # Type: string
@@ -4304,7 +4179,7 @@ set pager_index_lines=0
 # For the default value, ``joe'' would be expanded to: ``~f joe | ~s joe''.
 #
 #
-# set sleep_time=1
+# set sleep_time = 1
 #
 # Name: sleep_time
 # Type: number
@@ -4317,7 +4192,7 @@ set pager_index_lines=0
 # a value of zero for this option suppresses the pause.
 #
 #
-# set smart_wrap=yes
+# set smart_wrap
 #
 # Name: smart_wrap
 # Type: boolean
@@ -4330,7 +4205,7 @@ set pager_index_lines=0
 # $markers variable.
 #
 #
-# set smileys="(>From )|(:[-^]?[][)(><}{|/DP])"
+# set smileys = "(>From )|(:[-^]?[][)(><}{|/DP])"
 #
 # Name: smileys
 # Type: regular expression
@@ -4343,7 +4218,7 @@ set pager_index_lines=0
 # happens at the beginning of a line.
 #
 #
-# set smime_ask_cert_label=yes
+# set smime_ask_cert_label
 #
 # Name: smime_ask_cert_label
 # Type: boolean
@@ -4356,7 +4231,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_ca_location=""
+# set smime_ca_location = ""
 #
 # Name: smime_ca_location
 # Type: path
@@ -4368,7 +4243,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_certificates=""
+# set smime_certificates = ""
 #
 # Name: smime_certificates
 # Type: path
@@ -4385,7 +4260,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_decrypt_command=""
+# set smime_decrypt_command = ""
 #
 # Name: smime_decrypt_command
 # Type: string
@@ -4415,7 +4290,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_decrypt_use_default_key=yes
+# set smime_decrypt_use_default_key
 #
 # Name: smime_decrypt_use_default_key
 # Type: boolean
@@ -4428,7 +4303,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_default_key=""
+# set smime_default_key = ""
 #
 # Name: smime_default_key
 # Type: string
@@ -4440,7 +4315,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_encrypt_command=""
+# set smime_encrypt_command = ""
 #
 # Name: smime_encrypt_command
 # Type: string
@@ -4454,7 +4329,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_encrypt_with="aes256"
+# set smime_encrypt_with = "aes256"
 #
 # Name: smime_encrypt_with
 # Type: string
@@ -4466,7 +4341,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_get_cert_command=""
+# set smime_get_cert_command = ""
 #
 # Name: smime_get_cert_command
 # Type: string
@@ -4480,7 +4355,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_get_cert_email_command=""
+# set smime_get_cert_email_command = ""
 #
 # Name: smime_get_cert_email_command
 # Type: string
@@ -4496,7 +4371,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_get_signer_cert_command=""
+# set smime_get_signer_cert_command = ""
 #
 # Name: smime_get_signer_cert_command
 # Type: string
@@ -4512,7 +4387,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_import_cert_command=""
+# set smime_import_cert_command = ""
 #
 # Name: smime_import_cert_command
 # Type: string
@@ -4526,7 +4401,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_is_default=no
+# set smime_is_default = no
 #
 # Name: smime_is_default
 # Type: boolean
@@ -4541,7 +4416,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_keys=""
+# set smime_keys = ""
 #
 # Name: smime_keys
 # Type: path
@@ -4557,7 +4432,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_pk7out_command=""
+# set smime_pk7out_command = ""
 #
 # Name: smime_pk7out_command
 # Type: string
@@ -4572,7 +4447,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_sign_command=""
+# set smime_sign_command = ""
 #
 # Name: smime_sign_command
 # Type: string
@@ -4587,7 +4462,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_sign_digest_alg="sha256"
+# set smime_sign_digest_alg = "sha256"
 #
 # Name: smime_sign_digest_alg
 # Type: string
@@ -4599,7 +4474,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_sign_opaque_command=""
+# set smime_sign_opaque_command = ""
 #
 # Name: smime_sign_opaque_command
 # Type: string
@@ -4615,7 +4490,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_timeout=300
+# set smime_timeout = 300
 #
 # Name: smime_timeout
 # Type: number
@@ -4627,7 +4502,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_verify_command=""
+# set smime_verify_command = ""
 #
 # Name: smime_verify_command
 # Type: string
@@ -4641,7 +4516,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smime_verify_opaque_command=""
+# set smime_verify_opaque_command = ""
 #
 # Name: smime_verify_opaque_command
 # Type: string
@@ -4656,7 +4531,7 @@ set pager_index_lines=0
 # (S/MIME only)
 #
 #
-# set smtp_authenticators=""
+# set smtp_authenticators = ""
 #
 # Name: smtp_authenticators
 # Type: string
@@ -4672,10 +4547,10 @@ set pager_index_lines=0
 # most-secure to least-secure.
 #
 # Example:
-# set smtp_authenticators="digest-md5:cram-md5"
+# set smtp_authenticators = "digest-md5:cram-md5"
 #
 #
-# set smtp_pass=""
+# set smtp_pass = ""
 #
 # Name: smtp_pass
 # Type: string
@@ -4691,7 +4566,7 @@ set pager_index_lines=0
 # if you are the only one who can read the file.
 #
 #
-# set smtp_url=""
+# set smtp_url = ""
 #
 # Name: smtp_url
 # Type: string
@@ -4707,7 +4582,7 @@ set pager_index_lines=0
 # variable.
 #
 #
-# set sort=date
+# set sort = date
 #
 # Name: sort
 # Type: sort order
@@ -4729,10 +4604,10 @@ set pager_index_lines=0
 #
 #
 # You may optionally use the ``reverse-'' prefix to specify reverse sorting
-# order (example: ``set sort=reverse-date-sent'').
+# order (example: ``set sort = reverse-date-sent'').
 #
 #
-# set sort_alias=alias
+# set sort_alias = alias
 #
 # Name: sort_alias
 # Type: sort order
@@ -4746,7 +4621,7 @@ set pager_index_lines=0
 # - unsorted (leave in order specified in .muttrc)
 #
 #
-# set sort_aux=date
+# set sort_aux = date
 #
 # Name: sort_aux
 # Type: sort order
@@ -4761,18 +4636,18 @@ set pager_index_lines=0
 # must come after ``reverse-''.  The ``last-'' prefix causes messages to be
 # sorted against its siblings by which has the last descendant, using
 # the rest of $sort_aux as an ordering.  For instance,
-# set sort_aux=last-date-received
+# set sort_aux = last-date-received
 #
 # would mean that if a new message is received in a
 # thread, that thread becomes the last one displayed (or the first, if
-# you have ``set sort=reverse-threads''.)
+# you have ``set sort = reverse-threads''.)
 #
 # Note: For reversed $sort
 # order $sort_aux is reversed again (which is not the right thing to do,
 # but kept to not break any existing configuration setting).
 #
 #
-# set sort_browser=alpha
+# set sort_browser = alpha
 #
 # Name: sort_browser
 # Type: sort order
@@ -4788,10 +4663,10 @@ set pager_index_lines=0
 #
 #
 # You may optionally use the ``reverse-'' prefix to specify reverse sorting
-# order (example: ``set sort_browser=reverse-date'').
+# order (example: ``set sort_browser = reverse-date'').
 #
 #
-# set sort_re=yes
+# set sort_re
 #
 # Name: sort_re
 # Type: boolean
@@ -4808,7 +4683,7 @@ set pager_index_lines=0
 # non-$reply_regexp parts of both messages are identical.
 #
 #
-# set spam_separator=","
+# set spam_separator = ","
 #
 # Name: spam_separator
 # Type: string
@@ -4822,7 +4697,7 @@ set pager_index_lines=0
 # separator.
 #
 #
-# set spoolfile=""
+# set spoolfile = ""
 #
 # Name: spoolfile
 # Type: path
@@ -4835,7 +4710,7 @@ set pager_index_lines=0
 # variable $MAIL or $MAILDIR if either is defined.
 #
 #
-# set ssl_ca_certificates_file=""
+# set ssl_ca_certificates_file = ""
 #
 # Name: ssl_ca_certificates_file
 # Type: path
@@ -4847,10 +4722,10 @@ set pager_index_lines=0
 # certificates is also automatically accepted.
 #
 # Example:
-# set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
+# set ssl_ca_certificates_file = /etc/ssl/certs/ca-certificates.crt
 #
 #
-# set ssl_client_cert=""
+# set ssl_client_cert = ""
 #
 # Name: ssl_client_cert
 # Type: path
@@ -4861,7 +4736,7 @@ set pager_index_lines=0
 # key.
 #
 #
-# set ssl_force_tls=no
+# set ssl_force_tls = no
 #
 # Name: ssl_force_tls
 # Type: boolean
@@ -4875,7 +4750,7 @@ set pager_index_lines=0
 # option supersedes $ssl_starttls.
 #
 #
-# set ssl_min_dh_prime_bits=0
+# set ssl_min_dh_prime_bits = 0
 #
 # Name: ssl_min_dh_prime_bits
 # Type: number
@@ -4887,7 +4762,7 @@ set pager_index_lines=0
 # the default from the GNUTLS library.
 #
 #
-# set ssl_starttls=yes
+# set ssl_starttls
 #
 # Name: ssl_starttls
 # Type: quadoption
@@ -4899,7 +4774,7 @@ set pager_index_lines=0
 # use STARTTLS regardless of the server's capabilities.
 #
 #
-# set ssl_use_sslv2=no
+# set ssl_use_sslv2 = no
 #
 # Name: ssl_use_sslv2
 # Type: boolean
@@ -4911,7 +4786,7 @@ set pager_index_lines=0
 # considered fundamentally insecure and are no longer recommended.
 #
 #
-# set ssl_use_sslv3=no
+# set ssl_use_sslv3 = no
 #
 # Name: ssl_use_sslv3
 # Type: boolean
@@ -4923,7 +4798,7 @@ set pager_index_lines=0
 # considered fundamentally insecure and are no longer recommended.
 #
 #
-# set ssl_use_tlsv1=yes
+# set ssl_use_tlsv1
 #
 # Name: ssl_use_tlsv1
 # Type: boolean
@@ -4934,7 +4809,7 @@ set pager_index_lines=0
 # SSL authentication process.
 #
 #
-# set ssl_use_tlsv1_1=yes
+# set ssl_use_tlsv1_1
 #
 # Name: ssl_use_tlsv1_1
 # Type: boolean
@@ -4945,7 +4820,7 @@ set pager_index_lines=0
 # SSL authentication process.
 #
 #
-# set ssl_use_tlsv1_2=yes
+# set ssl_use_tlsv1_2
 #
 # Name: ssl_use_tlsv1_2
 # Type: boolean
@@ -4956,7 +4831,7 @@ set pager_index_lines=0
 # SSL authentication process.
 #
 #
-# set ssl_usesystemcerts=yes
+# set ssl_usesystemcerts
 #
 # Name: ssl_usesystemcerts
 # Type: boolean
@@ -4968,7 +4843,7 @@ set pager_index_lines=0
 # is signed by a trusted CA.
 #
 #
-# set ssl_verify_dates=yes
+# set ssl_verify_dates
 #
 # Name: ssl_verify_dates
 # Type: boolean
@@ -4981,7 +4856,7 @@ set pager_index_lines=0
 # <account-hook> function.
 #
 #
-# set ssl_verify_host=yes
+# set ssl_verify_host
 #
 # Name: ssl_verify_host
 # Type: boolean
@@ -4994,7 +4869,7 @@ set pager_index_lines=0
 # the <account-hook> function.
 #
 #
-# set ssl_ciphers=""
+# set ssl_ciphers = ""
 #
 # Name: ssl_ciphers
 # Type: string
@@ -5010,7 +4885,7 @@ set pager_index_lines=0
 # required.)
 #
 #
-# set status_chars="-*%A"
+# set status_chars = "-*%A"
 #
 # Name: status_chars
 # Type: string
@@ -5029,7 +4904,7 @@ set pager_index_lines=0
 # forwarding, etc. are not permitted in this mode).
 #
 #
-# set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"
+# set status_format = "-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"
 #
 # Name: status_format
 # Type: string
@@ -5106,7 +4981,7 @@ set pager_index_lines=0
 # with IMAP folders that don't like dots in folder names.
 #
 #
-# set status_on_top=no
+# set status_on_top = no
 #
 # Name: status_on_top
 # Type: boolean
@@ -5118,7 +4993,7 @@ set pager_index_lines=0
 # is set, too it'll be placed at the bottom.
 #
 #
-# set strict_threads=no
+# set strict_threads = no
 #
 # Name: strict_threads
 # Type: boolean
@@ -5135,7 +5010,7 @@ set pager_index_lines=0
 # behavior.
 #
 #
-# set suspend=yes
+# set suspend
 #
 # Name: suspend
 # Type: boolean
@@ -5147,15 +5022,15 @@ set pager_index_lines=0
 # inside an xterm using a command like ``xterm -e mutt''.
 #
 #
-# set text_flowed=no
+# set text_flowed = no
 #
 # Name: text_flowed
 # Type: boolean
 # Default: no
 #
 #
-# When set, mutt will generate ``format=flowed'' bodies with a content type
-# of ``text/plain; format=flowed''.
+# When set, mutt will generate ``format = flowed'' bodies with a content type
+# of ``text/plain; format = flowed''.
 # This format is easier to handle for some mailing software, and generally
 # just looks like ordinary text.  To actually make use of this format's
 # features, you'll need support in your editor.
@@ -5163,7 +5038,7 @@ set pager_index_lines=0
 # Note that $indent_string is ignored when this option is set.
 #
 #
-# set thorough_search=yes
+# set thorough_search
 #
 # Name: thorough_search
 # Type: boolean
@@ -5182,7 +5057,7 @@ set pager_index_lines=0
 # headers) which may lead to incorrect search results.
 #
 #
-# set thread_received=no
+# set thread_received = no
 #
 # Name: thread_received
 # Type: boolean
@@ -5193,7 +5068,7 @@ set pager_index_lines=0
 # to thread messages by subject.
 #
 #
-# set tilde=no
+# set tilde = no
 #
 # Name: tilde
 # Type: boolean
@@ -5204,7 +5079,7 @@ set pager_index_lines=0
 # screen with a tilde (``~'').
 #
 #
-# set time_inc=0
+# set time_inc = 0
 #
 # Name: time_inc
 # Type: number
@@ -5220,7 +5095,7 @@ set pager_index_lines=0
 # Also see the ``tuning'' section of the manual for performance considerations.
 #
 #
-# set timeout=600
+# set timeout = 600
 #
 # Name: timeout
 # Type: number
@@ -5240,7 +5115,7 @@ set pager_index_lines=0
 # A value of zero or less will cause Mutt to never time out.
 #
 #
-# set tmpdir=""
+# set tmpdir = ""
 #
 # Name: tmpdir
 # Type: path
@@ -5253,7 +5128,7 @@ set pager_index_lines=0
 # used.  If $TMPDIR is not set then ``/tmp'' is used.
 #
 #
-# set to_chars=" +TCFL"
+# set to_chars = " +TCFL"
 #
 # Name: to_chars
 # Type: string
@@ -5272,7 +5147,7 @@ set pager_index_lines=0
 # was sent to a mailing-list you subscribe to.
 #
 #
-# set ts_icon_format="M%?n?AIL&ail?"
+# set ts_icon_format = "M%?n?AIL&ail?"
 #
 # Name: ts_icon_format
 # Type: string
@@ -5284,7 +5159,7 @@ set pager_index_lines=0
 # ``$status_format''.
 #
 #
-# set ts_enabled=no
+# set ts_enabled = no
 #
 # Name: ts_enabled
 # Type: boolean
@@ -5295,7 +5170,7 @@ set pager_index_lines=0
 # Most terminal emulators emulate the status line in the window title.
 #
 #
-# set ts_status_format="Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?"
+# set ts_status_format = "Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?"
 #
 # Name: ts_status_format
 # Type: string
@@ -5307,7 +5182,7 @@ set pager_index_lines=0
 # formatting to the one used by ``$status_format''.
 #
 #
-# set trash=""
+# set trash = ""
 #
 # Name: trash
 # Type: path
@@ -5322,7 +5197,7 @@ set pager_index_lines=0
 # deleted, so that you have a way to clean the trash.
 #
 #
-# set tunnel=""
+# set tunnel = ""
 #
 # Name: tunnel
 # Type: string
@@ -5332,7 +5207,7 @@ set pager_index_lines=0
 # Setting this variable will cause mutt to open a pipe to a command
 # instead of a raw socket. You may be able to use this to set up
 # preauthenticated connections to your IMAP/POP3/SMTP server. Example:
-# set tunnel="ssh -q mailhost.net /usr/local/libexec/imapd"
+# set tunnel = "ssh -q mailhost.net /usr/local/libexec/imapd"
 #
 # Note: For this example to work you must be able to log in to the remote
 # machine without having to enter a password.
@@ -5342,7 +5217,7 @@ set pager_index_lines=0
 # tunnel commands per connection.
 #
 #
-# set uncollapse_jump=no
+# set uncollapse_jump = no
 #
 # Name: uncollapse_jump
 # Type: boolean
@@ -5353,7 +5228,7 @@ set pager_index_lines=0
 # when the current thread is uncollapsed.
 #
 #
-# set use_8bitmime=no
+# set use_8bitmime = no
 #
 # Name: use_8bitmime
 # Type: boolean
@@ -5368,7 +5243,7 @@ set pager_index_lines=0
 # flag when sending 8-bit messages to enable ESMTP negotiation.
 #
 #
-# set use_domain=yes
+# set use_domain
 #
 # Name: use_domain
 # Type: boolean
@@ -5380,7 +5255,7 @@ set pager_index_lines=0
 # addresses will be qualified.
 #
 #
-# set use_envelope_from=no
+# set use_envelope_from = no
 #
 # Name: use_envelope_from
 # Type: boolean
@@ -5398,7 +5273,7 @@ set pager_index_lines=0
 # executable pointed to by $sendmail doesn't support the -f switch.
 #
 #
-# set use_from=yes
+# set use_from
 #
 # Name: use_from
 # Type: boolean
@@ -5411,7 +5286,7 @@ set pager_index_lines=0
 # command.
 #
 #
-# set use_ipv6=yes
+# set use_ipv6
 #
 # Name: use_ipv6
 # Type: boolean
@@ -5423,7 +5298,7 @@ set pager_index_lines=0
 # Normally, the default should work.
 #
 #
-# set user_agent=yes
+# set user_agent
 #
 # Name: user_agent
 # Type: boolean
@@ -5435,7 +5310,7 @@ set pager_index_lines=0
 # them.
 #
 #
-# set visual=""
+# set visual = ""
 #
 # Name: visual
 # Type: path
@@ -5446,7 +5321,7 @@ set pager_index_lines=0
 # given in the built-in editor.
 #
 #
-# set wait_key=yes
+# set wait_key
 #
 # Name: wait_key
 # Type: boolean
@@ -5466,7 +5341,7 @@ set pager_index_lines=0
 # for a key only if the external command returned a non-zero status.
 #
 #
-# set weed=yes
+# set weed
 #
 # Name: weed
 # Type: boolean
@@ -5477,7 +5352,7 @@ set pager_index_lines=0
 # printing, or replying to messages.
 #
 #
-# set wrap=0
+# set wrap = 0
 #
 # Name: wrap
 # Type: number
@@ -5492,7 +5367,7 @@ set pager_index_lines=0
 # Also see $reflow_wrap.
 #
 #
-# set wrap_headers=78
+# set wrap_headers = 78
 #
 # Name: wrap_headers
 # Type: number
@@ -5508,7 +5383,7 @@ set pager_index_lines=0
 # this setting when you know what you're doing.
 #
 #
-# set wrap_search=yes
+# set wrap_search
 #
 # Name: wrap_search
 # Type: boolean
@@ -5521,7 +5396,7 @@ set pager_index_lines=0
 # unset, incremental searches will not wrap.
 #
 #
-# set wrapmargin=0
+# set wrapmargin = 0
 #
 # Name: wrapmargin
 # Type: number
@@ -5531,7 +5406,7 @@ set pager_index_lines=0
 # (DEPRECATED) Equivalent to setting $wrap with a negative value.
 #
 #
-# set write_bcc=yes
+# set write_bcc
 #
 # Name: write_bcc
 # Type: boolean
@@ -5545,7 +5420,7 @@ set pager_index_lines=0
 # in this case.
 #
 #
-# set write_inc=10
+# set write_inc = 10
 #
 # Name: write_inc
 # Type: number
@@ -5559,4 +5434,5 @@ set pager_index_lines=0
 # Also see the $read_inc, $net_inc and $time_inc variables and the
 # ``tuning'' section of the manual for performance considerations.
 #
-#
+
+# vi:ft=muttrc:

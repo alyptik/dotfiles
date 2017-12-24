@@ -1,6 +1,6 @@
 [user]
-	email = alyptik@protonmail.com
-	name = alyptik
+	email = joeypabalinas@gmail.com
+	name = Joey Pabalinas
 	signingkey = AEEBCB7D68725419
 [diff]
 	tool = vimdiff2
@@ -13,13 +13,13 @@
 [imap]
 	folder = "[Gmail]/Drafts"
 	host = imaps://imap.google.com
-	user = alyptik@gmail.com
+	user = joeypabalinas@gmail.com
 	port = 993
 	sslverify = false
 [sendemail]
 	smtpEncryption = tls
 	smtpServer = smtp.gmail.com
-	smtpUser = alyptik@gmail.com
+	smtpUser = joeypabalinas@gmail.com
 	smtpServerPort = 587
 [push]
 	default = simple
@@ -63,6 +63,7 @@
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
 	pl = pull
+	f = grep -Fn --color=auto --break
 	g = grep -Pn --color=auto --break
 	gw = grep -PWn --color=auto --break
 	gp = grep -Pnp --color=auto --break
