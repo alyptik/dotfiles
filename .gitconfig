@@ -69,6 +69,9 @@
 	gp = grep -Pnp --color=auto --break
 	gf = grep -Fn --color=auto --break
 	gr = grep -Pn --color=auto --break --no-index
+	dcd = !git difftool --extcmd \"colordiff -wyB\"
+	dcdy = !git difftool --extcmd \"colordiff -wyB\"
+	di = !git difftool --extcmd icdiff
 [web]
 	browser = w3m
 [instaweb]
