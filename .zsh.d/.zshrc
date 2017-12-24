@@ -477,7 +477,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	defargcmds+=(elftoc fzf gnome-keyring-daemon gpg-agent help2man)
 	defargcmds+=(highlight hping hsetroot install keyring kid3-cli)
 	defargcmds+=(kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint)
-	defargcmds+=(mv named netstat netstat newsbeuter node nohup)
+	defargcmds+=(mv named neomutt netstat netstat newsbeuter node nohup)
 	defargcmds+=(objconv objdump optipng pacconf pactree paste pstree)
 	defargcmds+=(qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir)
 	defargcmds+=(rmlint rst2man rst2man2 saldl scan-build seq shred)
