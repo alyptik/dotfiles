@@ -755,8 +755,6 @@ inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
 inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
 "let g:slime_paste_file=tempname()
 let g:slime_paste_file='~/.slime_paste'
-" 32-bit assembly
-" let g:ale_asm_gcc_options='-m32'
 let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warnings'
 let g:instant_markdown_autostart=0
 let g:instant_markdown_slow=1
@@ -1736,29 +1734,45 @@ nnoremap <C-F8> :call ToggleFold()<CR>
 " nnoremap <Esc><F8> :call ToggleHex()<CR>
 let g:tindent=0
 function! ToggleIndent()
-		if g:tindent== 0
-	set shiftwidth=4
-	let g:tindent=1
-		elseif g:tindent== 1
-	set shiftwidth=1
-	let g:tindent=2
-		else
-	set shiftwidth=8
-	let g:tindent=0
-		endif
+	if g:tindent== 0
+		set shiftwidth=4
+		let g:tindent=1
+	elseif g:tindent== 1
+		set shiftwidth=1
+		let g:tindent=2
+	else
+		set shiftwidth=8
+		let g:tindent=0
+	endif
 endfunction
 nnoremap <C-F9> :call ToggleIndent()<CR>
 let g:txxd=0
 function! ToggleXXD()
-		if g:txxd
-	edit!
-	let g:txxd=0
-		else
-	%!xxd
-	let g:txxd=1
-		endi
+	if g:txxd
+		edit!
+		let g:txxd=0
+	else
+		% !xxd
+		let g:txxd=1
+	endi
 endfunction
 nnoremap <Esc><F9> :call ToggleXXD()<CR>
+let g:m32=0
+" 32-bit assembly
+function! ToggleASM()
+	if g:m32
+		let g:ale_asm_gcc_options=''
+		echo g:ale_asm_gcc_options
+		:call ale#Queue(0)
+		let g:m32=0
+	else
+		let g:ale_asm_gcc_options='-m32'
+		echo g:ale_asm_gcc_options
+		:call ale#Queue(0)
+		let g:m32=1
+	endi
+endfunction
+nnoremap <Leader>A :call ToggleASM()<CR>
 
 "There are no default mappings for toggling all marks and for the |:MarkClear|
 "command, but you can define some yourself: >
