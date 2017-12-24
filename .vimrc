@@ -45,6 +45,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'
 	Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	Plug 'junegunn/goyo.vim', {'for': 'markdown'}
@@ -52,9 +53,9 @@ call plug#begin(g:plugdir)
 	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
 	Plug 'edkolev/promptline.vim'
-	Plug 'sudar/vim-arduino-syntax'
+	" Plug 'sudar/vim-arduino-syntax'
 	" Plug 'jplaut/vim-arduino-ino'
-	Plug 'stevearc/vim-arduino'
+	" Plug 'stevearc/vim-arduino'
 	Plug 'eagletmt/ghcmod-vim'
 	Plug 'eagletmt/neco-ghc'
 	" Plug 'lervag/vimtex'
@@ -68,8 +69,8 @@ call plug#begin(g:plugdir)
 	Plug 'matze/vim-move'
 	Plug 'rhysd/conflict-marker.vim'
 	" Plug 'vim-voom/VOoM'
-	" Plug 'thinca/vim-visualstar'
-	" Plug 'wincent/command-t', {'do': 'cd ruby/command-t && ruby extconf.rb && make'}
+	Plug 'thinca/vim-visualstar'
+	Plug 'wincent/command-t', {'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'}
 	Plug 'airblade/vim-gitgutter'
 	Plug 'editorconfig/editorconfig-vim'
 	" Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install -no-update-rc'}
@@ -80,7 +81,7 @@ call plug#begin(g:plugdir)
 	Plug 'mileszs/ack.vim'
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
-	Plug 'roblillack/vim-bufferlist'
+	" Plug 'roblillack/vim-bufferlist'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'subosito/nginx.vim'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -248,6 +249,7 @@ set omnifunc=syntaxcomplete#Complete
 set nocp cpoptions+=d
 set verbose=0
 set updatetime=1000
+set helpheight=0
 set mouse=a
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 set display=lastline
@@ -1299,8 +1301,11 @@ let g:startify_bookmarks=[
 	\ { 'c': '~/.profile' },
 	\ ]
 
-let g:startify_custom_footer=
-	\ ['', "   Vim is charityware. Please read ':help uganda'.", '']
+let g:startify_custom_footer= [
+	\ '',
+	\ "   Vim is charityware. Please read ':help uganda'.",
+	\ ''
+	\ ]
 
 hi StartifyBracket ctermfg=240
 hi StartifyFile    ctermfg=147
@@ -1310,6 +1315,11 @@ hi StartifyNumber  ctermfg=215
 hi StartifyPath    ctermfg=245
 hi StartifySlash   ctermfg=240
 hi StartifySpecial ctermfg=240
+
+let g:BufferListWidth=25
+let g:BufferListMaxWidth=50
+hi BufferSelected term=reverse ctermfg=white ctermbg=red cterm=bold
+hi BufferNormal term=NONE ctermfg=black ctermbg=darkcyan cterm=NONE
 
 " Custom mappings
 
@@ -1487,6 +1497,7 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 map ' %
 
 nnoremap gb :ls<CR>:b<Space>
+" nnoremap gb :call BufferList()<CR>
 nnoremap <leader>f :find *
 nnoremap <leader>s :sfind *
 nnoremap <leader>v :vert sfind *
