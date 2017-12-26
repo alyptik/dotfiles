@@ -369,7 +369,7 @@ download-full-page yes
 #
 # Default value: 20
 #
-# feedhq-min-items 100
+feedhq-min-items 100
 
 ####  feedhq-password
 #
@@ -521,7 +521,7 @@ download-full-page yes
 #
 # Default value: internal
 #
-#html-renderer "w3m -dump -T text/html"
+html-renderer "w3m -dump -T text/html"
 
 ####  http-auth-method
 #
@@ -680,7 +680,7 @@ include "~/.newsbeuter/colors/gruvbox"
 #
 # Default value: 20
 #
-# newsblur-min-items 100
+newsblur-min-items 100
 
 ####  newsblur-password
 #
@@ -866,7 +866,7 @@ include "~/.newsbeuter/colors/gruvbox"
 #
 # Default value: 20
 #
-# oldreader-min-items 100
+oldreader-min-items 100
 
 ####  oldreader-password
 #

@@ -72,6 +72,7 @@
 	dcd = !git difftool --extcmd \"colordiff -wyB\"
 	dcdy = !git difftool --extcmd \"colordiff -wyB\"
 	di = !git difftool --extcmd icdiff
+	i = ls-files -i --full-name --exclude-standard
 [web]
 	browser = w3m
 [instaweb]
@@ -81,6 +82,7 @@
 [core]
 	pager = less
 	excludesfile = ~/.cvsignore
+	abbrev = 12
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
