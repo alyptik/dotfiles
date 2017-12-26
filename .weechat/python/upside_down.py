@@ -120,7 +120,6 @@ def flip_cmd_cb(data, buffer, args):
     translate_input = args
     if not translate_input:
         translate_input = w.buffer_get_string(w.current_buffer(), "input")
-    translate_input = translate_input[::-1]
     outstring = ''
     for char  in translate_input:
         if char in replacements:
