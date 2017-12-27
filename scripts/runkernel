@@ -1,0 +1,96 @@
+#!/bin/bash
+
+# CLI handling.
+# norandmaps: Don't use address space randomization. Equivalent to echo 0 > /proc/sys/kernel/randomize_va_space.
+# printk.time=y: log in format: "[time ] msg" for all printk messages.
+extra_flags=''
+extra_append='norandmaps printk.devkmsg=on printk.time=y'
+base_dir="${P:-/store/code/projects}/teeny-linux"
+aval='root=/dev/vda nopat console=ttyS0'
+bval="$base_dir/obj/linux-x86/arch/x86_64/boot/bzImage"
+gval='-nographic'
+# gval='-display curses'
+ival="$base_dir/obj/buildroot-x86/images/rootfs.ext4"
+nval='-net nic,model=virtio -net bridge,br=virbr0'
+# nval='-monitor telnet::45454,server,nowait -netdev user,hostfwd=tcp::45455-:45455,id=net0 -net nic,model=virtio -net bridge,bridge=virbr0'
+
+while getopts :a:b:i:n:dghk name; do
+	case "$name" in
+	i)
+		iflag=1
+		ival="$OPTARG"
+		;;
+	a)
+		aflag=1
+		aval="$OPTARG"
+		;;
+	b)
+		bflag=1
+		bval="$OPTARG"
+		;;
+	n)
+		nflag=1
+		nval="-net nic -net $OPTARG"
+		;;
+	d)
+		extra_flags="$extra_flags -S -s"
+		;;
+	g)
+		gval='-vga virtio'
+		;;
+	k)
+		extra_append="$extra_append kgdbwait"
+		# For those who want to try KDB.
+		# extra_append+="$extra_append kgdboc=kbd"
+		extra_append="$extra_append kgdboc=ttyS0,115200"
+		extra_flags="$extra_flags -serial tcp::1234,server,nowait"
+		;;
+	h)
+		printf 'usage: %s: [−k <kernel>] [−d <disk>] [-a <cmdline>] [-n <netdev>] [<args>]\n' "${0##*/}"
+		exit
+		;;
+	:|?)
+		printf 'illegal option: -%s\n' "$OPTARG"
+		printf 'usage: %s: [−k <kernel>] [−d <disk>] [-a <cmdline>] [-n <netdev>] [<args>]\n' "${0##*/}"
+		exit 2
+		;;
+	esac
+done
+shift $((OPTIND - 1))
+
+if [[ -n "$bflag" ]]; then
+	printf 'Option −k "%s" specified\n' "$bval"
+fi
+if [[ -n "$iflag" ]]; then
+	printf 'Option −d "%s" specified\n' "$ival"
+fi
+if [[ -n "$aflag" ]]; then
+	printf 'Option −a "%s" specified\n' "$aval"
+fi
+if [[ -n "$nflag" ]]; then
+	printf 'Option −n "%s" specified\n' "$nval"
+fi
+if (($# > 0)); then
+	printf 'Remaining arguments are: "%s"\n' "$*"
+fi
+
+extra_flags="$extra_flags $*"
+qemu="screen qemu-system-x86_64"
+
+cmd="$qemu \
+	-kernel $bval \
+	-append '$aval $extra_append' \
+	-drive 'file=$ival,if=virtio,format=raw' \
+	-monitor telnet::45454,server,nowait \
+	-netdev user,hostfwd=tcp::45455-:45455,id=net0 \
+	-m 2048M \
+	-smp 2 \
+	-enable-kvm \
+	-machine type=pc,accel=kvm \
+	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+	-show-cursor -usb -device usb-tablet \
+	$gval $nval $extra_flags \
+"
+
+echo "$cmd"
+eval "$cmd"

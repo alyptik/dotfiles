@@ -523,8 +523,8 @@ fi
 	local -a defargcmds asmcmds dbpkgs kmods pubkeys seckeys
 
 	defargcmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
-	defargcmds+=(calcc canto-curses canto-daemon canto-remote catdoc cd2raw)
-	defargcmds+=(cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium)
+	defargcmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
+	defargcmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium)
 	defargcmds+=(ci co col colordiff compton configure conky cower cpanm)
 	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode dumpasn1)
 	defargcmds+=(expac fasd file flac2all fusermount-glusterfs fusermount3)
