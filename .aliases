@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias rk='runkernel'
 alias nmu='neomutt'
 alias node='NODE_NO_READLINE=1 rlwrap node'
 alias m='make clean && PREFIX=~/.local make install && scan-build make -B debug && /lib/ld-linux-x86-64.so.2'
