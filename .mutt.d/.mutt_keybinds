@@ -3,6 +3,14 @@
 #
 # Mutt keybindings
 
+# bind index g group-reply
+# bind generic,index,browser g first-entry
+# bind generic,index,browser G last-entry
+bind generic,index g first-entry
+bind generic,index G last-entry
+bind pager g top
+bind pager G bottom
+bind generic,index,pager R group-reply
 bind generic,index,pager B sidebar-toggle-visible
 bind generic,index,pager \cP sidebar-prev
 bind generic,index,pager \cN sidebar-next

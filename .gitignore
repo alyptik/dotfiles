@@ -53,3 +53,4 @@ vimfiles/
 .emacs.d/undo-tree
 .mutt.d/ox_config/
 .mutt_history
+.mutt.d/cache/

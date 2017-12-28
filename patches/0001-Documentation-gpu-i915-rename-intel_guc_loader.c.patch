@@ -1,0 +1,35 @@
+From 242a2bdce7d46b3951eebee985c263a70b507db0 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Wed, 27 Dec 2017 16:45:59 -1000
+Subject: [PATCH] Documentation: gpu/i915: rename intel_guc_loader.c
+
+Commit e8668bbcb0f91c7baa ("drm/i915/guc: Rename intel_guc_loader.c to
+intel_guc_fw.c") renamed drivers/gpu/drm/i915/intel_guc_loader.c
+but didn't update Documentation/gpu/i915.rst. Change intel_guc_loader.c
+to intel_guc_fw.c in Documentation/gpu/i915.rst.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ Documentation/gpu/i915.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gpu/i915.rst b/Documentation/gpu/i915.rst
+index 2e7ee0313c1cd6c037..e21698e16534de9ccc 100644
+--- a/Documentation/gpu/i915.rst
++++ b/Documentation/gpu/i915.rst
+@@ -341,10 +341,10 @@ GuC
+ GuC-specific firmware loader
+ ----------------------------
+ 
+-.. kernel-doc:: drivers/gpu/drm/i915/intel_guc_loader.c
++.. kernel-doc:: drivers/gpu/drm/i915/intel_guc_fw.c
+    :doc: GuC-specific firmware loader
+ 
+-.. kernel-doc:: drivers/gpu/drm/i915/intel_guc_loader.c
++.. kernel-doc:: drivers/gpu/drm/i915/intel_guc_fw.c
+    :internal:
+ 
+ GuC-based command submission
+-- 
+2.15.1
+
