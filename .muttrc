@@ -85,6 +85,7 @@ unset pgp_create_traditional
 set pgp_use_gpg_agent
 unset pgp_ignore_subkeys
 
+set hostname = "gmail.com"
 set realname = "Joey Pabalinas"
 set from = "joeypabalinas@gmail.com"
 set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
