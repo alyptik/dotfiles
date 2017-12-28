@@ -19,8 +19,8 @@ unset imap_passive
 set ssl_starttls
 set ssl_force_tls
 unset ssl_use_sslv3
-set header_cache = "~/.cache/mutt"
-set message_cachedir = "~/.cache/mutt"
+set header_cache = "$my_cfgdir/cache"
+set message_cachedir = "$my_cfgdir/cache"
 set signature = "$my_cfgdir/.signature"
 set alias_file = "$my_cfgdir/.mutt_aliases"
 set history_file = "$my_cfgdir/.mutt_history"
@@ -48,7 +48,8 @@ unset sidebar_new_mail_only
 set sidebar_next_new_wrap
 # set sidebar_divider_char = " ▐ "
 set sidebar_divider_char = " │ "
-set sidebar_format = "%B %?N?(%N)?%* %S"
+# set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
+set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
 set sidebar_sort_method = "path"
 # set sidebar_on_right = no
 

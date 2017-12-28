@@ -82,7 +82,7 @@
 [core]
 	pager = less
 	excludesfile = ~/.cvsignore
-	abbrev = 12
+	abbrev = 18
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
@@ -98,3 +98,6 @@
 	patternType = perl
 	extendedRegexp = true
 	fullname = true
+[log]
+	abbrevCommit = yes
+[format]
