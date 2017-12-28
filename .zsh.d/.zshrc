@@ -275,6 +275,7 @@ if type zplug >/dev/null 2>&1; then
 	# zplug "tj/git-extras"
 	# zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 	# zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
+	# zplug "zdharma/fast-syntax-highlighting", defer:2
 	zplug "oknowton/zsh-dwim"
 	zplug "zsh-users/zsh-autosuggestions"
 	zplug "zsh-users/zsh-history-substring-search"
