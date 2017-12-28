@@ -1,7 +1,7 @@
-diff --git b/colorize_nicks.py.orig a/colorize_nicks.py
-index 5d268b544..0bf0cc50b 100644
---- b/colorize_nicks.py.orig
-+++ a/colorize_nicks.py
+diff --git a/colorize_nicks.py b/colorize_nicks.py
+index 5d268b54433f..75755befc417 100644
+--- a/colorize_nicks.py
++++ b/colorize_nicks.py
 @@ -87,7 +87,7 @@ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
  
  # Based on the recommendations in RFC 7613. A valid nick is composed
@@ -11,3 +11,12 @@ index 5d268b544..0bf0cc50b 100644
  valid_nick_re = re.compile(VALID_NICK)
  ignore_channels = []
  ignore_nicks = []
+@@ -129,7 +129,7 @@ def colorize_config_init():
+     colorize_config_option["min_nick_length"] = weechat.config_new_option(
+         colorize_config_file, section_look, "min_nick_length",
+         "integer", "Minimum length nick to colorize", "",
+-        2, 20, "", "", 0, "", "", "", "", "", "")
++        1, 20, "", "", 0, "", "", "", "", "", "")
+     colorize_config_option["colorize_input"] = weechat.config_new_option(
+         colorize_config_file, section_look, "colorize_input",
+         "boolean", "Whether to colorize input", "", 0,
