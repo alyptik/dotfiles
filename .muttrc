@@ -49,7 +49,8 @@ set sidebar_next_new_wrap
 # set sidebar_divider_char = " ▐ "
 set sidebar_divider_char = " │ "
 # set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
-set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
+# set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
+set sidebar_format = "%B %?N?(%N)? %* %S"
 set sidebar_sort_method = "path"
 # set sidebar_on_right = no
 
