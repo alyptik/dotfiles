@@ -8,7 +8,8 @@ if [[ $_GET_HOST == '' ]]; then
 fi
 
 # use the current user as the prefix of the current tab title
-TAB_TITLE_PREFIX='"`'$_GET_HOST'`:`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
+# TAB_TITLE_PREFIX='"`'$_GET_HOST'`:`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
+TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
 # when at the shell prompt, show a truncated version of the current path (with
 # standard ~ replacement) as the rest of the title.
 TAB_TITLE_PROMPT='$SHELL:t'
