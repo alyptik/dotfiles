@@ -1,0 +1,20 @@
+--- colorize_nicks.py
++++ colorize_nicks.py
+@@ -87,7 +87,7 @@ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
+ 
+ # Based on the recommendations in RFC 7613. A valid nick is composed
+ # of anything but " ,*?.!@".
+-VALID_NICK = r'([@~&!%+-])?([^\s,\*?\.!@]+)'
++VALID_NICK = r'([@~&!%+:-])?([^\s,\*\?\.!@:›\'"%#\&]+)'
+ valid_nick_re = re.compile(VALID_NICK)
+ ignore_channels = []
+ ignore_nicks = []
+@@ -129,7 +129,7 @@ def colorize_config_init():
+     colorize_config_option["min_nick_length"] = weechat.config_new_option(
+         colorize_config_file, section_look, "min_nick_length",
+         "integer", "Minimum length nick to colorize", "",
+-        2, 20, "", "", 0, "", "", "", "", "", "")
++        1, 20, "", "", 0, "", "", "", "", "", "")
+     colorize_config_option["colorize_input"] = weechat.config_new_option(
+         colorize_config_file, section_look, "colorize_input",
+         "boolean", "Whether to colorize input", "", 0,

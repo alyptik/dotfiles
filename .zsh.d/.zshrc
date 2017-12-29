@@ -527,23 +527,24 @@ fi
 	defargcmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
 	defargcmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cepl cgasm chromium)
 	defargcmds+=(ci co col colordiff compton configure conky cower cpanm)
-	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode dumpasn1)
-	defargcmds+=(expac fasd file flac2all fusermount-glusterfs fusermount3)
-	defargcmds+=(elftoc fzf gnome-keyring-daemon gpg-agent help2man)
-	defargcmds+=(highlight hping hsetroot install keyring kid3-cli)
+	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode)
+	defargcmds+=(dumpasn1 expac fasd file flac2all fusermount-glusterfs)
+	defargcmds+=(fusermount3 elftoc fzf gnome-keyring-daemon gpg-agent)
+	defargcmds+=(help2man highlight hping hsetroot install keyring kid3-cli)
 	defargcmds+=(kid3-qt ld lighttpd2 ln lrz lua lz4 maim more mpd muttprint)
 	defargcmds+=(mv named neomutt netstat netstat newsbeuter node nohup)
-	defargcmds+=(objconv objdump optipng pacconf pactree paste pstree)
-	defargcmds+=(qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir)
+	defargcmds+=(objconv objdump oomox-cli optipng pacconf pactree paste)
+	defargcmds+=(pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rmdir)
 	defargcmds+=(rmlint rst2man rst2man2 saldl scan-build seq shred)
 	defargcmds+=(sox split stat st stjerm strings supybot swapon)
 	defargcmds+=(systool termite test tic tload transmission-cli)
 	defargcmds+=(transmission-create transmission-daemon transmission-edit)
 	defargcmds+=(transmission-get transmission-gtk transmission-qt)
-	defargcmds+=(transmission-remote transmission-remote-cli transmission-remote-cli)
-	defargcmds+=(transmission-remote-gtk transmission-show transset-df)
-	defargcmds+=(updatedb urxvtc urxvtcd urxvtd vanitygen vimpager x11vnc)
-	defargcmds+=(xbindkeys xsel youtube-dl)
+	defargcmds+=(transmission-remote transmission-remote-cli)
+	defargcmds+=(transmission-remote-cli transmission-remote-gtk)
+	defargcmds+=(transmission-show transset-df updatedb urxvtc urxvtcd)
+	defargcmds+=(urxvtd vanitygen vimpager x11vnc xbindkeys)
+	defargcmds+=(xsel youtube-dl)
 
 	if type cgasm &>/dev/null; then
 		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
@@ -623,6 +624,7 @@ compdef _au wau
 compdef _pwns pwns
 compdef azle=autoload
 compdef gnpm=npm
+compdef oomox=oomox-cli
 compdef p=perl
 compdef run=gcc
 compdef xs=xsel
