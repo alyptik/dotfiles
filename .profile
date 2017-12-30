@@ -26,6 +26,7 @@ export ARCHFLAGS="-arch x86_64"
 # export CCACHE_PATH=/usr/lib/distcc/bin:/usr/bin
 # export CCACHE_PREFIX="distcc"
 export C="/store/dotfiles" c="$C"
+export CF="-Wdefault-bitfield-sign -Wptr-subtraction-blows -Wundef"
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 # Audio plugins
@@ -36,7 +37,7 @@ export FCEDIT="$EDITOR" VISUAL="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$
 # export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_COMMAND="
 	(git ls-tree -r --name-only HEAD ||
-	find . -path '*/\.*' -prune -o \( -type f -o -type l \) -print |
+	find . -path '*/\\.*' -prune -o \\( -type f -o -type l \\) -print |
 	sed s/^..//) 2>/dev/null
 "
 export FZF_DEFAULT_OPTS="
@@ -109,11 +110,13 @@ export PAGER=less
 # default PATH
 # export PATH="/usr/local/sbin:/usr/local/bin:/bin:/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 # export PATH="${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/usr/lib/distcc/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
-export PATH="/usr/lib/ccache/bin:$(ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
-export PATH="$(ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
+# export PATH="/usr/lib/ccache/bin:$(ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
+PATH="${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
+PATH="$(ruby -rubygems -e "puts Gem.user_dir")/bin:$PATH"
 # prepend cross compiler to PATH
-export PATH="/opt/cross/bin:$PATH"
-export PATH="/usr/lib/ccache/bin:$PATH"
+PATH="/opt/cross/bin:$PATH"
+PATH="/usr/lib/ccache/bin:$PATH"
+export PATH
 # shellcheck disable=SC2039
 export PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
 # shellcheck disable=SC2039
