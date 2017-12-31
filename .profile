@@ -26,7 +26,9 @@ export ARCHFLAGS="-arch x86_64"
 # export CCACHE_PATH=/usr/lib/distcc/bin:/usr/bin
 # export CCACHE_PREFIX="distcc"
 export C="/store/dotfiles" c="$C"
-export CF="-Wdefault-bitfield-sign -Wptr-subtraction-blows -Wundef"
+CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
+CF="$CF -Wdefault-bitfield-sign -Wptr-subtraction-blows -Wundef"
+export CF
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 # Audio plugins
@@ -118,13 +120,15 @@ PATH="/opt/cross/bin:$PATH"
 PATH="/usr/lib/ccache/bin:$PATH"
 export PATH
 # shellcheck disable=SC2039
-export PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
+PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
 # shellcheck disable=SC2039
-export PERL5LIB="${PERL5LIB:+${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
+PERL5LIB="${PERL5LIB:+${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
+export PERL5LIB
 # shellcheck disable=SC2039
-export PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT//:${HOME}\/perl5}}"
+PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT//:${HOME}\/perl5}}"
 # shellcheck disable=SC2039
-export PERL_LOCAL_LIB_ROOT="${PERL_LOCAL_LIB_ROOT:+${PERL_LOCAL_LIB_ROOT//:${HOME}\/perl5}}"
+PERL_LOCAL_LIB_ROOT="${PERL_LOCAL_LIB_ROOT:+${PERL_LOCAL_LIB_ROOT//:${HOME}\/perl5}}"
+export PERL_LOCAL_LIB_ROOT
 export PERL_MB_OPT="--install_base \"${HOME}/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"
 export PERLDOC="-i -oman"
