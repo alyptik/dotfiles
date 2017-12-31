@@ -194,28 +194,32 @@ case "$_theme" in
 	fi
 
 	# common PS1 section
-	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]"$(('
-	PS1+='$(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]'
+	PS1+='"$(($(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
 	PS1+='/proc/meminfo)/1024))"'
-	PS1+='$reset_color$fg[yellow]/"$(('
-	PS1+='$(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1+='$reset_color$fg[yellow]/'
+	PS1+='"$(($(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
 	PS1+='/proc/meminfo)/1024))MB"		'
 	PS1+='$reset_color$fg[magenta]$(</proc/loadavg)")'
 	PS1+='$prompt_newline$bold_color$fg[grey]%}['
 	PS1+='$reset_color$fg[white]%}$$:$PPID %j:%l'
 	PS1+='$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	'
-	PS1+='%D{%a %d %b %I:%M:%S%P}'
-	# If root, print the prompt character in red. Otherwise, print the prompt in cyan.
-	if (( EUID == 0 )); then
-		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{$bold_color$fg[grey]%}:%{'
-		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[green]%}+${SHLVL}%{'
+	PS1+='%D{%a %d %b %I:%M:%S%P} '
+	# if root, print the prompt character in red.
+	if ((EUID == 0)); then
+		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{'
+		PS1+='$bold_color$fg[grey]%}:%{'
+		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{'
+		PS1+='$bold_color$fg[green]%}+${SHLVL}%{'
 		PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{'
 		PS1+='$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{'
 		PS1+='$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
-	# normal colors
+	# otherwise, print the prompt in cyan.
 	else
-		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{$bold_color$fg[grey]%}:%{'
-		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{$bold_color$fg[red]%}+${SHLVL}%{'
+		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{'
+		PS1+='$bold_color$fg[grey]%}:%{'
+		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{'
+		PS1+='$bold_color$fg[red]%}+${SHLVL}%{'
 		PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{'
 		PS1+='$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{'
 		PS1+='$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
@@ -234,7 +238,7 @@ esac
 	. /usr/share/bash-completion/completions/dkms
 # zsh specific
 [[ -d "${ZDOTDIR:-$HOME/.zsh.d}"/plugins ]] && \
-	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}"/plugins/enabled/*.zsh; do . "$i"; done; }
+	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}"/plugins/enabled/*.zsh; . "$i"; }
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
 [[ -f "${HOME}/.aliases" ]] && \
@@ -248,8 +252,9 @@ safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	# host -t txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
-	dig +short txt istheinternetonfire.com | cut -f 2 -d '"' | cowsay -f "$muhcow" -W 50
+	# local cmd=$'dig +short txt istheinternetonfire.com | cut -f 2 -d \'"\''
+	local cmd=$'host -t txt istheinternetonfire.com | cut -f 2 -d \'"\''
+	$cmd | cowsay -f "$muhcow" -W 50
 }
 
 # autoload completion for systemctl subcommand compdefs
