@@ -1420,7 +1420,7 @@ noremap <Leader>et :tabe <C-r>=expand("%:p:h")."/"<CR>
 noremap <Leader>het :tabe <C-r>=expand("~")."/"<CR>
 noremap <Leader>eb :e <C-r>=expand("%:p:h")."/"<CR>
 noremap <Leader>heb :e <C-r>=expand("~")."/"<CR>
-noremap <Leader>[ :q<CR>
+noremap <Leader>[ :bdel<CR>
 noremap <Leader>] :w<CR>
 "noremap <Leader>; :bdel<CR>
 " noremap <Leader>" mzI# `z
@@ -1494,7 +1494,7 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 " map [] k$][%?}<CR>
 map ' %
 
-nnoremap gb :ls<CR>:b<Space>
+nnoremap gb :ls!<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
 nnoremap <leader>f :find *
 nnoremap <leader>s :sfind *

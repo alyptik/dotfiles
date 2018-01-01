@@ -60,10 +60,13 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
 export GIT_PAGER=less
-export GOPATH="${HOME}/code/go"
+export GOPATH="${HOME}/.go"
 # Gtk themes
-export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
 export GTK_DEBUG=1
+export GTK_IM_MODULE="xim" QT_IM_MODULE="xim" XMODIFIERS="@im=none"
+# export GTK_IM_MODULE="fcitx" QT_IM_MODULE="fcitx" XMODIFIERS="@im=fcitx"
+# export GTK_IM_MODULE="ibus" QT_IM_MODULE="ibus" XMODIFIERS="@im=ibus"
+export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
 export H="$HOME" h="$H"
 # get more colors
 export HH_CONFIG=hicolor

@@ -57,7 +57,6 @@ except ImportError:
     import_ok = False
 
 import json
-import subprocess
 
 def init_config():
     """Set plugin options to defaults if not already done"""
@@ -89,11 +88,8 @@ def get_recent_track(data, command, rc, out, err):
         else:
             artist = data['recenttracks']['track'][0]['artist']['#text']
             name = data['recenttracks']['track'][0]['name']
-            track = "{} - {}".format(artist.encode('utf8'), name.encode('utf8'))
+            track = "{} - {}".format(artist, name)
             user = data['recenttracks']['@attr']['user'].lower()
-            ytdlcmd = ['youtube-dl', '--get-id', 'ytsearch1:' + track]
-            out = subprocess.Popen(ytdlcmd, stdout=subprocess.PIPE, shell=False).communicate()[0]
-            track = '{} <{}{}>'.format(track, 'https://youtube.com/watch?v=', bytes.decode(out, 'utf8').strip('\n'))
 
             # print username or not, depending on config/arg
             if user == weechat.config_get_plugin('user').lower():

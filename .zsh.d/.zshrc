@@ -251,10 +251,11 @@ esac
 safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
+	# local -a cmd=(host -t txt istheinternetonfire.com)
+	# local cmd='dig +short txt istheinternetonfire.com'
+	local cmd='host -t txt istheinternetonfire.com'
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	# local cmd=$'dig +short txt istheinternetonfire.com | cut -f 2 -d \'"\''
-	local cmd=$'host -t txt istheinternetonfire.com | cut -f 2 -d \'"\''
-	$cmd | cowsay -f "$muhcow" -W 50
+	${(z)cmd} | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
 }
 
 # autoload completion for systemctl subcommand compdefs
