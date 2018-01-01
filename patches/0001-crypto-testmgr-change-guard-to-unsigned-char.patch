@@ -1,0 +1,30 @@
+From 0dc559613cc19b1026489a3da59659be3a2c4015 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 1 Jan 2018 00:09:20 -1000
+Subject: [PATCH] crypto: testmgr: change `guard` to unsigned char
+
+When char is signed, storing the values 0xba (186) and 0xad (173) in the
+`guard` array produces signed overflow. Change the type of `guard` to
+unsigned char to remove undefined behavior.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ crypto/testmgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/crypto/testmgr.c b/crypto/testmgr.c
+index 29d7020b8826faa3f0..e9a9faecf212bbd742 100644
+--- a/crypto/testmgr.c
++++ b/crypto/testmgr.c
+@@ -185,7 +185,7 @@ static int ahash_partial_update(struct ahash_request **preq,
+ 	char *state;
+ 	struct ahash_request *req;
+ 	int statesize, ret = -EINVAL;
+-	const char guard[] = { 0x00, 0xba, 0xad, 0x00 };
++	const unsigned char guard[] = { 0x00, 0xba, 0xad, 0x00 };
+ 
+ 	req = *preq;
+ 	statesize = crypto_ahash_statesize(
+-- 
+2.15.1
+
