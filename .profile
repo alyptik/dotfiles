@@ -16,6 +16,11 @@ if [ -t 0 ]; then
 	stty -ixon
 fi
 
+# directory shortcut environment variables
+export H="$HOME" h="$HOME"
+export PROJECTS="/store/code/projects" P="$PROJECTS" p="$PROJECTS"
+export LINUX="$PROJECTS/linux" L="$LINUX" l="$LINUX"
+
 # Environment variables
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
@@ -67,7 +72,6 @@ export GTK_IM_MODULE="xim" QT_IM_MODULE="xim" XMODIFIERS="@im=none"
 # export GTK_IM_MODULE="fcitx" QT_IM_MODULE="fcitx" XMODIFIERS="@im=fcitx"
 # export GTK_IM_MODULE="ibus" QT_IM_MODULE="ibus" XMODIFIERS="@im=ibus"
 export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
-export H="$HOME" h="$H"
 # get more colors
 export HH_CONFIG=hicolor
 # increase history size (default is 500)
@@ -121,6 +125,7 @@ PATH="$(ruby -rubygems -e "puts Gem.user_dir")/bin:$PATH"
 # prepend cross compiler to PATH
 PATH="/opt/cross/bin:$PATH"
 PATH="/usr/lib/ccache/bin:$PATH"
+PATH="${LINUX}/scripts:$PATH"
 export PATH
 # shellcheck disable=SC2039
 PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
@@ -143,7 +148,6 @@ export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Librari
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:${PLAN9}/bin"
 # shellcheck disable=SC2039
 export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man" p9="${PLAN9}"
-export P="/store/code/projects" p="$P"
 export PRE="${HOME}/.local" pre="$PRE"
 # export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,comm"
 export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,args"
