@@ -1,11 +1,12 @@
-From 0dc559613cc19b1026489a3da59659be3a2c4015 Mon Sep 17 00:00:00 2001
+From 0c98f543288c488a41627fa262a2d2c5227bb17a Mon Sep 17 00:00:00 2001
 From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Mon, 1 Jan 2018 00:09:20 -1000
-Subject: [PATCH] crypto: testmgr: change `guard` to unsigned char
+Subject: [PATCH v2] crypto: testmgr: change `guard` to unsigned char
 
 When char is signed, storing the values 0xba (186) and 0xad (173) in the
 `guard` array produces signed overflow. Change the type of `guard` to
-unsigned char to remove undefined behavior.
+static unsigned char to correct undefined behavior and reduce function
+stack usage.
 
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
 ---
@@ -13,7 +14,7 @@ Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/crypto/testmgr.c b/crypto/testmgr.c
-index 29d7020b8826faa3f0..e9a9faecf212bbd742 100644
+index 29d7020b8826faa3f0..44a85d4b3561acbca6 100644
 --- a/crypto/testmgr.c
 +++ b/crypto/testmgr.c
 @@ -185,7 +185,7 @@ static int ahash_partial_update(struct ahash_request **preq,
@@ -21,7 +22,7 @@ index 29d7020b8826faa3f0..e9a9faecf212bbd742 100644
  	struct ahash_request *req;
  	int statesize, ret = -EINVAL;
 -	const char guard[] = { 0x00, 0xba, 0xad, 0x00 };
-+	const unsigned char guard[] = { 0x00, 0xba, 0xad, 0x00 };
++	static const unsigned char guard[] = { 0x00, 0xba, 0xad, 0x00 };
  
  	req = *preq;
  	statesize = crypto_ahash_statesize(
