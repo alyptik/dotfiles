@@ -61,7 +61,7 @@ call plug#begin(g:plugdir)
 	" Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview'
-	Plug 'Rip-Rip/clang_complete'
+	" Plug 'Rip-Rip/clang_complete'
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
@@ -290,6 +290,7 @@ set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
 set wildignore+=tags
 set wildignore+=*.tar.*,*.zip
 set path=.,**
+set cscopetag
 "set nowrap
 set wrap
 set showbreak=++++
@@ -1514,8 +1515,10 @@ noremap <Leader>; <Esc>:cclose<CR>
 noremap <Leader>' <Esc>:copen<CR>
 nnoremap <C-\|> :SCCompileRun<CR>
 
-nnoremap <C-]> g<C-]>
-vnoremap <C-]> g<C-]>
+" nnoremap <C-]> g<C-]>
+" vnoremap <C-]> g<C-]>
+nnoremap <C-]> <Esc>:cstag <C-r>=(expand('<cword>'))<CR><CR>
+vnoremap <C-]> <Esc>:cstag <C-r>=(expand('<cword>'))<CR><CR>
 nnoremap g<C-]> <C-]>
 vnoremap g<C-]> <C-]>
 
