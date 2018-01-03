@@ -2,7 +2,7 @@
 # set disassembly intel
 # source ~/.gdbinit-gef.py
 # add-auto-load-safe-path /usr/lib/libthread_db-1.0.so
-set auto-load safe-path /
+# set auto-load safe-path /
 directory ./src
 directory ./t
 
