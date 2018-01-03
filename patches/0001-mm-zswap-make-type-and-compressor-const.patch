@@ -1,0 +1,58 @@
+From f1fca18ee029ffcadc1703b503eaf73678affae0 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 1 Jan 2018 21:37:59 -1000
+Subject: [PATCH 1/2] mm/zswap: make type and compressor const
+
+The characters pointed to by `zswap_compressor`, `type`, and `compressor`
+aren't ever modified. Add const to the static variable and both parameters in
+`zswap_pool_find_get()`, `zswap_pool_create()`, and `__zswap_param_set()`
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/mm/zswap.c b/mm/zswap.c
+index d39581a076c3aed1e9..a4f2dfaf9131694265 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -90,7 +90,7 @@ module_param_cb(enabled, &zswap_enabled_param_ops, &zswap_enabled, 0644);
+ 
+ /* Crypto compressor to use */
+ #define ZSWAP_COMPRESSOR_DEFAULT "lzo"
+-static char *zswap_compressor = ZSWAP_COMPRESSOR_DEFAULT;
++static const char *zswap_compressor = ZSWAP_COMPRESSOR_DEFAULT;
+ static int zswap_compressor_param_set(const char *,
+ 				      const struct kernel_param *);
+ static struct kernel_param_ops zswap_compressor_param_ops = {
+@@ -475,7 +475,8 @@ static struct zswap_pool *zswap_pool_last_get(void)
+ }
+ 
+ /* type and compressor must be null-terminated */
+-static struct zswap_pool *zswap_pool_find_get(char *type, char *compressor)
++static struct zswap_pool *zswap_pool_find_get(const char *type,
++					      const char *compressor)
+ {
+ 	struct zswap_pool *pool;
+ 
+@@ -495,7 +496,8 @@ static struct zswap_pool *zswap_pool_find_get(char *type, char *compressor)
+ 	return NULL;
+ }
+ 
+-static struct zswap_pool *zswap_pool_create(char *type, char *compressor)
++static struct zswap_pool *zswap_pool_create(const char *type,
++					    const char *compressor)
+ {
+ 	struct zswap_pool *pool;
+ 	char name[38]; /* 'zswap' + 32 char (max) num + \0 */
+@@ -658,7 +660,7 @@ static void zswap_pool_put(struct zswap_pool *pool)
+ 
+ /* val must be a null-terminated string */
+ static int __zswap_param_set(const char *val, const struct kernel_param *kp,
+-			     char *type, char *compressor)
++			     const char *type, const char *compressor)
+ {
+ 	struct zswap_pool *pool, *put_pool = NULL;
+ 	char *s = strstrip((char *)val);
+-- 
+2.15.1
+

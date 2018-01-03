@@ -61,7 +61,7 @@ call plug#begin(g:plugdir)
 	" Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview'
-	" Plug 'Rip-Rip/clang_complete'
+	Plug 'Rip-Rip/clang_complete'
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
@@ -496,6 +496,7 @@ let g:ale_lint_on_text_changed=0
 " on opening a file
 let g:ale_lint_on_enter=0
 
+let g:clang_jumpto_declaration_key='<C-/>'
 let g:ale_c_clang_options='-std=c11 -pedantic -Wall -Wextra'
 	\ . ' -Wno-missing-field-initializers -Wno-unused-function'
 	\ . ' -Wno-unused-parameter -Wno-unused-const-variable'

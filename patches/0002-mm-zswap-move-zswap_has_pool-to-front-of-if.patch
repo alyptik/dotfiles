@@ -1,0 +1,30 @@
+From 9aba5bf97ef31124a4c5252402baf8645e7ccdc1 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 1 Jan 2018 22:47:49 -1000
+Subject: [PATCH 2/2] mm/zswap: move `zswap_has_pool` to front of `if ()`
+
+`zwap_has_pool` is a simple boolean, so it should be tested first
+to avoid unnecessarily calling `strcmp()`. Test `zswap_has_pool`
+first to take advantage of the short-circuiting behavior of && in
+`__zswap_param_set()`.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/zswap.c b/mm/zswap.c
+index a4f2dfaf9131694265..dbf35139471f692798 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -672,7 +672,7 @@ static int __zswap_param_set(const char *val, const struct kernel_param *kp,
+ 	}
+ 
+ 	/* no change required */
+-	if (!strcmp(s, *(char **)kp->arg) && zswap_has_pool)
++	if (zswap_has_pool && !strcmp(s, *(char **)kp->arg))
+ 		return 0;
+ 
+ 	/* if this is load-time (pre-init) param setting,
+-- 
+2.15.1
+

@@ -4,6 +4,7 @@
 # norandmaps: Don't use address space randomization. Equimageent to echo 0 > /proc/sys/kernel/randomize_va_space.
 # printk.time=y: log in format: "[time ] msg" for all printk messages.
 extra_flags=''
+opt_append=''
 extra_append='norandmaps printk.devkmsg=on printk.time=y'
 base_dir="${P:-/store/code/projects}/teeny-linux"
 qemu="qemu-system-x86_64"
@@ -19,7 +20,7 @@ while getopts :a:b:i:n:dghkms name; do
 		image="$OPTARG"
 		;;
 	a)
-		append="$OPTARG"
+		opt_append="$OPTARG"
 		;;
 	b)
 		kernel="$OPTARG"
@@ -63,7 +64,7 @@ shift "$((OPTIND - 1))"
 extra_flags="$extra_flags $*"
 cmd="$qemu \
 	-kernel $kernel \
-	-append '$append $extra_append' \
+	-append '$append $extra_append $opt_append' \
 	-drive 'file=$image,if=virtio,format=raw' \
 	-netdev user,hostfwd=tcp::45455-:45455,id=net0 \
 	-m 2G \
@@ -73,8 +74,8 @@ cmd="$qemu \
 	-machine type=pc,accel=kvm \
 	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
 	-show-cursor \
-	-soundhw all \
 	-usb -device usb-tablet \
+	-soundhw all \
 	$monitor $display $network $extra_flags \
 "
 
