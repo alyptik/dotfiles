@@ -1,11 +1,12 @@
-From ba8f2fe526fa64a334f514e31de417acf7b33d86 Mon Sep 17 00:00:00 2001
+From 9aba5bf97ef31124a4c5252402baf8645e7ccdc1 Mon Sep 17 00:00:00 2001
 From: Joey Pabalinas <joeypabalinas@gmail.com>
-Date: Mon, 1 Jan 2018 22:49:45 -1000
-Subject: [PATCH 0/2] mm/zswap: add minor `__zswap_param_set()` optimizations
+Date: Mon, 1 Jan 2018 23:01:31 -1000
+Subject: [PATCH 0/2] mm/zswap: add minor const/conditional optimizations
 
-Make a couple minor improvements to `__zswap_param_set()`.
-  - Aince the pointed-to objects are never modified,
-    const-qualify the relevant parameters.
+Make a couple minor short-circuiting order and const changes
+  - Since the pointed-to objects are never modified through
+    these pointers, const-qualify type and compressor
+    variables.
   - Test boolean before calling `strcmp()` to take
     advantage of short-circuiting.
 
