@@ -1,4 +1,4 @@
-#compdef fman man apropos whatis
+#compdef man apropos whatis
 
 local -A opt_args
 local -a sections

@@ -2,6 +2,8 @@
 
 shopt -s extglob
 
+auditctl -e 0
+
 # printf "%s\n" "/store/cores/core.%e.%p.%P" | tee /proc/sys/kernel/core_pattern
 printf "%s\n" "/store/cores/core.%e.%p" | tee /proc/sys/kernel/core_pattern
 
