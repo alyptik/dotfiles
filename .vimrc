@@ -232,17 +232,14 @@ set keywordprg=man\ -s
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
-" set clipboard+=unnamedplus
 set ofu=syntaxcomplete#Complete
 set magic nostartofline
 " set termguicolors
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
-" set tags=~/.vimtags;./tags;/
-" setglobal tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
+setglobal tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
 set tags-=~/.vimtags,./tags tags-=~/.vimtags tags-=./tags tags^=~/.vimtags,./tags
 " set rtp=~/.vim/vimfiles,~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
-" set rtp-=~/.vim/vimfiles rtp^=~/.vim/vimfiles,~/.vim
 set rtp-=~/.vim/vimfiles rtp^=~/.vim/vimfiles,~/.vim,$VIM/vimfiles,$VIM/vimfiles/after,~/.vim/after
 set diffopt=filler,context:5,iwhite,vertical
 set omnifunc=syntaxcomplete#Complete
@@ -295,6 +292,14 @@ set cscopetag
 set wrap
 set showbreak=++++
 " let &showbreak="        "
+
+silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
+set backup
+set backupdir=$HOME/.cache/vim/backup
+set swapfile
+set directory=$HOME/.cache/vim/swap
+set undofile
+set undodir=$HOME/.cache/vim/undo
 
 " filetype marks
 augroup VIMRC
