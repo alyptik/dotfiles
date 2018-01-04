@@ -6,10 +6,11 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias fm='fman'
 alias rk='runkernel'
 alias nmu='neomutt'
 alias node='NODE_NO_READLINE=1 rlwrap node'
-alias m='make clean && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
+alias sb='make clean && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
 ## quick opening files with mpv
 # alias m='f -e mpv'
 alias urb='define -u'
@@ -33,7 +34,6 @@ alias cdp='pushd "${P:-/store/code/projects}" >/dev/null'
 _SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
 unset _JAVA_OPTIONS
 alias java='java "$_SILENT_JAVA_OPTIONS"'
-alias sb='scan-build'
 alias vg='valgrind'
 alias ip='ip -c'
 alias rline=$'python -c \'import os; import random; os.system("vim %s +%s" % (lambda f: (f, random.randint(1,len(open(f).readlines())+1)))(random.choice([f for f in sum([[os.path.join(p, f) for f in fs] for (p, ds, fs) in os.walk(".")], []) if not ".git" in f])))\''
