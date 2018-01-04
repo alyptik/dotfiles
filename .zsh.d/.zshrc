@@ -610,7 +610,6 @@ fi
 	compdef "$reptyr_str" reptyr
 }
 
-compdef _fman fman
 compdef _gem gem
 compdef _git fshow
 compdef _man cppman
@@ -628,6 +627,7 @@ compdef _pip pip
 compdef _au au
 compdef _au wau
 compdef _pwns pwns
+compdef fman=man
 compdef azle=autoload
 compdef gnpm=npm
 compdef oomox=oomox-cli

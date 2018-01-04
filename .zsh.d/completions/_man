@@ -81,7 +81,7 @@ _arguments -C \
 	'--usage[give a short usage message]' \
 	'-V[print program version]' \
 	'--version[print program version]' \
-	"1:sections:->section" "2:manpages:->page" "*:query: " && ret=0
+	"1:sections:->section" "*:manpages:->page" && ret=0
 
 case "$state" in
 	(section) local -a sects
