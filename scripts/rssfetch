@@ -1,0 +1,41 @@
+#!/bin/sh
+## Script to fetch RSS + atom feeds 
+
+RSS="$XDG_DATA_HOME"/rss
+TMP="$(mktemp -d)"
+XSLT="/usr/local/share/rss_xslt"
+
+trap 'rm -rf "$TMP"' exit
+
+build() {
+	read -r feed
+	# Some titles need cleaning
+	feed="$(printf '%s\n' "$feed" | sed 's|^.*://||' | sed 's|/.*||')"
+	while read -r link title; do
+		if ! ls "$RSS/$feed/"*read"/$title" >/dev/null; then
+			mkdir -p "$(dirname "$RSS/$feed/unread/$title")"
+			echo "$link" > "$RSS/$feed/unread/$title"
+		fi
+	done
+}
+
+fetch() {
+	cd "$TMP"
+	xargs -n 1 curl -sLO < "$XDG_DATA_HOME"/feedurls
+}
+
+parse() {
+	while read -r in; do
+		xml tr "$XSLT/$(xml el "$TMP/$in" | head -n 1)".xslt "$TMP/$in" | build
+	done
+}
+
+fetch && wait
+# This is to ensure good ordering on the pipeline
+ls "$TMP" | parse
+
+# you can comment this out, it's just for my status bar
+if ls -d "$RSS"/*/unread/* >/dev/null; then 
+	dirname "$RSS"/*/unread/* | wc -l > "$XDG_RUNTIME_DIR/statusbar/rss"
+fi
+
