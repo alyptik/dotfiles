@@ -1001,8 +1001,7 @@ let g:fzf_history_dir='~/.local/share/fzf-history'
 " [Files] Extra options for fzf
 "   e.g. File preview using Highlight
 "        (http://www.andre-simon.de/doku/highlight/en/highlight.html)
-let g:fzf_files_options=
-	\ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+let g:fzf_files_options='--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump=1
 " [[B]Commits] Customize the options used by 'git log':
@@ -1125,7 +1124,7 @@ let g:NERDTreeIndicatorMapCustom={
 	\ "Unknown"   : "?"
 	\ }
 
-function! Hashbang(portable, permission, RemExt)
+function! Hashbang(portable, permission, remove_extension)
 let shells={
 	\    'awk': "awk",
 	\     'sh': "bash",
@@ -1146,22 +1145,22 @@ let shells={
 	\ }
 
 let extension=expand("%:e")
-if has_key(shells,extension)
+if has_key(shells, extension)
 	let fileshell=shells[extension]
 	if a:portable
-		let line= "#!/usr/bin/env " . fileshell
+		let line= "#!/usr/bin/env " . fileshell . "\n"
 	else
-		let line="#!" . system("which " . fileshell)
+		let line="#!" . system("which " . fileshell) . "\n"
 	endif
-	0put= line
+	0put= line | $
 	if a:permission
-		if a:RemExt
+		if a:remove_extension
 			:autocmd! BufWritePost * :autocmd! VimLeave * :!chmod +x % && mv % "%:p:r"
 		else
 			:autocmd! BufWritePost * :autocmd! VimLeave * :!chmod +x %
 		endif
 	else
-		if a:RemExt
+		if a:remove_extension
 			:autocmd! BufWritePost * :autocmd! VimLeave * :!mv % "%:p:r"
 		endif
 	endif
@@ -1666,7 +1665,7 @@ function! Exposee()
 		vertical res 1000
 		let g:fs=1
 	else
-		exe "normal \<C-W>="
+		exe "normal \<C-w>="
 		let g:fs=0
 	endif
 endfun
