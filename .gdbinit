@@ -3,6 +3,7 @@
 # source ~/.gdbinit-gef.py
 # add-auto-load-safe-path /usr/lib/libthread_db-1.0.so
 # set auto-load safe-path /
+set auto-load safe-path /usr/lib/libthread_db-1.0.so
 directory ./src
 directory ./t
 
