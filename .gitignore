@@ -7,9 +7,6 @@
 tags
 .vimtags
 *_history*
-# .*sh_history*
-# .*zsh_history*
-# .*bash_history*
 
 pipe
 certs
