@@ -1,10 +1,10 @@
-.zwidgets(1)
-============
+ .zwidgets(1)
+=============
 :compat-mode!:
 
 NAME
-----
-.zwidgets - a shell script
+-----
+ .zwidgets - a shell script
 
 SYNOPSIS
 --------
@@ -36,12 +36,15 @@ FUNCTIONS
  zle-less
  zle-line-finish
  zle-line-init
+ zle-list-binds
+ zle-refresh-keymap
  zle-toggle-keymap
  zle-vi-keymap
  zle-vim
  zle-youtube-helper
  zle-zaw-help
  zshreadhist
+ zwc
 
 DETAILS
 -------
@@ -64,6 +67,14 @@ Not called by script or any function, may be a hook or Zle widget, etc.
 
 append-x-selection
 ~~~~~~~~~~~~~~~~~~
+
+____
+ # function insert-x-selection {
+ #         local pos="$CURSOR"
+ #         LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"
+ #         CURSOR="$pos"
+ # }
+____
 
 Has 1 line(s). Doesn't call other functions.
 
@@ -176,7 +187,15 @@ Has 20 line(s). Doesn't call other functions.
 
 Uses feature(s): _eval_
 
-Not called by script or any function, may be a hook or Zle widget, etc.
+Called by:
+
+ zle-emacs-keymap
+ zle-keymap-select
+ zle-line-finish
+ zle-line-init
+ zle-refresh-keymap
+ zle-toggle-keymap
+ zle-vi-keymap
 
 yank-x-selection
 ~~~~~~~~~~~~~~~~
@@ -215,7 +234,10 @@ Not called by script or any function, may be a hook or Zle widget, etc.
 zle-emacs-keymap
 ~~~~~~~~~~~~~~~~
 
-Has 2 line(s). Doesn't call other functions.
+Has 2 line(s). Calls functions:
+
+ zle-emacs-keymap
+ `-- setescapes
 
 Uses feature(s): _bindkey_
 
@@ -240,7 +262,10 @@ Not called by script or any function, may be a hook or Zle widget, etc.
 zle-keymap-select
 ~~~~~~~~~~~~~~~~~
 
-Has 10 line(s). Doesn't call other functions.
+Has 13 line(s). Calls functions:
+
+ zle-keymap-select
+ `-- setescapes
 
 Uses feature(s): _zle_
 
@@ -258,7 +283,10 @@ Not called by script or any function, may be a hook or Zle widget, etc.
 zle-line-finish
 ~~~~~~~~~~~~~~~
 
-Has 10 line(s). Doesn't call other functions.
+Has 10 line(s). Calls functions:
+
+ zle-line-finish
+ `-- setescapes
 
 Uses feature(s): _zle_
 
@@ -267,16 +295,43 @@ Not called by script or any function, may be a hook or Zle widget, etc.
 zle-line-init
 ~~~~~~~~~~~~~
 
-Has 10 line(s). Doesn't call other functions.
+Has 10 line(s). Calls functions:
+
+ zle-line-init
+ `-- setescapes
 
 Uses feature(s): _zle_
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+zle-list-binds
+~~~~~~~~~~~~~~
+
+Has 4 line(s). Doesn't call other functions.
+
+Uses feature(s): _zle_
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+zle-refresh-keymap
+~~~~~~~~~~~~~~~~~~
+
+Has 16 line(s). Calls functions:
+
+ zle-refresh-keymap
+ `-- setescapes
+
+Uses feature(s): _bindkey_, _zle_
 
 Not called by script or any function, may be a hook or Zle widget, etc.
 
 zle-toggle-keymap
 ~~~~~~~~~~~~~~~~~
 
-Has 8 line(s). Doesn't call other functions.
+Has 14 line(s). Calls functions:
+
+ zle-toggle-keymap
+ `-- setescapes
 
 Uses feature(s): _bindkey_, _zle_
 
@@ -285,7 +340,10 @@ Not called by script or any function, may be a hook or Zle widget, etc.
 zle-vi-keymap
 ~~~~~~~~~~~~~
 
-Has 2 line(s). Doesn't call other functions.
+Has 2 line(s). Calls functions:
+
+ zle-vi-keymap
+ `-- setescapes
 
 Uses feature(s): _bindkey_
 
@@ -324,6 +382,19 @@ ____
 ____
 
 Has 1 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+zwc
+~~~
+
+____
+ # compile zwc files
+____
+
+Has 6 line(s). Doesn't call other functions.
+
+Uses feature(s): _zcompile_
 
 Not called by script or any function, may be a hook or Zle widget, etc.
 

@@ -1,10 +1,10 @@
-.zshrc(1)
-=========
+ .zshrc(1)
+==========
 :compat-mode!:
 
 NAME
-----
-.zshrc - a shell script
+-----
+ .zshrc - a shell script
 
 SYNOPSIS
 --------
@@ -13,11 +13,12 @@ Documentation automatically generated with `zshelldoc'
 FUNCTIONS
 ---------
 
+ _force_rehash
+AUTOLOAD _git
 AUTOLOAD bashcompinit
 AUTOLOAD colors
 AUTOLOAD compinit
 AUTOLOAD promptinit
-AUTOLOAD _systemctl
 AUTOLOAD vcs_info
 
 DETAILS
@@ -26,47 +27,92 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 584 line(s). No functions are called (may attach to Zle or do hooks, etc.).
+Has 615 line(s). Calls functions:
+
+ Script-Body
+ |-- bashcompinit
+ |-- colors
+ |-- compinit
+ `-- promptinit
+
+_force_rehash
+~~~~~~~~~~~~~
+
+____
+ # run rehash on completion so new installed program are found automatically:
+____
+
+Has 2 line(s). Doesn't call other functions.
+
+Not called by script or any function, may be a hook or Zle widget, etc.
+
+_git
+~~~~
+
+____
+ # end of .zshrc config
+ #
+ # all dankness must come to an end :(
+____
+
+Has 234 line(s). Calls functions:
+
+ _git
+
+Uses feature(s): _zstyle_
+
+Not called by script or any function, may be a hook or Zle widget, etc.
 
 bashcompinit
 ~~~~~~~~~~~~
 
 Has 179 line(s). Doesn't call other functions.
 
-Not called by script or any function, may be a hook or Zle widget, etc.
+Uses feature(s): _autoload_, _unfunction_
+
+Called by:
+
+ Script-Body
 
 colors
 ~~~~~~
 
 Has 117 line(s). Doesn't call other functions.
 
-Not called by script or any function, may be a hook or Zle widget, etc.
+Called by:
+
+ Script-Body
 
 compinit
 ~~~~~~~~
 
 Has 547 line(s). Doesn't call other functions.
 
-Not called by script or any function, may be a hook or Zle widget, etc.
+Uses feature(s): _autoload_, _bindkey_, _eval_, _read_, _unfunction_, _zle_, _zstyle_
+
+Called by:
+
+ Script-Body
 
 promptinit
 ~~~~~~~~~~
 
-Has 263 line(s). Doesn't call other functions.
+Has 263 line(s). Calls functions:
 
-Not called by script or any function, may be a hook or Zle widget, etc.
+ promptinit
 
-_systemctl
-~~~~~~~~~~
+Called by:
 
-Has 393 line(s). Doesn't call other functions.
-
-Not called by script or any function, may be a hook or Zle widget, etc.
+ Script-Body
 
 vcs_info
 ~~~~~~~~
 
-Has 148 line(s). Doesn't call other functions.
+Has 148 line(s). Calls functions:
+
+ vcs_info
+
+Uses feature(s): _autoload_
 
 Not called by script or any function, may be a hook or Zle widget, etc.
 
