@@ -1,10 +1,10 @@
-.zshenv(1)
-==========
+ .zshenv(1)
+===========
 :compat-mode!:
 
 NAME
-----
-.zshenv - a shell script
+-----
+ .zshenv - a shell script
 
 SYNOPSIS
 --------
@@ -20,5 +20,5 @@ DETAILS
 Script Body
 ~~~~~~~~~~~
 
-Has 11 line(s). No functions are called (may attach to Zle or do hooks, etc.).
+Has 12 line(s). No functions are called (may attach to Zle or do hooks, etc.).
 
