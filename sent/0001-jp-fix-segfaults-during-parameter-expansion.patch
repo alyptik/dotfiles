@@ -1,0 +1,78 @@
+From a29b5d758c61d27f7ba9cd6a02594496fcc6882d Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 13 Jan 2018 19:36:33 -1000
+Subject: [PATCH] jp: fix segfaults during parameter expansion
+
+Running `zsh -fc ': ${${(PAA)p[foo]}::=x}'` in current zsh versions causes:
+
+> "segmentation fault (core dumped) zsh -fc ': ${${(PAA)p[foo]}::=x}'
+
+Also happens when testing with machabot:
+
+> 19:42 <jp> > : ${${(PAA)p[foo]}::=x}
+> 19:42 <machabot> jp: zsh[248]: segfault at 0 ip b7dfcda3 sp bfeb9ebc
+>       error 4 in libc-2.13.so[b7d84000+149000]
+
+Add checks to catch NULL dereferences.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/Src/params.c b/Src/params.c
+index de7730ae735a44963c..9516185015d878b553 100644
+--- a/Src/params.c
++++ b/Src/params.c
+@@ -2016,6 +2016,9 @@ fetchvalue(Value v, char **pptr, int bracks, int flags)
+     char sav, c;
+     int ppar = 0;
+ 
++    if (!*pptr)
++	return NULL;
++
+     s = t = *pptr;
+ 
+     if (idigit(c = *s)) {
+diff --git a/Src/string.c b/Src/string.c
+index 9e14ef94919c3e8ec5..7ad8ca7589199e8170 100644
+--- a/Src/string.c
++++ b/Src/string.c
+@@ -144,7 +144,12 @@ dyncat(const char *s1, const char *s2)
+ {
+     /* This version always uses space from the current heap. */
+     char *ptr;
+-    size_t l1 = strlen(s1);
++    size_t l1;
++
++    if (!s1 || !s2)
++	return NULL;
++
++    l1 = strlen(s1);
+ 
+     ptr = (char *)zhalloc(l1 + strlen(s2) + 1);
+     strcpy(ptr, s1);
+diff --git a/Src/subst.c b/Src/subst.c
+index d027e3d83cadc631a7..c423bc8433c590a89c 100644
+--- a/Src/subst.c
++++ b/Src/subst.c
+@@ -2577,7 +2577,7 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
+      * the local value system, or we need to get rid of brackets
+      * even if there isn't a v.
+      */
+-    while (v || ((inbrace || (unset(KSHARRAYS) && vunset)) && isbrack(*s))) {
++    while (v || ((inbrace || (unset(KSHARRAYS) && vunset)) && s && isbrack(*s))) {
+ 	if (!v) {
+ 	    /*
+ 	     * Index applied to non-existent parameter; we may or may
+@@ -2703,6 +2703,8 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
+      * examine properly later on.
+      */
+     if (inbrace) {
++	if (!s)
++	    return NULL;
+ 	c = *s;
+ 	if (!IS_DASH(c) &&
+ 	    c != '+' && c != ':' && c != '%'  && c != '/' &&
+-- 
+2.15.1
+
