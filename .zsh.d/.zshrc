@@ -176,6 +176,12 @@ fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc"
 autoload -U promptinit && promptinit
 autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit -u
+# autoload functions/completions in *.zwc files
+() for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(M@z)fpath%%*.zwc}"
+# autoload completion for systemctl subcommand compdefs
+[[ "$(type _git)" =~ "autoload" ]] && autoload -Uz +X _git
+[[ "$(type _pacman)" =~ "autoload" ]] && autoload -Uz +X _pacman
+[[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
 
 case "$_theme" in
 # builtin clint prompt
@@ -243,8 +249,6 @@ esac
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
 [[ -f "${HOME}/.aliases" ]] && \
 	. "${HOME}/.aliases"
-# autoload functions/completions in *.zwc files
-() for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(M@z)fpath%%*.zwc}"
 
 # prompt rice
 [[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
@@ -257,11 +261,6 @@ safetytoggle -n
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
 	${(z)cmd} | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
 }
-
-# autoload completion for systemctl subcommand compdefs
-[[ "$(type _git)" =~ "autoload" ]] && autoload -Uz +X _git
-[[ "$(type _pacman)" =~ "autoload" ]] && autoload -Uz +X _pacman
-[[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
 
 if type fasd &>/dev/null; then
 	eval "$(fasd --init auto)"
