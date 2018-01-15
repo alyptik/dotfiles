@@ -1,0 +1,59 @@
+From e0c3ede402758055c205dd2f29866193e58baa58 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sun, 14 Jan 2018 05:04:06 -1000
+Subject: [PATCH 2/3] jp: Use `(nil)` for empty identifier strings
+
+Indicate the presence of an empty identifier string using `(nil)`; the
+empty string case should still provide a somewhat useful error message using:
+
+> zsh:1: not an identifier: (nil)
+
+rather than:
+
+> zsh:1: not an identifier:
+
+which is fairly confusing and sort of useless.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Requested-by: Bart Schaefer <schaefer@brasslantern.com>
+
+ 2 files changed, 6 insertions(+)
+
+diff --git a/Src/params.c b/Src/params.c
+index de7730ae735a44963c..44a942296f23ddf88f 100644
+--- a/Src/params.c
++++ b/Src/params.c
+@@ -3004,6 +3004,8 @@ assignsparam(char *s, char *val, int flags)
+     int sstart, created = 0;
+ 
+     if (!isident(s)) {
++	if (!strcmp(s, ""))
++	    s = "(nil)";
+ 	zerr("not an identifier: %s", s);
+ 	zsfree(val);
+ 	errflag |= ERRFLAG_ERROR;
+diff --git a/Src/subst.c b/Src/subst.c
+index d027e3d83cadc631a7..5fe69a6b94bfad8d9e 100644
+--- a/Src/subst.c
++++ b/Src/subst.c
+@@ -3150,6 +3150,8 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
+ 	}
+ 	if (*itype_end(s, IIDENT, 0)) {
+ 	    untokenize(s);
++	    if (!strcmp(s, ""))
++		s = "(nil)";
+ 	    zerr("not an identifier: %s", s);
+ 	    return NULL;
+ 	}
+@@ -3210,6 +3212,8 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
+ 	++s;
+ 	if (*itype_end(s, IIDENT, 0)) {
+ 	    untokenize(s);
++	    if (!strcmp(s, ""))
++		s = "(nil)";
+ 	    zerr("not an identifier: %s", s);
+ 	    return NULL;
+ 	}
+-- 
+2.15.1
+

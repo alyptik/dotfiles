@@ -1,0 +1,59 @@
+From 2eaefd88ba47e03dbb2024c6bf859f94f041ea18 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sun, 14 Jan 2018 05:03:22 -1000
+Subject: [PATCH 1/3] jp: Fix segfaults during parameter expansion
+
+Running:
+
+> $ zsh -fc ': ${${(PAA)p[foo]}::=x}'` in current zsh versions causes:
+>
+> [1] 4441 segmentation fault (core dumped) zsh -fc ': ${${(PAA)p[foo]}::=x}'
+
+Also happens when testing with machabot:
+
+> 19:42 <jp> > : ${${(PAA)p[foo]}::=x}
+> 19:42 <machabot> jp: zsh[248]: segfault at 0 ip b7dfcda3 sp bfeb9ebc
+>       error 4 in libc-2.13.so[b7d84000+149000]
+
+Add a simple `dupstring(s2)` fallback instead of pointlessly
+trying to concatenate `s2` to NULL and segfaulting.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/Src/string.c b/Src/string.c
+index 9e14ef94919c3e8ec5..038624d65a9f533494 100644
+--- a/Src/string.c
++++ b/Src/string.c
+@@ -144,8 +144,12 @@ dyncat(const char *s1, const char *s2)
+ {
+     /* This version always uses space from the current heap. */
+     char *ptr;
+-    size_t l1 = strlen(s1);
++    size_t l1;
+ 
++    /* String duplicate fallback to prevent NULL derefs */
++    if (!s1)
++	return dupstring(s2);
++    l1 = strlen(s1);
+     ptr = (char *)zhalloc(l1 + strlen(s2) + 1);
+     strcpy(ptr, s1);
+     strcpy(ptr + l1, s2);
+@@ -158,8 +162,12 @@ bicat(const char *s1, const char *s2)
+ {
+     /* This version always uses permanently-allocated space. */
+     char *ptr;
+-    size_t l1 = strlen(s1);
++    size_t l1;
+ 
++    /* String duplicate fallback to prevent NULL derefs */
++    if (!s1)
++	return dupstring(s2);
++    l1 = strlen(s1);
+     ptr = (char *)zalloc(l1 + strlen(s2) + 1);
+     strcpy(ptr, s1);
+     strcpy(ptr + l1, s2);
+-- 
+2.15.1
+

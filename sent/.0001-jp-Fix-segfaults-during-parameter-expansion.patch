@@ -1,0 +1,109 @@
+From 8a81c3017cf4949f5a94cbd8aae4ad83b7b7ce43 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sun, 14 Jan 2018 03:47:16 -1000
+Subject: [PATCH v3] jp: Fix segfaults during parameter expansion
+
+Also added indication of empty string using `(nil)`; the empty string
+case should still provide a somewhat useful error message of
+
+> zsh:1: not an identifier: (nil)
+
+rather than
+
+> zsh:1: not an identifier:
+
+which is fairly confusing.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Requested-by: Bart Schaefer <schaefer@brasslantern.com>
+
+ 3 files changed, 26 insertions(+), 4 deletions(-)
+
+diff --git a/Src/string.c b/Src/string.c
+index 9e14ef94919c3e8ec5..7c24ab3c45777f31e9 100644
+--- a/Src/string.c
++++ b/Src/string.c
+@@ -126,9 +126,16 @@ mod_export char *
+ zhtricat(char const *s1, char const *s2, char const *s3)
+ {
+     char *ptr;
+-    size_t l1 = strlen(s1);
+-    size_t l2 = strlen(s2);
++    size_t l1, l2;
+ 
++    /* String duplicate fallback to prevent NULL derefs */
++    if (!s1 && !s2)
++	return dupstring(s3);
++    if (!s1)
++	l1 = 0, s1 = s2;
++    else
++	l1 = strlen(s1);
++    l2 = strlen(s2);
+     ptr = (char *)zhalloc(l1 + l2 + strlen(s3) + 1);
+     strcpy(ptr, s1);
+     strcpy(ptr + l1, s2);
+@@ -144,8 +152,12 @@ dyncat(const char *s1, const char *s2)
+ {
+     /* This version always uses space from the current heap. */
+     char *ptr;
+-    size_t l1 = strlen(s1);
++    size_t l1;
+ 
++    /* String duplicate fallback to prevent NULL derefs */
++    if (!s1)
++	return dupstring(s2);
++    l1 = strlen(s1);
+     ptr = (char *)zhalloc(l1 + strlen(s2) + 1);
+     strcpy(ptr, s1);
+     strcpy(ptr + l1, s2);
+@@ -158,8 +170,12 @@ bicat(const char *s1, const char *s2)
+ {
+     /* This version always uses permanently-allocated space. */
+     char *ptr;
+-    size_t l1 = strlen(s1);
++    size_t l1;
+ 
++    /* String duplicate fallback to prevent NULL derefs */
++    if (!s1)
++	return dupstring(s2);
++    l1 = strlen(s1);
+     ptr = (char *)zalloc(l1 + strlen(s2) + 1);
+     strcpy(ptr, s1);
+     strcpy(ptr + l1, s2);
+diff --git a/Src/subst.c b/Src/subst.c
+index d027e3d83cadc631a7..9a8c635e313687d046 100644
+--- a/Src/subst.c
++++ b/Src/subst.c
+@@ -3150,6 +3150,8 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
+ 	}
+ 	if (*itype_end(s, IIDENT, 0)) {
+ 	    untokenize(s);
++	    if (!strcmp(s, ""))
++		s = "(nil)";
+ 	    zerr("not an identifier: %s", s);
+ 	    return NULL;
+ 	}
+@@ -3210,6 +3212,8 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
+ 	++s;
+ 	if (*itype_end(s, IIDENT, 0)) {
+ 	    untokenize(s);
++	    if (!strcmp(s, ""))
++		s = "(nil)";
+ 	    zerr("not an identifier: %s", s);
+ 	    return NULL;
+ 	}
+diff --git a/Src/params.c b/Src/params.c
+index de7730ae735a44963c..44a942296f23ddf88f 100644
+--- a/Src/params.c
++++ b/Src/params.c
+@@ -3004,6 +3004,8 @@ assignsparam(char *s, char *val, int flags)
+     int sstart, created = 0;
+ 
+     if (!isident(s)) {
++	if (!strcmp(s, ""))
++	    s = "(nil)";
+ 	zerr("not an identifier: %s", s);
+ 	zsfree(val);
+ 	errflag |= ERRFLAG_ERROR;
+-- 
+2.15.1

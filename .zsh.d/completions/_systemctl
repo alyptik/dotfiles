@@ -1,4 +1,5 @@
 #compdef systemctl
+# SPDX-License-Identifier: LGPL-2.1+
 
 (( $+functions[_systemctl_command] )) || _systemctl_command()
 {
@@ -133,7 +134,7 @@ _filter_units_by_property() {
   echo -E - "${(@g:o:)${(k@)props[(Re)$property=$value]}#Id=}"
 }
 
-_systemctl_get_template_names() { echo -E - ${^${(M)${(f)"$(__systemctl list-unit-files "*$PREFIX*$SUFFIX*" )"}##*@.[^[:space:]]##}%%@.*}\@ }
+_systemctl_get_template_names() { echo -E - ${^${(M)${(f)"$(__systemctl list-unit-files "*$PREFIX*$SUFFIX*" )"}##*@.[^[:space:]]##}%%@.*}@ }
 
 
 _systemctl_active_units()  {_sys_active_units=(  ${${(f)"$(__systemctl list-units "*$PREFIX*$SUFFIX*" )"}%% *} )}
@@ -375,14 +376,14 @@ _arguments -s \
     '--system[Connect to system manager]' \
     '--user[Connect to user service manager]' \
     "--no-wall[Don't send wall message before halt/power-off/reboot]" \
-    '--global[Enable/disable unit files globally]' \
+    '--global[Enable/disable/mask unit files globally]' \
     "--no-reload[When enabling/disabling unit files, don't reload daemon configuration]" \
     '--no-ask-password[Do not ask for system passwords]' \
     '--kill-who=[Who to send signal to]:killwho:(main control all)' \
     {-s+,--signal=}'[Which signal to send]:signal:_signals' \
     {-f,--force}'[When enabling unit files, override existing symlinks. When shutting down, execute action immediately]' \
-    '--root=[Enable unit files in the specified root directory]:directory:_directories' \
-    '--runtime[Enable unit files only temporarily until next reboot]' \
+    '--root=[Enable/disable/mask unit files in the specified root directory]:directory:_directories' \
+    '--runtime[Enable/disable/mask unit files only temporarily until next reboot]' \
     {-H+,--host=}'[Operate on remote host]:userathost:_sd_hosts_or_user_at_host' \
     {-P,--privileged}'[Acquire privileges before execution]' \
     {-n+,--lines=}'[Journal entries to show]:number of entries' \

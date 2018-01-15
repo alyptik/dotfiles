@@ -1,0 +1,38 @@
+From 7e22a8036db8314566367316eb85b2f1696d84c7 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sun, 14 Jan 2018 05:06:32 -1000
+Subject: [PATCH 3/3] jp: Add `dupstring()` fallback to `zhtricat()`
+
+Add `dupstring()` fallback machanism to guard against NULL derefs
+in 3-argument concat function.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/Src/string.c b/Src/string.c
+index 038624d65a9f533494..df7e932061dbfbaab2 100644
+--- a/Src/string.c
++++ b/Src/string.c
+@@ -126,9 +126,16 @@ mod_export char *
+ zhtricat(char const *s1, char const *s2, char const *s3)
+ {
+     char *ptr;
+-    size_t l1 = strlen(s1);
+-    size_t l2 = strlen(s2);
++    size_t l1, l2;
+ 
++    /* String duplicate fallback to prevent NULL derefs */
++    if (!s1 && !s2)
++	return dupstring(s3);
++    if (!s1)
++	l1 = 0, s1 = s2;
++    else
++	l1 = strlen(s1);
++    l2 = strlen(s2);
+     ptr = (char *)zhalloc(l1 + l2 + strlen(s3) + 1);
+     strcpy(ptr, s1);
+     strcpy(ptr + l1, s2);
+-- 
+2.15.1
+
