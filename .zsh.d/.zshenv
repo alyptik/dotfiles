@@ -17,7 +17,7 @@ if (( ! $+ETC_ZSH_ZSHRC )); then
 	# define ZLE widgets
 	[[ -f "${ZDOTDIR:-$HOME}/.zwidgets" ]] && . "${ZDOTDIR:-$HOME}/.zwidgets"
 	# 10MB coredump limit
-	ulimit -c 20480
+	ulimit -c 2048
 fi
 
 ETC_ZSH_ZSHRC=1
