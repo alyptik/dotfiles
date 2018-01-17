@@ -44,6 +44,7 @@ map b :bookmarks!<Space>
 map <A-w> closeTab
 map R reloadAllTabs
 map ` percentScroll
+map <A-a> reloadTab
 map <A-,> goToInput
 map <A-.> :source /store/dotfiles/cvimrc.vim<CR>
 " map <A-.> :execute<Space><Esc><CR>
