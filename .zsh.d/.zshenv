@@ -16,8 +16,6 @@ if (( ! $+ETC_ZSH_ZSHRC )); then
 	[[ -f "${HOME}/perl5/perlbrew/etc/bashrc" ]] && emulate bash -c '. "${HOME}/perl5/perlbrew/etc/bashrc"'
 	# define ZLE widgets
 	[[ -f "${ZDOTDIR:-$HOME}/.zwidgets" ]] && . "${ZDOTDIR:-$HOME}/.zwidgets"
-	# 10MB coredump limit
-	ulimit -c 2048
 fi
 
 ETC_ZSH_ZSHRC=1

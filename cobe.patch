@@ -1,5 +1,7 @@
 diff --git a/plugin.py b/plugin.py
-index 1934e56..f39cf5d 100644
+old mode 100644
+new mode 100755
+index 1934e564e4d4e6cd51..fba1b76facd97cf6fb
 --- a/plugin.py
 +++ b/plugin.py
 @@ -1,4 +1,4 @@
@@ -169,11 +171,11 @@ index 1934e56..f39cf5d 100644
              if self.magicnick in response:
 -                response = response.replace(self.magicnick, random.choice(list(irc.state.channels[msg.args[0]].users)))
 +                response = response.replace(self.magicnick,
-+                                            re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                                            re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
              if self.magicnick.lower() in response:
 -                response = response.replace(self.magicnick.lower(), random.choice(list(irc.state.channels[msg.args[0]].users)))
 +                response = response.replace(self.magicnick.lower(),
-+                                            re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                                            re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 +
  
 -        
@@ -403,7 +405,7 @@ index 1934e56..f39cf5d 100644
      teach = wrap(teach, [('checkCapability', 'admin'), additional('channel'), 'text'])
  
      def respond(self, irc, msg, args, channel, text):
-@@ -358,49 +369,89 @@ class Cobe(callbacks.Plugin):
+@@ -358,49 +369,76 @@ class Cobe(callbacks.Plugin):
          if not channel: # Did the user enter in a channel? If not, set the current channel
              channel = msg.args[0]
  
@@ -427,14 +429,9 @@ index 1934e56..f39cf5d 100644
 +                        for i in range(response.lower().count(self.magicnick.lower())):
 +                            # If first word is nick, switch with the callers nick.
 +                            if self.magicnick in response:
-+                                response = response.replace(self.magicnick,
-+                                                            re.sub(r'^(.)', r'\1​',
-+                                                                   random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 +                            if self.magicnick.lower() in response:
-+                                response = response.replace(self.magicnick.lower(),
-+                                                            re.sub(r'^(.)',
-+                                                                   r'\1​',
-+                                                                   random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
  
                      else:
 -            
@@ -464,13 +461,9 @@ index 1934e56..f39cf5d 100644
 +                    for i in range(response.lower().count(self.magicnick.lower())):
 +                        # If first word is nick, switch with the callers nick.
 +                        if self.magicnick in response:
-+                            response = response.replace(self.magicnick,
-+                                                        re.sub(r'^(.)', r'\1​',
-+                                                               random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 +                        if self.magicnick.lower() in response:
-+                            response = response.replace(self.magicnick.lower(),
-+                                                        re.sub(r'^(.)', r'\1​',
-+                                                               random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 +
 +                    # lowercase first letter of the string.
 +                    response = response[0].lower() + response[1:]
@@ -495,13 +488,9 @@ index 1934e56..f39cf5d 100644
 +                response = self._strip_nick(irc, msg, response)
 +                # If first word is nick, switch with the callers nick.
 +                if self.magicnick in response:
-+                    response = response.replace(self.magicnick,
-+                                                re.sub(r'^(.)', r'\1​',
-+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 +                if self.magicnick.lower() in response:
-+                    response = response.replace(self.magicnick.lower(),
-+                                                re.sub(r'^(.)', r'\1​',
-+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 +
 +                # lowercase first letter of the string.
 +                response = response[0].lower() + response[1:]
@@ -509,7 +498,7 @@ index 1934e56..f39cf5d 100644
                  irc.reply(response)
  
              else:
-@@ -408,27 +459,37 @@ class Cobe(callbacks.Plugin):
+@@ -408,27 +446,35 @@ class Cobe(callbacks.Plugin):
  
          elif not os.path.exists(self._getBrainDirectoryForChannel(channel)) and irc.isChannel(channel):
              # Nope, create one!
@@ -531,13 +520,11 @@ index 1934e56..f39cf5d 100644
 +                response = self._strip_nick(irc, msg, response)
 +                # If first word is nick, switch with the callers nick.
 +                if self.magicnick in response:
-+                    response = response.replace(self.magicnick,
-+                                                re.sub(r'^(.)', r'\1​',
-+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
 +                if self.magicnick.lower() in response:
-+                    response = response.replace(self.magicnick.lower(),
-+                                                re.sub(r'^(.)', r'\1​',
-+                                                       random.choice(list(irc.state.channels[msg.args[0]].users)), count=1))
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
                  cobeBrain.learn(text)
 -                
 +
