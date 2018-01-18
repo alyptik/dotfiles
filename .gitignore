@@ -34,7 +34,9 @@ urlserver_list.txt
 .mutt_certificates
 bind/bind.keys.v9_8
 bind/account_key.json
+.weechat/python/lastfm2.py
 .weechat/chanop_mode_cache.dat
+.weechat/script/plugins.xml.gz
 
 rfc/
 logs/
