@@ -99,7 +99,8 @@ export LD_LIBRARY_PATH="/usr/lib64:/usr/lib:/usr/lib32:/home/alyptik/GNUstep/Lib
 export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:${HOME}/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:${HOME}/lxvst:/store/audio/lxvst"
-export GROFF_NO_SGR=1 LESS='CMRis' LESS='CMRXis' man man git
+export LESS=CMNRXis
+export GROFF_NO_SGR=1 LESS=CMRis LESS=CMRXis man man git
 # shellcheck disable=SC2039
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43;5m' LESS_TERMCAP_md=$'\E[1;31m'

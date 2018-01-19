@@ -3,27 +3,40 @@
 #
 # <file system>	<dir>	<type>	<options>	<dump>	<pass>
 
-## UUID=c56a80cb-c40b-47b4-a9f7-2b06d9d07000
-/dev/mapper/vg-arch	/		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvol=rootfs			0 0
-/dev/mapper/vg-arch	/home		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvol=home			0 0
-/dev/mapper/vg-arch	/store		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvol=store			0 0
-/dev/mapper/vg-arch	/btrfs		btrfs     rw,relatime,compress=lzo,space_cache,autodefrag,subvolid=0			0 0
-#/run/btrfs/empty	/run/btrfs/rootfs	none	rw,defaults,bind							0 0
+##/dev/sda5: LABEL="Arch" UUID="410203b0-5874-4266-83ad-0aecc4ccdd97" TYPE="ext4" PARTLABEL="Arch Linux root partition" PARTUUID="25e9666d-f4ca-42ac-a999-c48db65cb175"
+##/dev/sda1: LABEL="Recovery" UUID="1C58D29B58D272CE" TYPE="ntfs" PARTLABEL="Windows recovery partition" PARTUUID="52a43b86-3f12-4f08-b70f-bcda67ed6475"
+##/dev/sda2: LABEL="ESP" UUID="8AD3-1E1C" TYPE="vfat" PARTLABEL="EFI system partition" PARTUUID="3daf787f-296d-4ed8-afcb-6e86843ebcab"
+##/dev/sda4: LABEL="Windows" UUID="5A9AFEEA9AFEC195" TYPE="ntfs" PARTLABEL="Windows data partition" PARTUUID="d6862e5b-452e-4a9f-b9e2-0709d59c7b67"
+##/dev/sdb1: LABEL="microSDXC" UUID="A694-9154" TYPE="exfat" PTTYPE="dos" ##/dev/sdc1: UUID="2016-07-01-19-33-52-00" LABEL="ARCH_201607" TYPE="iso9660" PTUUID="4c840490" PTTYPE="dos" PARTUUID="4c840490-01"
+##/dev/sdc2: SEC_TYPE="msdos" LABEL="ARCHISO_EFI" UUID="5409-DBBC" TYPE="vfat" PARTUUID="4c840490-02"##/dev/loop0: TYPE="squashfs"
+##/dev/sda3: PARTLABEL="Microsoft reserved partition" PARTUUID="5073bd9c-31a9-4573-a44b-5d820c3311e0"
+##/dev/loop0: TYPE="squashfs" ##/dev/sda3: PARTLABEL="Microsoft reserved partition" PARTUUID="5073bd9c-31a9-4573-a44b-5d820c3311e0"
 
-## LABEL="Windows" UUID="8AFC51B7FC519DEF" TYPE="ntfs" PARTUUID="e7ace552-02"
-#/dev/sda2		/mnt/windows	ntfs-3g	ro,relatime,users,exec								0 0
+## /dev/sda5: LABEL="Arch" UUID="410203b0-5874-4266-83ad-0aecc4ccdd97"
+/dev/mapper/sp3-arch 	/		ext4	defaults,noatime,errors=remount-ro				0 1
+#/dev/mapper/sp3-arch 	/		ext4	defaults,noatime,nobarrier,barrier=0,errors=remount-ro		0 1
+#/dev/mapper/sp3-arch 	/		ext4	defaults,noatime,nobarrier,errors=remount-ro			0 1
+#/dev/mapper/sp3-arch 	/		ext4	defaults,noatime,nobarrier,barrier=0,errors=remount-ro		0 1
+#/dev/mapper/sp3-arch 	/		ext4	defaults,discard,noatime,nobarrier,barrier=0,errors=remount-ro	0 1
+#LABEL=Arch     	/		ext4	defaults,discard,noatime,nobarrier,barrier=0,errors=remount-ro	0 1
+#LABEL=Arch     	/         	ext4   	rw,discard,noatime,nobarrier,errors=remount-ro,data=ordered	0 1
 
-/dev/sda2		/mnt/windows	ntfs-3g	auto,defaults,rw,x-systemd.automount,x-systemd.device-timeout=1,timeo=15,x-systemd.idle-timeout=1min,nofail,nosuid,nodev,relatime,default_permissions,allow_other,users,exec,locale=en_US.UTF-8,uhelper=udisks2		0 0
+## /dev/sda2 UUID=8AD3-1E1C
+/dev/sda1		/boot/efi	vfat  	defaults,noatime,errors=remount-ro				0 2
+#/dev/sda1		/boot/efi	vfat  	defaults,noatime,errors=remount-ro				0 2
+#/dev/sda1		/boot/efi	vfat  	defaults,discard,noatime,errors=remount-ro			0 2
+#LABEL=ESP		/boot/efi	vfat  	defaults,discard,noatime,errors=remount-ro			0 2
+#LABEL=ESP		/boot/efi	vfat  	noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro	0 2
 
-## UUID=6ec7889f-b1d0-40f1-ac3e-17bc9ed3a3d0 LABEL=swap
-/dev/mapper/vg-swap	none		swap     defaults,pri=10							0 0
-## ZRAM
-#/dev/zram		none		swap     defaults,pri=100								0 0
-
-## MySQL tmpfs
-tmpfs			/var/lib/mysqltmp	tmpfs	rw,gid=89,uid=89,size=100M,mode=0750,relatime				0 0
+## Swap file: resume_offset=34816
+LABEL=Swap    		none      	swap	defaults,discard=pages,pri=0					0 0
+# LABEL=Swap   		none      	swap	defaults,discard=once,pri=0					0 0
+#/dev/mapper/sp3-swap 	none     	swap	defaults,pri=0,nofail						0 0
+#/dev/mapper/sp3-swap 	none     	swap	defaults,pri=0,discard,nofail					0 0
+#/swap         		none      	swap	defaults,discard=pages,nofail					0 0
+/home/alyptik/llpp.conf /c/llpp.conf	none	defaults,bind,nofail						0 0
+# /home/alyptik/.config/llpp.conf		/c/llpp.conf	none	defaults,bind,nofail				0 0
 
 ## NFS
-#/run/btrfs		/srv/nfs/btrfs		none    defaults,bind								0 0
-#surface.alyptik.lan:/srv/nfs			/mnt/nfs	nfs	auto,x-systemd.automount,x-systemd.device-timeout=1,timeo=14,x-systemd.idle-timeout=1min	0 0
-#surface.alyptik.lan:/srv/nfs			/mnt/nfs	nfs	rsize=8192,wsize=8192,timeo=14,_netdev			0 0
+# alyp.tk:/		/mnt/nfs	nfs	rsize=8192,wsize=8192,timeo=14,_netdev				0 0
+# alyp.tk:/		/mnt/nfs	nfs	auto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min,nofail	0 0

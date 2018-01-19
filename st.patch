@@ -6,8 +6,8 @@ index 4defff9..3502c60 100644
  
  It means that st doesn’t have any terminfo entry on your system. Chances are
  you did not `make install`. If you just want to test it without installing it,
--you can manualy run `tic -sx st.info`.
-+you can manualy run `tic -s st.info`.
+-you can manually run `tic -sx st.info`.
++you can manually run `tic -s st.info`.
  
  ## Nothing works, and nothing is said about an unknown terminal!
  
@@ -118,8 +118,8 @@ index 877afab..5774f5f 100644
  /* frames per second st should at maximum draw to the screen */
 -unsigned int xfps = 120;
 -unsigned int actionfps = 30;
-+static uint xfps = 30;
-+static uint actionfps = 30;
++static uint xfps = 60;
++static uint actionfps = 60;
  
  /*
   * blinking timeout (set to 0 to disable blinking) for the terminal blinking
@@ -146,7 +146,7 @@ index 877afab..5774f5f 100644
  
  /*
   * spaces per tab
-@@ -80,46 +82,52 @@ char termname[] = "st-256color";
+@@ -80,46 +82,49 @@ char termname[] = "st-256color";
   *
   *	stty tabs
   */
@@ -175,7 +175,6 @@ index 877afab..5774f5f 100644
 +	"#458588",
 +	"#b16286",
 +	"#689d6a",
-+	/* "#ebdbb2", */
 +	"#a89984",
  
  	/* 8 bright colors */
@@ -194,7 +193,6 @@ index 877afab..5774f5f 100644
 +	"#83a598",
 +	"#d3869b",
 +	"#8ec07c",
-+	/* "#a89984", */
 +	"#ebdbb2",
  
  	[255] = 0,
@@ -202,7 +200,6 @@ index 877afab..5774f5f 100644
  	/* more colors can be added after 255 to use with DefaultXX */
  	"#cccccc",
  	"#555555",
-+	/* "#ebdbb2", */
 +	"#32302f",
  };
  
@@ -234,7 +231,7 @@ index 877afab..5774f5f 100644
 -
 -unsigned int cols = 80;
 -unsigned int rows = 24;
-+static uint cursorshape = 2;
++static uint cursorshape = 1;
  
  /*
   * Default colour and shape of the mouse cursor
@@ -255,7 +252,7 @@ index 877afab..5774f5f 100644
   */
 -unsigned int defaultattr = 11;
 +static uint defaultitalic = 13;
-+static uint defaultunderline = 15;
++static uint defaultunderline = 11;
  
  /*
   * Internal mouse shortcuts.
@@ -2648,7 +2645,7 @@ index 7c7ddff..4ae3505 100644
  {
  	xunloadfonts();
  	xloadfonts(usedfont, arg->f);
-@@ -2600,18 +3665,559 @@ zoomabs(const Arg *arg)
+@@ -2600,18 +3665,560 @@ zoomabs(const Arg *arg)
  }
  
  void
@@ -3152,6 +3149,7 @@ index 7c7ddff..4ae3505 100644
 +			utf8decode("☃", &g.u, UTF_SIZ);
 +		case 0: /* Blinking Block */
 +		case 1: /* Blinking Block (Default) */
++			g.mode |= term.line[term.c.y][curx].mode & MODE_BLINK;
 +		case 2: /* Steady Block */
 +			g.mode |= term.line[term.c.y][curx].mode & ATTR_WIDE;
 +			xdrawglyph(g, term.c.x, term.c.y);
