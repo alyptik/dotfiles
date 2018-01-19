@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # Unset previous function/alias instances
-unset -f bfg define defrag fc java wd which 2>/dev/null
+unset -f define defrag fc java wd which 2>/dev/null
 unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
