@@ -73,7 +73,7 @@
 	dcdy = !git difftool --extcmd \"colordiff -wyB\"
 	di = !git difftool --extcmd icdiff
 	i = ls-files -i --full-name --exclude-standard
-	pu = pull
+	ps = push
 [web]
 	browser = w3m
 [instaweb]
