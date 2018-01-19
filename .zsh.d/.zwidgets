@@ -1,8 +1,37 @@
 #!/usr/bin/env zsh
 #
 # .zwidgets
-#
+
 # ZLE shell function section
+function ztype () { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@" }
+# inline calculator `= 4 * 2`
+function = () { print -r -- "$(($@))"; }
+aliases[=]='noglob ='
+
+function zle-run-help {
+	local -a args
+	local cmd
+	args=(${(z)BUFFER})
+	while (($#args > 1)); do
+		cmd=$args[1]
+		if [[ $(ztype $cmd) == alias ]]; then
+			cmd=${${$(whence -va $args[1])}[(w)6]}
+			args[1]=$cmd
+		fi
+		if [[ $cmd != sudo ]]; then
+			break
+		fi
+		shift args
+	done
+	if whence $args >/dev/null; then
+		if [[ $args[1] == git ]]; then
+			args[2]=${${(z)$(git config --global "alias.$args[2]")}[1]}
+		fi
+		run-help $args
+	else
+		run-help ${(z)BUFFER}
+	fi
+}
 
 # compile zwc files
 function zwc () {
@@ -13,10 +42,6 @@ function zwc () {
 		rm -fv ../../zcomps.zwc && zcompile -MUz ../../zcomps.zwc * || \
 		return 1 )
 }
-
-# inline calculator `= 4 * 2`
-function = () { print -r -- "$(($@))"; }
-aliases[=]='noglob ='
 
 function zle-fman {
 	local -a cmdline mansects

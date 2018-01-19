@@ -1543,13 +1543,13 @@ xmap <silent> <Leader>J k<Plug>(ale_previous)
 xmap <silent> <Leader>K j<Plug>(ale_next)
 
 vnoremap <Esc>; <C-u>
-" nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
-nnoremap <Esc>' <C-u>
+nnoremap <Esc>; <C-u>
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
+" nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
 nnoremap <Esc>' <C-d>
-" nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 vnoremap <Esc>' <C-d>
 inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
+" nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 vnoremap <Esc>u <C-u>
 vnoremap <Esc>d <C-d>
 " inoremap <Esc>c <Esc>"+yy<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>li

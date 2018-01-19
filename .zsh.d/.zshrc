@@ -78,7 +78,7 @@ type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 
 # zmodules
 () {
-	local -a au_arr zle_arr zmod_arr
+	local -a au_arr zle_arr zmod_arr zle_cust
 	au_arr+=(expand-absolute-path up-line-or-beginning-search)
 	au_arr+=(down-line-or-beginning-search filter-select run-help)
 	au_arr+=(regexp-replace edit-command-line nsert-unicode-char)
@@ -93,12 +93,18 @@ type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 	zmod_arr+=(zsh/net/socket zsh/system zsh/net/tcp)
 	zmod_arr+=(zsh/zftp zsh/zprof zsh/zpty zsh/zselect)
 	zmod_arr+=(zsh/pcre zsh/db/gdbm zsh/deltochar)
+	zle_cust+=(append-x-selection insert-x-selection yank-x-selection)
+	zle_cust+=(zle-youtube-helper zle-fman zle-compdef zle-refresh-keymap)
+	zle_cust+=(zle-toggle-keymap zle-emacs-keymap zle-vi-keymap)
+	zle_cust+=(zle-list-binds fzf-locate-widge insert-composed-char)
+	zle_cust+=(zle-backwards-delete-to-char zle-backwards-zap-to-char)
+	zle_cust+=(zle-zaw-help zle-less zle-vim zle-fh zle-run-help)
 	() for 1 { autoload -Uz "$1"; } $au_arr
-	() for 1 { zle -N "$1"; } $zle_arr
+	() for 1 { zle -N "$1"; } $zle_arr $zle_cust
 	() for 1 { zmodload "$1"; } $zmod_arr
 	# equiv of bash's "help"
 	unalias run-help help 2>/dev/null
-	alias help='run-help'
+	alias help='zle-run-help'
 }
 
 #AUTOPAIR_INHIBIT_INIT=${AUTOPAIR_INHIBIT_INIT:-}
@@ -294,26 +300,6 @@ if type zplug >/dev/null 2>&1; then
 	zplug load --verbose
 fi
 
-zle -N zle-youtube-helper
-zle -N zle-fman
-zle -N zle-compdef
-zle -N zle-refresh-keymap
-zle -N zle-toggle-keymap
-zle -N zle-emacs-keymap
-zle -N zle-vi-keymap
-zle -N append-x-selection
-zle -N insert-x-selection
-zle -N yank-x-selection
-zle -N zle-list-binds
-zle -N fzf-locate-widget
-zle -N insert-composed-char
-zle -N zle-backwards-delete-to-char
-zle -N zle-backwards-zap-to-char
-zle -N zle-zaw-help
-zle -N zle-less
-zle -N zle-vim
-zle -N zle-fh
-
 # FZF fuzzy completion
 export fzf_default_completion="complete-word"
 # export fzf_default_completion="expand-or-complete-prefix"
@@ -404,7 +390,7 @@ fi
 	bindkey -M "$1" "\C-f" self-insert
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
-	bindkey -M "$1" "\eh" run-help
+	bindkey -M "$1" "\eh" zle-run-help
 	bindkey -M "$1" "\eu" undo
 	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\ey" yank-pop
