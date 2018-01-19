@@ -35,7 +35,7 @@ exec 2<>"$_zsh_error"
 	setarr+=(pushdminus pushdtohome rematchpcre)
 	# `setopt IGNORE_CLOSE_BRACES` breaks too many things :'(
 	# setarr+=(ignoreclosebraces)
-	() for 1 { unsetopt "$1"; }  $unsetarr
+	() for 1 { setopt "no$1"; }  $unsetarr
 	() for 1 { setopt "$1"; } $setarr
 }
 # Emacs 19.29 or thereabouts stopped using a terminal type of "emacs" in
