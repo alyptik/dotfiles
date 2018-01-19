@@ -125,6 +125,8 @@ alias uniqu-sed="sed '$ b;N;/^\(.*\)\n\1$/!{P;D;};:c;$ d;s/.*\n//;N;/^\(.*\)\n\1
 alias fzero='find . -size 0'
 alias objd='objdump -Mintel,i8086 -D'
 alias cg='cgasm'
+alias cgf='cgasm -f'
+alias cgv='cgasm -v'
 # alias cg='grep --color=always'
 alias ngcc="gcc -v -E -x c -march=native - < /dev/null 2>&1 | grep cc1 | perl -pe 's/ -mno-\S+//g; s/^.* - //g;'"
 #alias ngcc="gcc -v -E -x c -march=native -mtune=native - </dev/null|&grep cc1|perl -pe 's/ -mno-\S+//g; s/^.* - //g;'"

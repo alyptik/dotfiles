@@ -7,7 +7,7 @@ index 5d268b54433f5e2403..f95a2add5b62f58239 100644
  # Based on the recommendations in RFC 7613. A valid nick is composed
  # of anything but " ,*?.!@".
 -VALID_NICK = r'([@~&!%+-])?([^\s,\*?\.!@]+)'
-+VALID_NICK = r'([@~&!%+:-])?([-\\~`|A-Za-z0-9^\[\]]+)'
++VALID_NICK = r'([@~&!%+:-])?([-_\\~`|A-Za-z0-9^\[\]]+)'
 +#  VALID_NICK = r'([@~&!%+:-])?([^\s,\*\?\.!@:›\'"%#\&​]+)'
  valid_nick_re = re.compile(VALID_NICK)
  ignore_channels = []

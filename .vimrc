@@ -1499,7 +1499,9 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 " map ][ /}<CR>b99]}
 " map ]] j0[[%/{<CR>
 " map [] k$][%?}<CR>
-map ' %
+map <Leader>' %
+map ; ^
+map ' $
 
 nnoremap gb :ls!<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
@@ -1540,13 +1542,17 @@ xmap <silent> <Esc>k j<Plug>(ale_next)
 xmap <silent> <Leader>J k<Plug>(ale_previous)
 xmap <silent> <Leader>K j<Plug>(ale_next)
 
+vnoremap <Esc>; <C-u>
+" nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+nnoremap <Esc>' <C-u>
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
-vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
-nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+nnoremap <Esc>' <C-d>
+" nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
+vnoremap <Esc>' <C-d>
 inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
-vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
-nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
-inoremap <Esc>c <Esc>"+yy<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>li
+vnoremap <Esc>u <C-u>
+vnoremap <Esc>d <C-d>
+" inoremap <Esc>c <Esc>"+yy<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>li
 " inoremap <Esc>v <Esc>:call setreg("\"",system("xsel -ob 2>/dev/null"))<CR>"+pli
 
 " Open a Quickfix window for the last search.
