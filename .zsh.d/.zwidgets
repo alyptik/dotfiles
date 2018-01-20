@@ -10,8 +10,14 @@ aliases[=]='noglob ='
 
 function zle-run-help {
 	local -a args
-	local cmd git_cmd
+	local cmd git_cmd saved match
+	match="${(M)BUFFER##g }"
+	saved="$BUFFER"
 	args=(${(z)BUFFER})
+	if [[ -n "$match" ]]; then
+		saved="${saved/g /git }"
+		args[1]="$saved"
+	fi
 	while (($#args > 1)); do
 		cmd=$args[1]
 		if [[ $(ztype $cmd) == alias ]]; then
@@ -28,11 +34,12 @@ function zle-run-help {
 			git_cmd=${${(z)$(git config --global "alias.$args[2]")}[1]}
 			[[ -n "$git_cmd" ]] && args[2]=$git_cmd
 		fi
+		print $git_cmd
 		zle push-input
 		BUFFER="run-help $args"
 	else
 		zle push-input
-		BUFFER="run-help ${(z)BUFFER}"
+		BUFFER="run-help $saved"
 	fi
 	zle accept-line
 	# zle -R
