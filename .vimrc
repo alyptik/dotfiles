@@ -47,8 +47,8 @@ call plug#begin(g:plugdir)
 
 	Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'
-	Plug 'SidOfc/mkdx', {'for': 'markdown'}
-	Plug 'junegunn/goyo.vim', {'for': 'markdown'}
+	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
+	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
 	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
@@ -1541,6 +1541,12 @@ xmap <silent> <Esc>j k<Plug>(ale_previous)
 xmap <silent> <Esc>k j<Plug>(ale_next)
 xmap <silent> <Leader>J k<Plug>(ale_previous)
 xmap <silent> <Leader>K j<Plug>(ale_next)
+
+" vnoremap <Esc>[ :call comfortable_motion#flick(-75)<CR>|  nnoremap <Esc>[ :call comfortable_motion#flick(-75)<CR>
+" inoremap <Esc>[ <Esc>:call comfortable_motion#flick(-75)<CR>li
+" vnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
+" nnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
+" inoremap <Esc>] <Esc>:call comfortable_motion#flick(75)<CR>li
 
 vnoremap <Esc>; <C-u>
 nnoremap <Esc>; <C-u>

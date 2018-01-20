@@ -26,6 +26,7 @@ export LINUX="$PROJECTS/linux" L="$LINUX" l="$LINUX"
 export ARCHFLAGS="-arch x86_64"
 # export BROWSER=firefox
 # export BROWSER=chromium
+export CCACHE_DISABLE=1
 # Tell ccache to only use these compilers
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PATH=/usr/lib/distcc/bin:/usr/bin

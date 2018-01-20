@@ -10,7 +10,7 @@ aliases[=]='noglob ='
 
 function zle-run-help {
 	local -a args
-	local cmd
+	local cmd git_cmd
 	args=(${(z)BUFFER})
 	while (($#args > 1)); do
 		cmd=$args[1]
@@ -25,12 +25,17 @@ function zle-run-help {
 	done
 	if whence $args >/dev/null; then
 		if [[ $args[1] == git ]]; then
-			args[2]=${${(z)$(git config --global "alias.$args[2]")}[1]}
+			git_cmd=${${(z)$(git config --global "alias.$args[2]")}[1]}
+			[[ -n "$git_cmd" ]] && args[2]=$git_cmd
 		fi
-		run-help $args
+		zle push-input
+		BUFFER="run-help $args"
 	else
-		run-help ${(z)BUFFER}
+		zle push-input
+		BUFFER="run-help ${(z)BUFFER}"
 	fi
+	zle accept-line
+	# zle -R
 }
 
 # compile zwc files
@@ -149,7 +154,7 @@ function zle-list-binds {
 	zle push-input
 	BUFFER="bindkey -L | hi tcsh -"
 	zle accept-line
-	zle -R
+	# zle -R
 }
 
 function zle-keymap-select {

@@ -177,6 +177,7 @@ else
 fi
 
 # prepend zcompiled functions/completions to fpath
+fpath[1,0]="${HOME}/.local/zsh/site-functions"
 fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zcomps.zwc"
 fpath[1,0]="${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc"
 autoload -U promptinit && promptinit
@@ -392,8 +393,8 @@ fi
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" zle-run-help
 	bindkey -M "$1" "\eu" undo
-	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\ey" yank-pop
+	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\C-q" push-line
 	bindkey -M "$1" "\C-k" kill-whole-line
 	bindkey -M "$1" "\ed" kill-word
