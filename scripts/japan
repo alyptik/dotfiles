@@ -1,8 +1,62 @@
 #!/bin/perl
+
 use strict;
 # use warnings;
-BEGIN { *ARGV=*DATA unless $ARGV[0]; }
 
-my $_i_=0;my (@_words_,@_text_) = (((-e $ARGV[0])?(<>):@ARGV),qw//); my %_h_; my $_ph_={knead=>[]}; for (@_words_) { if (s/[^[:alnum:]]//p){my $_w_=${^PREMATCH}.${^POSTMATCH};;$_ph_->{$_w_}->[0]=-(length(${^POSTMATCH})-length($_w_));$_ph_->{$_w_}->[1]=${^MATCH};}};map {my $_j_=[uc $_ ^ $_, length($_)]; $_text_[$_i_]=$_;my $_w_=$_;$_text_[$_i_]=~s/([aeiou]+)c*k\b/$1kusaki/gi;$_text_[$_i_]=~s/l+(?=\b)/rru/gi;$_text_[$_i_]=~s/l(?=\B)/r/gi;$_text_[$_i_]=~s/(?<![\baeiouy])([sfrpgt]+)(?=\b)/$1u/gi;$_text_[$_i_]=~s/(?<=[\baeiouy])([dpfzmtnrg]+)(?=\b)/$1o/gi;$_text_[$_i_]=~s/(?<=[\baeiouy])([dpt]+)o+\b/$1osaki/gi;$_text_[$_i_]=~s/(?<=[\baeiouy])([dpt]+)o+\b/$1saki/gi;$_text_[$_i_]=~s/c+([ie]+)/kush$1/gi;$_text_[$_i_]=~s/c+([aeiou])/k$1/gi;$_text_[$_i_]=~s/([ld]+)o\b/$1u/gi;$_text_[$_i_]=~s/[lr]+e\b/uru/gi;$_text_[$_i_]=~s/f([aeiou]+)/fr$1/g;$_text_[$_i_]=~s/th/doru/gi;$_text_[$_i_]=~s/ch(r+|)/kur/gi;$_text_[$_i_]=~s/doru[aeiou]+/da/gi;$_ph_->{$_text_[$_i_]}=[];$_ph_->{$_text_[$_i_]}->[0]=$_ph_->{$_w_}->[0];$_ph_->{$_text_[$_i_]}->[1]=$_ph_->{$_w_}->[1];$_h_{$_text_[$_i_++]}=$_j_;} @_words_;for (0 .. (scalar @_text_ - 1)){my $_j_=$_h_{$_text_[$_]}; $_text_[$_]=uc $_text_[$_] | $_j_->[0] . substr($_j_->[0],-1) x (length($_text_[$_])-$_j_->[1])} map{ my ($_w_,$_r_)=($_,\$_); my @_char_=($_ph_->{$_w_}->[1] // "", $_ph_->{$_w_}->[0] // 1); substr($$_r_,$_char_[1])=$_char_[0].substr($$_r_,$_char_[1]);}@_text_ ;print join " ",@_text_;
+BEGIN {
+	*ARGV=*DATA unless $ARGV[0];
+}
+
+my $_i_=0;
+my (@_words_,@_text_) = (((-e $ARGV[0])?(<>):@ARGV),qw//);
+my %_h_;
+my $_ph_={knead=>[]};
+
+for (@_words_) {
+	if (s/[^[:alnum:]]//p) {
+		my $_w_=${^PREMATCH}.${^POSTMATCH};
+		$_ph_->{$_w_}->[0]=-(length(${^POSTMATCH})-length($_w_));
+		$_ph_->{$_w_}->[1]=${^MATCH};
+	}
+}
+
+map {
+	my $_j_=[uc $_ ^ $_, length($_)];
+	$_text_[$_i_]=$_;
+	my $_w_=$_;
+	$_text_[$_i_]=~s/([aeiou]+)c*k\b/$1kusaki/gi;
+	$_text_[$_i_]=~s/l+(?=\b)/rru/gi;
+	$_text_[$_i_]=~s/l(?=\B)/r/gi;
+	$_text_[$_i_]=~s/(?<![\baeiouy])([sfrpgt]+)(?=\b)/$1u/gi;
+	$_text_[$_i_]=~s/(?<=[\baeiouy])([dpfzmtnrg]+)(?=\b)/$1o/gi;
+	$_text_[$_i_]=~s/(?<=[\baeiouy])([dpt]+)o+\b/$1osaki/gi;
+	$_text_[$_i_]=~s/(?<=[\baeiouy])([dpt]+)o+\b/$1saki/gi;
+	$_text_[$_i_]=~s/c+([ie]+)/kush$1/gi;
+	$_text_[$_i_]=~s/c+([aeiou])/k$1/gi;
+	$_text_[$_i_]=~s/([ld]+)o\b/$1u/gi;
+	$_text_[$_i_]=~s/[lr]+e\b/uru/gi;
+	$_text_[$_i_]=~s/f([aeiou]+)/fr$1/g;
+	$_text_[$_i_]=~s/th/doru/gi;
+	$_text_[$_i_]=~s/ch(r+|)/kur/gi;
+	$_text_[$_i_]=~s/doru[aeiou]+/da/gi;
+	$_ph_->{$_text_[$_i_]}=[];
+	$_ph_->{$_text_[$_i_]}->[0]=$_ph_->{$_w_}->[0];
+	$_ph_->{$_text_[$_i_]}->[1]=$_ph_->{$_w_}->[1];
+	$_h_{$_text_[$_i_++]}=$_j_;
+} @_words_;
+
+for (0 .. (scalar @_text_ - 1)) {
+	my $_j_=$_h_{$_text_[$_]};
+	$_text_[$_]=uc $_text_[$_] | $_j_->[0] . substr($_j_->[0],-1) x (length($_text_[$_])-$_j_->[1])
+}
+
+map {
+	my ($_w_,$_r_)=($_,\$_);
+	my @_char_=($_ph_->{$_w_}->[1] // "", $_ph_->{$_w_}->[0] // 1);
+	substr($$_r_,$_char_[1])=$_char_[0].substr($$_r_,$_char_[1]);
+} @_text_ ;
+
+print join " ",@_text_;
+
 __DATA__
 foo bar baz
