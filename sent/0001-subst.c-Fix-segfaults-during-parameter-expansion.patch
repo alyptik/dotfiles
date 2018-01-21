@@ -1,4 +1,4 @@
-From b046ff36a6e222fb79a6510057fbcccb067ed156 Mon Sep 17 00:00:00 2001
+From 01eb72d91fc8524d9b967c2d8a0b3f105bb7f0ae Mon Sep 17 00:00:00 2001
 From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Sat, 20 Jan 2018 15:34:16 -1000
 Subject: [PATCH] subst.c: Fix segfaults during parameter expansion
@@ -20,21 +20,13 @@ Add a simple `dupstring(s)` fallback.
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
 Requested-by: Bart Schaefer <schaefer@brasslantern.com>
 
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Src/subst.c b/Src/subst.c
-index d027e3d83cadc631a7..d159a92ae1bc1b9c10 100644
+index d027e3d83cadc631a7..a265a187e8730868a9 100644
 --- a/Src/subst.c
 +++ b/Src/subst.c
-@@ -2423,14 +2423,14 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
- 	     * substitution.
- 	     */
- 	    if (isarr) {
--		if (aval[0] && aval[1]) {
-+		if (!aval[0] || (aval[0] && aval[1])) {
- 		    zerr("parameter name reference used with array");
- 		    return NULL;
- 		}
+@@ -2430,7 +2430,7 @@ paramsubst(LinkList l, LinkNode n, char **str, int qt, int pf_flags,
  		val = aval[0];
  		isarr = 0;
  	    }

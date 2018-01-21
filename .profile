@@ -26,11 +26,11 @@ export LINUX="$PROJECTS/linux" L="$LINUX" l="$LINUX"
 export ARCHFLAGS="-arch x86_64"
 # export BROWSER=firefox
 # export BROWSER=chromium
-export CCACHE_DISABLE=1
-# Tell ccache to only use these compilers
+export CCACHE_DIR="$HOME/.ccache"
+# export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin
-# export CCACHE_PATH=/usr/lib/distcc/bin:/usr/bin
 # export CCACHE_PREFIX="distcc"
+export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
 export C="/store/dotfiles" c="$C"
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
 CF="$CF -Wdefault-bitfield-sign -Wptr-subtraction-blows -Wundef"
