@@ -44,7 +44,7 @@
 	re = remote
 	squash = rebase -i origin/master
 	mail = send-email outgoing/*
-	patch = format-patch --cover-letter -M origin/master -o outgoing/
+	patch = format-patch -M @^ --shortstat -o /patches
 	ch = checkout
 	t = tag
 	bi = bisect
@@ -62,7 +62,7 @@
 	p = push --progress -v
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
-	pl = pull
+	pl = pull -tvj5 --all --recurse-submodules=on-demand
 	f = grep -Fn --color=auto --break
 	g = grep -Pn --color=auto --break
 	gw = grep -PWn --color=auto --break
@@ -73,7 +73,7 @@
 	dcdy = !git difftool --extcmd \"colordiff -wyB\"
 	di = !git difftool --extcmd icdiff
 	i = ls-files -i --full-name --exclude-standard
-	ps = push
+	ps = push -v --all --follow-tags --progress
 [web]
 	browser = w3m
 [instaweb]

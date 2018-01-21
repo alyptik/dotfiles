@@ -1499,9 +1499,9 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 " map ][ /}<CR>b99]}
 " map ]] j0[[%/{<CR>
 " map [] k$][%?}<CR>
-map <Leader>' %
 map ; ^
 map ' $
+map ,, %
 
 nnoremap gb :ls!<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
