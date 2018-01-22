@@ -1,6 +1,10 @@
-tags
-*.swn
+build/
 *.swo
 *.swp
 *\~
 a.out
+tags
+TAGS
+cscope.po.out
+cscope.in.out
+cscope.out
