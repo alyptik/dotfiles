@@ -715,19 +715,19 @@ zstyle ':completion:*:matches'				group 'yes'
 zstyle ':completion:*'					group-name ''
 zstyle ':completion:*'					menu select
 zstyle ':completion:*:messages'				format '%d'
-zstyle ':completion:*:options'				auto-description '%d'
 # describe options in full
 zstyle ':completion:*:options'				description 'yes'
+zstyle ':completion:*:options'				auto-description '%d'
 # on processes completion complete all user processes
 zstyle ':completion:*:processes'			command 'ps -au$USER'
 # offer indexes before parameters in subscripts
 zstyle ':completion:*:*:-subscript-:*'			tag-order indexes parameters
-# provide verbose completion information
-zstyle ':completion:*'					verbose true
 # recent (as of Dec 2007) zsh versions are able to provide descriptions
 # for commands (read: 1st word in the line) that it will list for the user
 # to choose from. The following disables that, because it's not exactly fast.
 zstyle ':completion:*:-command-:*:'			verbose true
+# provide verbose completion information
+zstyle ':completion:*'					verbose true
 # set format for warnings
 zstyle ':completion:*:warnings'				format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
 # define files to ignore for zcompile
@@ -744,7 +744,7 @@ zstyle ':completion:*:manuals'				separate-sections true
 zstyle ':completion:*:manuals*'				insert-sections   true
 zstyle ':completion:*:man*'				menu yes select
 # provide .. as a completion
-# zstyle ':completion:*'					special-dirs ..
+zstyle ':completion:*'					special-dirs ..
 
 # run rehash on completion so new installed program are found automatically:
 _force_rehash() {
@@ -755,14 +755,14 @@ _force_rehash() {
 # correction
 # try to be smart about when to use what completer...
 zstyle -e ':completion:*'				completer '
-	if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+	if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
 		_last_try="$HISTNO$BUFFER$CURSOR"
-		reply=(_complete _correct _approximate _expand _match _ignored _prefix _files)
+		reply=(_complete _expand _match _ignored _prefix)
 	else
-		if [[ $words[1] == (rm|mv|cp) ]] ; then
-			reply=(_complete _files)
+		if [[ $words[1] == (rm|mv|cp) ]]; then
+			reply=(_oldlist _ignored _files)
 		else
-			reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
+			reply=(_oldlist _ignored _correct _approximate _force_rehash _files)
 		fi
 	fi'
 
