@@ -4,8 +4,9 @@ shopt -s extglob
 
 auditctl -e 0
 
-# printf "%s\n" "/store/cores/core.%e.%p.%P" | tee /proc/sys/kernel/core_pattern
-printf "%s\n" "/store/cores/core.%e.%p" | tee /proc/sys/kernel/core_pattern
+# printf "%s\n" "/store/cores/core.%e.%p.%P" |
+printf "%s\n" "/store/cores/core.%e.%p" |
+	tee /proc/sys/kernel/core_pattern
 
 # Analog stereo card
 # eg. SOUND_CARD_PCI_ID=03:00.0 (use `lspci | grep -i audio`)
@@ -16,15 +17,18 @@ SOUND_CARD_PCI_ID=00:1b.0
 setpci -v -d *:* latency_timer=b0
 setpci -v -s "$SOUND_CARD_PCI_ID" latency_timer=ff
 
-printf "performance\nperformance\nperformance\nperformance\n" | \
+printf "performance\nperformance\nperformance\nperformance\n" |
 	tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 
-printf "mq-deadline\n" | tee /sys/block/sd*/queue/scheduler
-# printf "kyber\n" | tee /sys/block/sd*/queue/scheduler
-# printf "bfq\n" | tee /sys/block/sd*/queue/scheduler
+# printf "kyber\n" |
+# printf "bfq\n" |
+printf "mq-deadline\n" |
+	tee /sys/block/sd*/queue/scheduler
 
-printf "2048\n" | tee /sys/class/rtc/rtc0/max_user_freq
-printf "2048\n" | tee /proc/sys/dev/hpet/max-user-freq
+printf "2048\n" |
+	tee /sys/class/rtc/rtc0/max_user_freq
+printf "2048\n" |
+	tee /proc/sys/dev/hpet/max-user-freq
 
 #SOUND_CARD_PCI_ID=00:03.0 ## HDMI card
 #printf '%s' "2048" | sudo tee '/sys/class/rtc/rtc0/max_user_freq' '/proc/sys/dev/hpet/max-user-freq' > /dev/nullSOUND_CARD_PCI_IDSOUND_CARD_PCI_IDSOUNDSOUND_CARD_PCI_IDSOUND_CARD_PCI_ID_CARD_PCI_ID

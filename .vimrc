@@ -45,6 +45,9 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'osfameron/perl-tags-vim'
+	" Plug 'osfameron/perl-tags'
+	Plug 'c9s/perlomni.vim'
 	Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
@@ -292,6 +295,17 @@ set cscopetag
 set wrap
 set showbreak=++++
 " let &showbreak="        "
+set history=10000
+set nohlsearch
+
+" '10  :  marks will be remembered for up to 10 previously edited files
+"  <100 :  will save up to 100 lines for each register
+"  /100 : Maximum number of items in the search pattern history to be saved.
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
+" set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n~/.viminfo
 
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
 set backup
@@ -301,6 +315,71 @@ set directory=$HOME/.cache/vim/swap
 set undofile
 set undodir=$HOME/.cache/vim/undo
 
+au QuickFixCmdPost *grep* cwindow
+
+"formal: au BufNewFile,BufRead * setf {filetype}
+au BufNewFile,BufRead *.h set filetype=c
+au BufNewFile,BufRead *.c set filetype=c
+au BufNewFile,BufRead *.jq setf javascript
+au BufNewFile,BufRead *tmux.conf set filetype=tmux
+au BufNewFile,BufRead *nanorc setf nanorc
+au BufNewFile,BufRead *vimpagerrc setf vim
+au BufNewFile,BufRead *.\(service\|socket\|target\|timer\)* set filetype=sysctl
+"au BufNewFile,BufRead *\(nftables.conf\|.nft\)* setf nftables
+au BufNewFile,BufRead *\(nftables.conf\|.nft\)* set filetype=nftables
+au BufNewFile,BufRead *toxic.conf* set filetype=cfg
+"au BufNewFile,BufRead *conf setf config
+"au BufNewFile,BufRead *conf setf conf
+au BufNewFile,BufRead db.* set filetype=bindzone
+au BufNewFile,BufRead *grub* set filetype=grub
+au BufNewFile,BufRead *.\(cc\|cpp\) set filetype=cpp
+au BufNewFile,BufRead proftpd.\(con\|conf\) set filetype=cterm
+au BufNewFile,BufRead i3.conf set filetype=i3
+au BufNewFile,BufRead *.md set filetype=markdown
+"au BufNewFile,BufRead {/etc/udev/rules.d/,/store/config/}*.rules set filetype=udevrules
+au BufNewFile,BufRead *.txt setf erlang
+au BufNewFile,BufRead *.log setf irc
+au BufNewFile,BufRead /etc/X11/xorg.conf.d/* setf xf86conf
+au BufNewFile,BufRead *named.conf* set filetype=named
+au BufNewFile,BufRead *.log setf irc
+" au BufNewFile,BufRead *conf set filetype=cfg
+au BufNewFile,BufRead *torrc* setf cfg
+au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
+au BufNewFile,BufRead */.zsh.d/zfunctions/* setf zsh
+au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
+au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
+au BufNewFile,BufRead makepkg.conf* set filetype=sh
+au BufNewFile,BufRead *.conf* setf cfg
+au BufNewFile,BufRead /etc/* setf cfg
+au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
+au BufNewFile,BufRead *.vala setf cs
+au BufNewFile,BufRead *.vapi setf cs
+au BufNewFile,BufRead *.gtkaml setf cs
+au BufNewFile,BufRead *.gtkon setf cs
+" Fallback
+" au BufNewFile,BufRead * setf erlang
+
+"au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
+au FileType cpp set keywordprg=cppman
+" au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+" au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+" au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
+au FileType c setl ofu=ClangComplete cfu=ClangComplete
+au FileType h setl ofu=ClangComplete cfu=ClangComplete
+" au FileType cpp setl ofu=ClangComplete
+" au FileType c setl ofu=ccomplete#CompleteCpp
+" au FileType h setl ofu=ccomplete#CompleteCpp
+" au FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+au FileType php setl ofu=phpcomplete#CompletePHP
+au FileType ruby,eruby setl ofu=rubycomplete#Complete
+au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
+au FileType css setl ofu=csscomplete#CompleteCSS
+au FileType udev set filetype=udevrules
+au FileType pandoc set filetype=markdown
+" Disable haskell-vim omnifunc
+let g:haskellmode_completion_ghc = 0
+au FileType haskell setl omnifunc=necoghc#omnifunc
 " filetype marks
 augroup VIMRC
 	autocmd!
@@ -869,81 +948,6 @@ let g:ctrlp_custom_ignore= {
 	\ 'link': 'some_bad_symbolic_links',
 	\ }
 let g:ctrlp_user_command=['.git', 'cd %s && git ls-files -co --exclude-standard']
-
-au QuickFixCmdPost *grep* cwindow
-
-"formal: au BufNewFile,BufRead * setf {filetype}
-au BufNewFile,BufRead *.h set filetype=c
-au BufNewFile,BufRead *.c set filetype=c
-au BufNewFile,BufRead *.jq setf javascript
-au BufNewFile,BufRead *tmux.conf set filetype=tmux
-au BufNewFile,BufRead *nanorc setf nanorc
-au BufNewFile,BufRead *vimpagerrc setf vim
-au BufNewFile,BufRead *.\(service\|socket\|target\|timer\)* set filetype=sysctl
-"au BufNewFile,BufRead *\(nftables.conf\|.nft\)* setf nftables
-au BufNewFile,BufRead *\(nftables.conf\|.nft\)* set filetype=nftables
-au BufNewFile,BufRead *toxic.conf* set filetype=cfg
-"au BufNewFile,BufRead *conf setf config
-"au BufNewFile,BufRead *conf setf conf
-au BufNewFile,BufRead db.* set filetype=bindzone
-au BufNewFile,BufRead *grub* set filetype=grub
-au BufNewFile,BufRead *.\(cc\|cpp\) set filetype=cpp
-au BufNewFile,BufRead proftpd.\(con\|conf\) set filetype=cterm
-au BufNewFile,BufRead i3.conf set filetype=i3
-au BufNewFile,BufRead *.md set filetype=markdown
-"au BufNewFile,BufRead {/etc/udev/rules.d/,/store/config/}*.rules set filetype=udevrules
-au BufNewFile,BufRead *.txt setf erlang
-au BufNewFile,BufRead *.log setf irc
-au BufNewFile,BufRead /etc/X11/xorg.conf.d/* setf xf86conf
-au BufNewFile,BufRead *named.conf* set filetype=named
-au BufNewFile,BufRead *.log setf irc
-" au BufNewFile,BufRead *conf set filetype=cfg
-au BufNewFile,BufRead *torrc* setf cfg
-au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
-au BufNewFile,BufRead */.zsh.d/zfunctions/* setf zsh
-au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
-au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
-au BufNewFile,BufRead makepkg.conf* set filetype=sh
-au BufNewFile,BufRead *.conf* setf cfg
-au BufNewFile,BufRead /etc/* setf cfg
-au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
-au BufNewFile,BufRead *.vala setf cs
-au BufNewFile,BufRead *.vapi setf cs
-au BufNewFile,BufRead *.gtkaml setf cs
-au BufNewFile,BufRead *.gtkon setf cs
-
-" Fallback
-"au BufNewFile,BufRead * setf erlang
-
-"au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
-au FileType cpp set keywordprg=cppman
-" au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-" au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-" au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
-au FileType c setl ofu=ClangComplete cfu=ClangComplete
-au FileType h setl ofu=ClangComplete cfu=ClangComplete
-" au FileType cpp setl ofu=ClangComplete
-" au FileType c setl ofu=ccomplete#CompleteCpp
-" au FileType h setl ofu=ccomplete#CompleteCpp
-"au FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
-au FileType php setl ofu=phpcomplete#CompletePHP
-au FileType ruby,eruby setl ofu=rubycomplete#Complete
-au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
-au FileType css setl ofu=csscomplete#CompleteCSS
-au FileType udev set filetype=udevrules
-au FileType pandoc set filetype=markdown
-" Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-au FileType haskell setl omnifunc=necoghc#omnifunc
-
-" '10  :  marks will be remembered for up to 10 previously edited files
-"  <100 :  will save up to 100 lines for each register
-"  /100 : Maximum number of items in the search pattern history to be saved.
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-set viminfo='1000,<1000,/1000,:1000,@1000,f1000,s1000,!,%,c,n~/.viminfo
 
 let g:mdnquery_show_on_invoke=1
 let g:mdnquery_auto_focus=1
@@ -1548,16 +1552,21 @@ xmap <silent> <Leader>K j<Plug>(ale_next)
 " nnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
 " inoremap <Esc>] <Esc>:call comfortable_motion#flick(75)<CR>li
 
-vnoremap <Esc>; <C-u>
-nnoremap <Esc>; <C-u>
 inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
-" nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
-nnoremap <Esc>' <C-d>
-vnoremap <Esc>' <C-d>
 inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
-" nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 vnoremap <Esc>u <C-u>
 vnoremap <Esc>d <C-d>
+
+nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
+vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
+
+" vnoremap <Esc>; <C-u>
+" nnoremap <Esc>; <C-u>
+" nnoremap <Esc>' <C-d>
+" vnoremap <Esc>' <C-d>
+"
 " inoremap <Esc>c <Esc>"+yy<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>li
 " inoremap <Esc>v <Esc>:call setreg("\"",system("xsel -ob 2>/dev/null"))<CR>"+pli
 
