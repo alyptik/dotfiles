@@ -623,13 +623,13 @@ compdef xs=xsel
 
 # named directories
 hash -d a="${HOME}/code/aur"
-hash -d audio="/media/microSDXC/audio"
+hash -d audio="/sdxc/audio"
 hash -d b="${HOME}/bin/"
-hash -d calibre="/media/microSDXC/calibre"
+hash -d calibre="/sdxc/calibre"
 hash -d code="${P:-/store/code/projects}/school"
 hash -d c="${CONF:-/store/dotfiles}"
 hash -d d="${P:-/store/code/projects}/linux/Documentation"
-hash -d djzomg="/media/microSDXC/Music/djzomg"
+hash -d djzomg="/sdxc/Music/djzomg"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
 hash -d g="${HOME}/git"
@@ -646,13 +646,13 @@ hash -d plugins="/usr/share/oh-my-zsh/plugins"
 hash -d prose="/store/writing"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
-hash -d s="/media/microSDXC/school"
-hash -d sdxc="/run/media/alyptik/microSDXC"
+hash -d s="/sdxc/school"
+hash -d sdxc="/sdxc"
 hash -d surfraw="/usr/lib/surfraw"
-hash -d stuff="/media/toshiba1TB"
+hash -d stuff="/hdd"
 hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
-hash -d tt="/media/toshiba1TB/torrents"
+hash -d tt="/hdd/torrents"
 hash -d vim="${HOME}/.vim"
 hash -d vm="/run/media/alyptik/vm"
 hash -d wanderlust="/hdd/wanderlust"
@@ -744,7 +744,7 @@ zstyle ':completion:*:manuals'				separate-sections true
 zstyle ':completion:*:manuals*'				insert-sections   true
 zstyle ':completion:*:man*'				menu yes select
 # provide .. as a completion
-zstyle ':completion:*'					special-dirs ..
+# zstyle ':completion:*'					special-dirs ..
 
 # run rehash on completion so new installed program are found automatically:
 _force_rehash() {
@@ -757,12 +757,12 @@ _force_rehash() {
 zstyle -e ':completion:*'				completer '
 	if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
 		_last_try="$HISTNO$BUFFER$CURSOR"
-		reply=(_complete _expand _match _ignored _prefix)
+		reply=(_complete _expand _match _prefix _correct _approximate)
 	else
 		if [[ $words[1] == (rm|mv|cp) ]]; then
-			reply=(_oldlist _ignored _files)
+			reply=(_complete _ignored _expand _prefix _files)
 		else
-			reply=(_oldlist _ignored _correct _approximate _force_rehash _files)
+			reply=(_oldlist _ignored _complete _expand _correct _approximate _force_rehash _files)
 		fi
 	fi'
 
