@@ -1,0 +1,5 @@
+#!/bin/python3
+ck=("import#sys@@dargs#=#sys.argv[1:]@if#not#(len(dargs)):@#print#('wtf')@#quit()@max_i#=#max(#[#len(arg)#for#arg#in#dargs]#)@@def#w_to_n(word):@#rv#=#[ord(i)#for#i#in#word]@#for#i#in#range(#max_i-len(word)#):@##rv.append(0)@#return#rv@def#add_es(f,s):@#return#[#f[i]+s[i]#for#i#in#range(max_i)#]@def#n_to_w(f):@#return#''.join(#[#chr(###((i-97)%26)+97#)#for#i#in#f]#)@mx=#[0#for#i#in#range(max_i)]#@sr=''@for#arg#in#dargs:@#sr=sr+str(arg)+'#+#'@#if#len(dargs)==1:@###sr=sr+'nothing###'@#mx=add_es(mx,#w_to_n(arg))@print#(sr[:-3],'=',n_to_w(mx)#)@")
+ck=ck.replace('@',chr(10))
+ck=ck.replace('#',' ')
+exec(ck)

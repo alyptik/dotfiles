@@ -8,6 +8,7 @@ BEGIN {
 }
 
 my $_i_=0;
+# my (@_words_,@_text_) = (@ARGV, qw//);
 my (@_words_,@_text_) = (((-e $ARGV[0])?(<>):@ARGV),qw//);
 my %_h_;
 my $_ph_={knead=>[]};
