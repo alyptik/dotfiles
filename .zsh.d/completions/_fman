@@ -1,4 +1,4 @@
-#compdef fman
+#compdef fman man apropos whatis
 
 _man() {
 	local dirs expl mrd awk
@@ -11,7 +11,7 @@ _man() {
 		_files || return 0
 	fi
 
-	if (( ! $#_manpath )); then
+	if (( !$#_manpath )); then
 		local mp
 		mp=( ${(s.:.)$(manpath 2>/dev/null)} )
 		[[ "$mp" == *:* ]] && mp=( ${(s.:.)mp} )
@@ -103,6 +103,14 @@ _man() {
 				_wanted manuals expl 'manual page' _man_pages && return 0
 			fi
 
+			## To fall back to other sections' manpages when completing filenames, like
+			## the 'else' codepath does:
+
+			# if (( ret )) && [[ $PREFIX$SUFFIX == */* ]]; then
+			#         sect_dirname=
+			#         _wanted manuals expl 'manual page' _man_pages && return 0
+			# fi
+
 			return 1
 	else
 		sect_dirname=
@@ -149,6 +157,8 @@ _man_pages() {
 
 local -A opt_args
 local -a sections
+local context state state_descr line
+local curcontext="$curcontext"
 sections=(${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//})
 
 _arguments -C \
