@@ -68,8 +68,8 @@ call plug#begin(g:plugdir)
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
-	" Plug 'easymotion/vim-easymotion'
-	Plug 'matze/vim-move'
+	Plug 'easymotion/vim-easymotion'
+	" Plug 'matze/vim-move'
 	Plug 'rhysd/conflict-marker.vim'
 	" Plug 'vim-voom/VOoM'
 	Plug 'thinca/vim-visualstar'
@@ -84,7 +84,6 @@ call plug#begin(g:plugdir)
 	Plug 'mileszs/ack.vim'
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
-	" Plug 'roblillack/vim-bufferlist'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'subosito/nginx.vim'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -100,7 +99,7 @@ call plug#begin(g:plugdir)
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'w0rp/ale'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
-	" Plug 'Terryma/vim-multiple-cursors'
+	Plug 'Terryma/vim-multiple-cursors'
 	" Plug 'xolox/vim-notes'
 	" Group dependencies, vim-snippets depends on ultisnips
 	" Plug 'SirVer/ultisnips'
