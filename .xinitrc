@@ -47,6 +47,8 @@ stjerm -k F12 -ah false -o 90 -b none -w 85% -h 80% -ar -tf true -tp bottom -fn 
 # urxvt -kuake-hotkey F10 &
 # urxvtcd -kuake-hotkey F10 &
 # scpuled &
+pcmanfm &
+transgui &
 udisksctl mount -b "$(findfs LABEL=vm)" &
 xrandr --dpi 216 &
 
