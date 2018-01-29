@@ -68,8 +68,8 @@ call plug#begin(g:plugdir)
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
-	Plug 'easymotion/vim-easymotion'
-	" Plug 'matze/vim-move'
+	" Plug 'easymotion/vim-easymotion'
+	Plug 'matze/vim-move'
 	Plug 'rhysd/conflict-marker.vim'
 	" Plug 'vim-voom/VOoM'
 	Plug 'thinca/vim-visualstar'
@@ -140,6 +140,7 @@ call plug#end()
 " Make Vim recognize XTerm escape sequences for Page and Arrow
 " keys combined with modifiers such as Shift, Control, and Alt.
 " See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
+set nottybuiltin term=$TERM
 if &term =~ '^\(xterm\|st\|rxvt\|tmux\)'
 	" let &t_SI .= "\<Esc>[5 q"
 	" let &t_EI .= "\<Esc>[1 q"
@@ -355,6 +356,7 @@ au BufNewFile,BufRead *.vala setf cs
 au BufNewFile,BufRead *.vapi setf cs
 au BufNewFile,BufRead *.gtkaml setf cs
 au BufNewFile,BufRead *.gtkon setf cs
+
 " Fallback
 " au BufNewFile,BufRead * setf erlang
 
@@ -1156,16 +1158,12 @@ if has_key(shells, extension)
 		let line="#!" . system("which " . fileshell) . "\n"
 	endif
 	0put= line | $
-	if a:permission
-		if a:remove_extension
-			:autocmd! BufWritePost * :autocmd! VimLeave * :!chmod +x % && mv % "%:p:r"
-		else
-			:autocmd! BufWritePost * :autocmd! VimLeave * :!chmod +x %
-		endif
-	else
-		if a:remove_extension
-			:autocmd! BufWritePost * :autocmd! VimLeave * :!mv % "%:p:r"
-		endif
+	if a:permission && a:remove_extension
+		:autocmd! BufWritePost * :autocmd! VimLeave * :!chmod +x % && mv % "%:p:r"
+	elseif a:permission
+		:autocmd! BufWritePost * :autocmd! VimLeave * :!chmod +x %
+	elseif a:remove_extension
+		:autocmd! BufWritePost * :autocmd! VimLeave * :!mv % "%:p:r"
 	endif
 endif
 endfunction

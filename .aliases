@@ -10,7 +10,7 @@ alias fm='fman'
 alias rk='runkernel'
 alias nmu='neomutt'
 alias node='NODE_NO_READLINE=1 rlwrap node'
-alias m='make clean && PREFIX=~/.local make debug install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
+alias m='make clean && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
 ## quick opening files with mpv
 # alias m='f -e mpv'
 alias urb='define -u'
