@@ -1,0 +1,21 @@
+<!--
+WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
+OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
+  virsh net-edit virbr0
+or other application using the libvirt API.
+-->
+
+<network ipv6='no'>
+  <name>virbr0</name>
+  <uuid>0045e2b3-23b1-480b-8ccf-ab0f5af7852a</uuid>
+  <forward mode='nat'/>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <mac address='52:54:00:45:e1:43'/>
+  <domain name='alyptik.lan'/>
+  <ip address='192.168.10.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.10.100' end='192.168.10.254'/>
+      <host mac='52:54:00:91:b6:5c' name='compiler' ip='192.168.10.2'/>
+    </dhcp>
+  </ip>
+</network>
