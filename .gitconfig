@@ -59,7 +59,7 @@
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = diff --histogram --cached
 	dc = diff --cached --histogram
-	p = push --progress -v
+	p = push -v --follow-tags
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
 	pl = pull -tvj5 --all --recurse-submodules=on-demand
@@ -73,7 +73,7 @@
 	dcdy = !git difftool --extcmd \"colordiff -wyB\"
 	di = !git difftool --extcmd icdiff
 	i = ls-files -i --full-name --exclude-standard
-	ps = push -v --all --follow-tags --progress
+	ps = push -v --all --follow-tags
 [web]
 	browser = w3m
 [instaweb]
