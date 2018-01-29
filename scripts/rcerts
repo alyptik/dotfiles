@@ -4,5 +4,10 @@ domains=(alyp.tk sigfu.tk fsckingfu.tk)
 subs=(mail cube www webmail stream)
 list=($(print ${(j:,:)domains},$(printf '%s.%s,' {${^subs},${^domains}})))
 
-sudo certbot certonly --standalone -d "${list%%,}"
+sudo systemctl stop nginx
+
+sudo certbot renew
+# sudo certbot certonly --standalone -d "${list%%,}"
 # sudo certbot certonly --standalone -d "${list%%,},hewillnotdivide.tk"
+
+sudo systemctl start nginx
