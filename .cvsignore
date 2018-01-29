@@ -1,4 +1,5 @@
 build/
+core\.*
 *.orig
 *.rej
 *.swo
