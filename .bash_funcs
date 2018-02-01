@@ -481,19 +481,24 @@ function dsgenkey() {
 }
 
 function dssign() {
-	[[ ${PWD} != /etc/bind ]] && pushd . >/dev/null 2>&1
-	cd "/etc/bind"
+	[[ "${PWD}" != /etc/bind ]] && pushd . >/dev/null 2>&1 || return 1
+	cd "/etc/bind" || return 1
 	if [[ -z "${1}" ]]; then
-		printf '%b' 'no zone specified!\nsign "alyp.tk"? (Y/n)' ; read ans
-		[[ ${ans} =~ ([ \t]*[Yy].*|) ]] && { popd >/dev/null 2>&1; dssign 'alyp.tk'; return 0; }
-		echo -n "\r\nenter zone(s) to sign: "
-		read -r ans2
+		printf '%b' 'no zone specified!\nsign "alyp.tk"? (Y/n)'; read ans
+		case "$ans" in
+		[Yy]*)
+			popd >/dev/null 2>&1 || return 1
+			dssign 'alyp.tk'
+			return 0
+			;;
+		esac
+		echo -n "\r\nenter zone(s) to sign: "; read -r ans2
 		if [[ -z "${ans2}" ]]; then
 			echo "exiting..."
 			return 2
 		else
-			zarray=( $ans2 )
-			popd >/dev/null 2>&1
+			zarray=($ans2)
+			popd >/dev/null 2>&1 || return 1
 			dssign "${zarray[@]}"
 			return 0
 		fi
@@ -591,6 +596,8 @@ function f0x0() {
 	AppleWebKit/537.36 (KHTML, like Gecko) \
 	Chrome/44.0.2403.89 Safari/537.36" https://0x0.st --progress-bar -F"file=@${*}"
 }
+
+function faketty() { script -qfc "$(printf "%q " "$@")"; }
 
 function favicon() {
 	local ico
@@ -1779,9 +1786,9 @@ function safetytoggle() {
 	chmod --preserve-root
 	chgrp --preserve-root'
 	## Parse options
-	[[ "$*" =~ ^([\-]$|\-[0-9]+|\-[hu]+[snhu]*|\-\-help|\-\-usage)+.*$ ]] && { printf "$usagedoc"; return 0; }
-	[[ "$*" =~ ^(\-s[snhu]*|\-\-set)+.*$ ]] && { unalias rm wget mv cp ln chown chmod chgrp &>/dev/null; }
-	[[ "$*" =~ ^(\-n[snhu]*|\-\-noset)+.*$ ]] && { alias rm='rm -I ' &>/dev/null; }
+	[[ "$*" =~ ^([-]$|-[0-9]+|-[hu]+[snhu]*|--help|--usage) ]] && { printf "$usagedoc"; return 0; }
+	[[ "$*" =~ ^(-s[snhu]*|--set) ]] && { unalias rm wget mv cp ln chown chmod chgrp &>/dev/null; }
+	[[ "$*" =~ ^(-n[snhu]*|--noset) ]] && { alias rm='rm -I ' &>/dev/null; }
 	## Set/unset aliases
 	(( `(alias; declare -f) | egrep -q '^rm=.*$'`$? )) && {
 	## start from scratch
