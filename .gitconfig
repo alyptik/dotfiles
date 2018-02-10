@@ -74,6 +74,7 @@
 	di = !git difftool --extcmd icdiff
 	i = ls-files -i --full-name --exclude-standard
 	ps = push -v --all --follow-tags
+	ds = diff --stat
 [web]
 	browser = w3m
 [instaweb]

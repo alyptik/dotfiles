@@ -1,0 +1,70 @@
+————————————————————————————————————————————————————————————————————————————————
+————————————————————————————————————————————————————————————————————————————————
+
+Do you have C/C++ software design and development experience?
+If so, please summarize (# years, products, lines of code, etc.)
+and highlight any accomplishments.
+
+————————————————————————————————————————————————————————————————————————————————
+
+Yes, I am an active C programmer with a couple of personal projects
+such as CEPL (a C11 interactive REPL <https://github.com/alyptik/cepl>.
+ I have recently become interested in the Linux Kernel, and have
+submitted a few minor patches.
+
+Recent patch accepted into linux-next: <https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=da1729ce4866be266575a114208c7d5350bf310d>
+Other submitted patches: <https://patchwork.kernel.org/project/LKML/list/?submitter=178113>.
+
+In my spare time, I also help out by answering questions in Freenode's ##c channel to stay sharp on knowledge of the C11 standard.
+
+————————————————————————————————————————————————————————————————————————————————
+————————————————————————————————————————————————————————————————————————————————
+
+Do you have a thorough knowledge of the TCP/IP suite of protocols?
+If so, where and when have you done this?
+
+————————————————————————————————————————————————————————————————————————————————
+
+I understand how TCP/IP works at the protocol level, and I have
+a minor working knowledge of how the Linux Kernel TCP/IP implementation
+works. I stress that I spend most of my days learning, so I will
+have a much more thorough understanding by the time you actually read
+this.
+
+————————————————————————————————————————————————————————————————————————————————
+————————————————————————————————————————————————————————————————————————————————
+
+Please read the job description and tell me why you would be
+an amazing fit (start up experience, commercial networking software,
+backend expert, etc.).
+
+————————————————————————————————————————————————————————————————————————————————
+
+I am very motivated with regard to C projectsand living in
+Hawaii, as you can imagine, there are far fewer jobs available
+in this field. I would be very excited to work in a formal team;
+truthfully, the only real collaboration experience I have is
+submitting patches and communicating via a mailing list.
+
+————————————————————————————————————————————————————————————————————————————————
+————————————————————————————————————————————————————————————————————————————————
+
+Please tell me your ideal salary for this position.
+
+————————————————————————————————————————————————————————————————————————————————
+
+50,000 USD (Negotiable)
+
+————————————————————————————————————————————————————————————————————————————————
+————————————————————————————————————————————————————————————————————————————————
+
+Why are you open/looking for a new opportunity? When are you available to interview?
+
+————————————————————————————————————————————————————————————————————————————————
+
+I am not a complicated person by any means; simply put, I want
+to improve myself. I am available for interview at any time that
+is adequate for you.
+
+————————————————————————————————————————————————————————————————————————————————
+————————————————————————————————————————————————————————————————————————————————
