@@ -12,10 +12,14 @@ such as CEPL (a C11 interactive REPL <https://github.com/alyptik/cepl>.
  I have recently become interested in the Linux Kernel, and have
 submitted a few minor patches.
 
-Recent patch accepted into linux-next: <https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=da1729ce4866be266575a114208c7d5350bf310d>
-Other submitted patches: <https://patchwork.kernel.org/project/LKML/list/?submitter=178113>.
+Recent patch accepted into linux-mainline:
+<https://github.com/torvalds/linux/commit/da1729ce4866be266575a114208c7d5350bf310d>
 
-In my spare time, I also help out by answering questions in Freenode's ##c channel to stay sharp on knowledge of the C11 standard.
+Other submitted patches:
+<https://patchwork.kernel.org/project/LKML/list/?submitter=178113>
+
+In my spare time, I also help out by answering questions in Freenode's
+##c channel to stay sharp on knowledge of the C11 standard.
 
 ————————————————————————————————————————————————————————————————————————————————
 ————————————————————————————————————————————————————————————————————————————————
