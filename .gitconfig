@@ -78,8 +78,8 @@
 	mt = mergetool
 	mc = merge --continue
 	ma = merge --abort
-	rc = rebase -cotiniue
-	ra = rebase -abort
+	rc = rebase --continue
+	ra = rebase --abort
 	update = pull -v --ff-only
 [web]
 	browser = w3m
