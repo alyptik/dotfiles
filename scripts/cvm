@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec sudo /store/code/projects/pbot/modules/compiler_vm/compiler_server_virsh.pl

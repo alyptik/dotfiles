@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # CLI handling.
+#
 # norandmaps: Don't use address space randomization. Equimageent to echo 0 > /proc/sys/kernel/randomize_va_space.
 # printk.time=y: log in format: "[time ] msg" for all printk messages.
 extra_flags=''
@@ -12,47 +13,47 @@ append='root=/dev/vda nopat console=ttyS0'
 kernel="$base_dir/obj/linux-x86/arch/x86_64/boot/bzImage"
 display='-nographic'
 image="$base_dir/obj/buildroot-x86/images/rootfs.ext4"
-network='-net nic,macaddr=52:54:00:91:b6:5c,model=virtio -net bridge,br=virbr0'
+network='-net nic,macaddr=52:54:00:46:de:42,model=virtio -net bridge,br=virbr0'
 
-while getopts :a:b:i:n:dghkms name; do
-	case "$name" in
-	i)
+while getopts :a:b:i:n:dghkms opt; do
+	case "$opt" in
+	(i)
 		image="$OPTARG"
 		;;
-	a)
+	(a)
 		opt_append="$OPTARG"
 		;;
-	b)
+	(b)
 		kernel="$OPTARG"
 		;;
-	n)
+	(n)
 		network="-net nic -net $OPTARG"
 		;;
-	d)
+	(d)
 		extra_flags="$extra_flags -S -s"
 		;;
-	g)
+	(g)
 		# vga='-display curses'
 		display='-vga virtio'
 		;;
-	k)
+	(k)
 		extra_append="$extra_append kgdbwait"
 		# For those who want to try KDB.
 		# extra_append+="$extra_append kgdboc=kbd"
 		extra_append="$extra_append kgdboc=ttyS0,115200"
 		extra_flags="$extra_flags -serial tcp::1234,server,nowait"
 		;;
-	m)
+	(m)
 		monitor="-monitor telnet::45454,server,nowait"
 		;;
-	s)
+	(s)
 		qemu="screen qemu-system-x86_64"
 		;;
-	h)
+	(h)
 		printf 'usage: %s: [-dghkms] [−b <kernel>] [−i <disk>] [-a <cmdline>] [-n <net>] [<args>]\n' "${0##*/}"
 		exit
 		;;
-	:|?)
+	(:|?)
 		printf 'illegal option: -%s\n' "$OPTARG"
 		printf 'usage: %s: [-dghkms] [−b <kernel>] [−i <disk>] [-a <cmdline>] [-n <net>] [<args>]\n' "${0##*/}"
 		exit 2
@@ -79,5 +80,6 @@ cmd="$qemu \
 	$monitor $display $network $extra_flags \
 "
 
-echo "${cmd//	}"
+# debug print and execute cmdline
+printf '%s\n' "${cmd//	}"
 eval "$cmd"

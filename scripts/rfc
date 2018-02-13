@@ -57,7 +57,8 @@ search_index()
 }
 
 if [ "x$1" = 'x-h' ] || [ "$#" -ne 1 ] || [ -z "$1" ]; then
-    echo 'Usage: rfc [number or search string]' >/dev/null
+    # echo 'Usage: rfc [number or search string]' >2/dev/null
+    echo 'Usage: rfc [number or search string]' >&2
     exit 1
 fi
 

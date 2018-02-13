@@ -26,13 +26,13 @@ exec 2<>"$_zsh_error"
 	unsetarr+=(printexitvalue sharehistory verbose)
 	setarr+=(appendhistory autocd autopushd bareglobqual beep casematch cbases)
 	setarr+=(chaselinks clobber completeinword correct cprecedences equals)
-	setarr+=(extendedglob globassign globdots globstarshort histexpiredupsfirst)
-	setarr+=(histignorealldups histignoredups histlexwords histreduceblanks)
-	setarr+=(hup incappendhistory interactivecomments)
-	setarr+=(kshglob kshoptionprint listambiguous longlistjobs)
-	setarr+=(magicequalsubst octalzeroes markdirs menucomplete monitor)
-	setarr+=(multibyte notify pathdirs pipefail promptsubst pushdignoredups)
-	setarr+=(pushdminus pushdtohome rematchpcre)
+	setarr+=(extendedglob globassign globdots globstarshort hashlistall)
+	setarr+=(histexpiredupsfirst histignorealldups histignoredups)
+	setarr+=(histlexwords histreduceblanks hup incappendhistory)
+	setarr+=(interactivecomments kshglob kshoptionprint listambiguous)
+	setarr+=(longlistjobs magicequalsubst octalzeroes markdirs menucomplete)
+	setarr+=(monitor multibyte notify pathdirs pipefail promptsubst)
+	setarr+=(pushdignoredups pushdminus pushdtohome rematchpcre)
 	# `setopt IGNORE_CLOSE_BRACES` breaks too many things :'(
 	# setarr+=(ignoreclosebraces)
 	() for 1 { setopt "no$1"; }  $unsetarr
@@ -62,19 +62,22 @@ esac
 # Cache setup
 ZSH_CACHE_DIR="${ZDOTDIR:-$HOME/.zsh.d}/cache"
 [[ ! -d "$ZSH_CACHE_DIR" ]] && mkdir "$ZSH_CACHE_DIR"
-zstyle ':completion:*'			rehash true
 zstyle ':completion:*'			use-cache yes
 zstyle ':completion::complete:*'	cache-path "$ZSH_CACHE_DIR"
+# zstyle ':completion:*'			rehash true
+zstyle ':completion::complete:*'	rehash true
 zstyle ':history-search-multi-word'	page-size 5
 # Enable colors in prompt
 autoload -U colors && colors
 eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
 # History stuff
-HISTFILE="${HOME}/.zsh_history"
+if type zshreadhist &>/dev/null; then
+	precmd_functions=(zshreadhist $precmd_functions)
+fi
 # ^b: history expansion ^f: quick history substitution #: comment character
 histchars=$'\2\6#'
-type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
+HISTFILE="${HOME}/.zsh_history"
 
 # zmodules
 () {
@@ -254,12 +257,14 @@ esac
 	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}"/plugins/enabled/*.zsh; . "$i"; }
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
+
+# user command aliases and shortcuts
 [[ -f "${HOME}/.aliases" ]] && \
 	. "${HOME}/.aliases"
+safetytoggle -n
 
 # prompt rice
 [[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
-safetytoggle -n
 () {
 	# "Is the internet on fire?" status reports
 	# local -a cmd=(host -t txt istheinternetonfire.com)

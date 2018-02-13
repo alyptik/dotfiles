@@ -96,7 +96,6 @@ backtick 4 5 5 "date"
 backtick 5 5 5 true
 
 ## Kill startup message
-# bell_msg ""
 startup_message off
 attrcolor b ".I"
 attrcolor i "+b"
@@ -104,30 +103,37 @@ attrcolor i "+b"
 # rendition bell "=bu"
 rendition so "+biu Dw"
 layout autosave on
-#Vell off
+bell on
+bell_msg "WOOOF WOOF WOOF WOOF WOOOOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOOOOOOOF WOOF WOOOOOOF"
+vbellwait 1
 vbell on
-vbell_msg "🐶 woof!!! ——— woof!!! 🐶 "
+bell_msg "WOOOF WOOF WOOF WOOF WOOOOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOOOOOOOF WOOF WOOOOOOF"
+# bell_msg "!!! WOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOF !!!"
+# bell_msg "🐶 WOOF!!! ——— WOOF!!! 🐶 "
+# bell_msg ""
 nethack on
 autodetach on
 # altscreen off
 altscreen on
 cjkwidth off
 log off
-msgminwait 2
-msgwait 2
+msgminwait 3
+msgwait 3
 truecolor on
 defautonuke off
-# defbce on
-defbce off
 defencoding utf8
-defflow auto
+defbce on
+# defbce off
+defflow interrupt
 # defflow off
+# defflow auto
 deflog off
-deflogin on
+deflogin off
 defmousetrack off
 defnonblock on
-defobuflimit 2048
-defscrollback 5000
+defobuflimit 512
+defscrollback 2000
+password none
 
 ## Informs screen that all terminals that begin with “xterm” have firm auto-margins that allow the last
 ## position on the screen to be updated (LP), but they don't really have a status line (no hs - append @
@@ -153,7 +159,7 @@ termcapinfo gnome* "XT"
 termcapinfo h19|z19  "am@:im=\E@:ei=\EO" "dc=\E[P"
 termcapinfo rxvt* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:ti@:te@:hs:ts=\E]2;:fs=07:ds=\E]2;screen07"
 # termcapinfo st* "ti@:te@"
-termcapinfo st* "ti@:te@:hs"
+termcapinfo st* "ti@:te@:hs@"
 # termcapinfo st* "ti@:te@:xn:am:bce:hs:mir:msgr:npc:xenl:vb@:oc@:initc@:smcup=\E[?1049h:rmcup=\E[?1049l"
 termcapinfo vt* "xn"
 termcapinfo vt100  ""  "l0=PF1:l1=PF2:l2=PF3:l3=PF4"
