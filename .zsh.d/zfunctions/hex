@@ -1,6 +1,5 @@
-
-	local input="$(cat "${@:-/dev/stdin}")"
-	printf '%s' "$input" | \
-		od -tx1 | \
-		sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g;s/^ //' | \
-		tr -d '\n'
+cat "${@:-/dev/stdin}" |
+	od -tx1 |
+	sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g;s/^ //' |
+	tr -d '\n' |
+	sed '1 s/^/"/; $s/$/"/';

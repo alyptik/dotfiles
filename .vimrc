@@ -428,7 +428,7 @@ let g:airline#extensions#whitespace#mixed_indent_file_format='mix-indent-file[%s
 let g:airline#extensions#whitespace#trailing_regexp='\s$'
 " configure, which filetypes have special treatment of /* */ comments,
 " matters for mix-indent-file algorithm: >
-let airline#extensions#c_like_langs=['c', 'cpp', 'cuda', 'go', 'java', 'javascript', 'ld', 'php']
+let airline#extensions#c_like_langs=['c', 'cpp', 'cuda', 'go', 'java', 'javascript', 'lex', 'ld', 'php', 'yacc']
 
 " Checking is enabled by default because b:airline_whitespace_disabled
 " is by default not defined:

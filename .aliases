@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v 
 
 ## Custom aliases
 
+alias pfm='pcmanfm'
 alias fm='fman'
 alias rk='runkernel'
 alias nmu='neomutt'
@@ -258,26 +259,29 @@ alias egrep='egrep --color=auto'
 alias egr='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias fgr='fgrep --color=auto'
-#alias bc='bc -l'
+alias bc='bc -l'
 ## Generate sha1 digest
 alias sha1='openssl sha1'
 alias mkdir='mkdir -pv'
 alias rm='rm -v'
 alias mv='mv -v'
-alias cp='cp -v'
+alias cp='cp -v --reflink=auto'
 alias ln='ln -v'
+## this one saved by butt so many times
+alias wget='wget -c'
 
 ## Stop after sending count ECHO_REQUEST packets
 alias pong='ping -c 5'
 # Do not wait interval 1 second, go fast #
 alias fastping='ping -c 100 -s1'
+alias fp='ping -c 100 -s1'
 # alias ports='netstat -tulanp'
 alias ports='ss -tulanp'
 
 # alias enft='sudo vim -p /etc/nftables.nft'
 alias enft='sudo vim /etc/nftables.nft'
 alias rnft='sudo nft -f /etc/nftables.nft'
-#alias lnft='sudo nft list ruleset -a | less -R'
+# alias lnft=sudo nft list ruleset -a | less -R'
 # alias lnft='vim -p -c "setf nftables" <(sudo nft list ruleset -a)'
 alias lnft='vim -c "setf nftables" <(sudo nft list ruleset -a)'
 
@@ -408,7 +412,6 @@ alias pill='sudo powerpill'
 alias bill='sudo bauerbill'
 
 alias findfd="ls -lAhqiQFs1 --color=always /proc/$$/fd | awk '{ print $10 }'"
-alias sudo='sudo '
 alias _='sudo '
 alias scodes='sudo showkey --scancodes'
 alias c-du='cdu -isdLh'

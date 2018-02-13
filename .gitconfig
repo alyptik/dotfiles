@@ -75,6 +75,12 @@
 	i = ls-files -i --full-name --exclude-standard
 	ps = push -v --all --follow-tags
 	ds = diff --stat
+	mt = mergetool
+	mc = merge --continue
+	ma = merge --abort
+	rc = rebase -cotiniue
+	ra = rebase -abort
+	update = pull -v --ff-only
 [web]
 	browser = w3m
 [instaweb]
