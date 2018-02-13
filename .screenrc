@@ -122,8 +122,8 @@ msgwait 3
 truecolor on
 defautonuke off
 defencoding utf8
-defbce on
-# defbce off
+# defbce on
+defbce off
 defflow interrupt
 # defflow off
 # defflow auto
@@ -131,7 +131,7 @@ deflog off
 deflogin off
 defmousetrack off
 defnonblock on
-defobuflimit 512
+defobuflimit 1024
 defscrollback 2000
 password none
 
