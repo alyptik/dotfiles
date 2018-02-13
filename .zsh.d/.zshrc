@@ -689,6 +689,8 @@ WORDCHARS=
 	# parse ssh configuration
 	_ssh_hosts=(${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts}(N) /dev/null)}%%,*})
 	_ssh_hosts=(${${(Mu)${${_ssh_hosts##*/}##*@}##*.*}%%:*})
+	# _ssh_hosts=(${(f@)$(cat ${HOME}/.ssh/{config,known_hosts}(N) /dev/null)})
+	# _ssh_hosts=(${${${(Mu)${${_ssh_hosts%%,*}##*/}##*@}##*.*}%%:*})
 	# _ssh_hosts=${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts} 2>/dev/null)}%%,*}##*/}##*@}##*.*}%%:*}
 	# _ssh_hosts=${(Mu)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%,*}%%*.*}
 	zstyle ':completion:*:(ssh|scp|sftp|rsync):*'	hosts $_ssh_hosts
