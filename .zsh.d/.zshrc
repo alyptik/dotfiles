@@ -270,12 +270,11 @@ safetytoggle -n
 
 # "Is the internet on fire?" status reports
 () {
-	local -a cmd=(host -t txt istheinternetonfire.com)
-	# local cmd='dig +short txt istheinternetonfire.com'
-	# local cmd='host -t txt istheinternetonfire.com'
+	local -a host=(host -t) dig=(dig +short)
+	local -a cmdline=($host txt istheinternetonfire.com)
+	# local -a cmdline=($dig txt istheinternetonfire.com)
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	# ${(z)cmd} | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
-	$cmd | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
+	$cmdline | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
 }
 
 if type fasd &>/dev/null; then
@@ -302,7 +301,7 @@ if type zplug >/dev/null 2>&1; then
 	zplug "zsh-users/zsh-history-substring-search"
 	zplug "zsh-users/zsh-syntax-highlighting", defer:2
 	zplug "b4b4r07/zsh-vimode-visual", defer:3
-	zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+	# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then
 		print - "Install? [y/N]: "
 		if read -sq; then zplug install; fi
@@ -310,12 +309,11 @@ if type zplug >/dev/null 2>&1; then
 	zplug load --verbose
 fi
 
-# FZF fuzzy completion
-export fzf_default_completion="complete-word"
-# export fzf_default_completion="expand-or-complete-prefix"
 # 'literal trigger' & fzf-completion keybind to start fuzzy completion
 export FZF_COMPLETION_TRIGGER="//"
 # export FZF_COMPLETION_TRIGGER="**"
+export fzf_default_completion="complete-word"
+# export fzf_default_completion="expand-or-complete-prefix"
 
 # bind P and N for EMACS mode
 bindkey -M emacs "\C-p" history-substring-search-up
@@ -686,9 +684,15 @@ WORDCHARS=
 # WORDCHARS='*?_-.[]~=/&;!#$%^ (){}<>'
 
 # Completion tweaks
-zstyle ':completion:*:(ssh|scp|sftp|rsync):*'		hosts \
-	${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts} 2>/dev/null)}%%,*}##*/}##*@}##*.*}%%:*}
-	# ${(Mu)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%,*}%%*.*}
+() {
+	local -a _ssh_hosts
+	# parse ssh configuration
+	_ssh_hosts=(${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts}(N) /dev/null)}%%,*})
+	_ssh_hosts=(${${(Mu)${${_ssh_hosts##*/}##*@}##*.*}%%:*})
+	# _ssh_hosts=${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts} 2>/dev/null)}%%,*}##*/}##*@}##*.*}%%:*}
+	# _ssh_hosts=${(Mu)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%,*}%%*.*}
+	zstyle ':completion:*:(ssh|scp|sftp|rsync):*'	hosts $_ssh_hosts
+}
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
 zstyle ':completion:*:approximate:'			max-errors 'reply=("$(( ($#PREFIX+$#SUFFIX)/2 ))" numeric)'
