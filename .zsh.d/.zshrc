@@ -685,14 +685,10 @@ WORDCHARS=
 
 # Completion tweaks
 () {
-	local -a _ssh_hosts
 	# parse ssh configuration
+	local -a _ssh_hosts
 	_ssh_hosts=(${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts}(N) /dev/null)}%%,*})
 	_ssh_hosts=(${${(Mu)${${_ssh_hosts##*/}##*@}##*.*}%%:*})
-	# _ssh_hosts=(${(f@)$(cat ${HOME}/.ssh/{config,known_hosts}(N) /dev/null)})
-	# _ssh_hosts=(${${${(Mu)${${_ssh_hosts%%,*}##*/}##*@}##*.*}%%:*})
-	# _ssh_hosts=${${(Mu)${${${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts} 2>/dev/null)}%%,*}##*/}##*@}##*.*}%%:*}
-	# _ssh_hosts=${(Mu)${${(f@)$(<${HOME}/.ssh/known_hosts)}%%,*}%%*.*}
 	zstyle ':completion:*:(ssh|scp|sftp|rsync):*'	hosts $_ssh_hosts
 }
 zstyle ':acceptline'					nocompwarn true
@@ -714,23 +710,10 @@ zstyle ':completion:*:*:cd:*:directory-stack'		menu yes select
 # insert all expansions for expand completer
 zstyle ':completion:*:expand:*'				tag-order all-expansions
 zstyle ':completion:*:history-words'			list true
-# activate menu
-zstyle ':completion:*:history-words'			menu yes select
 # ignore duplicate entries
+zstyle ':completion:*:history-words'			menu yes select
 zstyle ':completion:*:history-words'			remove-all-dups yes
 zstyle ':completion:*:history-words'			stop yes
-# match uppercase from lowercase
-# zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
-# zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
-# 0 -- vanilla completion (abc => abc)
-# 1 -- smart case completion (abc => Abc)
-# 2 -- word flex completion (abc => A-big-Car)
-# 3 -- full flex completion (abc => ABraCadabra)
-zstyle ':completion:*'					matcher-list \
-	'' \
-	'm:{a-z\-}={A-Z\_}' \
-	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-	'r:|?=** m:{a-z\-}={A-Z\_}'
 # separate matches into groups
 zstyle ':completion:*:matches'				group 'yes'
 zstyle ':completion:*'					group-name ''
@@ -743,6 +726,20 @@ zstyle ':completion:*:options'				auto-description '%d'
 zstyle ':completion:*:processes'			command 'ps -au$USER'
 # offer indexes before parameters in subscripts
 zstyle ':completion:*:*:-subscript-:*'			tag-order indexes parameters
+
+# 0 -- vanilla completion (abc => abc)
+# 1 -- smart case completion (abc => Abc)
+# 2 -- word flex completion (abc => A-big-Car)
+# 3 -- full flex completion (abc => ABraCadabra)
+zstyle ':completion:*'					matcher-list \
+	'' \
+	'm:{a-z\-}={A-Z\_}' \
+	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+	'r:|?=** m:{a-z\-}={A-Z\_}'
+# match uppercase from lowercase
+# zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
+# zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
 # recent (as of Dec 2007) zsh versions are able to provide descriptions
 # for commands (read: 1st word in the line) that it will list for the user
 # to choose from. The following disables that, because it's not exactly fast.
@@ -769,7 +766,7 @@ zstyle ':completion:*:man*'				menu yes select
 
 # run rehash on completion so new installed program are found automatically:
 _force_rehash() {
-	(( CURRENT == 1 )) && rehash
+	((CURRENT == 1)) && rehash
 	return 1
 }
 
