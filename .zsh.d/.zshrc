@@ -54,9 +54,13 @@ _km=vi _emacs= _vi=main
 setescapes
 case "$_km" in
 (vi)
-	printf "$cblock"; printf "$cgrey" ;;
+	printf "$cblock"
+	printf "$cgrey"
+	;;
 (emacs)
-	printf "$cblock"; printf "$cyellow" ;;
+	printf "$cblock"
+	printf "$cyellow"
+	;;
 esac
 
 # Cache setup
@@ -72,9 +76,7 @@ autoload -U colors && colors
 eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
 # History stuff
-if type zshreadhist &>/dev/null; then
-	precmd_functions=(zshreadhist $precmd_functions)
-fi
+type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 # ^b: history expansion ^f: quick history substitution #: comment character
 histchars=$'\2\6#'
 HISTFILE="${HOME}/.zsh_history"
@@ -265,13 +267,15 @@ safetytoggle -n
 
 # prompt rice
 [[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
+
+# "Is the internet on fire?" status reports
 () {
-	# "Is the internet on fire?" status reports
-	# local -a cmd=(host -t txt istheinternetonfire.com)
+	local -a cmd=(host -t txt istheinternetonfire.com)
 	# local cmd='dig +short txt istheinternetonfire.com'
-	local cmd='host -t txt istheinternetonfire.com'
+	# local cmd='host -t txt istheinternetonfire.com'
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	${(z)cmd} | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
+	# ${(z)cmd} | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
+	$cmd | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
 }
 
 if type fasd &>/dev/null; then
@@ -566,20 +570,26 @@ fi
 	cgasm_str+=$'_arguments "*:arg:_default" ":assembly instruction:('
 	cgasm_str+="${asmcmds[*]}"
 	cgasm_str+=')" -- '
-	dgpg_str+=$'_arguments "*:arg:_default" ":secret keys:('
 	# dgpg_str+=$'_arguments "*:arg:_default" ":public key:('
-	dgpg_str+="${seckeys[*]}"
 	# dgpg_str+="${pubkeys[*]}"
+	dgpg_str+=$'_arguments "*:arg:_default" ":secret keys:('
+	dgpg_str+="${seckeys[*]}"
 	dgpg_str+=$')" -- '
-	hi_str+=$'_arguments "*:file:_files" ":syntax:_files '
+	hi_str+=$'_arguments '
+	hi_str+=$'":syntax:_files '
 	hi_str+=$'-W \'/usr/share/highlight/langDefs/\' '
-	hi_str+=$'-g \'*.lang(:r)\'" -- '
-	high_str+=$'_arguments "*:file:_files" ":theme:_files '
-	high_str+=$'-W \'/usr/share/highlight/themes\''
-	high_str+=$'-g \'*.theme(:r)\'" ":syntax:_files'
-	high_str+=$'-W \'/usr/share/highlight/langDefs\''
-	high_str+=$'-g \'*.lang(:r)\'" ":out format:'
-	high_str+=$'(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" -- '
+	hi_str+=$'-g \'*.lang(:r)\'" '
+	hi_str+=$'"*:file:_files" -- '
+	high_str+=$'_arguments '
+	high_str+=$'":theme:_files '
+	high_str+=$'-W \'/usr/share/highlight/themes\' '
+	high_str+=$'-g \'*.theme(:r)\'" '
+	high_str+=$'":syntax:_files '
+	high_str+=$'-W \'/usr/share/highlight/langDefs\' '
+	high_str+=$'-g \'*.lang(:r)\'" '
+	high_str+=$'":out format: '
+	high_str+=$'(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" '
+	high_str+=$'"*:file:_files" -- '
 	pinfo_str+=$'_arguments "*:arg:_default" ":info page:_texinfo" -- '
 	qpc_str+=$'_arguments "*:packages:('
 	qpc_str+="${dbpkgs[*]}"
@@ -590,7 +600,6 @@ fi
 	modprobe_str+=$')" -- '
 
 	() for 1 { compdef _gnu_generic "$1"; } $defargcmds
-
 	compdef "$cgasm_str" cgasm
 	compdef "$dgpg_str" dgpg
 	compdef "$hi_str" hi
@@ -766,9 +775,9 @@ zstyle -e ':completion:*'				completer '
 		reply=(_complete _expand _match _prefix _correct _approximate)
 	else
 		if [[ $words[1] == (rm|mv|cp) ]]; then
-			reply=(_complete _ignored _expand _prefix _files)
+			reply=(_oldlist _ignored _files)
 		else
-			reply=(_oldlist _ignored _complete _expand _correct _approximate _force_rehash _files)
+			reply=(_force_rehash _oldlist _ignored _files)
 		fi
 	fi'
 
