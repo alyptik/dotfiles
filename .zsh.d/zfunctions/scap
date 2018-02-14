@@ -3,4 +3,4 @@ if (($# != 2)); then
 	return 1
 fi
 print -rf "\n[running]: setcap %s %s\n" $1 =$2
-setcap $1 =$2
+sudo setcap $1 =$2
