@@ -378,7 +378,6 @@ alias aw='BROWSER=chromium arch-wiki'
 alias sefi="sed 's@/boot/@EFI/arch/@g' /boot/refind_linux.conf | sudo tee /boot/efi/EFI/arch/refind_linux.conf"
 alias tma='tmux attach'
 alias wm='wemux'
-alias cp='cp --reflink=auto'
 #alias pix="curl -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36' --progress-bar -n -F'f:1=<-' ix.io"
 alias pix="curl --progress-bar -n -F'f:1=<-' ix.io"
 alias tbin='nc termbin.com 9999'
