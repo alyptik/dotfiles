@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /store/code/projects/pbot/modules/compiler_vm || exit 1
-screen sudo env PERL_USE_UNSAFE_INC=1 perl -I/store/code/projects/pbot /store/code/projects/pbot/pbot.pl
+screen env PERL_USE_UNSAFE_INC=1 perl -I/store/code/projects/pbot /store/code/projects/pbot/pbot.pl
