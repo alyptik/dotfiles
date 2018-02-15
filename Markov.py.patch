@@ -1,0 +1,449 @@
+diff --git a/Markov.py b/Markov.py
+old mode 100644
+new mode 100755
+index 7d705e6a921c850132..aef87f0f6fe08e6624
+--- a/Markov.py
++++ b/Markov.py
+@@ -1,5 +1,5 @@
+ ###
+-# Copyright (c) 2005, James Vega
++# Copyright (c) 2005,2008, James Vega
+ # All rights reserved.
+ #
+ # Redistribution and use in source and binary forms, with or without
+@@ -29,7 +29,6 @@
+ 
+ import time
+ import Queue
+-import anydbm
+ import random
+ import threading
+ 
+@@ -42,6 +41,171 @@ import supybot.ircutils as ircutils
+ import supybot.schedule as schedule
+ import supybot.callbacks as callbacks
+ 
++class SqlAlchemyMarkovDB(object):
++    def __init__(self, filename, engine):
++        self.dbs = ircutils.IrcDict()
++        self.filename = filename
++        self.engine = engine
++
++    def close(self):
++        self.dbs.clear()
++
++    def _getDb(self, channel, debug=False):
++        if channel in self.dbs:
++            return self.dbs[channel]
++
++        try:
++            import sqlalchemy as sql
++            self.sql = sql
++        except ImportError:
++            raise callbacks.Error('You need to have SQLAlchemy installed to use this ' \
++                    'plugin.  Download it at <http://www.sqlalchemy.org/>')
++
++        filename = plugins.makeChannelFilename(self.filename, channel)
++        engine = sql.create_engine(self.engine + filename, echo=debug)
++        metadata = sql.MetaData()
++        firsts = sql.Table('firsts', metadata,
++                           sql.Column('id', sql.Integer, primary_key=True),
++                           sql.Column('first', sql.Text, unique=True),
++                           sql.Column('count', sql.Integer, default=1),
++                          )
++        lasts = sql.Table('lasts', metadata,
++                          sql.Column('id', sql.Integer, primary_key=True),
++                          sql.Column('last', sql.Text, unique=True),
++                          sql.Column('count', sql.Integer, default=1),
++                         )
++        pairs = sql.Table('pairs', metadata,
++                          sql.Column('id', sql.Integer, primary_key=True),
++                          sql.Column('first', sql.Text, default=sql.null),
++                          sql.Column('second', sql.Text, default=sql.null),
++                          sql.Column('follow', sql.Text, default=sql.null),
++                          sql.Column('count', sql.Integer, default=1),
++                          sql.UniqueConstraint('first', 'second', 'follow'),
++                         )
++        metadata.create_all(engine)
++        self.dbs[channel] = (engine, firsts, lasts, pairs)
++        return self.dbs[channel]
++
++    def _addFirst(self, db, table, first):
++        s = self.sql.select([table.c.count], table.c.first==first)
++        results = db.execute(s)
++        r = results.fetchone()
++        if r is None:
++            db.execute(table.insert(), first=first).close()
++        else:
++            db.execute(table.update(), count=r[0]+1).close()
++
++    def _addLast(self, db, table, last):
++        s = self.sql.select([table.c.count], table.c.last==last)
++        results = db.execute(s)
++        r = results.fetchone()
++        if r is None:
++            db.execute(table.insert(), last=last).close()
++        else:
++            db.execute(table.update(), count=r[0]+1).close()
++
++    def addPair(self, channel, first, second, follower, isFirst, isLast):
++        (db, firsts, lasts, pairs) = self._getDb(channel)
++        if isFirst:
++            self._addFirst(db, firsts, follower)
++            return
++        if isLast:
++            self._addLast(db, lasts, second)
++        s = self.sql.select([pairs.c.count],
++                            self.sql.and_(pairs.c.first==first,
++                                          pairs.c.second==second,
++                                          pairs.c.follow==follower))
++        results = db.execute(s)
++        r = results.fetchone()
++        if r is None:
++            db.execute(pairs.insert(), first=first, second=second,
++                       follow=follower).close()
++        else:
++            db.execute(pairs.update(), count=r[0]+1).close()
++
++    def _weightedChoice(self, results):
++        L = []
++        for t in results:
++            c = t[-1]
++            while c > 0:
++                c -= 1
++                L.append(t[:-1])
++        return utils.iter.choice(L)
++
++    def getFirstPair(self, channel):
++        (db, _, _, pairs) = self._getDb(channel)
++        s = self.sql.select([pairs.c.first, pairs.c.second, pairs.c.count],
++                            pairs.c.first==None)
++        results = db.execute(s)
++        r = results.fetchall()
++        results.close()
++        if not r:
++            raise KeyError
++        return self._weightedChoice(r)
++
++    def getFollower(self, channel, first, second):
++        (db, _, _, pairs) = self._getDb(channel)
++        s = self.sql.select([pairs.c.first, pairs.c.second,
++                             pairs.c.follow, pairs.c.count],
++                            self.sql.and_(pairs.c.first==first,
++                                          pairs.c.second==second))
++        results = db.execute(s)
++        r = results.fetchall()
++        results.close()
++        if not r:
++            raise KeyError
++        print('foo')
++        print((repr(r)))
++        L = self._weightedChoice(r)
++        isLast = False
++        if not L[-1]:
++            isLast = True
++        return (L[-2], isLast)
++
++    def firsts(self, channel):
++        (db, firsts, _, _) = self._getDb(channel)
++        s = self.sql.select([firsts.c.count])
++        results = db.execute(s)
++        r = results.fetchall()
++        results.close()
++        if not r:
++            return 0
++        else:
++            return sum([x[0] for x in r])
++
++    def lasts(self, channel):
++        (db, _, lasts, _) = self._getDb(channel)
++        s = self.sql.select([lasts.c.count])
++        results = db.execute(s)
++        r = results.fetchall()
++        results.close()
++        if not r:
++            return 0
++        else:
++            return sum([x[0] for x in r])
++
++    def pairs(self, channel):
++        (db, _, _, pairs) = self._getDb(channel)
++        s = self.sql.select([pairs.c.count])
++        results = db.execute(s)
++        r = results.fetchall()
++        results.close()
++        if not r:
++            return 0
++        else:
++            return sum([x[0] for x in r])
++
++    def follows(self, channel):
++        (db, _, _, pairs) = self._getDb(channel)
++        s = self.sql.select([pairs.c.count],
++                            self.sql.not_(pairs.c.follow==None))
++        results = db.execute(s)
++        r = results.fetchall()
++        results.close()
++        if not r:
++            return 0
++        else:
++            return sum([x[0] for x in r])
+ 
+ class DbmMarkovDB(object):
+     def __init__(self, filename):
+@@ -53,16 +217,14 @@ class DbmMarkovDB(object):
+             db.close()
+ 
+     def _getDb(self, channel):
++        import dbm
+         if channel not in self.dbs:
+             filename = plugins.makeChannelFilename(self.filename, channel)
+             # To keep the code simpler for addPair, I decided not to make
+             # self.dbs[channel]['firsts'] and ['lasts'].  Instead, we'll pad
+             # the words list being sent to addPair such that ['\n \n'] will be
+-            # ['firsts'] and ['\n'] will be ['lasts'].  This also means isFirst
+-            # and isLast aren't necessary, but they'll be left alone in case
+-            # one of the other Db formats uses them or someone decides that I
+-            # was wrong and changes my code.
+-            self.dbs[channel] = anydbm.open(filename, 'c')
++            # ['firsts'] and ['\n'] will be ['lasts'].
++            self.dbs[channel] = dbm.open(filename, 'c')
+         return self.dbs[channel]
+ 
+     def _flush(self, db):
+@@ -71,65 +233,74 @@ class DbmMarkovDB(object):
+         if hasattr(db, 'flush'):
+             db.flush()
+ 
+-    def addPair(self, channel, first, second, follower,
+-                isFirst=False, isLast=False):
++    def _addPair(self, channel, pair, follow):
+         db = self._getDb(channel)
+-        combined = self._combine(first, second)
+-        if db.has_key(combined): # EW!
+-            db[combined] = ' '.join([db[combined], follower])
++        # EW! but necessary since not all dbm backends support
++        # "combined in db"
++        if pair.encode('utf-8') in db:
++            db[pair] = b' '.join([db[pair].encode('utf-8'), follow.encode('utf-8')])
+         else:
+-            db[combined] = follower
+-        if follower == '\n':
+-            if db.has_key('\n'):
+-                db['\n'] = ' '.join([db['\n'], second])
+-            else:
+-                db['\n'] = second
++            db[pair] = follow.encode('utf-8')
+         self._flush(db)
+ 
++    def _combine(self, first, second):
++        first = first or '\n'
++        second = second or '\n'
++        return '%s %s' % (first, second)
++
++    def addPair(self, channel, first, second, follower, isFirst, isLast):
++        combined = self._combine(first, second)
++        self._addPair(channel, combined, follower or '\n')
++        if isLast:
++            self._addPair(channel, '\n', second)
++
+     def getFirstPair(self, channel):
+         db = self._getDb(channel)
+         firsts = db['\n \n'].split()
+         if firsts:
+-            return ('\n', utils.iter.choice(firsts))
++            return (None, utils.iter.choice(firsts))
+         else:
+-            raise KeyError, 'No firsts for %s.' % channel
+-
+-    def _combine(self, first, second):
+-        return '%s %s' % (first, second)
++            raise KeyError('No firsts for %s.' % channel)
+ 
+     def getFollower(self, channel, first, second):
+         db = self._getDb(channel)
+         followers = db[self._combine(first, second)]
+         follower = utils.iter.choice(followers.split(' '))
+-        return (follower, follower == '\n')
++        last = False
++        if follower == '\n':
++            follower = None
++            last = True
++        return (follower, last)
+ 
+     def firsts(self, channel):
+         db = self._getDb(channel)
+-        if db.has_key('\n \n'):
++        if b'\n \n' in db:
+             return len(set(db['\n \n'].split()))
+         else:
+             return 0
+ 
+     def lasts(self, channel):
+         db = self._getDb(channel)
+-        if db.has_key('\n'):
++        if b'\n' in db:
+             return len(set(db['\n'].split()))
+         else:
+             return 0
+ 
+     def pairs(self, channel):
+         db = self._getDb(channel)
+-        pairs = [k for k in db.keys() if '\n' not in k]
++        pairs = [k for k in db.keys() if b'\n' not in k]
+         return len(pairs)
+ 
+     def follows(self, channel):
+         db = self._getDb(channel)
+-        # anydbm sucks in that we're not guaranteed to have .iteritems()
++        # dbm sucks in that we're not guaranteed to have .iteritems()
+         # *cough*gdbm*cough*, so this has to be done the stupid way
+-        follows = [len(db[k].split()) for k in db.keys() if '\n' not in k]
++        follows = [len([f for f in db[k].split() if f != b'\n'])
++                   for k in db.keys() if b'\n' not in k]
+         return sum(follows)
+ 
+-MarkovDB = plugins.DB('Markov', {'anydbm': DbmMarkovDB})
++MarkovDB = plugins.DB('Markov', {'dbm': DbmMarkovDB,
++                                 'sqlalchemy': SqlAlchemyMarkovDB})
+ 
+ class MarkovWorkQueue(threading.Thread):
+     def __init__(self, *args, **kwargs):
+@@ -177,34 +348,37 @@ class Markov(callbacks.Plugin):
+ 
+     def doPrivmsg(self, irc, msg):
+         if irc.isChannel(msg.args[0]):
+-            channel = plugins.getChannel(msg.args[0])
++            speakChan = msg.args[0]
++            dbChan = plugins.getChannel(speakChan)
+             canSpeak = False
+             now = time.time()
+             throttle = self.registryValue('randomSpeaking.throttleTime',
+-                                          channel)
+-            prob = self.registryValue('randomSpeaking.probability', channel)
+-            delay = self.registryValue('randomSpeaking.maxDelay', channel)
+-            irc = callbacks.SimpleProxy(irc, msg)
++                                          speakChan)
++            prob = self.registryValue('randomSpeaking.probability', speakChan)
++            delay = self.registryValue('randomSpeaking.maxDelay', speakChan)
+             if now > self.lastSpoke + throttle:
+                 canSpeak = True
+             if canSpeak and random.random() < prob:
+-                f = self._markov(channel, irc, prefixNick=False, to=channel,
+-                                 Random=True)
++                f = self._markov(speakChan, irc, prefixNick=False,
++                                 to=speakChan, Random=True)
+                 schedule.addEvent(lambda: self.q.enqueue(f), now + delay)
+                 self.lastSpoke = now + delay
+             words = self.tokenize(msg)
+-            words.insert(0, '\n')
+-            words.insert(0, '\n')
+-            words.append('\n')
+-            # This shouldn't happen often (CTCP messages being the possible exception)
+-            if not words or len(words) == 3:
++            # This shouldn't happen often (CTCP messages being the possible
++            # exception)
++            if not words:
+                 return
+-            if self.registryValue('ignoreBotCommands', channel) and \
++            if self.registryValue('ignoreBotCommands', speakChan) and \
+                     callbacks.addressed(irc.nick, msg):
+                 return
++            words.insert(0, None)
++            words.insert(0, None)
++            words.append(None)
+             def doPrivmsg(db):
+                 for (first, second, follower) in utils.seq.window(words, 3):
+-                    db.addPair(channel, first, second, follower)
++                    db.addPair(dbChan, first, second, follower,
++                               isFirst=(first is None and second is None),
++                               isLast=(follower is None))
+             self.q.enqueue(doPrivmsg)
+ 
+     def _markov(self, channel, irc, word1=None, word2=None, **kwargs):
+@@ -213,18 +387,21 @@ class Markov(callbacks.Plugin):
+             maxTries = self.registryValue('maxAttempts', channel)
+             Random = kwargs.pop('Random', None)
+             while maxTries > 0:
+-                maxTries -= 1;
++                maxTries -= 1
+                 if word1 and word2:
+-                    givenPair = True
+                     words = [word1, word2]
++                    resp = [word1]
++                    follower = word2
+                 elif word1 or word2:
+-                    givenPair = False
+-                    words = ['\n', word1 or word2]
++                    words = [None, word1 or word2]
++                    resp = []
++                    follower = words[-1]
+                 else:
+-                    givenPair = False
+                     try:
+-                        # words is of the form ['\n', word]
++                        # words is of the form [None, word]
+                         words = list(db.getFirstPair(channel))
++                        resp = []
++                        follower = words[-1]
+                     except KeyError:
+                         irc.error(
+                             format('I don\'t have any first pairs for %s.',
+@@ -232,32 +409,23 @@ class Markov(callbacks.Plugin):
+                         return # We can't use raise here because the exception
+                                # isn't caught and therefore isn't sent to the
+                                # server
+-                follower = words[-1]
+                 last = False
+-                resp = []
+                 while not last:
+                     resp.append(follower)
+                     try:
+-                        (follower,last) = db.getFollower(channel, words[-2],
+-                                                         words[-1])
++                        (follower, last) = db.getFollower(channel, words[-2],
++                                                          words[-1])
+                     except KeyError:
+                         irc.error('I found a broken link in the Markov chain. '
+                                   ' Maybe I received two bad links to start '
+                                   'the chain.')
+                         return # ditto here re: Raise
+                     words.append(follower)
+-                if givenPair:
+-                    if len(words[:-1]) >= minLength:
+-                        irc.reply(' '.join(words[:-1]), **kwargs)
+-                        return
+-                    else:
+-                        continue
++                if len(resp) >= minLength:
++                    irc.reply(' '.join(resp), **kwargs)
++                    return
+                 else:
+-                    if len(resp) >= minLength:
+-                        irc.reply(' '.join(resp), **kwargs)
+-                        return
+-                    else:
+-                        continue
++                    continue
+             if not Random:
+                 irc.error(
+                     format('I was unable to generate a Markov chain at least '
+@@ -287,8 +457,9 @@ class Markov(callbacks.Plugin):
+         <channel>.
+         """
+         def firsts(db):
+-            s = 'There are %s firsts in my Markov database for %s.'
+-            irc.reply(s % (db.firsts(channel), channel))
++            irc.reply(
++                format('There are %s firsts in my Markov database for %s.',
++                       db.firsts(channel), channel))
+         self.q.enqueue(firsts)
+     firsts = wrap(firsts, ['channeldb'])
+ 
+@@ -345,4 +520,4 @@ class Markov(callbacks.Plugin):
+ Class = Markov
+ 
+ 
+-# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
+\ No newline at end of file
++# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
