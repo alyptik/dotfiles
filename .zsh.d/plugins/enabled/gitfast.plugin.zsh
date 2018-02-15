@@ -1,1 +1,0 @@
-../gitfast/gitfast.plugin.zsh

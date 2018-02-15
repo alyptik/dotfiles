@@ -45,7 +45,6 @@ bind ')' number 0
 
 # M-. as escape
 bindkey "\033." command
-
 # emacs keybindings for navigation in copy mode
 markkeys "0=^a:$=^e:^b=;:^f='"
 # make incremental search default
@@ -53,6 +52,7 @@ markkeys "0=^a:$=^e:^b=;:^f='"
 # bindkey -m / stuff "^s"
 # bindkey -m ^r stuff "?"
 # bindkey -m ^s stuff "/"
+bindkey "^b" eval split "focus top" "screen $HOME/bin/showman" "focus bottom" other "focus top"
 ## defaults
 bindkey -m ? stuff "?"
 bindkey -m / stuff "/"
@@ -63,31 +63,26 @@ bindkey -m -k kP stuff \;
 bindkey -m -k kN stuff \'
 ## PgUp | Enter copy/scrollback mode and page up
 ## PgDown | Enter copy/scrollback mode and page down
-
-#bindkey "\033[5~" eval 'copy' 'stuff ^b'
-#bindkey "\033[6~" eval 'copy' 'stuff ^f'
+# bindkey "\033[5~" eval 'copy' 'stuff ^b'
+# bindkey "\033[6~" eval 'copy' 'stuff ^f'
 ## special hack for C-e, since it should go *past*
 ## the last char. -m means this is for copy mode only.
-
 # exit copy mode
 bindkey -m , stuff "\033"
-
 bindkey -m ^e stuff "$^f"
 ## control arrows move by words. (set B, e, and w to F keys so that i can
 ## use them to move by words, but they themselves still quit copy mode.)
-
 markkeys "B={:E=}:b=[:e=]:w=>:B=<"
-#bindkey -m "\033[1;5D" stuff "["
-#bindkey -m "\033[1;5C" stuff "]"
+# bindkey -m "\033[1;5D" stuff "["
+# bindkey -m "\033[1;5C" stuff "]"
 bindkey -m "\033[1;5D" stuff "["
 bindkey -m "\033[1;5C" stuff "}}["
-
 ## M-< and M-> for start/end of buffer
 bindkey -m "\033<" stuff "g"
 bindkey -m "\033>" stuff "G"
 ## Easier scrolling
-#bindkey "\033[M`[8" eval 'copy' 'stuff ^b'
-#bindkey "\033[MaZ8" eval 'copy' 'stuff ^f'
+# bindkey "\033[M`[8" eval 'copy' 'stuff ^b'
+# bindkey "\033[MaZ8" eval 'copy' 'stuff ^f'
 
 backtick 1 5 5 "$HOME/bin/meminfo"
 backtick 2 5 5 "$HOME/bin/load"
@@ -103,27 +98,17 @@ attrcolor i "+b"
 # rendition bell "=bu"
 rendition so "+biu Dw"
 layout autosave on
-bell on
-bell_msg "WOOOF WOOF WOOF WOOF WOOOOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOOOOOOOF WOOF WOOOOOOF"
-vbellwait 1
-vbell on
-bell_msg "WOOOF WOOF WOOF WOOF WOOOOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOOOOOOOF WOOF WOOOOOOF"
-# bell_msg "!!! WOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOF !!!"
-# bell_msg "🐶 WOOF!!! ——— WOOF!!! 🐶 "
-# bell_msg ""
 nethack on
 autodetach on
 # altscreen off
 altscreen on
 cjkwidth off
 log off
-msgminwait 3
-msgwait 3
 truecolor on
 defautonuke off
 defencoding utf8
-# defbce on
-defbce off
+defbce on
+# defbce off
 # defflow interrupt
 # defflow auto
 defflow off
@@ -132,43 +117,50 @@ deflogin off
 defmousetrack off
 defnonblock on
 defobuflimit 512
-defscrollback 5000
+defscrollback 1000
 password none
+bell on
+vbell on
+msgminwait 1
+vbellwait 2
+msgwait 3
+activity "Wuff!!"
+vbell_msg "Wuff  ----  Wuff!!"
+bell_msg "Wuff Wuff --- Wuff Wuff!! --- Wuff Wuff --- Wuff Wuff!!"
+# bell_msg ""
+# bell_msg "🐶 WOOF!!! ——— WOOF!!! 🐶 "
+# bell_msg "!!! WOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF WOOF !!!"
+# bell_msg "WOOOF WOOF WOOF WOOF WOOOOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOF WOOOOOOOOF WOOF WOOOOOOF"
 
+termcapinfo * "Z0=\E[?3h:Z1=\E[?3l"
+termcapinfo gnome* "XT"
 ## Informs screen that all terminals that begin with “xterm” have firm auto-margins that allow the last
 ## position on the screen to be updated (LP), but they don't really have a status line (no hs - append @
-## to turn entries off). Note that we assume LP for all terminal names that start with “vt”, but onlyi
+## to turn entries off). Note that we assume LP for all terminal names that start with “vt”, but only
 ## if you don't specify a termcap command for that terminal.
-# termcapinfo xterm* "LP:hs@"
+termcapinfo xterm*|xs "ti@:te@:LP:xn:hs@:Co#256:LP:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 ## Specifies the firm-margined LP capability for all terminals that begin with “vt”, and the second line
 ## will also add the escape-sequences to switch into (Z0) and back out of (Z1) 132-character-per-line mode
 ## if this is a VT102 or VT220. (You must specify Z0 and Z1 in your termcap to use the width-changing commands.)
-# termcapinfo vt* "LP"
-# termcapinfo vt102|vt220 "Z0=\E[?3h:Z1=\E[?3l"
+termcapinfo vt* "LP:xn"
+termcapinfo vt102|vt220 "Z0=\E[?3h:Z1=\E[?3l"
 ## This leaves your vt100 termcap alone and adds the function key labels to each window"s termcap entry.
-# termcapinfo vt100  ""  "l0=PF1:l1=PF2:l2=PF3:l3=PF4"
+termcapinfo vt100  ""  "l0=PF1:l1=PF2:l2=PF3:l3=PF4"
 ## Takes a h19 or z19 termcap and turns off auto-margins (am@) and enables the insert mode (im) and end-insert (ei)
 ## capabilities (the @ in the im string is after the =, so it is part of the string). Having the im and ei
 ## definitions put into your terminal's termcap will cause screen to automatically advertise the character-insert
 ## capability in each window's termcap. Each window will also get the delete-character capability (dc) added to
 ## its termcap, which screen will translate into a line-update for the terminal (we"re pretending it doesn"t support character deletion).
-# termcapinfo h19|z19  "am@:im=\E@:ei=\EO" "dc=\E[P"
-#
-termcapinfo * "Z0=\E[?3h:Z1=\E[?3l"
-termcapinfo gnome* "XT"
 termcapinfo h19|z19  "am@:im=\E@:ei=\EO" "dc=\E[P"
-termcapinfo rxvt* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:ti@:te@:hs:ts=\E]2;:fs=07:ds=\E]2;screen07"
-termcapinfo st* "ti@:te@"
-# termcapinfo st* "ti@:te@:hs"
-# termcapinfo st* "ti@:te@:xn:am:bce:hs:mir:msgr:npc:xenl:vb@:oc@:initc@:smcup=\E[?1049h:rmcup=\E[?1049l"
-termcapinfo vt* "xn"
-termcapinfo vt100  ""  "l0=PF1:l1=PF2:l2=PF3:l3=PF4"
-termcapinfo xterm*|xs "ti@:te@:xn:hs@:Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo st* "ti@:te@:hs@"
+# termcapinfo st* "ti@:te@:LP:xn:am:bce:hs@:mir:msgr:npc:xenl:oc@:initc@:smcup=\E[?1049h:rmcup=\E[?1049l"
+termcapinfo h19|z19  "am@:im=\E@:ei=\EO" "dc=\E[P"
+termcapinfo rxvt* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:ti@:te@:hs@:ts=\E]2;:fs=07:ds=\E]2;screen07"
 
-term screen-256color-italic
+# term screen-256color-italic
 # term screen-256color-it
 # term screen-256color-bce-it
-# term screen-256color-bce-s-it
+term screen-256color-bce-s-it
 # term st
 # term st-256color
 # term xterm-256color
@@ -188,7 +180,6 @@ term screen-256color-italic
 ## hardstatus alwayslastline "%{1;2} red on green %{-;-}"
 ## hardstatus alwaysfirstline "%{199;77} magenta on light green %{-;-}"
 ## hardstatus alwayslastline "%{xFF0000;x00FF00} red on green in truecolor %{-;-}"
-#
 hardstatus on
 caption always
 hardstatus alwayslastline
