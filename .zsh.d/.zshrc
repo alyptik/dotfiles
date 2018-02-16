@@ -270,6 +270,7 @@ esac
 	# local -a cmdline=($dig txt istheinternetonfire.com)
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
 	$cmdline | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
+	print;
 }
 
 if type fasd &>/dev/null; then
