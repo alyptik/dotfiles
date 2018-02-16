@@ -1,7 +1,7 @@
 diff --git a/Markov.py b/Markov.py
 old mode 100644
 new mode 100755
-index 7d705e6a921c850132..aef87f0f6fe08e6624
+index 73598f237dd0caccac..f997823723e3553d5b
 --- a/Markov.py
 +++ b/Markov.py
 @@ -1,5 +1,5 @@
@@ -225,7 +225,7 @@ index 7d705e6a921c850132..aef87f0f6fe08e6624
 +        # EW! but necessary since not all dbm backends support
 +        # "combined in db"
 +        if pair.encode('utf-8') in db:
-+            db[pair] = b' '.join([db[pair].encode('utf-8'), follow.encode('utf-8')])
++            db[pair.encode('utf-8')] = b' '.join([db[pair.encode('utf-8')].encode('utf-8'), follow.encode('utf-8')])
          else:
 -            db[combined] = follower
 -        if follower == '\n':
@@ -233,7 +233,7 @@ index 7d705e6a921c850132..aef87f0f6fe08e6624
 -                db['\n'] = ' '.join([db['\n'], second])
 -            else:
 -                db['\n'] = second
-+            db[pair] = follow.encode('utf-8')
++            db[pair.encode('utf-8')] = follow.encode('utf-8')
          self._flush(db)
  
 +    def _combine(self, first, second):
@@ -428,7 +428,20 @@ index 7d705e6a921c850132..aef87f0f6fe08e6624
              if not Random:
                  irc.error(
                      format('I was unable to generate a Markov chain at least '
-@@ -287,8 +457,9 @@ class Markov(callbacks.Plugin):
+@@ -270,6 +438,7 @@ class Markov(callbacks.Plugin):
+ 
+     def markov(self, irc, msg, args, channel, word1, word2):
+         """[<channel>] [word1 [word2]]
++
+         Returns a randomly-generated Markov Chain generated sentence from the
+         data kept on <channel> (which is only necessary if not sent in the
+         channel itself).  If word1 and word2 are specified, they will be used
+@@ -283,17 +452,20 @@ class Markov(callbacks.Plugin):
+ 
+     def firsts(self, irc, msg, args, channel):
+         """[<channel>]
++
+         Returns the number of Markov's first links in the database for
          <channel>.
          """
          def firsts(db):
@@ -440,10 +453,39 @@ index 7d705e6a921c850132..aef87f0f6fe08e6624
          self.q.enqueue(firsts)
      firsts = wrap(firsts, ['channeldb'])
  
-@@ -345,4 +520,4 @@ class Markov(callbacks.Plugin):
+     def lasts(self, irc, msg, args, channel):
+         """[<channel>]
++
+         Returns the number of Markov's last links in the database for
+         <channel>.
+         """
+@@ -306,6 +478,7 @@ class Markov(callbacks.Plugin):
+ 
+     def pairs(self, irc, msg, args, channel):
+         """[<channel>]
++
+         Returns the number of Markov's chain links in the database for
+         <channel>.
+         """
+@@ -318,6 +491,7 @@ class Markov(callbacks.Plugin):
+ 
+     def follows(self, irc, msg, args, channel):
+         """[<channel>]
++
+         Returns the number of Markov's third links in the database for
+         <channel>.
+         """
+@@ -330,6 +504,7 @@ class Markov(callbacks.Plugin):
+ 
+     def stats(self, irc, msg, args, channel):
+         """[<channel>]
++
+         Returns all stats (firsts, lasts, pairs, follows) for <channel>'s
+         Markov database.
+         """
+@@ -344,5 +519,4 @@ class Markov(callbacks.Plugin):
+ 
  Class = Markov
  
- 
--# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
-\ No newline at end of file
-+# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
+-
+ # vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
