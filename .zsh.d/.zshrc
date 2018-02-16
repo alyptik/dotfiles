@@ -260,11 +260,6 @@ esac
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
 
-# user command aliases and shortcuts
-[[ -f "${HOME}/.aliases" ]] && \
-	. "${HOME}/.aliases"
-safetytoggle -n
-
 # prompt rice
 [[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
 
@@ -308,6 +303,11 @@ if type zplug >/dev/null 2>&1; then
 	fi
 	zplug load --verbose
 fi
+
+# user command aliases and shortcuts
+[[ -f "${HOME}/.aliases" ]] && \
+	. "${HOME}/.aliases"
+safetytoggle -n
 
 # 'literal trigger' & fzf-completion keybind to start fuzzy completion
 export FZF_COMPLETION_TRIGGER="//"

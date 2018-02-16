@@ -1,0 +1,12 @@
+[Unit]
+Description="weechat inotify script daemon"
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=30
+ExecStart=%h/.local/bin/inotify-daemon
+
+[Install]
+WantedBy=default.target
