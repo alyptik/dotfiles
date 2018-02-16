@@ -1,1 +1,0 @@
-../stats_bar.pl

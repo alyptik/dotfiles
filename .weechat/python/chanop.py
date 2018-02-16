@@ -791,12 +791,15 @@ class Bar(object):
         if pointer and not self.hidden:
             weechat.bar_set(pointer, 'hidden', 'on')
             self.hidden = True
+            weechat.bar_set(pointer, 'hidden', 'off')
+            self.hidden = False
 
     def remove(self):
         pointer = self.getPointer()
-        if pointer:
-            weechat.bar_remove(pointer)
-            self._pointer = ''
+        #  if pointer:
+            #  weechat.bar_remove(pointer)
+            #  self._pointer = ''
+            #  self.new
 
     def __len__(self):
         """True False evaluation."""
