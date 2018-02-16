@@ -1,0 +1,23 @@
+diff --git a/chanop.py b/chanop.py
+index 848837e3e0dd9e93de..a8e6294a02fdc74e75 100644
+--- a/chanop.py
++++ b/chanop.py
+@@ -791,12 +791,15 @@ class Bar(object):
+         if pointer and not self.hidden:
+             weechat.bar_set(pointer, 'hidden', 'on')
+             self.hidden = True
++            weechat.bar_set(pointer, 'hidden', 'off')
++            self.hidden = False
+ 
+     def remove(self):
+         pointer = self.getPointer()
+-        if pointer:
+-            weechat.bar_remove(pointer)
+-            self._pointer = ''
++        #  if pointer:
++            #  weechat.bar_remove(pointer)
++            #  self._pointer = ''
++            #  self.new
+ 
+     def __len__(self):
+         """True False evaluation."""
