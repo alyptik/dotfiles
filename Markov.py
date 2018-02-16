@@ -238,9 +238,9 @@ class DbmMarkovDB(object):
         # EW! but necessary since not all dbm backends support
         # "combined in db"
         if pair.encode('utf-8') in db:
-            db[pair] = b' '.join([db[pair].encode('utf-8'), follow.encode('utf-8')])
+            db[pair.encode('utf-8')] = b' '.join([db[pair.encode('utf-8')].encode('utf-8'), follow.encode('utf-8')])
         else:
-            db[pair] = follow.encode('utf-8')
+            db[pair.encode('utf-8')] = follow.encode('utf-8')
         self._flush(db)
 
     def _combine(self, first, second):
@@ -518,6 +518,5 @@ class Markov(callbacks.Plugin):
 
 
 Class = Markov
-
 
 # vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
