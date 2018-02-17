@@ -116,7 +116,7 @@ call plug#begin(g:plugdir)
 	Plug 'Rykka/InstantRst'
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'jreybert/vimagit'
-	Plug 'vim-ctrlspace/vim-ctrlspace'
+	" Plug 'vim-ctrlspace/vim-ctrlspace'
 	Plug 'jungomi/vim-mdnquery'
 	Plug 'powerman/vim-plugin-AnsiEsc'
 	Plug 'tpope/vim-rhubarb'
@@ -587,8 +587,8 @@ let g:ale_c_clang_options='-std=c11 -pedantic -Wall -Wextra'
 	\ . ' -Wno-unused-parameter -Wno-unused-const-variable'
 	\ . ' -Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow'
 let g:ale_c_gcc_options=g:ale_c_clang_options
-let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
-" let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
+" let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
+let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
 let g:ale_fixers={'c': ['clang-format']}
 let g:ale_c_clangtidy_checks=[
 	\ 'bugprone-integer-division',

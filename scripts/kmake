@@ -63,8 +63,8 @@ b)
 	;;
 esac
 
-
-# print final command
+# change directories and print final command
+cd "$src_dir" || exit 1
 printf 'executing: [%s %s %s]\n' \
 	"$(tput sgr0)$(tput setaf 11)${make_cmd[*]}$(tput sgr0)" \
 	"$(tput sgr0)$(tput setaf 9)O=$out_dir$(tput sgr0)" \
@@ -74,12 +74,10 @@ printf 'buid directory: [%s]\n' \
 printf 'output directory: [%s]\n' \
 	"$(tput sgr0)$(tput setaf 13)$(realpath -e "$out_dir" 2>/dev/null || echo '(error)')$(tput sgr0)"
 
-# change directories and start build
-cd "$src_dir" || exit 1
-if [[ -z "$sparse_flag" ]]; then
+# start build
+if [[ -z "$sparse_flag" || "${make_cmd[1]}" == echo ]]; then
 	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}"
 else
-	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" 2>&1 >/dev/null |
-		tee -a ../sparse.log &&
-		perl -e 'print "\n" . "—"x72 . "\n" . `date` . "—"x72 . "\n\n"' >>../sparse.log
+	perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' >>../sparse.log
+	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" 2>&1 >/dev/null | tee -a ../sparse.log
 fi
