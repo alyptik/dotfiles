@@ -1,15 +1,17 @@
 
+
 # set verbose off
-# set disassembly intel
+# directory ./src
+# directory ./t
 # source ~/.gdbinit-gef.py
 
+# set debug auto-load on
 # set auto-load safe-path /
-# add-auto-load-safe-path /usr/lib/libthread_db-1.0.so
-directory ./src
-directory ./t
-set auto-load safe-path /usr/lib/libthread_db-1.0.so
+# set auto-load safe-path /usr/lib/libthread_db-1.0.so
+add-auto-load-safe-path /usr/lib/libthread_db-1.0.so
 set auto-load libthread-db on
 
+# set disassembly intel
 set history filename ~/.gdb_history
 set history save on
 set history size unlimited
