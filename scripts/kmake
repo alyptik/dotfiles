@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# cleanup traps
+save_dir="$PWD"
+function cleanup() { cd "$save_dir" || exit 1; trap - INT ERR EXIT; }
+trap 'cleanup; kill -INT $$;' INT
+trap 'cleanup' ERR EXIT
+
+# setup variables
+proj_dir=/store/code/projects
+base=teeny-linux
+kern_src=linux
+broot_src=buildroot
+kern_build=obj/linux-x86
+broot_build=obj/buildroot-x86
+build_type=''
+append_args=('')
+make_cmd=(make)
+sparse_flag=''
+
+while getopts :bdchks opt; do
+	case "$opt" in
+	(b)
+		[[ -z "$build_type" ]] && build_type=b
+		;;
+	(c)
+		[[ "${append_args[*]}" != *nconfig* ]] && append_args+=(nconfig)
+		;;
+	(d)
+		make_cmd=(echo make)
+		;;
+	(k)
+		[[ -z "$build_type" ]] && build_type=k
+		;;
+	(s)
+		sparse_flag=1
+		;;
+	(h)
+		printf 'usage: %s: [-bcdkh] [<make args>]\n' "${0##*/}"
+		exit
+		;;
+	(:|?)
+		printf 'illegal option: -%s\n' "$OPTARG"
+		printf 'usage: %s: [-bcdkh] [<make args>]\n' "${0##*/}"
+		exit 2
+		;;
+	esac
+done
+shift "$((OPTIND - 1))"
+
+# build command-line
+append_args=("$@")
+case "$build_type" in
+b)
+
+	src_dir="$proj_dir/$base/$broot_src"
+	out_dir="../$broot_build"
+	;;
+*)
+	src_dir="$proj_dir/$base/$kern_src"
+	out_dir="../$kern_build"
+	[[ -n "$sparse_flag" ]] && append_args+=('C=1')
+	;;
+esac
+
+
+# print final command
+printf 'executing: [%s %s %s]\n' \
+	"$(tput sgr0)$(tput setaf 11)${make_cmd[*]}$(tput sgr0)" \
+	"$(tput sgr0)$(tput setaf 9)O=$out_dir$(tput sgr0)" \
+	"$(tput sgr0)$(tput setaf 10)${append_args[*]}$(tput sgr0)"
+printf 'buid directory: [%s]\n' \
+	"$(tput sgr0)$(tput setaf 13)$src_dir$(tput sgr0)"
+printf 'output directory: [%s]\n' \
+	"$(tput sgr0)$(tput setaf 13)$(realpath -e "$out_dir" 2>/dev/null || echo '(error)')$(tput sgr0)"
+
+# change directories and start build
+cd "$src_dir" || exit 1
+if [[ -z "$sparse_flag" ]]; then
+	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}"
+else
+	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" 2>&1 >/dev/null |
+		tee -a ../sparse.log &&
+		perl -e 'print "\n" . "—"x72 . "\n" . `date` . "—"x72 . "\n\n"' >>../sparse.log
+fi
