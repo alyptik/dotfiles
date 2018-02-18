@@ -72,10 +72,10 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 
+st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true
 ! st.font:		SourceCodePro:style=Regular:pixelsize=28:antialias=true:hinting=true
 ! st.font:		Fira Code:style=Retina:pixelsize=28:antialias=true:hinting=true
 ! st.font:		SauceCodePro Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true
-st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true
 ! st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true,\
 !                                 Noto Emoji:style=Regular:pixelsize=30:antialias=true:hinting=true,\
 !                                 Symbola:style=Regular:pixelsize=30:antialias=true:hinting=true,\

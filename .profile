@@ -42,6 +42,7 @@ export DSSI_PATH="/usr/lib/dssi:/usr/local/lib/dssi:${HOME}/dssi:/store/audio/ds
 # Add vim as default editor
 export EDITOR=vim
 export FCEDIT="$EDITOR" VISUAL="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR"
+export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
 # export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_COMMAND="
 	(git ls-tree -r --name-only HEAD ||
