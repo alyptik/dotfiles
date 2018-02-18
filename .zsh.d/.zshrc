@@ -109,7 +109,7 @@ HISTFILE="${HOME}/.zsh_history"
 	() for 1 { zmodload "$1"; } $zmod_arr
 	# equiv of bash's "help"
 	unalias run-help help 2>/dev/null
-	alias help='zle-run-help'
+	alias help='run-help'
 }
 
 #AUTOPAIR_INHIBIT_INIT=${AUTOPAIR_INHIBIT_INIT:-}
