@@ -93,9 +93,10 @@ backtick 5 5 5 true
 startup_message off
 attrcolor b ".I"
 attrcolor i "+b"
-# sorendition "-b dw"
+# attrcolor u "+u"
+sorendition "+bi Dw"
+# sorendition "+biu Dw"
 # rendition bell "=bu"
-rendition so "+biu Dw"
 layout autosave on
 nethack on
 autodetach on
