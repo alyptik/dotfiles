@@ -51,16 +51,19 @@ set sidebar_divider_char = " │ "
 # set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
 # set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
 set sidebar_format = "%B %?N?(%N)? %* %S"
-set sidebar_sort_method = "path"
+# set sidebar_sort_method = "path"
+set sidebar_sort_method = "unsorted"
 # set sidebar_on_right = no
 
 set mail_check_stats
 set allow_ansi
 unset pager_stop
-set sort = last-date-received
+set sort = "last-date-received"
 # set sort = "threads"
 # set sort = "reverse-threads"
 set sort_aux = "last-date-received"
+set sort_browser = "date"
+set strict_threads
 set sort_re
 set uncollapse_jump
 unset text_flowed
