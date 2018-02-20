@@ -34,6 +34,7 @@
 \e[1;2B   home
 \e$       end
 \ke       end
+^E        end
 \e[1;5A   end
 \e[1;3A   end
 \e[1;2A   end

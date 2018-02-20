@@ -33,13 +33,13 @@ tab_length = 4
 # Color schemes should be put in $XDG_CONFIG_HOME/bpython/ e.g. to use the theme
 # $XDG_CONFIG_HOME/bpython/foo.theme set color_scheme = foo. Leave blank or set
 # to "default" to use the default theme
-color_scheme = pelme
 # color_scheme = default
+color_scheme = pelme
 
 # External editor to use for editing the current line, block, or full history
 # Default is to try $EDITOR and $VISUAL, then vi - but if you uncomment
 # the line below that will take precedence
-# editor = vim
+editor = vim
 
 # Whether to append .py to the filename while saving session to a file.
 # (default: False)
@@ -64,7 +64,7 @@ reimport = F6
 help = F1
 toggle_file_watch = F5
 save = M-s
-undo = C-r
+undo = M-u
 up_one_line = C-p
 down_one_line = C-n
 cut_to_buffer = C-k
@@ -78,8 +78,8 @@ show_source = F2
 exit = C-d
 external_editor = F7
 edit_config = F3
-reverse_incremental_search = M-r
-incremental_search = M-s
+reverse_incremental_search = C-r
+incremental_search = C-s
 
 [curtsies]
 
