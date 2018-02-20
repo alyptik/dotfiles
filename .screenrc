@@ -51,16 +51,21 @@ bind s eval split "focus top" "screen -t man $HOME/bin/showman" "focus bottom" o
 
 # M-. as escape
 bindkey "\033." command
-# emacs keybindings for navigation in copy mode
+# exit copy mode
+# bindkey -m , stuff "\033"
 markkeys "0=^A:$=^E:^B=;:^F='"
-## control arrows move by words. (set B, e, and w to F keys so that i can
-## use them to move by words, but they themselves still quit copy mode.)
+markkeys "/=/:?=?:^R=^R:^S=^S"
 markkeys "B={:E=}:b=[:e=]:w=>:B=<"
 # make incremental search default
-bindkey -m ? stuff "^R"
-bindkey -m / stuff "^S"
-bindkey -m ^R stuff "?"
-bindkey -m ^S stuff "/"
+# bindkey -m ? stuff ^R
+# bindkey -m / stuff ^S
+# bindkey -m ^R stuff ?
+# bindkey -m ^S stuff /
+# default search bindings
+bindkey -m ?
+bindkey -m /
+bindkey -m ^R
+bindkey -m ^S
 # PgUp | Enter copy/scrollback mode and page up
 # PgDown | Enter copy/scrollback mode and page down
 # bindkey -k kP eval copy "stuff ^B"
@@ -69,8 +74,6 @@ bindkey -m -k kP stuff ^B
 bindkey -m -k kN stuff ^F
 # special hack for C-e, since it should go *past*
 # the last char. -m means this is for copy mode only.
-# exit copy mode
-bindkey -m , stuff "\033"
 bindkey -m ^E stuff "$}{"
 # bindkey -m "\033[1;5D" stuff "["
 # bindkey -m "\033[1;5C" stuff "]"
