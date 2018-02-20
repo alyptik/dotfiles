@@ -33,7 +33,9 @@ export CCACHE_DISABLE=1
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
 export C="/store/dotfiles" c="$C"
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
-CF="$CF -Wdefault-bitfield-sign -Wptr-subtraction-blows -Wundef"
+CF="$CF -Wdefault-bitfield-sign -Wparen-string"
+CF="$CF -Wptr-subtraction-blows -Wshadow"
+CF="$CF -Wsizeof-bool -Wtypesign -Wundef"
 export CF
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
