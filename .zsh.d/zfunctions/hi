@@ -10,4 +10,4 @@ else
 fi
 
 highlight --out-format=truecolor --syntax="${syn:-conf}" --style=orion "$file" | \
-	less -CMRXis
+	less -CMNRis

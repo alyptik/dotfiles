@@ -26,7 +26,7 @@ shift
 env \
 	PAGER="$pager" \
 	MANWIDTH="$width" \
-	LESS="MRXis${query}" \
+	LESS="CMRins${query}" \
 	GROFF_NO_SGR=1 \
 	LESS_TERMCAP_se=$'\E[0m' \
 	LESS_TERMCAP_me=$'\E[0m' \
