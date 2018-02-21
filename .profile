@@ -194,6 +194,7 @@ SURF_USERAGENT="$SURF_USERAGENT Chrome/49.0.2623.105 Mobile Safari/537.36"
 export SURF_USERAGENT
 export SYSTEMD_LESS="CFKMRins" journalctl
 export TERMINAL=st
+export TZ=/usr/share/zoneinfo/posix/Pacific/Honolulu
 export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:${HOME}/vst:/store/audio/vst"
 # Set X cursor theme
 export XCURSOR_THEME=ArchCursorTheme
