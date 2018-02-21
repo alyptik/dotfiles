@@ -88,9 +88,9 @@
 [color]
 	ui = auto
 [core]
-	pager = less
 	excludesfile = ~/.cvsignore
 	abbrev = 18
+	pager = less
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]

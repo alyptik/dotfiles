@@ -20,18 +20,19 @@ fi
 export H="$HOME" h="$HOME"
 export PROJECTS="/store/code/projects" P="$PROJECTS" p="$PROJECTS"
 export LINUX="$PROJECTS/linux" L="$LINUX" l="$LINUX"
+export CONFIG="/store/dotfiles" C="$CONFIG" c="$CONFIG"
 
 # Environment variables
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
-# export BROWSER=firefox
-# export BROWSER=chromium
+# export BROWSER=/usr/bin/firefox
+# export BROWSER=/usr/bin/chromium
+export BROWSER=/usr/bin/w3m
 export CCACHE_DIR="$HOME/.ccache"
 export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PREFIX="distcc"
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
-export C="/store/dotfiles" c="$C"
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
 CF="$CF -Wdefault-bitfield-sign -Wparen-string"
 CF="$CF -Wptr-subtraction-blows -Wshadow"
@@ -42,15 +43,15 @@ export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 # Audio plugins
 export DSSI_PATH="/usr/lib/dssi:/usr/local/lib/dssi:${HOME}/dssi:/store/audio/dssi"
 # Add vim as default editor
-export EDITOR=vim
-export FCEDIT="$EDITOR" VISUAL="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR"
+export EDITOR=/usr/bin/vim
+export FCEDIT="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR" VISUAL="$EDITOR"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
-# export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_DEFAULT_COMMAND="
-	(git ls-tree -r --name-only HEAD ||
-	find . -path '*/\\.*' -prune -o \\( -type f -o -type l \\) -print |
-	sed s/^..//) 2>/dev/null
-"
+# export FZF_DEFAULT_COMMAND="
+#         (git ls-tree -r --name-only HEAD ||
+#         find . -path '*/\\.*' -prune -o \\( -type f -o -type l \\) -print |
+#         sed s/^..//) 2>/dev/null
+# "
+export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS="
 	--color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
 	--color info:150,prompt:110,spinner:150,pointer:167,marker:174
@@ -68,8 +69,9 @@ export FZF_CTRL_T_OPTS="
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
-export GIT_PAGER=less
+export GIT_PAGER="less -CMRins"
 export GOPATH="${HOME}/.go"
+export GROFF_NO_SGR=1 man
 # Gtk themes
 export GTK_DEBUG=1
 export GTK_IM_MODULE="xim" QT_IM_MODULE="xim" XMODIFIERS="@im=none"
@@ -99,38 +101,48 @@ export LC_CTYPE=en_US.UTF-8
 export LC_MESSAGES=en_US.UTF-8
 export LC_NUMERIC=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
-export LD_LIBRARY_PATH="/usr/lib64:/usr/lib:/usr/lib32:/home/alyptik/GNUstep/Library/Libraries"
+LD_LIBRARY_PATH="/usr/lib:/usr/lib64:/usr/lib32"
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/alyptik/GNUstep/Library/Libraries"
+export LD_LIBRARY_PATH
 export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:${HOME}/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:${HOME}/lxvst:/store/audio/lxvst"
-export LESS=CMNRXis
-export GROFF_NO_SGR=1 LESS=CMRis LESS=CMRXis man man git
+export LESS=CMNRis
 # shellcheck disable=SC2039
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
-# export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43;5m' LESS_TERMCAP_md=$'\E[1;31m'
 # shellcheck disable=SC2039
+# export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[1;33;43;5m' LESS_TERMCAP_md=$'\E[1;31m'
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
 # Intel VA-API and VDPAU configuration
-# export LIBVA_DRIVER_NAME="i965"
-# export VDPAU_DRIVER="va_gl"
+# export LIBVA_DRIVER_NAME=i965 VDPAU_DRIVER=va_gl
 # export MAKEFLAGS="-j -l5"
 export MAKEFLAGS="-j5"
-export MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man:/opt/intel/man/common:/usr/local/man:/usr/share/man:${C}/man"
-export MANSECT="2:3:1:0:9:7:5:4:n:l:8:6:3f"
+export MANPAGER="less -CMRins"
+MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
+MANPATH="$MANPATH:/opt/intel/man/common:/usr/local/man:/usr/share/man:${C}/man"
+export MANPATH
+export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:3f"
 export MESA_GL_VERSION_OVERRIDE="4.5COMPAT"
 export npm_config_prefix="${HOME}/.node_modules"
-export PAGER=less
-# export PAGER=vimpager
+# export PAGER=/usr/bin/vimpager
+export PAGER=/usr/bin/less
 # default PATH
-# export PATH="/usr/local/sbin:/usr/local/bin:/bin:/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
-# export PATH="${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/usr/lib/distcc/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
-# export PATH="/usr/lib/ccache/bin:$(ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
-PATH="${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:${HOME}/.zplug/bin:${HOME}/bin/asski:${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin"
+PATH="/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+PATH="/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:$PATH"
+PATH="/usr/bin/core_perl:${HOME}/code/go/bin:/opt/TIS-100:/opt/cuda/bin:$PATH"
+PATH="/store/local/bin:${HOME}/.linuxbrew/bin:${HOME}/GNUstep/Tools:$PATH"
+PATH="/usr/lib/surfraw:/store/local/Wolfram/CDFPlayer/10.3/Executables:$PATH"
+PATH="/opt/android-sdk/platform-tools:${HOME}/.gem/ruby/2.3.0/bin:$PATH"
+PATH="${HOME}/.cargo/bin:/opt/intel/bin:/store/config/scripts:$PATH"
+PATH="${HOME}/.node_modules/bin:${HOME}/.gem/ruby/2.4.0/bin:${HOME}/perl5/bin:$PATH"
+PATH="${HOME}/.local/bin:/usr/local/texlive/2016/bin/x86_64-linux:$PATH"
+PATH="${HOME}/bin:${HOME}/.zsh.d/plugins/zplug/bin:$PATH"
+PATH="${HOME}/.zplug/bin:${HOME}/bin/asski:${LINUX}/scripts:$PATH"
 PATH="$(ruby -rrubygems -e "puts Gem.user_dir")/bin:$PATH"
+# PATH="/usr/lib/distcc/bin:$PATH"
+PATH="/usr/lib/ccache/bin:$PATH"
 # prepend cross compiler to PATH
 PATH="/opt/cross/bin:$PATH"
-PATH="/usr/lib/ccache/bin:$PATH"
-PATH="${LINUX}/scripts:$PATH"
 export PATH
 # shellcheck disable=SC2039
 PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:${HOME}\/perl5\/lib\/perl5}}"
@@ -145,21 +157,25 @@ export PERL_LOCAL_LIB_ROOT
 export PERL_MB_OPT="--install_base \"${HOME}/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"
 export PERLDOC="-i -oman"
-# export PERLDOC_PAGER="less -+C -MRXs"
-export PERLDOC_PAGER="less -CMRis"
 # export PERLDOC_PAGER="most -+C -E"
+# export PERLDOC_PAGER="less -+C -MRXs"
+export PERLDOC_PAGER="less -CMRins"
 # export PLAN9=/usr/lib/plan9 PATH="${PATH}:${PLAN9}/bin"
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${HOME}/GNUstep/Library/Libraries/pkgconfig:/usr/lib/pkgconfig"
+PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig"
+PKG_CONFIG_PATH="${HOME}/GNUstep/Library/Libraries/pkgconfig:$PKG_CONFIG_PATH"
+PKG_CONFIG_PATH="${HOME}/.local/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:${PLAN9}/bin"
 # shellcheck disable=SC2039
-export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man" p9="${PLAN9}"
+export PLAN9=/opt/plan9 PATH="${PATH//:\/opt\/plan9\/bin}:$PLAN9/bin"
+# shellcheck disable=SC2039
+export p9="${PLAN9}" MANPATH="${MANPATH//:\/opt\/plan9\/share\/man}:${PLAN9}/share/man"
 export PRE="${HOME}/.local" pre="$PRE"
 # export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,comm"
 export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,args"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2.7"
 # export PYTHON='/store/config/scripts/python2'
-# export PYTHONSTARTUP="${HOME}/.pyrc"
 export PYTHONSTARTUP="${HOME}/.pythonrc"
 export READNULLCMD=less
 export QEMU_AUDIO_DRV=pa
@@ -168,13 +184,16 @@ export QEMU_PA_SERVER=localhost
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_PLUGIN_PATH="${HOME}/.kde4/lib/kde4/plugins:/usr/lib/kde4/plugins"
 export QT_QPA_PLATFORMTHEME=qt5ct
-# export QT_SCALE_FACTOR=2.25
-# export QT_SCREEN_SCALE_FACTORS=2.25
+export QT_SCALE_FACTOR=2.25
+export QT_SCREEN_SCALE_FACTORS=2.25
 export SAVEHIST="$HISTSIZE"
 export SDL_AUDIODRIVER=alsa
 export SSH_KEY_PATH="${HOME}/.ssh/id_gpg"
-export SURF_USERAGENT="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MOB3OD) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.105 Mobile Safari/537.36"
-export SYSTEMD_LESS="CFKMRiX" journalctl
+SURF_USERAGENT="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MOB3OD)"
+SURF_USERAGENT="$SURF_USERAGENT AppleWebKit/537.36 (KHTML, like Gecko)"
+SURF_USERAGENT="$SURF_USERAGENT Chrome/49.0.2623.105 Mobile Safari/537.36"
+export SURF_USERAGENT
+export SYSTEMD_LESS="CFKMRins" journalctl
 export TERMINAL=st
 export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:${HOME}/vst:/store/audio/vst"
 # Set X cursor theme
@@ -185,6 +204,6 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export ZDOTDIR="${HOME}/.zsh.d"
-# export _Z_OWNER=alyptik
-# export _Z_NO_PROMPT_COMMAND=true
-# export _Z_NO_RESOLVE_SYMLINKS=true
+export _Z_OWNER=alyptik
+export _Z_NO_PROMPT_COMMAND=true
+export _Z_NO_RESOLVE_SYMLINKS=true

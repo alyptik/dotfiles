@@ -1,1 +1,1 @@
- { parallel --will-cite systemctl --user ::: restart status ::: "$@"; } | less -FKMRX
+ { parallel --will-cite systemctl --user ::: restart status ::: "$@"; } | less -CFKMRins
