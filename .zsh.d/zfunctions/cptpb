@@ -17,7 +17,6 @@ elif [[ -n "$BASh" ]]; then
 else
 	printf "$(tput setaf 9)$(tput bold)%s$(tput sgr0)\n" 'Error: bash/zsh not found!'
 	return 1
-fi
 	# TODO: history doesn't work right with "$shell" -c; figure out how to fix
 	# local bashcmd zshcmd shell
 	# shell="$(sh -c 'type -P zsh' || sh -c 'type -P bash')"
@@ -39,3 +38,4 @@ fi
 	#         *bash) "$shell" -c "$bashcmd" ;;
 	#         *) printf "\033[31m%s\033[0m\n" 'Error: bash/zsh not found!'; return 1;;
 	# esac
+fi
