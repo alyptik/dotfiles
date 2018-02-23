@@ -1,10 +1,10 @@
 ;;; -*- coding: utf-8 -*-
-(("/mnt/shared/init" . 177)
+(("/media/microSDXC/fnord.txt" . 1255)
+ ("/mnt/shared/init" . 177)
  ("/home/alyptik/"
   (dired-filename . "/home/alyptik/.emacs.d"))
  ("/home/alyptik/.emacs.d/"
   (dired-filename . "/home/alyptik/.emacs.d/evil"))
  ("/home/alyptik/.emacs.d/evil/"
   (dired-filename . "/home/alyptik/.emacs.d/evil/evil-commands.el"))
- ("/home/alyptik/.emacs.d/evil/evil-commands.el" . 2921)
- ("/run/media/alyptik/microSDXC/resume_template.tex" . 3064))
+ ("/home/alyptik/.emacs.d/evil/evil-commands.el" . 2921))
