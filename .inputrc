@@ -32,6 +32,9 @@ set visible-stats on
 "\e[": start-kbd-macro
 "\e]": end-kbd-macro
 "\e\\": call-last-kbd-macro
+# $if node
+#         "\C-i": rlwrap-direct-keypress
+# $endif
 $if mode=emacs
 	"\e[15~": vi-editing-mode
 $endif

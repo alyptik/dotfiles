@@ -1,12 +1,7 @@
 #!/bin/bash
 
-# cleanup traps
-save_dir="$PWD"
-function cleanup() { cd "$save_dir" || exit 1; trap - INT ERR EXIT; }
-trap 'cleanup; kill -INT $$;' INT
-trap 'cleanup' ERR EXIT
-
 # setup variables
+save_dir="$PWD"
 proj_dir=/store/code/projects
 base=teeny-linux
 kern_src=linux
@@ -17,6 +12,18 @@ build_type=''
 append_args=('')
 make_cmd=(make)
 sparse_flag=''
+
+# cleanup traps
+function cleanup() {
+	if (($(wc -l ../sparse.log.tmp | cut -f-1 -d' ') > 5)); then
+		cat ../sparse.log.tmp >>../sparse.log
+	fi
+	rm -f ../sparse.log.tmp
+	cd "$save_dir" || exit 2
+	trap - INT ERR EXIT
+}
+trap 'cleanup; kill -INT $$;' INT
+trap 'cleanup' ERR EXIT
 
 while getopts :bdchks opt; do
 	case "$opt" in
@@ -78,6 +85,6 @@ printf 'output directory: [%s]\n' \
 if [[ -z "$sparse_flag" || "${make_cmd[1]}" == echo ]]; then
 	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}"
 else
-	perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' >>../sparse.log
-	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" 2>&1 >/dev/null | tee -a ../sparse.log
+	perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' >>../sparse.log.tmp
+	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" 2>&1 >/dev/null | tee -a ../sparse.log.tmp
 fi

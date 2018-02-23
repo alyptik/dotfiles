@@ -2,16 +2,17 @@
 
 # Unset previous function/alias instances
 unset -f define defrag fc java sudo wd which 2>/dev/null
-unalias {1..9} c f gbr gco gcs gg gm h history java l md o rd ru s sd sf si u v z zz 2>/dev/null
+unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
 
+alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
+# alias node='env NODE_NO_READLINE=1 rlwrap -D 2 -p"Purple" -S"> " node'
 alias pf='pkgfile'
 alias pfm='pcmanfm'
 alias fm='fman'
 alias rk='runkernel'
 alias nmu='neomutt'
-alias node='NODE_NO_READLINE=1 rlwrap node'
 alias m='make clean && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
 ## quick opening files with mpv
 # alias m='f -e mpv'
