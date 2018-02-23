@@ -36,7 +36,7 @@ export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
 CF="$CF -Wdefault-bitfield-sign -Wparen-string"
 CF="$CF -Wptr-subtraction-blows -Wshadow"
-CF="$CF -Wsizeof-bool -Wtypesign -Wundef"
+CF="$CF -Wsizeof-bool -Wtypesign -Wundef -Wno-unknown-attribute"
 export CF
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
@@ -177,6 +177,7 @@ export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,s
 # export PYTHON='/store/config/scripts/python2'
 export PYTHONSTARTUP="${HOME}/.pythonrc"
 export READNULLCMD=less
+export RLWRAP_EDITOR="vim '+call cursor(%L,%C)'"
 export QEMU_AUDIO_DRV=pa
 export QEMU_PA_SERVER=localhost
 # Qt themes
@@ -184,8 +185,8 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_PLUGIN_PATH="${HOME}/.kde4/lib/kde4/plugins:/usr/lib/kde4/plugins"
 export QT_QPA_PLATFORMTHEME=qt5ct
 # export QT_SCALE_FACTOR=2.25
-# export QT_SCREEN_SCALE_FACTORS=2.25
 export SAVEHIST="$HISTSIZE"
+# export QT_SCREEN_SCALE_FACTORS=2.25
 export SDL_AUDIODRIVER=alsa
 export SSH_KEY_PATH="${HOME}/.ssh/id_gpg"
 SURF_USERAGENT="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MOB3OD)"
