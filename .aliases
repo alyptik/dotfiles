@@ -6,7 +6,8 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si
 
 ## Custom aliases
 
-alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
+alias n='node'
+# alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
 # alias node='env NODE_NO_READLINE=1 rlwrap -D 2 -p"Purple" -S"> " node'
 alias pf='pkgfile'
 alias pfm='pcmanfm'
