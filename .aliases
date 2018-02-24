@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si
 
 ## Custom aliases
 
+alias mdn='mdn-query'
 alias n='node'
 # alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
 # alias node='env NODE_NO_READLINE=1 rlwrap -D 2 -p"Purple" -S"> " node'
@@ -70,7 +71,6 @@ alias bkey='bindkey | highlight --out-format="truecolor" --syntax="conf" --style
 alias bool='printf "%b\n" "\n$(tput setaf 10)¬ / ~ / !\t$(tput setaf 11)|$(tput setaf 9)\t\tNOT$(tput sgr0)" "$(tput setaf 10)∧\t\t$(tput setaf 11)|$(tput setaf 9)\t\tAND$(tput sgr0)" "$(tput setaf 10)∨\t\t$(tput setaf 11)|$(tput setaf 9)\t\tOR$(tput sgr0)" "$(tput setaf 10)⊕\t\t$(tput setaf 11)|$(tput setaf 9)\t\tXOR$(tput sgr0)" "$(tput setaf 10)∈\t\t$(tput setaf 11)|$(tput setaf 9)\t\tIN$(tput sgr0)" "$(tput setaf 10)→ / ⇒ / ⊃\t$(tput setaf 11)|$(tput setaf 9)\t\tIF$(tput sgr0)" "$(tput setaf 10)↔ / ⇔ / ≡\t$(tput setaf 11)|$(tput setaf 9)\t\tIF AND ONLY IF$(tput sgr0)" "$(tput setaf 10)∃\t\t$(tput setaf 11)|$(tput setaf 9)\t\tAT LEAST ONE$(tput sgr0)" "$(tput setaf 10)∃!\t\t$(tput setaf 11)|$(tput setaf 9)\t\tEXACTLY ONE$(tput sgr0)" "$(tput setaf 10)∀\t\t$(tput setaf 11)|$(tput setaf 9)\t\tFOR ALL$(tput sgr0)" "$(tput setaf 10)≔ / ≡\t\t$(tput setaf 11)|$(tput setaf 9)\t\tDEFINED AS$(tput sgr0)" "$(tput setaf 10)⊤\t\t$(tput setaf 11)|$(tput setaf 9)\t\tTAUTAULOGY$(tput sgr0)" "$(tput setaf 10)⊥\t\t$(tput setaf 11)|$(tput setaf 9)\t\tCONTRADICTION$(tput sgr0)" "$(tput setaf 10)⊢\t\t$(tput setaf 11)|$(tput setaf 9)\t\tPROVABLE FROM$(tput sgr0)" "$(tput setaf 10)⊨\t\t$(tput setaf 11)|$(tput setaf 9)\t\tENTAILS$(tput sgr0)" "$(tput setaf 10):⇔\t\t$(tput setaf 11)|$(tput setaf 9)\t\tLOGICALLY EQUVALENT EVERYWHERE$(tput sgr0)" && echo && printf "%s" "¬ / ~ / ! | ∧ | ∨ | ⊕ | ∈ | → / ⇒ / ⊃ | ↔ / ⇔ | ∃ | ∃ | ∀ | ≔ / ≡ | ⊤ | ⊥ | ⊢ | ⊨ | :⇔ " | tee >(xsel -ib) && echo'
 alias xsi='xsel -ip'
 alias xso='xclip -o'
-alias md='abricotine'
 alias jp='jump'
 alias bm='bookmark'
 alias sm='showmarks'

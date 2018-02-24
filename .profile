@@ -26,8 +26,9 @@ export CONFIG="/store/dotfiles" C="$CONFIG" c="$CONFIG"
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 # export BROWSER=/usr/bin/firefox
-# export BROWSER=/usr/bin/chromium
-export BROWSER=/usr/bin/w3m
+export BROWSER=/usr/bin/chromium
+# export BROWSER=/usr/bin/w3m
+# export BROWSER=/usr/bin/lynx
 export CCACHE_DIR="$HOME/.ccache"
 export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin

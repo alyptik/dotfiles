@@ -45,6 +45,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'jungomi/vim-mdnquery'
 	Plug 'osfameron/perl-tags-vim'
 	" Plug 'osfameron/perl-tags'
 	Plug 'c9s/perlomni.vim'
