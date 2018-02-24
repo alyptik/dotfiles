@@ -1,1 +1,0 @@
-../ncmpcpp.pl
