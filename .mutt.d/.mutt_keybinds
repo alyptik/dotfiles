@@ -31,6 +31,7 @@ bind generic,index,pager,browser \e- first-entry
 bind generic,index,pager,browser \e= last-entry
 bind generic,index,pager,browser \c? previous-line
 bind generic,index,pager,browser b previous-page
+bind generic,index,pager,browser <space> next-page
 bind index "^" imap-fetch-mail
 bind attach <return> view-mailcap
 bind browser y exit

@@ -1549,15 +1549,16 @@ xmap <silent> <Leader>K j<Plug>(ale_next)
 " nnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
 " inoremap <Esc>] <Esc>:call comfortable_motion#flick(75)<CR>li
 
-inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
-inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
-vnoremap <Esc>u <C-u>
-vnoremap <Esc>d <C-d>
-
+nnoremap <Esc>u <C-u>
+nnoremap <Esc>d <C-d>
 nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
-vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
 nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
-vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
+" vnoremap <Esc>u <C-u>
+" vnoremap <Esc>d <C-d>
+" inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
+" inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
+" vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+" vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 
 " vnoremap <Esc>; <C-u>
 " nnoremap <Esc>; <C-u>
