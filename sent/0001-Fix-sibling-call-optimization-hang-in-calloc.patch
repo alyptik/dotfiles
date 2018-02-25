@@ -1,0 +1,35 @@
+From 367e4af880f608d712f8bf22b49588b46379dbdc Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 24 Feb 2018 13:41:47 -1000
+Subject: [PATCH] Fix sibling-call optimization hang in calloc()
+
+With a NULL `p` argument realloc() behaves exactly the same as malloc()
+does (the malloc() call would be otherwise be replaced by an unconditional
+branch back to line 1719 ad infinitum).
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/Src/mem.c b/Src/mem.c
+index 840bbb6e4a4eb6fd73..f1208197b3ddac2139 100644
+--- a/Src/mem.c
++++ b/Src/mem.c
+@@ -1719,7 +1719,13 @@ calloc(MALLOC_ARG_T n, MALLOC_ARG_T size)
+     if (!(l = n * size))
+ 	return (MALLOC_RET_T) m_high;
+ 
+-    r = malloc(l);
++    /*
++     * use realloc() (with a NULL `p` argument it behaves exactly the same
++     * as malloc() does) to prevent an infinite loop caused by sibling-call
++     * optimizations (the malloc() call would otherwise be replaced by an
++     * unconditional branch back to line 1719 ad infinitum).
++     */
++    r = realloc(NULL, l);
+ 
+     memset(r, 0, l);
+ 
+-- 
+2.16.2
+
