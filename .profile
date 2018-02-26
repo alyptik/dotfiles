@@ -36,8 +36,8 @@ export CCACHE_DISABLE=1
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
 CF="$CF -Wdefault-bitfield-sign -Wno-do-while -Wno-non-pointer-null"
-CF="$CF -Wparen-string -Wptr-subtraction-blows -Wno-shadow -Wsizeof-bool"
-CF="$CF -Wtypesign -Wno-undef -Wno-unknown-attribute"
+CF="$CF -Wparen-string -Wptr-subtraction-blows -Wno-shadow"
+CF="$CF -Wno-sizeof-bool -Wtypesign -Wno-undef -Wno-unknown-attribute"
 export CF
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
