@@ -1,0 +1,38 @@
+From 65fb08c17c6149f1e2553b1e222af6c4fb773867 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 26 Feb 2018 01:51:44 -1000
+Subject: [PATCH] mm/zsmalloc: strength reduce zspage_size calculation
+
+Replace the repeated multiplication in the main loop
+body calculation of zspage_size with an equivalent
+(and cheaper) addition operation.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mm/zsmalloc.c b/mm/zsmalloc.c
+index c3013505c30527dc42..647a1a2728634b5194 100644
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -821,15 +821,15 @@ static enum fullness_group fix_fullness_group(struct size_class *class,
+  */
+ static int get_pages_per_zspage(int class_size)
+ {
++	int zspage_size = 0;
+ 	int i, max_usedpc = 0;
+ 	/* zspage order which gives maximum used size per KB */
+ 	int max_usedpc_order = 1;
+ 
+ 	for (i = 1; i <= ZS_MAX_PAGES_PER_ZSPAGE; i++) {
+-		int zspage_size;
+ 		int waste, usedpc;
+ 
+-		zspage_size = i * PAGE_SIZE;
++		zspage_size += PAGE_SIZE;
+ 		waste = zspage_size % class_size;
+ 		usedpc = (zspage_size - waste) * 100 / zspage_size;
+ 
+-- 
+2.16.2
+
