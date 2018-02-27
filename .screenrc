@@ -23,7 +23,7 @@ bind q only
 bind Q xon
 bind x remove
 bind X lockscreen
-bind r source "${HOME}/.screenrc"
+bind r source "$HOME/.screenrc"
 bind R wrap
 bind m mousetrack on
 bind M mousetrack off
