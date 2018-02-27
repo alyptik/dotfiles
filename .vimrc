@@ -580,16 +580,18 @@ let g:ale_lint_on_save=1
 let g:ale_lint_on_text_changed=0
 " You can disable this option too if you don't want linters to run
 " on opening a file
-let g:ale_lint_on_enter=0
+let g:ale_lint_on_enter=1
 
 let g:clang_jumpto_declaration_key='<C-/>'
-let g:ale_c_clang_options='-std=c11 -pedantic -Wall -Wextra'
-	\ . ' -Wno-missing-field-initializers -Wno-unused-function'
-	\ . ' -Wno-unused-parameter -Wno-unused-const-variable'
-	\ . ' -Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow'
+let g:ale_c_cppcheck_options='--enable=style --std=c11 --std=posix'
+let g:ale_c_clang_options='-std=c11 -pedantic -Wall -Wextra '
+	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
+	\ . '-Wno-unused-function -Wno-unused-parameter '
+	\ . '-Wno-unused-const-variable -Wfloat-equal -Wrestrict '
+	\ . '-Wshadow -Wstrict-overflow '
 let g:ale_c_gcc_options=g:ale_c_clang_options
-let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
-" let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
+" let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
+let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
 let g:ale_fixers={'c': ['clang-format']}
 let g:ale_c_clangtidy_checks=[
 	\ 'bugprone-integer-division',
