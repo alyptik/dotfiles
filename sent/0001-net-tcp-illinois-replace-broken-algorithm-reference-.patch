@@ -1,0 +1,40 @@
+From ce0d308893e15014906d2138c3cff7b57b6c7559 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Tue, 27 Feb 2018 21:46:27 -1000
+Subject: [PATCH] net/tcp/illinois: replace broken algorithm reference link
+
+The link to the pdf containing the algorithm description is now a
+dead link; it seems http://www.ifp.illinois.edu/~srikant/ has been
+moved to https://sites.google.com/a/illinois.edu/srikant/ and none of
+the original papers can be found there...
+
+I have replaced it with the only working copy I was able to find.
+
+n.b. there is also a copy available at:
+
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.296.6350&rep=rep1&type=pdf
+
+However, this seems to only be a *cached* version, so I am unsure
+exactly how reliable that link can be expected to remain over time
+and have decided against using that one.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/ipv4/tcp_illinois.c b/net/ipv4/tcp_illinois.c
+index 7c843578f2333db581..faddf4f9a707f1583f 100644
+--- a/net/ipv4/tcp_illinois.c
++++ b/net/ipv4/tcp_illinois.c
+@@ -6,7 +6,7 @@
+  * The algorithm is described in:
+  * "TCP-Illinois: A Loss and Delay-Based Congestion Control Algorithm
+  *  for High-Speed Networks"
+- * http://www.ifp.illinois.edu/~srikant/Papers/liubassri06perf.pdf
++ * http://tamerbasar.csl.illinois.edu/LiuBasarSrikantPerfEvalArtJun2008.pdf
+  *
+  * Implemented from description in paper and ns-2 simulation.
+  * Copyright (C) 2007 Stephen Hemminger <shemminger@linux-foundation.org>
+-- 
+2.16.2
+
