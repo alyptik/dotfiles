@@ -26,7 +26,7 @@
 	followTags = true
 [alias]
 	br = branch
-	co = commit -v -S
+	co = commit -S -s -v
 	st = status
 	l = log --show-signature --stat
 	lu = log --show-signature -u

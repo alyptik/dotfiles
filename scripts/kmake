@@ -3,7 +3,7 @@
 # setup variables
 save_dir="$PWD"
 proj_dir=/store/code/projects
-base=teeny-linux
+base=kernel
 kern_src=linux
 broot_src=buildroot
 kern_build=obj/linux-x86
@@ -15,7 +15,12 @@ sparse_flag=''
 
 # cleanup traps
 function cleanup() {
-	if (($(wc -l ../sparse.log.tmp | cut -f-1 -d' ') > 5)); then
+	local lines
+	lines="$(wc -l ../sparse.log.tmp 2>/dev/null | cut -f-1 -d' ')"
+	if [[ -z "$lines" ]]; then
+		lines=0
+	fi
+	if ((lines > 5)); then
 		cat ../sparse.log.tmp >>../sparse.log
 	fi
 	rm -f ../sparse.log.tmp

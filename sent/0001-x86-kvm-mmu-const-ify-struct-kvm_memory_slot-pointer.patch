@@ -1,0 +1,87 @@
+From 4b253e693ee20c1eead8ea21af63a3501d28e36d Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Wed, 28 Feb 2018 00:34:09 -1000
+Subject: [PATCH] x86/kvm/mmu: const-ify struct kvm_memory_slot pointers
+
+Remove `(struct kvm_memory_slot *)` cast of the
+`const struct kvm_memory_slot *memslot` parameter and
+const-ify all references to that pointer down the
+function call chain.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/arch/x86/kvm/mmu.c b/arch/x86/kvm/mmu.c
+index f551962ac29488431b..e6b32de4d7426fecb3 100644
+--- a/arch/x86/kvm/mmu.c
++++ b/arch/x86/kvm/mmu.c
+@@ -1235,7 +1235,7 @@ static void pte_list_remove(u64 *spte, struct kvm_rmap_head *rmap_head)
+ }
+ 
+ static struct kvm_rmap_head *__gfn_to_rmap(gfn_t gfn, int level,
+-					   struct kvm_memory_slot *slot)
++					   const struct kvm_memory_slot *slot)
+ {
+ 	unsigned long idx;
+ 
+@@ -1678,7 +1678,7 @@ static int kvm_set_pte_rmapp(struct kvm *kvm, struct kvm_rmap_head *rmap_head,
+ 
+ struct slot_rmap_walk_iterator {
+ 	/* input fields. */
+-	struct kvm_memory_slot *slot;
++	const struct kvm_memory_slot *slot;
+ 	gfn_t start_gfn;
+ 	gfn_t end_gfn;
+ 	int start_level;
+@@ -1705,7 +1705,7 @@ rmap_walk_init_level(struct slot_rmap_walk_iterator *iterator, int level)
+ 
+ static void
+ slot_rmap_walk_init(struct slot_rmap_walk_iterator *iterator,
+-		    struct kvm_memory_slot *slot, int start_level,
++		    const struct kvm_memory_slot *slot, int start_level,
+ 		    int end_level, gfn_t start_gfn, gfn_t end_gfn)
+ {
+ 	iterator->slot = slot;
+@@ -5081,7 +5081,7 @@ typedef bool (*slot_level_handler) (struct kvm *kvm, struct kvm_rmap_head *rmap_
+ 
+ /* The caller should hold mmu-lock before calling this function. */
+ static __always_inline bool
+-slot_handle_level_range(struct kvm *kvm, struct kvm_memory_slot *memslot,
++slot_handle_level_range(struct kvm *kvm, const struct kvm_memory_slot *memslot,
+ 			slot_level_handler fn, int start_level, int end_level,
+ 			gfn_t start_gfn, gfn_t end_gfn, bool lock_flush_tlb)
+ {
+@@ -5111,7 +5111,7 @@ slot_handle_level_range(struct kvm *kvm, struct kvm_memory_slot *memslot,
+ }
+ 
+ static __always_inline bool
+-slot_handle_level(struct kvm *kvm, struct kvm_memory_slot *memslot,
++slot_handle_level(struct kvm *kvm, const struct kvm_memory_slot *memslot,
+ 		  slot_level_handler fn, int start_level, int end_level,
+ 		  bool lock_flush_tlb)
+ {
+@@ -5138,7 +5138,7 @@ slot_handle_large_level(struct kvm *kvm, struct kvm_memory_slot *memslot,
+ }
+ 
+ static __always_inline bool
+-slot_handle_leaf(struct kvm *kvm, struct kvm_memory_slot *memslot,
++slot_handle_leaf(struct kvm *kvm, const struct kvm_memory_slot *memslot,
+ 		 slot_level_handler fn, bool lock_flush_tlb)
+ {
+ 	return slot_handle_level(kvm, memslot, fn, PT_PAGE_TABLE_LEVEL,
+@@ -5245,10 +5245,8 @@ static bool kvm_mmu_zap_collapsible_spte(struct kvm *kvm,
+ void kvm_mmu_zap_collapsible_sptes(struct kvm *kvm,
+ 				   const struct kvm_memory_slot *memslot)
+ {
+-	/* FIXME: const-ify all uses of struct kvm_memory_slot.  */
+ 	spin_lock(&kvm->mmu_lock);
+-	slot_handle_leaf(kvm, (struct kvm_memory_slot *)memslot,
+-			 kvm_mmu_zap_collapsible_spte, true);
++	slot_handle_leaf(kvm, memslot, kvm_mmu_zap_collapsible_spte, true);
+ 	spin_unlock(&kvm->mmu_lock);
+ }
+ 
+-- 
+2.16.2
+

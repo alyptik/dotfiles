@@ -1,0 +1,69 @@
+From e48639044892e1a76283e267849467d20c608314 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 1 Mar 2018 01:15:39 -1000
+Subject: [PATCH v2] sound/pci/ice1712: replace strcpy() with strlcpy()
+
+Replace unsafe usages of strcpy() to copy the name
+argument into the sid.name buffer with strlcpy()
+to guard against possible buffer overflows.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/sound/pci/ice1712/juli.c b/sound/pci/ice1712/juli.c
+index 0dbaccf61f33270608..21806bab4757241a9e 100644
+--- a/sound/pci/ice1712/juli.c
++++ b/sound/pci/ice1712/juli.c
+@@ -27,6 +27,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <sound/core.h>
+ #include <sound/tlv.h>
+ 
+@@ -425,10 +426,9 @@ DECLARE_TLV_DB_SCALE(juli_master_db_scale, -6350, 50, 1);
+ static struct snd_kcontrol *ctl_find(struct snd_card *card,
+ 				     const char *name)
+ {
+-	struct snd_ctl_elem_id sid;
+-	memset(&sid, 0, sizeof(sid));
+-	/* FIXME: strcpy is bad. */
+-	strcpy(sid.name, name);
++	struct snd_ctl_elem_id sid = {0};
++
++	strlcpy(sid.name, name, sizeof(sid.name));
+ 	sid.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
+ 	return snd_ctl_find_id(card, &sid);
+ }
+diff --git a/sound/pci/ice1712/quartet.c b/sound/pci/ice1712/quartet.c
+index d145b5eb7ff86d978d..5bc836241c977feb51 100644
+--- a/sound/pci/ice1712/quartet.c
++++ b/sound/pci/ice1712/quartet.c
+@@ -26,6 +26,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <sound/core.h>
+ #include <sound/tlv.h>
+ #include <sound/info.h>
+@@ -785,10 +786,9 @@ DECLARE_TLV_DB_SCALE(qtet_master_db_scale, -6350, 50, 1);
+ static struct snd_kcontrol *ctl_find(struct snd_card *card,
+ 				     const char *name)
+ {
+-	struct snd_ctl_elem_id sid;
+-	memset(&sid, 0, sizeof(sid));
+-	/* FIXME: strcpy is bad. */
+-	strcpy(sid.name, name);
++	struct snd_ctl_elem_id sid = {0};
++
++	strlcpy(sid.name, name, sizeof(sid.name));
+ 	sid.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
+ 	return snd_ctl_find_id(card, &sid);
+ }
+-- 
+2.16.2
+

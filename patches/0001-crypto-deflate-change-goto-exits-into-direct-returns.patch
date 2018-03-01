@@ -1,0 +1,168 @@
+From f26fb881eeee81c41a3ef5a418e74ac2029aa36d Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Wed, 28 Feb 2018 20:55:34 -1000
+Subject: [PATCH] crypto/deflate: change goto exits into direct returns
+
+There are of course valid use-cases for creating common
+exit points using goto, but these deflate functions are
+so short and neat that goto isn't needed at all. Quite
+the contrary, in fact; these particular goto paths only
+end adding more CPU load to your mental code parser.
+
+Unroll them into normal, direct returns with deallocations
+moved to their matching exits.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 28 insertions(+), 44 deletions(-)
+
+diff --git a/crypto/deflate.c b/crypto/deflate.c
+index 94ec3b36a8e8396f98..7d19ee6e4bd66b36ce 100644
+--- a/crypto/deflate.c
++++ b/crypto/deflate.c
+@@ -50,10 +50,8 @@ static int deflate_comp_init(struct deflate_ctx *ctx, int format)
+ 
+ 	stream->workspace = vzalloc(zlib_deflate_workspacesize(
+ 				    MAX_WBITS, MAX_MEM_LEVEL));
+-	if (!stream->workspace) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
++	if (!stream->workspace)
++		return -ENOMEM;
+ 	if (format)
+ 		ret = zlib_deflateInit(stream, 3);
+ 	else
+@@ -61,15 +59,13 @@ static int deflate_comp_init(struct deflate_ctx *ctx, int format)
+ 					-DEFLATE_DEF_WINBITS,
+ 					DEFLATE_DEF_MEMLEVEL,
+ 					Z_DEFAULT_STRATEGY);
++
+ 	if (ret != Z_OK) {
+-		ret = -EINVAL;
+-		goto out_free;
++		vfree(stream->workspace);
++		return -EINVAL;
+ 	}
+-out:
++
+ 	return ret;
+-out_free:
+-	vfree(stream->workspace);
+-	goto out;
+ }
+ 
+ static int deflate_decomp_init(struct deflate_ctx *ctx, int format)
+@@ -78,23 +74,19 @@ static int deflate_decomp_init(struct deflate_ctx *ctx, int format)
+ 	struct z_stream_s *stream = &ctx->decomp_stream;
+ 
+ 	stream->workspace = vzalloc(zlib_inflate_workspacesize());
+-	if (!stream->workspace) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
++	if (!stream->workspace)
++		return -ENOMEM;
++
+ 	if (format)
+ 		ret = zlib_inflateInit(stream);
+ 	else
+ 		ret = zlib_inflateInit2(stream, -DEFLATE_DEF_WINBITS);
+ 	if (ret != Z_OK) {
+-		ret = -EINVAL;
+-		goto out_free;
++		vfree(stream->workspace);
++		return -EINVAL;
+ 	}
+-out:
++
+ 	return ret;
+-out_free:
+-	vfree(stream->workspace);
+-	goto out;
+ }
+ 
+ static void deflate_comp_exit(struct deflate_ctx *ctx)
+@@ -115,11 +107,11 @@ static int __deflate_init(void *ctx, int format)
+ 
+ 	ret = deflate_comp_init(ctx, format);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 	ret = deflate_decomp_init(ctx, format);
+ 	if (ret)
+ 		deflate_comp_exit(ctx);
+-out:
++
+ 	return ret;
+ }
+ 
+@@ -185,10 +177,8 @@ static int __deflate_compress(const u8 *src, unsigned int slen,
+ 	struct z_stream_s *stream = &dctx->comp_stream;
+ 
+ 	ret = zlib_deflateReset(stream);
+-	if (ret != Z_OK) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
++	if (ret != Z_OK)
++		return -EINVAL;
+ 
+ 	stream->next_in = (u8 *)src;
+ 	stream->avail_in = slen;
+@@ -196,14 +186,12 @@ static int __deflate_compress(const u8 *src, unsigned int slen,
+ 	stream->avail_out = *dlen;
+ 
+ 	ret = zlib_deflate(stream, Z_FINISH);
+-	if (ret != Z_STREAM_END) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-	ret = 0;
++	if (ret != Z_STREAM_END)
++		return -EINVAL;
++
+ 	*dlen = stream->total_out;
+-out:
+-	return ret;
++
++	return 0;
+ }
+ 
+ static int deflate_compress(struct crypto_tfm *tfm, const u8 *src,
+@@ -230,10 +218,8 @@ static int __deflate_decompress(const u8 *src, unsigned int slen,
+ 	struct z_stream_s *stream = &dctx->decomp_stream;
+ 
+ 	ret = zlib_inflateReset(stream);
+-	if (ret != Z_OK) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
++	if (ret != Z_OK)
++		return -EINVAL;
+ 
+ 	stream->next_in = (u8 *)src;
+ 	stream->avail_in = slen;
+@@ -252,14 +238,12 @@ static int __deflate_decompress(const u8 *src, unsigned int slen,
+ 		stream->avail_in = 1;
+ 		ret = zlib_inflate(stream, Z_FINISH);
+ 	}
+-	if (ret != Z_STREAM_END) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-	ret = 0;
++	if (ret != Z_STREAM_END)
++		return -EINVAL;
++
+ 	*dlen = stream->total_out;
+-out:
+-	return ret;
++
++	return 0;
+ }
+ 
+ static int deflate_decompress(struct crypto_tfm *tfm, const u8 *src,
+-- 
+2.16.2
+
