@@ -1,0 +1,81 @@
+From 4c4d1d2c031828fb93302405f48e4b64f4a4ab27 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 1 Mar 2018 01:15:39 -1000
+Subject: [PATCH] sound/pci/ice1712: replace strcpy() with scnprintf()
+
+Replace unsafe uses of strcpy() to copy the name
+argument into the sid.name buffer with scnprintf()
+to guard against possible buffer overflows.
+
+Even though we don't actually care about the return
+value in this specific case, scnprintf() is still
+preferred over snprintf() due to scnprintf() returning
+the much more logical length of what was *actually* encoded
+into the destination array instead of returning length
+the resulting string *would* be, assuming it all fit
+into the destination array as snprintf() does.
+
+Maybe one day someone will use the return value, and
+since the behavior is exactly the same apart from the
+return value it would be better to account for that
+possibility and program defensively.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/sound/pci/ice1712/juli.c b/sound/pci/ice1712/juli.c
+index 0dbaccf61f33270608..0abacc64168f895d53 100644
+--- a/sound/pci/ice1712/juli.c
++++ b/sound/pci/ice1712/juli.c
+@@ -26,6 +26,7 @@
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/init.h>
++#include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <sound/core.h>
+ #include <sound/tlv.h>
+@@ -425,10 +426,9 @@ DECLARE_TLV_DB_SCALE(juli_master_db_scale, -6350, 50, 1);
+ static struct snd_kcontrol *ctl_find(struct snd_card *card,
+ 				     const char *name)
+ {
+-	struct snd_ctl_elem_id sid;
+-	memset(&sid, 0, sizeof(sid));
+-	/* FIXME: strcpy is bad. */
+-	strcpy(sid.name, name);
++	struct snd_ctl_elem_id sid = {0};
++
++	scnprintf(sid.name, sizeof(sid.name), "%s", name);
+ 	sid.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
+ 	return snd_ctl_find_id(card, &sid);
+ }
+diff --git a/sound/pci/ice1712/quartet.c b/sound/pci/ice1712/quartet.c
+index d145b5eb7ff86d978d..332f6226548c6a089a 100644
+--- a/sound/pci/ice1712/quartet.c
++++ b/sound/pci/ice1712/quartet.c
+@@ -25,6 +25,7 @@
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/init.h>
++#include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <sound/core.h>
+ #include <sound/tlv.h>
+@@ -785,10 +786,9 @@ DECLARE_TLV_DB_SCALE(qtet_master_db_scale, -6350, 50, 1);
+ static struct snd_kcontrol *ctl_find(struct snd_card *card,
+ 				     const char *name)
+ {
+-	struct snd_ctl_elem_id sid;
+-	memset(&sid, 0, sizeof(sid));
+-	/* FIXME: strcpy is bad. */
+-	strcpy(sid.name, name);
++	struct snd_ctl_elem_id sid = {0};
++
++	scnprintf(sid.name, sizeof(sid.name), "%s", name);
+ 	sid.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
+ 	return snd_ctl_find_id(card, &sid);
+ }
+-- 
+2.16.2
+

@@ -3,10 +3,10 @@
 # .zwidgets
 
 # ZLE shell function section
-function ztype () { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@" }
+function ztype () { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
+
 # inline calculator `= 4 * 2`
 function = () { print -r -- "$(($@))"; }
-aliases[=]='noglob ='
 
 function zle-run-help {
 	local -a args

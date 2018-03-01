@@ -3,13 +3,28 @@
 #
 # Mutt keybindings
 
+bind attach <return> view-mailcap
+bind browser y exit
+# apply to tagged pattern
+bind index <esc>a tag-prefix
+bind index <esc>N toggle-new
+bind index ^^ imap-fetch-mail
+bind editor <esc>[ backward-word
+bind editor <esc>] forward-word
+bind editor "<esc>;" backward-word
+bind editor "<esc>'" forward-word
+bind editor \ck kill-line
+bind pager g top
+bind pager G bottom
 # bind index g group-reply
 # bind generic,index,browser g first-entry
 # bind generic,index,browser G last-entry
 bind generic,index g first-entry
 bind generic,index G last-entry
-bind pager g top
-bind pager G bottom
+bind index,pager <esc>r root-message
+bind index,pager <esc>P parent-message
+bind index,pager <esc>p previous-subthread
+bind index,pager <esc>n next-subthread
 bind generic,index,pager R group-reply
 bind generic,index,pager B sidebar-toggle-visible
 bind generic,index,pager \cP sidebar-prev
@@ -18,28 +33,26 @@ bind generic,index,pager \cO sidebar-open
 bind generic,index,pager [ sidebar-prev
 bind generic,index,pager ] sidebar-next
 bind generic,index,pager \\ sidebar-open
-bind generic,index,pager \e[ sidebar-prev
-bind generic,index,pager \e] sidebar-next
-bind generic,index,pager \e\\ sidebar-open
+bind generic,index,pager <esc>[ sidebar-prev
+bind generic,index,pager <esc>] sidebar-next
+bind generic,index,pager <esc>\\ sidebar-open
 bind generic,index,pager,browser ";" half-up
 bind generic,index,pager,browser "'" half-down
-bind generic,index,pager,browser "\e;" half-up
-bind generic,index,pager,browser "\e'" half-down
+bind generic,index,pager,browser "<esc>;" half-up
+bind generic,index,pager,browser "<esc>'" half-down
 bind generic,index,pager,browser - first-entry
 bind generic,index,pager,browser = last-entry
-bind generic,index,pager,browser \e- first-entry
-bind generic,index,pager,browser \e= last-entry
+bind generic,index,pager,browser <esc>- first-entry
+bind generic,index,pager,browser <esc>= last-entry
 bind generic,index,pager,browser \c? previous-line
 bind generic,index,pager,browser b previous-page
 bind generic,index,pager,browser <space> next-page
-bind index "^" imap-fetch-mail
-bind attach <return> view-mailcap
-bind browser y exit
-bind editor \e[ backward-word
-bind editor \e] forward-word
-bind editor "\e;" backward-word
-bind editor "\e'" forward-word
-bind editor \ck kill-line
+bind generic,index,pager,browser N search-opposite
+bind generic,index,pager,browser \c/ search-reverse
+bind generic,index,pager,browser ? search-reverse
+bind generic,index,pager,browser h help
+bind generic,index,pager,browser <esc>k what-key
+bind generic,index,pager <esc>K mail-key
 
 macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
@@ -52,10 +65,10 @@ macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folde
 # Show documentation when pressing F1
 macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 macro index A \
-	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag><esc>N<untag-pattern>.<enter>" \
 	      "mark all new as read"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
-macro index \eb "<search>~b " "search in message bodies"
+macro index <esc>b "<search>~b " "search in message bodies"
 macro index,pager,attach,compose \cb "\
 <enter-command> set my_pipe_decode = \$pipe_decode pipe_decode<Enter>\
 <pipe-message> urlview<Enter>\

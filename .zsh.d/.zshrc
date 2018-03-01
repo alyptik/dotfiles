@@ -2,7 +2,7 @@
 #
 # .zshrc
 #
-# Zsh configuration file
+# Zsh interactive shell configuration
 
 # Catch EXIT, SIGINT, SIGQUIT, SIGTERM, and SIGTRAP signals for clean up
 trap '{ cleanup; trap -; }' USR1 EXIT
@@ -308,6 +308,7 @@ fi
 # user command aliases and shortcuts
 [[ -f "${HOME}/.aliases" ]] && \
 	. "${HOME}/.aliases"
+aliases[=]='noglob ='
 safetytoggle -n
 
 # 'literal trigger' & fzf-completion keybind to start fuzzy completion
@@ -650,7 +651,8 @@ hash -d g="${HOME}/git"
 hash -d hdd="/run/media/alyptik/toshiba1TB"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
-hash -d l="${HOME}/.local"
+hash -d k="${P:-/store/code/projects}/kernel"
+hash -d l="${P:-/store/code/projects}/linux"
 hash -d magnets="${C:-/store/dotfiles}/magnets"
 hash -d man="${C:-/store/dotfiles}/man"
 hash -d music="/store/music"
