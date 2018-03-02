@@ -1,0 +1,108 @@
+From bbc9df1add9584b67348596d0524c409371ae026 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 1 Mar 2018 13:32:20 -1000
+Subject: [PATCH] symbol.c: replace strncat() with sprintf()
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 20 insertions(+), 15 deletions(-)
+
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index cca9663be5ddd91870..0bd7e5eb2c74aca258 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -902,8 +902,8 @@ struct symbol *sym_find(const char *name)
+ char *sym_expand_string_value(const char *in)
+ {
+ 	const char *src;
+-	char *res;
+-	size_t reslen;
++	char *res, *res_end;
++	size_t reslen, written;
+ 
+ 	/*
+ 	 * Note: 'in' might come from a token that's about to be
+@@ -912,14 +912,16 @@ char *sym_expand_string_value(const char *in)
+ 	reslen = strlen(in) + 1;
+ 	res = xmalloc(reslen);
+ 	res[0] = '\0';
++	res_end = res;
+ 
+ 	while ((src = strchr(in, '$'))) {
+ 		char *p, name[SYMBOL_MAXLENGTH];
+ 		const char *symval = "";
+ 		struct symbol *sym;
+-		size_t newlen;
++		size_t newlen, sym_max;
+ 
+-		strncat(res, in, src - in);
++		written = sprintf(res_end, "%.*s", (int)(src - in), in);
++		res_end += written;
+ 		src++;
+ 
+ 		p = name;
+@@ -939,7 +941,9 @@ char *sym_expand_string_value(const char *in)
+ 			res = xrealloc(res, reslen);
+ 		}
+ 
+-		strcat(res, symval);
++		sym_max = newlen - strlen(res);
++		written = sprintf(res_end, "%.*s", (int)sym_max, symval);
++		res_end += written;
+ 		in = src;
+ 	}
+ 	strcat(res, in);
+@@ -950,9 +954,8 @@ char *sym_expand_string_value(const char *in)
+ const char *sym_escape_string_value(const char *in)
+ {
+ 	const char *p;
+-	size_t reslen;
+-	char *res;
+-	size_t l;
++	size_t reslen, l, written;
++	char *res, *res_end;
+ 
+ 	reslen = strlen(in) + strlen("\"\"") + 1;
+ 
+@@ -970,20 +973,22 @@ const char *sym_escape_string_value(const char *in)
+ 
+ 	res = xmalloc(reslen);
+ 	res[0] = '\0';
+-
+-	strcat(res, "\"");
++	res_end = res;
++	written = sprintf(res_end, "%.*s", 2, "\"");
++	res_end += written;
+ 
+ 	p = in;
+ 	for (;;) {
+ 		l = strcspn(p, "\"\\");
+-		strncat(res, p, l);
++		written = sprintf(res_end, "%.*s", (int)l, p);
++		res_end += written;
+ 		p += l;
+ 
+ 		if (p[0] == '\0')
+ 			break;
+ 
+-		strcat(res, "\\");
+-		strncat(res, p++, 1);
++		written = sprintf(res_end, "%.*s%.*s", 2, "\\", 1, p++);
++		res_end += written;
+ 	}
+ 
+ 	strcat(res, "\"");
+@@ -1014,8 +1019,8 @@ static int sym_rel_comp(const void *sym1, const void *sym2)
+ 	 * exactly; if this is the case, we can't decide which comes first,
+ 	 * and we fallback to sorting alphabetically.
+ 	 */
+-	exact1 = (s1->eo - s1->so) == strlen(s1->sym->name);
+-	exact2 = (s2->eo - s2->so) == strlen(s2->sym->name);
++	exact1 = (size_t)(s1->eo - s1->so) == strlen(s1->sym->name);
++	exact2 = (size_t)(s2->eo - s2->so) == strlen(s2->sym->name);
+ 	if (exact1 && !exact2)
+ 		return -1;
+ 	if (!exact1 && exact2)
+-- 
+2.16.2
+
