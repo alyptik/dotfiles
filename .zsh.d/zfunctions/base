@@ -33,6 +33,10 @@ for i in "$@"; do
 		print join("_", @b) . "\n";
 	' "${$(([#2] i))//2\#/}"
 
+	# alternate binary methods
+	# perl -E 'say "0b", sprintf("%0*b", (log($_)/log(2) + 7) & ~7, $_) =~ s/.{8}/_$&/gr for map oct, @ARGV' $i
+	# perl -E 'say "0b", sprintf("%b", oct $_) =~ s/.{8}/_$&/gr for @ARGV' $i
+
 	# print formatted octal
 	# perl -e '
 	#         my $a = shift;

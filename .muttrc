@@ -16,7 +16,7 @@ auto_view text/x-patch
 
 set connect_timeout = -1
 set imap_keepalive = 60
-set imap_pipeline_depth = 20
+set imap_pipeline_depth = 15
 set imap_check_subscribed
 set imap_passive
 unset imap_idle

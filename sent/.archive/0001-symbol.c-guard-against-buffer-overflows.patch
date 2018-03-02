@@ -1,0 +1,125 @@
+From 175e45c2911b05f8ad1add74c5d7d726c43fa4f7 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 1 Mar 2018 13:32:20 -1000
+Subject: [PATCH] symbol.c: guard against buffer overflows
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 24 insertions(+), 19 deletions(-)
+
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index cca9663be5ddd91870..48cac372a6901f9723 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -903,15 +903,15 @@ char *sym_expand_string_value(const char *in)
+ {
+ 	const char *src;
+ 	char *res;
+-	size_t reslen;
++	size_t reslen, reslim, respos;
+ 
+ 	/*
+ 	 * Note: 'in' might come from a token that's about to be
+ 	 * freed, so make sure to always allocate a new string
+ 	 */
++	respos = 0;
+ 	reslen = strlen(in) + 1;
+-	res = xmalloc(reslen);
+-	res[0] = '\0';
++	res = xcalloc(1, reslen);
+ 
+ 	while ((src = strchr(in, '$'))) {
+ 		char *p, name[SYMBOL_MAXLENGTH];
+@@ -919,7 +919,7 @@ char *sym_expand_string_value(const char *in)
+ 		struct symbol *sym;
+ 		size_t newlen;
+ 
+-		strncat(res, in, src - in);
++		respos += sprintf(res + respos, "%.*s", (int)(src - in), in);
+ 		src++;
+ 
+ 		p = name;
+@@ -933,13 +933,14 @@ char *sym_expand_string_value(const char *in)
+ 			symval = sym_get_string_value(sym);
+ 		}
+ 
+-		newlen = strlen(res) + strlen(symval) + strlen(src) + 1;
++		newlen = respos + strlen(symval) + strlen(src) + 1;
+ 		if (newlen > reslen) {
+ 			reslen = newlen;
+ 			res = xrealloc(res, reslen);
+ 		}
+ 
+-		strcat(res, symval);
++		reslim = newlen - respos;
++		respos += sprintf(res + respos, "%.*s", (int)reslim, symval);
+ 		in = src;
+ 	}
+ 	strcat(res, in);
+@@ -949,11 +950,11 @@ char *sym_expand_string_value(const char *in)
+ 
+ const char *sym_escape_string_value(const char *in)
+ {
+-	const char *p;
+-	size_t reslen;
+ 	char *res;
+-	size_t l;
++	const char *p;
++	size_t reslen, respos, reslim, l;
+ 
++	respos = 0;
+ 	reslen = strlen(in) + strlen("\"\"") + 1;
+ 
+ 	p = in;
+@@ -968,25 +969,29 @@ const char *sym_escape_string_value(const char *in)
+ 		p++;
+ 	}
+ 
+-	res = xmalloc(reslen);
+-	res[0] = '\0';
+-
+-	strcat(res, "\"");
++	res = xcalloc(1, reslen);
++	res[0] = '\"';
++	respos++;
+ 
+ 	p = in;
+ 	for (;;) {
++		reslim = reslen - respos;
+ 		l = strcspn(p, "\"\\");
+-		strncat(res, p, l);
++		if (l > reslim) {
++			reslen = respos + l + 1;
++			res = xrealloc(res, reslen);
++		}
++
++		respos += sprintf(res + respos, "%.*s", (int)l, p);
+ 		p += l;
+ 
+ 		if (p[0] == '\0')
+ 			break;
+ 
+-		strcat(res, "\\");
+-		strncat(res, p++, 1);
++		respos += sprintf(res + respos, "%s%.*s", "\\", 1, p++);
+ 	}
++	strcpy(res + respos, "\"");
+ 
+-	strcat(res, "\"");
+ 	return res;
+ }
+ 
+@@ -1014,8 +1019,8 @@ static int sym_rel_comp(const void *sym1, const void *sym2)
+ 	 * exactly; if this is the case, we can't decide which comes first,
+ 	 * and we fallback to sorting alphabetically.
+ 	 */
+-	exact1 = (s1->eo - s1->so) == strlen(s1->sym->name);
+-	exact2 = (s2->eo - s2->so) == strlen(s2->sym->name);
++	exact1 = (s1->eo - s1->so) == (off_t)strlen(s1->sym->name);
++	exact2 = (s2->eo - s2->so) == (off_t)strlen(s2->sym->name);
+ 	if (exact1 && !exact2)
+ 		return -1;
+ 	if (!exact1 && exact2)
+-- 
+2.16.2
+

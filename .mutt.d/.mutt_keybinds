@@ -65,7 +65,7 @@ macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folde
 # Show documentation when pressing F1
 macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 macro index A \
-	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag><esc>N<untag-pattern>.<enter>" \
+	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
 	      "mark all new as read"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
 macro index <esc>b "<search>~b " "search in message bodies"

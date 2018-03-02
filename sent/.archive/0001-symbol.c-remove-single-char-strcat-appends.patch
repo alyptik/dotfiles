@@ -1,0 +1,74 @@
+From 5a814d812c391d963bcb25a6e275fa6a9db74fad Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 1 Mar 2018 16:01:15 -1000
+Subject: [PATCH] symbol.c: remove single char strcat() appends
+
+Convert strcat() calls that only append single
+characters into much cheaper simple character
+assignments.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index cca9663be5ddd91870..ab40acf04b5205ed4a 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -910,8 +910,7 @@ char *sym_expand_string_value(const char *in)
+ 	 * freed, so make sure to always allocate a new string
+ 	 */
+ 	reslen = strlen(in) + 1;
+-	res = xmalloc(reslen);
+-	res[0] = '\0';
++	res = xcalloc(reslen);
+ 
+ 	while ((src = strchr(in, '$'))) {
+ 		char *p, name[SYMBOL_MAXLENGTH];
+@@ -951,7 +950,7 @@ const char *sym_escape_string_value(const char *in)
+ {
+ 	const char *p;
+ 	size_t reslen;
+-	char *res;
++	char *res, *end;
+ 	size_t l;
+ 
+ 	reslen = strlen(in) + strlen("\"\"") + 1;
+@@ -968,10 +967,9 @@ const char *sym_escape_string_value(const char *in)
+ 		p++;
+ 	}
+ 
+-	res = xmalloc(reslen);
+-	res[0] = '\0';
+-
+-	strcat(res, "\"");
++	res = xcalloc(1, reslen);
++	res[0] = '"';
++	end = res + 1;
+ 
+ 	p = in;
+ 	for (;;) {
+@@ -979,14 +977,17 @@ const char *sym_escape_string_value(const char *in)
+ 		strncat(res, p, l);
+ 		p += l;
+ 
++		while (end[0] != '\0')
++			end++;
++
+ 		if (p[0] == '\0')
+ 			break;
+ 
+-		strcat(res, "\\");
+-		strncat(res, p++, 1);
++		end[0] = '\\';
++		end[1] = *p++;
+ 	}
++	end[0] = '"';
+ 
+-	strcat(res, "\"");
+ 	return res;
+ }
+ 
+-- 
+2.16.2
+

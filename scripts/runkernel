@@ -69,7 +69,7 @@ cmd="$qemu \
 	-append '$append $extra_append $opt_append' \
 	-drive 'file=$image,if=virtio,format=raw' \
 	-netdev user,hostfwd=tcp::45455-:45455,id=net0 \
-	-m 2G \
+	-m 512M \
 	-smp 2 \
 	-echr 0x14 \
 	-enable-kvm \

@@ -8,8 +8,10 @@ kern_src=linux
 broot_src=buildroot
 kern_build=obj/linux-x86
 broot_build=obj/buildroot-x86
+root=../overlay
 build_type=''
-append_args=('')
+append_args=()
+mod_args=()
 make_cmd=(make)
 sparse_flag=''
 
@@ -30,30 +32,33 @@ function cleanup() {
 trap 'cleanup; kill -INT $$;' INT
 trap 'cleanup' ERR EXIT
 
-while getopts :bdchks opt; do
+while getopts :bcdhkmns opt; do
 	case "$opt" in
-	(b)
+	b)
 		[[ -z "$build_type" ]] && build_type=b
 		;;
-	(c)
+	c|n)
 		[[ "${append_args[*]}" != *nconfig* ]] && append_args+=(nconfig)
 		;;
-	(d)
+	d)
 		make_cmd=(echo make)
 		;;
-	(k)
+	k)
 		[[ -z "$build_type" ]] && build_type=k
 		;;
-	(s)
+	m)
+		[[ "${mod_args[*]}" != *modules_install* ]] && mod_args+=("INSTALL_MOD_PATH=$root" modules_install)
+		;;
+	s)
 		sparse_flag=1
 		;;
-	(h)
-		printf 'usage: %s: [-bcdkh] [<make args>]\n' "${0##*/}"
+	h)
+		printf 'usage: %s: -bk [-cdhmns] [<make args>]\n' "${0##*/}"
 		exit
 		;;
-	(:|?)
+	:|?)
 		printf 'illegal option: -%s\n' "$OPTARG"
-		printf 'usage: %s: [-bcdkh] [<make args>]\n' "${0##*/}"
+		printf 'usage: %s: -bk [-cdhmns] [<make args>]\n' "${0##*/}"
 		exit 2
 		;;
 	esac
@@ -68,10 +73,14 @@ b)
 	src_dir="$proj_dir/$base/$broot_src"
 	out_dir="../$broot_build"
 	;;
-*)
+k)
 	src_dir="$proj_dir/$base/$kern_src"
 	out_dir="../$kern_build"
 	[[ -n "$sparse_flag" ]] && append_args+=('C=1')
+	;;
+*)
+	printf 'usage: %s: -bk [-cdhmns] [<make args>]\n' "${0##*/}"
+	exit
 	;;
 esac
 
@@ -92,4 +101,9 @@ if [[ -z "$sparse_flag" || "${make_cmd[1]}" == echo ]]; then
 else
 	perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' >>../sparse.log.tmp
 	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" 2>&1 >/dev/null | tee -a ../sparse.log.tmp
+fi
+
+# install modules
+if [[ -n "${mod_args[*]}" ]]; then
+	 "${make_cmd[@]}" O="$out_dir" "${mod_args[@]}"
 fi
