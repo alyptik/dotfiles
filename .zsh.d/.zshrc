@@ -619,10 +619,14 @@ compdef _man tldr
 compdef _pacaur apacman
 compdef _pacaur pml
 compdef _pacaur pspc
-compdef _systemctl_status scrs
-compdef _systemctl_status pscrs
-compdef _systemctl_status uscrs
-compdef _systemctl_status puscrs
+compdef _scrs scrs
+compdef _scrs pscrs
+compdef _uscrs uscrs
+compdef _uscrs puscrs
+# compdef _systemctl_status scrs
+# compdef _systemctl_status pscrs
+# compdef _systemctl_status uscrs
+# compdef _systemctl_status puscrs
 compdef _texinfo info
 compdef _vim v
 compdef _pip pip
