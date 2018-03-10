@@ -91,17 +91,22 @@ export _JAVA_OPTIONS='-Dswing.aatext=true -Dawt.useSystemAAFontSettings=on'
 # Configure KWin to use OpenGL ES
 export KWIN_COMPOSE="O2ES"
 export LADSPA_PATH="/usr/lib/ladspa:/usr/local/lib/ladspa:${HOME}/ladspa:/store/audio/ladspa"
-export LANG="en_US.UTF-8"
-export LANGUAGE="en_US.UTF-8"
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 # this overwrites the value of LANG and any other LC_ variable specifying a locale category
 # export LC_ALL=en_US.UTF-8
 unset LC_ALL
-export LC=en_US.UTF-8
-export LC_COLLATE=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LC_MESSAGES=en_US.UTF-8
 export LC_NUMERIC=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
+export LC_COLLATE=en_US.UTF-8
+export LC_MONETARY=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8
+export LC_PAPER=en_US.UTF-8
+export LC_NAME=en_US.UTF-8
+export LC_ADDRESS=en_US.UTF-8
+export LC_TELEPHONE=en_US.UTF-8
+export LC_MEASUREMENT=en_US.UTF-8
+export LC_IDENTIFICATION=en_US.UTF-8
 LD_LIBRARY_PATH="/usr/lib:/usr/lib64:/usr/lib32"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/alyptik/GNUstep/Library/Libraries"
 export LD_LIBRARY_PATH
