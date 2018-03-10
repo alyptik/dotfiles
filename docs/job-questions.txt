@@ -46,7 +46,7 @@ backend expert, etc.).
 
 I am very motivated with regard to C projects and living in
 Hawaii, as you can imagine, there are far fewer jobs available
-in this field. I would be very excited to work in a formal team;
+in this field. I would be very excited to work with a formal team;
 truthfully, the only real collaboration experience I have is
 submitting patches and communicating via a mailing list.
 
