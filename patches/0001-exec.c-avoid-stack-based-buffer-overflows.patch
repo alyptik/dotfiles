@@ -1,0 +1,68 @@
+From 751274156890575379f8719b83f953e4d6db1a0c Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Tue, 13 Mar 2018 10:27:11 -1000
+Subject: [PATCH] exec.c: avoid stack-based buffer overflows
+
+Give buf static storage duration to prevent excess
+stack usage (memset() before returning to caller
+in order to keep buf zero'd shouldn't be too painful)
+
+Fixes CVE-2018-1071:
+https://access.redhat.com/security/cve/cve-2018-1071
+https://bugzilla.redhat.com/show_bug.cgi?id=1553531
+
+FIXME(?):
+It could be argued that this needs _reliable_
+confirmation of (non)existence :(
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/Src/exec.c b/Src/exec.c
+index e5c64555c06d55afd5..ea14f8b77af64cc5d1 100644
+--- a/Src/exec.c
++++ b/Src/exec.c
+@@ -927,11 +927,25 @@ isrelative(char *s)
+ mod_export Cmdnam
+ hashcmd(char *arg0, char **pp)
+ {
++    /*
++     * avoid stack-based buffer overflow vulnerability by
++     * giving buf static storage duration (memset() before
++     * returning to caller in order to keep buf zero'd
++     * shouldn't be too painful).
++     *
++     * fixes CVE-2018-1071:
++     * https://access.redhat.com/security/cve/cve-2018-1071
++     * https://bugzilla.redhat.com/show_bug.cgi?id=1553531
++     *
++     * FIXME(?):
++     * needs _reliable_ confirmation of (non)existence :(
++     * -alyptik
++     */
++    static char buf[PATH_MAX + 1];
++    char *s, **pq;
+     Cmdnam cn;
+-    char *s, buf[PATH_MAX+1];
+-    char **pq;
+ 
+-    for (; *pp; pp++)
++    for (; *pp; pp++) {
+ 	if (**pp == '/') {
+ 	    s = buf;
+ 	    strucpy(&s, *pp);
+@@ -942,6 +956,10 @@ hashcmd(char *arg0, char **pp)
+ 	    if (iscom(buf))
+ 		break;
+ 	}
++    }
++
++    /* cleanup buf for subsequent calls */
++    memset(buf, 0, sizeof buf);
+ 
+     if (!*pp)
+ 	return NULL;
+-- 
+2.16.2
+

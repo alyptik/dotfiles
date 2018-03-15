@@ -119,7 +119,7 @@ deflog off
 deflogin off
 defmousetrack off
 defnonblock on
-defobuflimit 512
+defobuflimit 2048
 defscrollback 5000
 # password none
 bell on

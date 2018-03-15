@@ -87,7 +87,7 @@ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
 
 # Based on the recommendations in RFC 7613. A valid nick is composed
 # of anything but " ,*?.!@".
-VALID_NICK = r'([@~&!%+:-])?([-_\\~`|A-Za-z0-9^\[\]]+)'
+VALID_NICK = r'([@~&!%+-])?([^\s,\*\?\.!@:›%#\&]+)'
 valid_nick_re = re.compile(VALID_NICK)
 ignore_channels = []
 ignore_nicks = []
@@ -254,7 +254,7 @@ def colorize_cb(data, modifier, modifier_data, line):
                                 new_word = word.replace(nick, '%s%s%s' % (nick_color, nick, reset))
                                 line = line.replace(word, new_word)
 
-                # Let's use lazy matching for nick
+                # Switch to lazy matching
                 else:
                     raise AssertionError
 
