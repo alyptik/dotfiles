@@ -52,7 +52,7 @@
 	cached = diff --cached
 	stat = status -sb
 	d = diff --histogram
-	dr = diff --histogram --patch --relative --no-index
+	dr = diff --histogram --relative --no-index
 	fa = fetch --all --jobs=4 --recurse-submodules=on-demand
 	reb = rebase -S --autostash
 	lgp = log --graph --oneline --decorate --boundary --first-parent
@@ -81,6 +81,7 @@
 	unset = config --global --unset
 	pl = pull -tvj5 --recurse-submodules=on-demand
 	ps = push -v --follow-tags
+	m = checkout master
 [web]
 	browser = w3m
 [instaweb]

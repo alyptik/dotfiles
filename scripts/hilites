@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+
+tail_cmd=(tail -Fs 10 "${HOME}/.weechat/pipe")
+dzen_cmd=(dzen2 -sa c -w 2175 -dock -fn "xft:FuraCode Nerd Font-Light:pixelsize=22")
 
 killall dzen2
 i3-msg restart
 sleep 2
-tail -Fs 10 "${HOME}/.weechat/pipe" | \
-	dzen2 -sa c -w 2175 -dock -fn "xft:FuraCode Nerd Font-Light:pixelsize=22" & \
-	disown
+
+("${tail_cmd[@]}" | "${dzen_cmd[@]}") & disown
