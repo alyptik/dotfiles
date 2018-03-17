@@ -8,7 +8,7 @@ kern_src=linux
 broot_src=buildroot
 kern_build=obj/linux-x86
 broot_build=obj/buildroot-x86
-root=../overlay
+root="$proj_dir/$base/overlay"
 build_type=''
 append_args=()
 mod_args=()
@@ -75,7 +75,7 @@ b)
 	;;
 k)
 	src_dir="$proj_dir/$base/$kern_src"
-	out_dir="../$kern_build"
+	out_dir="$proj_dir/$base/$kern_build"
 	[[ -n "$sparse_flag" ]] && append_args+=('C=1')
 	;;
 *)

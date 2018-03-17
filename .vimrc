@@ -392,6 +392,7 @@ augroup VIMRC
 	autocmd BufLeave *.js   normal! mJ
 	autocmd BufLeave *.php  normal! mP
 augroup END
+autocmd BufEnter PKGBUILD,.env let b:ale_sh_shellcheck_exclusions='SC2034,SC2154,SC2164'
 
 " let g:easytags_opts=['--fields=+l --c-kinds=-p']
 
@@ -581,6 +582,11 @@ let g:ale_lint_on_text_changed=0
 " You can disable this option too if you don't want linters to run
 " on opening a file
 let g:ale_lint_on_enter=1
+
+if @% =~ 'PKGBUILD$' || &ft ==? 'PKGBUILD'
+	let g:ale_sh_shellcheck_options='-e SC2034,SC2154,SC2164'
+	let b:syntastic_sh_shellcheck_post_args='-e SC2034,SC2154,SC2164'
+endif
 
 let g:clang_jumpto_declaration_key='<C-/>'
 let g:ale_c_cppcheck_options='--enable=style --std=c11 --std=posix'
