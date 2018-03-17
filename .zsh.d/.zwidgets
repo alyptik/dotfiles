@@ -42,7 +42,9 @@ function zle-run-help {
 		BUFFER="run-help $saved"
 	fi
 	zle accept-line
-	# zle -R
+	zle -R
+	zle autosuggest-enable
+	zle redisplay
 }
 
 # compile zwc files

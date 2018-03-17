@@ -1,0 +1,65 @@
+From 62c656312f6768a6eec0c51f302674633b59ce5c Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 15 Mar 2018 03:40:23 -1000
+Subject: [PATCH] x86/kvm: Replace TASK_UNINTERRUPTIBLE with TASK_KILLABLE
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+index bc1a27280c4bf77899..b93d9bd7077e6c979d 100644
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -123,6 +123,7 @@ static struct kvm_task_sleep_node *_find_apf_task(struct kvm_task_sleep_head *b,
+  */
+ void kvm_async_pf_task_wait(u32 token, int interrupt_kernel)
+ {
++	signed long ret = 0;
+ 	u32 key = hash_32(token, KVM_TASK_SLEEP_HASHBITS);
+ 	struct kvm_task_sleep_head *b = &async_pf_sleepers[key];
+ 	struct kvm_task_sleep_node n, *e;
+@@ -154,15 +155,15 @@ void kvm_async_pf_task_wait(u32 token, int interrupt_kernel)
+ 
+ 	for (;;) {
+ 		if (!n.halted)
+-			prepare_to_swait(&n.wq, &wait, TASK_UNINTERRUPTIBLE);
+-		if (hlist_unhashed(&n.link))
++			prepare_to_swait_event(&n.wq, &wait, TASK_KILLABLE);
++		if (ret || hlist_unhashed(&n.link))
+ 			break;
+ 
+ 		rcu_irq_exit();
+ 
+ 		if (!n.halted) {
+ 			local_irq_enable();
+-			schedule();
++			ret = schedule_timeout_killable(HZ);
+ 			local_irq_disable();
+ 		} else {
+ 			/*
+diff --git a/kernel/sched/swait.c b/kernel/sched/swait.c
+index 9ff1555341ed5d47ba..9e0b333d400f253828 100644
+--- a/kernel/sched/swait.c
++++ b/kernel/sched/swait.c
+@@ -87,9 +87,15 @@ EXPORT_SYMBOL(prepare_to_swait);
+ 
+ long prepare_to_swait_event(struct swait_queue_head *q, struct swait_queue *wait, int state)
+ {
+-	if (signal_pending_state(state, current))
+-		return -ERESTARTSYS;
++	switch (state) {
++	case TASK_INTERRUPTIBLE:
++		if (signal_pending_state(state, current))
++			return -ERESTARTSYS;
+ 
++	case TASK_KILLABLE:
++		if (fatal_signal_pending(current))
++			return -ERESTARTSYS;
++	}
+ 	prepare_to_swait(q, wait, state);
+ 
+ 	return 0;
+-- 
+2.16.2
+

@@ -111,6 +111,8 @@ HISTFILE="${HOME}/.zsh_history"
 	alias help='run-help'
 }
 
+# zsh syntax highlighting
+#
 #AUTOPAIR_INHIBIT_INIT=${AUTOPAIR_INHIBIT_INIT:-}
 #AUTOPAIR_BETWEEN_WHITESPACE=${AUTOPAIR_BETWEEN_WHITESPACE:-}
 typeset -gA AUTOPAIR_PAIRS
@@ -135,12 +137,9 @@ AUTOPAIR_RBOUNDS[braces]=''
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line pattern root)
 ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="${ZDOTDIR:-${HOME}/.zsh.d}/plugins/highlighters"
-## Zsh autosuggest defaults
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-## Prefix to use when saving original versions of bound widgets
-ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
-ZSH_AUTOSUGGEST_STRATEGY=default
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=25
+
+# git prompt
+#
 # Adapted from code found at <https://gist.github.com/1712320>.
 # Modify the colors and symbols in these variables as desired.
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
@@ -151,7 +150,37 @@ GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"
 GIT_PROMPT_MERGING="%{$fg[magenta]%}⚡︎%{$reset_color%}"
 GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
 GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
-GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
+
+# Zsh autosuggestions
+#
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=25
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+## Prefix to use when saving original versions of bound widgets
+ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
+# - `default`: Chooses the most recent match.
+# - `match_prev_cmd`: Chooses the most recent match whose preceding history
+ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
+# Widgets that modify the buffer and are not found in any of these
+# arrays will fetch a new suggestion after they are invoked.
+# Widgets in this array will clear the suggestion when invoked.
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=()
+# Widgets in this array will accept the suggestion when invoked.
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS+=()
+# Widgets in this array will execute the suggestion when invoked.
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=()
+# Widgets in this array will partially accept the suggestion when invoked.
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=()
+# Widgets in this array will not trigger any custom behavior.
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(append-x-selection insert-x-selection)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(yank-x-selection fzf-locate-widget)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(insert-composed-char)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-delete-to-char)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-zap-to-char)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-compdef zle-emacs-keymap zle-fh zle-fman)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-less zle-list-binds zle-refresh-keymap)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-run-help zle-toggle-keymap zle-vi-keymap)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-vim zle-youtube-helper zle-zaw-help)
 
 ## load VCS module
 autoload -Uz vcs_info
@@ -425,6 +454,8 @@ fi
 	## Ctrl+x h will show the completion context
 	bindkey -M "$1" "\C-x\C-h" _complete_help
 	bindkey -M "$1" "\C-xh" _complete_help
+	bindkey -M "$1" "\C-x\C-x" execute-named-command
+	bindkey -M "$1" "\C-xx" execute-named-command
 
 	# movement
 	bindkey -M "$1" "\eOA" up-line-or-beginning-search
