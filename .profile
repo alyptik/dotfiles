@@ -202,12 +202,13 @@ export SURF_USERAGENT
 export SYSTEMD_LESS="CFKMRins" journalctl
 export TERMINAL=st
 export TZ=/usr/share/zoneinfo/posix/Pacific/Honolulu
-export VST_PATH="/usr/lib/vst:/usr/local/lib/vst:${HOME}/vst:/store/audio/vst"
+export VST_PATH="${HOME}/vst:/store/audio/vst:/usr/lib/vst:/usr/local/lib/vst"
 # Set X cursor theme
 export XCURSOR_THEME=ArchCursorTheme
 export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_CONFIG_DIRS="/etc/xdg"
-export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CONFIG_DIRS="${HOME}/.config:/etc/xdg"
+# export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CONFIG_HOME="${HOME}/.local/etc"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export ZDOTDIR="${HOME}/.zsh.d"

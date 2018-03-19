@@ -1,0 +1,57 @@
+From a297406d32057a314defa669d39dbf9e7ddf9ef7 Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 17 Mar 2018 22:58:49 -1000
+Subject: [PATCH] Reduce zrealloc() call frequency by doubling allocation size
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 13 insertions(+), 7 deletions(-)
+
+diff --git a/Src/input.c b/Src/input.c
+index 9787dedf698cf911d6..e614b727e675166746 100644
+--- a/Src/input.c
++++ b/Src/input.c
+@@ -137,7 +137,7 @@ mod_export char *
+ shingetline(void)
+ {
+     char *line = NULL;
+-    int ll = 0;
++    int llen = 0, bufsz = 0;
+     int c;
+     char buf[BUFSIZ];
+     char *p;
+@@ -159,8 +159,11 @@ shingetline(void)
+ 		*p++ = '\n';
+ 	    if (p > buf) {
+ 		*p++ = '\0';
+-		line = zrealloc(line, ll + (p - buf));
+-		memcpy(line + ll, buf, p - buf);
++		if (bufsz <= llen) {
++		    bufsz = (llen + (p - buf)) * 2;
++		    line = zrealloc(line, bufsz);
++		}
++		memcpy(line + llen, buf, p - buf);
+ 	    }
+ 	    return line;
+ 	}
+@@ -172,10 +175,13 @@ shingetline(void)
+ 	if (p >= buf + BUFSIZ - 1) {
+ 	    winch_block();
+ 	    queue_signals();
+-	    line = zrealloc(line, ll + (p - buf) + 1);
+-	    memcpy(line + ll, buf, p - buf);
+-	    ll += p - buf;
+-	    line[ll] = '\0';
++	    if (bufsz <= llen) {
++		bufsz = (llen + (p - buf) + 1) * 2;
++		line = zrealloc(line, bufsz);
++	    }
++	    memcpy(line + llen, buf, p - buf);
++	    llen += p - buf;
++	    line[llen] = '\0';
+ 	    p = buf;
+ 	    winch_unblock();
+ 	    dont_queue_signals();
+-- 
+2.16.2
+
