@@ -6,8 +6,8 @@
 shopt -s expand_aliases autocd hostcomplete histappend
 
 ## Menu completion
-bind "set menu-complete-display-prefix on"
-bind "TAB:menu-complete"; bind "set show-all-if-ambiguous on"
+bind 'set menu-complete-display-prefix on'
+bind 'TAB:menu-complete'; bind 'set show-all-if-ambiguous on'
 
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f /usr/share/doc/find-the-command/ftc.bash ]] && . /usr/share/doc/find-the-command/ftc.bash
@@ -23,6 +23,7 @@ bind "TAB:menu-complete"; bind "set show-all-if-ambiguous on"
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f "${ZDOTDIR:-${HOME}/zsh.d}/plugins/z.sh" ]] && . "${ZDOTDIR:-${HOME}/zsh.d}/plugins/z.sh"
 # shellcheck disable=SC1090 disable=SC1091
+
 [[ -f "${ZDOTDIR:-${HOME}/zsh.d}/plugins/fz.bash" ]] && . "${ZDOTDIR:-${HOME}/zsh.d}/plugins/fz.bash"
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f "${ZDOTDIR:-${HOME}/zsh.d}/plugins/ftc.bash" ]] && . "${ZDOTDIR:-${HOME}/zsh.d}/plugins/ftc.bash"

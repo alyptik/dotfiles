@@ -155,18 +155,19 @@ GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
 #
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=25
-ZSH_AUTOSUGGEST_USE_ASYNC=1
+# ZSH_AUTOSUGGEST_USE_ASYNC=1
 ## Prefix to use when saving original versions of bound widgets
 ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
 # - `default`: Chooses the most recent match.
 # - `match_prev_cmd`: Chooses the most recent match whose preceding history
+# ZSH_AUTOSUGGEST_STRATEGY=default
 ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
 # Widgets that modify the buffer and are not found in any of these
 # arrays will fetch a new suggestion after they are invoked.
 # Widgets in this array will clear the suggestion when invoked.
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=()
+# ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=()
 # Widgets in this array will accept the suggestion when invoked.
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS+=()
+# ZSH_AUTOSUGGEST_ACCEPT_WIDGETS+=()
 # Widgets in this array will execute the suggestion when invoked.
 ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=()
 # Widgets in this array will partially accept the suggestion when invoked.
@@ -307,7 +308,7 @@ fi
 
 if type filter-select &>/dev/null; then
 	filter-select -i
-	bindkey -M filterselect '^E' accept-search
+	bindkey -M filterselect "\C-e" accept-search
 fi
 
 if type zplug >/dev/null 2>&1; then

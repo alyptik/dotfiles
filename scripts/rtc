@@ -5,8 +5,8 @@ shopt -s extglob
 auditctl -e 0
 
 # printf '%s\n' "/store/cores/core.%e.%p.%P" |
-# printf '%s\n' "|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" |
-printf '%s\n' "core.%e.%p" |
+# printf '%s\n' "core.%e.%p" |
+printf '%s\n' "|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" |
 	tee /proc/sys/kernel/core_pattern
 
 # Analog stereo card
