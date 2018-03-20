@@ -1,14 +1,14 @@
-From a297406d32057a314defa669d39dbf9e7ddf9ef7 Mon Sep 17 00:00:00 2001
+From 10072c8b56382740bbf205b859686eea3f84c923 Mon Sep 17 00:00:00 2001
 From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Sat, 17 Mar 2018 22:58:49 -1000
 Subject: [PATCH] Reduce zrealloc() call frequency by doubling allocation size
 
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
 
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/Src/input.c b/Src/input.c
-index 9787dedf698cf911d6..e614b727e675166746 100644
+index 9787dedf698cf911d6..6d553449fd31465ac6 100644
 --- a/Src/input.c
 +++ b/Src/input.c
 @@ -137,7 +137,7 @@ mod_export char *
@@ -20,21 +20,18 @@ index 9787dedf698cf911d6..e614b727e675166746 100644
      int c;
      char buf[BUFSIZ];
      char *p;
-@@ -159,8 +159,11 @@ shingetline(void)
+@@ -159,8 +159,8 @@ shingetline(void)
  		*p++ = '\n';
  	    if (p > buf) {
  		*p++ = '\0';
 -		line = zrealloc(line, ll + (p - buf));
 -		memcpy(line + ll, buf, p - buf);
-+		if (bufsz <= llen) {
-+		    bufsz = (llen + (p - buf)) * 2;
-+		    line = zrealloc(line, bufsz);
-+		}
++		line = zrealloc(line, llen + (p - buf));
 +		memcpy(line + llen, buf, p - buf);
  	    }
  	    return line;
  	}
-@@ -172,10 +175,13 @@ shingetline(void)
+@@ -172,10 +172,13 @@ shingetline(void)
  	if (p >= buf + BUFSIZ - 1) {
  	    winch_block();
  	    queue_signals();
