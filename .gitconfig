@@ -79,9 +79,11 @@
 	ra = rebase --abort
 	update = pull -v --ff-only
 	unset = config --global --unset
-	pl = pull -tvj5 --recurse-submodules=on-demand
-	ps = push -v --follow-tags
+	pl = pull -tj5 --recurse-submodules=on-demand
+	ps = push --follow-tags
 	m = checkout master
+	fw = grep -FWn --color=auto --break
+	ff = grep -FWn --color=auto --break
 [web]
 	browser = w3m
 [instaweb]

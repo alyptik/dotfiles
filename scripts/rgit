@@ -1,0 +1,12 @@
+#!/bin/bash
+
+matchnum=10
+matchpat="*.[ch]"
+ignorepat="^(arch|drivers)/"
+gitdir="${1:-/store/code/projects/kernel/linux}"
+
+(
+	cd "$gitdir" || exit 1
+	mapfile -tn"$matchnum" < <(git ls-files -- "$matchpat" | grep -Ev -- "$ignorepat" | sort -R)
+	vim "${MAPFILE[@]}"
+)
