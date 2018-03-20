@@ -15,16 +15,17 @@ auto_view text/x-diff
 auto_view text/x-patch
 
 set connect_timeout = -1
-set imap_keepalive = 60
-set imap_pipeline_depth = 15
+set mail_check = 30
+set imap_keepalive = 10
+set imap_pipeline_depth = 10
 set imap_check_subscribed
-set imap_passive
-unset imap_idle
-set implicit_autoview
-
+unset imap_passive
+set imap_idle
 set ssl_starttls
 set ssl_force_tls
 unset ssl_use_sslv3
+
+unset maildir_header_cache_verify
 set header_cache = "$my_cfgdir/cache"
 set message_cachedir = "$my_cfgdir/cache"
 set signature = "$my_cfgdir/.signature"
@@ -35,15 +36,24 @@ set entropy_file = "/dev/urandom"
 set charset = "utf-8"
 set send_charset = "us-ascii:utf-8"
 set editor = "vim"
+
 set prompt_after
 set implicit_autoview
 set include
 set abort_nosubject = ask-yes
-set mail_check = 120
 set save_history = 10000
 set history = 10000
 set history_remove_dups
 set auto_tag
+set narrow_tree
+set pager_index_lines = 0
+set pager_context = 10
+unset mark_old
+set menu_move_off
+unset menu_scroll
+set meta_key
+set metoo
+set reply_self
 
 set sidebar_visible
 set sidebar_short_path
@@ -70,11 +80,12 @@ set sort = "last-date-received"
 # set sort = "reverse-threads"
 set sort_aux = "last-date-received"
 set sort_browser = "date"
-set strict_threads
-set sort_re
 set uncollapse_jump
 unset text_flowed
 set indent_string = "> "
+unset strict_threads
+set sort_re
+set reply_regexp = "^(re([\\[0-9\\]+])*|aw):[ \t]*"
 
 set pgp_verify_command = "gpg2 --no-verbose --batch --output - --verify %s %f"
 set pgp_decrypt_command = "gpg2 --passphrase-fd 0 --no-verbose --batch --output - %f"
@@ -162,7 +173,7 @@ hdr_order date from to cc subject
 
 # If your sendmail supports the -B8BITMIME flag, enable the following
 #
-set use_8bitmime
+unset use_8bitmime
 
 # Use mime.types to look up handlers for application/octet-stream. Can
 # be undone with unmime_lookup.
@@ -1829,7 +1840,7 @@ attachments   -I message/external-body
 #
 # Specifies the password for your IMAP account.  If unset, Mutt will
 # prompt you for your password when you invoke the <imap-fetch-mail> function
-# or try to open an IMAP folder.
+
 #
 # Warning: you should only use this option when you are on a
 # fairly secure machine, because the superuser can read your muttrc even
@@ -2538,8 +2549,8 @@ attachments   -I message/external-body
 # the screen width to be badly formatted in the help menu.
 #
 #
-set pager_context = 10
 #
+# set pager_context = 10
 # Name: pager_context
 # Type: number
 # Default: 0
@@ -2568,7 +2579,7 @@ set pager_context = 10
 # section.
 #
 #
-set pager_index_lines = 0
+# set pager_index_lines = 0
 #
 # Name: pager_index_lines
 # Type: number

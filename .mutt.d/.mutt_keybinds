@@ -3,12 +3,6 @@
 #
 # Mutt keybindings
 
-bind attach <return> view-mailcap
-bind browser y exit
-# apply to tagged pattern
-bind index <esc>a tag-prefix
-bind index <esc>N toggle-new
-bind index ^^ imap-fetch-mail
 bind editor <esc>[ backward-word
 bind editor <esc>] forward-word
 bind editor "<esc>;" backward-word
@@ -53,6 +47,14 @@ bind generic,index,pager,browser ? search-reverse
 bind generic,index,pager,browser h help
 bind generic,index,pager,browser <esc>k what-key
 bind generic,index,pager <esc>K mail-key
+# apply to tagged pattern
+bind index ^^ imap-fetch-mail
+bind index <esc>a tag-prefix
+bind index <esc>N toggle-new
+bind index <return> next-line
+bind index o display-message
+bind attach <return> view-mailcap
+bind browser y exit
 
 macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
