@@ -9,6 +9,7 @@ broot_src=buildroot
 kern_build=obj/linux-x86
 broot_build=obj/buildroot-x86
 root="$proj_dir/$base/overlay"
+mod_dir="$root/lib/modules"
 build_type=''
 append_args=()
 mod_args=()
@@ -90,10 +91,12 @@ printf 'executing: [%s %s %s]\n' \
 	"$(tput sgr0)$(tput setaf 11)${make_cmd[*]}$(tput sgr0)" \
 	"$(tput sgr0)$(tput setaf 9)O=$out_dir$(tput sgr0)" \
 	"$(tput sgr0)$(tput setaf 10)${append_args[*]}$(tput sgr0)"
-printf 'buid directory: [%s]\n' \
+printf 'build directory: [%s]\n' \
 	"$(tput sgr0)$(tput setaf 13)$src_dir$(tput sgr0)"
 printf 'output directory: [%s]\n' \
 	"$(tput sgr0)$(tput setaf 13)$(realpath -e "$out_dir" 2>/dev/null || echo '(error)')$(tput sgr0)"
+printf 'module directory: [%s]\n' \
+	"$(tput sgr0)$(tput setaf 13)$mod_dir$(tput sgr0)"
 
 # start build
 if [[ -z "$sparse_flag" || "${make_cmd[1]}" == echo ]]; then
@@ -105,5 +108,6 @@ fi
 
 # install modules
 if [[ -n "${mod_args[*]}" ]]; then
-	 "${make_cmd[@]}" O="$out_dir" "${mod_args[@]}"
+	rm -rfv "${mod_dir:?}"/*
+	"${make_cmd[@]}" O="$out_dir" "${mod_args[@]}"
 fi
