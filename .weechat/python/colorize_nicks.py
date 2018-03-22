@@ -87,7 +87,7 @@ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
 
 # Based on the recommendations in RFC 7613. A valid nick is composed
 # of anything but " ,*?.!@".
-VALID_NICK = r'([@~&!%+-])?([^\s,\*\?\.!@:›%#\&]+)'
+VALID_NICK = r'([@~&!%+-])?([^\s,\*\?\.!@:›%#\&\'"]+)'
 valid_nick_re = re.compile(VALID_NICK)
 ignore_channels = []
 ignore_nicks = []

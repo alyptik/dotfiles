@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si
 
 ## Custom aliases
 
+alias runk='runkernel -s'
 alias mdn='mdn-query'
 alias n='node'
 # alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
