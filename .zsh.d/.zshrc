@@ -91,9 +91,10 @@ HISTFILE="${HOME}/.zsh_history"
 	au_arr+=(up-line-or-beginning-search zargs zed zmv)
 	# zle_arr+=(bracketed-paste bracketed-paste-magic)
 	zle_arr+=(edit-command-line expand-absolute-path)
-	zle_arr+=(down-line-or-beginning-search insert-composed-char)
-	zle_arr+=(insert-unicode-char tetris up-line-or-beginning-search)
-	zle_arr+=(zmv znt-history-widget znt-cd-widget znt-kill-widget)
+	zle_arr+=(down-line-or-beginning-search execute-named-command)
+	zle_arr+=(insert-composed-char insert-unicode-char tetris)
+	zle_arr+=(up-line-or-beginning-search zmv znt-history-widget)
+	zle_arr+=(znt-cd-widget znt-kill-widget)
 	zmod_arr+=(zsh/curses zsh/datetime zsh/db/gdbm zsh/deltochar zsh/mapfile)
 	zmod_arr+=(zsh/mathfunc zsh/net/socket zsh/net/tcp zsh/pcre zsh/terminfo)
 	zmod_arr+=(zsh/system zsh/zftp zsh/zprof zsh/zpty zsh/zselect)
@@ -136,7 +137,7 @@ AUTOPAIR_RBOUNDS[braces]=''
 ## Array declaring active highlighters names.
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line pattern root)
-ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="${ZDOTDIR:-${HOME}/.zsh.d}/plugins/highlighters"
+# ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="${ZDOTDIR:-${HOME}/.zsh.d}/plugins/highlighters"
 
 # git prompt
 #
@@ -324,7 +325,7 @@ if type zplug >/dev/null 2>&1; then
 	zplug "oknowton/zsh-dwim"
 	zplug "zsh-users/zsh-autosuggestions"
 	zplug "zsh-users/zsh-history-substring-search"
-	zplug "zsh-users/zsh-syntax-highlighting", defer:2
+	zplug "zsh-users/zsh-syntax-highlighting", defer:2, at:tmp
 	zplug "b4b4r07/zsh-vimode-visual", defer:3
 	# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then

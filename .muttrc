@@ -48,7 +48,7 @@ set auto_tag
 set narrow_tree
 set pager_index_lines = 0
 set pager_context = 10
-unset mark_old
+set mark_old
 set menu_move_off
 unset menu_scroll
 set meta_key

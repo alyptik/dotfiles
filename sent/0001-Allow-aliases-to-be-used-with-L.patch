@@ -1,0 +1,47 @@
+From 8873876b6b8bf60dc06ba0d8c70e012bc0d29f1f Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Wed, 21 Mar 2018 15:07:37 -1000
+Subject: [PATCH] Allow '=' aliases to be used with -L
+
+Special case '=' aliases so that they can be output correctly
+by -L and be used in startup scripts.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/Src/hashtable.c b/Src/hashtable.c
+index b7baa314220509240d..53e7e99e1a9f1505b6 100644
+--- a/Src/hashtable.c
++++ b/Src/hashtable.c
+@@ -1303,11 +1303,23 @@ printaliasnode(HashNode hn, int printflags)
+     }
+ 
+     if (printflags & PRINT_LIST) {
+-	/* Fast fail on unrepresentable values. */
++	/*
++	 * '=' aliases need to be special cased with direct alias
++	 * table assignment (`aliases[=]=...`). If the zsh/parameter
++	 * module isn't loaded just print a warning and fail.
++	 */
+ 	if (strchr(a->node.nam, '=')) {
+-	    zwarn("invalid alias '%s' encountered while printing aliases", 
+-		  a->node.nam);
+-	    /* ### TODO: Return an error status to the C caller */
++	    /* Fast fail on unrepresentable values. */
++	    if (!module_loaded("zsh/parameter")) {
++		zwarn("invalid alias '%s' encountered while printing aliases",
++		 a->node.nam);
++		/* ### TODO: Return an error status to the C caller */
++		return;
++	    }
++
++	    printf("aliases[=]=");
++	    quotedzputs(a->text, stdout);
++	    putchar('\n');
+ 	    return;
+ 	}
+ 
+-- 
+2.16.2
+
