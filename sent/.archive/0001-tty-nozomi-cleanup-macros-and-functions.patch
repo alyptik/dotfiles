@@ -1,0 +1,182 @@
+From ca2cb76379cbcbc673dc47876c7ba358422b94ed Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Tue, 20 Mar 2018 13:53:58 -1000
+Subject: [PATCH] tty/nozomi: cleanup macros and functions
+
+Cleanup a few messy sections of code by replacing constructs
+like `len__ > TMP_BUF_MAX ? TMP_BUF_MAX : len__` with
+`min(len__, TMP_BUF_MAX)` and renaming identifiers
+like i to with more descriptive names; existing semantics
+remain unchanged.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 39 insertions(+), 39 deletions(-)
+
+diff --git a/drivers/tty/nozomi.c b/drivers/tty/nozomi.c
+index b57b35066ebea94639..0d445ec488f2279882 100644
+--- a/drivers/tty/nozomi.c
++++ b/drivers/tty/nozomi.c
+@@ -70,21 +70,21 @@ do {							\
+ 
+ /* TODO: rewrite to optimize macros... */
+ 
+-#define TMP_BUF_MAX 256
++#define TMP_BUF_MAX ((u32)256)
+ 
+ #define DUMP(buf__,len__) \
+-  do {  \
+-    char tbuf[TMP_BUF_MAX] = {0};\
+-    if (len__ > 1) {\
+-	snprintf(tbuf, len__ > TMP_BUF_MAX ? TMP_BUF_MAX : len__, "%s", buf__);\
+-	if (tbuf[len__-2] == '\r') {\
+-		tbuf[len__-2] = 'r';\
+-	} \
+-	DBG1("SENDING: '%s' (%d+n)", tbuf, len__);\
+-    } else {\
+-	DBG1("SENDING: '%s' (%d)", tbuf, len__);\
+-    } \
+-} while (0)
++	do {  \
++		char tbuf[TMP_BUF_MAX] = {0}; \
++		if (len__ > 1) { \
++			snprintf(tbuf, min(len__, TMP_BUF_MAX), "%s", buf__); \
++			if (tbuf[len__-2] == '\r') { \
++				tbuf[len__-2] = 'r'; \
++			} \
++			DBG1("SENDING: '%s' (%d+n)", tbuf, len__); \
++		} else { \
++			DBG1("SENDING: '%s' (%d)", tbuf, len__); \
++		} \
++	} while (0)
+ 
+ /*    Defines */
+ #define NOZOMI_NAME		"nozomi"
+@@ -365,7 +365,7 @@ struct buffer {
+ 	u8 *data;
+ } __attribute__ ((packed));
+ 
+-/*    Global variables */
++/* Global variables */
+ static const struct pci_device_id nozomi_pci_tbl[] = {
+ 	{PCI_DEVICE(0x1931, 0x000c)},	/* Nozomi HSDPA */
+ 	{},
+@@ -411,25 +411,23 @@ static void read_mem32(u32 *buf, const void __iomem *mem_addr_start,
+ 	/* shortcut for extremely often used cases */
+ 	switch (size_bytes) {
+ 	case 2:	/* 2 bytes */
+-		buf16 = (u16 *) buf;
++		buf16 = (u16 *)buf;
+ 		*buf16 = __le16_to_cpu(readw(ptr));
+ 		goto out;
+-		break;
+ 	case 4:	/* 4 bytes */
+-		*(buf) = __le32_to_cpu(readl(ptr));
++		*buf = __le32_to_cpu(readl(ptr));
+ 		goto out;
+-		break;
+ 	}
+ 
+ 	while (i < size_bytes) {
+ 		if (size_bytes - i == 2) {
+ 			/* Handle 2 bytes in the end */
+-			buf16 = (u16 *) buf;
+-			*(buf16) = __le16_to_cpu(readw(ptr));
++			buf16 = (u16 *)buf;
++			*buf16 = __le16_to_cpu(readw(ptr));
+ 			i += 2;
+ 		} else {
+ 			/* Read 4 bytes */
+-			*(buf) = __le32_to_cpu(readl(ptr));
++			*buf = __le32_to_cpu(readl(ptr));
+ 			i += 4;
+ 		}
+ 		buf++;
+@@ -447,7 +445,7 @@ static void read_mem32(u32 *buf, const void __iomem *mem_addr_start,
+ static u32 write_mem32(void __iomem *mem_addr_start, const u32 *buf,
+ 			u32 size_bytes)
+ {
+-	u32 i = 0;
++	u32 written = 0;
+ 	u32 __iomem *ptr = mem_addr_start;
+ 	const u16 *buf16;
+ 
+@@ -459,33 +457,35 @@ static u32 write_mem32(void __iomem *mem_addr_start, const u32 *buf,
+ 	case 2:	/* 2 bytes */
+ 		buf16 = (const u16 *)buf;
+ 		writew(__cpu_to_le16(*buf16), ptr);
+-		return 2;
+-		break;
++		written = 2;
++		goto out;
+ 	case 1: /*
+ 		 * also needs to write 4 bytes in this case
+ 		 * so falling through..
+ 		 */
+ 	case 4: /* 4 bytes */
+ 		writel(__cpu_to_le32(*buf), ptr);
+-		return 4;
+-		break;
++		written = 4;
++		goto out;
+ 	}
+ 
+-	while (i < size_bytes) {
+-		if (size_bytes - i == 2) {
++	while (written < size_bytes) {
++		if (size_bytes - written == 2) {
+ 			/* 2 bytes */
+ 			buf16 = (const u16 *)buf;
+ 			writew(__cpu_to_le16(*buf16), ptr);
+-			i += 2;
++			written += 2;
+ 		} else {
+ 			/* 4 bytes */
+ 			writel(__cpu_to_le32(*buf), ptr);
+-			i += 4;
++			written += 4;
+ 		}
+ 		buf++;
+ 		ptr++;
+ 	}
+-	return i;
++
++out:
++	return written;
+ }
+ 
+ /* Setup pointers to different channels and also setup buffer sizes. */
+@@ -1352,8 +1352,8 @@ static int nozomi_card_init(struct pci_dev *pdev,
+ 
+ 	ret = pci_request_regions(dc->pdev, NOZOMI_NAME);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "I/O address 0x%04x already in use\n",
+-			(int) /* nozomi_private.io_addr */ 0);
++		/* nozomi_private.io_addr */
++		dev_err(&pdev->dev, "I/O address 0x%04x already in use\n", 0);
+ 		goto err_disable_device;
+ 	}
+ 
+@@ -1429,13 +1429,13 @@ static int nozomi_card_init(struct pci_dev *pdev,
+ 		port->port.ops = &noz_tty_port_ops;
+ 		tty_dev = tty_port_register_device(&port->port, ntty_driver,
+ 				dc->index_start + i, &pdev->dev);
++		if (likely(!IS_ERR(tty_dev)))
++			continue;
+ 
+-		if (IS_ERR(tty_dev)) {
+-			ret = PTR_ERR(tty_dev);
+-			dev_err(&pdev->dev, "Could not allocate tty?\n");
+-			tty_port_destroy(&port->port);
+-			goto err_free_tty;
+-		}
++		ret = PTR_ERR(tty_dev);
++		dev_err(&pdev->dev, "Could not allocate tty?\n");
++		tty_port_destroy(&port->port);
++		goto err_free_tty;
+ 	}
+ 
+ 	return 0;
+-- 
+2.16.2
+

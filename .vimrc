@@ -589,9 +589,10 @@ if @% =~ 'PKGBUILD$' || &ft ==? 'PKGBUILD'
 endif
 
 let g:clang_jumpto_declaration_key='<C-/>'
-let g:ale_c_cppcheck_options='--enable=style --std=c11 --std=posix'
-let g:ale_c_clangtidy_options='-I./include -std=c11 -pedantic -Wall -Wextra'
-let g:ale_c_clang_options='-I./include -std=c11 -pedantic -Wall -Wextra '
+let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
+let g:ale_c_clangtidy_options='-I./include -std=gnu11 -Wall -Wextra'
+let g:ale_c_clang_options='-I./include -Wall -Wextra -std=gnu11 '
+	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
 	\ . '-Wno-unused-const-variable -Wfloat-equal -Wrestrict '

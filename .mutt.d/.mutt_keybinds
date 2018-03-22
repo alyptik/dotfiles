@@ -51,7 +51,7 @@ bind generic,index,pager <esc>K mail-key
 bind index ^^ imap-fetch-mail
 bind index <esc>a tag-prefix
 bind index <esc>N toggle-new
-bind index <return> next-line
+# bind index <return> next-line
 bind index o display-message
 bind attach <return> view-mailcap
 bind browser y exit
