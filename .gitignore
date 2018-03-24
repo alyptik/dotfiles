@@ -10,6 +10,7 @@ tags
 
 pipe
 certs
+cache
 irc.conf
 urls.log
 iset.conf
@@ -51,11 +52,11 @@ vimfiles/
 gifs/thewire/
 .mpdscribble/
 oprofile_data/
-.mutt.d/cache/
 .node_modules/
 .vim/__archive/
 .mixxx/analysis/
 .mutt.d/ox_config/
 .emacs.d.spacemacs/
+.mutt.d/message_cache/
 
 # vi:ft=git:
