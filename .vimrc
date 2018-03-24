@@ -590,13 +590,13 @@ endif
 
 let g:clang_jumpto_declaration_key='<C-/>'
 let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
-let g:ale_c_clangtidy_options='-I./include -std=gnu11 -Wall -Wextra'
 let g:ale_c_clang_options='-I./include -Wall -Wextra -std=gnu11 '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
 	\ . '-Wno-unused-const-variable -Wfloat-equal -Wrestrict '
 	\ . '-Wshadow -Wstrict-overflow '
+let g:ale_c_clangtidy_options=g:ale_c_clang_options
 let g:ale_c_gcc_options=g:ale_c_clang_options
 let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
 " let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}

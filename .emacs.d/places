@@ -1,5 +1,14 @@
 ;;; -*- coding: utf-8 -*-
-(("/media/microSDXC/fnord.txt" . 1255)
+(("/home/alyptik/.emacs.d/elpa/evil-magit-20180313.931/evil-magit-autoloads.el" . 728)
+ ("/home/alyptik/.emacs.d/elpa/magit-20180323.650/magit-autoloads.el" . 77541)
+ ("/home/alyptik/.emacs.d/elpa/ghub-20180320.1206/ghub-autoloads.el" . 932)
+ ("/home/alyptik/.emacs.d/elpa/git-commit-20180321.730/git-commit-autoloads.el" . 1235)
+ ("/home/alyptik/.emacs.d/elpa/let-alist-1.0.5/let-alist-autoloads.el" . 1297)
+ ("/home/alyptik/.emacs.d/elpa/magit-popup-20180318.1254/magit-popup-autoloads.el" . 287)
+ ("/home/alyptik/.emacs.d/elpa/with-editor-20180318.1253/with-editor-autoloads.el" . 3211)
+ ("/home/alyptik/.emacs.d/elpa/async-20180119.533/async-autoloads.el" . 4644)
+ ("/media/microSDXC/wtfmath.txt" . 774)
+ ("/media/microSDXC/fnord.txt" . 1255)
  ("/mnt/shared/init" . 177)
  ("/home/alyptik/"
   (dired-filename . "/home/alyptik/.emacs.d"))

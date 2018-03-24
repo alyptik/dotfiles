@@ -295,7 +295,7 @@ esac
 
 # "Is the internet on fire?" status reports
 () {
-	local -a host=(host -t) dig=(dig +short)
+	local -a host=(host -W 1 -t) dig=(dig +short +timeout=1)
 	local -a cmdline=($host txt istheinternetonfire.com)
 	# local -a cmdline=($dig txt istheinternetonfire.com)
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
@@ -671,6 +671,7 @@ compdef oomox=oomox-cli
 compdef p=perl
 compdef run=gcc
 compdef xs=xsel
+compdef cg=cgasm
 
 # named directories
 hash -d a="${HOME}/code/aur"

@@ -1,0 +1,52 @@
+From 6340930b8de5148ee29c280979fc14fba4e4f84a Mon Sep 17 00:00:00 2001
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Fri, 23 Mar 2018 11:09:34 -1000
+Subject: [PATCH v2 1/4] tty/nozomi: cleanup DUMP() macro
+
+Replace snprint() with strscpy() and use max_t() instead of
+the conditional operator.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/tty/nozomi.c b/drivers/tty/nozomi.c
+index b57b35066ebea94639..f26bf1d1e9ee0e74eb 100644
+--- a/drivers/tty/nozomi.c
++++ b/drivers/tty/nozomi.c
+@@ -72,19 +72,19 @@ do {							\
+ 
+ #define TMP_BUF_MAX 256
+ 
+-#define DUMP(buf__,len__) \
+-  do {  \
+-    char tbuf[TMP_BUF_MAX] = {0};\
+-    if (len__ > 1) {\
+-	snprintf(tbuf, len__ > TMP_BUF_MAX ? TMP_BUF_MAX : len__, "%s", buf__);\
+-	if (tbuf[len__-2] == '\r') {\
+-		tbuf[len__-2] = 'r';\
+-	} \
+-	DBG1("SENDING: '%s' (%d+n)", tbuf, len__);\
+-    } else {\
+-	DBG1("SENDING: '%s' (%d)", tbuf, len__);\
+-    } \
+-} while (0)
++#define DUMP(buf__, len__)						\
++	do {								\
++		char tbuf[TMP_BUF_MAX] = {0};				\
++		if (len__ > 1) {					\
++			u32 data_len = min_t(u32, len__, TMP_BUF_MAX);	\
++			strscpy(tbuf, buf__, data_len);			\
++			if (tbuf[data_len - 2] == '\r')			\
++				tbuf[data_len - 2] = 'r';		\
++			DBG1("SENDING: '%s' (%d+n)", tbuf, len__);	\
++		} else {						\
++			DBG1("SENDING: '%s' (%d)", tbuf, len__);	\
++		}							\
++	} while (0)
+ 
+ /*    Defines */
+ #define NOZOMI_NAME		"nozomi"
+-- 
+2.16.3
+
