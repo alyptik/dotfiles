@@ -131,7 +131,7 @@ function zle-compdef {
 		LBUFFER="compdef _gnu_generic "
 	else
 		# isolate the actual command
-		cmd="${${${BUFFER##(*)(;|\||&|\(|\)|\{|\}|\`|do|then|else|time|sudo)}/*([[:blank:]])}%%[[:blank:]]*}"
+		cmd="${${${BUFFER##(*)(;|\||&|\(|\)|\{|\}|\`|do|then|else|time|sudo)}/#[[:blank:]]#}%%[[:blank:]]*}"
 		zle push-input
 		BUFFER="compdef _gnu_generic $cmd"
 		zle accept-line
@@ -388,7 +388,7 @@ function git_prompt_string () {
 # Arch latest news
 # The characters "£, §" are used as metacharacters. They should not be encountered in a feed...
 function news_short () {
-	print -n -- "$(print -- $(curl -m 3 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
+	print -n -- "$(print -- $(curl -m 1 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
 		sed -e ':a;N;$!ba;s/\n/ /g') | \
 			sed -e '
 			s/&amp;/\&/g
@@ -417,7 +417,7 @@ function news_short () {
 }
 
 function news_long () {
-	print -n -- "$(print -- $(curl -m 3 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
+	print -n -- "$(print -- $(curl -m 1 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
 		sed -e ':a;N;$!ba;s/\n/ /g') | \
 			sed -e '
 			s/&amp;/\&/g

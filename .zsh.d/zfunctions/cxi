@@ -1,12 +1,20 @@
 local pchar
-[[ "$EUID" -eq 0 ]] && pchar='# ' || pchar='$ '
+
+if ((EUID == 0)); then
+	pchar='$ '
+else
+	pchar='# '
+fi
+
 if [[ -n "$ZSH_NAME" ]]; then
-	cat <(printf "%s -> " "${pchar}${history[$HISTCMD]}" | sed "s/ *| *cxi//") - | \
+	cat <(printf "%s -> " "${pchar}${history[$HISTCMD]}" | sed \
+			"s/[[:space:]]*|[^[:space:]]*[[:space:]]*cxi//") - | \
 		paste -sd ';' | \
 		perl -pe 's/\;/$& /g; s/;\s+$// if eof; chomp if eof;' | \
 		tee >(xsel -ib)
 elif [[ -n "$BASh" ]]; then
-	cat <(printf "%s -> " "${pchar}$(history 1 | sed "s/[0-9]* *\(.*[^ ]\) *| *cxi/\1/")") - | \
+	cat <(printf "%s -> " "${pchar}$(history 1 | sed \
+			"s/[0-9]* *\(.*[^[:space:]]\)[[:space:]]*|[^[:space:]][[:space:]]*cxi/\1/")") - | \
 		paste -sd ';' | \
 		perl -pe 's/\;/$& /g; s/;\s+$// if eof; chomp if eof;' | \
 		tee >(xsel -ib)

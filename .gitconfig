@@ -84,6 +84,7 @@
 	m = checkout master
 	fw = grep -FWn --color=auto --break
 	ff = grep -FWn --color=auto --break
+	amend = commit -S -s -v --amend
 [web]
 	browser = w3m
 [instaweb]

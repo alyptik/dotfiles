@@ -6,7 +6,6 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si
 
 ## Custom aliases
 
-alias runk='runkernel -s'
 alias mdn='mdn-query'
 alias n='node'
 # alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
@@ -14,7 +13,7 @@ alias n='node'
 alias pf='pkgfile'
 alias pfm='pcmanfm'
 alias fm='fman'
-alias rk='runkernel'
+alias rk='runkernel -s'
 alias nmu='neomutt'
 alias m='make clean && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
 ## quick opening files with mpv
@@ -130,7 +129,6 @@ alias uniq-sed="sed 'h;:b;$ b;N;/^\(.*\)\n\1$/{g;bb};$ b;P;D'"
 alias uniqu-sed="sed '$ b;N;/^\(.*\)\n\1$/!{P;D;};:c;$ d;s/.*\n//;N;/^\(.*\)\n\1$/{bc;};D'"
 alias fzero='find . -size 0'
 alias objd='objdump -Mintel,i8086 -D'
-alias cg='cgasm'
 alias cgf='cgasm -f'
 alias cgv='cgasm -v'
 # alias cg='grep --color=always'

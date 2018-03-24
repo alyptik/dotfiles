@@ -33,7 +33,7 @@
  '(indicate-empty-lines t)
  '(package-selected-packages
    (quote
-    (evil-search-highlight-persist evil-surround evil-commentary gruvbox-theme evil-terminal-cursor-changer evil-leader evil-easymotion evil-multiedit evil)))
+    (evil-magit magit evil-search-highlight-persist evil-surround evil-commentary gruvbox-theme evil-terminal-cursor-changer evil-leader evil-easymotion evil-multiedit evil)))
  '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t))
