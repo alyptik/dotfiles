@@ -65,7 +65,8 @@ call plug#begin(g:plugdir)
 	" Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview'
-	Plug 'Rip-Rip/clang_complete'
+	Plug 'justmao945/vim-clang'
+	" Plug 'Rip-Rip/clang_complete'
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
@@ -248,6 +249,11 @@ set tags-=~/.vimtags,./tags tags-=~/.vimtags tags-=./tags tags^=~/.vimtags,./tag
 set rtp-=~/.vim/vimfiles rtp^=~/.vim/vimfiles,~/.vim,$VIM/vimfiles,$VIM/vimfiles/after,~/.vim/after
 set diffopt=filler,context:5,iwhite,vertical
 set omnifunc=syntaxcomplete#Complete
+" conceal in insert (i), normal (n) and visual (v) modes
+set concealcursor=inv
+" hide concealed text completely unless replacement character is defined
+set conceallevel=2
+set completeopt=menuone
 set nocp cpoptions+=d
 set verbose=0
 set updatetime=1000
@@ -598,11 +604,6 @@ let g:clang_snippet=1
 let g:clang_conceal_snippets=1
 let g:clang_snippets_engine='clang_complete'
 " let g:clang_snippets_engine='utilsnips'
-" conceal in insert (i), normal (n) and visual (v) modes
-set concealcursor=inv
-" hide concealed text completely unless replacement character is defined
-set conceallevel=2
-set completeopt=menuone
 let g:clang_trailing_placeholder=1
 let g:clang_complete_optional_args_in_snippets=1
 let g:clang_omnicppcomplete_compliance=0
@@ -617,12 +618,6 @@ let g:UltiSnipsSnippetDirectories=['UltiSnips']
 let g:clang_library_path='/usr/lib/libclang.so'
 " let g:clang_library_path='/usr/lib64/libclang.so.6.0'
 let g:livepreview_previewer = 'evince2'
-" let g:UltiSnipsExpandTrigger='<C-h>'
-" let g:UltiSnipsJumpForwardTrigger='<C-j>'
-" let g:UltiSnipsJumpBackwardTrigger='<C-k>'
-" let g:UltiSnipsListSnippets='<C-l>'
-" inoremap <C-x><C-k> <C-x><C-k>
-" inoremap <C-H> <C-h>
 
 " silent! unmap <Tab>
 " silent! iunmap <Tab>
@@ -635,10 +630,26 @@ let g:UltiSnipsExpandTrigger = '<S-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Right>'
 let g:UltiSnipsJumpBackwardTrigger = '<Left>'
 let g:UltiSnipsListSnippets='<C-l>'
+" let g:UltiSnipsExpandTrigger='<C-h>'
+" let g:UltiSnipsJumpForwardTrigger='<C-j>'
+" let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+" let g:UltiSnipsListSnippets='<C-l>'
+" inoremap <C-x><C-k> <C-x><C-k>
+" inoremap <C-H> <C-h>
 
 let g:ale_c_flawfinder_error_severity=6
 let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
-let g:ale_c_clang_options='-I./include -Wall -Wextra -std=gnu11 '
+let g:clang_cpp_options=''
+	\ . '-std=gnu++14 -stdlib=libc++'
+	\ . '-I./include -Wall -Wextra'
+	\ . '-Wno-gnu-statement-expression '
+	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
+	\ . '-Wno-unused-function -Wno-unused-parameter '
+	\ . '-Wno-unused-const-variable -Wfloat-equal -Wrestrict '
+	\ . '-Wshadow -Wstrict-overflow '
+let g:ale_c_clang_options=''
+	\ . '-std=gnu11 '
+	\ . '-I./include -Wall -Wextra '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
@@ -646,6 +657,7 @@ let g:ale_c_clang_options='-I./include -Wall -Wextra -std=gnu11 '
 	\ . '-Wshadow -Wstrict-overflow '
 let g:ale_c_clangtidy_options=g:ale_c_clang_options
 let g:ale_c_gcc_options=g:ale_c_clang_options
+let g:clang_c_options=g:ale_c_clang_options
 let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
 " let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
 let g:ale_fixers={'c': ['clang-format']}
