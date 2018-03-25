@@ -14,10 +14,10 @@ auto_view text/html
 auto_view text/x-diff
 auto_view text/x-patch
 
-set connect_timeout = -1
+set connect_timeout = 10
 set mail_check = 30
-set imap_keepalive = 30
-set imap_pipeline_depth = 5
+set imap_keepalive = 60
+set imap_pipeline_depth = 10
 set imap_check_subscribed
 unset imap_passive
 set imap_idle
@@ -27,7 +27,7 @@ unset ssl_use_sslv3
 
 unset maildir_header_cache_verify
 set header_cache = "$my_cfgdir/cache"
-set message_cachedir = "$my_cfgdir/cache"
+set message_cachedir = "$my_cfgdir/message_cache"
 set signature = "$my_cfgdir/.signature"
 set alias_file = "$my_cfgdir/.mutt_aliases"
 set history_file = "$my_cfgdir/.mutt_history"
@@ -84,7 +84,7 @@ set uncollapse_jump
 unset text_flowed
 set indent_string = "> "
 unset strict_threads
-set sort_re
+unset sort_re
 set reply_regexp = "^(re([\\[0-9\\]+])*|aw):[ \t]*"
 
 set pgp_verify_command = "gpg2 --no-verbose --batch --output - --verify %s %f"

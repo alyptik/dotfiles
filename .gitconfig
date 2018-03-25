@@ -21,6 +21,9 @@
 	smtpServer = smtp.gmail.com
 	smtpUser = joeypabalinas@gmail.com
 	smtpServerPort = 587
+	thread = true
+	signedoffbycc = true
+	suppressfrom = true
 [push]
 	default = simple
 	followTags = true
@@ -114,3 +117,5 @@
 [log]
 	abbrevCommit = yes
 [format]
+[format]
+	thread = shallow

@@ -28,8 +28,8 @@ stjerm -k F12 -ah false -o 90 -b none -w 85% -h 80% -ar -tf true -tp bottom -fn 
 hilites &
 transgui &
 udisksctl mount -b "$(findfs LABEL=vm)" &
-(udisksctl mount -b "$(findfs LABEL=microSDXC)" && pcmanfm /media/microSDXC) &
-(udisksctl mount -b "$(findfs LABEL=toshiba1TB)" && transmission-remote -tall -s) &
+(udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 1; pcmanfm /media/microSDXC) &
+(udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &
 xrandr --dpi 216 &
 # eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh 2>/dev/null)
 # shellcheck disable=SC2046
