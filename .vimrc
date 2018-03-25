@@ -236,6 +236,7 @@ set keywordprg=man\ -s
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
+" set ofu=syntaxcomplete#Complete
 set ofu=syntaxcomplete#Complete
 set magic nostartofline
 " set termguicolors
@@ -363,12 +364,12 @@ au BufNewFile,BufRead *.gtkon setf cs
 
 "au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
 au FileType cpp set keywordprg=cppman
-" au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-" au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-" au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
-au FileType c setl ofu=ClangComplete cfu=ClangComplete
-au FileType h setl ofu=ClangComplete cfu=ClangComplete
+au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+" au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
+" au FileType c setl ofu=ClangComplete cfu=ClangComplete
+" au FileType h setl ofu=ClangComplete cfu=ClangComplete
 " au FileType cpp setl ofu=ClangComplete
 " au FileType c setl ofu=ccomplete#CompleteCpp
 " au FileType h setl ofu=ccomplete#CompleteCpp
@@ -588,7 +589,54 @@ if @% =~ 'PKGBUILD$' || &ft ==? 'PKGBUILD'
 	let b:syntastic_sh_shellcheck_post_args='-e SC2034,SC2154,SC2164'
 endif
 
-let g:clang_jumpto_declaration_key='<C-/>'
+" <C-_> is the same key as <C-/>
+let g:clang_jumpto_declaration_key='<C-_>'
+let g:clang_jumpto_declaration_in_preview_key='<C-w><C-_>'
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=1
+let g:clang_snippet=1
+let g:clang_conceal_snippets=1
+let g:clang_snippets_engine='clang_complete'
+" let g:clang_snippets_engine='utilsnips'
+" conceal in insert (i), normal (n) and visual (v) modes
+set concealcursor=inv
+" hide concealed text completely unless replacement character is defined
+set conceallevel=2
+set completeopt=menuone
+let g:clang_trailing_placeholder=1
+let g:clang_complete_optional_args_in_snippets=1
+let g:clang_omnicppcomplete_compliance=0
+" let g:clang_complete_auto=1
+let g:clang_auto_select=1
+let g:clang_complete_loaded=0
+let g:ale_completion_enabled=1
+
+" UltiSnips setup
+let g:UltiSnipsSnippetsDir=g:plugdir.'/vim-snippets/UltiSnips'
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+let g:clang_library_path='/usr/lib/libclang.so'
+" let g:clang_library_path='/usr/lib64/libclang.so.6.0'
+let g:livepreview_previewer = 'evince2'
+" let g:UltiSnipsExpandTrigger='<C-h>'
+" let g:UltiSnipsJumpForwardTrigger='<C-j>'
+" let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+" let g:UltiSnipsListSnippets='<C-l>'
+" inoremap <C-x><C-k> <C-x><C-k>
+" inoremap <C-H> <C-h>
+
+" silent! unmap <Tab>
+" silent! iunmap <Tab>
+map <Tab> <Plug>CompletorCppJumpToPlaceholder
+imap <Tab> <Plug>CompletorCppJumpToPlaceholder
+" alternate key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = '<S-Tab>'
+" let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+" let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+let g:UltiSnipsJumpForwardTrigger = '<Right>'
+let g:UltiSnipsJumpBackwardTrigger = '<Left>'
+let g:UltiSnipsListSnippets='<C-l>'
+
+let g:ale_c_flawfinder_error_severity=6
 let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
 let g:ale_c_clang_options='-I./include -Wall -Wextra -std=gnu11 '
 	\ . '-Wno-gnu-statement-expression '
@@ -929,7 +977,9 @@ let g:completor_css_omni_trigger='([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
 let g:completor_disable_ultisnips=1
 let g:completor_auto_trigger=1
 inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
-if (!g:completor_auto_trigger) | inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>") | endif
+if (!g:completor_auto_trigger)
+	inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>")
+endif
 inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
 inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
 "let g:slime_paste_file=tempname()
@@ -989,27 +1039,6 @@ let g:multi_cursor_visual_maps={'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1}
 highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
 highlight link multiple_cursors_visual Visual
 let g:github_dashboard= {'username': 'alyptik'}
-" UltiSnips setup
-let g:UltiSnipsSnippetsDir=g:plugdir.'/vim-snippets/UltiSnips'
-let g:UltiSnipsSnippetDirectories=['UltiSnips']
-let g:clang_library_path='/usr/lib64/libclang.so'
-" let g:clang_library_path='/usr/lib64/libclang.so.6.0'
-let g:livepreview_previewer = 'evince2'
-
-" let g:UltiSnipsExpandTrigger='<C-h>'
-" let g:UltiSnipsJumpForwardTrigger='<C-j>'
-" let g:UltiSnipsJumpBackwardTrigger='<C-k>'
-" let g:UltiSnipsListSnippets='<C-l>'
-" inoremap <C-x><C-k> <C-x><C-k>
-" inoremap <C-H> <C-h>
-
-" alternate key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = '<Tab>'
-" let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-" let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Right>'
-let g:UltiSnipsJumpBackwardTrigger = '<Left>'
-let g:UltiSnipsListSnippets='<C-l>'
 
 let g:move_key_modifier = 'M'
 nmap <C-j> <Plug>MoveLineDown
@@ -1553,16 +1582,27 @@ nnoremap <Leader>a :A<CR>
 "cnoremap Q q
 command! W w
 command! Q q
-command! WQ wq
 command! Wq wq
+command! WQ wq
 command! Qall qall
-command! WQall wqall
+command! Qall qall
 command! Wqall wqall
+command! WQall wqall
 "cabbrev wQ <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'wq' : 'wQ')<CR>
 "cnoremap w!! silent w !sudo dd of=%
 " command! SudoWrite silent w !sudo sponge %
 command! SudoWrite silent w !sudo sponge %
 cabbrev w!! <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SudoWrite' : 'w!!')<CR>
+cabbrev W! w!
+cabbrev Q! q!
+cabbrev wQ! wq!
+cabbrev Wq! wq!
+cabbrev WQ! wq!
+cabbrev QAll! qall!
+cabbrev QAll! qall!
+cabbrev Wqall! wqall!
+cabbrev wQall! wqall!
+cabbrev WQall! wqall!
 
 command! P PlugUpdate
 cabbrev pu PlugUpdate

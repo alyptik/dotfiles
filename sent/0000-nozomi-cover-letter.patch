@@ -3,6 +3,9 @@ From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Fri, 23 Mar 2018 11:36:43 -1000
 Subject: [PATCH v2 0/4] tty/nozomi: general module cleanup
 
+Sorry, totally screwed up git send-email CC's there; resending
+the patchset.
+
 The nozomi module code has a fair amount of sections which could
 use a bit of improvement; both style and clarity could be improved
 while maintaining equivalent semantics.
