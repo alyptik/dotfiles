@@ -74,7 +74,7 @@
 	dcdy = !git difftool --extcmd \"colordiff -wyB\"
 	di = !git difftool --extcmd icdiff
 	i = ls-files -i --full-name --exclude-standard
-	ds = diff --stat
+	ds = log -M --oneline --stat --no-merges
 	mt = mergetool
 	mc = merge --continue
 	ma = merge --abort
@@ -88,6 +88,11 @@
 	fw = grep -FWn --color=auto --break
 	ff = grep -FWn --color=auto --break
 	amend = commit -S -s -v --amend
+	sl = shortlog --no-merges
+	dirstat = diff -M --dirstate=2,cumulative
+	count = rev-list --count --no-merges
+	numstat = log -M --oneline --numstat --no-merges
+	diffstat = log -M --oneline --stat --no-merges
 [web]
 	browser = w3m
 [instaweb]
