@@ -94,6 +94,19 @@ st.tabspaces:			8
 st.cwscale:			0.9
 st.chscale:			1.0
 
+stjerm*key:			f12
+stjerm*autohide:		false
+stjerm*border:			none
+stjerm*opacity:			90
+stjerm*width:			90%
+stjerm*height:			90%
+stjerm*allowreorder:		true
+stjerm*tabfill:			true
+stjerm*tabpos:			bottom
+! stjerm*font:			FuraCode Nerd Font
+! stjerm*font:			Source Code Pro Light
+stjerm*font:			SauceCodePro Nerd Font Light
+
 ! URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 ! URxvt*font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=24:antialias=true:hinting=true,\
 ! URxvt*font:		xft:FuraCode NF:style=Light:pixelsize=24:antialias=true:hinting=true,\

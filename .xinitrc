@@ -41,11 +41,10 @@ hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint "#458588" -brig
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/alyptik/.Xmodmap"
-# stjerm -k F12 -ah false -o 90 -b none -w 95% -h 90% -ar -tf true -tp bottom -fn "FuraCode Nerd Font" &
-# stjerm -k F12 -ah false -o 95 -b none -w 95% -h 90% -ar -tf true -tp bottom -fn "Source Code Pro Light 9" &
-stjerm -k F12 -ah false -o 90 -b none -w 85% -h 80% -ar -tf true -tp bottom -fn "SauceCodePro Nerd Font Light" &
+stjerm &
 hilites &
 transgui &
+pavucontrol &
 udisksctl mount -b "$(findfs LABEL=vm)" &
 (udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 1; pcmanfm /media/microSDXC) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &
