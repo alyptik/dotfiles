@@ -17,6 +17,12 @@ bind 'TAB:menu-complete'; bind 'set show-all-if-ambiguous on'
 [[ -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f /etc/profile.d/cnf.sh ]] && . /etc/profile.d/cnf.sh
+# setup python-virtualenvwrapper
+# shellcheck disable=SC1090 disable=SC1091
+[[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
+# shellcheck disable=SC1090 disable=SC1091
+# [[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && . /usr/bin/virtualenvwrapper_lazy.sh
+
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f "${HOME}/.profile" ]] && . "${HOME}/.profile"
 

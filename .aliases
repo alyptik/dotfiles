@@ -6,6 +6,7 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si
 
 ## Custom aliases
 
+alias pythong='python'
 alias yt='noglob youtube-dl -f bestaudio --write-all-thumbnails --write-description'
 alias mdn='mdn-query'
 alias n='node'
