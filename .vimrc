@@ -45,6 +45,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'hdima/python-syntax'
 	Plug 'jungomi/vim-mdnquery'
 	Plug 'osfameron/perl-tags-vim'
 	" Plug 'osfameron/perl-tags'
@@ -538,6 +539,7 @@ let g:gruvbox_italic=1
 " let g:gruvbox_termcolors=256
 let g:gruvbox_invert_indent_guides=1
 
+let g:python_highlight_all=1
 let g:OmniCpp_MayCompleteDot=1
 let g:OmniCpp_MayCompleteArrow=1
 let g:OmniCpp_MayCompleteScope=1
@@ -980,7 +982,7 @@ let s:lightGreen="31B53E"
 let s:white="FFFFFF"
 let s:rspec_red='FE405F'
 let s:git_orange='F54D27'
-let g:completor_python_binary='/usr/bin/python'
+let g:completor_python_binary='/usr/bin/python2'
 let g:completor_racer_binary='~/.cargo/bin/racer'
 let g:completor_node_binary='/usr/bin/node'
 let g:completor_clang_binary='/usr/bin/clang'
@@ -997,6 +999,8 @@ inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
 "let g:slime_paste_file=tempname()
 let g:slime_paste_file='~/.slime_paste'
 let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warnings'
+let g:ale_python_pylint_executable='python2'
+" let g:ale_python_pylint_executable='python3'
 let g:instant_markdown_autostart=0
 let g:instant_markdown_slow=1
 nnoremap <Leader>im :InstantMarkdownPreview<CR>
