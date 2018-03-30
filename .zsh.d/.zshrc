@@ -292,6 +292,11 @@ esac
 	{ for i in "${ZDOTDIR:-$HOME/.zsh.d}"/plugins/enabled/*.zsh; . "$i"; }
 [[ -f "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash" ]] && \
 	. "${HOME}/perl5/perlbrew/etc/perlbrew-completion.bash"
+# setup python-virtualenvwrapper
+[[ -f /usr/bin/virtualenvwrapper.sh ]] && \
+	. /usr/bin/virtualenvwrapper.sh
+# [[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && \
+#         . /usr/bin/virtualenvwrapper_lazy.sh
 
 # prompt rice
 [[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
