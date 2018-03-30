@@ -1,1 +1,4 @@
+#!/bin/bash
+
 script -qfc "$(printf "%q " "$@")"
+rm -f ./typescript

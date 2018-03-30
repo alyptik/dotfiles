@@ -89,7 +89,7 @@
 	ff = grep -FWn --color=auto --break
 	amend = commit -S -s -v --amend
 	sl = shortlog --no-merges
-	dirstat = diff -M --dirstate=2,cumulative
+	dirstat = diff -M --dirstat=2,cumulative
 	count = rev-list --count --no-merges
 	numstat = log -M --oneline --numstat --no-merges
 	diffstat = log -M --oneline --stat --no-merges
