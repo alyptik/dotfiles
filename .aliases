@@ -416,7 +416,6 @@ alias pill='sudo powerpill'
 alias bill='sudo bauerbill'
 
 alias findfd="ls -lAhqiQFs1 --color=always /proc/$$/fd | awk '{ print $10 }'"
-alias _='sudo '
 alias scodes='sudo showkey --scancodes'
 alias c-du='cdu -isdLh'
 alias dh='dirs -v'

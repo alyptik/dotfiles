@@ -66,8 +66,8 @@ call plug#begin(g:plugdir)
 	" Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview'
-	Plug 'justmao945/vim-clang'
-	" Plug 'Rip-Rip/clang_complete'
+	" Plug 'justmao945/vim-clang'
+	Plug 'Rip-Rip/clang_complete'
 	Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	Plug 'chaoren/vim-wordmotion'
@@ -254,7 +254,7 @@ set omnifunc=syntaxcomplete#Complete
 set concealcursor=inv
 " hide concealed text completely unless replacement character is defined
 set conceallevel=2
-set completeopt=menuone
+set completeopt=menuone,noinsert,noselect
 set nocp cpoptions+=d
 set verbose=0
 set updatetime=1000
@@ -621,9 +621,7 @@ let g:clang_library_path='/usr/lib/libclang.so'
 " let g:clang_library_path='/usr/lib64/libclang.so.6.0'
 let g:livepreview_previewer = 'evince2'
 
-" silent! unmap <Tab>
 " silent! iunmap <Tab>
-map <Tab> <Plug>CompletorCppJumpToPlaceholder
 imap <Tab> <Plug>CompletorCppJumpToPlaceholder
 " alternate key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = '<S-Tab>'
