@@ -333,7 +333,8 @@ if type zplug >/dev/null 2>&1; then
 	zplug "oknowton/zsh-dwim"
 	zplug "zsh-users/zsh-autosuggestions"
 	zplug "zsh-users/zsh-history-substring-search"
-	zplug "zsh-users/zsh-syntax-highlighting", defer:2, at:tmp
+	# zplug "zsh-users/zsh-syntax-highlighting", defer:2, at:tmp
+	zplug "zsh-users/zsh-syntax-highlighting", defer:2
 	zplug "b4b4r07/zsh-vimode-visual", defer:3
 	# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then
@@ -472,16 +473,16 @@ fi
 	bindkey -M "$1" "\e[A" up-line-or-beginning-search
 	bindkey -M "$1" "\eOB" down-line-or-beginning-search
 	bindkey -M "$1" "\e[B" down-line-or-beginning-search
-	bindkey -M "$1" "\eOD" backward-word
-	bindkey -M "$1" "\e\e[D" backward-word
-	bindkey -M "$1" "\e[1;5D" backward-word
-	bindkey -M "$1" "\e[1;3D" backward-word
-	bindkey -M "$1" "\e[1;2D" backward-word
-	bindkey -M "$1" "\eOC" forward-word
-	bindkey -M "$1" "\e\e[C" forward-word
-	bindkey -M "$1" "\e[1;5C" forward-word
-	bindkey -M "$1" "\e[1;3C" forward-word
-	bindkey -M "$1" "\e[1;2C" forward-word
+	bindkey -M "$1" "\eOD" emacs-backward-word
+	bindkey -M "$1" "\e\e[D" emacs-backward-word
+	bindkey -M "$1" "\e[1;5D" emacs-backward-word
+	bindkey -M "$1" "\e[1;3D" emacs-backward-word
+	bindkey -M "$1" "\e[1;2D" emacs-backward-word
+	bindkey -M "$1" "\eOC" emacs-forward-word
+	bindkey -M "$1" "\e\e[C" emacs-forward-word
+	bindkey -M "$1" "\e[1;5C" emacs-forward-word
+	bindkey -M "$1" "\e[1;3C" emacs-forward-word
+	bindkey -M "$1" "\e[1;2C" emacs-forward-word
 	bindkey -M "$1" "\e[7~" beginning-of-line
 	bindkey -M "$1" "\e[1;5B" beginning-of-line
 	bindkey -M "$1" "\e[1;3B" beginning-of-line
@@ -680,6 +681,7 @@ compdef p=perl
 compdef run=gcc
 compdef xs=xsel
 compdef cg=cgasm
+compdef _=sudo
 
 # named directories
 hash -d a="${HOME}/code/aur"
