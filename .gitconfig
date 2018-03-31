@@ -29,7 +29,7 @@
 	followTags = true
 [alias]
 	br = branch
-	co = commit -S -s -v
+	co = commit -S -v
 	st = status
 	l = log --show-signature --stat
 	lu = log --show-signature -u
@@ -93,6 +93,7 @@
 	count = rev-list --count --no-merges
 	numstat = log -M --oneline --numstat --no-merges
 	diffstat = log -M --oneline --stat --no-merges
+	cos = commit -S -s -v
 [web]
 	browser = w3m
 [instaweb]
