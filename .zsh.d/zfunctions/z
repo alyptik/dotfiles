@@ -1,10 +1,12 @@
+if ((!$#)); then
+	cd "$(fasd -ld 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
+	return
+fi
 
-	if [[ -z "$*" ]]; then
-		cd "$(fasd -ld 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
-	else
-		local cwd="$PWD"
-		_last_z_args=("$@")
-		fasd_cd "$@"
-		[[ "$cwd" == "$PWD" ]] && cd "$(fasd -Rld 2>&1 | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
-		unset cwd
-	fi
+local cwd
+cwd="$PWD"
+_last_z_args=("$@")
+fasd_cd "$@"
+if [[ "$cwd" == "$PWD" ]]; then
+	cd "$(fasd -ld 2>&1 | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+fi
