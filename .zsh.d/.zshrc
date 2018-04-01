@@ -682,6 +682,7 @@ compdef run=gcc
 compdef xs=xsel
 compdef cg=cgasm
 compdef _=sudo
+compdef e=vim
 
 # named directories
 hash -d a="${HOME}/code/aur"
