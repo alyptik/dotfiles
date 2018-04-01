@@ -30,7 +30,7 @@ export BROWSER=/usr/bin/chromium
 # export BROWSER=/usr/bin/w3m
 # export BROWSER=/usr/bin/lynx
 export CCACHE_DIR="$HOME/.ccache"
-export CCACHE_DISABLE=1
+# export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PREFIX="distcc"
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
@@ -123,7 +123,7 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME=i965 VDPAU_DRIVER=va_gl
 # export MAKEFLAGS="-j -l5"
-export MAKEFLAGS="-j5"
+export MAKEFLAGS="-j4"
 export MANPAGER="less -CMRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="$MANPATH:/opt/intel/man/common:/usr/local/man:/usr/share/man:$C/man"
