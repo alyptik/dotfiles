@@ -1,13 +1,13 @@
 diff --git a/colorize_nicks.py b/colorize_nicks.py
-index b693efd9de41ebb367..0c9f75b7a33bc96803 100644
+index 55b1b2fc279987ed55..6b2c5ad2ad60650f75 100644
 --- a/colorize_nicks.py
 +++ b/colorize_nicks.py
 @@ -87,7 +87,7 @@ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
  
  # Based on the recommendations in RFC 7613. A valid nick is composed
  # of anything but " ,*?.!@".
--VALID_NICK = r'([@~&!%+:​-])?([^\s,\*\?\.!@:›\'"%#\&]+)'
-+VALID_NICK = r'([@~&!%+-])?([^\s,\*\?\.!@:›%#\&\'"\+]*[^\s,\*\?\.!@:›%#\&\'"\+\]])'
+-VALID_NICK = r'([@~&!%+:​-])?([^\s,\*\?\.!@:\'"%#\&]+›?)'
++VALID_NICK = r'([@~&!%+-])?([^\s,\*\?\.!@:›»%#\&\'"\+]*[^\s,\*\?\.!@:›»%#\&\'"\+\]])'
  valid_nick_re = re.compile(VALID_NICK)
  ignore_channels = []
  ignore_nicks = []
