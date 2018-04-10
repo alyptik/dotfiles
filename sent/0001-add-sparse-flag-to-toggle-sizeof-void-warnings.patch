@@ -1,0 +1,109 @@
+From 8019b1fddb7846f43c34ddc5711c63cb795891ac Mon Sep 17 00:00:00 2001
+Message-Id: <8019b1fddb7846f43c34ddc5711c63cb795891ac.1523093187.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Fri, 6 Apr 2018 23:07:27 -1000
+Subject: [PATCH] add sparse flag to toggle sizeof(void) warnings
+
+Recent changes to the min()/max() macros in include/linux/kernel.h
+have added a lot of noise to sparse output; this is due to the
+*huge* number of new sizeof(void) warnings, most of which can
+largely be ignored.
+
+Add the -Wsizeof_void flag to enable/disable these warnings on
+demand; the warning itself has been disabled by default to reduce the
+large influx of noise which was inadvertently added by commit
+3c8ba0d61d04ced9f8 (kernel.h: Retain constant expression output
+for max()/min()).
+
+Update the manpage to document the new flag.
+
+CC: Kees Cook <keescook@chromium.org>
+CC: Linus Torvalds <torvalds@linux-foundation.org>
+CC: Martin Uecker <Martin.Uecker@med.uni-goettingen.de>
+CC: Al Viro <viro@ZenIV.linux.org.uk>
+CC: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+CC: Christopher Li <sparse@chrisli.org>
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 4 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/evaluate.c b/evaluate.c
+index b96696d3a51396800a..33e5fcabc4e755e0b7 100644
+--- a/evaluate.c
++++ b/evaluate.c
+@@ -2169,7 +2169,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+ 	size = type->bit_size;
+ 
+ 	if (size < 0 && is_void_type(type)) {
+-		warning(expr->pos, "expression using sizeof(void)");
++		if (Wsizeof_void)
++			warning(expr->pos, "expression using sizeof(void)");
+ 		size = bits_in_char;
+ 	}
+ 
+diff --git a/lib.c b/lib.c
+index 645132a892107512a1..35b41ad5becddf6b59 100644
+--- a/lib.c
++++ b/lib.c
+@@ -245,6 +245,7 @@ int Wptr_subtraction_blows = 0;
+ int Wreturn_void = 0;
+ int Wshadow = 0;
+ int Wsizeof_bool = 0;
++int Wsizeof_void = 0;
+ int Wtautological_compare = 0;
+ int Wtransparent_union = 0;
+ int Wtypesign = 0;
+@@ -536,6 +537,7 @@ static const struct warning {
+ 	{ "return-void", &Wreturn_void },
+ 	{ "shadow", &Wshadow },
+ 	{ "sizeof-bool", &Wsizeof_bool },
++	{ "sizeof-void", &Wsizeof_void },
+ 	{ "sparse-error", &Wsparse_error },
+ 	{ "tautological-compare", &Wtautological_compare },
+ 	{ "transparent-union", &Wtransparent_union },
+diff --git a/lib.h b/lib.h
+index a9b70b07686801305c..517f933e97d504f2bb 100644
+--- a/lib.h
++++ b/lib.h
+@@ -138,6 +138,7 @@ extern int Wptr_subtraction_blows;
+ extern int Wreturn_void;
+ extern int Wshadow;
+ extern int Wsizeof_bool;
++extern int Wsizeof_void;
+ extern int Wtautological_compare;
+ extern int Wtransparent_union;
+ extern int Wtypesign;
+diff --git a/sparse.1 b/sparse.1
+index e183204de623efd022..09eecf9cbb06b9acc4 100644
+--- a/sparse.1
++++ b/sparse.1
+@@ -323,7 +323,25 @@ Sparse does not issue these warnings by default.
+ .B \-Wsizeof-bool
+ Warn when checking the sizeof a _Bool.
+ 
+-C99 does not specify the sizeof a _Bool.  gcc uses 1.
++C99 does not specify the sizeof a _Bool. GCC uses \fI1\fR.
++
++Sparse does not issue these warnings by default.
++.
++.TP
++.B \-Wsizeof-void
++Warn when checking the sizeof a void.
++
++C99 does not allow the sizeof operator to be applied to incomplete types
++such as void. GCC allows \fBsizeof(void)\fR as an extension and uses \fI1\fR.
++
++Although non-standard, \fBsizeof(void)\fR is often useful when the intent
++is to operate on an expression without evaluating it, e.g. in the following
++integer constant expression predicate:
++
++.nf
++#define __is_constexpr(x) \\
++	(sizeof(int) == sizeof(*(8 ? ((void *)((long)(x) * 0l)) : (int *)8)))
++.fi
+ 
+ Sparse does not issue these warnings by default.
+ .
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+

@@ -1,0 +1,65 @@
+From c70bc75ceb6d78bea8309baefde67b2d0901e351 Mon Sep 17 00:00:00 2001
+Message-Id: <c70bc75ceb6d78bea8309baefde67b2d0901e351.1523316643.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1523316643.git.joeypabalinas@gmail.com>
+References: <cover.1523316643.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Fri, 6 Apr 2018 23:50:38 -1000
+Subject: [PATCH V3] doc: copy-edit text related to applying sizeof to a _Bool
+
+Clean up the grammar/capitalization of the -Wsizeof-bool sections and
+italicize the size (1) so that it is consistent with the surrounding
+text.
+
+CC: Al Viro <viro@ZenIV.linux.org.uk>
+CC: Christopher Li <sparse@chrisli.org>
+CC: Joey Pabalinas <joeypabalinas@gmail.com>
+CC: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+
+ evaluate.c               | 2 +-
+ sparse.1                 | 2 +-
+ validation/sizeof-bool.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/evaluate.c b/evaluate.c
+index 4e1dffe9c5416380df..9ee47c611958c7e8bf 100644
+--- a/evaluate.c
++++ b/evaluate.c
+@@ -2199,7 +2199,7 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+ 
+ 	if (size == 1 && is_bool_type(type)) {
+ 		if (Wsizeof_bool)
+-			warning(expr->pos, "expression using sizeof bool");
++			warning(expr->pos, "expression using sizeof _Bool");
+ 		size = bits_in_char;
+ 	}
+ 
+diff --git a/sparse.1 b/sparse.1
+index 88343f3170f195297a..70f1f55a76e0cbbb2a 100644
+--- a/sparse.1
++++ b/sparse.1
+@@ -329,7 +329,7 @@ Sparse does not issue these warnings by default.
+ .B \-Wsizeof-bool
+ Warn when checking the sizeof a _Bool.
+ 
+-C99 does not specify the sizeof a _Bool.  gcc uses 1.
++C99 does not specify the size of a _Bool. GCC, by default, uses \fI1\fR.
+ 
+ Sparse does not issue these warnings by default.
+ .
+diff --git a/validation/sizeof-bool.c b/validation/sizeof-bool.c
+index 05e76a44e88e8da71a..9f21d1c65e3705425f 100644
+--- a/validation/sizeof-bool.c
++++ b/validation/sizeof-bool.c
+@@ -8,6 +8,6 @@ static int a(void)
+  * number of bytes
+  * check-command: sparse -Wsizeof-bool $file
+  * check-error-start
+-sizeof-bool.c:3:16: warning: expression using sizeof bool
++sizeof-bool.c:3:16: warning: expression using sizeof _Bool
+  * check-error-end
+  */
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+

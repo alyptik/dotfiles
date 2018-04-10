@@ -1,0 +1,31 @@
+From ee9fffd6bc7f01635e596139fbaf1c23a8aa9697 Mon Sep 17 00:00:00 2001
+Message-Id: <ee9fffd6bc7f01635e596139fbaf1c23a8aa9697.1523135495.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1523135495.git.joeypabalinas@gmail.com>
+References: <cover.1523135495.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Fri, 6 Apr 2018 23:50:38 -1000
+Subject: [PATCH 1/2] doc: copyedit man page for sizeof(_Bool)
+
+Use 'GCC' instead of 'gcc' and put the size, '1', in italic.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sparse.1 b/sparse.1
+index 88343f3170f195297a..85ed98188599962f4e 100644
+--- a/sparse.1
++++ b/sparse.1
+@@ -329,7 +329,7 @@ Sparse does not issue these warnings by default.
+ .B \-Wsizeof-bool
+ Warn when checking the sizeof a _Bool.
+ 
+-C99 does not specify the sizeof a _Bool.  gcc uses 1.
++C99 does not specify the sizeof a _Bool. GCC uses \fI1\fR.
+ 
+ Sparse does not issue these warnings by default.
+ .
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+

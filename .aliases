@@ -6,8 +6,9 @@ unalias {1..9} c f gbr gco gcs gg gm h history java l md node o rd ru s sd sf si
 
 ## Custom aliases
 
+alias ccc='noglob ccc'
 alias _='sudo '
-alias pythong='python'
+alias pythong='python2'
 alias yt='noglob youtube-dl -f bestaudio --write-all-thumbnails --write-description'
 alias mdn='mdn-query'
 alias n='node'
@@ -55,7 +56,7 @@ alias ty='type '
 alias whe='whence '
 alias wh='which '
 alias pcc='gcc -o /dev/stdout'
-alias pre='PREFIX=${HOME}/.local '
+alias pre='make PREFIX=${HOME}/.local'
 alias ldrun='/lib/ld-linux-x86-64.so.2'
 alias ldrun32='/lib/ld-linux.so.2'
 alias pt='ptpython'

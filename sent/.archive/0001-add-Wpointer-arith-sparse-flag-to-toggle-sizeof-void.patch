@@ -1,0 +1,136 @@
+From 621d72f925d4a3a2885d0a823866114f76edccb8 Mon Sep 17 00:00:00 2001
+Message-Id: <621d72f925d4a3a2885d0a823866114f76edccb8.1523136786.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1523136786.git.joeypabalinas@gmail.com>
+References: <cover.1523136786.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Fri, 6 Apr 2018 23:50:38 -1000
+Subject: [PATCH v3] add -Wpointer-arith sparse flag to toggle sizeof(void) warnings
+
+Recent changes to the min()/max() macros in include/linux/kernel.h
+have added a lot of noise when compiling the kernel with Sparse checking
+enabled. This mostly is due to the *huge* increase in the number of
+sizeof(void) warnings, a larger number of which can safely be ignored.
+
+Add the -Wpointer-arith flag to enable/disable these warnings (along
+with the warning when applying sizeof to function types exactly like the
+GCC -Wpointer-arith flag) on demand; the warning itself has been disabled
+by default to reduce the large influx of noise which was inadvertently
+added by commit 3c8ba0d61d04ced9f8 (kernel.h: Retain constant expression
+output for max()/min()).
+
+Update the manpage to document the new flag.
+
+CC: Kees Cook <keescook@chromium.org>
+CC: Linus Torvalds <torvalds@linux-foundation.org>
+CC: Martin Uecker <Martin.Uecker@med.uni-goettingen.de>
+CC: Al Viro <viro@ZenIV.linux.org.uk>
+CC: Christopher Li <sparse@chrisli.org>
+CC: Joey Pabalinas <joeypabalinas@gmail.com>
+CC: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+
+ 4 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/evaluate.c b/evaluate.c
+index 4e1dffe9c5416380df..f828da37df8e686623 100644
+--- a/evaluate.c
++++ b/evaluate.c
+@@ -2193,7 +2193,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+ 	size = type->bit_size;
+ 
+ 	if (size < 0 && is_void_type(type)) {
+-		warning(expr->pos, "expression using sizeof(void)");
++		if (Wpointer_arith)
++			warning(expr->pos, "expression using sizeof(void)");
+ 		size = bits_in_char;
+ 	}
+ 
+@@ -2204,7 +2205,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+ 	}
+ 
+ 	if (is_function(type->ctype.base_type)) {
+-		warning(expr->pos, "expression using sizeof on a function");
++		if (Wpointer_arith)
++			warning(expr->pos, "expression using sizeof on a function");
+ 		size = bits_in_char;
+ 	}
+ 
+diff --git a/lib.c b/lib.c
+index 73d372c36626538bab..f7fdac96674aec4c24 100644
+--- a/lib.c
++++ b/lib.c
+@@ -242,6 +242,7 @@ int Woverride_init = 1;
+ int Woverride_init_all = 0;
+ int Woverride_init_whole_range = 0;
+ int Wparen_string = 0;
++int Wpointer_arith = 0;
+ int Wptr_subtraction_blows = 0;
+ int Wreturn_void = 0;
+ int Wshadow = 0;
+@@ -654,6 +655,7 @@ static const struct flag warnings[] = {
+ 	{ "return-void", &Wreturn_void },
+ 	{ "shadow", &Wshadow },
+ 	{ "sizeof-bool", &Wsizeof_bool },
++	{ "pointer-arith", &Wpointer_arith },
+ 	{ "sparse-error", &Wsparse_error },
+ 	{ "tautological-compare", &Wtautological_compare },
+ 	{ "transparent-union", &Wtransparent_union },
+diff --git a/lib.h b/lib.h
+index 3050b5577ba4d42e97..e34bb9a02ebac03f52 100644
+--- a/lib.h
++++ b/lib.h
+@@ -151,6 +151,7 @@ extern int Woverride_init;
+ extern int Woverride_init_all;
+ extern int Woverride_init_whole_range;
+ extern int Wparen_string;
++extern int Wpointer_arith;
+ extern int Wptr_subtraction_blows;
+ extern int Wreturn_void;
+ extern int Wshadow;
+diff --git a/sparse.1 b/sparse.1
+index 88343f3170f195297a..4379406999c94b806e 100644
+--- a/sparse.1
++++ b/sparse.1
+@@ -288,6 +288,25 @@ Standard C syntax does not permit a parenthesized string as an array
+ initializer.  GCC allows this syntax as an extension.  With
+ \fB\-Wparen\-string\fR, Sparse will warn about this syntax.
+ 
++Sparse does not issue these warnings by default.
++.
++.TP
++.B \-Wpointer-arith
++Warn about anything that depends on the \fBsizeof\fR a function type or of void.
++
++C99 does not allow the \fBsizeof\fR operator to be applied to function types or to
++incomplete types such as void. GCC allows \fBsizeof\fR to be applied to these
++types as an extension and assigns these types a size of \fI1\fR.
++
++Although non-standard (and somewhat illogical), constructs such as \fBsizeof(void)\fR
++are often useful when the intent is to operate on an expression without evaluating
++it, e.g. in the following integer constant expression predicate:
++
++.nf
++#define __is_constexpr(x) \\
++	(sizeof(int) == sizeof(*(8 ? ((void *)((long)(x) * 0l)) : (int *)8)))
++.fi
++
+ Sparse does not issue these warnings by default.
+ .
+ .TP
+diff --git a/validation/sizeof-function.c b/validation/sizeof-function.c
+index 27d535d4e..8ff67f214 100644
+--- a/validation/sizeof-function.c
++++ b/validation/sizeof-function.c
+@@ -35,7 +35,7 @@ int test(void)
+ 
+ /*
+  * check-name: sizeof-function
+- * check-command: sparse -Wno-decl $file
++ * check-command: sparse -Wpointer-arith -Wno-decl $file
+  *
+  * check-error-start
+ sizeof-function.c:22:14: warning: expression using sizeof on a function
+-- 
+
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty

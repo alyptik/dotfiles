@@ -1,0 +1,54 @@
+From bbf5d8a033504221b7c37862f48f26832cb7c001 Mon Sep 17 00:00:00 2001
+Message-Id: <bbf5d8a033504221b7c37862f48f26832cb7c001.1523136786.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1523136786.git.joeypabalinas@gmail.com>
+References: <cover.1523136786.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Fri, 6 Apr 2018 23:50:38 -1000
+Subject: [PATCH] doc: copy-edit manual/warning text for sizeof(_Bool)
+
+Clean up the grammar/capitalization of the -Wsizeof-bool sections and
+italicize the size (1) so that it is consistent with the surrounding
+text.
+
+CC: Al Viro <viro@ZenIV.linux.org.uk>
+CC: Christopher Li <sparse@chrisli.org>
+CC: Joey Pabalinas <joeypabalinas@gmail.com>
+CC: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/evaluate.c b/evaluate.c
+index f828da37df8e686623..de85feaea696ba5358 100644
+--- a/evaluate.c
++++ b/evaluate.c
+@@ -2200,7 +2200,7 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+ 
+ 	if (size == 1 && is_bool_type(type)) {
+ 		if (Wsizeof_bool)
+-			warning(expr->pos, "expression using sizeof bool");
++			warning(expr->pos, "expression using sizeof(bool)");
+ 		size = bits_in_char;
+ 	}
+ 
+diff --git a/sparse.1 b/sparse.1
+index 4379406999c94b806e..598ba396571f123e7d 100644
+--- a/sparse.1
++++ b/sparse.1
+@@ -346,9 +346,10 @@ Sparse does not issue these warnings by default.
+ .
+ .TP
+ .B \-Wsizeof-bool
+-Warn when checking the sizeof a _Bool.
++Warn when applying \fBsizeof\fR to a _Bool type.
+ 
+-C99 does not specify the sizeof a _Bool.  gcc uses 1.
++C99 does not specify the \fBsizeof(_Bool)\fR. By default, GCC assigns _Bool a
++size of \fI1\fR.
+ 
+ Sparse does not issue these warnings by default.
+ .
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+

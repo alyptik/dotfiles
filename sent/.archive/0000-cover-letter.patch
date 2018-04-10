@@ -1,25 +1,21 @@
-From 7e22a8036db8314566367316eb85b2f1696d84c7 Mon Sep 17 00:00:00 2001
+From 43893a13629e42c97fda9b6d02b5f74e5869e9b0 Mon Sep 17 00:00:00 2001
+Message-Id: <cover.1523176645.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
-Date: Sun, 14 Jan 2018 05:09:10 -1000
-Subject: [PATCH 0/3] jp: Patchset for parameter expansion segfaults
+Date: Sat, 7 Apr 2018 22:37:25 -1000
+Subject: [PATCH 0/1] *** SUBJECT HERE ***
 
-Add checks to guard against NULL-deref-caused segfaults in current
-zsh parameter-expansion edge-cases.
+*** BLURB HERE ***
 
-> $ zsh -fc ': ${${(PAA)p[foo]}::=x}'
->
-> [1] 4441 segmentation fault (core dumped) zsh -fc ': ${${(PAA)p[foo]}::=x}'
+Joey Pabalinas (1):
+  ACPI: prefer bool over int for predicates
 
-Joey Pabalinas (3):
-  - Fix segfaults during parameter expansion
-  - Use `(nil)` for empty identifier strings
-  - Add `dupstring()` fallback to `zhtricat()`
-
- Src/params.c |  2 ++
- Src/string.c | 23 +++++++++++++++++++----
- Src/subst.c  |  4 ++++
- 3 files changed, 25 insertions(+), 4 deletions(-)
+ drivers/acpi/battery.c  |  4 ++--
+ drivers/acpi/ec.c       | 20 +++++++++-----------
+ drivers/acpi/pci_root.c | 17 ++++++-----------
+ drivers/acpi/scan.c     |  6 +++---
+ include/acpi/acpi_bus.h |  2 +-
+ 5 files changed, 21 insertions(+), 28 deletions(-)
 
 -- 
-2.15.1
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
 
