@@ -1,7 +1,0 @@
-[
-  {
-    "implementation": "./lib/ClangProcessService.js",
-    "name": "ClangProcessService",
-    "preserveFunctionNames": true
-  }
-]

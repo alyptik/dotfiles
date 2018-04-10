@@ -1,5 +1,0 @@
-{
-  "cmd": "echo",
-  "args": ["Hello"],
-  "env": {}
-}

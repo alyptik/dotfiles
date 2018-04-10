@@ -61,7 +61,7 @@
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = diff --histogram --cached
 	dc = diff --cached --histogram
-	p = format-patch -M @^ --shortstat --cover-letter -o /patches/
+	p = format-patch -M @^ --shortstat -o /patches/
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
 	f = grep -Fn --color=auto --break

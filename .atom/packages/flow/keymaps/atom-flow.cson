@@ -1,8 +1,0 @@
-
-#fail - atom takes ctrl-shift-0 as ctrl-) which is locale specific!
-#short term, ctrl alt is used
-
-'atom-workspace':
-  'ctrl-alt-0': 'flow:status'
-# 'ctrl-alt-9': 'flow:set-project-file'
-  'ctrl-alt-8': 'flow:set-target'
