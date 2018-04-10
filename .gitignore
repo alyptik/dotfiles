@@ -53,10 +53,11 @@ gifs/thewire/
 .mpdscribble/
 oprofile_data/
 .node_modules/
+.atom/packages/
 .vim/__archive/
 .mixxx/analysis/
 .mutt.d/ox_config/
 .emacs.d.spacemacs/
 .mutt.d/message_cache/
 
-# vi:ft=git:
+# vi:ft=cfg:

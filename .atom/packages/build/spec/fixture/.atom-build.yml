@@ -1,7 +1,0 @@
-cmd: echo
-args:
-  - hello
-  - world
-  - from
-  - yaml
-name: yaml conf

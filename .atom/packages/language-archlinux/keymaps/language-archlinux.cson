@@ -1,9 +1,0 @@
-# Order based on menus/language-archlinux.cson
-'atom-text-editor':
-  'f4': 'pkgbuild:newpkg'
-  'f5': 'pkgbuild:makepkg'
-  'f6': 'pkgbuild:docs'
-  'f7': 'pkgbuild:aurup'
-  'f8': 'pkgbuild:namcap'
-  'f9': 'pkgbuild:updpkgsums'
-  'f10': 'pkgbuild:mksrcinfo'

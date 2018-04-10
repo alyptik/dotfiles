@@ -1,8 +1,0 @@
-{
-  "atom-text-editor": {
-    "ctrl-shift-space": "camel-case-mode:toggle"
-  },
-  "atom-text-editor.camel-case-mode": {
-    "space": "camel-case-mode:capitalize-next"
-  }
-}

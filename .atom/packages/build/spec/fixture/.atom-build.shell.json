@@ -1,7 +1,0 @@
-{
-  "cmd": "echo $SOMEVAR",
-  "args": [],
-  "env": {
-    "SOMEVAR": "Good news, everyone!"
-  }
-}
