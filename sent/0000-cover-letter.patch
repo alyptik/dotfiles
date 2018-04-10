@@ -1,22 +1,21 @@
-From 9aba5bf97ef31124a4c5252402baf8645e7ccdc1 Mon Sep 17 00:00:00 2001
+From ce80925ac82c9c92766504244c8ed07aa73b09e3 Mon Sep 17 00:00:00 2001
+Message-Id: <cover.1523177060.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
-Date: Mon, 1 Jan 2018 23:01:31 -1000
-Subject: [PATCH 0/2] mm/zswap: add minor const/conditional optimizations
+Date: Sat, 7 Apr 2018 22:44:20 -1000
+Subject: [PATCH 0/1] *** SUBJECT HERE ***
 
-Make a couple minor short-circuiting order and const changes
-  - Since the pointed-to objects are never modified through
-    these pointers, const-qualify type and compressor
-    variables.
-  - Test boolean before calling `strcmp()` to take
-    advantage of short-circuiting.
+*** BLURB HERE ***
 
-Joey Pabalinas (2):
-  mm/zswap: make type and compressor const
-  mm/zswap: move `zswap_has_pool` to front of `if ()`
+Joey Pabalinas (1):
+  ACPI: prefer bool over int for predicates
 
- mm/zswap.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/acpi/battery.c  |  4 ++--
+ drivers/acpi/ec.c       | 20 +++++++++-----------
+ drivers/acpi/pci_root.c | 17 ++++++-----------
+ drivers/acpi/scan.c     |  6 +++---
+ include/acpi/acpi_bus.h |  2 +-
+ 5 files changed, 21 insertions(+), 28 deletions(-)
 
 -- 
-2.15.1
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
 

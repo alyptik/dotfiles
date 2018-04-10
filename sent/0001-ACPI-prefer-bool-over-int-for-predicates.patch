@@ -1,0 +1,181 @@
+From ce80925ac82c9c92766504244c8ed07aa73b09e3 Mon Sep 17 00:00:00 2001
+Message-Id: <ce80925ac82c9c92766504244c8ed07aa73b09e3.1523177060.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1523177060.git.joeypabalinas@gmail.com>
+References: <cover.1523177060.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 7 Apr 2018 21:12:51 -1000
+Subject: [PATCH 1/1] ACPI: prefer bool over int for predicates
+
+Prefer bool over int for variables / returns which are
+predicate expressions to make it explicit that these
+expressions are evaluating simple "yes or no?" queries.
+
+This makes it more obvious which expressions are _not_
+that simple and require more attention, e.g. an `int ret`
+meant to hold 0 or -ENOENT as a return value or an
+`unsigned nmemb` meant to refer to the number of valid
+members in some arbitrary array.
+
+Change relevant variable / return types from int to bool and
+prefer a true / false value for predicate expressions versus
+a plain 1 / 0 value.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ drivers/acpi/battery.c  |  4 ++--
+ drivers/acpi/ec.c       | 20 +++++++++-----------
+ drivers/acpi/pci_root.c | 17 ++++++-----------
+ drivers/acpi/scan.c     |  6 +++---
+ include/acpi/acpi_bus.h |  2 +-
+ 5 files changed, 21 insertions(+), 28 deletions(-)
+
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index bdb24d636d9acc9c1a..f1a5fb5252969f0478 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -1416,7 +1416,7 @@ static int acpi_battery_add(struct acpi_device *device)
+ 	battery->pm_nb.notifier_call = battery_notify;
+ 	register_pm_notifier(&battery->pm_nb);
+ 
+-	device_init_wakeup(&device->dev, 1);
++	device_init_wakeup(&device->dev, true);
+ 
+ 	return result;
+ 
+@@ -1434,7 +1434,7 @@ static int acpi_battery_remove(struct acpi_device *device)
+ 
+ 	if (!device || !acpi_driver_data(device))
+ 		return -EINVAL;
+-	device_init_wakeup(&device->dev, 0);
++	device_init_wakeup(&device->dev, false);
+ 	battery = acpi_driver_data(device);
+ 	unregister_pm_notifier(&battery->pm_nb);
+ #ifdef CONFIG_ACPI_PROCFS_POWER
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 30a5729565575f83cb..d4a564ab9cdd53046c 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -350,7 +350,7 @@ static inline bool acpi_ec_is_gpe_raised(struct acpi_ec *ec)
+ 	acpi_event_status gpe_status = 0;
+ 
+ 	(void)acpi_get_gpe_status(NULL, ec->gpe, &gpe_status);
+-	return (gpe_status & ACPI_EVENT_FLAG_STATUS_SET) ? true : false;
++	return gpe_status & ACPI_EVENT_FLAG_STATUS_SET;
+ }
+ 
+ static inline void acpi_ec_enable_gpe(struct acpi_ec *ec, bool open)
+@@ -580,28 +580,26 @@ static bool acpi_ec_guard_event(struct acpi_ec *ec)
+ 	return guarded;
+ }
+ 
+-static int ec_transaction_polled(struct acpi_ec *ec)
++static bool ec_transaction_polled(struct acpi_ec *ec)
+ {
+ 	unsigned long flags;
+-	int ret = 0;
++	bool polled;
+ 
+ 	spin_lock_irqsave(&ec->lock, flags);
+-	if (ec->curr && (ec->curr->flags & ACPI_EC_COMMAND_POLL))
+-		ret = 1;
++	polled = ec->curr && (ec->curr->flags & ACPI_EC_COMMAND_POLL);
+ 	spin_unlock_irqrestore(&ec->lock, flags);
+-	return ret;
++	return polled;
+ }
+ 
+-static int ec_transaction_completed(struct acpi_ec *ec)
++static bool ec_transaction_completed(struct acpi_ec *ec)
+ {
+ 	unsigned long flags;
+-	int ret = 0;
++	bool completed;
+ 
+ 	spin_lock_irqsave(&ec->lock, flags);
+-	if (ec->curr && (ec->curr->flags & ACPI_EC_COMMAND_COMPLETE))
+-		ret = 1;
++	completed = ec->curr && (ec->curr->flags & ACPI_EC_COMMAND_COMPLETE);
+ 	spin_unlock_irqrestore(&ec->lock, flags);
+-	return ret;
++	return completed;
+ }
+ 
+ static inline void ec_transaction_transition(struct acpi_ec *ec, unsigned long flag)
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index 6fc204a524932e97f4..61c0c079cff346e492 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -81,20 +81,15 @@ static DEFINE_MUTEX(osc_lock);
+  * Note: we could make this API take a struct acpi_device * instead, but
+  * for now, it's more convenient to operate on an acpi_handle.
+  */
+-int acpi_is_root_bridge(acpi_handle handle)
++bool acpi_is_root_bridge(acpi_handle handle)
+ {
+-	int ret;
+ 	struct acpi_device *device;
+ 
+-	ret = acpi_bus_get_device(handle, &device);
+-	if (ret)
+-		return 0;
+-
+-	ret = acpi_match_device_ids(device, root_device_ids);
+-	if (ret)
+-		return 0;
+-	else
+-		return 1;
++	if (acpi_bus_get_device(handle, &device))
++		return false;
++	if (acpi_match_device_ids(device, root_device_ids))
++		return false;
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(acpi_is_root_bridge);
+ 
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 490498eca0d3db7d6a..8e3d436184104b5799 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -625,7 +625,7 @@ int acpi_device_add(struct acpi_device *device,
+ {
+ 	int result;
+ 	struct acpi_device_bus_id *acpi_device_bus_id, *new_bus_id;
+-	int found = 0;
++	bool found = false;
+ 
+ 	if (device->handle) {
+ 		acpi_status status;
+@@ -667,7 +667,7 @@ int acpi_device_add(struct acpi_device *device,
+ 		if (!strcmp(acpi_device_bus_id->bus_id,
+ 			    acpi_device_hid(device))) {
+ 			acpi_device_bus_id->instance_no++;
+-			found = 1;
++			found = true;
+ 			kfree(new_bus_id);
+ 			break;
+ 		}
+@@ -1787,7 +1787,7 @@ static void acpi_device_dep_initialize(struct acpi_device *adev)
+ 
+ 	for (i = 0; i < dep_devices.count; i++) {
+ 		struct acpi_device_info *info;
+-		int skip;
++		bool skip;
+ 
+ 		status = acpi_get_object_info(dep_devices.handles[i], &info);
+ 		if (ACPI_FAILURE(status)) {
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index c9608b0b80c602a7df..4504da12c43daa0f6c 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -599,7 +599,7 @@ void acpi_dma_deconfigure(struct device *dev);
+ 
+ struct acpi_device *acpi_find_child_device(struct acpi_device *parent,
+ 					   u64 address, bool check_children);
+-int acpi_is_root_bridge(acpi_handle);
++bool acpi_is_root_bridge(acpi_handle handle);
+ struct acpi_pci_root *acpi_pci_find_root(acpi_handle handle);
+ 
+ int acpi_enable_wakeup_device_power(struct acpi_device *dev, int state);
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+

@@ -30,14 +30,19 @@ export BROWSER=/usr/bin/chromium
 # export BROWSER=/usr/bin/w3m
 # export BROWSER=/usr/bin/lynx
 export CCACHE_DIR="$HOME/.ccache"
-# export CCACHE_DISABLE=1
+export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PREFIX="distcc"
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
+# sparse defines
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
-CF="$CF -Wdefault-bitfield-sign -Wno-do-while -Wno-non-pointer-null"
-CF="$CF -Wparen-string -Wptr-subtraction-blows -Wno-shadow"
-CF="$CF -Wno-sizeof-bool -Wtypesign -Wno-undef -Wno-unknown-attribute"
+# sparse warning overrides
+CF="$CF -Wno-do-while -Wno-non-pointer-null -Wno-pointer-arith"
+CF="$CF -Wno-shadow -Wno-sizeof-bool -Wno-undef"
+CF="$CF -Wno-unknown-attribute"
+# sparse extra warnings
+CF="$CF -Wdefault-bitfield-sign -Wparen-string -Wptr-subtraction-blows"
+CF="$CF -Wtypesign"
 export CF
 # export CORRECT_IGNORE="_?*"
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
@@ -127,6 +132,7 @@ export MAKEFLAGS="-j4"
 export MANPAGER="less -CMRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="$MANPATH:/opt/intel/man/common:/usr/local/man:/usr/share/man:$C/man"
+MANPATH="$HOME/.local/share/man:$MANPATH"
 export MANPATH
 export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:3f"
 export MESA_GL_VERSION_OVERRIDE="4.5COMPAT"

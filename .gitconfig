@@ -56,12 +56,12 @@
 	stat = status -sb
 	d = diff --histogram
 	dr = diff --histogram --relative --no-index
-	fa = fetch --all --jobs=4 --recurse-submodules=on-demand
+	fa = fetch --ipv4 --all --jobs=4 --recurse-submodules=on-demand
 	reb = rebase -S --autostash
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = diff --histogram --cached
 	dc = diff --cached --histogram
-	p = format-patch -M @^ --shortstat -o /patches/
+	p = format-patch -M @^ --shortstat --cover-letter -o /patches/
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
 	sub = submodule
 	f = grep -Fn --color=auto --break
@@ -93,7 +93,7 @@
 	count = rev-list --count --no-merges
 	numstat = log -M --oneline --numstat --no-merges
 	diffstat = log -M --oneline --stat --no-merges
-	cos = commit -S -s -v
+	cos = commit -S -s -v -p
 [web]
 	browser = w3m
 [instaweb]
