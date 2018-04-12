@@ -11,16 +11,16 @@ git fetch -qj4 pull-requests || exit 1
 
 # map `git show-branch` to the list of PRs
 
-# bash method
-# readarray -t pr_list < <(git branch -r --list 'pull-requests/*')
-# for i in "${pr_list[@]}"; do
-#         pr="${i##*remotes/}"
-#         git show-branch "$pr" 2>/dev/null
-# done
-
 # posix method
 git branch -r --list 'pull-requests/*' | \
 	while read -r branch; do
 		pr="${branch##*remotes/}"
 		git show-branch "$pr" 2>/dev/null
 	done
+
+# bash method
+# readarray -t pr_list < <(git branch -r --list 'pull-requests/*')
+# for i in "${pr_list[@]}"; do
+#         pr="${i##*remotes/}"
+#         git show-branch "$pr" 2>/dev/null
+# done
