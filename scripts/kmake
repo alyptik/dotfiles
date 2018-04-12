@@ -9,7 +9,8 @@ broot_src=buildroot
 kern_build=obj/linux-x86
 broot_build=obj/buildroot-x86
 root="$proj_dir/$base/overlay"
-mod_dir="$root/lib/modules"
+kmod_dir="$root/lib/modules"
+bmod_dir="$proj_dir/$base/$broot_build/target/usr/lib/modules"
 build_type=''
 append_args=()
 mod_args=()
@@ -100,8 +101,10 @@ printf 'build directory: [%s]\n' \
 	"$(tput sgr0)$(tput setaf 13)$src_dir$(tput sgr0)"
 printf 'output directory: [%s]\n' \
 	"$(tput sgr0)$(tput setaf 13)$(realpath -e "$out_dir" 2>/dev/null || echo '(error)')$(tput sgr0)"
-printf 'module directory: [%s]\n' \
-	"$(tput sgr0)$(tput setaf 13)$mod_dir$(tput sgr0)"
+printf 'kernel module directory: [%s]\n' \
+	"$(tput sgr0)$(tput setaf 13)$kmod_dir$(tput sgr0)"
+printf 'buildroot module directory: [%s]\n' \
+	"$(tput sgr0)$(tput setaf 13)$bmod_dir$(tput sgr0)"
 
 # record date
 perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' \
@@ -120,7 +123,7 @@ fi
 
 # install modules
 if [[ -n "${mod_args[*]}" ]]; then
-	rm -rfv "${mod_dir:?}"/*
+	rm -rfv "${kmod_dir:?}"/* "${bmod_dir:?}"/*
 	"${make_cmd[@]}" O="$out_dir" "${mod_args[@]}" \
 		2> >(tee -a ../error.log.tmp >&2) \
 		> >(tee -a ../build.log.tmp)

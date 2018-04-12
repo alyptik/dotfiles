@@ -30,17 +30,23 @@
 #keystate_scrolllock = enable
 #keystate_capslock = enable
 
-## tdrop on F12 (c:96) or F9 (c:75)
-"tdrop chromium"
+# tdrop on F9 (c:75)
+"tdrop -n 1 chromium"
     m:0x0 + c:75
-    #m:0x0 + c:96
 
-## tdrop on F10 (c:76)
-"tdrop st"
+# tdrop on F10 (c:76)
+"tdrop -n 1 st"
     m:0x0 + c:76
-    #m:0x0 + c:96
 
-## Show xbindkeys bindings
+# tdrop on F11 (c:95)
+"tdrop -n 2 st"
+    m:0x0 + c:95
+
+# tdrop on F12 (c:96)
+"tdrop -n 3 st"
+    m:0x0 + c:96
+
+# Show xbindkeys bindings
 # "xbindkeys_show"
 #     m:0xc + c:24
 #     Control+Alt + q

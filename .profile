@@ -22,32 +22,64 @@ export PROJECTS="/store/code/projects" P="$PROJECTS" p="$PROJECTS"
 export LINUX="$PROJECTS/linux" L="$LINUX" l="$LINUX"
 export CONFIG="/store/dotfiles" C="$CONFIG" c="$CONFIG"
 
-# Environment variables
-# Compilation flags
+# compiler environment
+unset CCACHE_DISABLE CFLAGS CCFLAGS CPPFLAGS CXXFLAGS LDFLAGS
 export ARCHFLAGS="-arch x86_64"
+export CARCH="x86_64"
+export CCACHE_DIR="$HOME/.ccache"
+# export CCACHE_DISABLE=1
+# export CCACHE_PATH=/usr/bin
+# export CCACHE_PREFIX="distcc"
+export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
+# sparse configuraiton
+CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
+CF="-fmax-warnings=unlimited $CF"
+# sparse extra warnings
+CF="-Wptr-subtraction-blows -Wtypesign $CF"
+CF="-Wdefault-bitfield-sign -Wparen-string $CF"
+# sparse warning overrides
+CF="-Wno-undef -Wno-unknown-attribute $CF"
+CF="-Wno-pointer-arith -Wno-shadow -Wno-sizeof-bool $CF"
+CF="-Wno-do-while -Wno-non-pointer-null $CF"
+export CF
+export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
+# GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01"
+GCC_COLORS="error=01;31:warning=01;35:note=01;36:range1=32:range2=34:locus=01:quote=01:"
+GCC_COLORS="fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:$GCC_COLORS"
+GCC_COLORS="diff-delete=31:diff-insert=32:type-diff=01;32:$GCC_COLORS"
+export GCC_COLORS
+# compiler flags
+CFLAGS="-pipe -march=native -g3 -O3"
+# CFLAGS="-Wno-unknown-warning $CFLAGS"
+CFLAGS="-Wno-error -Wno-implicit-fallthrough $CFLAGS"
+CFLAGS="-fno-plt -fno-strict-aliasing $CFLAGS"
+CFLAGS="-fdiagnostics-color=always $CFLAGS"
+CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
+CFLAGS="-flto -fPIC -fuse-ld=gold $CFLAGS"
+CFLAGS="-fuse-linker-plugin $CFLAGS"
+export CFLAGS
+export CHOST="x86_64-unknown-linux-gnu"
+export CCFLAGS="$CFLAGS"
+# export CPPFLAGS="-D_FORTIFY_SOURCE=2"
+export CXXFLAGS="$CFLAGS"
+LDFLAGS="$CFLAGS"
+LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
+LDFLAGS="-Wl,--warn-unresolved-symbols $LDFLAGS"
+# LDFLAGS="-Wl,--sort-common,--as-needed $LDFLAGS"
+export LDFLAGS
+# export MAKEFLAGS="-j -l4"
+export MAKEFLAGS="-j4"
+
+# Environment variables
 # export BROWSER=/usr/bin/firefox
 export BROWSER=/usr/bin/chromium
 # export BROWSER=/usr/bin/w3m
 # export BROWSER=/usr/bin/lynx
-export CCACHE_DIR="$HOME/.ccache"
-export CCACHE_DISABLE=1
-# export CCACHE_PATH=/usr/bin
-# export CCACHE_PREFIX="distcc"
-export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
-# sparse defines
-CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
-# sparse warning overrides
-CF="$CF -Wno-do-while -Wno-non-pointer-null -Wno-pointer-arith"
-CF="$CF -Wno-shadow -Wno-sizeof-bool -Wno-undef"
-CF="$CF -Wno-unknown-attribute"
-# sparse extra warnings
-CF="$CF -Wdefault-bitfield-sign -Wparen-string -Wptr-subtraction-blows"
-CF="$CF -Wtypesign"
-export CF
 # export CORRECT_IGNORE="_?*"
-export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 # Audio plugins
-export DSSI_PATH="/usr/lib/dssi:/usr/local/lib/dssi:$HOME/dssi:/store/audio/dssi"
+DSSI_PATH="/usr/local/lib/dssi:/usr/lib/dssi"
+DSSI_PATH="$HOME/dssi:/store/audio/dssi:$DSSI_PATH"
+export DSSI_PATH
 # Add vim as default editor
 export EDITOR=/usr/bin/vim
 export FCEDIT="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR" VISUAL="$EDITOR"
@@ -71,8 +103,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="
 	--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'
 "
-# Color GCC
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
 export GIT_PAGER="less -CMRins"
@@ -88,11 +118,15 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export HH_CONFIG=hicolor
 # increase history size (default is 500)
 export HISTSIZE=20000000 HISTFILESIZE="$HISTSIZE"
-# export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:$HOME/.linuxbrew/share/info:$HOME/GNUstep/Library/Documentation/info:$INFOPATH"
-export INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info:/home/alyptik/.linuxbrew/share/info:/home/alyptik/GNUstep/Library/Documentation/info"
+INFOPATH="/usr/local/texlive/2016/texmf-dist/doc/info:/usr/share/info"
+INFOPATH="$HOME/GNUstep/Library/Documentation/info:$INFOPATH"
+INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+INFOPATH="$HOME/.local/share/.info:$INFOPATH"
+export INFOPATH
 export _JAVA_AWT_WM_NONREPARENTING=1
-# export _JAVA_OPTIONS='-Dsun.java2d.opengl=true -Dswing.aatext=true -Dawt.useSystemAAFontSettings=on'
-export _JAVA_OPTIONS='-Dswing.aatext=true -Dawt.useSystemAAFontSettings=on'
+_JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=on"
+_JAVA_OPTIONS="$_JAVA_OPTIONS -Dsun.java2d.opengl=true"
+export _JAVA_OPTIONS
 # Configure KWin to use OpenGL ES
 export KWIN_COMPOSE="O2ES"
 export LADSPA_PATH="/usr/lib/ladspa:/usr/local/lib/ladspa:$HOME/ladspa:/store/audio/ladspa"
@@ -114,9 +148,6 @@ export LC_ADDRESS=en_US.UTF-8
 export LC_TELEPHONE=en_US.UTF-8
 export LC_MEASUREMENT=en_US.UTF-8
 export LC_IDENTIFICATION=en_US.UTF-8
-LD_LIBRARY_PATH="/usr/lib:/usr/lib64:/usr/lib32"
-LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/alyptik/GNUstep/Library/Libraries"
-export LD_LIBRARY_PATH
 export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:$HOME/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:$HOME/lxvst:/store/audio/lxvst"
@@ -127,11 +158,9 @@ export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME=i965 VDPAU_DRIVER=va_gl
-# export MAKEFLAGS="-j -l5"
-export MAKEFLAGS="-j4"
 export MANPAGER="less -CMRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
-MANPATH="$MANPATH:/opt/intel/man/common:/usr/local/man:/usr/share/man:$C/man"
+MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
 MANPATH="$HOME/.local/share/man:$MANPATH"
 export MANPATH
 export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:3f"
