@@ -1,9 +1,8 @@
-From e5a6520b33adeed8ba66bcb6045682bd0e6774ec Mon Sep 17 00:00:00 2001
-Message-Id: <e5a6520b33adeed8ba66bcb6045682bd0e6774ec.1523323838.git.joeypabalinas@gmail.com>
+From 63181c1ec7b96ba237ed99e1f06fa3ab4e93fc88 Mon Sep 17 00:00:00 2001
+Message-Id: <63181c1ec7b96ba237ed99e1f06fa3ab4e93fc88.1523400198.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
-Date: Fri, 6 Apr 2018 23:50:38 -1000
-Subject: [PATCH] sparse: add -Wpointer-arith flag to toggle sizeof(void)
- warnings
+Date: Mon, 9 Apr 2018 15:02:04 -1000
+Subject: [PATCH v4] sparse: add -Wpointer-arith flag to toggle sizeof(void) warnings
 
 Recent changes to the min()/max() macros in include/linux/kernel.h
 have added a lot of noise when compiling the kernel with Sparse checking
@@ -18,8 +17,8 @@ by default to reduce the large influx of noise which was inadvertently
 added by commit 3c8ba0d61d04ced9f8 (kernel.h: Retain constant expression
 output for max()/min()).
 
-Update the manpage to document the new flag and add/update validation
-cases regarding the application of sizeof to void and function types.
+Update the manpage to document the new flag and add a validation case
+for sizeof(void).
 
 CC: Kees Cook <keescook@chromium.org>
 CC: Linus Torvalds <torvalds@linux-foundation.org>
@@ -31,13 +30,13 @@ CC: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
 Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
 
- 6 files changed, 60 insertions(+), 3 deletions(-)
+ 5 files changed, 64 insertions(+), 2 deletions(-)
 
 diff --git a/evaluate.c b/evaluate.c
-index 4e1dffe9c5416380df..f828da37df8e686623 100644
+index b96696d3a51396800a..8f07d08cf5b494f8f0 100644
 --- a/evaluate.c
 +++ b/evaluate.c
-@@ -2193,7 +2193,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+@@ -2169,7 +2169,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
  	size = type->bit_size;
  
  	if (size < 0 && is_void_type(type)) {
@@ -47,7 +46,7 @@ index 4e1dffe9c5416380df..f828da37df8e686623 100644
  		size = bits_in_char;
  	}
  
-@@ -2204,7 +2205,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
+@@ -2180,7 +2181,8 @@ static struct symbol *evaluate_sizeof(struct expression *expr)
  	}
  
  	if (is_function(type->ctype.base_type)) {
@@ -58,10 +57,10 @@ index 4e1dffe9c5416380df..f828da37df8e686623 100644
  	}
  
 diff --git a/lib.c b/lib.c
-index 73d372c36626538bab..f7fdac96674aec4c24 100644
+index 645132a892107512a1..0caee38a996cd0fa4c 100644
 --- a/lib.c
 +++ b/lib.c
-@@ -242,6 +242,7 @@ int Woverride_init = 1;
+@@ -241,6 +241,7 @@ int Woverride_init = 1;
  int Woverride_init_all = 0;
  int Woverride_init_whole_range = 0;
  int Wparen_string = 0;
@@ -69,7 +68,7 @@ index 73d372c36626538bab..f7fdac96674aec4c24 100644
  int Wptr_subtraction_blows = 0;
  int Wreturn_void = 0;
  int Wshadow = 0;
-@@ -654,6 +655,7 @@ static const struct flag warnings[] = {
+@@ -536,6 +537,7 @@ static const struct warning {
  	{ "return-void", &Wreturn_void },
  	{ "shadow", &Wshadow },
  	{ "sizeof-bool", &Wsizeof_bool },
@@ -78,10 +77,10 @@ index 73d372c36626538bab..f7fdac96674aec4c24 100644
  	{ "tautological-compare", &Wtautological_compare },
  	{ "transparent-union", &Wtransparent_union },
 diff --git a/lib.h b/lib.h
-index 3050b5577ba4d42e97..e34bb9a02ebac03f52 100644
+index a9b70b07686801305c..98e20d3830d9059acb 100644
 --- a/lib.h
 +++ b/lib.h
-@@ -151,6 +151,7 @@ extern int Woverride_init;
+@@ -134,6 +134,7 @@ extern int Woverride_init;
  extern int Woverride_init_all;
  extern int Woverride_init_whole_range;
  extern int Wparen_string;
@@ -90,10 +89,10 @@ index 3050b5577ba4d42e97..e34bb9a02ebac03f52 100644
  extern int Wreturn_void;
  extern int Wshadow;
 diff --git a/sparse.1 b/sparse.1
-index 88343f3170f195297a..4e1f2385fea7ec9296 100644
+index e183204de623efd022..3bd5f1cb11309e65b8 100644
 --- a/sparse.1
 +++ b/sparse.1
-@@ -288,6 +288,19 @@ Standard C syntax does not permit a parenthesized string as an array
+@@ -282,6 +282,19 @@ Standard C syntax does not permit a parenthesized string as an array
  initializer.  GCC allows this syntax as an extension.  With
  \fB\-Wparen\-string\fR, Sparse will warn about this syntax.
  
@@ -113,29 +112,16 @@ index 88343f3170f195297a..4e1f2385fea7ec9296 100644
  Sparse does not issue these warnings by default.
  .
  .TP
-diff --git a/validation/sizeof-function.c b/validation/sizeof-function.c
-index 27d535d4ebda79ef0c..8ff67f2149981de7a9 100644
---- a/validation/sizeof-function.c
-+++ b/validation/sizeof-function.c
-@@ -35,7 +35,7 @@ int test(void)
- 
- /*
-  * check-name: sizeof-function
-- * check-command: sparse -Wno-decl $file
-+ * check-command: sparse -Wpointer-arith -Wno-decl $file
-  *
-  * check-error-start
- sizeof-function.c:22:14: warning: expression using sizeof on a function
 diff --git a/validation/sizeof-void.c b/validation/sizeof-void.c
 new file mode 100644
-index 000000000000000000..bc58c98d18d5fa3cda
+index 000000000000000000..0fd917a21fb296a95d
 --- /dev/null
 +++ b/validation/sizeof-void.c
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,44 @@
 +#define is_constexpr(x) \
 +	(sizeof(int) == sizeof(*(8 ? ((void *)((long)(x) * 0l)) : (int *)8)))
 +
-+int test(void)
++static int test(void)
 +{
 +	unsigned int s = 0, i = 0;
 +	void *ptr = &i;
@@ -149,8 +135,9 @@ index 000000000000000000..bc58c98d18d5fa3cda
 +	// KO
 +	s += sizeof(void);
 +	s += sizeof *ptr;
-+	s += is_constexpr(1 + 1);
-+	s += is_constexpr((1, 1));
++	s += is_constexpr(ptr++);
++	s += is_constexpr((i++, 1));
++	s += is_constexpr(sizeof *ptr);
 +	s += is_constexpr(ptr + 1);
 +	s += is_constexpr(&ptr + 1);
 +	s += is_constexpr(*(((char *)&ptr) + 1));
@@ -159,16 +146,20 @@ index 000000000000000000..bc58c98d18d5fa3cda
 +}
 +
 +/*
-+ * check-name: sizeof-void
-+ * check-command: sparse -Wpointer-arith -Wno-decl -Wno-unused-value $file
++ * check-name: sizeof(void) is valid
++ * check-description: sizeof(void) was rejected because void is an incomplete
++ * type
++ * check-command: sparse -Wpointer-arith $file
 + *
 + * check-error-start
 +sizeof-void.c:16:14: warning: expression using sizeof(void)
 +sizeof-void.c:17:14: warning: expression using sizeof(void)
++sizeof-void.c:18:14: warning: expression using sizeof(void)
 +sizeof-void.c:19:14: warning: expression using sizeof(void)
 +sizeof-void.c:20:14: warning: expression using sizeof(void)
 +sizeof-void.c:21:14: warning: expression using sizeof(void)
 +sizeof-void.c:22:14: warning: expression using sizeof(void)
++sizeof-void.c:23:14: warning: expression using sizeof(void)
 + * check-error-end
 + */
 -- 

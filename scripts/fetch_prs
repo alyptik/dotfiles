@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# fetch PR list
+if ! git rev-list pull-requests -- >/dev/null 2>&1; then
+	git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || exit 1
+fi
+
+# refmap list of PRs at +refs/pull/*/head to pull-request remote
+git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*' || exit 1
+git fetch -q -j4 pull-requests || exit 1
+
+# map `git show-branch` to the list of PRs
+
+# bash method
+# readarray -t pr_list < <(git branch -r --list 'pull-requests/*')
+# for i in "${pr_list[@]}"; do
+#         pr="${i##*remotes/}"
+#         git show-branch "$pr" 2>/dev/null
+# done
+
+# posix method
+git branch -r --list 'pull-requests/*' | \
+	while read -r branch; do
+		pr="${branch##*remotes/}"
+		git show-branch "$pr" 2>/dev/null
+	done
