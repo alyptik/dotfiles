@@ -8,6 +8,16 @@ function ztype () { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
 # inline calculator `= 4 * 2`
 function = () { print -r -- "$(($@))"; }
 
+# fetch github PRs
+function get_muh_prs () {
+	if ! git rev-list pull-requests -- &>/dev/null; then
+		git remote add pull-requests ${1:-"$(git remote get-url -origin)"} || return 1
+	fi
+	git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*'
+	git fetch -qj4 pull-requests || return 1
+	() for 1 { git show-branch ${1##*remotes/}; } $(git branch -r --list 'pull-requests/*')
+}
+
 function zle-run-help {
 	local -a args
 	local cmd git_cmd saved match
