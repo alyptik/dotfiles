@@ -6,8 +6,8 @@ if ! git rev-list pull-requests -- >/dev/null 2>&1; then
 fi
 
 # refmap list of PRs at +refs/pull/*/head to pull-request remote
-git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*' || exit 1
-git fetch -q -j4 pull-requests || exit 1
+git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*'
+git fetch -qj4 pull-requests || exit 1
 
 # map `git show-branch` to the list of PRs
 
