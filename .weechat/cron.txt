@@ -8,3 +8,9 @@
 10 * * * * * irc.znc/freenode.#chee-fanclub command /msg pineboat owner reload Markov
 30 * * * * * irc.znc/freenode.#chee-fanclub command /msg pineboat owner reload Markov
 50 * * * * * irc.znc/freenode.#chee-fanclub command /msg pineboat owner reload Markov
+0 * * * * * irc.znc/madirc.#Elite command /msg pineboat owner reload Markov
+20 * * * * * irc.znc/madirc.#Elite command /msg pineboat owner reload Markov
+40 * * * * * irc.znc/madirc.#Elite command /msg pineboat owner reload Markov
+10 * * * * * irc.znc/madirc.#Elite command /msg pineboat owner reload Markov
+30 * * * * * irc.znc/madirc.#Elite command /msg pineboat owner reload Markov
+50 * * * * * irc.znc/madirc.#Elite command /msg pineboat owner reload Markov
