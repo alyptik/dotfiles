@@ -26,9 +26,9 @@
 # m:xxx + c:xxx
 # Shift+...
 
-#keystate_numlock = enable
-#keystate_scrolllock = enable
-#keystate_capslock = enable
+# keystate_numlock = enable
+# keystate_scrolllock = enable
+# keystate_capslock = enable
 
 # tdrop on F9 (c:75)
 "tdrop -n 1 chromium"
@@ -43,47 +43,47 @@
     m:0x0 + c:95
 
 # tdrop on F12 (c:96)
-"tdrop -n 3 st"
-    m:0x0 + c:96
+# "tdrop -n 3 st"
+#     m:0x0 + c:96
 
-# Show xbindkeys bindings
-# "xbindkeys_show"
-#     m:0xc + c:24
-#     Control+Alt + q
+# show xbindkeys bindings
+"xbindkeys_show"
+    m:0xc + c:24
+    Control+Alt + q
 
-## Toggle Touchpad
+# toggle Touchpad
 # "t-xinput.sh"
 "[[ $(xinput list-props $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}') | grep '\bDevice Enabled\b'|sed 's/.*\(.\)$/\1/') -eq 0 ]] && xinput enable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}') || xinput disable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
     m:0xc + c:61
     Control+Alt + slash
 
-## Disable Touchpad
+# disable touchpad
 "xinput disable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
     m:0xc + c:60
     Control+Alt + period
 
-## Enable Touchpad
+# enable touchpad
 "xinput enable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
     m:0xc + c:59
     Control+Alt + comma
 
-## Derease Brightness
+# decrease brightness
 "xbacklight -dec 10"
     m:0xc + c:20
     Control+Alt + minus
 
-## Increase Brightness
+## increase brightness
 "xbacklight -inc 10"
     m:0xc + c:21
     Control+Alt + equal
 
-## VolUp
+# volup
 #"amixer set Master 5%+"
 "pactl set-sink-volume @DEFAULT_SINK@ +5%"
     m:0x0 + c:123
     XF86AudioRaiseVolume
 
-## VolDown
+# voldown
 #"amixer set Master 5%-"
 "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     m:0x0 + c:122
@@ -95,12 +95,12 @@
     m:0x0 + c:121
     XF86AudioMute
 
-## Mouse PageDown
+# mouse pagedown
 #"xdotool key 'Shift+Page_Up'"
 "xdotool key 'Page_Up'"
    m:0x0 + b:9
 
-## Mouse PageUp
+# mouse pageup
 #"xdotool key 'Shift+Page_Down'"
 "xdotool key 'Page_Down'"
    m:0x0 + b:8
@@ -117,30 +117,27 @@
 #   m:0x8 + c:60
 #   Alt + period
 
-## xclip paste
-#"xclip -o -sel clip"
-#  m:0x5 + b:2
+# xclip paste
+# "xclip -o -sel clip"
+ # m:0x5 + b:2
 
-## xclip copy
-#"xclip -f -sel clip"
-#  m:0x0 + b:2
+# xclip copy
+# "xclip -f -sel clip"
+ m:0x0 + b:2
 
-## Restart KWin
-#"kwin_x11 --replace"
+# restart kwin
+# "kwin_x11 --replace"
 #   m:0xc + c:45
 #   Control+Alt + k
 
-## Openbox WM
-#"openbox-session"
+# openbox wm
+# "openbox-session"
 #   m:0xc + c:32
 #   Control+Alt + o
 
-## Plasmashell
-#"plasmashell"
+# plasmashell
+# "plasmashell"
 #   m:0xc + c:33
 #   Control+Alt + p
-
-#
-# End of xbindkeys configuration
 
 # vi:filetype=cfg:

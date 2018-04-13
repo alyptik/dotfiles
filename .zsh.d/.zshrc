@@ -579,7 +579,7 @@ fi
 	defargcmds+=(pstree qemu-img qemu-nbd reptyr resolvconf rfc rg rlwrap)
 	defargcmds+=(rmdir rmlint rst2man rst2man2 saldl scan-build seq shred)
 	defargcmds+=(sox split stat st stjerm strings supybot swapon)
-	defargcmds+=(systool termite test tic tload transmission-cli)
+	defargcmds+=(systool tdrop termite test tic tload transmission-cli)
 	defargcmds+=(transmission-create transmission-daemon transmission-edit)
 	defargcmds+=(transmission-get transmission-gtk transmission-qt)
 	defargcmds+=(transmission-remote transmission-remote-cli)
@@ -701,6 +701,7 @@ hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
 hash -d k="${P:-/store/code/projects}/kernel"
 hash -d l="${P:-/store/code/projects}/linux"
+hash -d lind="${P:-/store/code/projects}/secure-systems-lab/lind_project"
 hash -d magnets="${C:-/store/dotfiles}/magnets"
 hash -d man="${C:-/store/dotfiles}/man"
 hash -d music="/store/music"
@@ -784,10 +785,13 @@ zstyle ':completion:*:*:-subscript-:*'			tag-order indexes parameters
 # 2 -- word flex completion (abc => A-big-Car)
 # 3 -- full flex completion (abc => ABraCadabra)
 zstyle ':completion:*'					matcher-list \
-	'' \
 	'm:{a-z\-}={A-Z\_}' \
 	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
 	'r:|?=** m:{a-z\-}={A-Z\_}'
+	# '' \
+	# 'm:{a-z\-}={A-Z\_}' \
+	# 'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+	# 'r:|?=** m:{a-z\-}={A-Z\_}'
 # match uppercase from lowercase
 # zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
 # zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
