@@ -61,7 +61,7 @@ CFLAGS="-fPIC -fuse-ld=gold $CFLAGS"
 CFLAGS="-fuse-linker-plugin $CFLAGS"
 export CFLAGS
 export CHOST="x86_64-unknown-linux-gnu"
-export CCFLAGS="$CFLAGS"
+export CPATH=":$HOME/.local/include"
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 export CXXFLAGS="$CFLAGS"
 LDFLAGS="$CFLAGS"
@@ -69,6 +69,7 @@ LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
 LDFLAGS="-Wl,--warn-unresolved-symbols $LDFLAGS"
 # LDFLAGS="-Wl,--sort-common,--as-needed $LDFLAGS"
 export LDFLAGS
+export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l4"
 export MAKEFLAGS="-j4"
 

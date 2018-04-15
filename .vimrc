@@ -45,6 +45,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'JCLiang/vim-cscope-utils'
 	Plug 'hdima/python-syntax'
 	Plug 'jungomi/vim-mdnquery'
 	Plug 'osfameron/perl-tags-vim'
@@ -306,6 +307,7 @@ set showbreak=++++
 " let &showbreak="        "
 set history=10000
 set nohlsearch
+set viewoptions-=options
 
 " '10  :  marks will be remembered for up to 10 previously edited files
 "  <100 :  will save up to 100 lines for each register
@@ -393,16 +395,14 @@ au FileType haskell setl omnifunc=necoghc#omnifunc
 " filetype marks
 augroup VIMRC
 	autocmd!
-	autocmd BufLeave *.c    normal! mC
-	autocmd BufLeave *.h    normal! mH
-	" autocmd BufLeave *.css  normal! mC
-	" autocmd BufLeave *.html normal! mH
+	autocmd BufLeave *.c    normal! mc
+	autocmd BufLeave *.h    normal! mh
+	autocmd BufLeave *.css  normal! mC
+	autocmd BufLeave *.html normal! mH
 	autocmd BufLeave *.js   normal! mJ
 	autocmd BufLeave *.php  normal! mP
 augroup END
 autocmd BufEnter PKGBUILD,.env let b:ale_sh_shellcheck_exclusions='SC2034,SC2154,SC2164'
-
-" let g:easytags_opts=['--fields=+l --c-kinds=-p']
 
 " airline
 let g:airline#extensions#whitespace#enabled=1
@@ -558,6 +558,13 @@ let g:easytags_by_filetype='~/.vim/tags'
 "let g:easytags_events=['BufWritePost', 'CursorHold']
 "let g:easytags_events=['BufWritePost', 'CursorHold', 'CursorHoldI']
 "let g:easytags_events=['BufWritePost', 'CursorHoldI']
+let g:easytags_suppress_ctags_warning=1
+" let g:easytags_opts=['--fields=+l --c-kinds=-p']
+let g:easytags_opts=[
+	\ '--fields=+l', '--c-kinds=+lp',
+	\ '--c++-kinds=+lp', '--python-kinds=+lz',
+	\ '--extras=+q'
+	\ ]
 let g:netrw_silent=1
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
@@ -1330,19 +1337,16 @@ endif
 augroup resCur
 	autocmd!
 	if has("folding")
-		au VimEnter * if ResCur() | call UnfoldCur() | endif
-		au BufWinEnter * if ResCur() | call UnfoldCur() | endif
+		" au BufWinEnter * if ResCur() | call UnfoldCur() | endif
+		au BufWinEnter ?* silent! 0,$foldo!
 	else
-"  au VimEnter * silent loadview
-	au VimEnter * loadview
-"  au BufWinEnter * silent loadview
-	au BufWinEnter * loadview
-	au BufWinEnter * call ResCur()
-"  au BufReadPost * call setpos(".", getpos("'\""))
-	au BufWinLeave * mkview
+		au BufWinEnter ?* call ResCur()
 	endif
-	au BufWinEnter * silent! 0,$foldo!
-	au VimEnter * silent! 0,$foldo!
+	" au BufReadPost *.* call setpos(".", getpos("'\""))
+	" au BufWritePost,BufLeave,WinLeave ?* mkview
+	" au BufReadPre ?* silent loadview
+	au BufWinLeave ?* mkview
+	au BufWinEnter ?* silent loadview
 augroup END
 
 " vim -b : edit binary using xxd-format!
@@ -1562,6 +1566,7 @@ noremap <Leader>et :tabe <C-r>=expand("%:p:h")."/"<CR>
 noremap <Leader>het :tabe <C-r>=expand("~")."/"<CR>
 noremap <Leader>eb :e <C-r>=expand("%:p:h")."/"<CR>
 noremap <Leader>heb :e <C-r>=expand("~")."/"<CR>
+" Avoid E173
 noremap <Leader>[ :qall<CR>
 noremap <Leader>] :w<CR>
 "noremap <Leader>; :bdel<CR>
@@ -1645,6 +1650,10 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 " map ][ /}<CR>b99]}
 " map ]] j0[[%/{<CR>
 " map [] k$][%?}<CR>
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
 map ; ^
 map ' $
 map ,, %
