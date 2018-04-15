@@ -683,6 +683,7 @@ compdef xs=xsel
 compdef cg=cgasm
 compdef _=sudo
 compdef e=vim
+compdef g=git
 
 # named directories
 hash -d a="${HOME}/code/aur"
