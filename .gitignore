@@ -1,5 +1,5 @@
-*\~
 *.zwc
+*\~
 *.swn
 *.swo
 *.swp
@@ -48,6 +48,7 @@ openvpn/
 .homesick/
 .distcc/
 vimfiles/
+.vim/view/
 .nicotine/
 gifs/thewire/
 .mpdscribble/
