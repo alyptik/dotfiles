@@ -23,9 +23,10 @@ export LINUX="$PROJECTS/linux" L="$LINUX" l="$LINUX"
 export CONFIG="/store/dotfiles" C="$CONFIG" c="$CONFIG"
 
 # compiler environment
-unset CCACHE_DISABLE CFLAGS CCFLAGS CPPFLAGS CXXFLAGS LDFLAGS
+unset CARCH CCACHE_DISABLE CFLAGS CCFLAGS CHOST
+unset CPATH CPPFLAGS CXXFLAGS LDFLAGS LIBRARY_PATH
 export ARCHFLAGS="-arch x86_64"
-export CARCH="x86_64"
+# export CARCH="x86_64"
 export CCACHE_DIR="$HOME/.ccache"
 # export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin
@@ -49,27 +50,28 @@ GCC_COLORS="fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:$GCC_C
 GCC_COLORS="diff-delete=31:diff-insert=32:type-diff=01;32:$GCC_COLORS"
 export GCC_COLORS
 # compiler flags
-CFLAGS="-pipe -march=native -g3 -O3"
+# CFLAGS="-pipe -march=native -g3 -O3"
+CFLAGS="-march=native -O3"
 # CFLAGS="-Wno-unknown-warning $CFLAGS"
 CFLAGS="-Wno-error -Wno-implicit-fallthrough $CFLAGS"
-# CFLAGS="-fno-plt -fno-strict-aliasing $CFLAGS"
-CFLAGS="-fno-strict-aliasing $CFLAGS"
+CFLAGS="-fno-plt -fno-strict-aliasing $CFLAGS"
+# CFLAGS="-fno-strict-aliasing $CFLAGS"
 CFLAGS="-fdiagnostics-color=always $CFLAGS"
 CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
-# CFLAGS="-flto -fPIC -fuse-ld=gold $CFLAGS"
+CFLAGS="-flto -fPIC -fuse-ld=gold $CFLAGS"
 CFLAGS="-fPIC -fuse-ld=gold $CFLAGS"
 CFLAGS="-fuse-linker-plugin $CFLAGS"
 export CFLAGS
-export CHOST="x86_64-unknown-linux-gnu"
-export CPATH=":$HOME/.local/include"
+# export CHOST="x86_64-unknown-linux-gnu"
+# export CPATH=":$HOME/.local/include"
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 export CXXFLAGS="$CFLAGS"
 LDFLAGS="$CFLAGS"
 LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
-LDFLAGS="-Wl,--warn-unresolved-symbols $LDFLAGS"
+# LDFLAGS="-Wl,--warn-unresolved-symbols $LDFLAGS"
 # LDFLAGS="-Wl,--sort-common,--as-needed $LDFLAGS"
 export LDFLAGS
-export LIBRARY_PATH="$HOME/.local/lib"
+# export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l4"
 export MAKEFLAGS="-j4"
 
