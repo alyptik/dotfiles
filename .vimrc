@@ -56,33 +56,33 @@ call plug#begin(g:plugdir)
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
-	Plug 'xolox/vim-misc'
+	" Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
-	Plug 'edkolev/promptline.vim'
+	" Plug 'edkolev/promptline.vim'
 	" Plug 'sudar/vim-arduino-syntax'
 	" Plug 'jplaut/vim-arduino-ino'
 	" Plug 'stevearc/vim-arduino'
-	Plug 'eagletmt/ghcmod-vim'
-	Plug 'eagletmt/neco-ghc'
+	" Plug 'eagletmt/ghcmod-vim'
+	" Plug 'eagletmt/neco-ghc'
 	" Plug 'lervag/vimtex'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview'
 	" Plug 'justmao945/vim-clang'
 	Plug 'Rip-Rip/clang_complete'
-	Plug 'mikelue/vim-maven-plugin'
+	" Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
-	Plug 'chaoren/vim-wordmotion'
+	" Plug 'chaoren/vim-wordmotion'
 	" Plug 'easymotion/vim-easymotion'
 	Plug 'matze/vim-move'
 	Plug 'rhysd/conflict-marker.vim'
 	" Plug 'vim-voom/VOoM'
 	Plug 'thinca/vim-visualstar'
-	Plug 'wincent/command-t', {'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'}
+	" Plug 'wincent/command-t', {'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'}
 	Plug 'airblade/vim-gitgutter'
-	Plug 'editorconfig/editorconfig-vim'
+	" Plug 'editorconfig/editorconfig-vim'
 	" Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'yes \| ./install -no-update-rc'}
-	Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
-	Plug 'junegunn/fzf.vim'
+	" Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
+	" Plug 'junegunn/fzf.vim'
 	" Plug 'junegunn/limelight.vim'
 	Plug 'maksimr/vim-jsbeautify'
 	Plug 'mileszs/ack.vim'
@@ -92,13 +92,13 @@ call plug#begin(g:plugdir)
 	Plug 'subosito/nginx.vim'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	Plug 'ternjs/tern_for_vim', {'do': 'npm install && npm install -g tern'}
-	Plug 'terryma/vim-expand-region'
+	" Plug 'terryma/vim-expand-region'
 	Plug 'tpope/vim-abolish'
-	Plug 'tpope/vim-commentary'
+	" Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-fugitive'
-	Plug 'tpope/vim-repeat'
+	" Plug 'tpope/vim-repeat'
 	Plug 'tpope/vim-surround'
-	Plug 'tpope/vim-unimpaired'
+	" Plug 'tpope/vim-unimpaired'
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'w0rp/ale'
@@ -117,17 +117,16 @@ call plug#begin(g:plugdir)
 	" Plug 'FredKSchott/CoVim'
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'Rykka/riv.vim'
-	Plug 'Rykka/InstantRst'
+	" Plug 'Rykka/InstantRst'
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'jreybert/vimagit'
 	" Plug 'vim-ctrlspace/vim-ctrlspace'
-	Plug 'jungomi/vim-mdnquery'
-	Plug 'powerman/vim-plugin-AnsiEsc'
+	" Plug 'powerman/vim-plugin-AnsiEsc'
 	Plug 'tpope/vim-rhubarb'
 	Plug 'mhinz/vim-signify'
 	Plug 'jpalardy/vim-slime', {'for': ['clojure', 'scheme']}
 	" Plug 'tpope/vim-vinegar'
-	Plug 'junegunn/seoul256.vim'
+	" Plug 'junegunn/seoul256.vim'
 	" Plug 'junegunn/vim-easy-align'
 	Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 	" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -1217,21 +1216,21 @@ let g:expand_region_text_objects_ruby= {
 	\ 'am' :0,
 	\ }
 " Extend the global default (NOTE: Remove comments in dictionary before sourcing)
-call expand_region#custom_text_objects({
-	\ "\/\\n\\n\<CR>": 1,
-	\ 'a]' :1,
-	\ 'ab' :1,
-	\ 'aB' :1,
-	\ 'ii' :0,
-	\ 'ai' :0,
-	\ })
+" call expand_region#custom_text_objects({
+"         \ '\/\\n\\n\<CR>': 1,
+"         \ 'a]' :1,
+"         \ 'ab' :1,
+"         \ 'aB' :1,
+"         \ 'ii' :0,
+"         \ 'ai' :0,
+"         \ })
 " Use the global default + the following for ruby
-call expand_region#custom_text_objects('ruby', {
-	\ 'im' :0,
-	\ 'am' :0,
-	\ })
-map <Leader>h <Plug>(expand_region_expand)
-map <Leader>g <Plug>(expand_region_shrink)
+" call expand_region#custom_text_objects('ruby', {
+"         \ 'im' :0,
+"         \ 'am' :0,
+"         \ })
+" map <Leader>h <Plug>(expand_region_expand)
+" map <Leader>g <Plug>(expand_region_shrink)
 
 " NERDTree ---------------------------------------------------------------------
 "map <silent> <leader>D :execute 'NERDTreeToggle ' . getcwd()<CR>
