@@ -315,7 +315,8 @@ set viewoptions-=options
 "  :20  :  up to 20 lines of command-line history will be remembered
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
-set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
+set viminfo='1000000,s1000000,!,c,h,n~/.viminfo
+" set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
 " set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n~/.viminfo
 
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
@@ -644,11 +645,17 @@ let g:UltiSnipsListSnippets='<C-l>'
 " inoremap <C-x><C-k> <C-x><C-k>
 " inoremap <C-H> <C-h>
 
+let g:ale_c_flawfinder_executable=1
 let g:ale_c_flawfinder_error_severity=6
 let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
 let g:clang_cpp_options=''
-	\ . '-std=gnu++14 -stdlib=libc++'
-	\ . '-I./include -Wall -Wextra'
+	\ . '-std=gnu++14 -stdlib=libc++ '
+	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
+	\ . '-D__native_client__ -DNACL_LINUX=1 -DNACL_x86=1 '
+	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
+	\ . '-I./ -I../ -I../../ '
+	\ . '-I./trusted/include/ -I./untrusted/include/ '
+	\ . '-I./include/ -Wall -Wextra '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
@@ -656,7 +663,12 @@ let g:clang_cpp_options=''
 	\ . '-Wshadow -Wstrict-overflow '
 let g:ale_c_clang_options=''
 	\ . '-std=gnu11 '
-	\ . '-I./include -Wall -Wextra '
+	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
+	\ . '-D__native_client__ -DNACL_LINUX=1 -DNACL_x86=1 '
+	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
+	\ . '-I./ -I../ -I../../ '
+	\ . '-I./trusted/include/ -I./untrusted/include/ '
+	\ . '-I./include/ -Wall -Wextra '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
@@ -665,8 +677,8 @@ let g:ale_c_clang_options=''
 let g:ale_c_clangtidy_options=g:ale_c_clang_options
 let g:ale_c_gcc_options=g:ale_c_clang_options
 let g:clang_c_options=g:ale_c_clang_options
-let g:ale_linters = {'c': ['clang', 'clangtidy', 'gcc']}
-" let g:ale_linters = {'c': ['clang', 'clangtidy', 'cppcheck', 'gcc']}
+let g:ale_linters = {'c': ['clang', 'gcc', 'clangtidy', 'flawfinder']}
+" let g:ale_linters = {'c': ['clang', 'gcc', 'clangtidy', 'flawfinder', 'cppcheck']}
 let g:ale_fixers={'c': ['clang-format']}
 let g:ale_c_clangtidy_checks=[
 	\ 'bugprone-integer-division',
@@ -1346,7 +1358,7 @@ augroup resCur
 	" au BufWritePost,BufLeave,WinLeave ?* mkview
 	" au BufReadPre ?* silent loadview
 	au BufWinLeave ?* mkview
-	au BufWinEnter ?* silent loadview
+	au BufWinEnter ?* silent! loadview
 augroup END
 
 " vim -b : edit binary using xxd-format!

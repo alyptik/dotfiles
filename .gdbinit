@@ -9,6 +9,7 @@
 # set auto-load safe-path /
 # set auto-load safe-path /usr/lib/libthread_db-1.0.so
 add-auto-load-safe-path /usr/lib/libthread_db-1.0.so
+add-auto-load-safe-path /store/code/projects/kernel/linux/scripts/gdb/vmlinux-gdb.py
 set auto-load libthread-db on
 
 # set disassembly intel

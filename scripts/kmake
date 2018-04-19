@@ -17,6 +17,9 @@ mod_args=()
 make_cmd=(make)
 sparse_flag=''
 
+# needed for buildroot
+unset PERL_MM_OPT
+
 # cleanup traps
 function cleanup() {
 	local build_lines error_lines
@@ -107,14 +110,16 @@ printf 'buildroot module directory: [%s]\n' \
 	"$(tput sgr0)$(tput setaf 13)$bmod_dir$(tput sgr0)"
 
 # record date
-perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' \
+perl -e \
+	'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' \
 	| tee -a ../build.log.tmp
 
 # start build
 if [[ -z "$sparse_flag" ]]; then
 	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}"
 else
-	perl -e 'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' \
+	perl -e \
+		'print "\n", "—"x72, "\nCompilation started at: ". `date`, "—"x72, "\n\n"' \
 		>> ../error.log.tmp
 	"${make_cmd[@]}" O="$out_dir" "${append_args[@]}" \
 		2> >(tee -a ../error.log.tmp >&2) \
@@ -123,7 +128,7 @@ fi
 
 # install modules
 if [[ -n "${mod_args[*]}" ]]; then
-	rm -rfv "${kmod_dir:?}"/* "${bmod_dir:?}"/*
+	rm -rf "${kmod_dir:?}"/* "${bmod_dir:?}"/*
 	"${make_cmd[@]}" O="$out_dir" "${mod_args[@]}" \
 		2> >(tee -a ../error.log.tmp >&2) \
 		> >(tee -a ../build.log.tmp)

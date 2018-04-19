@@ -1,0 +1,11 @@
+#!/bin/sh
+
+kernel_file="${1:-/store/code/projects/kernel/obj/linux-x86/vmlinux}"
+shift
+runkernel -ds "$@"
+gdb \
+	-ex "set confirm off" \
+	-ex "symbol-file $kernel_file" \
+	-ex "target remote :1234" \
+	-ex "hbreak start_kernel" \
+	"$kernel_file"

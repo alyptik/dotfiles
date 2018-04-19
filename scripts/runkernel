@@ -38,9 +38,10 @@ while getopts :a:b:i:n:dghkms opt; do
 		display='-vga virtio'
 		;;
 	(k)
-		extra_append="$extra_append kgdbwait"
+		extra_append="$extra_append kgdbwait nokaslr"
 		# For those who want to try KDB.
 		# extra_append+="$extra_append kgdboc=kbd"
+		extra_append="$extra_append console=ttyS0,115200"
 		extra_append="$extra_append kgdboc=ttyS0,115200"
 		extra_flags="$extra_flags -serial tcp::1234,server,nowait"
 		;;

@@ -59,7 +59,7 @@ CFLAGS="-fno-plt -fno-strict-aliasing $CFLAGS"
 CFLAGS="-fdiagnostics-color=always $CFLAGS"
 CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
 CFLAGS="-flto -fPIC -fuse-ld=gold $CFLAGS"
-CFLAGS="-fPIC -fuse-ld=gold $CFLAGS"
+# CFLAGS="-fPIC -fuse-ld=gold $CFLAGS"
 CFLAGS="-fuse-linker-plugin $CFLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"

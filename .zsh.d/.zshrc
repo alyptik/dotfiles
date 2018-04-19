@@ -745,6 +745,13 @@ WORDCHARS=
 	_ssh_hosts=(${${(Mu)${${_ssh_hosts##*/}##*@}##*.*}%%:*})
 	zstyle ':completion:*:(ssh|scp|sftp|rsync):*'	hosts $_ssh_hosts
 }
+
+# only show single character options with -
+# zstyle -e ':completion:*:options'			ignored-patterns '
+#         if [[ -prefix - ]]; then
+#                 reply=("--*");
+#         fi'
+
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
 zstyle ':completion:*:approximate:'			max-errors 'reply=("$(( ($#PREFIX+$#SUFFIX)/2 ))" numeric)'
