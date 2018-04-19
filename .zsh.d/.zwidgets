@@ -24,10 +24,6 @@ function zle-run-help {
 	match="${(M)BUFFER##g }"
 	saved="$BUFFER"
 	args=(${(z)BUFFER})
-	if [[ -n "$match" ]]; then
-		saved="${saved/g /git }"
-		args[1]="$saved"
-	fi
 	while (($#args > 1)); do
 		cmd=$args[1]
 		if [[ $(ztype $cmd) == alias ]]; then
@@ -40,11 +36,11 @@ function zle-run-help {
 		shift args
 	done
 	if whence $args >/dev/null; then
-		if [[ $args[1] == git ]]; then
-			git_cmd=${${(z)$(git config --global "alias.$args[2]")}[1]}
+		if [[ $args[1] == git || $args[1] == g ]]; then
+			git_cmd=${${(z)$(git config --global "alias.$args[2]" 2>/dev/null)}[1]}
 			[[ -n "$git_cmd" ]] && args[2]=$git_cmd
 		fi
-		print $git_cmd
+		args[1]="${args[1]/#g/git}"
 		zle push-input
 		BUFFER="run-help $args"
 	else
@@ -57,16 +53,14 @@ function zle-run-help {
 
 # compile zwc files
 function zwc () {
-	(
-		cd "${ZDOTDIR:-$HOME/.zsh.d}/zfunctions" && \
-		rm -fv ../zfuncs.zwc && zcompile -MUz ../zfuncs.zwc * || \
-		return 1
-	)
-	(
-		cd "${ZDOTDIR:-$HOME/.zsh.d}/completions/enabled" && \
-		rm -fv ../../zcomps.zwc && zcompile -MUz ../../zcomps.zwc * || \
-		return 1
-	)
+	rm -fv ${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc \
+		&& zcompile -MUz \
+			${ZDOTDIR:-$HOME/.zsh.d}/zfuncs.zwc \
+			${ZDOTDIR:-$HOME/.zsh.d}/zfunctions/*
+	rm -fv ${ZDOTDIR:-$HOME/.zsh.d}/zcomps.zwc \
+		&& zcompile -MUz \
+			${ZDOTDIR:-$HOME/.zsh.d}/zcomps.zwc \
+			${ZDOTDIR:-$HOME/.zsh.d}/completions/enabled/*
 }
 
 function zle-fman {
@@ -314,31 +308,34 @@ function zshreadhist () { fc -p "$HISTFILE"; }
 
 # Set term escape strings
 function setescapes () {
-	[[ "$TERM" =~ ^linux.*$ ]] && return
-	local i
-	typeset -g cblock cline cred cgrey cyellow
-	cblock='\033[1 q'
-	cline='\033[5 q'
-	# cgrey='\033]12;##d7d7d7\007'
-	# cgrey='\033]12;Grey\007'
-	# cred='\033]12;Red\007'
-	# cred='\033]12;#ff0000\007'
-	# cred='\033]12;#cc241d\007'
-	cred='\033]12;#fb4934\007'
-	cgrey='\033]12;#a0a0a0\007'
-	cyellow='\033]12;#b58900\007'
-	if (pstree -s "$$" | grep -wq '\(termite\|stjerm\|qterminal\)' || [[ "$TERM" =~ (linux|xterm.*) ]]); then
-		cblock= cline=
-		return
-	elif pstree -s "$$" | grep -wq 'screen'; then
-		for i in cblock cline cred cgrey cyellow; do
-			eval "$i="'\\033P'"\${$i}"'\\033\\\\'
-		done
-	elif ([[ -n "$TMUX" ]] && [[ -z "$STY" ]]); then
-		for i in cblock cline cred cgrey cyellow; do
-			eval "$i="'\\033Ptmux\;\\033'"\${$i}"'\\033\\\\'
-		done
-	fi
+	{
+		[[ "$TERM" =~ ^linux.*$ ]] && return
+		local i
+		typeset -g cblock cline cred cgrey cyellow
+		cblock='\033[1 q'
+		cline='\033[5 q'
+		# cgrey='\033]12;##d7d7d7\007'
+		# cgrey='\033]12;Grey\007'
+		# cred='\033]12;Red\007'
+		# cred='\033]12;#ff0000\007'
+		# cred='\033]12;#cc241d\007'
+		cred='\033]12;#fb4934\007'
+		cgrey='\033]12;#a0a0a0\007'
+		cyellow='\033]12;#b58900\007'
+		if [[ "$TERM" =~ (linux|xterm.*) ]]; then
+			cblock= cline=
+		elif pstree -s "$$" | grep -Ewq '(termite|stjerm|qterminal)'; then
+			cblock= cline=
+		elif pstree -s "$$" | grep -wq 'screen'; then
+			for i in cblock cline cred cgrey cyellow; do
+				eval "$i="'\\033P'"\${$i}"'\\033\\\\'
+			done
+		elif ([[ -n "$TMUX" ]] && [[ -z "$STY" ]]); then
+			for i in cblock cline cred cgrey cyellow; do
+				eval "$i="'\\033Ptmux\;\\033'"\${$i}"'\\033\\\\'
+			done
+		fi
+	} 2>/dev/null
 }
 
 # Function to capture exit code of later command.

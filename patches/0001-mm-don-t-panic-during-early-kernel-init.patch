@@ -1,0 +1,3958 @@
+From da7ac9ebd03035fc4b9ad67ee20d493560a0106e Mon Sep 17 00:00:00 2001
+Message-Id: <da7ac9ebd03035fc4b9ad67ee20d493560a0106e.1523957805.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 16 Apr 2018 18:48:29 -1000
+Subject: [PATCH] mm: don't panic() during early kernel init
+
+These functions are called before kernel_start() in
+init/main.c. We cannot panic here since the console, smp,
+and many more things have not yet been initialized.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 26 files changed, 504 deletions(-)
+
+diff --git a/mm/early_ioremap.c b/mm/early_ioremap.c
+index 00ef8d3ec9fbf7fed1..57540de2b44c58b020 100644
+--- a/mm/early_ioremap.c
++++ b/mm/early_ioremap.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * Provide common bits of early_ioremap() support for architectures needing
+  * temporary mappings during boot before ioremap() is available.
+diff --git a/mm/gup.c b/mm/gup.c
+index 3bb0f279df6fbd872b..6c3b4e822946f53352 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1,5 +1,4 @@
+ #include <linux/kernel.h>
+-#include <linux/kernel.h>
+ #include <linux/errno.h>
+ #include <linux/err.h>
+ #include <linux/spinlock.h>
+@@ -40,7 +39,6 @@ static struct page *no_page_table(struct vm_area_struct *vma,
+ static int follow_pfn_pte(struct vm_area_struct *vma, unsigned long address,
+ 		pte_t *pte, unsigned int flags)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 43 \n");
+ 	/* No page to get reference */
+ 	if (flags & FOLL_GET)
+ 		return -EFAULT;
+@@ -318,7 +316,6 @@ static int get_gate_page(struct mm_struct *mm, unsigned long address,
+ 		unsigned int gup_flags, struct vm_area_struct **vma,
+ 		struct page **page)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 321 \n");
+ 	pgd_t *pgd;
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+@@ -632,7 +629,6 @@ static long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
+ 
+ bool vma_permits_fault(struct vm_area_struct *vma, unsigned int fault_flags)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 635 \n");
+ 	bool write   = !!(fault_flags & FAULT_FLAG_WRITE);
+ 	bool foreign = !!(fault_flags & FAULT_FLAG_REMOTE);
+ 	vm_flags_t vm_flags = write ? VM_WRITE : VM_READ;
+@@ -687,7 +683,6 @@ int fixup_user_fault(struct task_struct *tsk, struct mm_struct *mm,
+ 		     unsigned long address, unsigned int fault_flags,
+ 		     bool *unlocked)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 690 \n");
+ 	struct vm_area_struct *vma;
+ 	int ret, major = 0;
+ 
+@@ -850,7 +845,6 @@ long get_user_pages_locked(unsigned long start, unsigned long nr_pages,
+ 			   unsigned int gup_flags, struct page **pages,
+ 			   int *locked)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 853 \n");
+ 	return __get_user_pages_locked(current, current->mm, start, nr_pages,
+ 				       pages, NULL, locked, true,
+ 				       gup_flags | FOLL_TOUCH);
+@@ -871,7 +865,6 @@ __always_inline long __get_user_pages_unlocked(struct task_struct *tsk, struct m
+ 					       unsigned long start, unsigned long nr_pages,
+ 					       struct page **pages, unsigned int gup_flags)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 874 \n");
+ 	long ret;
+ 	int locked = 1;
+ 
+@@ -904,7 +897,6 @@ EXPORT_SYMBOL(__get_user_pages_unlocked);
+ long get_user_pages_unlocked(unsigned long start, unsigned long nr_pages,
+ 			     struct page **pages, unsigned int gup_flags)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 907 \n");
+ 	return __get_user_pages_unlocked(current, current->mm, start, nr_pages,
+ 					 pages, gup_flags | FOLL_TOUCH);
+ }
+@@ -984,7 +976,6 @@ long get_user_pages(unsigned long start, unsigned long nr_pages,
+ 		unsigned int gup_flags, struct page **pages,
+ 		struct vm_area_struct **vmas)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 987 \n");
+ 	return __get_user_pages_locked(current, current->mm, start, nr_pages,
+ 				       pages, vmas, NULL, false,
+ 				       gup_flags | FOLL_TOUCH);
+@@ -1077,7 +1068,6 @@ EXPORT_SYMBOL(get_user_pages_longterm);
+ long populate_vma_page_range(struct vm_area_struct *vma,
+ 		unsigned long start, unsigned long end, int *nonblocking)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 1080 \n");
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	unsigned long nr_pages = (end - start) / PAGE_SIZE;
+ 	int gup_flags;
+@@ -1123,7 +1113,6 @@ long populate_vma_page_range(struct vm_area_struct *vma,
+  */
+ int __mm_populate(unsigned long start, unsigned long len, int ignore_errors)
+ {
+-	panic("We reached unpopular paths in mm/gup.c: line 1126 \n");
+ 	struct mm_struct *mm = current->mm;
+ 	unsigned long end, nstart, nend;
+ 	struct vm_area_struct *vma = NULL;
+diff --git a/mm/internal.h b/mm/internal.h
+index 7b8190b7ffd7878f0e..3e2d016947479f5d40 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /* internal.h: mm/ internal definitions
+  *
+  * Copyright (C) 2004 Red Hat, Inc. All Rights Reserved.
+@@ -57,7 +56,6 @@ extern int __do_page_cache_readahead(struct address_space *mapping,
+ static inline unsigned long ra_submit(struct file_ra_state *ra,
+ 		struct address_space *mapping, struct file *filp)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 60 \n");
+ 	return __do_page_cache_readahead(mapping, filp,
+ 					ra->start, ra->size, ra->async_size);
+ }
+@@ -68,7 +66,6 @@ static inline unsigned long ra_submit(struct file_ra_state *ra,
+  */
+ static inline void set_page_refcounted(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 71 \n");
+ 	VM_BUG_ON_PAGE(PageTail(page), page);
+ 	VM_BUG_ON_PAGE(page_ref_count(page), page);
+ 	set_page_count(page, 1);
+@@ -142,7 +139,6 @@ struct alloc_context {
+ static inline unsigned long
+ __find_buddy_index(unsigned long page_idx, unsigned int order)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 145 \n");
+ 	return page_idx ^ (1 << order);
+ }
+ 
+@@ -152,7 +148,6 @@ extern struct page *__pageblock_pfn_to_page(unsigned long start_pfn,
+ static inline struct page *pageblock_pfn_to_page(unsigned long start_pfn,
+ 				unsigned long end_pfn, struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 155 \n");
+ 	if (zone->contiguous)
+ 		return pfn_to_page(start_pfn);
+ 
+@@ -221,7 +216,6 @@ int find_suitable_fallback(struct free_area *area, unsigned int order,
+  */
+ static inline unsigned int page_order(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 224 \n");
+ 	/* PageBuddy() must be checked by the caller */
+ 	return page_private(page);
+ }
+@@ -241,7 +235,6 @@ static inline unsigned int page_order(struct page *page)
+ 
+ static inline bool is_cow_mapping(vm_flags_t flags)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 244 \n");
+ 	return (flags & (VM_SHARED | VM_MAYWRITE)) == VM_MAYWRITE;
+ }
+ 
+@@ -254,7 +247,6 @@ static inline bool is_cow_mapping(vm_flags_t flags)
+  */
+ static inline bool is_exec_mapping(vm_flags_t flags)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 257 \n");
+ 	return (flags & (VM_EXEC | VM_WRITE | VM_STACK)) == VM_EXEC;
+ }
+ 
+@@ -266,7 +258,6 @@ static inline bool is_exec_mapping(vm_flags_t flags)
+  */
+ static inline bool is_stack_mapping(vm_flags_t flags)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 269 \n");
+ 	return (flags & VM_STACK) == VM_STACK;
+ }
+ 
+@@ -275,7 +266,6 @@ static inline bool is_stack_mapping(vm_flags_t flags)
+  */
+ static inline bool is_data_mapping(vm_flags_t flags)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 278 \n");
+ 	return (flags & (VM_WRITE | VM_SHARED | VM_STACK)) == VM_WRITE;
+ }
+ 
+@@ -364,7 +354,6 @@ static inline void mlock_migrate_page(struct page *new, struct page *old) { }
+  */
+ static inline struct page *mem_map_offset(struct page *base, int offset)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 367 \n");
+ 	if (unlikely(offset >= MAX_ORDER_NR_PAGES))
+ 		return nth_page(base, offset);
+ 	return base + offset;
+@@ -377,7 +366,6 @@ static inline struct page *mem_map_offset(struct page *base, int offset)
+ static inline struct page *mem_map_next(struct page *iter,
+ 						struct page *base, int offset)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 380 \n");
+ 	if (unlikely((offset & (MAX_ORDER_NR_PAGES - 1)) == 0)) {
+ 		unsigned long pfn = page_to_pfn(base) + offset;
+ 		if (!pfn_valid(pfn))
+@@ -427,17 +415,14 @@ extern void mminit_verify_zonelist(void);
+ static inline void mminit_dprintk(enum mminit_level level,
+ 				const char *prefix, const char *fmt, ...)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 430 \n");
+ }
+ 
+ static inline void mminit_verify_pageflags_layout(void)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 435 \n");
+ }
+ 
+ static inline void mminit_verify_zonelist(void)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 440 \n");
+ }
+ #endif /* CONFIG_DEBUG_MEMORY_INIT */
+ 
+@@ -449,7 +434,6 @@ extern void mminit_validate_memmodel_limits(unsigned long *start_pfn,
+ static inline void mminit_validate_memmodel_limits(unsigned long *start_pfn,
+ 				unsigned long *end_pfn)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 452 \n");
+ }
+ #endif /* CONFIG_SPARSEMEM */
+ 
+@@ -498,15 +482,12 @@ void flush_tlb_batched_pending(struct mm_struct *mm);
+ #else
+ static inline void try_to_unmap_flush(void)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 501 \n");
+ }
+ static inline void try_to_unmap_flush_dirty(void)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 505 \n");
+ }
+ static inline void flush_tlb_batched_pending(struct mm_struct *mm)
+ {
+-	panic("We reached unpopular paths in mm/internal.h: line 509 \n");
+ }
+ #endif /* CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH */
+ 
+diff --git a/mm/list_lru.c b/mm/list_lru.c
+index a4231119ccebde91c6..7a40fa2be858acbc79 100644
+--- a/mm/list_lru.c
++++ b/mm/list_lru.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * Copyright (c) 2013 Red Hat, Inc. and Parallels Inc. All rights reserved.
+  * Authors: David Chinner and Glauber Costa
+@@ -33,12 +32,10 @@ static void list_lru_unregister(struct list_lru *lru)
+ #else
+ static void list_lru_register(struct list_lru *lru)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 36 \n");
+ }
+ 
+ static void list_lru_unregister(struct list_lru *lru)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 41 \n");
+ }
+ #endif /* CONFIG_MEMCG && !CONFIG_SLOB */
+ 
+@@ -93,21 +90,18 @@ list_lru_from_kmem(struct list_lru_node *nlru, void *ptr)
+ #else
+ static inline bool list_lru_memcg_aware(struct list_lru *lru)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 96 \n");
+ 	return false;
+ }
+ 
+ static inline struct list_lru_one *
+ list_lru_from_memcg_idx(struct list_lru_node *nlru, int idx)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 103 \n");
+ 	return &nlru->lru;
+ }
+ 
+ static inline struct list_lru_one *
+ list_lru_from_kmem(struct list_lru_node *nlru, void *ptr)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 110 \n");
+ 	return &nlru->lru;
+ }
+ #endif /* CONFIG_MEMCG && !CONFIG_SLOB */
+@@ -154,7 +148,6 @@ EXPORT_SYMBOL_GPL(list_lru_del);
+ 
+ void list_lru_isolate(struct list_lru_one *list, struct list_head *item)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 157 \n");
+ 	list_del_init(item);
+ 	list->nr_items--;
+ }
+@@ -163,7 +156,6 @@ EXPORT_SYMBOL_GPL(list_lru_isolate);
+ void list_lru_isolate_move(struct list_lru_one *list, struct list_head *item,
+ 			   struct list_head *head)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 166 \n");
+ 	list_move(item, head);
+ 	list->nr_items--;
+ }
+@@ -172,7 +164,6 @@ EXPORT_SYMBOL_GPL(list_lru_isolate_move);
+ static unsigned long __list_lru_count_one(struct list_lru *lru,
+ 					  int nid, int memcg_idx)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 175 \n");
+ 	struct list_lru_node *nlru = &lru->node[nid];
+ 	struct list_lru_one *l;
+ 	unsigned long count;
+@@ -188,7 +179,6 @@ static unsigned long __list_lru_count_one(struct list_lru *lru,
+ unsigned long list_lru_count_one(struct list_lru *lru,
+ 				 int nid, struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 191 \n");
+ 	return __list_lru_count_one(lru, nid, memcg_cache_id(memcg));
+ }
+ EXPORT_SYMBOL_GPL(list_lru_count_one);
+@@ -268,7 +258,6 @@ list_lru_walk_one(struct list_lru *lru, int nid, struct mem_cgroup *memcg,
+ 		  list_lru_walk_cb isolate, void *cb_arg,
+ 		  unsigned long *nr_to_walk)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 271 \n");
+ 	return __list_lru_walk_one(lru, nid, memcg_cache_id(memcg),
+ 				   isolate, cb_arg, nr_to_walk);
+ }
+@@ -297,7 +286,6 @@ EXPORT_SYMBOL_GPL(list_lru_walk_node);
+ 
+ static void init_one_lru(struct list_lru_one *l)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 300 \n");
+ 	INIT_LIST_HEAD(&l->list);
+ 	l->nr_items = 0;
+ }
+@@ -533,13 +521,11 @@ void memcg_drain_all_list_lrus(int src_idx, int dst_idx)
+ #else
+ static int memcg_init_list_lru(struct list_lru *lru, bool memcg_aware)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 536 \n");
+ 	return 0;
+ }
+ 
+ static void memcg_destroy_list_lru(struct list_lru *lru)
+ {
+-	panic("We reached unpopular paths in mm/list_lru.c: line 542 \n");
+ }
+ #endif /* CONFIG_MEMCG && !CONFIG_SLOB */
+ 
+diff --git a/mm/memblock.c b/mm/memblock.c
+index 5b30d06ff12f4d2382..42b98af6a41586dd5e 100644
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * Procedures for maintaining information about logical memory blocks.
+  *
+@@ -80,7 +79,6 @@ memblock_type_name(struct memblock_type *type)
+ /* adjust *@size so that (@base + *@size) doesn't overflow, return new size */
+ static inline phys_addr_t memblock_cap_size(phys_addr_t base, phys_addr_t *size)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 83 \n");
+ 	return *size = min(*size, (phys_addr_t)ULLONG_MAX - base);
+ }
+ 
+@@ -1160,7 +1158,6 @@ phys_addr_t __init memblock_alloc_range(phys_addr_t size, phys_addr_t align,
+ 					phys_addr_t start, phys_addr_t end,
+ 					ulong flags)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1163 \n");
+ 	return memblock_alloc_range_nid(size, align, start, end, NUMA_NO_NODE,
+ 					flags);
+ }
+@@ -1174,7 +1171,6 @@ static phys_addr_t __init memblock_alloc_base_nid(phys_addr_t size,
+ 
+ phys_addr_t __init memblock_alloc_nid(phys_addr_t size, phys_addr_t align, int nid)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1177 \n");
+ 	ulong flags = choose_memblock_flags();
+ 	phys_addr_t ret;
+ 
+@@ -1191,14 +1187,12 @@ phys_addr_t __init memblock_alloc_nid(phys_addr_t size, phys_addr_t align, int n
+ 
+ phys_addr_t __init __memblock_alloc_base(phys_addr_t size, phys_addr_t align, phys_addr_t max_addr)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1194 \n");
+ 	return memblock_alloc_base_nid(size, align, max_addr, NUMA_NO_NODE,
+ 				       MEMBLOCK_NONE);
+ }
+ 
+ phys_addr_t __init memblock_alloc_base(phys_addr_t size, phys_addr_t align, phys_addr_t max_addr)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1201 \n");
+ 	phys_addr_t alloc;
+ 
+ 	alloc = __memblock_alloc_base(size, align, max_addr);
+@@ -1212,13 +1206,11 @@ phys_addr_t __init memblock_alloc_base(phys_addr_t size, phys_addr_t align, phys
+ 
+ phys_addr_t __init memblock_alloc(phys_addr_t size, phys_addr_t align)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1215 \n");
+ 	return memblock_alloc_base(size, align, MEMBLOCK_ALLOC_ACCESSIBLE);
+ }
+ 
+ phys_addr_t __init memblock_alloc_try_nid(phys_addr_t size, phys_addr_t align, int nid)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1221 \n");
+ 	phys_addr_t res = memblock_alloc_nid(size, align, nid);
+ 
+ 	if (res)
+@@ -1439,13 +1431,11 @@ void __init __memblock_free_late(phys_addr_t base, phys_addr_t size)
+ 
+ phys_addr_t __init_memblock memblock_phys_mem_size(void)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1442 \n");
+ 	return memblock.memory.total_size;
+ }
+ 
+ phys_addr_t __init_memblock memblock_reserved_size(void)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1448 \n");
+ 	return memblock.reserved.total_size;
+ }
+ 
+@@ -1469,13 +1459,11 @@ phys_addr_t __init memblock_mem_size(unsigned long limit_pfn)
+ /* lowest address */
+ phys_addr_t __init_memblock memblock_start_of_DRAM(void)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1472 \n");
+ 	return memblock.memory.regions[0].base;
+ }
+ 
+ phys_addr_t __init_memblock memblock_end_of_DRAM(void)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1478 \n");
+ 	int idx = memblock.memory.cnt - 1;
+ 
+ 	return (memblock.memory.regions[idx].base + memblock.memory.regions[idx].size);
+@@ -1676,7 +1664,6 @@ void __init_memblock memblock_set_current_limit(phys_addr_t limit)
+ 
+ phys_addr_t __init_memblock memblock_get_current_limit(void)
+ {
+-	panic("We reached unpopular paths in mm/memblock.c: line 1679 \n");
+ 	return memblock.current_limit;
+ }
+ 
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 74dbfc19833273b30a..50088150fc1739a9ef 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /* memcontrol.c - Memory Controller
+  *
+  * Copyright IBM Corporation, 2007
+@@ -251,7 +250,6 @@ enum res_type {
+ /* Some nice accessors for the vmpressure. */
+ struct vmpressure *memcg_to_vmpressure(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 254 \n");
+ 	if (!memcg)
+ 		memcg = root_mem_cgroup;
+ 	return &memcg->vmpressure;
+@@ -259,13 +257,11 @@ struct vmpressure *memcg_to_vmpressure(struct mem_cgroup *memcg)
+ 
+ struct cgroup_subsys_state *vmpressure_to_css(struct vmpressure *vmpr)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 262 \n");
+ 	return &container_of(vmpr, struct mem_cgroup, vmpressure)->css;
+ }
+ 
+ static inline bool mem_cgroup_is_root(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 268 \n");
+ 	return (memcg == root_mem_cgroup);
+ }
+ 
+@@ -336,7 +332,6 @@ EXPORT_SYMBOL(memcg_kmem_enabled_key);
+  */
+ struct cgroup_subsys_state *mem_cgroup_css_from_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 339 \n");
+ 	struct mem_cgroup *memcg;
+ 
+ 	memcg = page->mem_cgroup;
+@@ -362,7 +357,6 @@ struct cgroup_subsys_state *mem_cgroup_css_from_page(struct page *page)
+  */
+ ino_t page_cgroup_ino(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 365 \n");
+ 	struct mem_cgroup *memcg;
+ 	unsigned long ino = 0;
+ 
+@@ -379,7 +373,6 @@ ino_t page_cgroup_ino(struct page *page)
+ static struct mem_cgroup_per_node *
+ mem_cgroup_page_nodeinfo(struct mem_cgroup *memcg, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 382 \n");
+ 	int nid = page_to_nid(page);
+ 
+ 	return memcg->nodeinfo[nid];
+@@ -388,14 +381,12 @@ mem_cgroup_page_nodeinfo(struct mem_cgroup *memcg, struct page *page)
+ static struct mem_cgroup_tree_per_node *
+ soft_limit_tree_node(int nid)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 391 \n");
+ 	return soft_limit_tree.rb_tree_per_node[nid];
+ }
+ 
+ static struct mem_cgroup_tree_per_node *
+ soft_limit_tree_from_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 398 \n");
+ 	int nid = page_to_nid(page);
+ 
+ 	return soft_limit_tree.rb_tree_per_node[nid];
+@@ -405,7 +396,6 @@ static void __mem_cgroup_insert_exceeded(struct mem_cgroup_per_node *mz,
+ 					 struct mem_cgroup_tree_per_node *mctz,
+ 					 unsigned long new_usage_in_excess)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 408 \n");
+ 	struct rb_node **p = &mctz->rb_root.rb_node;
+ 	struct rb_node *parent = NULL;
+ 	struct mem_cgroup_per_node *mz_node;
+@@ -519,7 +509,6 @@ static void mem_cgroup_remove_from_trees(struct mem_cgroup *memcg)
+ static struct mem_cgroup_per_node *
+ __mem_cgroup_largest_soft_limit_node(struct mem_cgroup_tree_per_node *mctz)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 522 \n");
+ 	struct rb_node *rightmost = NULL;
+ 	struct mem_cgroup_per_node *mz;
+ 
+@@ -546,7 +535,6 @@ __mem_cgroup_largest_soft_limit_node(struct mem_cgroup_tree_per_node *mctz)
+ static struct mem_cgroup_per_node *
+ mem_cgroup_largest_soft_limit_node(struct mem_cgroup_tree_per_node *mctz)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 549 \n");
+ 	struct mem_cgroup_per_node *mz;
+ 
+ 	spin_lock_irq(&mctz->lock);
+@@ -579,7 +567,6 @@ mem_cgroup_largest_soft_limit_node(struct mem_cgroup_tree_per_node *mctz)
+ static unsigned long
+ mem_cgroup_read_stat(struct mem_cgroup *memcg, enum mem_cgroup_stat_index idx)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 582 \n");
+ 	long val = 0;
+ 	int cpu;
+ 
+@@ -598,7 +585,6 @@ mem_cgroup_read_stat(struct mem_cgroup *memcg, enum mem_cgroup_stat_index idx)
+ static unsigned long mem_cgroup_read_events(struct mem_cgroup *memcg,
+ 					    enum mem_cgroup_events_index idx)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 601 \n");
+ 	unsigned long val = 0;
+ 	int cpu;
+ 
+@@ -642,7 +628,6 @@ static void mem_cgroup_charge_statistics(struct mem_cgroup *memcg,
+ unsigned long mem_cgroup_node_nr_lru_pages(struct mem_cgroup *memcg,
+ 					   int nid, unsigned int lru_mask)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 645 \n");
+ 	struct lruvec *lruvec = mem_cgroup_lruvec(NODE_DATA(nid), memcg);
+ 	unsigned long nr = 0;
+ 	enum lru_list lru;
+@@ -660,7 +645,6 @@ unsigned long mem_cgroup_node_nr_lru_pages(struct mem_cgroup *memcg,
+ static unsigned long mem_cgroup_nr_lru_pages(struct mem_cgroup *memcg,
+ 			unsigned int lru_mask)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 663 \n");
+ 	unsigned long nr = 0;
+ 	int nid;
+ 
+@@ -783,7 +767,6 @@ struct mem_cgroup *mem_cgroup_iter(struct mem_cgroup *root,
+ 				   struct mem_cgroup *prev,
+ 				   struct mem_cgroup_reclaim_cookie *reclaim)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 786 \n");
+ 	struct mem_cgroup_reclaim_iter *uninitialized_var(iter);
+ 	struct cgroup_subsys_state *css = NULL;
+ 	struct mem_cgroup *memcg = NULL;
+@@ -898,7 +881,6 @@ struct mem_cgroup *mem_cgroup_iter(struct mem_cgroup *root,
+ void mem_cgroup_iter_break(struct mem_cgroup *root,
+ 			   struct mem_cgroup *prev)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 901 \n");
+ 	if (!root)
+ 		root = root_mem_cgroup;
+ 	if (prev && prev != root)
+@@ -956,7 +938,6 @@ static void invalidate_reclaim_iterators(struct mem_cgroup *dead_memcg)
+ int mem_cgroup_scan_tasks(struct mem_cgroup *memcg,
+ 			  int (*fn)(struct task_struct *, void *), void *arg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 959 \n");
+ 	struct mem_cgroup *iter;
+ 	int ret = 0;
+ 
+@@ -1060,7 +1041,6 @@ void mem_cgroup_update_lru_size(struct lruvec *lruvec, enum lru_list lru,
+ 
+ bool task_in_mem_cgroup(struct task_struct *task, struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1063 \n");
+ 	struct mem_cgroup *task_memcg;
+ 	struct task_struct *p;
+ 	bool ret;
+@@ -1094,7 +1074,6 @@ bool task_in_mem_cgroup(struct task_struct *task, struct mem_cgroup *memcg)
+  */
+ static unsigned long mem_cgroup_margin(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1097 \n");
+ 	unsigned long margin = 0;
+ 	unsigned long count;
+ 	unsigned long limit;
+@@ -1125,7 +1104,6 @@ static unsigned long mem_cgroup_margin(struct mem_cgroup *memcg)
+  */
+ static bool mem_cgroup_under_move(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1128 \n");
+ 	struct mem_cgroup *from;
+ 	struct mem_cgroup *to;
+ 	bool ret = false;
+@@ -1148,7 +1126,6 @@ static bool mem_cgroup_under_move(struct mem_cgroup *memcg)
+ 
+ static bool mem_cgroup_wait_acct_move(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1151 \n");
+ 	if (mc.moving_task && current != mc.moving_task) {
+ 		if (mem_cgroup_under_move(memcg)) {
+ 			DEFINE_WAIT(wait);
+@@ -1174,7 +1151,6 @@ static bool mem_cgroup_wait_acct_move(struct mem_cgroup *memcg)
+  */
+ void mem_cgroup_print_oom_info(struct mem_cgroup *memcg, struct task_struct *p)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1177 \n");
+ 	struct mem_cgroup *iter;
+ 	unsigned int i;
+ 
+@@ -1229,7 +1205,6 @@ void mem_cgroup_print_oom_info(struct mem_cgroup *memcg, struct task_struct *p)
+  */
+ static int mem_cgroup_count_children(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1232 \n");
+ 	int num = 0;
+ 	struct mem_cgroup *iter;
+ 
+@@ -1243,7 +1218,6 @@ static int mem_cgroup_count_children(struct mem_cgroup *memcg)
+  */
+ unsigned long mem_cgroup_get_limit(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1246 \n");
+ 	unsigned long limit;
+ 
+ 	limit = memcg->memory.limit;
+@@ -1262,7 +1236,6 @@ unsigned long mem_cgroup_get_limit(struct mem_cgroup *memcg)
+ static bool mem_cgroup_out_of_memory(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 				     int order)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1265 \n");
+ 	struct oom_control oc = {
+ 		.zonelist = NULL,
+ 		.nodemask = NULL,
+@@ -1368,7 +1341,6 @@ int mem_cgroup_select_victim_node(struct mem_cgroup *memcg)
+ #else
+ int mem_cgroup_select_victim_node(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1371 \n");
+ 	return 0;
+ }
+ #endif
+@@ -1378,7 +1350,6 @@ static int mem_cgroup_soft_reclaim(struct mem_cgroup *root_memcg,
+ 				   gfp_t gfp_mask,
+ 				   unsigned long *total_scanned)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1381 \n");
+ 	struct mem_cgroup *victim = NULL;
+ 	int total = 0;
+ 	int loop = 0;
+@@ -1439,7 +1410,6 @@ static DEFINE_SPINLOCK(memcg_oom_lock);
+  */
+ static bool mem_cgroup_oom_trylock(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1442 \n");
+ 	struct mem_cgroup *iter, *failed = NULL;
+ 
+ 	spin_lock(&memcg_oom_lock);
+@@ -1479,7 +1449,6 @@ static bool mem_cgroup_oom_trylock(struct mem_cgroup *memcg)
+ 
+ static void mem_cgroup_oom_unlock(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1482 \n");
+ 	struct mem_cgroup *iter;
+ 
+ 	spin_lock(&memcg_oom_lock);
+@@ -1491,7 +1460,6 @@ static void mem_cgroup_oom_unlock(struct mem_cgroup *memcg)
+ 
+ static void mem_cgroup_mark_under_oom(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1494 \n");
+ 	struct mem_cgroup *iter;
+ 
+ 	spin_lock(&memcg_oom_lock);
+@@ -1502,7 +1470,6 @@ static void mem_cgroup_mark_under_oom(struct mem_cgroup *memcg)
+ 
+ static void mem_cgroup_unmark_under_oom(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1505 \n");
+ 	struct mem_cgroup *iter;
+ 
+ 	/*
+@@ -1526,7 +1493,6 @@ struct oom_wait_info {
+ static int memcg_oom_wake_function(wait_queue_t *wait,
+ 	unsigned mode, int sync, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1529 \n");
+ 	struct mem_cgroup *wake_memcg = (struct mem_cgroup *)arg;
+ 	struct mem_cgroup *oom_wait_memcg;
+ 	struct oom_wait_info *oom_wait_info;
+@@ -1556,7 +1522,6 @@ static void memcg_oom_recover(struct mem_cgroup *memcg)
+ 
+ static void mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int order)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1559 \n");
+ 	if (!current->memcg_may_oom)
+ 		return;
+ 	/*
+@@ -1598,7 +1563,6 @@ static void mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int order)
+  */
+ bool mem_cgroup_oom_synchronize(bool handle)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1601 \n");
+ 	struct mem_cgroup *memcg = current->memcg_in_oom;
+ 	struct oom_wait_info owait;
+ 	bool locked;
+@@ -1785,7 +1749,6 @@ static void drain_stock(struct memcg_stock_pcp *stock)
+ 
+ static void drain_local_stock(struct work_struct *dummy)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1788 \n");
+ 	struct memcg_stock_pcp *stock;
+ 	unsigned long flags;
+ 
+@@ -1825,7 +1788,6 @@ static void refill_stock(struct mem_cgroup *memcg, unsigned int nr_pages)
+  */
+ static void drain_all_stock(struct mem_cgroup *root_memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1828 \n");
+ 	int cpu, curcpu;
+ 
+ 	/* If someone's already draining, avoid adding running more workers. */
+@@ -1859,7 +1821,6 @@ static int memcg_cpu_hotplug_callback(struct notifier_block *nb,
+ 					unsigned long action,
+ 					void *hcpu)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1862 \n");
+ 	int cpu = (unsigned long)hcpu;
+ 	struct memcg_stock_pcp *stock;
+ 
+@@ -1878,7 +1839,6 @@ static void reclaim_high(struct mem_cgroup *memcg,
+ 			 unsigned int nr_pages,
+ 			 gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1881 \n");
+ 	do {
+ 		if (page_counter_read(&memcg->memory) <= memcg->high)
+ 			continue;
+@@ -1889,7 +1849,6 @@ static void reclaim_high(struct mem_cgroup *memcg,
+ 
+ static void high_work_func(struct work_struct *work)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 1892 \n");
+ 	struct mem_cgroup *memcg;
+ 
+ 	memcg = container_of(work, struct mem_cgroup, high_work);
+@@ -2081,7 +2040,6 @@ static void cancel_charge(struct mem_cgroup *memcg, unsigned int nr_pages)
+ 
+ static void lock_page_lru(struct page *page, int *isolated)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2084 \n");
+ 	struct zone *zone = page_zone(page);
+ 
+ 	spin_lock_irq(zone_lru_lock(zone));
+@@ -2098,7 +2056,6 @@ static void lock_page_lru(struct page *page, int *isolated)
+ 
+ static void unlock_page_lru(struct page *page, int isolated)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2101 \n");
+ 	struct zone *zone = page_zone(page);
+ 
+ 	if (isolated) {
+@@ -2477,7 +2434,6 @@ static int mem_cgroup_move_swap_account(swp_entry_t entry,
+ static inline int mem_cgroup_move_swap_account(swp_entry_t entry,
+ 				struct mem_cgroup *from, struct mem_cgroup *to)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2480 \n");
+ 	return -EINVAL;
+ }
+ #endif
+@@ -2487,7 +2443,6 @@ static DEFINE_MUTEX(memcg_limit_mutex);
+ static int mem_cgroup_resize_limit(struct mem_cgroup *memcg,
+ 				   unsigned long limit)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2490 \n");
+ 	unsigned long curusage;
+ 	unsigned long oldusage;
+ 	bool enlarge = false;
+@@ -2543,7 +2498,6 @@ static int mem_cgroup_resize_limit(struct mem_cgroup *memcg,
+ static int mem_cgroup_resize_memsw_limit(struct mem_cgroup *memcg,
+ 					 unsigned long limit)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2546 \n");
+ 	unsigned long curusage;
+ 	unsigned long oldusage;
+ 	bool enlarge = false;
+@@ -2596,7 +2550,6 @@ unsigned long mem_cgroup_soft_limit_reclaim(pg_data_t *pgdat, int order,
+ 					    gfp_t gfp_mask,
+ 					    unsigned long *total_scanned)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2599 \n");
+ 	unsigned long nr_reclaimed = 0;
+ 	struct mem_cgroup_per_node *mz, *next_mz = NULL;
+ 	unsigned long reclaimed;
+@@ -2699,7 +2652,6 @@ static inline bool memcg_has_children(struct mem_cgroup *memcg)
+  */
+ static int mem_cgroup_force_empty(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2702 \n");
+ 	int nr_retries = MEM_CGROUP_RECLAIM_RETRIES;
+ 
+ 	/* we call try-to-free pages for make this cgroup empty */
+@@ -2728,7 +2680,6 @@ static ssize_t mem_cgroup_force_empty_write(struct kernfs_open_file *of,
+ 					    char *buf, size_t nbytes,
+ 					    loff_t off)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2731 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+ 
+ 	if (mem_cgroup_is_root(memcg))
+@@ -2739,7 +2690,6 @@ static ssize_t mem_cgroup_force_empty_write(struct kernfs_open_file *of,
+ static u64 mem_cgroup_hierarchy_read(struct cgroup_subsys_state *css,
+ 				     struct cftype *cft)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2742 \n");
+ 	return mem_cgroup_from_css(css)->use_hierarchy;
+ }
+ 
+@@ -2775,7 +2725,6 @@ static int mem_cgroup_hierarchy_write(struct cgroup_subsys_state *css,
+ 
+ static void tree_stat(struct mem_cgroup *memcg, unsigned long *stat)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2778 \n");
+ 	struct mem_cgroup *iter;
+ 	int i;
+ 
+@@ -2789,7 +2738,6 @@ static void tree_stat(struct mem_cgroup *memcg, unsigned long *stat)
+ 
+ static void tree_events(struct mem_cgroup *memcg, unsigned long *events)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2792 \n");
+ 	struct mem_cgroup *iter;
+ 	int i;
+ 
+@@ -2803,7 +2751,6 @@ static void tree_events(struct mem_cgroup *memcg, unsigned long *events)
+ 
+ static unsigned long mem_cgroup_usage(struct mem_cgroup *memcg, bool swap)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2806 \n");
+ 	unsigned long val = 0;
+ 
+ 	if (mem_cgroup_is_root(memcg)) {
+@@ -2838,7 +2785,6 @@ enum {
+ static u64 mem_cgroup_read_u64(struct cgroup_subsys_state *css,
+ 			       struct cftype *cft)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2841 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 	struct page_counter *counter;
+ 
+@@ -2983,7 +2929,6 @@ static void memcg_free_kmem(struct mem_cgroup *memcg)
+ static int memcg_update_kmem_limit(struct mem_cgroup *memcg,
+ 				   unsigned long limit)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2986 \n");
+ 	int ret;
+ 
+ 	mutex_lock(&memcg_limit_mutex);
+@@ -2994,7 +2939,6 @@ static int memcg_update_kmem_limit(struct mem_cgroup *memcg,
+ 
+ static int memcg_update_tcp_limit(struct mem_cgroup *memcg, unsigned long limit)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 2997 \n");
+ 	int ret;
+ 
+ 	mutex_lock(&memcg_limit_mutex);
+@@ -3035,7 +2979,6 @@ static int memcg_update_tcp_limit(struct mem_cgroup *memcg, unsigned long limit)
+ static ssize_t mem_cgroup_write(struct kernfs_open_file *of,
+ 				char *buf, size_t nbytes, loff_t off)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3038 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+ 	unsigned long nr_pages;
+ 	int ret;
+@@ -3077,7 +3020,6 @@ static ssize_t mem_cgroup_write(struct kernfs_open_file *of,
+ static ssize_t mem_cgroup_reset(struct kernfs_open_file *of, char *buf,
+ 				size_t nbytes, loff_t off)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3080 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+ 	struct page_counter *counter;
+ 
+@@ -3115,7 +3057,6 @@ static ssize_t mem_cgroup_reset(struct kernfs_open_file *of, char *buf,
+ static u64 mem_cgroup_move_charge_read(struct cgroup_subsys_state *css,
+ 					struct cftype *cft)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3118 \n");
+ 	return mem_cgroup_from_css(css)->move_charge_at_immigrate;
+ }
+ 
+@@ -3141,7 +3082,6 @@ static int mem_cgroup_move_charge_write(struct cgroup_subsys_state *css,
+ static int mem_cgroup_move_charge_write(struct cgroup_subsys_state *css,
+ 					struct cftype *cft, u64 val)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3144 \n");
+ 	return -ENOSYS;
+ }
+ #endif
+@@ -3199,7 +3139,6 @@ static int memcg_numa_stat_show(struct seq_file *m, void *v)
+ 
+ static int memcg_stat_show(struct seq_file *m, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3202 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(m));
+ 	unsigned long memory, memsw;
+ 	struct mem_cgroup *mi;
+@@ -3295,7 +3234,6 @@ static int memcg_stat_show(struct seq_file *m, void *v)
+ static u64 mem_cgroup_swappiness_read(struct cgroup_subsys_state *css,
+ 				      struct cftype *cft)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3298 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 
+ 	return mem_cgroup_swappiness(memcg);
+@@ -3304,7 +3242,6 @@ static u64 mem_cgroup_swappiness_read(struct cgroup_subsys_state *css,
+ static int mem_cgroup_swappiness_write(struct cgroup_subsys_state *css,
+ 				       struct cftype *cft, u64 val)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3307 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 
+ 	if (val > 100)
+@@ -3382,7 +3319,6 @@ static void mem_cgroup_threshold(struct mem_cgroup *memcg)
+ 
+ static int compare_thresholds(const void *a, const void *b)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3385 \n");
+ 	const struct mem_cgroup_threshold *_a = a;
+ 	const struct mem_cgroup_threshold *_b = b;
+ 
+@@ -3397,7 +3333,6 @@ static int compare_thresholds(const void *a, const void *b)
+ 
+ static int mem_cgroup_oom_notify_cb(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3400 \n");
+ 	struct mem_cgroup_eventfd_list *ev;
+ 
+ 	spin_lock(&memcg_oom_lock);
+@@ -3411,7 +3346,6 @@ static int mem_cgroup_oom_notify_cb(struct mem_cgroup *memcg)
+ 
+ static void mem_cgroup_oom_notify(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3414 \n");
+ 	struct mem_cgroup *iter;
+ 
+ 	for_each_mem_cgroup_tree(iter, memcg)
+@@ -3421,7 +3355,6 @@ static void mem_cgroup_oom_notify(struct mem_cgroup *memcg)
+ static int __mem_cgroup_usage_register_event(struct mem_cgroup *memcg,
+ 	struct eventfd_ctx *eventfd, const char *args, enum res_type type)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3424 \n");
+ 	struct mem_cgroup_thresholds *thresholds;
+ 	struct mem_cgroup_threshold_ary *new;
+ 	unsigned long threshold;
+@@ -3504,21 +3437,18 @@ static int __mem_cgroup_usage_register_event(struct mem_cgroup *memcg,
+ static int mem_cgroup_usage_register_event(struct mem_cgroup *memcg,
+ 	struct eventfd_ctx *eventfd, const char *args)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3507 \n");
+ 	return __mem_cgroup_usage_register_event(memcg, eventfd, args, _MEM);
+ }
+ 
+ static int memsw_cgroup_usage_register_event(struct mem_cgroup *memcg,
+ 	struct eventfd_ctx *eventfd, const char *args)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3514 \n");
+ 	return __mem_cgroup_usage_register_event(memcg, eventfd, args, _MEMSWAP);
+ }
+ 
+ static void __mem_cgroup_usage_unregister_event(struct mem_cgroup *memcg,
+ 	struct eventfd_ctx *eventfd, enum res_type type)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3521 \n");
+ 	struct mem_cgroup_thresholds *thresholds;
+ 	struct mem_cgroup_threshold_ary *new;
+ 	unsigned long usage;
+@@ -3598,14 +3528,12 @@ static void __mem_cgroup_usage_unregister_event(struct mem_cgroup *memcg,
+ static void mem_cgroup_usage_unregister_event(struct mem_cgroup *memcg,
+ 	struct eventfd_ctx *eventfd)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3601 \n");
+ 	return __mem_cgroup_usage_unregister_event(memcg, eventfd, _MEM);
+ }
+ 
+ static void memsw_cgroup_usage_unregister_event(struct mem_cgroup *memcg,
+ 	struct eventfd_ctx *eventfd)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3608 \n");
+ 	return __mem_cgroup_usage_unregister_event(memcg, eventfd, _MEMSWAP);
+ }
+ 
+@@ -3650,7 +3578,6 @@ static void mem_cgroup_oom_unregister_event(struct mem_cgroup *memcg,
+ 
+ static int mem_cgroup_oom_control_read(struct seq_file *sf, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3653 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(sf));
+ 
+ 	seq_printf(sf, "oom_kill_disable %d\n", memcg->oom_kill_disable);
+@@ -3661,7 +3588,6 @@ static int mem_cgroup_oom_control_read(struct seq_file *sf, void *v)
+ static int mem_cgroup_oom_control_write(struct cgroup_subsys_state *css,
+ 	struct cftype *cft, u64 val)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3664 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 
+ 	/* cannot set to root cgroup and only 0 and 1 are allowed */
+@@ -3753,18 +3679,15 @@ void mem_cgroup_wb_stats(struct bdi_writeback *wb, unsigned long *pfilepages,
+ 
+ static int memcg_wb_domain_init(struct mem_cgroup *memcg, gfp_t gfp)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3756 \n");
+ 	return 0;
+ }
+ 
+ static void memcg_wb_domain_exit(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3762 \n");
+ }
+ 
+ static void memcg_wb_domain_size_changed(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3767 \n");
+ }
+ 
+ #endif	/* CONFIG_CGROUP_WRITEBACK */
+@@ -3813,7 +3736,6 @@ static void memcg_event_remove(struct work_struct *work)
+ static int memcg_event_wake(wait_queue_t *wait, unsigned mode,
+ 			    int sync, void *key)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 3816 \n");
+ 	struct mem_cgroup_event *event =
+ 		container_of(wait, struct mem_cgroup_event, wait);
+ 	struct mem_cgroup *memcg = event->memcg;
+@@ -4152,7 +4074,6 @@ static DEFINE_IDR(mem_cgroup_idr);
+ 
+ static void mem_cgroup_id_get_many(struct mem_cgroup *memcg, unsigned int n)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 4155 \n");
+ 	VM_BUG_ON(atomic_read(&memcg->id.ref) <= 0);
+ 	atomic_add(n, &memcg->id.ref);
+ }
+@@ -4171,7 +4092,6 @@ static void mem_cgroup_id_put_many(struct mem_cgroup *memcg, unsigned int n)
+ 
+ static inline void mem_cgroup_id_get(struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 4174 \n");
+ 	mem_cgroup_id_get_many(memcg, 1);
+ }
+ 
+@@ -4188,7 +4108,6 @@ static inline void mem_cgroup_id_put(struct mem_cgroup *memcg)
+  */
+ struct mem_cgroup *mem_cgroup_from_id(unsigned short id)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 4191 \n");
+ 	WARN_ON_ONCE(!rcu_read_lock_held());
+ 	return idr_find(&mem_cgroup_idr, id);
+ }
+@@ -4222,7 +4141,6 @@ static int alloc_mem_cgroup_per_node_info(struct mem_cgroup *memcg, int node)
+ 
+ static void free_mem_cgroup_per_node_info(struct mem_cgroup *memcg, int node)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 4225 \n");
+ 	kfree(memcg->nodeinfo[node]);
+ }
+ 
+@@ -5086,16 +5004,13 @@ static void mem_cgroup_move_task(void)
+ #else	/* !CONFIG_MMU */
+ static int mem_cgroup_can_attach(struct cgroup_taskset *tset)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5089 \n");
+ 	return 0;
+ }
+ static void mem_cgroup_cancel_attach(struct cgroup_taskset *tset)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5094 \n");
+ }
+ static void mem_cgroup_move_task(void)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5098 \n");
+ }
+ #endif
+ 
+@@ -5120,7 +5035,6 @@ static void mem_cgroup_bind(struct cgroup_subsys_state *root_css)
+ static u64 memory_current_read(struct cgroup_subsys_state *css,
+ 			       struct cftype *cft)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5123 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 
+ 	return (u64)page_counter_read(&memcg->memory) * PAGE_SIZE;
+@@ -5128,7 +5042,6 @@ static u64 memory_current_read(struct cgroup_subsys_state *css,
+ 
+ static int memory_low_show(struct seq_file *m, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5131 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(m));
+ 	unsigned long low = READ_ONCE(memcg->low);
+ 
+@@ -5143,7 +5056,6 @@ static int memory_low_show(struct seq_file *m, void *v)
+ static ssize_t memory_low_write(struct kernfs_open_file *of,
+ 				char *buf, size_t nbytes, loff_t off)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5146 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+ 	unsigned long low;
+ 	int err;
+@@ -5160,7 +5072,6 @@ static ssize_t memory_low_write(struct kernfs_open_file *of,
+ 
+ static int memory_high_show(struct seq_file *m, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5163 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(m));
+ 	unsigned long high = READ_ONCE(memcg->high);
+ 
+@@ -5175,7 +5086,6 @@ static int memory_high_show(struct seq_file *m, void *v)
+ static ssize_t memory_high_write(struct kernfs_open_file *of,
+ 				 char *buf, size_t nbytes, loff_t off)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5178 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+ 	unsigned long nr_pages;
+ 	unsigned long high;
+@@ -5199,7 +5109,6 @@ static ssize_t memory_high_write(struct kernfs_open_file *of,
+ 
+ static int memory_max_show(struct seq_file *m, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5202 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(m));
+ 	unsigned long max = READ_ONCE(memcg->memory.limit);
+ 
+@@ -5214,7 +5123,6 @@ static int memory_max_show(struct seq_file *m, void *v)
+ static ssize_t memory_max_write(struct kernfs_open_file *of,
+ 				char *buf, size_t nbytes, loff_t off)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5217 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(of_css(of));
+ 	unsigned int nr_reclaims = MEM_CGROUP_RECLAIM_RETRIES;
+ 	bool drained = false;
+@@ -5263,7 +5171,6 @@ static ssize_t memory_max_write(struct kernfs_open_file *of,
+ 
+ static int memory_events_show(struct seq_file *m, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5266 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(m));
+ 
+ 	seq_printf(m, "low %lu\n", mem_cgroup_read_events(memcg, MEMCG_LOW));
+@@ -5276,7 +5183,6 @@ static int memory_events_show(struct seq_file *m, void *v)
+ 
+ static int memory_stat_show(struct seq_file *m, void *v)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5279 \n");
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(seq_css(m));
+ 	unsigned long stat[MEMCG_NR_STAT];
+ 	unsigned long events[MEMCG_NR_EVENTS];
+@@ -5404,7 +5310,6 @@ struct cgroup_subsys memory_cgrp_subsys = {
+  */
+ bool mem_cgroup_low(struct mem_cgroup *root, struct mem_cgroup *memcg)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5407 \n");
+ 	if (mem_cgroup_disabled())
+ 		return false;
+ 
+@@ -5720,7 +5625,6 @@ void mem_cgroup_uncharge_list(struct list_head *page_list)
+  */
+ void mem_cgroup_migrate(struct page *oldpage, struct page *newpage)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5723 \n");
+ 	struct mem_cgroup *memcg;
+ 	unsigned int nr_pages;
+ 	bool compound;
+@@ -5814,7 +5718,6 @@ void mem_cgroup_sk_free(struct sock *sk)
+  */
+ bool mem_cgroup_charge_skmem(struct mem_cgroup *memcg, unsigned int nr_pages)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5817 \n");
+ 	gfp_t gfp_mask = GFP_KERNEL;
+ 
+ 	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys)) {
+@@ -5849,7 +5752,6 @@ bool mem_cgroup_charge_skmem(struct mem_cgroup *memcg, unsigned int nr_pages)
+  */
+ void mem_cgroup_uncharge_skmem(struct mem_cgroup *memcg, unsigned int nr_pages)
+ {
+-	panic("We reached unpopular paths in mm/memcontrol.c: line 5852 \n");
+ 	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys)) {
+ 		page_counter_uncharge(&memcg->tcpmem, nr_pages);
+ 		return;
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 8803dff3f7f990aa51..c9f715b2917f458195 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/memory_hotplug.c
+  *
+@@ -127,7 +126,6 @@ void put_online_mems(void)
+ 
+ void mem_hotplug_begin(void)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 130 \n");
+ 	mem_hotplug.active_writer = current;
+ 
+ 	memhp_lock_acquire();
+@@ -143,7 +141,6 @@ void mem_hotplug_begin(void)
+ 
+ void mem_hotplug_done(void)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 146 \n");
+ 	mem_hotplug.active_writer = NULL;
+ 	mutex_unlock(&mem_hotplug.lock);
+ 	memhp_lock_release();
+@@ -152,7 +149,6 @@ void mem_hotplug_done(void)
+ /* add this memory to iomem resource */
+ static struct resource *register_memory_resource(u64 start, u64 size)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 155 \n");
+ 	struct resource *res;
+ 	res = kzalloc(sizeof(struct resource), GFP_KERNEL);
+ 	if (!res)
+@@ -172,7 +168,6 @@ static struct resource *register_memory_resource(u64 start, u64 size)
+ 
+ static void release_memory_resource(struct resource *res)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 175 \n");
+ 	if (!res)
+ 		return;
+ 	release_resource(res);
+@@ -1183,7 +1178,6 @@ int __ref online_pages(unsigned long pfn, unsigned long nr_pages, int online_typ
+ 
+ static void reset_node_present_pages(pg_data_t *pgdat)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1186 \n");
+ 	struct zone *z;
+ 
+ 	for (z = pgdat->node_zones; z < pgdat->node_zones + MAX_NR_ZONES; z++)
+@@ -1248,7 +1242,6 @@ static pg_data_t __ref *hotadd_new_pgdat(int nid, u64 start)
+ 
+ static void rollback_node_hotadd(int nid, pg_data_t *pgdat)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1251 \n");
+ 	arch_refresh_nodedata(nid, NULL);
+ 	free_percpu(pgdat->per_cpu_nodestats);
+ 	arch_free_nodedata(pgdat);
+@@ -1263,7 +1256,6 @@ static void rollback_node_hotadd(int nid, pg_data_t *pgdat)
+  */
+ int try_online_node(int nid)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1266 \n");
+ 	pg_data_t	*pgdat;
+ 	int	ret;
+ 
+@@ -1294,7 +1286,6 @@ int try_online_node(int nid)
+ 
+ static int check_hotplug_memory_range(u64 start, u64 size)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1297 \n");
+ 	u64 start_pfn = PFN_DOWN(start);
+ 	u64 nr_pages = size >> PAGE_SHIFT;
+ 
+@@ -1317,7 +1308,6 @@ static int check_hotplug_memory_range(u64 start, u64 size)
+  */
+ static int should_add_memory_movable(int nid, u64 start, u64 size)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1320 \n");
+ 	unsigned long start_pfn = start >> PAGE_SHIFT;
+ 	pg_data_t *pgdat = NODE_DATA(nid);
+ 	struct zone *movable_zone = pgdat->node_zones + ZONE_MOVABLE;
+@@ -1334,7 +1324,6 @@ static int should_add_memory_movable(int nid, u64 start, u64 size)
+ int zone_for_memory(int nid, u64 start, u64 size, int zone_default,
+ 		bool for_device)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1337 \n");
+ #ifdef CONFIG_ZONE_DEVICE
+ 	if (for_device)
+ 		return ZONE_DEVICE;
+@@ -1347,7 +1336,6 @@ int zone_for_memory(int nid, u64 start, u64 size, int zone_default,
+ 
+ static int online_memory_block(struct memory_block *mem, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 1350 \n");
+ 	return memory_block_change_state(mem, MEM_ONLINE, MEM_OFFLINE);
+ }
+ 
+@@ -2041,7 +2029,6 @@ int offline_pages(unsigned long start_pfn, unsigned long nr_pages)
+ int walk_memory_range(unsigned long start_pfn, unsigned long end_pfn,
+ 		void *arg, int (*func)(struct memory_block *, void *))
+ {
+-	panic("We reached unpopular paths in mm/memory_hotplug.c: line 2044 \n");
+ 	struct memory_block *mem = NULL;
+ 	struct mem_section *section;
+ 	unsigned long pfn, section_nr;
+diff --git a/mm/mempool.c b/mm/mempool.c
+index 0d68e2693bfef8e331..47a659dedd44405a27 100644
+--- a/mm/mempool.c
++++ b/mm/mempool.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/mempool.c
+  *
+@@ -97,17 +96,14 @@ static void poison_element(mempool_t *pool, void *element)
+ #else /* CONFIG_DEBUG_SLAB || CONFIG_SLUB_DEBUG_ON */
+ static inline void check_element(mempool_t *pool, void *element)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 100 \n");
+ }
+ static inline void poison_element(mempool_t *pool, void *element)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 104 \n");
+ }
+ #endif /* CONFIG_DEBUG_SLAB || CONFIG_SLUB_DEBUG_ON */
+ 
+ static void kasan_poison_element(mempool_t *pool, void *element)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 110 \n");
+ 	if (pool->alloc == mempool_alloc_slab || pool->alloc == mempool_kmalloc)
+ 		kasan_poison_kfree(element);
+ 	if (pool->alloc == mempool_alloc_pages)
+@@ -116,7 +112,6 @@ static void kasan_poison_element(mempool_t *pool, void *element)
+ 
+ static void kasan_unpoison_element(mempool_t *pool, void *element, gfp_t flags)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 119 \n");
+ 	if (pool->alloc == mempool_alloc_slab || pool->alloc == mempool_kmalloc)
+ 		kasan_unpoison_slab(element);
+ 	if (pool->alloc == mempool_alloc_pages)
+@@ -133,7 +128,6 @@ static void add_element(mempool_t *pool, void *element)
+ 
+ static void *remove_element(mempool_t *pool, gfp_t flags)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 136 \n");
+ 	void *element = pool->elements[--pool->curr_nr];
+ 
+ 	BUG_ON(pool->curr_nr < 0);
+@@ -152,7 +146,6 @@ static void *remove_element(mempool_t *pool, gfp_t flags)
+  */
+ void mempool_destroy(mempool_t *pool)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 155 \n");
+ 	if (unlikely(!pool))
+ 		return;
+ 
+@@ -243,7 +236,6 @@ EXPORT_SYMBOL(mempool_create_node);
+  */
+ int mempool_resize(mempool_t *pool, int new_min_nr)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 246 \n");
+ 	void *element;
+ 	void **new_elements;
+ 	unsigned long flags;
+@@ -471,7 +463,6 @@ EXPORT_SYMBOL(mempool_free_slab);
+  */
+ void *mempool_kmalloc(gfp_t gfp_mask, void *pool_data)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 474 \n");
+ 	size_t size = (size_t)pool_data;
+ 	return kmalloc(size, gfp_mask);
+ }
+@@ -479,7 +470,6 @@ EXPORT_SYMBOL(mempool_kmalloc);
+ 
+ void mempool_kfree(void *element, void *pool_data)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 482 \n");
+ 	kfree(element);
+ }
+ EXPORT_SYMBOL(mempool_kfree);
+@@ -490,7 +480,6 @@ EXPORT_SYMBOL(mempool_kfree);
+  */
+ void *mempool_alloc_pages(gfp_t gfp_mask, void *pool_data)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 493 \n");
+ 	int order = (int)(long)pool_data;
+ 	return alloc_pages(gfp_mask, order);
+ }
+@@ -498,7 +487,6 @@ EXPORT_SYMBOL(mempool_alloc_pages);
+ 
+ void mempool_free_pages(void *element, void *pool_data)
+ {
+-	panic("We reached unpopular paths in mm/mempool.c: line 501 \n");
+ 	int order = (int)(long)pool_data;
+ 	__free_pages(element, order);
+ }
+diff --git a/mm/mm_init.c b/mm/mm_init.c
+index fbfc134f00c4069343..5b72266b4b03362ebb 100644
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * mm_init.c - Memory initialisation verification and debugging
+  *
+diff --git a/mm/mprotect.c b/mm/mprotect.c
+index 6fc2b88970c7770fc5..ae740c9b1f9b6053ad 100644
+--- a/mm/mprotect.c
++++ b/mm/mprotect.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  mm/mprotect.c
+  *
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 1566c3c7ccc563205b..15976716dd40dcece7 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *	mm/mremap.c
+  *
+@@ -73,7 +72,6 @@ static pmd_t *alloc_new_pmd(struct mm_struct *mm, struct vm_area_struct *vma,
+ 
+ static void take_rmap_locks(struct vm_area_struct *vma)
+ {
+-	panic("We reached unpopular paths in mm/mremap.c: line 76 \n");
+ 	if (vma->vm_file)
+ 		i_mmap_lock_write(vma->vm_file->f_mapping);
+ 	if (vma->anon_vma)
+@@ -82,7 +80,6 @@ static void take_rmap_locks(struct vm_area_struct *vma)
+ 
+ static void drop_rmap_locks(struct vm_area_struct *vma)
+ {
+-	panic("We reached unpopular paths in mm/mremap.c: line 85 \n");
+ 	if (vma->anon_vma)
+ 		anon_vma_unlock_write(vma->anon_vma);
+ 	if (vma->vm_file)
+@@ -91,7 +88,6 @@ static void drop_rmap_locks(struct vm_area_struct *vma)
+ 
+ static pte_t move_soft_dirty_pte(pte_t pte)
+ {
+-	panic("We reached unpopular paths in mm/mremap.c: line 94 \n");
+ 	/*
+ 	 * Set soft dirty bit so we can notice
+ 	 * in userspace the ptes were moved.
+@@ -420,7 +416,6 @@ static struct vm_area_struct *vma_to_resize(unsigned long addr,
+ static unsigned long mremap_to(unsigned long addr, unsigned long old_len,
+ 		unsigned long new_addr, unsigned long new_len, bool *locked)
+ {
+-	panic("We reached unpopular paths in mm/mremap.c: line 423 \n");
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma;
+ 	unsigned long ret = -EINVAL;
+diff --git a/mm/nobootmem.c b/mm/nobootmem.c
+index a2710d073274cea675..ab998125f04d320b19 100644
+--- a/mm/nobootmem.c
++++ b/mm/nobootmem.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  bootmem - A boot-time physical memory allocator and configurator
+  *
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 4732679a390b89211b..94018ea5f93523b367 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/page_alloc.c
+  *
+@@ -136,13 +135,11 @@ gfp_t gfp_allowed_mask __read_mostly = GFP_BOOT_MASK;
+  */
+ static inline int get_pcppage_migratetype(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 139 \n");
+ 	return page->index;
+ }
+ 
+ static inline void set_pcppage_migratetype(struct page *page, int migratetype)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 145 \n");
+ 	page->index = migratetype;
+ }
+ 
+@@ -355,12 +352,10 @@ static inline bool update_defer_init(pg_data_t *pgdat,
+ #else
+ static inline void reset_deferred_meminit(pg_data_t *pgdat)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 358 \n");
+ }
+ 
+ static inline bool early_page_uninitialised(unsigned long pfn)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 363 \n");
+ 	return false;
+ }
+ 
+@@ -368,7 +363,6 @@ static inline bool update_defer_init(pg_data_t *pgdat,
+ 				unsigned long pfn, unsigned long zone_end,
+ 				unsigned long *nr_initialised)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 371 \n");
+ 	return true;
+ }
+ #endif
+@@ -386,7 +380,6 @@ static inline unsigned long *get_pageblock_bitmap(struct page *page,
+ 
+ static inline int pfn_to_bitidx(struct page *page, unsigned long pfn)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 389 \n");
+ #ifdef CONFIG_SPARSEMEM
+ 	pfn &= (PAGES_PER_SECTION-1);
+ 	return (pfn >> pageblock_order) * NR_PAGEBLOCK_BITS;
+@@ -428,7 +421,6 @@ unsigned long get_pfnblock_flags_mask(struct page *page, unsigned long pfn,
+ 					unsigned long end_bitidx,
+ 					unsigned long mask)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 431 \n");
+ 	return __get_pfnblock_flags_mask(page, pfn, end_bitidx, mask);
+ }
+ 
+@@ -534,7 +526,6 @@ static int bad_range(struct zone *zone, struct page *page)
+ #else
+ static inline int bad_range(struct zone *zone, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 537 \n");
+ 	return 0;
+ }
+ #endif
+@@ -542,7 +533,6 @@ static inline int bad_range(struct zone *zone, struct page *page)
+ static void bad_page(struct page *page, const char *reason,
+ 		unsigned long bad_flags)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 545 \n");
+ 	static unsigned long resume;
+ 	static unsigned long nr_shown;
+ 	static unsigned long nr_unshown;
+@@ -731,14 +721,12 @@ static inline void clear_page_guard(struct zone *zone, struct page *page,
+ 
+ static inline void set_page_order(struct page *page, unsigned int order)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 734 \n");
+ 	set_page_private(page, order);
+ 	__SetPageBuddy(page);
+ }
+ 
+ static inline void rmv_page_order(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 741 \n");
+ 	__ClearPageBuddy(page);
+ 	set_page_private(page, 0);
+ }
+@@ -939,7 +927,6 @@ static inline bool page_expected_state(struct page *page,
+ 
+ static void free_pages_check_bad(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 942 \n");
+ 	const char *bad_reason;
+ 	unsigned long bad_flags;
+ 
+@@ -975,7 +962,6 @@ static inline int free_pages_check(struct page *page)
+ 
+ static int free_tail_pages_check(struct page *head_page, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 978 \n");
+ 	int ret = 1;
+ 
+ 	/*
+@@ -1240,7 +1226,6 @@ static void init_reserved_page(unsigned long pfn)
+ #else
+ static inline void init_reserved_page(unsigned long pfn)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 1243 \n");
+ }
+ #endif /* CONFIG_DEFERRED_STRUCT_PAGE_INIT */
+ 
+@@ -1431,7 +1416,6 @@ void set_zone_contiguous(struct zone *zone)
+ 
+ void clear_zone_contiguous(struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 1434 \n");
+ 	zone->contiguous = false;
+ }
+ 
+@@ -1695,7 +1679,6 @@ static inline void expand(struct zone *zone, struct page *page,
+ 
+ static void check_new_page_bad(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 1698 \n");
+ 	const char *bad_reason = NULL;
+ 	unsigned long bad_flags = 0;
+ 
+@@ -1759,7 +1742,6 @@ static bool check_pcp_refill(struct page *page)
+ }
+ static bool check_new_pcp(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 1762 \n");
+ 	return false;
+ }
+ #endif /* CONFIG_DEBUG_VM */
+@@ -1890,7 +1872,6 @@ int move_freepages(struct zone *zone,
+ 			  struct page *start_page, struct page *end_page,
+ 			  int migratetype)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 1893 \n");
+ 	struct page *page;
+ 	unsigned int order;
+ 	int pages_moved = 0;
+@@ -1933,7 +1914,6 @@ int move_freepages(struct zone *zone,
+ int move_freepages_block(struct zone *zone, struct page *page,
+ 				int migratetype)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 1936 \n");
+ 	unsigned long start_pfn, end_pfn;
+ 	struct page *start_page, *end_page;
+ 
+@@ -2067,7 +2047,6 @@ int find_suitable_fallback(struct free_area *area, unsigned int order,
+ static void reserve_highatomic_pageblock(struct page *page, struct zone *zone,
+ 				unsigned int alloc_order)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2070 \n");
+ 	int mt;
+ 	unsigned long max_managed, flags;
+ 
+@@ -2106,7 +2085,6 @@ static void reserve_highatomic_pageblock(struct page *page, struct zone *zone,
+  */
+ static void unreserve_highatomic_pageblock(const struct alloc_context *ac)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2109 \n");
+ 	struct zonelist *zonelist = ac->zonelist;
+ 	unsigned long flags;
+ 	struct zoneref *z;
+@@ -2326,7 +2304,6 @@ void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp)
+  */
+ static void drain_pages_zone(unsigned int cpu, struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2329 \n");
+ 	unsigned long flags;
+ 	struct per_cpu_pageset *pset;
+ 	struct per_cpu_pages *pcp;
+@@ -2351,7 +2328,6 @@ static void drain_pages_zone(unsigned int cpu, struct zone *zone)
+  */
+ static void drain_pages(unsigned int cpu)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2354 \n");
+ 	struct zone *zone;
+ 
+ 	for_each_populated_zone(zone) {
+@@ -2367,7 +2343,6 @@ static void drain_pages(unsigned int cpu)
+  */
+ void drain_local_pages(struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2370 \n");
+ 	int cpu = smp_processor_id();
+ 
+ 	if (zone)
+@@ -2389,7 +2364,6 @@ void drain_local_pages(struct zone *zone)
+  */
+ void drain_all_pages(struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2392 \n");
+ 	int cpu;
+ 
+ 	/*
+@@ -2568,7 +2542,6 @@ EXPORT_SYMBOL_GPL(split_page);
+ 
+ int __isolate_free_page(struct page *page, unsigned int order)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2571 \n");
+ 	unsigned long watermark;
+ 	struct zone *zone;
+ 	int mt;
+@@ -2623,7 +2596,6 @@ int __isolate_free_page(struct page *page, unsigned int order)
+ static inline void zone_statistics(struct zone *preferred_zone, struct zone *z,
+ 								gfp_t flags)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2626 \n");
+ #ifdef CONFIG_NUMA
+ 	enum zone_stat_item local_stat = NUMA_LOCAL;
+ 
+@@ -2788,7 +2760,6 @@ late_initcall(fail_page_alloc_debugfs);
+ 
+ static inline bool should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2791 \n");
+ 	return false;
+ }
+ 
+@@ -2871,7 +2842,6 @@ bool __zone_watermark_ok(struct zone *z, unsigned int order, unsigned long mark,
+ bool zone_watermark_ok(struct zone *z, unsigned int order, unsigned long mark,
+ 		      int classzone_idx, unsigned int alloc_flags)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2874 \n");
+ 	return __zone_watermark_ok(z, order, mark, classzone_idx, alloc_flags,
+ 					zone_page_state(z, NR_FREE_PAGES));
+ }
+@@ -2923,7 +2893,6 @@ static bool zone_allows_reclaim(struct zone *local_zone, struct zone *zone)
+ #else	/* CONFIG_NUMA */
+ static bool zone_allows_reclaim(struct zone *local_zone, struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 2926 \n");
+ 	return true;
+ }
+ #endif	/* CONFIG_NUMA */
+@@ -3040,7 +3009,6 @@ get_page_from_freelist(gfp_t gfp_mask, unsigned int order, int alloc_flags,
+  */
+ static inline bool should_suppress_show_mem(void)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3043 \n");
+ 	bool ret = false;
+ 
+ #if NODES_SHIFT > 8
+@@ -3055,7 +3023,6 @@ static DEFINE_RATELIMIT_STATE(nopage_rs,
+ 
+ void warn_alloc(gfp_t gfp_mask, const char *fmt, ...)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3058 \n");
+ 	unsigned int filter = SHOW_MEM_FILTER_NODES;
+ 	struct va_format vaf;
+ 	va_list args;
+@@ -3095,7 +3062,6 @@ static inline struct page *
+ __alloc_pages_may_oom(gfp_t gfp_mask, unsigned int order,
+ 	const struct alloc_context *ac, unsigned long *did_some_progress)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3098 \n");
+ 	struct oom_control oc = {
+ 		.zonelist = ac->zonelist,
+ 		.nodemask = ac->nodemask,
+@@ -3294,7 +3260,6 @@ __alloc_pages_direct_compact(gfp_t gfp_mask, unsigned int order,
+ 		unsigned int alloc_flags, const struct alloc_context *ac,
+ 		enum compact_priority prio, enum compact_result *compact_result)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3297 \n");
+ 	*compact_result = COMPACT_SKIPPED;
+ 	return NULL;
+ }
+@@ -3305,7 +3270,6 @@ should_compact_retry(struct alloc_context *ac, unsigned int order, int alloc_fla
+ 		     enum compact_priority *compact_priority,
+ 		     int *compaction_retries)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3308 \n");
+ 	struct zone *zone;
+ 	struct zoneref *z;
+ 
+@@ -3333,7 +3297,6 @@ static int
+ __perform_reclaim(gfp_t gfp_mask, unsigned int order,
+ 					const struct alloc_context *ac)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3336 \n");
+ 	struct reclaim_state reclaim_state;
+ 	int progress;
+ 
+@@ -3364,7 +3327,6 @@ __alloc_pages_direct_reclaim(gfp_t gfp_mask, unsigned int order,
+ 		unsigned int alloc_flags, const struct alloc_context *ac,
+ 		unsigned long *did_some_progress)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3367 \n");
+ 	struct page *page = NULL;
+ 	bool drained = false;
+ 
+@@ -3392,7 +3354,6 @@ __alloc_pages_direct_reclaim(gfp_t gfp_mask, unsigned int order,
+ 
+ static void wake_all_kswapds(unsigned int order, const struct alloc_context *ac)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3395 \n");
+ 	struct zoneref *z;
+ 	struct zone *zone;
+ 	pg_data_t *last_pgdat = NULL;
+@@ -3408,7 +3369,6 @@ static void wake_all_kswapds(unsigned int order, const struct alloc_context *ac)
+ static inline unsigned int
+ gfp_to_alloc_flags(gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3411 \n");
+ 	unsigned int alloc_flags = ALLOC_WMARK_MIN | ALLOC_CPUSET;
+ 
+ 	/* __GFP_HIGH is assumed to be the same as ALLOC_HIGH to save a branch. */
+@@ -3446,7 +3406,6 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
+ 
+ bool gfp_pfmemalloc_allowed(gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3449 \n");
+ 	if (unlikely(gfp_mask & __GFP_NOMEMALLOC))
+ 		return false;
+ 
+@@ -3478,7 +3437,6 @@ should_reclaim_retry(gfp_t gfp_mask, unsigned order,
+ 		     struct alloc_context *ac, int alloc_flags,
+ 		     bool did_some_progress, int *no_progress_loops)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3481 \n");
+ 	struct zone *zone;
+ 	struct zoneref *z;
+ 
+@@ -3564,7 +3522,6 @@ static inline struct page *
+ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 						struct alloc_context *ac)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 3567 \n");
+ 	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
+ 	struct page *page = NULL;
+ 	unsigned int alloc_flags;
+@@ -4122,7 +4079,6 @@ void * __meminit alloc_pages_exact_nid(int nid, size_t size, gfp_t gfp_mask)
+  */
+ void free_pages_exact(void *virt, size_t size)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 4125 \n");
+ 	unsigned long addr = (unsigned long)virt;
+ 	unsigned long end = addr + PAGE_ALIGN(size);
+ 
+@@ -4187,7 +4143,6 @@ unsigned long nr_free_pagecache_pages(void)
+ 
+ static inline void show_node(struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 4190 \n");
+ 	if (IS_ENABLED(CONFIG_NUMA))
+ 		printk("Node %d ", zone_to_nid(zone));
+ }
+@@ -4287,7 +4242,6 @@ void si_meminfo_node(struct sysinfo *val, int nid)
+  */
+ bool skip_free_areas_node(unsigned int flags, int nid)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 4290 \n");
+ 	bool ret = false;
+ 	unsigned int cpuset_mems_cookie;
+ 
+@@ -4306,7 +4260,6 @@ bool skip_free_areas_node(unsigned int flags, int nid)
+ 
+ static void show_migration_types(unsigned char type)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 4309 \n");
+ 	static const char types[MIGRATE_TYPES] = {
+ 		[MIGRATE_UNMOVABLE]	= 'U',
+ 		[MIGRATE_MOVABLE]	= 'M',
+@@ -4343,7 +4296,6 @@ static void show_migration_types(unsigned char type)
+  */
+ void show_free_areas(unsigned int filter)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 4346 \n");
+ 	unsigned long free_pcp = 0;
+ 	int cpu;
+ 	struct zone *zone;
+@@ -4911,7 +4863,6 @@ static void setup_min_slab_ratio(void);
+ 
+ static void set_zonelist_order(void)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 4914 \n");
+ 	current_zonelist_order = ZONELIST_ORDER_ZONE;
+ }
+ 
+@@ -5254,7 +5205,6 @@ static int zone_batchsize(struct zone *zone)
+ static void pageset_update(struct per_cpu_pages *pcp, unsigned long high,
+ 		unsigned long batch)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 5257 \n");
+        /* start with a fail safe value for batch */
+ 	pcp->batch = 1;
+ 	smp_wmb();
+@@ -5298,7 +5248,6 @@ static void setup_pageset(struct per_cpu_pageset *p, unsigned long batch)
+ static void pageset_set_high(struct per_cpu_pageset *p,
+ 				unsigned long high)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 5301 \n");
+ 	unsigned long batch = max(1UL, high / 4);
+ 	if ((high / 4) > (PAGE_SHIFT * 8))
+ 		batch = PAGE_SHIFT * 8;
+@@ -6604,7 +6553,6 @@ void __init free_area_init(unsigned long *zones_size)
+ static int page_alloc_cpu_notify(struct notifier_block *self,
+ 				 unsigned long action, void *hcpu)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 6607 \n");
+ 	int cpu = (unsigned long)hcpu;
+ 
+ 	if (action == CPU_DEAD || action == CPU_DEAD_FROZEN) {
+@@ -7127,7 +7075,6 @@ void *__init alloc_large_system_hash(const char *tablename,
+ bool has_unmovable_pages(struct zone *zone, struct page *page, int count,
+ 			 bool skip_hwpoisoned_pages)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 7130 \n");
+ 	unsigned long pfn, iter, found;
+ 	int mt;
+ 
+@@ -7202,7 +7149,6 @@ bool has_unmovable_pages(struct zone *zone, struct page *page, int count,
+ 
+ bool is_pageblock_removable_nolock(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 7205 \n");
+ 	struct zone *zone;
+ 	unsigned long pfn;
+ 
+@@ -7466,7 +7412,6 @@ void __meminit zone_pcp_update(struct zone *zone)
+ 
+ void zone_pcp_reset(struct zone *zone)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 7469 \n");
+ 	unsigned long flags;
+ 	int cpu;
+ 	struct per_cpu_pageset *pset;
+@@ -7542,7 +7487,6 @@ __offline_isolated_pages(unsigned long start_pfn, unsigned long end_pfn)
+ 
+ bool is_free_buddy_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_alloc.c: line 7545 \n");
+ 	struct zone *zone = page_zone(page);
+ 	unsigned long pfn = page_to_pfn(page);
+ 	unsigned long flags;
+diff --git a/mm/page_ext.c b/mm/page_ext.c
+index fe6ddfafedde2aa1df..121dcffc4ec1768a6f 100644
+--- a/mm/page_ext.c
++++ b/mm/page_ext.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ #include <linux/mm.h>
+ #include <linux/mmzone.h>
+ #include <linux/bootmem.h>
+@@ -105,13 +104,11 @@ static void __init invoke_init_callbacks(void)
+ 
+ static unsigned long get_entry_size(void)
+ {
+-	panic("We reached unpopular paths in mm/page_ext.c: line 108 \n");
+ 	return sizeof(struct page_ext) + extra_mem;
+ }
+ 
+ static inline struct page_ext *get_entry(void *base, unsigned long index)
+ {
+-	panic("We reached unpopular paths in mm/page_ext.c: line 114 \n");
+ 	return base + get_entry_size() * index;
+ }
+ 
+@@ -125,7 +122,6 @@ void __meminit pgdat_page_ext_init(struct pglist_data *pgdat)
+ 
+ struct page_ext *lookup_page_ext(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/page_ext.c: line 128 \n");
+ 	unsigned long pfn = page_to_pfn(page);
+ 	unsigned long index;
+ 	struct page_ext *base;
+diff --git a/mm/percpu-vm.c b/mm/percpu-vm.c
+index 65850c459d45d435da..538998a137d24e0699 100644
+--- a/mm/percpu-vm.c
++++ b/mm/percpu-vm.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * mm/percpu-vm.c - vmalloc area based chunk allocation
+  *
+@@ -14,7 +13,6 @@
+ static struct page *pcpu_chunk_page(struct pcpu_chunk *chunk,
+ 				    unsigned int cpu, int page_idx)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 17 \n");
+ 	/* must not be used on pre-mapped chunk */
+ 	WARN_ON(chunk->immutable);
+ 
+@@ -57,7 +55,6 @@ static struct page **pcpu_get_pages(struct pcpu_chunk *chunk_alloc)
+ static void pcpu_free_pages(struct pcpu_chunk *chunk,
+ 			    struct page **pages, int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 60 \n");
+ 	unsigned int cpu;
+ 	int i;
+ 
+@@ -128,7 +125,6 @@ static int pcpu_alloc_pages(struct pcpu_chunk *chunk,
+ static void pcpu_pre_unmap_flush(struct pcpu_chunk *chunk,
+ 				 int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 131 \n");
+ 	flush_cache_vunmap(
+ 		pcpu_chunk_addr(chunk, pcpu_low_unit_cpu, page_start),
+ 		pcpu_chunk_addr(chunk, pcpu_high_unit_cpu, page_end));
+@@ -136,7 +132,6 @@ static void pcpu_pre_unmap_flush(struct pcpu_chunk *chunk,
+ 
+ static void __pcpu_unmap_pages(unsigned long addr, int nr_pages)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 139 \n");
+ 	unmap_kernel_range_noflush(addr, nr_pages << PAGE_SHIFT);
+ }
+ 
+@@ -156,7 +151,6 @@ static void __pcpu_unmap_pages(unsigned long addr, int nr_pages)
+ static void pcpu_unmap_pages(struct pcpu_chunk *chunk,
+ 			     struct page **pages, int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 159 \n");
+ 	unsigned int cpu;
+ 	int i;
+ 
+@@ -189,7 +183,6 @@ static void pcpu_unmap_pages(struct pcpu_chunk *chunk,
+ static void pcpu_post_unmap_tlb_flush(struct pcpu_chunk *chunk,
+ 				      int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 192 \n");
+ 	flush_tlb_kernel_range(
+ 		pcpu_chunk_addr(chunk, pcpu_low_unit_cpu, page_start),
+ 		pcpu_chunk_addr(chunk, pcpu_high_unit_cpu, page_end));
+@@ -260,7 +253,6 @@ static int pcpu_map_pages(struct pcpu_chunk *chunk,
+ static void pcpu_post_map_flush(struct pcpu_chunk *chunk,
+ 				int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 263 \n");
+ 	flush_cache_vmap(
+ 		pcpu_chunk_addr(chunk, pcpu_low_unit_cpu, page_start),
+ 		pcpu_chunk_addr(chunk, pcpu_high_unit_cpu, page_end));
+@@ -314,7 +306,6 @@ static int pcpu_populate_chunk(struct pcpu_chunk *chunk,
+ static void pcpu_depopulate_chunk(struct pcpu_chunk *chunk,
+ 				  int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 317 \n");
+ 	struct page **pages;
+ 
+ 	/*
+@@ -358,7 +349,6 @@ static struct pcpu_chunk *pcpu_create_chunk(void)
+ 
+ static void pcpu_destroy_chunk(struct pcpu_chunk *chunk)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 361 \n");
+ 	if (chunk && chunk->data)
+ 		pcpu_free_vm_areas(chunk->data, pcpu_nr_groups);
+ 	pcpu_free_chunk(chunk);
+@@ -366,7 +356,6 @@ static void pcpu_destroy_chunk(struct pcpu_chunk *chunk)
+ 
+ static struct page *pcpu_addr_to_page(void *addr)
+ {
+-	panic("We reached unpopular paths in mm/percpu-vm.c: line 369 \n");
+ 	return vmalloc_to_page(addr);
+ }
+ 
+diff --git a/mm/percpu.c b/mm/percpu.c
+index b73877576427716df3..f014cebbf40549187a 100644
+--- a/mm/percpu.c
++++ b/mm/percpu.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * mm/percpu.c - percpu memory allocator
+  *
+@@ -210,7 +209,6 @@ static bool pcpu_addr_in_reserved_chunk(void *addr)
+ 
+ static int __pcpu_size_to_slot(int size)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 213 \n");
+ 	int highbit = fls(size);	/* size is in bytes */
+ 	return max(highbit - PCPU_SLOT_BASE_SHIFT + 2, 1);
+ }
+@@ -233,14 +231,12 @@ static int pcpu_chunk_slot(const struct pcpu_chunk *chunk)
+ /* set the pointer to a chunk in a page struct */
+ static void pcpu_set_page_chunk(struct page *page, struct pcpu_chunk *pcpu)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 236 \n");
+ 	page->index = (unsigned long)pcpu;
+ }
+ 
+ /* obtain pointer to a chunk from a page struct */
+ static struct pcpu_chunk *pcpu_get_page_chunk(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 243 \n");
+ 	return (struct pcpu_chunk *)page->index;
+ }
+ 
+@@ -319,7 +315,6 @@ static void *pcpu_mem_zalloc(size_t size)
+  */
+ static void pcpu_mem_free(void *ptr)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 322 \n");
+ 	kvfree(ptr);
+ }
+ 
+@@ -751,7 +746,6 @@ static struct pcpu_chunk *pcpu_alloc_chunk(void)
+ 
+ static void pcpu_free_chunk(struct pcpu_chunk *chunk)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 754 \n");
+ 	if (!chunk)
+ 		return;
+ 	pcpu_mem_free(chunk->map);
+@@ -793,7 +787,6 @@ static void pcpu_chunk_populated(struct pcpu_chunk *chunk,
+ static void pcpu_chunk_depopulated(struct pcpu_chunk *chunk,
+ 				   int page_start, int page_end)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 796 \n");
+ 	int nr = page_end - page_start;
+ 
+ 	lockdep_assert_held(&pcpu_lock);
+@@ -1303,7 +1296,6 @@ EXPORT_SYMBOL_GPL(free_percpu);
+  */
+ bool is_kernel_percpu_address(unsigned long addr)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 1306 \n");
+ #ifdef CONFIG_SMP
+ 	const size_t static_size = __per_cpu_end - __per_cpu_start;
+ 	void __percpu *base = __addr_to_pcpu_ptr(pcpu_base_addr);
+@@ -1345,7 +1337,6 @@ bool is_kernel_percpu_address(unsigned long addr)
+  */
+ phys_addr_t per_cpu_ptr_to_phys(void *addr)
+ {
+-	panic("We reached unpopular paths in mm/percpu.c: line 1348 \n");
+ 	void __percpu *base = __addr_to_pcpu_ptr(pcpu_base_addr);
+ 	bool in_first_chunk = false;
+ 	unsigned long first_low, first_high;
+diff --git a/mm/pgtable-generic.c b/mm/pgtable-generic.c
+index 788bdf2dbde1059282..71c5f9109f2a84fce4 100644
+--- a/mm/pgtable-generic.c
++++ b/mm/pgtable-generic.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  mm/pgtable-generic.c
+  *
+@@ -19,21 +18,18 @@
+ 
+ void pgd_clear_bad(pgd_t *pgd)
+ {
+-	panic("We reached unpopular paths in mm/pgtable-generic.c: line 22 \n");
+ 	pgd_ERROR(*pgd);
+ 	pgd_clear(pgd);
+ }
+ 
+ void pud_clear_bad(pud_t *pud)
+ {
+-	panic("We reached unpopular paths in mm/pgtable-generic.c: line 29 \n");
+ 	pud_ERROR(*pud);
+ 	pud_clear(pud);
+ }
+ 
+ void pmd_clear_bad(pmd_t *pmd)
+ {
+-	panic("We reached unpopular paths in mm/pgtable-generic.c: line 36 \n");
+ 	pmd_ERROR(*pmd);
+ 	pmd_clear(pmd);
+ }
+@@ -52,7 +48,6 @@ int ptep_set_access_flags(struct vm_area_struct *vma,
+ 			  unsigned long address, pte_t *ptep,
+ 			  pte_t entry, int dirty)
+ {
+-	panic("We reached unpopular paths in mm/pgtable-generic.c: line 55 \n");
+ 	int changed = !pte_same(*ptep, entry);
+ 	if (changed) {
+ 		set_pte_at(vma->vm_mm, address, ptep, entry);
+@@ -66,7 +61,6 @@ int ptep_set_access_flags(struct vm_area_struct *vma,
+ int ptep_clear_flush_young(struct vm_area_struct *vma,
+ 			   unsigned long address, pte_t *ptep)
+ {
+-	panic("We reached unpopular paths in mm/pgtable-generic.c: line 69 \n");
+ 	int young;
+ 	young = ptep_test_and_clear_young(vma, address, ptep);
+ 	if (young)
+diff --git a/mm/rmap.c b/mm/rmap.c
+index 43b564b573694c28a5..94488b0362f891173d 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * mm/rmap.c - physical to virtual reverse mappings
+  *
+@@ -461,7 +460,6 @@ void __init anon_vma_init(void)
+  */
+ struct anon_vma *page_get_anon_vma(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 464 \n");
+ 	struct anon_vma *anon_vma = NULL;
+ 	unsigned long anon_mapping;
+ 
+@@ -505,7 +503,6 @@ struct anon_vma *page_get_anon_vma(struct page *page)
+  */
+ struct anon_vma *page_lock_anon_vma_read(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 508 \n");
+ 	struct anon_vma *anon_vma = NULL;
+ 	struct anon_vma *root_anon_vma;
+ 	unsigned long anon_mapping;
+@@ -568,7 +565,6 @@ struct anon_vma *page_lock_anon_vma_read(struct page *page)
+ 
+ void page_unlock_anon_vma_read(struct anon_vma *anon_vma)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 571 \n");
+ 	anon_vma_unlock_read(anon_vma);
+ }
+ 
+@@ -687,12 +683,10 @@ void flush_tlb_batched_pending(struct mm_struct *mm)
+ static void set_tlb_ubc_flush_pending(struct mm_struct *mm,
+ 		struct page *page, bool writable)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 690 \n");
+ }
+ 
+ static bool should_defer_flush(struct mm_struct *mm, enum ttu_flags flags)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 695 \n");
+ 	return false;
+ }
+ #endif /* CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH */
+@@ -703,7 +697,6 @@ static bool should_defer_flush(struct mm_struct *mm, enum ttu_flags flags)
+  */
+ unsigned long page_address_in_vma(struct page *page, struct vm_area_struct *vma)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 706 \n");
+ 	unsigned long address;
+ 	if (PageAnon(page)) {
+ 		struct anon_vma *page__anon_vma = page_anon_vma(page);
+@@ -766,7 +759,6 @@ pmd_t *mm_find_pmd(struct mm_struct *mm, unsigned long address)
+ pte_t *__page_check_address(struct page *page, struct mm_struct *mm,
+ 			  unsigned long address, spinlock_t **ptlp, int sync)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 769 \n");
+ 	pmd_t *pmd;
+ 	pte_t *pte;
+ 	spinlock_t *ptl;
+@@ -814,7 +806,6 @@ pte_t *__page_check_address(struct page *page, struct mm_struct *mm,
+  */
+ int page_mapped_in_vma(struct page *page, struct vm_area_struct *vma)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 817 \n");
+ 	unsigned long address;
+ 	pte_t *pte;
+ 	spinlock_t *ptl;
+@@ -932,7 +923,6 @@ struct page_referenced_arg {
+ static int page_referenced_one(struct page *page, struct vm_area_struct *vma,
+ 			unsigned long address, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 935 \n");
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	struct page_referenced_arg *pra = arg;
+ 	pmd_t *pmd;
+@@ -992,7 +982,6 @@ static int page_referenced_one(struct page *page, struct vm_area_struct *vma,
+ 
+ static bool invalid_page_referenced_vma(struct vm_area_struct *vma, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 995 \n");
+ 	struct page_referenced_arg *pra = arg;
+ 	struct mem_cgroup *memcg = pra->memcg;
+ 
+@@ -1017,7 +1006,6 @@ int page_referenced(struct page *page,
+ 		    struct mem_cgroup *memcg,
+ 		    unsigned long *vm_flags)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1020 \n");
+ 	int ret;
+ 	int we_locked = 0;
+ 	struct page_referenced_arg pra = {
+@@ -1064,7 +1052,6 @@ int page_referenced(struct page *page,
+ static int page_mkclean_one(struct page *page, struct vm_area_struct *vma,
+ 			    unsigned long address, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1067 \n");
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	pte_t *pte;
+ 	spinlock_t *ptl;
+@@ -1098,7 +1085,6 @@ static int page_mkclean_one(struct page *page, struct vm_area_struct *vma,
+ 
+ static bool invalid_mkclean_vma(struct vm_area_struct *vma, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1101 \n");
+ 	if (vma->vm_flags & VM_SHARED)
+ 		return false;
+ 
+@@ -1107,7 +1093,6 @@ static bool invalid_mkclean_vma(struct vm_area_struct *vma, void *arg)
+ 
+ int page_mkclean(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1110 \n");
+ 	int cleaned = 0;
+ 	struct address_space *mapping;
+ 	struct rmap_walk_control rwc = {
+@@ -1198,7 +1183,6 @@ static void __page_set_anon_rmap(struct page *page,
+ static void __page_check_anon_rmap(struct page *page,
+ 	struct vm_area_struct *vma, unsigned long address)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1201 \n");
+ #ifdef CONFIG_DEBUG_VM
+ 	/*
+ 	 * The page's anon-rmap details (mapping and index) are guaranteed to
+@@ -1232,7 +1216,6 @@ static void __page_check_anon_rmap(struct page *page,
+ void page_add_anon_rmap(struct page *page,
+ 	struct vm_area_struct *vma, unsigned long address, bool compound)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1235 \n");
+ 	do_page_add_anon_rmap(page, vma, address, compound ? RMAP_COMPOUND : 0);
+ }
+ 
+@@ -1244,7 +1227,6 @@ void page_add_anon_rmap(struct page *page,
+ void do_page_add_anon_rmap(struct page *page,
+ 	struct vm_area_struct *vma, unsigned long address, int flags)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1247 \n");
+ 	bool compound = flags & RMAP_COMPOUND;
+ 	bool first;
+ 
+@@ -1489,7 +1471,6 @@ struct rmap_private {
+ static int try_to_unmap_one(struct page *page, struct vm_area_struct *vma,
+ 		     unsigned long address, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1492 \n");
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	pte_t *pte;
+ 	pte_t pteval;
+@@ -1659,13 +1640,11 @@ bool is_vma_temporary_stack(struct vm_area_struct *vma)
+ 
+ static bool invalid_migration_vma(struct vm_area_struct *vma, void *arg)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1662 \n");
+ 	return is_vma_temporary_stack(vma);
+ }
+ 
+ static int page_mapcount_is_zero(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1668 \n");
+ 	return !page_mapcount(page);
+ }
+ 
+@@ -1685,7 +1664,6 @@ static int page_mapcount_is_zero(struct page *page)
+  */
+ int try_to_unmap(struct page *page, enum ttu_flags flags)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1688 \n");
+ 	int ret;
+ 	struct rmap_private rp = {
+ 		.flags = flags,
+@@ -1725,7 +1703,6 @@ int try_to_unmap(struct page *page, enum ttu_flags flags)
+ 
+ static int page_not_mapped(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1728 \n");
+ 	return !page_mapped(page);
+ };
+ 
+@@ -1746,7 +1723,6 @@ static int page_not_mapped(struct page *page)
+  */
+ int try_to_munlock(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1749 \n");
+ 	int ret;
+ 	struct rmap_private rp = {
+ 		.flags = TTU_MUNLOCK,
+@@ -1779,7 +1755,6 @@ void __put_anon_vma(struct anon_vma *anon_vma)
+ static struct anon_vma *rmap_walk_anon_lock(struct page *page,
+ 					struct rmap_walk_control *rwc)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1782 \n");
+ 	struct anon_vma *anon_vma;
+ 
+ 	if (rwc->anon_lock)
+@@ -1816,7 +1791,6 @@ static struct anon_vma *rmap_walk_anon_lock(struct page *page,
+ static int rmap_walk_anon(struct page *page, struct rmap_walk_control *rwc,
+ 		bool locked)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1819 \n");
+ 	struct anon_vma *anon_vma;
+ 	pgoff_t pgoff;
+ 	struct anon_vma_chain *avc;
+@@ -1870,7 +1844,6 @@ static int rmap_walk_anon(struct page *page, struct rmap_walk_control *rwc,
+ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc,
+ 		bool locked)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1873 \n");
+ 	struct address_space *mapping = page_mapping(page);
+ 	pgoff_t pgoff;
+ 	struct vm_area_struct *vma;
+@@ -1913,7 +1886,6 @@ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc,
+ 
+ int rmap_walk(struct page *page, struct rmap_walk_control *rwc)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1916 \n");
+ 	if (unlikely(PageKsm(page)))
+ 		return rmap_walk_ksm(page, rwc);
+ 	else if (PageAnon(page))
+@@ -1925,7 +1897,6 @@ int rmap_walk(struct page *page, struct rmap_walk_control *rwc)
+ /* Like rmap_walk, but caller holds relevant rmap lock */
+ int rmap_walk_locked(struct page *page, struct rmap_walk_control *rwc)
+ {
+-	panic("We reached unpopular paths in mm/rmap.c: line 1928 \n");
+ 	/* no ksm support for now */
+ 	VM_BUG_ON_PAGE(PageKsm(page), page);
+ 	if (PageAnon(page))
+diff --git a/mm/slab.c b/mm/slab.c
+index 2813c659851f5d31c6..1f82d16a051862b20c 100644
+--- a/mm/slab.c
++++ b/mm/slab.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * linux/mm/slab.c
+  * Written by Mark Hemment, 1996/97.
+@@ -395,7 +394,6 @@ static bool slab_max_order_set __initdata;
+ 
+ static inline struct kmem_cache *virt_to_cache(const void *obj)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 398 \n");
+ 	struct page *page = virt_to_head_page(obj);
+ 	return page->slab_cache;
+ }
+@@ -403,7 +401,6 @@ static inline struct kmem_cache *virt_to_cache(const void *obj)
+ static inline void *index_to_obj(struct kmem_cache *cache, struct page *page,
+ 				 unsigned int idx)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 406 \n");
+ 	return page->s_mem + cache->size * idx;
+ }
+ 
+@@ -434,7 +431,6 @@ static DEFINE_PER_CPU(struct delayed_work, slab_reap_work);
+ 
+ static inline struct array_cache *cpu_cache_get(struct kmem_cache *cachep)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 437 \n");
+ 	return this_cpu_ptr(cachep->cpu_cache);
+ }
+ 
+@@ -570,7 +566,6 @@ static void start_cpu_timer(int cpu)
+ 
+ static void init_arraycache(struct array_cache *ac, int limit, int batch)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 573 \n");
+ 	/*
+ 	 * The array_cache structures contain pointers to free object.
+ 	 * However, when such objects are allocated or transferred to another
+@@ -590,7 +585,6 @@ static void init_arraycache(struct array_cache *ac, int limit, int batch)
+ static struct array_cache *alloc_arraycache(int node, int entries,
+ 					    int batchcount, gfp_t gfp)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 593 \n");
+ 	size_t memsize = sizeof(void *) * entries + sizeof(struct array_cache);
+ 	struct array_cache *ac = NULL;
+ 
+@@ -625,7 +619,6 @@ static noinline void cache_free_pfmemalloc(struct kmem_cache *cachep,
+ static int transfer_objects(struct array_cache *to,
+ 		struct array_cache *from, unsigned int max)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 628 \n");
+ 	/* Figure out how many entries to transfer */
+ 	int nr = min3(from->avail, max, to->limit - to->avail);
+ 
+@@ -648,38 +641,32 @@ static int transfer_objects(struct array_cache *to,
+ static inline struct alien_cache **alloc_alien_cache(int node,
+ 						int limit, gfp_t gfp)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 651 \n");
+ 	return NULL;
+ }
+ 
+ static inline void free_alien_cache(struct alien_cache **ac_ptr)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 657 \n");
+ }
+ 
+ static inline int cache_free_alien(struct kmem_cache *cachep, void *objp)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 662 \n");
+ 	return 0;
+ }
+ 
+ static inline void *alternate_node_alloc(struct kmem_cache *cachep,
+ 		gfp_t flags)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 669 \n");
+ 	return NULL;
+ }
+ 
+ static inline void *____cache_alloc_node(struct kmem_cache *cachep,
+ 		 gfp_t flags, int nodeid)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 676 \n");
+ 	return NULL;
+ }
+ 
+ static inline gfp_t gfp_exact_node(gfp_t flags)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 682 \n");
+ 	return flags & ~__GFP_NOFAIL;
+ }
+ 
+@@ -1130,7 +1117,6 @@ static int slab_online_cpu(unsigned int cpu)
+ 
+ static int slab_offline_cpu(unsigned int cpu)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 1133 \n");
+ 	/*
+ 	 * Shutdown cache reaper. Note that the slab_mutex is held so
+ 	 * that if cache_reap() is invoked it cannot do anything
+@@ -1741,7 +1727,6 @@ static void slab_destroy_debugcheck(struct kmem_cache *cachep,
+ static void slab_destroy_debugcheck(struct kmem_cache *cachep,
+ 						struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 1744 \n");
+ }
+ #endif
+ 
+@@ -2431,20 +2416,17 @@ static void *alloc_slabmgmt(struct kmem_cache *cachep,
+ 
+ static inline freelist_idx_t get_free_obj(struct page *page, unsigned int idx)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 2434 \n");
+ 	return ((freelist_idx_t *)page->freelist)[idx];
+ }
+ 
+ static inline void set_free_obj(struct page *page,
+ 					unsigned int idx, freelist_idx_t val)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 2441 \n");
+ 	((freelist_idx_t *)(page->freelist))[idx] = val;
+ }
+ 
+ static void cache_init_objs_debug(struct kmem_cache *cachep, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 2447 \n");
+ #if DEBUG
+ 	int i;
+ 
+@@ -2593,7 +2575,6 @@ static bool shuffle_freelist(struct kmem_cache *cachep, struct page *page)
+ static inline bool shuffle_freelist(struct kmem_cache *cachep,
+ 				struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 2596 \n");
+ 	return false;
+ }
+ #endif /* CONFIG_SLAB_FREELIST_RANDOM */
+@@ -2677,7 +2658,6 @@ static void slab_put_obj(struct kmem_cache *cachep,
+ static void slab_map_pages(struct kmem_cache *cache, struct page *page,
+ 			   void *freelist)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 2680 \n");
+ 	page->slab_cache = cache;
+ 	page->freelist = freelist;
+ }
+@@ -2866,7 +2846,6 @@ static void *cache_free_debugcheck(struct kmem_cache *cachep, void *objp,
+ static inline void fixup_objfreelist_debug(struct kmem_cache *cachep,
+ 						void **list)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 2869 \n");
+ #if DEBUG
+ 	void *next = *list;
+ 	void *objp;
+@@ -3528,7 +3507,6 @@ static void cache_flusharray(struct kmem_cache *cachep, struct array_cache *ac)
+ static inline void __cache_free(struct kmem_cache *cachep, void *objp,
+ 				unsigned long caller)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 3531 \n");
+ 	/* Put the object into the quarantine, don't touch it for now. */
+ 	if (kasan_slab_free(cachep, objp))
+ 		return;
+@@ -3609,7 +3587,6 @@ cache_alloc_debugcheck_after_bulk(struct kmem_cache *s, gfp_t flags,
+ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+ 			  void **p)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 3612 \n");
+ 	size_t i;
+ 
+ 	s = slab_pre_alloc_hook(s, flags);
+@@ -3800,7 +3777,6 @@ EXPORT_SYMBOL(kmem_cache_free);
+ 
+ void kmem_cache_free_bulk(struct kmem_cache *orig_s, size_t size, void **p)
+ {
+-	panic("We reached unpopular paths in mm/slab.c: line 3803 \n");
+ 	struct kmem_cache *s;
+ 	size_t i;
+ 
+diff --git a/mm/slab.h b/mm/slab.h
+index 008f30e1e7a1ce3d5c..ceb7d70cdb76436d86 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ #ifndef MM_SLAB_H
+ #define MM_SLAB_H
+ /*
+@@ -288,52 +287,44 @@ extern void slab_init_memcg_params(struct kmem_cache *);
+ 
+ static inline bool is_root_cache(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 291 \n");
+ 	return true;
+ }
+ 
+ static inline bool slab_equal_or_root(struct kmem_cache *s,
+ 				      struct kmem_cache *p)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 298 \n");
+ 	return true;
+ }
+ 
+ static inline const char *cache_name(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 304 \n");
+ 	return s->name;
+ }
+ 
+ static inline struct kmem_cache *
+ cache_from_memcg_idx(struct kmem_cache *s, int idx)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 311 \n");
+ 	return NULL;
+ }
+ 
+ static inline struct kmem_cache *memcg_root_cache(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 317 \n");
+ 	return s;
+ }
+ 
+ static inline int memcg_charge_slab(struct page *page, gfp_t gfp, int order,
+ 				    struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 324 \n");
+ 	return 0;
+ }
+ 
+ static inline void memcg_uncharge_slab(struct page *page, int order,
+ 				       struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 331 \n");
+ }
+ 
+ static inline void slab_init_memcg_params(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 336 \n");
+ }
+ #endif /* CONFIG_MEMCG && !CONFIG_SLOB */
+ 
+@@ -366,7 +357,6 @@ static inline struct kmem_cache *cache_from_obj(struct kmem_cache *s, void *x)
+ 
+ static inline size_t slab_ksize(const struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 369 \n");
+ #ifndef CONFIG_SLUB
+ 	return s->object_size;
+ 
+@@ -466,7 +456,6 @@ struct kmem_cache_node {
+ 
+ static inline struct kmem_cache_node *get_node(struct kmem_cache *s, int node)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 469 \n");
+ 	return s->node[node];
+ }
+ 
+@@ -495,7 +484,6 @@ void cache_random_seq_destroy(struct kmem_cache *cachep);
+ static inline int cache_random_seq_create(struct kmem_cache *cachep,
+ 					unsigned int count, gfp_t gfp)
+ {
+-	panic("We reached unpopular paths in mm/slab.h: line 498 \n");
+ 	return 0;
+ }
+ static inline void cache_random_seq_destroy(struct kmem_cache *cachep) { }
+diff --git a/mm/slab_common.c b/mm/slab_common.c
+index e7cc7ddc7a5860d836..622f6b6ae84422a80e 100644
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  * Slab allocator functions that are independent of the allocator strategy
+  *
+@@ -64,7 +63,6 @@ __setup("slab_nomerge", setup_slab_nomerge);
+  */
+ unsigned int kmem_cache_size(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 67 \n");
+ 	return s->object_size;
+ }
+ EXPORT_SYMBOL(kmem_cache_size);
+@@ -103,14 +101,12 @@ static int kmem_cache_sanity_check(const char *name, size_t size)
+ #else
+ static inline int kmem_cache_sanity_check(const char *name, size_t size)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 106 \n");
+ 	return 0;
+ }
+ #endif
+ 
+ void __kmem_cache_free_bulk(struct kmem_cache *s, size_t nr, void **p)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 113 \n");
+ 	size_t i;
+ 
+ 	for (i = 0; i < nr; i++) {
+@@ -124,7 +120,6 @@ void __kmem_cache_free_bulk(struct kmem_cache *s, size_t nr, void **p)
+ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t nr,
+ 								void **p)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 127 \n");
+ 	size_t i;
+ 
+ 	for (i = 0; i < nr; i++) {
+@@ -224,13 +219,11 @@ int memcg_update_all_caches(int num_memcgs)
+ static inline int init_memcg_params(struct kmem_cache *s,
+ 		struct mem_cgroup *memcg, struct kmem_cache *root_cache)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 227 \n");
+ 	return 0;
+ }
+ 
+ static inline void destroy_memcg_params(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 233 \n");
+ }
+ #endif /* CONFIG_MEMCG && !CONFIG_SLOB */
+ 
+@@ -724,7 +717,6 @@ static int shutdown_memcg_caches(struct kmem_cache *s,
+ static inline int shutdown_memcg_caches(struct kmem_cache *s,
+ 		struct list_head *release, bool *need_rcu_barrier)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 727 \n");
+ 	return 0;
+ }
+ #endif /* CONFIG_MEMCG && !CONFIG_SLOB */
+@@ -739,7 +731,6 @@ void slab_kmem_cache_release(struct kmem_cache *s)
+ 
+ void kmem_cache_destroy(struct kmem_cache *s)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 742 \n");
+ 	LIST_HEAD(release);
+ 	bool need_rcu_barrier = false;
+ 	int err;
+@@ -881,7 +872,6 @@ static s8 size_index[24] = {
+ 
+ static inline int size_index_elem(size_t bytes)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 884 \n");
+ 	return (bytes - 1) / 8;
+ }
+ 
+@@ -1044,7 +1034,6 @@ void __init create_kmalloc_caches(unsigned long flags)
+  */
+ void *kmalloc_order(size_t size, gfp_t flags, unsigned int order)
+ {
+-	panic("We reached unpopular paths in mm/slab_common.c: line 1047 \n");
+ 	void *ret;
+ 	struct page *page;
+ 
+diff --git a/mm/sparse.c b/mm/sparse.c
+index 1b4c2b7a9fb80667da..1d6377e94209e2e7e4 100644
+--- a/mm/sparse.c
++++ b/mm/sparse.c
+@@ -56,7 +56,6 @@ static void set_section_nid(unsigned long section_nr, int nid)
+ #else /* !NODE_NOT_IN_PAGE_FLAGS */
+ static inline void set_section_nid(unsigned long section_nr, int nid)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 59 \n");
+ }
+ #endif
+ 
+@@ -98,7 +97,6 @@ static int __meminit sparse_index_init(unsigned long section_nr, int nid)
+ #else /* !SPARSEMEM_EXTREME */
+ static inline int sparse_index_init(unsigned long section_nr, int nid)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 101 \n");
+ 	return 0;
+ }
+ #endif
+@@ -125,7 +123,6 @@ int __section_nr(struct mem_section* ms)
+ #else
+ int __section_nr(struct mem_section* ms)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 128 \n");
+ 	return (int)(ms - mem_section[0]);
+ }
+ #endif
+@@ -138,13 +135,11 @@ int __section_nr(struct mem_section* ms)
+  */
+ static inline unsigned long sparse_encode_early_nid(int nid)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 141 \n");
+ 	return (nid << SECTION_NID_SHIFT);
+ }
+ 
+ static inline int sparse_early_nid(struct mem_section *section)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 147 \n");
+ 	return (section->section_mem_map >> SECTION_NID_SHIFT);
+ }
+ 
+@@ -224,7 +219,6 @@ unsigned long __init node_memmap_size_bytes(int nid, unsigned long start_pfn,
+  */
+ static unsigned long sparse_encode_mem_map(struct page *mem_map, unsigned long pnum)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 227 \n");
+ 	return (unsigned long)(mem_map - (section_nr_to_pfn(pnum)));
+ }
+ 
+@@ -256,7 +250,6 @@ static int __meminit sparse_init_one_section(struct mem_section *ms,
+ 
+ unsigned long usemap_size(void)
+ {
+-	panic("We reached unpopular paths in mm/sparse.c: line 259 \n");
+ 	unsigned long size_bytes;
+ 	size_bytes = roundup(SECTION_BLOCKFLAGS_BITS, 8) / 8;
+ 	size_bytes = roundup(size_bytes, sizeof(unsigned long));
+diff --git a/mm/swap.c b/mm/swap.c
+index 78854620a5813965c9..4dcf852e1e6d8f2e9f 100644
+--- a/mm/swap.c
++++ b/mm/swap.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/swap.c
+  *
+@@ -113,7 +112,6 @@ EXPORT_SYMBOL(__put_page);
+  */
+ void put_pages_list(struct list_head *pages)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 116 \n");
+ 	while (!list_empty(pages)) {
+ 		struct page *victim;
+ 
+@@ -140,7 +138,6 @@ EXPORT_SYMBOL(put_pages_list);
+ int get_kernel_pages(const struct kvec *kiov, int nr_segs, int write,
+ 		struct page **pages)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 143 \n");
+ 	int seg;
+ 
+ 	for (seg = 0; seg < nr_segs; seg++) {
+@@ -168,7 +165,6 @@ EXPORT_SYMBOL_GPL(get_kernel_pages);
+  */
+ int get_kernel_page(unsigned long start, int write, struct page **pages)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 171 \n");
+ 	const struct kvec kiov = {
+ 		.iov_base = (void *)start,
+ 		.iov_len = PAGE_SIZE
+@@ -210,7 +206,6 @@ static void pagevec_lru_move_fn(struct pagevec *pvec,
+ static void pagevec_move_tail_fn(struct page *page, struct lruvec *lruvec,
+ 				 void *arg)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 213 \n");
+ 	int *pgmoved = arg;
+ 
+ 	if (PageLRU(page) && !PageActive(page) && !PageUnevictable(page)) {
+@@ -226,7 +221,6 @@ static void pagevec_move_tail_fn(struct page *page, struct lruvec *lruvec,
+  */
+ static void pagevec_move_tail(struct pagevec *pvec)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 229 \n");
+ 	int pgmoved = 0;
+ 
+ 	pagevec_lru_move_fn(pvec, pagevec_move_tail_fn, &pgmoved);
+@@ -240,7 +234,6 @@ static void pagevec_move_tail(struct pagevec *pvec)
+  */
+ void rotate_reclaimable_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 243 \n");
+ 	if (!PageLocked(page) && !PageDirty(page) && !PageActive(page) &&
+ 	    !PageUnevictable(page) && PageLRU(page)) {
+ 		struct pagevec *pvec;
+@@ -313,18 +306,15 @@ void activate_page(struct page *page)
+ #else
+ static inline void activate_page_drain(int cpu)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 316 \n");
+ }
+ 
+ static bool need_activate_page_drain(int cpu)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 321 \n");
+ 	return false;
+ }
+ 
+ void activate_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 327 \n");
+ 	struct zone *zone = page_zone(page);
+ 
+ 	page = compound_head(page);
+@@ -421,7 +411,6 @@ void lru_cache_add_anon(struct page *page)
+ 
+ void lru_cache_add_file(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 424 \n");
+ 	if (PageActive(page))
+ 		ClearPageActive(page);
+ 	__lru_cache_add(page);
+@@ -456,7 +445,6 @@ void lru_cache_add(struct page *page)
+  */
+ void add_page_to_unevictable_list(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 459 \n");
+ 	struct pglist_data *pgdat = page_pgdat(page);
+ 	struct lruvec *lruvec;
+ 
+@@ -527,7 +515,6 @@ void lru_cache_add_active_or_unevictable(struct page *page,
+ static void lru_deactivate_file_fn(struct page *page, struct lruvec *lruvec,
+ 			      void *arg)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 530 \n");
+ 	int lru, file;
+ 	bool active;
+ 
+@@ -575,7 +562,6 @@ static void lru_deactivate_file_fn(struct page *page, struct lruvec *lruvec,
+ static void lru_deactivate_fn(struct page *page, struct lruvec *lruvec,
+ 			    void *arg)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 578 \n");
+ 	if (PageLRU(page) && PageActive(page) && !PageUnevictable(page)) {
+ 		int file = page_is_file_cache(page);
+ 		int lru = page_lru_base_type(page);
+@@ -633,7 +619,6 @@ void lru_add_drain_cpu(int cpu)
+  */
+ void deactivate_file_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 636 \n");
+ 	/*
+ 	 * In a workload with many unevictable page such as mprotect,
+ 	 * unevictable page deactivation for accelerating reclaim is pointless.
+@@ -660,7 +645,6 @@ void deactivate_file_page(struct page *page)
+  */
+ void deactivate_page(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 663 \n");
+ 	if (PageLRU(page) && PageActive(page) && !PageUnevictable(page)) {
+ 		struct pagevec *pvec = &get_cpu_var(lru_deactivate_pvecs);
+ 
+@@ -679,7 +663,6 @@ void lru_add_drain(void)
+ 
+ static void lru_add_drain_per_cpu(struct work_struct *dummy)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 682 \n");
+ 	lru_add_drain();
+ }
+ 
+@@ -705,7 +688,6 @@ early_initcall(lru_init);
+ 
+ void lru_add_drain_all(void)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 708 \n");
+ 	static DEFINE_MUTEX(lock);
+ 	static struct cpumask has_work;
+ 	int cpu;
+@@ -922,7 +904,6 @@ unsigned pagevec_lookup_entries(struct pagevec *pvec,
+ 				pgoff_t start, unsigned nr_pages,
+ 				pgoff_t *indices)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 925 \n");
+ 	pvec->nr = find_get_entries(mapping, start, nr_pages,
+ 				    pvec->pages, indices);
+ 	return pagevec_count(pvec);
+@@ -968,7 +949,6 @@ void pagevec_remove_exceptionals(struct pagevec *pvec)
+ unsigned pagevec_lookup(struct pagevec *pvec, struct address_space *mapping,
+ 		pgoff_t start, unsigned nr_pages)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 971 \n");
+ 	pvec->nr = find_get_pages(mapping, start, nr_pages, pvec->pages);
+ 	return pagevec_count(pvec);
+ }
+@@ -977,7 +957,6 @@ EXPORT_SYMBOL(pagevec_lookup);
+ unsigned pagevec_lookup_tag(struct pagevec *pvec, struct address_space *mapping,
+ 		pgoff_t *index, int tag, unsigned nr_pages)
+ {
+-	panic("We reached unpopular paths in mm/swap.c: line 980 \n");
+ 	pvec->nr = find_get_pages_tag(mapping, index, tag,
+ 					nr_pages, pvec->pages);
+ 	return pagevec_count(pvec);
+diff --git a/mm/swap_state.c b/mm/swap_state.c
+index 8d399e839a6394746f..35d7e0ee1c77c9fb94 100644
+--- a/mm/swap_state.c
++++ b/mm/swap_state.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/swap_state.c
+  *
+@@ -66,7 +65,6 @@ static atomic_t swapin_readahead_hits = ATOMIC_INIT(4);
+ 
+ void show_swap_cache_info(void)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 69 \n");
+ 	printk("%lu pages in swap cache\n", total_swapcache_pages());
+ 	printk("Swap cache stats: add %lu, delete %lu, find %lu/%lu\n",
+ 		swap_cache_info.add_total, swap_cache_info.del_total,
+@@ -82,7 +80,6 @@ void show_swap_cache_info(void)
+  */
+ int __add_to_swap_cache(struct page *page, swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 85 \n");
+ 	int error;
+ 	struct address_space *address_space;
+ 
+@@ -123,7 +120,6 @@ int __add_to_swap_cache(struct page *page, swp_entry_t entry)
+ 
+ int add_to_swap_cache(struct page *page, swp_entry_t entry, gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 126 \n");
+ 	int error;
+ 
+ 	error = radix_tree_maybe_preload(gfp_mask);
+@@ -140,7 +136,6 @@ int add_to_swap_cache(struct page *page, swp_entry_t entry, gfp_t gfp_mask)
+  */
+ void __delete_from_swap_cache(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 143 \n");
+ 	swp_entry_t entry;
+ 	struct address_space *address_space;
+ 
+@@ -167,7 +162,6 @@ void __delete_from_swap_cache(struct page *page)
+  */
+ int add_to_swap(struct page *page, struct list_head *list)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 170 \n");
+ 	swp_entry_t entry;
+ 	int err;
+ 
+@@ -223,7 +217,6 @@ int add_to_swap(struct page *page, struct list_head *list)
+  */
+ void delete_from_swap_cache(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 226 \n");
+ 	swp_entry_t entry;
+ 	struct address_space *address_space;
+ 
+@@ -288,7 +281,6 @@ void free_pages_and_swap_cache(struct page **pages, int nr)
+  */
+ struct page * lookup_swap_cache(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 291 \n");
+ 	struct page *page;
+ 
+ 	page = find_get_page(swap_address_space(entry), swp_offset(entry));
+@@ -307,7 +299,6 @@ struct page *__read_swap_cache_async(swp_entry_t entry, gfp_t gfp_mask,
+ 			struct vm_area_struct *vma, unsigned long addr,
+ 			bool *new_page_allocated)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 310 \n");
+ 	struct page *found_page, *new_page = NULL;
+ 	struct address_space *swapper_space = swap_address_space(entry);
+ 	int err;
+@@ -404,7 +395,6 @@ struct page *__read_swap_cache_async(swp_entry_t entry, gfp_t gfp_mask,
+ struct page *read_swap_cache_async(swp_entry_t entry, gfp_t gfp_mask,
+ 			struct vm_area_struct *vma, unsigned long addr)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 407 \n");
+ 	bool page_was_allocated;
+ 	struct page *retpage = __read_swap_cache_async(entry, gfp_mask,
+ 			vma, addr, &page_was_allocated);
+@@ -417,7 +407,6 @@ struct page *read_swap_cache_async(swp_entry_t entry, gfp_t gfp_mask,
+ 
+ static unsigned long swapin_nr_pages(unsigned long offset)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 420 \n");
+ 	static unsigned long prev_offset;
+ 	unsigned int pages, max_pages, last_ra;
+ 	static atomic_t last_readahead_pages;
+@@ -482,7 +471,6 @@ static unsigned long swapin_nr_pages(unsigned long offset)
+ struct page *swapin_readahead(swp_entry_t entry, gfp_t gfp_mask,
+ 			struct vm_area_struct *vma, unsigned long addr)
+ {
+-	panic("We reached unpopular paths in mm/swap_state.c: line 485 \n");
+ 	struct page *page;
+ 	unsigned long entry_offset = swp_offset(entry);
+ 	unsigned long offset = entry_offset;
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 3e91e4ccf818fbc23c..d76b2a18f044a07b84 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/swapfile.c
+  *
+@@ -95,7 +94,6 @@ static atomic_t proc_poll_event = ATOMIC_INIT(0);
+ 
+ static inline unsigned char swap_count(unsigned char ent)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 98 \n");
+ 	return ent & ~SWAP_HAS_CACHE;	/* may include SWAP_HAS_CONT flag */
+ }
+ 
+@@ -103,7 +101,6 @@ static inline unsigned char swap_count(unsigned char ent)
+ static int
+ __try_to_reclaim_swap(struct swap_info_struct *si, unsigned long offset)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 106 \n");
+ 	swp_entry_t entry = swp_entry(si->type, offset);
+ 	struct page *page;
+ 	int ret = 0;
+@@ -132,7 +129,6 @@ __try_to_reclaim_swap(struct swap_info_struct *si, unsigned long offset)
+  */
+ static int discard_swap(struct swap_info_struct *si)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 135 \n");
+ 	struct swap_extent *se;
+ 	sector_t start_block;
+ 	sector_t nr_blocks;
+@@ -171,7 +167,6 @@ static int discard_swap(struct swap_info_struct *si)
+ static void discard_swap_cluster(struct swap_info_struct *si,
+ 				 pgoff_t start_page, pgoff_t nr_pages)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 174 \n");
+ 	struct swap_extent *se = si->curr_swap_extent;
+ 	int found_extent = 0;
+ 
+@@ -207,86 +202,73 @@ static void discard_swap_cluster(struct swap_info_struct *si,
+ static inline void cluster_set_flag(struct swap_cluster_info *info,
+ 	unsigned int flag)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 210 \n");
+ 	info->flags = flag;
+ }
+ 
+ static inline unsigned int cluster_count(struct swap_cluster_info *info)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 216 \n");
+ 	return info->data;
+ }
+ 
+ static inline void cluster_set_count(struct swap_cluster_info *info,
+ 				     unsigned int c)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 223 \n");
+ 	info->data = c;
+ }
+ 
+ static inline void cluster_set_count_flag(struct swap_cluster_info *info,
+ 					 unsigned int c, unsigned int f)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 230 \n");
+ 	info->flags = f;
+ 	info->data = c;
+ }
+ 
+ static inline unsigned int cluster_next(struct swap_cluster_info *info)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 237 \n");
+ 	return info->data;
+ }
+ 
+ static inline void cluster_set_next(struct swap_cluster_info *info,
+ 				    unsigned int n)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 244 \n");
+ 	info->data = n;
+ }
+ 
+ static inline void cluster_set_next_flag(struct swap_cluster_info *info,
+ 					 unsigned int n, unsigned int f)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 251 \n");
+ 	info->flags = f;
+ 	info->data = n;
+ }
+ 
+ static inline bool cluster_is_free(struct swap_cluster_info *info)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 258 \n");
+ 	return info->flags & CLUSTER_FLAG_FREE;
+ }
+ 
+ static inline bool cluster_is_null(struct swap_cluster_info *info)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 264 \n");
+ 	return info->flags & CLUSTER_FLAG_NEXT_NULL;
+ }
+ 
+ static inline void cluster_set_null(struct swap_cluster_info *info)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 270 \n");
+ 	info->flags = CLUSTER_FLAG_NEXT_NULL;
+ 	info->data = 0;
+ }
+ 
+ static inline bool cluster_list_empty(struct swap_cluster_list *list)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 277 \n");
+ 	return cluster_is_null(&list->head);
+ }
+ 
+ static inline unsigned int cluster_list_first(struct swap_cluster_list *list)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 283 \n");
+ 	return cluster_next(&list->head);
+ }
+ 
+ static void cluster_list_init(struct swap_cluster_list *list)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 289 \n");
+ 	cluster_set_null(&list->head);
+ 	cluster_set_null(&list->tail);
+ }
+@@ -295,7 +277,6 @@ static void cluster_list_add_tail(struct swap_cluster_list *list,
+ 				  struct swap_cluster_info *ci,
+ 				  unsigned int idx)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 298 \n");
+ 	if (cluster_list_empty(list)) {
+ 		cluster_set_next_flag(&list->head, idx, 0);
+ 		cluster_set_next_flag(&list->tail, idx, 0);
+@@ -310,7 +291,6 @@ static void cluster_list_add_tail(struct swap_cluster_list *list,
+ static unsigned int cluster_list_del_first(struct swap_cluster_list *list,
+ 					   struct swap_cluster_info *ci)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 313 \n");
+ 	unsigned int idx;
+ 
+ 	idx = cluster_next(&list->head);
+@@ -328,7 +308,6 @@ static unsigned int cluster_list_del_first(struct swap_cluster_list *list,
+ static void swap_cluster_schedule_discard(struct swap_info_struct *si,
+ 		unsigned int idx)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 331 \n");
+ 	/*
+ 	 * If scan_swap_map() can't find a free cluster, it will check
+ 	 * si->swap_map directly. To make sure the discarding cluster isn't
+@@ -349,7 +328,6 @@ static void swap_cluster_schedule_discard(struct swap_info_struct *si,
+ */
+ static void swap_do_scheduled_discard(struct swap_info_struct *si)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 352 \n");
+ 	struct swap_cluster_info *info;
+ 	unsigned int idx;
+ 
+@@ -372,7 +350,6 @@ static void swap_do_scheduled_discard(struct swap_info_struct *si)
+ 
+ static void swap_discard_work(struct work_struct *work)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 375 \n");
+ 	struct swap_info_struct *si;
+ 
+ 	si = container_of(work, struct swap_info_struct, discard_work);
+@@ -389,7 +366,6 @@ static void swap_discard_work(struct work_struct *work)
+ static void inc_cluster_info_page(struct swap_info_struct *p,
+ 	struct swap_cluster_info *cluster_info, unsigned long page_nr)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 392 \n");
+ 	unsigned long idx = page_nr / SWAPFILE_CLUSTER;
+ 
+ 	if (!cluster_info)
+@@ -413,7 +389,6 @@ static void inc_cluster_info_page(struct swap_info_struct *p,
+ static void dec_cluster_info_page(struct swap_info_struct *p,
+ 	struct swap_cluster_info *cluster_info, unsigned long page_nr)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 416 \n");
+ 	unsigned long idx = page_nr / SWAPFILE_CLUSTER;
+ 
+ 	if (!cluster_info)
+@@ -448,7 +423,6 @@ static bool
+ scan_swap_map_ssd_cluster_conflict(struct swap_info_struct *si,
+ 	unsigned long offset)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 451 \n");
+ 	struct percpu_cluster *percpu_cluster;
+ 	bool conflict;
+ 
+@@ -472,7 +446,6 @@ scan_swap_map_ssd_cluster_conflict(struct swap_info_struct *si,
+ static void scan_swap_map_try_ssd_cluster(struct swap_info_struct *si,
+ 	unsigned long *offset, unsigned long *scan_base)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 475 \n");
+ 	struct percpu_cluster *cluster;
+ 	bool found_free;
+ 	unsigned long tmp;
+@@ -523,7 +496,6 @@ static void scan_swap_map_try_ssd_cluster(struct swap_info_struct *si,
+ static unsigned long scan_swap_map(struct swap_info_struct *si,
+ 				   unsigned char usage)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 526 \n");
+ 	unsigned long offset;
+ 	unsigned long scan_base;
+ 	unsigned long last_in_cluster = 0;
+@@ -675,7 +647,6 @@ static unsigned long scan_swap_map(struct swap_info_struct *si,
+ 
+ swp_entry_t get_swap_page(void)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 678 \n");
+ 	struct swap_info_struct *si, *next;
+ 	pgoff_t offset;
+ 
+@@ -741,7 +712,6 @@ swp_entry_t get_swap_page(void)
+ /* The only caller of this function is now suspend routine */
+ swp_entry_t get_swap_page_of_type(int type)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 744 \n");
+ 	struct swap_info_struct *si;
+ 	pgoff_t offset;
+ 
+@@ -763,7 +733,6 @@ swp_entry_t get_swap_page_of_type(int type)
+ 
+ static struct swap_info_struct *swap_info_get(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 766 \n");
+ 	struct swap_info_struct *p;
+ 	unsigned long offset, type;
+ 
+@@ -801,7 +770,6 @@ static struct swap_info_struct *swap_info_get(swp_entry_t entry)
+ static unsigned char swap_entry_free(struct swap_info_struct *p,
+ 				     swp_entry_t entry, unsigned char usage)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 804 \n");
+ 	unsigned long offset = swp_offset(entry);
+ 	unsigned char count;
+ 	unsigned char has_cache;
+@@ -870,7 +838,6 @@ static unsigned char swap_entry_free(struct swap_info_struct *p,
+  */
+ void swap_free(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 873 \n");
+ 	struct swap_info_struct *p;
+ 
+ 	p = swap_info_get(entry);
+@@ -885,7 +852,6 @@ void swap_free(swp_entry_t entry)
+  */
+ void swapcache_free(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 888 \n");
+ 	struct swap_info_struct *p;
+ 
+ 	p = swap_info_get(entry);
+@@ -902,7 +868,6 @@ void swapcache_free(swp_entry_t entry)
+  */
+ int page_swapcount(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 905 \n");
+ 	int count = 0;
+ 	struct swap_info_struct *p;
+ 	swp_entry_t entry;
+@@ -922,7 +887,6 @@ int page_swapcount(struct page *page)
+  */
+ int swp_swapcount(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 925 \n");
+ 	int count, tmp_count, n;
+ 	struct swap_info_struct *p;
+ 	struct page *page;
+@@ -1007,7 +971,6 @@ bool reuse_swap_page(struct page *page, int *total_mapcount)
+  */
+ int try_to_free_swap(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1010 \n");
+ 	VM_BUG_ON_PAGE(!PageLocked(page), page);
+ 
+ 	if (!PageSwapCache(page))
+@@ -1046,7 +1009,6 @@ int try_to_free_swap(struct page *page)
+  */
+ int free_swap_and_cache(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1049 \n");
+ 	struct swap_info_struct *p;
+ 	struct page *page = NULL;
+ 
+@@ -1176,7 +1138,6 @@ unsigned int count_swap_pages(int type, int free)
+ 
+ static inline int pte_same_as_swp(pte_t pte, pte_t swp_pte)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1179 \n");
+ 	return pte_same(pte_swp_clear_soft_dirty(pte), swp_pte);
+ }
+ 
+@@ -1188,7 +1149,6 @@ static inline int pte_same_as_swp(pte_t pte, pte_t swp_pte)
+ static int unuse_pte(struct vm_area_struct *vma, pmd_t *pmd,
+ 		unsigned long addr, swp_entry_t entry, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1191 \n");
+ 	struct page *swapcache;
+ 	struct mem_cgroup *memcg;
+ 	spinlock_t *ptl;
+@@ -1246,7 +1206,6 @@ static int unuse_pte_range(struct vm_area_struct *vma, pmd_t *pmd,
+ 				unsigned long addr, unsigned long end,
+ 				swp_entry_t entry, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1249 \n");
+ 	pte_t swp_pte = swp_entry_to_pte(entry);
+ 	pte_t *pte;
+ 	int ret = 0;
+@@ -1283,7 +1242,6 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
+ 				unsigned long addr, unsigned long end,
+ 				swp_entry_t entry, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1286 \n");
+ 	pmd_t *pmd;
+ 	unsigned long next;
+ 	int ret;
+@@ -1304,7 +1262,6 @@ static inline int unuse_pud_range(struct vm_area_struct *vma, pgd_t *pgd,
+ 				unsigned long addr, unsigned long end,
+ 				swp_entry_t entry, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1307 \n");
+ 	pud_t *pud;
+ 	unsigned long next;
+ 	int ret;
+@@ -1324,7 +1281,6 @@ static inline int unuse_pud_range(struct vm_area_struct *vma, pgd_t *pgd,
+ static int unuse_vma(struct vm_area_struct *vma,
+ 				swp_entry_t entry, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1327 \n");
+ 	pgd_t *pgd;
+ 	unsigned long addr, end, next;
+ 	int ret;
+@@ -1355,7 +1311,6 @@ static int unuse_vma(struct vm_area_struct *vma,
+ static int unuse_mm(struct mm_struct *mm,
+ 				swp_entry_t entry, struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1358 \n");
+ 	struct vm_area_struct *vma;
+ 	int ret = 0;
+ 
+@@ -1385,7 +1340,6 @@ static int unuse_mm(struct mm_struct *mm,
+ static unsigned int find_next_to_unuse(struct swap_info_struct *si,
+ 					unsigned int prev, bool frontswap)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1388 \n");
+ 	unsigned int max = si->max;
+ 	unsigned int i = prev;
+ 	unsigned char count;
+@@ -1434,7 +1388,6 @@ static unsigned int find_next_to_unuse(struct swap_info_struct *si,
+ int try_to_unuse(unsigned int type, bool frontswap,
+ 		 unsigned long pages_to_unuse)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1437 \n");
+ 	struct swap_info_struct *si = swap_info[type];
+ 	struct mm_struct *start_mm;
+ 	volatile unsigned char *swap_map; /* swap_map is accessed without
+@@ -1663,7 +1616,6 @@ int try_to_unuse(unsigned int type, bool frontswap,
+  */
+ static void drain_mmlist(void)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1666 \n");
+ 	struct list_head *p, *next;
+ 	unsigned int type;
+ 
+@@ -1684,7 +1636,6 @@ static void drain_mmlist(void)
+  */
+ static sector_t map_swap_entry(swp_entry_t entry, struct block_device **bdev)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1687 \n");
+ 	struct swap_info_struct *sis;
+ 	struct swap_extent *start_se;
+ 	struct swap_extent *se;
+@@ -1713,7 +1664,6 @@ static sector_t map_swap_entry(swp_entry_t entry, struct block_device **bdev)
+  */
+ sector_t map_swap_page(struct page *page, struct block_device **bdev)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1716 \n");
+ 	swp_entry_t entry;
+ 	entry.val = page_private(page);
+ 	return map_swap_entry(entry, bdev);
+@@ -1724,7 +1674,6 @@ sector_t map_swap_page(struct page *page, struct block_device **bdev)
+  */
+ static void destroy_swap_extents(struct swap_info_struct *sis)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1727 \n");
+ 	while (!list_empty(&sis->first_swap_extent.list)) {
+ 		struct swap_extent *se;
+ 
+@@ -1753,7 +1702,6 @@ int
+ add_swap_extent(struct swap_info_struct *sis, unsigned long start_page,
+ 		unsigned long nr_pages, sector_t start_block)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1756 \n");
+ 	struct swap_extent *se;
+ 	struct swap_extent *new_se;
+ 	struct list_head *lh;
+@@ -1823,7 +1771,6 @@ add_swap_extent(struct swap_info_struct *sis, unsigned long start_page,
+  */
+ static int setup_swap_extents(struct swap_info_struct *sis, sector_t *span)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1826 \n");
+ 	struct file *swap_file = sis->swap_file;
+ 	struct address_space *mapping = swap_file->f_mapping;
+ 	struct inode *inode = mapping->host;
+@@ -1852,7 +1799,6 @@ static void _enable_swap_info(struct swap_info_struct *p, int prio,
+ 				unsigned char *swap_map,
+ 				struct swap_cluster_info *cluster_info)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1855 \n");
+ 	if (prio >= 0)
+ 		p->prio = prio;
+ 	else
+@@ -1891,7 +1837,6 @@ static void enable_swap_info(struct swap_info_struct *p, int prio,
+ 				struct swap_cluster_info *cluster_info,
+ 				unsigned long *frontswap_map)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1894 \n");
+ 	frontswap_init(p->type, frontswap_map);
+ 	spin_lock(&swap_lock);
+ 	spin_lock(&p->lock);
+@@ -1902,7 +1847,6 @@ static void enable_swap_info(struct swap_info_struct *p, int prio,
+ 
+ static void reinsert_swap_info(struct swap_info_struct *p)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 1905 \n");
+ 	spin_lock(&swap_lock);
+ 	spin_lock(&p->lock);
+ 	_enable_swap_info(p, p->prio, p->swap_map, p->cluster_info);
+@@ -2202,7 +2146,6 @@ late_initcall(max_swapfiles_check);
+ 
+ static struct swap_info_struct *alloc_swap_info(void)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2205 \n");
+ 	struct swap_info_struct *p;
+ 	unsigned int type;
+ 
+@@ -2250,7 +2193,6 @@ static struct swap_info_struct *alloc_swap_info(void)
+ 
+ static int claim_swapfile(struct swap_info_struct *p, struct inode *inode)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2253 \n");
+ 	int error;
+ 
+ 	if (S_ISBLK(inode->i_mode)) {
+@@ -2281,7 +2223,6 @@ static unsigned long read_swap_header(struct swap_info_struct *p,
+ 					union swap_header *swap_header,
+ 					struct inode *inode)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2284 \n");
+ 	int i;
+ 	unsigned long maxpages;
+ 	unsigned long swapfilepages;
+@@ -2365,7 +2306,6 @@ static int setup_swap_map_and_extents(struct swap_info_struct *p,
+ 					unsigned long maxpages,
+ 					sector_t *span)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2368 \n");
+ 	int i;
+ 	unsigned int nr_good_pages;
+ 	int nr_extents;
+@@ -2437,7 +2377,6 @@ static int setup_swap_map_and_extents(struct swap_info_struct *p,
+  */
+ static bool swap_discardable(struct swap_info_struct *si)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2440 \n");
+ 	struct request_queue *q = bdev_get_queue(si->bdev);
+ 
+ 	if (!q || !blk_queue_discard(q))
+@@ -2688,7 +2627,6 @@ void si_swapinfo(struct sysinfo *val)
+  */
+ static int __swap_duplicate(swp_entry_t entry, unsigned char usage)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2691 \n");
+ 	struct swap_info_struct *p;
+ 	unsigned long offset, type;
+ 	unsigned char count;
+@@ -2764,7 +2702,6 @@ static int __swap_duplicate(swp_entry_t entry, unsigned char usage)
+  */
+ void swap_shmem_alloc(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2767 \n");
+ 	__swap_duplicate(entry, SWAP_MAP_SHMEM);
+ }
+ 
+@@ -2777,7 +2714,6 @@ void swap_shmem_alloc(swp_entry_t entry)
+  */
+ int swap_duplicate(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2780 \n");
+ 	int err = 0;
+ 
+ 	while (!err && __swap_duplicate(entry, 1) == -ENOMEM)
+@@ -2795,13 +2731,11 @@ int swap_duplicate(swp_entry_t entry)
+  */
+ int swapcache_prepare(swp_entry_t entry)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2798 \n");
+ 	return __swap_duplicate(entry, SWAP_HAS_CACHE);
+ }
+ 
+ struct swap_info_struct *page_swap_info(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2804 \n");
+ 	swp_entry_t swap = { .val = page_private(page) };
+ 	return swap_info[swp_type(swap)];
+ }
+@@ -2811,7 +2745,6 @@ struct swap_info_struct *page_swap_info(struct page *page)
+  */
+ struct address_space *__page_file_mapping(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2814 \n");
+ 	VM_BUG_ON_PAGE(!PageSwapCache(page), page);
+ 	return page_swap_info(page)->swap_file->f_mapping;
+ }
+@@ -2819,7 +2752,6 @@ EXPORT_SYMBOL_GPL(__page_file_mapping);
+ 
+ pgoff_t __page_file_index(struct page *page)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2822 \n");
+ 	swp_entry_t swap = { .val = page_private(page) };
+ 	VM_BUG_ON_PAGE(!PageSwapCache(page), page);
+ 	return swp_offset(swap);
+@@ -2843,7 +2775,6 @@ EXPORT_SYMBOL_GPL(__page_file_index);
+  */
+ int add_swap_count_continuation(swp_entry_t entry, gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2846 \n");
+ 	struct swap_info_struct *si;
+ 	struct page *head;
+ 	struct page *page;
+@@ -2946,7 +2877,6 @@ int add_swap_count_continuation(swp_entry_t entry, gfp_t gfp_mask)
+ static bool swap_count_continued(struct swap_info_struct *si,
+ 				 pgoff_t offset, unsigned char count)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 2949 \n");
+ 	struct page *head;
+ 	struct page *page;
+ 	unsigned char *map;
+@@ -3027,7 +2957,6 @@ init_map:		*map = 0;		/* we didn't zero the page */
+  */
+ static void free_swap_count_continuations(struct swap_info_struct *si)
+ {
+-	panic("We reached unpopular paths in mm/swapfile.c: line 3030 \n");
+ 	pgoff_t offset;
+ 
+ 	for (offset = 0; offset < si->max; offset += PAGE_SIZE) {
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index 0d3ca849614079f57b..195de42bea1f7d548b 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ /*
+  *  linux/mm/vmalloc.c
+  *
+@@ -208,7 +207,6 @@ static int vmap_page_range_noflush(unsigned long start, unsigned long end,
+ static int vmap_page_range(unsigned long start, unsigned long end,
+ 			   pgprot_t prot, struct page **pages)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 211 \n");
+ 	int ret;
+ 
+ 	ret = vmap_page_range_noflush(start, end, prot, pages);
+@@ -280,7 +278,6 @@ EXPORT_SYMBOL(vmalloc_to_page);
+  */
+ unsigned long vmalloc_to_pfn(const void *vmalloc_addr)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 283 \n");
+ 	return page_to_pfn(vmalloc_to_page(vmalloc_addr));
+ }
+ EXPORT_SYMBOL(vmalloc_to_pfn);
+@@ -504,14 +501,12 @@ static struct vmap_area *alloc_vmap_area(unsigned long size,
+ 
+ int register_vmap_purge_notifier(struct notifier_block *nb)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 507 \n");
+ 	return blocking_notifier_chain_register(&vmap_notify_list, nb);
+ }
+ EXPORT_SYMBOL_GPL(register_vmap_purge_notifier);
+ 
+ int unregister_vmap_purge_notifier(struct notifier_block *nb)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 514 \n");
+ 	return blocking_notifier_chain_unregister(&vmap_notify_list, nb);
+ }
+ EXPORT_SYMBOL_GPL(unregister_vmap_purge_notifier);
+@@ -556,7 +551,6 @@ static void __free_vmap_area(struct vmap_area *va)
+  */
+ static void free_vmap_area(struct vmap_area *va)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 559 \n");
+ 	spin_lock(&vmap_area_lock);
+ 	__free_vmap_area(va);
+ 	spin_unlock(&vmap_area_lock);
+@@ -572,7 +566,6 @@ static void unmap_vmap_area(struct vmap_area *va)
+ 
+ static void vmap_debug_free_range(unsigned long start, unsigned long end)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 575 \n");
+ 	/*
+ 	 * Unmap page tables and force a TLB flush immediately if pagealloc
+ 	 * debugging is enabled.  This catches use after free bugs similarly to
+@@ -627,7 +620,6 @@ static void purge_fragmented_blocks_allcpus(void);
+  */
+ void set_iounmap_nonlazy(void)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 630 \n");
+ 	atomic_set(&vmap_lazy_nr, lazy_max_pages()+1);
+ }
+ 
+@@ -704,7 +696,6 @@ static void try_purge_vmap_area_lazy(void)
+  */
+ static void purge_vmap_area_lazy(void)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 707 \n");
+ 	unsigned long start = ULONG_MAX, end = 0;
+ 
+ 	__purge_vmap_area_lazy(&start, &end, 1, 0);
+@@ -744,7 +735,6 @@ static void free_unmap_vmap_area_noflush(struct vmap_area *va)
+  */
+ static void free_unmap_vmap_area(struct vmap_area *va)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 747 \n");
+ 	flush_cache_vunmap(va->va_start, va->va_end);
+ 	free_unmap_vmap_area_noflush(va);
+ }
+@@ -762,7 +752,6 @@ static struct vmap_area *find_vmap_area(unsigned long addr)
+ 
+ static void free_unmap_vmap_area_addr(unsigned long addr)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 765 \n");
+ 	struct vmap_area *va;
+ 
+ 	va = find_vmap_area(addr);
+@@ -838,7 +827,6 @@ static RADIX_TREE(vmap_block_tree, GFP_ATOMIC);
+ 
+ static unsigned long addr_to_vb_idx(unsigned long addr)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 841 \n");
+ 	addr -= VMALLOC_START & ~(VMAP_BLOCK_SIZE-1);
+ 	addr /= VMAP_BLOCK_SIZE;
+ 	return addr;
+@@ -846,7 +834,6 @@ static unsigned long addr_to_vb_idx(unsigned long addr)
+ 
+ static void *vmap_block_vaddr(unsigned long va_start, unsigned long pages_off)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 849 \n");
+ 	unsigned long addr;
+ 
+ 	addr = va_start + (pages_off << PAGE_SHIFT);
+@@ -864,7 +851,6 @@ static void *vmap_block_vaddr(unsigned long va_start, unsigned long pages_off)
+  */
+ static void *new_vmap_block(unsigned int order, gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 867 \n");
+ 	struct vmap_block_queue *vbq;
+ 	struct vmap_block *vb;
+ 	struct vmap_area *va;
+@@ -923,7 +909,6 @@ static void *new_vmap_block(unsigned int order, gfp_t gfp_mask)
+ 
+ static void free_vmap_block(struct vmap_block *vb)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 926 \n");
+ 	struct vmap_block *tmp;
+ 	unsigned long vb_idx;
+ 
+@@ -982,7 +967,6 @@ static void purge_fragmented_blocks_allcpus(void)
+ 
+ static void *vb_alloc(unsigned long size, gfp_t gfp_mask)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 985 \n");
+ 	struct vmap_block_queue *vbq;
+ 	struct vmap_block *vb;
+ 	void *vaddr = NULL;
+@@ -1036,7 +1020,6 @@ static void *vb_alloc(unsigned long size, gfp_t gfp_mask)
+ 
+ static void vb_free(const void *addr, unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1039 \n");
+ 	unsigned long offset;
+ 	unsigned long vb_idx;
+ 	unsigned int order;
+@@ -1132,7 +1115,6 @@ EXPORT_SYMBOL_GPL(vm_unmap_aliases);
+  */
+ void vm_unmap_ram(const void *mem, unsigned int count)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1135 \n");
+ 	unsigned long size = (unsigned long)count << PAGE_SHIFT;
+ 	unsigned long addr = (unsigned long)mem;
+ 
+@@ -1168,7 +1150,6 @@ EXPORT_SYMBOL(vm_unmap_ram);
+  */
+ void *vm_map_ram(struct page **pages, unsigned int count, int node, pgprot_t prot)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1171 \n");
+ 	unsigned long size = (unsigned long)count << PAGE_SHIFT;
+ 	unsigned long addr;
+ 	void *mem;
+@@ -1322,7 +1303,6 @@ int map_kernel_range_noflush(unsigned long addr, unsigned long size,
+  */
+ void unmap_kernel_range_noflush(unsigned long addr, unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1325 \n");
+ 	vunmap_page_range(addr, addr + size);
+ }
+ EXPORT_SYMBOL_GPL(unmap_kernel_range_noflush);
+@@ -1337,7 +1317,6 @@ EXPORT_SYMBOL_GPL(unmap_kernel_range_noflush);
+  */
+ void unmap_kernel_range(unsigned long addr, unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1340 \n");
+ 	unsigned long end = addr + size;
+ 
+ 	flush_cache_vunmap(addr, end);
+@@ -1373,7 +1352,6 @@ static void setup_vmalloc_vm(struct vm_struct *vm, struct vmap_area *va,
+ 
+ static void clear_vm_uninitialized_flag(struct vm_struct *vm)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1376 \n");
+ 	/*
+ 	 * Before removing VM_UNINITIALIZED,
+ 	 * we should make sure that vm has proper values.
+@@ -1420,7 +1398,6 @@ static struct vm_struct *__get_vm_area_node(unsigned long size,
+ struct vm_struct *__get_vm_area(unsigned long size, unsigned long flags,
+ 				unsigned long start, unsigned long end)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1423 \n");
+ 	return __get_vm_area_node(size, 1, flags, start, end, NUMA_NO_NODE,
+ 				  GFP_KERNEL, __builtin_return_address(0));
+ }
+@@ -1430,7 +1407,6 @@ struct vm_struct *__get_vm_area_caller(unsigned long size, unsigned long flags,
+ 				       unsigned long start, unsigned long end,
+ 				       const void *caller)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1433 \n");
+ 	return __get_vm_area_node(size, 1, flags, start, end, NUMA_NO_NODE,
+ 				  GFP_KERNEL, caller);
+ }
+@@ -1446,7 +1422,6 @@ struct vm_struct *__get_vm_area_caller(unsigned long size, unsigned long flags,
+  */
+ struct vm_struct *get_vm_area(unsigned long size, unsigned long flags)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1449 \n");
+ 	return __get_vm_area_node(size, 1, flags, VMALLOC_START, VMALLOC_END,
+ 				  NUMA_NO_NODE, GFP_KERNEL,
+ 				  __builtin_return_address(0));
+@@ -1588,7 +1563,6 @@ EXPORT_SYMBOL(vfree);
+  */
+ void vunmap(const void *addr)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1591 \n");
+ 	BUG_ON(in_interrupt());
+ 	might_sleep();
+ 	if (addr)
+@@ -1609,7 +1583,6 @@ EXPORT_SYMBOL(vunmap);
+ void *vmap(struct page **pages, unsigned int count,
+ 		unsigned long flags, pgprot_t prot)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1612 \n");
+ 	struct vm_struct *area;
+ 	unsigned long size;		/* In bytes */
+ 
+@@ -1828,7 +1801,6 @@ EXPORT_SYMBOL(vzalloc);
+  */
+ void *vmalloc_user(unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1831 \n");
+ 	struct vm_struct *area;
+ 	void *ret;
+ 
+@@ -1857,7 +1829,6 @@ EXPORT_SYMBOL(vmalloc_user);
+  */
+ void *vmalloc_node(unsigned long size, int node)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1860 \n");
+ 	return __vmalloc_node(size, 1, GFP_KERNEL | __GFP_HIGHMEM, PAGE_KERNEL,
+ 					node, __builtin_return_address(0));
+ }
+@@ -1877,7 +1848,6 @@ EXPORT_SYMBOL(vmalloc_node);
+  */
+ void *vzalloc_node(unsigned long size, int node)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1880 \n");
+ 	return __vmalloc_node_flags(size, node,
+ 			 GFP_KERNEL | __GFP_HIGHMEM | __GFP_ZERO);
+ }
+@@ -1901,7 +1871,6 @@ EXPORT_SYMBOL(vzalloc_node);
+ 
+ void *vmalloc_exec(unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1904 \n");
+ 	return __vmalloc_node(size, 1, GFP_KERNEL | __GFP_HIGHMEM, PAGE_KERNEL_EXEC,
+ 			      NUMA_NO_NODE, __builtin_return_address(0));
+ }
+@@ -1923,7 +1892,6 @@ void *vmalloc_exec(unsigned long size)
+  */
+ void *vmalloc_32(unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1926 \n");
+ 	return __vmalloc_node(size, 1, GFP_VMALLOC32, PAGE_KERNEL,
+ 			      NUMA_NO_NODE, __builtin_return_address(0));
+ }
+@@ -1938,7 +1906,6 @@ EXPORT_SYMBOL(vmalloc_32);
+  */
+ void *vmalloc_32_user(unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1941 \n");
+ 	struct vm_struct *area;
+ 	void *ret;
+ 
+@@ -1959,7 +1926,6 @@ EXPORT_SYMBOL(vmalloc_32_user);
+ 
+ static int aligned_vread(char *buf, char *addr, unsigned long count)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 1962 \n");
+ 	struct page *p;
+ 	int copied = 0;
+ 
+@@ -1999,7 +1965,6 @@ static int aligned_vread(char *buf, char *addr, unsigned long count)
+ 
+ static int aligned_vwrite(char *buf, char *addr, unsigned long count)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2002 \n");
+ 	struct page *p;
+ 	int copied = 0;
+ 
+@@ -2063,7 +2028,6 @@ static int aligned_vwrite(char *buf, char *addr, unsigned long count)
+ 
+ long vread(char *buf, char *addr, unsigned long count)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2066 \n");
+ 	struct vmap_area *va;
+ 	struct vm_struct *vm;
+ 	char *vaddr, *buf_start = buf;
+@@ -2145,7 +2109,6 @@ long vread(char *buf, char *addr, unsigned long count)
+ 
+ long vwrite(char *buf, char *addr, unsigned long count)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2148 \n");
+ 	struct vmap_area *va;
+ 	struct vm_struct *vm;
+ 	char *vaddr;
+@@ -2213,7 +2176,6 @@ long vwrite(char *buf, char *addr, unsigned long count)
+ int remap_vmalloc_range_partial(struct vm_area_struct *vma, unsigned long uaddr,
+ 				void *kaddr, unsigned long size)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2216 \n");
+ 	struct vm_struct *area;
+ 
+ 	size = PAGE_ALIGN(size);
+@@ -2267,7 +2229,6 @@ EXPORT_SYMBOL(remap_vmalloc_range_partial);
+ int remap_vmalloc_range(struct vm_area_struct *vma, void *addr,
+ 						unsigned long pgoff)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2270 \n");
+ 	return remap_vmalloc_range_partial(vma, vma->vm_start,
+ 					   addr + (pgoff << PAGE_SHIFT),
+ 					   vma->vm_end - vma->vm_start);
+@@ -2285,7 +2246,6 @@ void __weak vmalloc_sync_all(void)
+ 
+ static int f(pte_t *pte, pgtable_t table, unsigned long addr, void *data)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2288 \n");
+ 	pte_t ***p = data;
+ 
+ 	if (p) {
+@@ -2311,7 +2271,6 @@ static int f(pte_t *pte, pgtable_t table, unsigned long addr, void *data)
+  */
+ struct vm_struct *alloc_vm_area(size_t size, pte_t **ptes)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2314 \n");
+ 	struct vm_struct *area;
+ 
+ 	area = get_vm_area_caller(size, VM_IOREMAP,
+@@ -2335,7 +2294,6 @@ EXPORT_SYMBOL_GPL(alloc_vm_area);
+ 
+ void free_vm_area(struct vm_struct *area)
+ {
+-	panic("We reached unpopular paths in mm/vmalloc.c: line 2338 \n");
+ 	struct vm_struct *ret;
+ 	ret = remove_vm_area(area->addr);
+ 	BUG_ON(ret != area);
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+
