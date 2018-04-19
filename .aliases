@@ -6,6 +6,15 @@ unalias {1..9} c d f gbr gco gcs gg gm h history java l md node o rd ru s sd sf 
 
 ## Custom aliases
 
+alias icd='icdiff'
+alias c='colordiff -wuB'
+alias chd='colordiff -wyB'
+alias vcdiff='colordiff -swBW 150'
+alias hcdiff='colordiff -swByW 150'
+alias bvcdiff='colordiff -swBW 150 --suppress-blank-empty'
+alias bhcdiff='colordiff -swyBW 150 --suppress-blank-empty'
+alias svcdiff='colordiff -swBW 150 --suppress-blank-empty --suppress-common-lines'
+alias shcdiff='colordiff -swyBW 150 --suppress-blank-empty --suppress-common-lines'
 alias d='docker'
 alias ccc='noglob ccc'
 alias _='sudo '
@@ -362,14 +371,6 @@ alias pscpu10='ps auxf | sort -nrk 3 | head -10'
 ## older system use /proc/cpuinfo ##
 alias cpuinfo='less /proc/cpuinfo'
 
-alias c='colordiff -uwB'
-## install colordiff package :)
-alias vcdiff='colordiff -swBW 150'
-alias hcdiff='colordiff -swByW 150'
-alias bvcdiff='colordiff -swBW 150 --suppress-blank-empty'
-alias bhcdiff='colordiff -swByW 150 --suppress-blank-empty'
-alias svcdiff='colordiff -swBW 150 --suppress-blank-empty --suppress-common-lines'
-alias shcdiff='colordiff -swByW 150 --suppress-blank-empty --suppress-common-lines'
 alias zswap='printf "\n\033[32m%s \033[31m%s\033[0m\n\n" "ZSWAP Enabled:" "$(grep --color=always "[YN]" /sys/module/zswap/parameters/enabled)" && sudo grep -R . /sys/module/zswap/parameters && echo && sudo grep -R . /sys/kernel/debug/zswap && echo'
 alias tzswap='sudo su -c "(sed 'y/NY/YN/' /sys/module/zswap/parameters/enabled >|/sys/module/zswap/parameters/enabled && cat /sys/module/zswap/parameters/enabled)"'
 alias slog='git log --show-signature'

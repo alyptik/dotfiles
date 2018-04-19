@@ -72,7 +72,7 @@
 	gr = grep -Pn --color=auto --break --no-index
 	dcd = !git difftool --extcmd \"colordiff -wyB\"
 	dcdy = !git difftool --extcmd \"colordiff -wyB\"
-	di = !git difftool --extcmd icdiff
+	di = !git difftool --extcmd git-icdiff
 	i = ls-files -i --full-name --exclude-standard
 	ds = log -M --oneline --stat --no-merges
 	mt = mergetool

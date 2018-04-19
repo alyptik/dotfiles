@@ -51,7 +51,7 @@ GCC_COLORS="diff-delete=31:diff-insert=32:type-diff=01;32:$GCC_COLORS"
 export GCC_COLORS
 # compiler flags
 # CFLAGS="-pipe -march=native -g3 -O3"
-CFLAGS="-march=native -O3"
+# CFLAGS="-march=native -O3"
 # CFLAGS="-Wno-unknown-warning $CFLAGS"
 CFLAGS="-Wno-error -Wno-implicit-fallthrough $CFLAGS"
 CFLAGS="-fno-plt -fno-strict-aliasing $CFLAGS"
@@ -190,6 +190,7 @@ PATH="$(ruby -rrubygems -e "puts Gem.user_dir")/bin:$PATH"
 PATH="/usr/lib/ccache/bin:$PATH"
 # prepend cross compiler to PATH
 PATH="/opt/cross/bin:$PATH"
+PATH="$PROJECTS/lind_project/lind/nacl/native_client/tools/out/nacl-sdk/bin:$PATH"
 export PATH
 # shellcheck disable=SC2039
 PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"
