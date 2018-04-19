@@ -748,7 +748,7 @@ WORDCHARS=
 
 # only show single character options with -
 # zstyle -e ':completion:*:options'			ignored-patterns '
-#         if [[ -prefix - ]]; then
+#         if [[ $PREFIX == - ]]; then
 #                 reply=("--*");
 #         fi'
 
