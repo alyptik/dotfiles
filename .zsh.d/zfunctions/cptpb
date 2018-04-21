@@ -1,5 +1,5 @@
 local pchar
-[[ "$EUID" -eq 0 ]] && pchar='# ' || pchar='$ '
+((!EUID)) && pchar='# ' || pchar='$ '
 if [[ -n "$ZSH_NAME" ]]; then
 	cat <(printf "\n%s\n" "${pchar}${history[$HISTCMD]}" | sed "s/ *| *cptpb.*//") - <(echo) | \
 		tee /dev/stderr | \
