@@ -45,6 +45,8 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	" Plug 'tpope/vim-obsession'
+	Plug 'xolox/vim-session'
 	Plug 'JCLiang/vim-cscope-utils'
 	Plug 'hdima/python-syntax'
 	Plug 'jungomi/vim-mdnquery'
@@ -271,7 +273,7 @@ set notimeout
 " set notimeout ttimeoutlen=10
 set number
 "set relativenumber
-set wildmenu showfulltag lbr ruler magic hidden
+set wildmenu showfulltag lbr ruler magic
 set incsearch ignorecase smartcase autoread
 " Turn off alternate screen
 " set t_ti= t_te=
@@ -307,6 +309,8 @@ set showbreak=++++
 set history=10000
 set nohlsearch
 set viewoptions-=options
+set hidden
+" set bufhidden=delete
 
 " '10  :  marks will be remembered for up to 10 previously edited files
 "  <100 :  will save up to 100 lines for each register
@@ -314,8 +318,7 @@ set viewoptions-=options
 "  :20  :  up to 20 lines of command-line history will be remembered
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
-set viminfo='1000000,s1000000,!,c,h,n~/.viminfo
-" set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
+set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
 " set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n~/.viminfo
 
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
@@ -1356,7 +1359,7 @@ augroup resCur
 	" au BufReadPost *.* call setpos(".", getpos("'\""))
 	" au BufWritePost,BufLeave,WinLeave ?* mkview
 	" au BufReadPre ?* silent loadview
-	au BufWinLeave ?* mkview
+	au BufWinLeave ?* silent! mkview
 	au BufWinEnter ?* silent! loadview
 augroup END
 
@@ -1407,6 +1410,9 @@ let g:promptline_preset={
 	\'z'    : [ promptline#slices#host() ]
 	\}
 
+let g:session_directory='~/.vim/session'
+let g:session_autosave='no'
+
 " let g:ascii= [
 "   \ '        __',
 "   \ '.--.--.|__|.--------.',
@@ -1420,15 +1426,25 @@ let g:startify_custom_header=
 	\ map(split(system('fortune archlinux | cowsay | perl -lpe "s/[[:space:]]*$//"'), '\n'), '"	". v:val')
 
 autocmd User Startified setlocal cursorline
+let g:startify_use_env			=1
+let g:startify_disable_at_vimenter	=0
+let g:startify_enable_special		=1
+let g:startify_files_number		=8
+let g:startify_relative_path		=1
+let g:startify_change_to_dir		=1
+let g:startify_update_oldfiles		=1
+let g:startify_session_autoload		=1
+let g:startify_session_persistence	=1
+let g:startify_session_delete_buffers	=1
+let g:startify_change_to_vcs_root	=1
 
-let g:startify_enable_special       =1
-let g:startify_files_number         =8
-let g:startify_relative_path        =1
-let g:startify_change_to_dir        =1
-let g:startify_update_oldfiles      =1
-let g:startify_session_autoload     =1
-let g:startify_session_persistence  =1
-let g:startify_session_delete_buffers=1
+let g:startify_session_dir='~/.vim/session'
+
+let g:startify_skiplist = [
+	\ 'COMMIT_EDITMSG',
+	\ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+	\ 'bundle/.*/doc',
+	\ ]
 
 let g:startify_list_order=[
 	\ ['   Sessions:'],
@@ -1450,8 +1466,8 @@ let g:startify_skiplist=[
 
 let g:startify_bookmarks=[
 	\ { 'c': '~/.vimrc' },
-	\ { 'z': '~/.zshrc' },
-	\ { 'e': '~/.zshenv' },
+	\ { 'z': '~/.zsh.d/.zshrc' },
+	\ { 'e': '~/.zsh.d/zshenv' },
 	\ { 'a': '~/.aliases' },
 	\ { 'c': '~/.profile' },
 	\ ]
@@ -1549,6 +1565,8 @@ inoremap <C-d> <C-o>dw
 " inoremap <C-k> <C-o>dd
 
 inoremap jj <Esc>
+nnoremap <Leader>t :<C-r>=(term_list() != [] ? bufwinnr(term_list()[0]).'wincmd w' : 'terminal')<CR><CR>
+vnoremap <Leader>t :<C-r>=(term_list() != [] ? bufwinnr(term_list()[0]).'wincmd w' : 'terminal')<CR><CR>
 
 " remove space when joining lines
 " nnoremap J Jvd
@@ -1577,16 +1595,20 @@ noremap <Leader>et :tabe <C-r>=expand("%:p:h")."/"<CR>
 noremap <Leader>het :tabe <C-r>=expand("~")."/"<CR>
 noremap <Leader>eb :e <C-r>=expand("%:p:h")."/"<CR>
 noremap <Leader>heb :e <C-r>=expand("~")."/"<CR>
-" Avoid E173
-noremap <Leader>[ :qall<CR>
-noremap <Leader>] :w<CR>
-"noremap <Leader>; :bdel<CR>
 " noremap <Leader>" mzI# `z
 " nnoremap <Leader>" :reg<CR>
 nnoremap <Leader>" :%s/ by / - /
 " nnoremap <Leader>, mzI# `z
 " nnoremap <Leader>. mzI" `z
 " nnoremap <Leader>/ mzI// `z
+
+function! SaveWork()
+	w
+	SaveSession
+endfunc
+noremap <Leader>] :call SaveWork()<CR>
+" Avoid E173
+noremap <Leader>[ :qall<CR>
 
 " Toggle <Tab> lcs
 nnoremap <expr> <Leader>, ':'.(execute('set lcs?')=~'tab' ? 'set lcs-=tab:>\ ' : 'set lcs^=tab:>\ ').'<CR>'
@@ -1669,7 +1691,8 @@ map ; ^
 map ' $
 map ,, %
 
-nnoremap gb :ls!<CR>:b<Space>
+" nnoremap gb :ls!<CR>:b<Space>
+nnoremap gb :ls<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
 nnoremap <leader>f :find *
 nnoremap <leader>s :sfind *
@@ -1714,16 +1737,16 @@ xmap <silent> <Leader>K j<Plug>(ale_next)
 " nnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
 " inoremap <Esc>] <Esc>:call comfortable_motion#flick(75)<CR>li
 
-nnoremap <Esc>u <C-u>
-nnoremap <Esc>d <C-d>
-vnoremap <Esc>u <C-u>
-vnoremap <Esc>d <C-d>
 nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
 nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
 vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 " inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 " inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
+" nnoremap <Esc>u <C-u>
+" nnoremap <Esc>d <C-d>
+" vnoremap <Esc>u <C-u>
+" vnoremap <Esc>d <C-d>
 
 " vnoremap <Esc>; <C-u>
 " nnoremap <Esc>; <C-u>

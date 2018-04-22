@@ -5,4 +5,3 @@ sleep 2
 setxkbmap -option compose:caps
 sleep 2
 xmodmap "/home/alyptik/.Xmodmap"
-

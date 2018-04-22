@@ -90,7 +90,7 @@
 	amend = commit -S -s -v --amend
 	sl = shortlog --no-merges
 	dirstat = diff -M --dirstat=2,cumulative
-	count = rev-list --count --no-merges
+	count = rev-list --count --no-merges @
 	numstat = log -M --oneline --numstat --no-merges
 	diffstat = log -M --oneline --stat --no-merges
 	cos = commit -S -s -v -p
