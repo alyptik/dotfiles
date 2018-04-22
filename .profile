@@ -51,15 +51,15 @@ GCC_COLORS="diff-delete=31:diff-insert=32:type-diff=01;32:$GCC_COLORS"
 export GCC_COLORS
 # compiler flags
 # CFLAGS="-pipe -march=native -g3 -O3"
-# CFLAGS="-march=native -O3"
+CFLAGS="-march=native -O3"
 # CFLAGS="-Wno-unknown-warning $CFLAGS"
 CFLAGS="-Wno-error -Wno-implicit-fallthrough $CFLAGS"
 CFLAGS="-fno-plt -fno-strict-aliasing $CFLAGS"
 # CFLAGS="-fno-strict-aliasing $CFLAGS"
 CFLAGS="-fdiagnostics-color=always $CFLAGS"
 CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
-CFLAGS="-flto -fPIC -fuse-ld=gold $CFLAGS"
-# CFLAGS="-fPIC -fuse-ld=gold $CFLAGS"
+# CFLAGS="-flto -fPIC -fuse-ld=gold $CFLAGS"
+CFLAGS="-fPIC -fuse-ld=gold $CFLAGS"
 CFLAGS="-fuse-linker-plugin $CFLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
