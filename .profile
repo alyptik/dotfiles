@@ -28,7 +28,7 @@ unset CPATH CPPFLAGS CXXFLAGS LDFLAGS LIBRARY_PATH
 export ARCHFLAGS="-arch x86_64"
 # export CARCH="x86_64"
 export CCACHE_DIR="$HOME/.ccache"
-# export CCACHE_DISABLE=1
+export CCACHE_DISABLE=1
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PREFIX="distcc"
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"

@@ -1,0 +1,40 @@
+From e63751253fc4d0fad31893ee05eaa19d00bbcb67 Mon Sep 17 00:00:00 2001
+Message-Id: <e63751253fc4d0fad31893ee05eaa19d00bbcb67.1525537458.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1525537458.git.joeypabalinas@gmail.com>
+References: <cover.1525537458.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 5 May 2018 06:18:04 -1000
+Subject: [PATCH 1/1] thread.c: add NULL guard for ctx->tree in
+ calculate_visibility()
+
+Fixes issue #1188 "SIGSEGV in calculate_visibility"[1]
+
+[1] https://github.com/neomutt/neomutt/issues/1188
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ thread.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/thread.c b/thread.c
+index 96deda6b4b25ae3028..a59eb2db843119bc16 100644
+--- a/thread.c
++++ b/thread.c
+@@ -150,10 +150,14 @@ static void calculate_visibility(struct Context *ctx, int *max_depth)
+   struct MuttThread *tmp = NULL, *tree = ctx->tree;
+   int hide_top_missing = HideTopMissing && !HideMissing;
+   int hide_top_limited = HideTopLimited && !HideLimited;
+   int depth = 0;
+ 
++  /* avoid a SEGV trying to walk a NULL tree */
++  if (!tree)
++   return;
++
+   /* we walk each level backwards to make it easier to compute next_subtree_visible */
+   while (tree->next)
+     tree = tree->next;
+   *max_depth = 0;
+ 
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+
