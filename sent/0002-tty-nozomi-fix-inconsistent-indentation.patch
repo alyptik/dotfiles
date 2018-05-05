@@ -1,19 +1,25 @@
-From 4d71f982c9d9c680bfdaa666671840f703923d62 Mon Sep 17 00:00:00 2001
+From eebb4bb5023839ee77d19e8d218d0766cf33711a Mon Sep 17 00:00:00 2001
+Message-Id: <eebb4bb5023839ee77d19e8d218d0766cf33711a.1524634929.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1524634929.git.joeypabalinas@gmail.com>
+References: <cover.1524634929.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Fri, 23 Mar 2018 11:11:12 -1000
-Subject: [PATCH v2 2/4] tty/nozomi: fix inconsistent indentation
+Subject: [PATCH v4 2/2] tty/nozomi: fix inconsistent indentation
 
 Correct misaligned indentation and remove extraneous spaces.
 
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
-
+---
+ drivers/tty/nozomi.c | 74 ++++++++++++++++++++++----------------------
  1 file changed, 37 insertions(+), 37 deletions(-)
 
 diff --git a/drivers/tty/nozomi.c b/drivers/tty/nozomi.c
 index f26bf1d1e9ee0e74eb..0fcb4db721d2a42f08 100644
 --- a/drivers/tty/nozomi.c
 +++ b/drivers/tty/nozomi.c
-@@ -102,41 +102,41 @@ do {							\
+@@ -100,45 +100,45 @@ do {							\
+ /* Size of tmp send buffer to card */
+ #define SEND_BUF_MAX		1024
  #define RECEIVE_BUF_MAX		4
  
  
@@ -81,7 +87,11 @@ index f26bf1d1e9ee0e74eb..0fcb4db721d2a42f08 100644
  
  #define MAX_PORT		4
  #define NOZOMI_MAX_PORTS	5
-@@ -365,7 +365,7 @@ struct buffer {
+ #define NOZOMI_MAX_CARDS	(NTTY_TTY_MAXMINORS / MAX_PORT)
+ 
+@@ -363,11 +363,11 @@ struct nozomi {
+ struct buffer {
+ 	u32 size;		/* size is the length of the data buffer */
  	u8 *data;
  } __attribute__ ((packed));
  
@@ -90,7 +100,11 @@ index f26bf1d1e9ee0e74eb..0fcb4db721d2a42f08 100644
  static const struct pci_device_id nozomi_pci_tbl[] = {
  	{PCI_DEVICE(0x1931, 0x000c)},	/* Nozomi HSDPA */
  	{},
-@@ -1686,12 +1686,12 @@ static int ntty_tiocmget(struct tty_struct *tty)
+ };
+ 
+@@ -1684,16 +1684,16 @@ static int ntty_tiocmget(struct tty_struct *tty)
+ 	const struct ctrl_dl *ctrl_dl = &port->ctrl_dl;
+ 	const struct ctrl_ul *ctrl_ul = &port->ctrl_ul;
  
  	/* Note: these could change under us but it is not clear this
  	   matters if so */
@@ -109,7 +123,11 @@ index f26bf1d1e9ee0e74eb..0fcb4db721d2a42f08 100644
  }
  
  /* Sets io controls parameters */
-@@ -1722,10 +1722,10 @@ static int ntty_cflags_changed(struct port *port, unsigned long flags,
+ static int ntty_tiocmset(struct tty_struct *tty,
+ 					unsigned int set, unsigned int clear)
+@@ -1720,14 +1720,14 @@ static int ntty_cflags_changed(struct port *port, unsigned long flags,
+ 		struct async_icount *cprev)
+ {
  	const struct async_icount cnow = port->tty_icount;
  	int ret;
  
@@ -124,6 +142,8 @@ index f26bf1d1e9ee0e74eb..0fcb4db721d2a42f08 100644
  
  	*cprev = cnow;
  
+ 	return ret;
+ }
 -- 
-2.16.3
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
 

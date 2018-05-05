@@ -6,6 +6,7 @@
 	tool = vimdiff2
 	renameLimit = 24167
 	algorithm = histogram
+	context = 5
 [difftool]
 	prompt = false
 [merge]
@@ -57,7 +58,7 @@
 	d = diff --histogram
 	dr = diff --histogram --relative --no-index
 	fa = fetch --ipv4 --all --jobs=4 --recurse-submodules=on-demand
-	reb = rebase -S --autostash
+	reb = rebase
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = diff --histogram --cached
 	dc = diff --cached --histogram
@@ -125,3 +126,7 @@
 [format]
 [format]
 	thread = shallow
+[init]
+	templateDir = /usr/share/git-core/templates
+[rebase]
+	stat = true

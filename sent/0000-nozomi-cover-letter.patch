@@ -1,14 +1,12 @@
-From b6a404435a3f91bcad3f1abdea75ba2133f58502 Mon Sep 17 00:00:00 2001
+From eebb4bb5023839ee77d19e8d218d0766cf33711a Mon Sep 17 00:00:00 2001
+Message-Id: <cover.1524634929.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
-Date: Fri, 23 Mar 2018 11:36:43 -1000
-Subject: [PATCH v2 0/4] tty/nozomi: general module cleanup
+Date: Tue, 24 Apr 2018 19:42:09 -1000
+Subject: [PATCH v4 0/2] tty/nozomi: general module cleanup
 
-Sorry, totally screwed up git send-email CC's there; resending
-the patchset.
-
-The nozomi module code has a fair amount of sections which could
-use a bit of improvement; both style and clarity could be improved
-while maintaining equivalent semantics.
+The nozomi module has a few sections which could use a bit of cleanup;
+both style and clarity could be improved while maintaining equivalent
+semantics.
 
 Cleanup messy portions of the module code while preserving existing
 behavior by:
@@ -16,28 +14,19 @@ behavior by:
  - Replacing constructs like `len__ > TMP_BUF_MAX ? TMP_BUF_MAX : len__`
    with `min_t(u32, len__, TMP_BUF_MAX)` and function calls like
    snprintf(tbuf, ..., "%s", ...). with strscpy(tbuf, ..., ...).
- - Rename identifiers more descriptively (where appropriate).
- - Simplify deeply nested conditionals by replacing them with shallower
-   (but semantically equivalent) logic.
- - Coalesce return paths / loop conditionals.
- - Remove pointless initializations and redundant parentheses/break
-   statements.
  - Correct inconsistently indented lines and extraneous whitespace.
 
 CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 CC: Arnd Bergmann <arnd@arndb.de>
 CC: Jiri Slaby <jslaby@suse.cz>
-CC: Tomasz Kramkowsk <tk@the-tk.com>
 
-Joey Pabalinas (4):
+Joey Pabalinas (2):
   tty/nozomi: cleanup DUMP() macro
   tty/nozomi: fix inconsistent indentation
-  tty/nozomi: improve code readability and style
-  tty/nozomi: refactor conditional statements
 
- drivers/tty/nozomi.c | 362 +++++++++++++++++++++++++--------------------------
- 1 file changed, 181 insertions(+), 181 deletions(-)
+ drivers/tty/nozomi.c | 100 +++++++++++++++++++++----------------------
+ 1 file changed, 50 insertions(+), 50 deletions(-)
 
 -- 
-2.16.3
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
 
