@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export PERL5LIB=/usr/lib/pisg/modules
+
+cwd="$PWD"
+trap '{ cd $cwd; trap - INT; kill -INT $$; }' INT
+trap '{ cd $cwd; }' EXIT ERR
+cd /usr/share/pisg || exit 1
+
+exec pisg "$@"
+# exec pisg -co /etc/pisg.cfg "$@"
