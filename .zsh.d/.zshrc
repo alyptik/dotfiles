@@ -675,15 +675,16 @@ compdef _au au
 compdef _au wau
 compdef _pwns pwns
 compdef azle=autoload
+compdef cg=cgasm
+compdef e=vim
+compdef g=git
 compdef gnpm=npm
 compdef oomox=oomox-cli
 compdef p=perl
+compdef pkgconf=pkg-config
 compdef run=gcc
 compdef xs=xsel
-compdef cg=cgasm
 compdef _=sudo
-compdef e=vim
-compdef g=git
 
 # named directories
 hash -d a="${HOME}/code/aur"
@@ -711,6 +712,7 @@ hash -d omz="/usr/share/oh-my-zsh"
 hash -d p="${P:-/store/code/projects}"
 hash -d plugins="/usr/share/oh-my-zsh/plugins"
 hash -d prose="/store/writing"
+hash -d r="${P:-/store/code/projects}/secure-systems-lab/lind_project/repy/repy"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
 hash -d s="/sdxc/school"

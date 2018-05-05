@@ -1,0 +1,34 @@
+#!/bin/sh
+
+cwd="$PWD"
+
+unset \
+	CFLAGS CPATH CPPFLAGS CXXFLAGS LDFLAGS LIBRARY_PATH
+export \
+	LIND_BASE=/usr/lind_project \
+	LIND_SRC=/usr/lind_project/lind \
+	REPY_PATH=/usr/lind_project/lind/repy \
+	NACL_SDK_ROOT=/usr/lind_project/repy/sdk \
+	LIND_MONITOR=/usr/lind_project/reference_monitor \
+	LD_LIBRARY_PATH=/lib/glibc \
+	NACL_SDK_ROOT=/usr/lind_project/lind/repy/sdk \
+	PNACLPYTHON=python2
+if test $# -ge 0; then
+	args=''
+	for i in $(seq -s' ' 1 $#); do
+		eval "arg=\"\$(realpath -qe --relative-to \"\$REPY_PATH/repy\" \$$i)\""
+		eval "args=\"\$args \${arg:-\$$i}\""
+	done
+	set -- $args
+fi
+
+cd /usr/lind_project/lind/repy/repy || exit 1
+
+if test "$1" = cp || test "$1" = update; then
+	set -- "$1" "$REPY_PATH/repy" "${@:2}"
+fi
+printf 'running: [%s]\n' \
+	"$(tput sgr0)$(tput setaf 13)python2 lind_fs_utils.py $*$(tput sgr0)"
+python2 lind_fs_utils.py "$@"
+
+cd "$cwd" || exit 1

@@ -57,8 +57,8 @@ call plug#begin(g:plugdir)
 	Plug 'xtal8/traces.vim'
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
-	Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
-	" Plug 'xolox/vim-misc'
+	" Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
+	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
 	" Plug 'edkolev/promptline.vim'
 	" Plug 'sudar/vim-arduino-syntax'
@@ -240,23 +240,20 @@ set keywordprg=man\ -s
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
-" set ofu=syntaxcomplete#Complete
 set ofu=syntaxcomplete#Complete
 set magic nostartofline
 " set termguicolors
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
-setglobal tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
-set tags-=~/.vimtags,./tags tags-=~/.vimtags tags-=./tags tags^=~/.vimtags,./tags
-" set rtp=~/.vim/vimfiles,~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
-set rtp-=~/.vim/vimfiles rtp^=~/.vim/vimfiles,~/.vim,$VIM/vimfiles,$VIM/vimfiles/after,~/.vim/after
+setg tags^=./tags;
+" setg tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
 set diffopt=filler,context:5,iwhite,vertical
 set omnifunc=syntaxcomplete#Complete
 " conceal in insert (i), normal (n) and visual (v) modes
 set concealcursor=inv
 " hide concealed text completely unless replacement character is defined
 set conceallevel=2
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone
 set nocp cpoptions+=d
 set verbose=0
 set updatetime=1000
@@ -287,8 +284,11 @@ set list lcs=trail:-,extends:>,precedes:<,nbsp:+
 set lcs^=tab:>\  " render tabs as '>    '
 " set lcs^=eol:$
 set tabpagemax=50
-set sessionoptions-=options
 set nrformats-=octal
+" Don't save cwd, hidden/unloaded buffer, or help pages
+set sessionoptions-=options sessionoptions-=buffers sessionoptions-=help
+" Don't save other tabs
+" set sessionoptions-=tabpages
 set cursorline showtabline=2 laststatus=2 statusline+=%{ALEGetStatusLine()}
 set encoding=utf8
 set balloondelay=100
@@ -310,7 +310,6 @@ set history=10000
 set nohlsearch
 set viewoptions-=options
 set hidden
-" set bufhidden=delete
 
 " '10  :  marks will be remembered for up to 10 previously edited files
 "  <100 :  will save up to 100 lines for each register
@@ -318,7 +317,8 @@ set hidden
 "  :20  :  up to 20 lines of command-line history will be remembered
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
-set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
+set viminfo='1000000,s1000000,!,c,h,n~/.viminfo
+" set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
 " set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n~/.viminfo
 
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
@@ -550,8 +550,8 @@ let g:easytags_on_cursorhold=1
 let g:easytags_always_enabled=0
 let g:easytags_async=1
 let g:easytags_auto_highlight=0
-" let g:easytags_syntax_keyword='always'
-let g:easytags_syntax_keyword='auto'
+let g:easytags_syntax_keyword='always'
+" let g:easytags_syntax_keyword='auto'
 let g:easytags_python_enabled=1
 let g:easytags_dynamic_files=0
 let g:easytags_resolve_links=1
@@ -564,10 +564,15 @@ let g:easytags_by_filetype='~/.vim/tags'
 let g:easytags_suppress_ctags_warning=1
 " let g:easytags_opts=['--fields=+l --c-kinds=-p']
 let g:easytags_opts=[
-	\ '--fields=+l', '--c-kinds=+lp',
-	\ '--c++-kinds=+lp', '--python-kinds=+lz',
+	\ '--fields=+l', '--c-kinds=+l-p',
+	\ '--c++-kinds=+l-p', '--python-kinds=+lz',
 	\ '--extras=+q'
 	\ ]
+" If you like one of the existing styles you can link them:
+highlight link cMember Special
+" You can also define your own style if you want:
+" highlight cMember gui=italic
+
 let g:netrw_silent=1
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
@@ -631,10 +636,12 @@ let g:clang_library_path='/usr/lib/libclang.so'
 " let g:clang_library_path='/usr/lib64/libclang.so.6.0'
 let g:livepreview_previewer = 'evince2'
 
-" silent! iunmap <Tab>
-imap <Tab> <Plug>CompletorCppJumpToPlaceholder
+" map <tab> <Plug>CompletorCppJumpToPlaceholder
+" imap <Tab> <Plug>CompletorCppJumpToPlaceholder
+
 " alternate key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = '<S-Tab>'
+let g:UltiSnipsExpandTrigger = '<Tab>'
+" let g:UltiSnipsExpandTrigger = '<S-Tab>'
 " let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 " let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Right>'
@@ -1009,12 +1016,12 @@ let g:completor_gocode_binary='/usr/bin/gocode'
 let g:completor_css_omni_trigger='([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
 let g:completor_disable_ultisnips=1
 let g:completor_auto_trigger=1
-inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
-if (!g:completor_auto_trigger)
-	inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>")
-endif
-inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
-inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
+" inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
+" if (!g:completor_auto_trigger)
+"         inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>")
+" endif
+" inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
+" inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
 "let g:slime_paste_file=tempname()
 let g:slime_paste_file='~/.slime_paste'
 let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warnings'
@@ -1167,7 +1174,10 @@ let g:fzf_buffers_jump=1
 " [[B]Commits] Customize the options used by 'git log':
 let g:fzf_commits_log_options='--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 " [Tags] Command to generate tags file
-let g:fzf_tags_command='ctags -R'
+let g:fzf_tags_command='ctags -R '
+			\ . '--fields=+l '
+			\ . '--c-kinds=+l-p --c++-kinds=+l-p --python-kinds=+lz '
+			\ . '--extras=+q --tag-relative=yes '
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect='alt-enter,ctrl-x'
 " Mapping selecting mappings
@@ -1410,9 +1420,6 @@ let g:promptline_preset={
 	\'z'    : [ promptline#slices#host() ]
 	\}
 
-let g:session_directory='~/.vim/session'
-let g:session_autosave='no'
-
 " let g:ascii= [
 "   \ '        __',
 "   \ '.--.--.|__|.--------.',
@@ -1433,11 +1440,14 @@ let g:startify_files_number		=8
 let g:startify_relative_path		=1
 let g:startify_change_to_dir		=1
 let g:startify_update_oldfiles		=1
-let g:startify_session_autoload		=1
-let g:startify_session_persistence	=1
+let g:startify_session_autoload		=0
+let g:startify_session_persistence	=0
 let g:startify_session_delete_buffers	=1
-let g:startify_change_to_vcs_root	=1
+let g:startify_change_to_vcs_root	=0
 
+let g:session_autosave='prompt'
+let g:session_command_aliases=1
+let g:session_directory='~/.vim/session'
 let g:startify_session_dir='~/.vim/session'
 
 let g:startify_skiplist = [
@@ -1606,7 +1616,8 @@ function! SaveWork()
 	w
 	SaveSession
 endfunc
-noremap <Leader>] :call SaveWork()<CR>
+" noremap <Leader>] :call SaveWork()<CR>
+noremap <Leader>] <Esc>:wall<CR>
 " Avoid E173
 noremap <Leader>[ :qall<CR>
 
@@ -1679,19 +1690,18 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 "map ]] )
 "map ][ %
 "map [] %
-" map [[ ?{<CR>w99[{
-" map ][ /}<CR>b99]}
-" map ]] j0[[%/{<CR>
-" map [] k$][%?}<CR>
+" map ; ^
+" map ' $
 map [[ ?{<CR>w99[{
 map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
-map ; ^
-map ' $
+map <Esc>; ^
+map <Esc>' $
+map ; :call comfortable_motion#flick(-50)<CR>
+map ' :call comfortable_motion#flick(50)<CR>
 map ,, %
 
-" nnoremap gb :ls!<CR>:b<Space>
 nnoremap gb :ls<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
 nnoremap <leader>f :find *
@@ -1704,8 +1714,8 @@ nnoremap <leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
 " nnoremap <leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
 nnoremap <leader>T :tabfind *
 
-nnoremap <F1> <Esc>:help <C-r>=(expand('<cword>').' ')<CR>
-vnoremap <F1> <Esc>:help <C-r>=(getreg().' ')<CR>
+nnoremap <F1> <Esc>:help <C-r>=(expand('<cword>'))<CR>
+vnoremap <F1> "*y<Esc>:help <C-r>=(getreg('*'))<CR>
 
 noremap <Leader>; <Esc>:cclose<CR>
 noremap <Leader>' <Esc>:copen<CR>
@@ -1731,16 +1741,10 @@ xmap <silent> <Esc>k j<Plug>(ale_next)
 xmap <silent> <Leader>J k<Plug>(ale_previous)
 xmap <silent> <Leader>K j<Plug>(ale_next)
 
-" vnoremap <Esc>[ :call comfortable_motion#flick(-75)<CR>|  nnoremap <Esc>[ :call comfortable_motion#flick(-75)<CR>
-" inoremap <Esc>[ <Esc>:call comfortable_motion#flick(-75)<CR>li
-" vnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
-" nnoremap <Esc>] :call comfortable_motion#flick(75)<CR>
-" inoremap <Esc>] <Esc>:call comfortable_motion#flick(75)<CR>li
-
-nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
-nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
-vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
-vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
+" nnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+" nnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
+" vnoremap <Esc>; :call comfortable_motion#flick(-75)<CR>
+" vnoremap <Esc>' :call comfortable_motion#flick(75)<CR>
 " inoremap <Esc>; <Esc>:call comfortable_motion#flick(-75)<CR>li
 " inoremap <Esc>' <Esc>:call comfortable_motion#flick(75)<CR>li
 " nnoremap <Esc>u <C-u>

@@ -85,11 +85,12 @@ include "%L"
 <Multi_key> <asciicircum> <asciicircum> <s>		: "ₛ" U209b	# subcript s
 <Multi_key> <asciicircum> <asciicircum> <t>		: "ₜ" U209c	# subcript t
 
-<Multi_key> <L> <O> <L>			: "ₗₒₗ"		# subcript lol
-<Multi_key> <w> <l> <e> <n>		: "┬┴┤( ͡° ͜ʖ├┬┴"		# lenny wall
-<Multi_key> <l> <w> <a> <l> <l>		: "┬┴┤( ͡° ͜ʖ├┬┴"		# lenny wall
-<Multi_key> <s> <h> <r> <u> <g>		: "┐(ツ)┌"		# shrug
-<Multi_key> <e> <y> <e> <s>	    	: "ಠ_ಠ" U0ca0	# eyes
+<Multi_key> <L> <O> <L>					: "ₗₒₗ"		# subcript lol
+<Multi_key> <w> <l> <e> <n>				: "┬┴┤( ͡° ͜ʖ├┬┴"	# lenny wall
+<Multi_key> <l> <w> <a> <l> <l>				: "┬┴┤( ͡° ͜ʖ├┬┴"	# lenny wall
+<Multi_key> <s> <h> <r> <u> <g>				: "🤷" U1f937	# shrug
+<Multi_key> <s> <s> <h> <r> <u> <g>			: "┐(ツ)┌"	# shrug
+<Multi_key> <e> <y> <e> <s>				: "ಠ_ಠ" U0ca0	# eyes
 
 ## end alyptik
 

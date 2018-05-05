@@ -52,3 +52,5 @@ manpage
 invariants
 dereference
 dereferencing
+initializer
+fsanitize

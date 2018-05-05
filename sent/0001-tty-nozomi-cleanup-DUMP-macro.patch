@@ -1,20 +1,26 @@
-From 6340930b8de5148ee29c280979fc14fba4e4f84a Mon Sep 17 00:00:00 2001
+From 58b559776732f0fc14b1c30ec7da6fc27c3f1cc8 Mon Sep 17 00:00:00 2001
+Message-Id: <58b559776732f0fc14b1c30ec7da6fc27c3f1cc8.1524634929.git.joeypabalinas@gmail.com>
+In-Reply-To: <cover.1524634929.git.joeypabalinas@gmail.com>
+References: <cover.1524634929.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Fri, 23 Mar 2018 11:09:34 -1000
-Subject: [PATCH v2 1/4] tty/nozomi: cleanup DUMP() macro
+Subject: [PATCH v4 1/2] tty/nozomi: cleanup DUMP() macro
 
-Replace snprint() with strscpy() and use max_t() instead of
-the conditional operator.
+Replace snprint() with strscpy() and use min_t() instead of
+the conditional operator to clamp buffer length.
 
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
-
+---
+ drivers/tty/nozomi.c | 26 +++++++++++++-------------
  1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/tty/nozomi.c b/drivers/tty/nozomi.c
 index b57b35066ebea94639..f26bf1d1e9ee0e74eb 100644
 --- a/drivers/tty/nozomi.c
 +++ b/drivers/tty/nozomi.c
-@@ -72,19 +72,19 @@ do {							\
+@@ -70,23 +70,23 @@ do {							\
+ 
+ /* TODO: rewrite to optimize macros... */
  
  #define TMP_BUF_MAX 256
  
@@ -47,6 +53,8 @@ index b57b35066ebea94639..f26bf1d1e9ee0e74eb 100644
  
  /*    Defines */
  #define NOZOMI_NAME		"nozomi"
+ #define NOZOMI_NAME_TTY		"nozomi_tty"
+ #define DRIVER_DESC		"Nozomi driver"
 -- 
-2.16.3
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
 
