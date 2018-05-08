@@ -110,21 +110,21 @@ Host wifi
     IdentityFile ~/.ssh/id_gpg
 
 Host ayy
-    HostName sigfu.tk
+    HostName alyp.tk
     Port 22
     User ayy
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
 Host rarch
-    HostName sigfu.tk
+    HostName alyp.tk
     Port 22
     User root
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
 Host earch
-    HostName sigfu.tk
+    HostName alyp.tk
     Port 22
     User alyptik
     CheckHostIP yes
@@ -151,8 +151,8 @@ Host http
     CheckHostIP no
     IdentityFile ~/.ssh/id_gpg
 
-Host sigfu.tk
-    HostName sigfu.tk
+Host alyp.tk
+    HostName alyp.tk
     Port 22
     User http
     CheckHostIP yes

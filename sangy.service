@@ -1,0 +1,19 @@
+[Unit]
+Description=Reverse Nginx proxy for custom domains
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStart=/usr/bin/docker run \
+-e LETSENCRYPT_HOST=arch.nyu.wtf \
+-e LETSENCRYPT_EMAIL=santiago@nyu.edu \
+-e VIRTUAL_HOST=arch.nyu.wtf \
+--name arch-repository\
+--expose 443 \
+-v /srv/arch-mirror/:/usr/share/nginx/html/ \
+--rm \
+nginx
+
+[Install]
+WantedBy=multi-user.target
