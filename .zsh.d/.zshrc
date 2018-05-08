@@ -335,7 +335,7 @@ if type zplug >/dev/null 2>&1; then
 	zplug "zsh-users/zsh-history-substring-search"
 	# zplug "zsh-users/zsh-syntax-highlighting", defer:2, at:tmp
 	zplug "zsh-users/zsh-syntax-highlighting", defer:2
-	zplug "b4b4r07/zsh-vimode-visual", defer:3
+	# zplug "b4b4r07/zsh-vimode-visual", defer:3
 	# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then
 		print - "Install? [y/N]: "
