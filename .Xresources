@@ -72,7 +72,7 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 
-st.font:		Fura Code Nerd Font:style=Retina:pixelsize=30:antialias=true:hinting=true
+st.font:		Fura Code Nerd Font:style=Regular:pixelsize=32:antialias=true:hinting=true
 ! st.font:		SourceCodePro:style=Regular:pixelsize=28:antialias=true:hinting=true
 ! st.font:		Fira Code:style=Retina:pixelsize=28:antialias=true:hinting=true
 ! st.font:		SauceCodePro Nerd Font:style=Retina:pixelsize=28:antialias=true:hinting=true
@@ -104,8 +104,8 @@ stjerm*allowreorder:		true
 stjerm*tabfill:			true
 stjerm*tabpos:			bottom
 ! stjerm*font:			FuraCode Nerd Font
-! stjerm*font:			Source Code Pro Light
-stjerm*font:			SauceCodePro Nerd Font Light
+stjerm*font:			Source Code Pro Light
+! stjerm*font:			SauceCodePro Nerd Font Light
 
 ! URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 ! URxvt*font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=24:antialias=true:hinting=true,\
