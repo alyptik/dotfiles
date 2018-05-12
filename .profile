@@ -3,11 +3,9 @@
 # .profile - environment configuration
 
 # conditionals
-_host="$(hostname)"
+if test x"$(hostname)" = x"fedora" -o x"$(hostname)" = x"compiler"; then TERM=screen-256color; fi
 # Disable toggling XON/XOFF with ^S/^Q
 if test -t 0; then stty -ixon; fi
-if test x"$_host" = x"fedora" -o x"$_host" = x"compiler"; then TERM=screen-256color; fi
-unset _host
 
 # directory shortcut environment variables
 export H="$HOME" h="$HOME"
@@ -42,8 +40,8 @@ GCC_COLORS="type-diff=01;32:$GCC_COLORS"
 # GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01"
 export GCC_COLORS
 # compiler flags
-CFLAGS="-pipe -march=native -g3 -O3"
-# CFLAGS="-march=native -O3"
+# CFLAGS="-pipe -march=native -g3 -O3"
+CFLAGS="-march=native -g3 -O3"
 CFLAGS="-Wno-unknown-warning $CFLAGS"
 CFLAGS="-Wno-error -Wno-implicit-fallthrough $CFLAGS"
 CFLAGS="-fno-strict-aliasing -fPIC $CFLAGS"
@@ -62,8 +60,8 @@ LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
 # LDFLAGS="-Wl,--sort-common,--as-needed $LDFLAGS"
 export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
-export MAKEFLAGS="-j -l4"
-# export MAKEFLAGS="-j4"
+# export MAKEFLAGS="-j -l4"
+export MAKEFLAGS="-j2"
 
 # Environment variables
 # export BROWSER=/usr/bin/firefox

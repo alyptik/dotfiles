@@ -1955,10 +1955,10 @@ nnoremap <C-F8> :call ToggleFold()<CR>
 let g:tindent=0
 function! ToggleIndent()
 	if g:tindent== 0
-		set shiftwidth=4
+		set shiftwidth=1
 		let g:tindent=1
 	elseif g:tindent== 1
-		set shiftwidth=1
+		set shiftwidth=4
 		let g:tindent=2
 	else
 		set shiftwidth=8

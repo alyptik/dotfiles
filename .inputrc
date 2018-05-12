@@ -1,12 +1,26 @@
-# do not bell on tab-completion
+# This file controls the behaviour of line input editing for
+# programs that use the GNU Readline library.  Existing
+# programs include FTP, Bash, and GDB.
+#
+# You can re-read the inputrc file with C-x C-r.
+# Lines beginning with '#' are comments.
+#
+# First, include any system-wide bindings and variable
+# assignments from /etc/Inputrc
+
+# $if guard=sourced
+#         $include /etc/inputrc
+#         set guard sourced
+# $endif
 
 set meta-flag on
 set input-meta on
 set convert-meta off
 set output-meta on
 
-# set bell-style none
+# do not bell on tab-completion
 set bell-style visible
+# set bell-style none
 set bind-tty-special-chars on
 set blink-matching-paren off
 set colored-completion-prefix on
@@ -22,7 +36,6 @@ set show-all-if-ambiguous on
 set show-mode-in-prompt on
 set visible-stats on
 
-# custom bindings
 "\C-k": kill-whole-line
 "\C-u": universal-argument
 "\C-w": backward-kill-word
@@ -39,7 +52,7 @@ $if mode=emacs
 	"\e[15~": vi-editing-mode
 $endif
 $if mode=vi
-	"\e[15~": emacs-editing-mode'
+	"\e[15~": emacs-editing-mode
 $endif
 # ctrl
 "\e[1;5A": beginning-of-line
