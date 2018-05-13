@@ -65,14 +65,14 @@ define run-lind
 	end
 end
 document run-lind
-	run-lind <thread> [prog]: Runs /test_case/jp/[prog].nexe attached to [thread].
+	run-lind [thread] [prog]: Runs /test_case/jp/[prog].nexe attached to [thread].
 end
 
 define segfault-address
 	print $_siginfo._sifields._sigfault.si_addr
 end
 document segfault-address
-	segfault-address: print last fault address (from the $_siginfo structure).
+	segfault-address: Print last fault address (from the $_siginfo structure).
 end
 
 define examine-instructions
@@ -83,38 +83,126 @@ define examine-instructions
 	end
 end
 document examine-instructions
-	examine-instructions: Examine the twenty instructions at [address] (defaults to last fault address).
+	examine-instructions [address]: Examine twenty instructions at [address] (defaults to fault address).
+end
+
+define examine-rip
+	if $argc > 0
+		x/20i $rip + $arg0
+	else
+		x/20i $rip
+	end
+end
+document examine-rip
+	examine-rip [offset]: Examine twenty instructions at %rip + [offset].
 end
 
 define print-representations
-	printf "[f] float: "
-	print/f $arg0
-	printf "[d] decimal: "
-	print/d $arg0
-	printf "[u] unsigned decimal: "
-	print/u $arg0
-	printf "[c] char: "
-	print/c $arg0
-	printf "[s] string: "
-	print/s $arg0
-	printf "[a] address: "
-	print/a $arg0
-	printf "[z] hex, zero padded on the left: "
-	print/z $arg0
-	printf "[t] binary: "
-	print/t $arg0
-	printf "[i] instruction: "
-	print/i $arg0
+	if $argc > 0
+		printf "[f] float: "
+		print/f $arg0
+		printf "[d] decimal: "
+		print/d $arg0
+		printf "[u] unsigned decimal: "
+		print/u $arg0
+		printf "[c] char: "
+		print/c $arg0
+		printf "[s] string: "
+		print/s $arg0
+		printf "[a] address: "
+		print/a $arg0
+		printf "[z] hex, zero padded on the left: "
+		print/z $arg0
+		printf "[t] binary: "
+		print/t $arg0
+	else
+		printf "[f] float: "
+		print/f $
+		printf "[d] decimal: "
+		print/d $
+		printf "[u] unsigned decimal: "
+		print/u $
+		printf "[c] char: "
+		print/c $
+		printf "[s] string: "
+		print/s $
+		printf "[a] address: "
+		print/a $
+		printf "[z] hex, zero padded on the left: "
+		print/z $
+		printf "[t] binary: "
+		print/t $
+	end
 end
 document print-representations
-	print-hex: Print some common representations of <value>.
+	print-hex [value]: Print some common representations of [value] (defaults to $).
+end
+
+define examine-representations
+	if $argc > 0
+		printf "[f] float: "
+		x/f $arg0
+		printf "[d] decimal: "
+		x/d $arg0
+		printf "[u] unsigned decimal: "
+		x/u $arg0
+		printf "[c] char: "
+		x/c $arg0
+		printf "[s] string: "
+		x/s $arg0
+		printf "[a] address: "
+		x/a $arg0
+		printf "[z] hex, zero padded on the left: "
+		x/z $arg0
+		printf "[t] binary: "
+		x/t $arg0
+		printf "[i] instruction: "
+		x/i $arg0
+	else
+		printf "[f] float: "
+		x/f $_siginfo._sifields._sigfault.si_addr
+		printf "[d] decimal: "
+		x/d $_siginfo._sifields._sigfault.si_addr
+		printf "[u] unsigned decimal: "
+		x/u $_siginfo._sifields._sigfault.si_addr
+		printf "[c] char: "
+		x/c $_siginfo._sifields._sigfault.si_addr
+		printf "[s] string: "
+		x/s $_siginfo._sifields._sigfault.si_addr
+		printf "[a] address: "
+		x/a $_siginfo._sifields._sigfault.si_addr
+		printf "[z] hex, zero padded on the left: "
+		x/z $_siginfo._sifields._sigfault.si_addr
+		printf "[t] binary: "
+		x/t $_siginfo._sifields._sigfault.si_addr
+		printf "[i] instruction: "
+		x/i $_siginfo._sifields._sigfault.si_addr
+	end
+end
+document examine-representations
+	examine-hex [value]: Examine some common representations of [value] (defaults to fault address).
+end
+
+define dasm-on
+	set disassemble-next-line on
+end
+document dasm-on
+	dasm-on: Turn on disassemble next line.
+end
+
+define dasm-off
+	set disassemble-next-line off
+end
+document dasm-off
+	dasm-off: Turn off disassemble next line.
 end
 
 # aliases
 #
 alias -- asm = disassemble
-alias -- dasm = disassemble
-alias -- dnext = set disassemble-next-line
+alias -- anext = set disassemble-next-line
+alias -- dy = dasm-on
+alias -- dn = dasm-off
 alias -- rlind = run-lind
 alias -- iargs = info args
 alias -- iregisters = info registers
@@ -123,8 +211,10 @@ alias -- ithreads = info threads
 alias -- tenable = tui enable
 alias -- tdisable = tui disable
 alias -- fault-address = segfault-address
-alias -- ss = segfault-address
+alias -- sshow = segfault-address
 alias -- xi = examine-instructions
 alias -- pr = print-representations
+alias -- xr = examine-representations
+alias -- rip = examine-rip
 
 # vi:ft=gdb:

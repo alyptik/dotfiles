@@ -42,13 +42,12 @@ export GCC_COLORS
 # compiler flags
 # CFLAGS="-pipe -march=native -g3 -O3"
 CFLAGS="-march=native -g3 -O3"
-CFLAGS="-Wno-unknown-warning $CFLAGS"
 CFLAGS="-Wno-error -Wno-implicit-fallthrough $CFLAGS"
 CFLAGS="-fno-strict-aliasing -fPIC $CFLAGS"
 CFLAGS="-fuse-ld=gold -fuse-linker-plugin $CFLAGS"
 # CFLAGS="-flto -fno-plt $CFLAGS"
-CFLAGS="-fdiagnostics-color=always $CFLAGS"
-CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
+# CFLAGS="-fdiagnostics-color=always $CFLAGS"
+# CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
