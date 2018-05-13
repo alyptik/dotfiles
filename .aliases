@@ -6,6 +6,7 @@ unalias {1..9} c d f gbr gco gcs gg gm h history java l md node o rd ru s sd sf 
 
 ## Custom aliases
 
+alias ed='ed -vp\*\ '
 alias icd='icdiff'
 alias c='colordiff -wuB'
 alias chd='colordiff -wyB'
@@ -76,7 +77,6 @@ alias bpy2='bpython2'
 alias ipy='ipython'
 alias ipy2='ipython2'
 alias ampv='noglob mpv --no-video --load-unsafe-playlists --ytdl-format=bestaudio/best'
-alias edd='ed -p\*'
 alias ec='/usr/lib/eclipse/eclim'
 alias ecd='/usr/lib/eclipse/eclimd'
 alias vd='vimdiff'

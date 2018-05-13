@@ -1,6 +1,7 @@
 include "%L"
 
 ## start alyptik
+<Multi_key> <colon> <colon>				: "∘" U2218	# function composition symbol
 <Multi_key> <0> <x>					: "🐂" U1f402	# ox
 <Multi_key> <p> <a> <n> <t> <s>				: "👖" U1f456	# pants
 <Multi_key> <f> <r> <o> <g>				: "🐸" U1f438	# frog

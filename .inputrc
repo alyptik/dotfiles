@@ -21,7 +21,7 @@ set output-meta on
 # do not bell on tab-completion
 set bell-style visible
 # set bell-style none
-set bind-tty-special-chars on
+set bind-tty-special-chars off
 set blink-matching-paren off
 set colored-completion-prefix on
 set colored-stats on
