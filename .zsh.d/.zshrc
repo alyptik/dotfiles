@@ -576,7 +576,7 @@ fi
 	defargcmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
 	defargcmds+=(mpd muttprint mv named neomutt netstat netstat newsbeuter)
 	defargcmds+=(node nohup objconv objdump oomox-cli optipng pacconf)
-	defargcmds+=(pactree paste pstree qemu-img qemu-nbd reptyr resolvconf)
+	defargcmds+=(pactree paste pisg pstree qemu-img qemu-nbd reptyr resolvconf)
 	defargcmds+=(rfc rg rlwrap rmdir rmlint rst2man rst2man2 saldl scan-build)
 	defargcmds+=(seq shred sox split stat st stjerm strings supybot swapon)
 	defargcmds+=(systool tdrop termite test tic tload transmission-cli)

@@ -32,16 +32,16 @@ bind P bumpleft
 bind ^D bindkey -d
 bind ^M bindkey -m
 
-bind "!" number 1
-bind "@" number 2
-bind "#" number 3
-bind "$" number 4
-bind "%" number 5
-bind "^" number 6
-bind "&" number 7
-bind "*" number 8
-bind "(" number 9
-bind ")" number 0
+bind ! number 1
+bind @ number 2
+bind \# number 3
+bind $ number 4
+bind % number 5
+bind ^ number 6
+bind & number 7
+bind * number 8
+bind ( number 9
+bind ) number 0
 
 # vim-like manpage search
 bind h eval split "focus top" "screen -t man $HOME/bin/showman" "focus bottom" other "focus top"
@@ -53,7 +53,7 @@ bind s eval split "focus top" "screen -t man $HOME/bin/showman" "focus bottom" o
 bindkey "\033." command
 # exit copy mode
 # bindkey -m , stuff "\033"
-markkeys "0=^A:$=^E:^B=;:^F='"
+markkeys "0=^A:$=^E:^B=;=,:^F='=."
 markkeys "/=/:?=?:^R=^R:^S=^S"
 markkeys "B={:E=}:b=[:e=]:w=>:B=<"
 # make incremental search default
@@ -66,7 +66,16 @@ bindkey -m ?
 bindkey -m /
 bindkey -m ^R
 bindkey -m ^S
-# PgUp | Enter copy/scrollback mode and page up
+# default navigation bindings
+bindkey -m "\033;" stuff ^B
+bindkey -m "\033'" stuff ^F
+bindkey -m "\033," stuff ^B
+bindkey -m "\033." stuff ^F
+# bindkey -m "\033;"
+# bindkey -m "\033'"
+# bindkey -m "\033,"
+# bindkey -m "\033."
+# PgUp | Enter cop:y/scrollback mode and page up
 # PgDown | Enter copy/scrollback mode and page down
 # bindkey -k kP eval copy "stuff ^B"
 # bindkey -k kN eval copy "stuff ^F"
@@ -116,11 +125,11 @@ defbce on
 # defflow auto
 defflow off
 deflog off
-deflogin off
+deflogin on
 defmousetrack off
 defnonblock on
 defobuflimit 256
-defscrollback 10000
+defscrollback 5000
 # password none
 bell on
 vbell on
