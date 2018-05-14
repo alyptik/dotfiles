@@ -7,5 +7,7 @@ trap '{ cd $cwd; trap - INT; kill -INT $$; }' INT
 trap '{ cd $cwd; }' EXIT ERR
 cd /usr/share/pisg || exit 1
 
-exec pisg "$@"
-# exec pisg -co /etc/pisg.cfg "$@"
+pisg -co /etc/aot.cfg "$@"
+pisg -co /etc/chee.cfg "$@"
+pisg -co /etc/void.cfg "$@"
+# exec pisg "$@"
