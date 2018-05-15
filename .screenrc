@@ -67,14 +67,12 @@ bindkey -m /
 bindkey -m ^R
 bindkey -m ^S
 # default navigation bindings
+bindkey -m ;
+bindkey -m \'
+bindkey -m \,
+bindkey -m .
 bindkey -m "\033;" stuff ^B
 bindkey -m "\033'" stuff ^F
-bindkey -m "\033," stuff ^B
-bindkey -m "\033." stuff ^F
-# bindkey -m "\033;"
-# bindkey -m "\033'"
-# bindkey -m "\033,"
-# bindkey -m "\033."
 # PgUp | Enter cop:y/scrollback mode and page up
 # PgDown | Enter copy/scrollback mode and page down
 # bindkey -k kP eval copy "stuff ^B"
