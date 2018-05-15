@@ -5,9 +5,15 @@ export PERL5LIB=/usr/lib/pisg/modules
 cwd="$PWD"
 trap '{ cd $cwd; trap - INT; kill -INT $$; }' INT
 trap '{ cd $cwd; }' EXIT ERR
+
 cd /usr/share/pisg || exit 1
+
+sudo su -c 'cat /var/lib/znc/.znc/moddata/log/alyptik/voidnet/\#thevoid/* > /store/void.log'
+sudo su -c 'cat /var/lib/znc/.znc/moddata/log/alyptik/freenode/\#archlinux-offtopic/* > /store/aot.log'
+sudo su -c 'cat /var/lib/znc/.znc/moddata/log/alyptik/freenode/\#chee-fanclub/* > /store/chee.log'
 
 pisg -co /etc/aot.cfg "$@"
 pisg -co /etc/chee.cfg "$@"
 pisg -co /etc/void.cfg "$@"
+
 # exec pisg "$@"

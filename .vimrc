@@ -285,10 +285,6 @@ set lcs^=tab:>\  " render tabs as '>    '
 " set lcs^=eol:$
 set tabpagemax=50
 set nrformats-=octal
-" Don't save cwd, hidden/unloaded buffer, or help pages
-set sessionoptions-=options sessionoptions-=buffers sessionoptions-=help
-" Don't save other tabs
-" set sessionoptions-=tabpages
 set cursorline showtabline=2 laststatus=2 statusline+=%{ALEGetStatusLine()}
 set encoding=utf8
 set balloondelay=100
@@ -307,19 +303,80 @@ set wrap
 set showbreak=++++
 " let &showbreak="        "
 set history=10000
-set nohlsearch
-set viewoptions-=options
+set hlsearch
+" don't save cwd
+" set viewoptions-=options
+" save :lcd cwd
+set viewoptions+=curdir
 set hidden
 
-" '10  :  marks will be remembered for up to 10 previously edited files
-"  <100 :  will save up to 100 lines for each register
-"  /100 : Maximum number of items in the search pattern history to be saved.
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-set viminfo='1000000,s1000000,!,c,h,n~/.viminfo
-" set viminfo='1000000,s1000000,!,%,c,h,n~/.viminfo
-" set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n~/.viminfo
+" ! : When included, save and restore global variables that start
+"     with an uppercase letter, and don't contain a lowercase
+"     letter.  Thus "KEEPTHIS and "K_L_M" are stored, but "KeepThis"
+"     and "_K_L_M" are not.  Nested List and Dict items may not be
+"     read back correctly, you end up with an empty item.
+" " : Maximum number of lines saved for each register.  Old name of
+"     the '<' item, with the disadvantage that you need to put a
+"     backslash before the ", otherwise it will be recognized as the
+"     start of a comment!
+" % : When included, save and restore the buffer list.  If Vim is
+"     started with a file name argument, the buffer list is not
+"     restored.  If Vim is started without a file name argument, the
+"     buffer list is restored from the viminfo file.  Quickfix
+"     ('buftype'), unlisted ('buflisted'), unnamed and buffers on
+"     removable media (|viminfo-r|) are not saved.
+"     When followed by a number, the number specifies the maximum
+"     number of buffers that are stored.  Without a number all
+"     buffers are stored.
+" ' : Maximum number of previously edited files for which the marks
+"     are remembered.  This parameter must always be included when
+"     'viminfo' is non-empty.
+"     Including this item also means that the |jumplist| and the
+"     |changelist| are stored in the viminfo file.
+" / : Maximum number of items in the search pattern history to be
+"     saved.  If non-zero, then the previous search and substitute
+"     patterns are also saved.  When not included, the value of
+"     'history' is used.
+" : : Maximum number of items in the command-line history to be
+"     saved.  When not included, the value of 'history' is used.
+" < : Maximum number of lines saved for each register.  If zero then
+"     registers are not saved.  When not included, all lines are
+"     saved.  '"' is the old name for this item.
+"     Also see the 's' item below: limit specified in Kbyte.
+" @ : Maximum number of items in the input-line history to be
+"     saved.  When not included, the value of 'history' is used.
+" c : When included, convert the text in the viminfo file from the
+"     'encoding' used when writing the file to the current
+"     'encoding'.  See |viminfo-encoding|.
+" f : Whether file marks need to be stored.  If zero, file marks ('0
+"     to '9, 'A to 'Z) are not stored.  When not present or when
+"     non-zero, they are all stored.  '0 is used for the current
+"     cursor position (when exiting or when doing ":wviminfo").
+" h : Disable the effect of 'hlsearch' when loading the viminfo
+"     file.  When not included, it depends on whether ":nohlsearch"
+"     has been used since the last search command.
+" n : Name of the viminfo file.  The name must immediately follow
+"     the 'n'.  Must be at the end of the option!  If the
+"     'viminfofile' option is set, that file name overrides the one
+"     given here with 'viminfo'.  Environment variables are
+"     expanded when opening the file, not when setting the option.
+" r : Removable media.  The argument is a string (up to the next
+"     ',').  This parameter can be given several times.  Each
+"     specifies the start of a path for which no marks will be
+"     stored.  This is to avoid removable media.  For MS-DOS you
+"     could use "ra:,rb:", for Amiga "rdf0:,rdf1:,rdf2:".  You can
+"     also use it for temp files, e.g., for Unix: "r/tmp".  Case is
+"     ignored.  Maximum length of each 'r' argument is 50
+"     characters.
+" s : Maximum size of an item in Kbyte.  If zero then registers are
+"     not saved.  Currently only applies to registers.  The default
+"     "s10" will exclude registers with more than 10 Kbyte of text.
+"     Also see the '<' item above: line count limit.
+
+set viminfofile=$HOME/.viminfo
+set viminfo='1000000,s1000000,!,c,h,n$HOME/.viminfo
+" set viminfo='1000000,s1000000,!,%,c,h,n$HOME/.viminfo
+" set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n$HOME/.viminfo
 
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
 set backup
@@ -441,7 +498,11 @@ let g:airline#extensions#whitespace#mixed_indent_file_format='mix-indent-file[%s
 let g:airline#extensions#whitespace#trailing_regexp='\s$'
 " configure, which filetypes have special treatment of /* */ comments,
 " matters for mix-indent-file algorithm: >
-let airline#extensions#c_like_langs=['c', 'cpp', 'cuda', 'go', 'java', 'javascript', 'lex', 'ld', 'php', 'yacc']
+let airline#extensions#c_like_langs=[
+	\ 'asm', 'c', 'cpp', 'cuda',
+	\ 'go', 'java', 'javascript',
+	\ 'lex', 'ld', 'php', 'yacc',
+	\ ]
 
 " Checking is enabled by default because b:airline_whitespace_disabled
 " is by default not defined:
@@ -664,7 +725,9 @@ let g:clang_cpp_options=''
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ '
 	\ . '-I./trusted/include/ -I./untrusted/include/ '
-	\ . '-I./include/ -Wall -Wextra '
+	\ . '-I./include/ -I./src -I./t '
+	\ . '-I/usr/include/python2.7 -I/inc/python3.6m/ '
+	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
@@ -677,7 +740,9 @@ let g:ale_c_clang_options=''
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ '
 	\ . '-I./trusted/include/ -I./untrusted/include/ '
-	\ . '-I./include/ -Wall -Wextra '
+	\ . '-I./include/ -I./src -I./t '
+	\ . '-I/usr/include/python2.7 -I/inc/python3.6m/ '
+	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
@@ -1175,9 +1240,10 @@ let g:fzf_buffers_jump=1
 let g:fzf_commits_log_options='--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 " [Tags] Command to generate tags file
 let g:fzf_tags_command='ctags -R '
-			\ . '--fields=+l '
-			\ . '--c-kinds=+l-p --c++-kinds=+l-p --python-kinds=+lz '
-			\ . '--extras=+q --tag-relative=yes '
+	\ . '--fields=+l '
+	\ . '--c-kinds=+l-p --c++-kinds=+l-p --python-kinds=+lz '
+	\ . '--extras=+q --tag-relative=yes '
+	\ . '.'
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect='alt-enter,ctrl-x'
 " Mapping selecting mappings
@@ -1445,10 +1511,28 @@ let g:startify_session_persistence	=0
 let g:startify_session_delete_buffers	=1
 let g:startify_change_to_vcs_root	=0
 
-let g:session_autosave='prompt'
+" let g:session_autosave='prompt'
+let g:session_autosave='yes'
+" let g:session_autoload='prompt'
+let g:session_autoload='no'
 let g:session_command_aliases=1
+" disable all session locking - I know what I'm doing :)
+let g:session_lock_enabled=0
+let g:session_autosave_silent=1
+let g:session_autosave_periodic=1
+let g:session_default_overwrite=1
+let g:session_default_to_last=1
+let g:session_default_name='last'
+" let g:session_autosave_to='last'
 let g:session_directory='~/.vim/session'
 let g:startify_session_dir='~/.vim/session'
+" persist all options related to :make
+let g:session_persist_globals = ['&makeprg', '&makeef']
+
+" don't save empty/hidden/unloaded buffers, help pages, or other tabs
+set sessionoptions-=blank sessionoptions-=buffers
+set sessionoptions-=help sessionoptions-=tabpages
+set sessionoptions+=localoptions sessionoptions+=winpos
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',
@@ -1678,12 +1762,16 @@ cnoremap <Esc>l <Right>
 cnoremap <Esc>b <C-Left>
 cnoremap <Esc>f <C-Right>
 cnoremap <Esc>w <C-Right>
-"<C-U> - backward kill line
-cnoremap <C-k> <C-\>e strpart(getcmdline(), 0, getcmdpos()-1)<CR>
 "<C-W> - backward kill word
 cnoremap <Esc>d <C-\>e utils#CmdlineEmacsKillWord()<CR>
 cnoremap <Esc>x <Delete>
-cnoremap <C-l> <C-k>
+" backward kill line
+cnoremap <Esc>u <C-u>
+" forward kill line
+cnoremap <C-l> <C-\>e strpart(getcmdline(), 0, getcmdpos()-1)<CR>
+" kill whole line
+cnoremap <Esc>k <C-u><C-\>e strpart(getcmdline(), 0, getcmdpos()-1)<CR>
+cnoremap <Esc>x <Home>!echo <End>
 cnoremap %% <C-r>=expand('%:h').'/'<CR>
 
 "map [[ (
