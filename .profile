@@ -44,6 +44,7 @@ CFLAGS="-Wno-error -Wno-implicit-fallthrough"
 # CFLAGS="-flto $CFLAGS"
 # CFLAGS="-fdiagnostics-color=always $CFLAGS"
 # CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
+# CFLAGS="-fno-common $CFLAGS"
 CFLAGS="-fno-common -fno-plt $CFLAGS"
 CFLAGS="-fno-strict-aliasing -fPIC $CFLAGS"
 CFLAGS="-fuse-ld=gold -fuse-linker-plugin $CFLAGS"
@@ -64,7 +65,7 @@ LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
 export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l4"
-export MAKEFLAGS="-j2"
+export MAKEFLAGS="-j4"
 
 # Environment variables
 # export BROWSER=/usr/bin/firefox

@@ -1,0 +1,38 @@
+From 53f8311596ccb82509c4ddf22c106e88bdb3a52a Mon Sep 17 00:00:00 2001
+Message-Id: <53f8311596ccb82509c4ddf22c106e88bdb3a52a.1526429314.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Tue, 15 May 2018 13:27:26 -1000
+Subject: [PATCH] scripts/tags.sh: don't rely on parsing `ls` for $ALLSOURCE_ARCHS generation
+
+Parsing `ls` is fragile at best and _will_ fail when $tree
+contains spaces. Replace this with a glob-generated string
+and directly assign it to $ALLSOURCE_ARCHS; use a subshell
+so `cd` doesn't affect the current working directory.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/scripts/tags.sh b/scripts/tags.sh
+index 78e546ff689c2d5f40..b84acf8889fe836c60 100755
+--- a/scripts/tags.sh
++++ b/scripts/tags.sh
+@@ -29,14 +29,11 @@ fi
+ ignore="$ignore ( -path ${tree}tools ) -prune -o"
+ 
+ # Find all available archs
+ find_all_archs()
+ {
+-	ALLSOURCE_ARCHS=""
+-	for arch in `ls ${tree}arch`; do
+-		ALLSOURCE_ARCHS="${ALLSOURCE_ARCHS} "${arch##\/}
+-	done
++	ALLSOURCE_ARCHS="$( (cd "${tree}arch/" && echo *) )"
+ }
+ 
+ # Detect if ALLSOURCE_ARCHS is set. If not, we assume SRCARCH
+ if [ "${ALLSOURCE_ARCHS}" = "" ]; then
+ 	ALLSOURCE_ARCHS=${SRCARCH}
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+

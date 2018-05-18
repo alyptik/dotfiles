@@ -45,12 +45,10 @@ latest | stable
 ### The best way
 
 ```console
-$ curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+$ curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 ```
 
-If you wonder this installation, please check it out:
-
-- [zplug/installer](https://github.com/zplug/installer/blob/master/installer.zsh)
+Curious about the installation script? Check it out at [zplug/installer](https://github.com/zplug/installer/blob/master/installer.zsh).
 
 ### Using [Homebrew](https://github.com/Homebrew/brew) (OS X)
 
@@ -350,6 +348,14 @@ Defaults to `$ZPLUG_HOME/repos`. You can change where the repositories are clone
 
 Defaults to `''`. You can set sudo password for zplug's `hook-build` tag. However, this variable should not be managed in dotfiles and so on.
 
+#### `ZPLUG_LOG_LOAD_SUCCESS`
+
+Defaults to `false`. If true, zplug spit the log about its success operation out to file (you can see it with `zplug --log`).
+
+#### `ZPLUG_LOG_LOAD_FAILURE`
+
+Defaults to `false`. If true, zplug spit the log about its failure operation out to file (you can see it with `zplug --log`).
+
 ```zsh
 # your .zshrc
 source ~/.zshrc_secret
@@ -395,7 +401,7 @@ page](https://github.com/zplug/zplug/wiki/Migration).
 [license]: http://b4b4r07.mit-license.org
 [travis-link]: https://travis-ci.org/zplug/zplug
 [travis-badge]: https://img.shields.io/travis/zplug/zplug.svg?style=flat-square
-[latest-badge]: https://img.shields.io/badge/latest-v2.4.1-ca7f85.svg?style=flat-square
+[latest-badge]: https://img.shields.io/badge/latest-v2.4.2-ca7f85.svg?style=flat-square
 [latest-link]: https://github.com/zplug/zplug/releases/latest
 [stable-badge]: https://img.shields.io/badge/stable-v2.3.2-e9a326.svg?style=flat-square
 [stable-link]: https://github.com/zplug/zplug/releases/tag/2.3.2

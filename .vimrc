@@ -285,7 +285,8 @@ set lcs^=tab:>\  " render tabs as '>    '
 " set lcs^=eol:$
 set tabpagemax=50
 set nrformats-=octal
-set cursorline showtabline=2 laststatus=2 statusline+=%{ALEGetStatusLine()}
+set cursorline showtabline=2 laststatus=2
+" set statusline+=%{ALEGetStatusLine()}'
 set encoding=utf8
 set balloondelay=100
 set sidescrolloff=5
@@ -303,7 +304,7 @@ set wrap
 set showbreak=++++
 " let &showbreak="        "
 set history=10000
-set hlsearch
+set nohlsearch
 " don't save cwd
 " set viewoptions-=options
 " save :lcd cwd
@@ -479,25 +480,57 @@ let g:airline#extensions#whitespace#mixed_indent_algo=1
 " indentation and spaces for alignment
 " let g:airline#extensions#whitespace#mixed_indent_algo=2
 
-" let g:airline#extensions#whitespace#symbol='!'
+" control which sections get truncated and at what width.
+" let g:airline#extensions#default#section_truncate_width={
+"         \ 'b': 79,
+"         \ 'x': 60,
+"         \ 'y': 88,
+"         \ 'z': 45,
+"         \ 'warning': 80,
+"         \ 'error': 80,
+"         \ }
+" Note: set to an empty dictionary to disable truncation.
+let g:airline#extensions#default#section_truncate_width={}
+
+" configure the layout of the sections by specifying an array of two arrays
+" (first array is the left side, second array is the right side).
+let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'y', 'z', 'error', 'warning']]
+" let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'y', 'z', 'error', 'warning']]
+
+" configure the layout to not use %(%) grouping items in the statusline.
+" Try setting this to zero, if you notice bleeding color artifacts
+" let airline#extensions#default#section_use_groupitems=1
+
+" configure the fileformat output
+" By default, it will display something like 'utf-8[unix]', however, you can
+" skip displaying it, if the output matches a configured string. To do so,
+" set
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 " indent: mixed indent within a line
 " long:   overlong lines
 " trailing: trailing whitespace
 " mixed-indent-file: different indentation in different lines
-let g:airline#extensions#whitespace#checks=[ 'indent', 'trailing', 'mixed-indent-file' ]
+let g:airline#extensions#whitespace#checks=['indent', 'trailing', 'mixed-indent-file']
+" let g:airline#extensions#whitespace#checks=['indent', 'trailing', 'long', 'mixed-indent-file']
 " this can also be configured for an individual buffer
 " let b:airline_whitespace_checks=[ 'indent', 'trailing', 'long', 'mixed-indent-file' ]
-"
+" let g:airline#extensions#whitespace#symbol='!'
+
+let g:airline#extensions#bufferline#enabled=1
 " let g:airline#extensions#whitespace#max_lines=20000
 let g:airline#extensions#whitespace#show_message=1
-let g:airline#extensions#whitespace#trailing_format='trailing[%s]'
-let g:airline#extensions#whitespace#mixed_indent_format='mixed-indent[%s]'
-let g:airline#extensions#whitespace#long_format='long[%s]'
-let g:airline#extensions#whitespace#mixed_indent_file_format='mix-indent-file[%s]'
+let g:airline#extensions#whitespace#trailing_format='T:%s'
+let g:airline#extensions#whitespace#mixed_indent_format='I:%s'
+let g:airline#extensions#whitespace#long_format='L:%s'
+let g:airline#extensions#whitespace#mixed_indent_file_format='M:%s'
+" let g:airline#extensions#whitespace#trailing_format='trailing[%s]'
+" let g:airline#extensions#whitespace#mixed_indent_format='mixed-indent[%s]'
+" let g:airline#extensions#whitespace#long_format='long[%s]'
+" let g:airline#extensions#whitespace#mixed_indent_file_format='mix-indent-file[%s]'
 let g:airline#extensions#whitespace#trailing_regexp='\s$'
 " configure, which filetypes have special treatment of /* */ comments,
-" matters for mix-indent-file algorithm: >
+" matters for mix-indent-file algorithm:
 let airline#extensions#c_like_langs=[
 	\ 'asm', 'c', 'cpp', 'cuda',
 	\ 'go', 'java', 'javascript',
@@ -558,6 +591,9 @@ let g:airline_right_alt_sep='⮃'
 let g:airline_symbols.branch='⭠'
 let g:airline_symbols.readonly='⭤'
 let g:airline_symbols.linenr='⭡'
+let g:airline_detect_spell=1
+let g:airline_skip_empty_sections=1
+let g:airline#extensions#tabline#show_buffers=0
 
 " arduino commands
 let g:arduino_cmd='/usr/share/arduino/arduino'
@@ -1051,8 +1087,8 @@ let g:ale_c_clangtidy_checks=[
 	\ 'clang-analyzer-valist.Unterminated',
 	\ ]
 
-let g:powerline_fonts=1
-let g:airline_powerline_fonts=1
+let g:powerline_fonts=0
+let g:airline_powerline_fonts=0
 let g:expand_region_use_select_mode=1
 " you can add these colors to your .vimrc to help customizing
 let s:brown="905532"
@@ -1199,83 +1235,83 @@ if executable('ag')
 endif
 
 " This is the default extra key bindings
-let g:fzf_command_prefix='Fzf'
-let g:fzf_action={
-	\ 'ctrl-t': 'tab split',
-	\ 'ctrl-x': 'split',
-	\ 'ctrl-v': 'vsplit' }
-" Default fzf layout
-" - down / up / left / right
-let g:fzf_layout={ 'down': '~40%' }
-" In Neovim, you can set up fzf window using a Vim command
-let g:fzf_layout={ 'window': 'enew' }
-let g:fzf_layout={ 'window': '-tabnew' }
-" Customize fzf colors to match your color scheme
-let g:fzf_colors={
-	\ 'fg':      ['fg', 'Normal'],
-	\ 'bg':      ['bg', 'Normal'],
-	\ 'hl':      ['fg', 'Comment'],
-	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-	\ 'hl+':     ['fg', 'Statement'],
-	\ 'info':    ['fg', 'PreProc'],
-	\ 'prompt':  ['fg', 'Conditional'],
-	\ 'pointer': ['fg', 'Exception'],
-	\ 'marker':  ['fg', 'Keyword'],
-	\ 'spinner': ['fg', 'Label'],
-	\ 'header':  ['fg', 'Comment']
-	\ }
-" Enable per-command history.
-" CTRL-N and CTRL-P will be automatically bound to next-history and
-" previous-history instead of down and up. If you don't like the change,
-" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir='~/.local/share/fzf-history'
-" [Files] Extra options for fzf
-"   e.g. File preview using Highlight
-"        (http://www.andre-simon.de/doku/highlight/en/highlight.html)
-let g:fzf_files_options='--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump=1
-" [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options='--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-" [Tags] Command to generate tags file
-let g:fzf_tags_command='ctags -R '
-	\ . '--fields=+l '
-	\ . '--c-kinds=+l-p --c++-kinds=+l-p --python-kinds=+lz '
-	\ . '--extras=+q --tag-relative=yes '
-	\ . '.'
-" [Commands] --expect expression for directly executing the command
-let g:fzf_commands_expect='alt-enter,ctrl-x'
-" Mapping selecting mappings
-nmap <Leader><Tab> <Plug>(fzf-maps-n)
-xmap <Leader><Tab> <Plug>(fzf-maps-x)
-omap <Leader><Tab> <Plug>(fzf-maps-o)
-" Insert mode completion
-imap <C-x><C-k> <Plug>(fzf-complete-word)
-imap <C-x><C-f> <Plug>(fzf-complete-path)
-imap <C-x><C-j> <Plug>(fzf-complete-file-ag)
-imap <C-x><C-l> <Plug>(fzf-complete-line)
-" Advanced customization using autoload functions
-" inoremap <expr> <C-x><C-k> fzf#vim#complete#word({'left': '15%'})
-" Replace the default dictionary completion with fzf-based fuzzy completion
-inoremap <expr> <C-x><C-k> fzf#complete('cat /usr/share/dict/words')
-function! s:make_sentence(lines)
-	return substitute(join(a:lines), '^.', '\=toupper(submatch(0))', '').'.'
-endfunction
-inoremap <expr> <C-x><C-s> fzf#complete({
-	\ 'source':  'cat /usr/share/dict/words',
-	\ 'reducer': function('<sid>make_sentence'),
-	\ 'options': '--multi --reverse --margin 15%,0',
-	\ 'left':    20
-	\ })
-function! s:fzf_statusline()
-	" Override statusline as you like
-	highlight fzf1 ctermfg=161 ctermbg=251
-	highlight fzf2 ctermfg=23 ctermbg=251
-	highlight fzf3 ctermfg=237 ctermbg=251
-	setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-au! User FzfStatusLine call <SID>fzf_statusline()
+" let g:fzf_command_prefix='Fzf'
+" let g:fzf_action={
+"         \ 'ctrl-t': 'tab split',
+"         \ 'ctrl-x': 'split',
+"         \ 'ctrl-v': 'vsplit' }
+" " Default fzf layout
+" " - down / up / left / right
+" let g:fzf_layout={ 'down': '~40%' }
+" " In Neovim, you can set up fzf window using a Vim command
+" let g:fzf_layout={ 'window': 'enew' }
+" let g:fzf_layout={ 'window': '-tabnew' }
+" " Customize fzf colors to match your color scheme
+" let g:fzf_colors={
+"         \ 'fg':      ['fg', 'Normal'],
+"         \ 'bg':      ['bg', 'Normal'],
+"         \ 'hl':      ['fg', 'Comment'],
+"         \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"         \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+"         \ 'hl+':     ['fg', 'Statement'],
+"         \ 'info':    ['fg', 'PreProc'],
+"         \ 'prompt':  ['fg', 'Conditional'],
+"         \ 'pointer': ['fg', 'Exception'],
+"         \ 'marker':  ['fg', 'Keyword'],
+"         \ 'spinner': ['fg', 'Label'],
+"         \ 'header':  ['fg', 'Comment']
+"         \ }
+" " Enable per-command history.
+" " CTRL-N and CTRL-P will be automatically bound to next-history and
+" " previous-history instead of down and up. If you don't like the change,
+" " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+" let g:fzf_history_dir='~/.local/share/fzf-history'
+" " [Files] Extra options for fzf
+" "   e.g. File preview using Highlight
+" "        (http://www.andre-simon.de/doku/highlight/en/highlight.html)
+" let g:fzf_files_options='--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+" " [Buffers] Jump to the existing window if possible
+" let g:fzf_buffers_jump=1
+" " [[B]Commits] Customize the options used by 'git log':
+" let g:fzf_commits_log_options='--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+" " [Tags] Command to generate tags file
+" let g:fzf_tags_command='ctags -R '
+"         \ . '--fields=+l '
+"         \ . '--c-kinds=+l-p --c++-kinds=+l-p --python-kinds=+lz '
+"         \ . '--extras=+q --tag-relative=yes '
+"         \ . '.'
+" " [Commands] --expect expression for directly executing the command
+" let g:fzf_commands_expect='alt-enter,ctrl-x'
+" " Mapping selecting mappings
+" nmap <Leader><Tab> <Plug>(fzf-maps-n)
+" xmap <Leader><Tab> <Plug>(fzf-maps-x)
+" omap <Leader><Tab> <Plug>(fzf-maps-o)
+" " Insert mode completion
+" imap <C-x><C-k> <Plug>(fzf-complete-word)
+" imap <C-x><C-f> <Plug>(fzf-complete-path)
+" imap <C-x><C-j> <Plug>(fzf-complete-file-ag)
+" imap <C-x><C-l> <Plug>(fzf-complete-line)
+" " Advanced customization using autoload functions
+" " inoremap <expr> <C-x><C-k> fzf#vim#complete#word({'left': '15%'})
+" " Replace the default dictionary completion with fzf-based fuzzy completion
+" inoremap <expr> <C-x><C-k> fzf#complete('cat /usr/share/dict/words')
+" function! s:make_sentence(lines)
+"         return substitute(join(a:lines), '^.', '\=toupper(submatch(0))', '').'.'
+" endfunction
+" inoremap <expr> <C-x><C-s> fzf#complete({
+"         \ 'source':  'cat /usr/share/dict/words',
+"         \ 'reducer': function('<sid>make_sentence'),
+"         \ 'options': '--multi --reverse --margin 15%,0',
+"         \ 'left':    20
+"         \ })
+" function! s:fzf_statusline()
+"         " Override statusline as you like
+"         highlight fzf1 ctermfg=161 ctermbg=251
+"         highlight fzf2 ctermfg=23 ctermbg=251
+"         highlight fzf3 ctermfg=237 ctermbg=251
+"         setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+" endfunction
+" au! User FzfStatusLine call <SID>fzf_statusline()
 
 let g:expand_region_text_objects= {
 	\ 'iw'  :0,
@@ -1470,11 +1506,11 @@ au Syntax * RainbowParenthesesLoadBraces
 " Set this. Airline will handle the rest. (ALE)
 let g:airline#extensions#ale#enabled=1
 
-"let g:promptline_preset='clear'
+" let g:promptline_preset='clear'
 " or
 let g:promptline_preset='full'
 " other presets available in autoload/promptline/presets/*
-"let g:promptline_theme='airline'
+" let g:promptline_theme='airline'
 " or
 let g:promptline_theme='jelly'
 " other themes available in autoload/promptline/themes/*
@@ -1529,9 +1565,8 @@ let g:startify_session_dir='~/.vim/session'
 " persist all options related to :make
 let g:session_persist_globals = ['&makeprg', '&makeef']
 
-" don't save empty/hidden/unloaded buffers, help pages, or other tabs
-set sessionoptions-=blank sessionoptions-=buffers
-set sessionoptions-=help sessionoptions-=tabpages
+" don't save empty buffers, help pages, or other tabs
+set sessionoptions-=blank sessionoptions-=help sessionoptions-=tabpages
 set sessionoptions+=localoptions sessionoptions+=winpos
 
 let g:startify_skiplist = [

@@ -45,8 +45,8 @@ HISTIGNORE='history*'
 HISTCONTROL='ignoreboth:erasedups'
 HISTFILE="${HOME}/.bash_history"
 
-declare __statstr
 declare -a tmp
+declare __statstr
 PROMPT_COMMAND='__statstr="$( tmp=("${PIPESTATUS[@]}"); '
 PROMPT_COMMAND+='((tmp)) && printf "|%d" "${tmp[@]}" || :)";'
 PROMPT_COMMAND+='printf "\033[0m\033[38;5;2m"'
@@ -116,3 +116,5 @@ bind '"\e[B": history-search-forward'
 ## The following line may also be placed in bashrc to set the mode string
 #bind "set vi-mode-str2 $(printf '1\033[37m\002+\001\033[0m\002')"
 #bind "set vi-mode-str1 $(printf '\033[37m+\033[0m')"
+
+# vi:ft=sh:

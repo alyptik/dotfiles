@@ -88,24 +88,6 @@ __zplug::core::core::run_interfaces()
 
 __zplug::core::core::prepare()
 {
-    # Unique array
-    typeset -gx -U path
-    typeset -gx -U fpath
-
-    # Add to the PATH
-    path=(
-    ${ZPLUG_ROOT:+"$ZPLUG_ROOT/bin"}
-    ${ZPLUG_BIN:+"$ZPLUG_BIN"}
-    "$path[@]"
-    )
-
-    # Add to the FPATH
-    fpath=(
-    "$ZPLUG_ROOT"/misc/completions(N-/)
-    "$ZPLUG_ROOT/base/sources"
-    "$fpath[@]"
-    )
-
     # Check whether you meet the requirements for using zplug
     # 1. zsh 4.3.9 or more
     # 2. git
@@ -121,15 +103,15 @@ __zplug::core::core::prepare()
             return 1
         fi
 
-        if ! __zplug::base::base::git_version 1.7; then
-            __zplug::io::print::f \
-                --die \
-                --zplug \
-                --error \
-                "git command not found in \$PATH\n" \
-                "zplug depends on git 1.7 or later.\n"
-            return 1
-        fi
+	if ! __zplug::base::base::git_version 1.7 && ! type git &>/dev/null; then
+	    __zplug::io::print::f \
+		--die \
+		--zplug \
+		--error \
+		"git command not found in \$PATH\n" \
+		"zplug depends on git 1.7 or later.\n"
+	    return 1
+	fi
 
         if ! __zplug::utils::awk::available; then
             __zplug::io::print::f \
@@ -143,6 +125,24 @@ __zplug::core::core::prepare()
 
     # Release zplug variables and export
     __zplug::core::core::variable || return 1
+
+    # Unique array
+    typeset -gx -U path
+    typeset -gx -U fpath
+
+    # Add to the PATH
+    path=(
+    ${ZPLUG_ROOT:+"$ZPLUG_ROOT/bin"}
+    ${ZPLUG_BIN:-${ZPLUG_HOME:+"$ZPLUG_HOME/bin"}}
+    "$path[@]"
+    )
+
+    # Add to the FPATH
+    fpath=(
+    "$ZPLUG_ROOT"/misc/completions(N-/)
+    "$ZPLUG_ROOT/base/sources"
+    "$fpath[@]"
+    )
 
     mkdir -p "$ZPLUG_HOME"/{,log}
     mkdir -p "$ZPLUG_BIN"
@@ -171,12 +171,14 @@ __zplug::core::core::variable()
     typeset -gx    ZPLUG_SUDO_PASSWORD
 
     typeset -gx    ZPLUG_ERROR_LOG=${ZPLUG_ERROR_LOG:-$ZPLUG_HOME/.error_log}
+    typeset -gx    ZPLUG_LOG_LOAD_SUCCESS=${ZPLUG_LOG_LOAD_SUCCESS:-false}
+    typeset -gx    ZPLUG_LOG_LOAD_FAILURE=${ZPLUG_LOG_LOAD_FAILURE:-false}
 
     typeset -gx    ZPLUG_BIN=${ZPLUG_BIN:-$ZPLUG_HOME/bin}
     typeset -gx    ZPLUG_CACHE_DIR=${ZPLUG_CACHE_DIR:-$ZPLUG_HOME/cache}
     typeset -gx    ZPLUG_REPOS=${ZPLUG_REPOS:-$ZPLUG_HOME/repos}
 
-    typeset -gx    _ZPLUG_VERSION="2.4.1"
+    typeset -gx    _ZPLUG_VERSION="2.4.2"
     typeset -gx    _ZPLUG_URL="https://github.com/zplug/zplug"
     typeset -gx    _ZPLUG_OHMYZSH="robbyrussell/oh-my-zsh"
     typeset -gx    _ZPLUG_PREZTO="sorin-ionescu/prezto"
