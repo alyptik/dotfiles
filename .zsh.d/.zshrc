@@ -49,6 +49,17 @@ exec 2<>"$_zsh_error"
 KEYTIMEOUT=20
 # bindkey -e
 bindkey -v
+() for 1 { autoload -U "$1" && zle -N "$1"; } select-bracketed select-quoted
+# text object for matching characters between matching pairs of brackets
+() for 1 {
+	bindkey -M viopp "$1" select-bracketed;
+	bindkey -M visual "$1" select-bracketed;
+} {a,i}${(s..)^:-'()[]{}<>bB'}
+# text object for matching characters between a particular delimiter
+() for 1 {
+	bindkey -M viopp "$1" select-quoted
+	bindkey -M visual "$1" select-quoted
+} {a,i}{\',\",\`}
 # _km=emacs _emacs=main _vi=
 _km=vi _emacs= _vi=main
 setescapes
@@ -571,7 +582,7 @@ fi
 	defargcmds+=(ci co col colordiff compton configure conky cower cpanm)
 	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode)
 	defargcmds+=(dumpasn1 expac fasd file flac2all fusermount-glusterfs)
-	defargcmds+=(fusermount3 elftoc fzf gnome-keyring-daemon gpg-agent)
+	defargcmds+=(fusermount3 elftoc free fzf gnome-keyring-daemon gpg-agent)
 	defargcmds+=(help2man highlight hping hsetroot icdiff install keyring)
 	defargcmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
 	defargcmds+=(mpd muttprint mv named neomutt netstat netstat newsbeuter)
@@ -587,6 +598,7 @@ fi
 	defargcmds+=(transmission-show transset-df updatedb urxvtc urxvtcd)
 	defargcmds+=(urxvtd vanitygen vimpager x11vnc xbindkeys)
 	defargcmds+=(xsel youtube-dl)
+	defargcmds+=(${$(print -r - /usr/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
 
 	if type cgasm &>/dev/null; then
 		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
@@ -685,6 +697,7 @@ compdef pkgconf=pkg-config
 compdef run=gcc
 compdef xs=xsel
 compdef _=sudo
+compdef meminfo=free
 
 # named directories
 hash -d a="${HOME}/code/aur"
@@ -697,7 +710,8 @@ hash -d d="${P:-/store/code/projects}/linux/Documentation"
 hash -d djzomg="/sdxc/Music/djzomg"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
-hash -d g="${HOME}/git"
+hash -d g="${P:-/store/code/projects}/secure-systems-lab/lind_project/lind/lind_glibc"
+hash -d git="${HOME}/git"
 hash -d hdd="/run/media/alyptik/toshiba1TB"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
@@ -707,6 +721,7 @@ hash -d lind="${P:-/store/code/projects}/secure-systems-lab/lind_project"
 hash -d magnets="${C:-/store/dotfiles}/magnets"
 hash -d man="${C:-/store/dotfiles}/man"
 hash -d music="/store/music"
+hash -d n="${P:-/store/code/projects}/secure-systems-lab/lind_project/native_client"
 hash -d nginx="/etc/nginx"
 hash -d omz="/usr/share/oh-my-zsh"
 hash -d p="${P:-/store/code/projects}"

@@ -3,7 +3,7 @@
 # Unset previous function/alias instances
 unset -f define defrag fc java sudo wd which 2>/dev/null
 unalias {1..9} c d es f gbr gco gcs gg gm h history java 2>/dev/null
-unalias l md node o rd ru s sd sf si u v z zz 2>/dev/null
+unalias l md meminfo node o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
 
@@ -362,7 +362,7 @@ alias 6nroutes='route -A inet6 -e'
 alias 6iproutes='ip -6 route show'
 
 ## pass options to free ##
-alias meminfo='free -mlt'
+# alias meminfo='free -mlt'
 ## get top process eating memory
 alias psmem='ps auxf | sort -nrk 4'
 alias psmem10='ps auxf | sort -nrk 4 | head -10'

@@ -179,7 +179,7 @@ PATH="$(ruby -rrubygems -e "puts Gem.user_dir")/bin:$PATH"
 # PATH="/usr/lib/distcc/bin:$PATH"
 PATH="/usr/lib/ccache/bin:$PATH"
 PATH="/opt/cross/bin:$PATH"
-PATH="$PROJECTS/lind_project/lind/nacl/native_client/tools/out/nacl-sdk/bin:$PATH"
+PATH="$PROJECTS/lind_project/native_client/tools/out/nacl-sdk/bin:$PATH"
 PATH="$PROJECTS/lind_project/lind/repy/bin:$PATH"
 export PATH
 # shellcheck disable=SC2039
