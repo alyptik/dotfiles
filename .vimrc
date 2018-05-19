@@ -290,7 +290,7 @@ set lcs^=tab:>\  " render tabs as '>    '
 set tabpagemax=50
 set nrformats-=octal
 set cursorline showtabline=2 laststatus=2
-" set statusline+=%{ALEGetStatusLine()}'
+" set statusline+=%{ALEGetStatusLine()}
 set encoding=utf8
 set balloondelay=100
 set sidescrolloff=5
@@ -314,7 +314,7 @@ set nohlsearch
 " save :lcd cwd
 set viewoptions+=curdir
 set hidden
-set lazyredraw
+set nolazyredraw
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -440,7 +440,9 @@ au BufNewFile,BufRead *.gtkon setf cs
 "au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
 au FileType cpp set keywordprg=cppman
 au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+au FileType c set keywordprg=man\ -s
 au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+au FileType h set keywordprg=man\ -s
 au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 " au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
 " au FileType c setl ofu=ClangComplete cfu=ClangComplete
@@ -597,7 +599,7 @@ let g:airline_symbols.branch='⭠'
 let g:airline_symbols.readonly='⭤'
 let g:airline_symbols.linenr='⭡'
 let g:airline_detect_spell=1
-let g:airline_skip_empty_sections=1
+let g:airline_skip_empty_sections=0
 let g:airline#extensions#tabline#show_buffers=0
 
 " arduino commands
@@ -762,7 +764,7 @@ let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
 let g:clang_cpp_options=''
 	\ . '-std=gnu++14 -stdlib=libc++ '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
-	\ . '-D__native_client__ -DNACL_LINUX=1 -DNACL_x86=1 '
+	\ . '-DNACL_LINUX=1 -DNACL_x86=1 '
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ '
 	\ . '-I./trusted/include/ -I./untrusted/include/ '
@@ -777,7 +779,7 @@ let g:clang_cpp_options=''
 let g:ale_c_clang_options=''
 	\ . '-std=gnu11 '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
-	\ . '-D__native_client__ -DNACL_LINUX=1 -DNACL_x86=1 '
+	\ . '-DNACL_LINUX=1 -DNACL_x86=1 '
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ '
 	\ . '-I./trusted/include/ -I./untrusted/include/ '
@@ -1537,7 +1539,7 @@ let g:promptline_preset={
 " let g:startify_custom_header= g:ascii + startify#fortune#boxed()
 
 let g:startify_custom_header=
-	\ map(split(system('fortune archlinux | cowsay | perl -lpe "s/[[:space:]]*$//"'), '\n'), '"	". v:val')
+	\ map(split(system('fortune psych | cowsay | perl -lpe "s/\s*$//"'), '\n'), '"	". v:val')
 
 autocmd User Startified setlocal cursorline
 let g:startify_use_env			=1
@@ -1552,11 +1554,18 @@ let g:startify_session_persistence	=0
 let g:startify_session_delete_buffers	=1
 let g:startify_change_to_vcs_root	=0
 
-augroup TestSession
-	au!
-	au SessionLoadPost * silent! let s:HasSession={-> !empty(g:CurSession) ? 1 : 0}()
-	au SessionLoadPost * let g:session_autosave=s:HasSession ? 'prompt' : 'no'
-augroup END
+let g:session_autosave='no'
+au SessionLoadPost * let g:session_autosave=!empty(xolox#session#find_current_session())
+	\ ? 'prompt'
+	\ : 'no'
+" prompt for autosave if g:CurSession is set
+" augroup HasSession
+"         au!
+"         au SessionLoadPost * let s:InSession=xolox#session#find_current_session()
+"         au SessionLoadPost * let g:session_autosave=s:InSession ? 'prompt' : 'no'
+"         " au SessionLoadPost * silent!  let s:HasSession={-> !empty(g:CurSession) ? 1 : 0}()
+"         " au SessionLoadPost * let g:session_autosave=s:HasSession ? 'prompt' : 'no'
+" augroup END
 
 let g:session_autoload='no'
 let g:session_command_aliases=1
@@ -1571,12 +1580,13 @@ let g:session_default_name='last'
 let g:session_directory='~/.vim/session'
 let g:startify_session_dir='~/.vim/session'
 " persist all options related to :make
-let g:session_persist_globals = ['&makeprg', '&makeef']
+" let g:session_persist_globals = ['&makeprg', '&makeef']
 
-" don't save empty buffers or help pages
-set sessionoptions-=blank sessionoptions-=help
+set sessionoptions+=winpos,globals
+set sessionoptions-=blank
+set sessionoptions-=help
+" set sessionoptions-=options
 " set sessionoptions-=tabpages
-set sessionoptions^=winpos,localoptions,globals
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',
@@ -1587,13 +1597,20 @@ let g:startify_skiplist = [
 let g:startify_list_order=[
 	\ ['   Sessions:'],
 	\ 'sessions',
-	\ ['   Bookmarks:'],
-	\ 'bookmarks',
 	\ ['   LRU:'],
 	\ 'files',
 	\ ['   LRU within this dir:'],
 	\ 'dir',
 	\ ]
+	" \ ['   Sessions:'],
+	" \ 'sessions',
+	" \ ['   Bookmarks:'],
+	" \ 'bookmarks',
+	" \ ['   LRU:'],
+	" \ 'files',
+	" \ ['   LRU within this dir:'],
+	" \ 'dir',
+	" \ ]
 
 let g:startify_skiplist=[
 	\ 'COMMIT_EDITMSG',
