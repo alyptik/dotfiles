@@ -229,9 +229,13 @@ let &colorcolumn=join(range(81,250), ',')
 highlight ColorColumn guibg=#282828
 " so listchars are only visible on the current line
 highlight SpecialKey guifg=#282828
-" my own indentation for C using the coding styles
-set smartindent cindent
-" set cino=:0,+0,(2,J0,{1,}0,>4,)1,m2
+" set smartindent
+set cindent
+set cinoptions=:0,+0,(2,J0,{1,}0,>4,)1,m2
+" default cinoptions
+" set cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0
+" set cinoptions+=gs,hs,N0,E0,ps,ts,is,+s,c3,C0,/0,(2s
+" set cinoptions+=us,U0,w0,W0,k0,m0,j0,J0,)20,*70,#0
 set foldmethod=marker
 set shell=/bin/zsh
 set background=dark
@@ -310,6 +314,7 @@ set nohlsearch
 " save :lcd cwd
 set viewoptions+=curdir
 set hidden
+set lazyredraw
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -1461,7 +1466,7 @@ if has("folding")
 	endfunction
 endif
 augroup resCur
-	autocmd!
+	au!
 	if has("folding")
 		" au BufWinEnter * if ResCur() | call UnfoldCur() | endif
 		au BufWinEnter ?* silent! 0,$foldo!
@@ -1547,9 +1552,12 @@ let g:startify_session_persistence	=0
 let g:startify_session_delete_buffers	=1
 let g:startify_change_to_vcs_root	=0
 
-" let g:session_autosave='prompt'
-let g:session_autosave='yes'
-" let g:session_autoload='prompt'
+augroup TestSession
+	au!
+	au SessionLoadPost * silent! let s:HasSession={-> !empty(g:CurSession) ? 1 : 0}()
+	au SessionLoadPost * let g:session_autosave=s:HasSession ? 'prompt' : 'no'
+augroup END
+
 let g:session_autoload='no'
 let g:session_command_aliases=1
 " disable all session locking - I know what I'm doing :)
@@ -1565,9 +1573,10 @@ let g:startify_session_dir='~/.vim/session'
 " persist all options related to :make
 let g:session_persist_globals = ['&makeprg', '&makeef']
 
-" don't save empty buffers, help pages, or other tabs
-set sessionoptions-=blank sessionoptions-=help sessionoptions-=tabpages
-set sessionoptions+=localoptions sessionoptions+=winpos
+" don't save empty buffers or help pages
+set sessionoptions-=blank sessionoptions-=help
+" set sessionoptions-=tabpages
+set sessionoptions^=winpos,localoptions,globals
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',

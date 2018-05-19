@@ -1,15 +1,17 @@
 # if using GNU screen, let the zsh tell screen what the title and hardstatus
 # of the tab window should be.
 if [[ $_GET_PATH == '' ]]; then
-	_GET_PATH='echo $PWD | sed "s/^\/Users\//~/;s/^\/home\//~/;s/^~$USER/~/"'
+	# _GET_PATH='echo $PWD | sed "s/^\/Users\//~/;s/^\/home\//~/;s/^~$USER/~/"'
+	_GET_PATH='basename $PWD | sed "s/alyptik/~/"'
 fi
 if [[ $_GET_HOST == '' ]]; then
 	_GET_HOST='echo $HOST | sed "s/\..*//"'
 fi
 
 # use the current user as the prefix of the current tab title
-# TAB_TITLE_PREFIX='"`'$_GET_HOST'`:`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
-TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
+TAB_TITLE_PREFIX='"$(basename $PWD | sed -r "s/alyptik/~/" | sed -r "s:^(.{6}).*:\1:")""$PROMPT_CHAR"'
+# TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
+
 # when at the shell prompt, show a truncated version of the current path (with
 # standard ~ replacement) as the rest of the title.
 TAB_TITLE_PROMPT='$SHELL:t'
@@ -37,7 +39,7 @@ function screen_set ()
 	print -nR $'\033]0;'$2$'\a'
 }
 # called by zsh before executing a command
-function preexec ()
+function screen_preexec ()
 {
 	local PS_FORMAT
 	[[ "$TERM" =~ ^screen.*$ ]] || return
@@ -45,22 +47,29 @@ function preexec ()
 	[[ -n "$STY" && -z "$TMUX" ]] || return
 	if ps -p "$PPID" | grep -iqw 'screen'; then
 		local -a cmd; cmd=(${(z)1}) # the command string
+		# eval "tab_title=$TAB_TITLE_EXEC"
 		eval "tab_title=$TAB_TITLE_PREFIX:$TAB_TITLE_EXEC"
-		eval "tab_hardstatus=$TAB_HARDSTATUS_PREFIX:$TAB_HARDSTATUS_EXEC"
+		# eval "tab_hardstatus=$TAB_HARDSTATUS_PREFIX:$TAB_HARDSTATUS_EXEC"
+		eval "tab_hardstatus=$TAB_HARDSTATUS_EXEC"
 		screen_set $tab_title $tab_hardstatus
 	fi
 }
 
 # called by zsh before showing the prompt
-function precmd ()
+function screen_precmd ()
 {
 	local PS_FORMAT
 	[[ "$TERM" =~ ^screen.*$ ]] || return
 	tty | grep -vq 'tty' || return
 	[[ -n "$STY" && -z "$TMUX" ]] || return
 	if ps -p "$PPID" | grep -iqw 'screen'; then
+		# eval "tab_title=$TAB_TITLE_PROMPT"
 		eval "tab_title=$TAB_TITLE_PREFIX:$TAB_TITLE_PROMPT"
-		eval "tab_hardstatus=$TAB_HARDSTATUS_PREFIX:$TAB_HARDSTATUS_PROMPT"
+		# eval "tab_hardstatus=$TAB_HARDSTATUS_PREFIX:$TAB_HARDSTATUS_PROMPT"
+		eval "tab_hardstatus=$TAB_HARDSTATUS_PROMPT"
 		screen_set $tab_title $tab_hardstatus
 	fi
 }
+
+preexec_functions+=(screen_preexec)
+precmd_functions+=(screen_precmd)
