@@ -12,10 +12,15 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 panel_height=16
-font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
+# font="pango:Fira Code Retina 8"
+# font="xft:FiraCode:style=Retina:pixelsize=8"
+# font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
+# font="-*-fixed-medium-*-*-*-20-*-*-*-*-*-*-*"
+# font="-*-terminus-medium-*-*-*-20-*-*-*-*-*-*-*"
+font="-*-terminus-medium-r-normal--20-*-*-*-*-*-*-*"
 
 ####
 # Try to find textwidth binary.
