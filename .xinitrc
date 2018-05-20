@@ -42,7 +42,6 @@ setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/alyptik/.Xmodmap"
 stjerm &
-hilites &
 transgui &
 pavucontrol &
 udisksctl mount -b "$(findfs LABEL=vm)" &
@@ -71,6 +70,10 @@ fi
 printf '%s\n' "$session" > ~/.WM.last;
 
 case $session in
+(herbst|herbstluftwm)
+	# /home/alyptik/bin/hilites &
+	xscreensaver &
+	exec herbstluftwm --locked;;
 (awesome)
 	xscreensaver &
 	exec awesome;;
@@ -116,7 +119,8 @@ case $session in
 	exec gnome-session --session=gnome-classic;;
 
 (i3|i3wm)
-/home/alyptik/bin/i3-focus-last &
+	/home/alyptik/bin/i3-focus-last &
+	/home/alyptik/bin/hilites &
 	xscreensaver &
 	exec i3;;
 

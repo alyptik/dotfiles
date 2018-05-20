@@ -6,6 +6,9 @@
 if test x"$(hostname)" = x"fedora" -o x"$(hostname)" = x"compiler"; then TERM=screen-256color; fi
 # Disable toggling XON/XOFF with ^S/^Q
 if test -t 0; then stty -ixon; fi
+# job number for threaded programs
+if which nproc >/dev/null 2>&1; then NPROC="$(nproc)"; else NPROC=4; fi
+export NPROC NCPU="$NPROC" nproc="$NPROC" ncpu="$NPROC"
 
 # directory shortcut environment variables
 export H="$HOME" h="$HOME"
@@ -41,31 +44,33 @@ GCC_COLORS="type-diff=01;32:$GCC_COLORS"
 export GCC_COLORS
 # compiler flags
 CFLAGS="-Wno-error -Wno-implicit-fallthrough"
-# CFLAGS="-flto $CFLAGS"
 # CFLAGS="-fdiagnostics-color=always $CFLAGS"
 # CFLAGS="-fdiagnostics-generate-patch $CFLAGS"
+# CFLAGS="-flto $CFLAGS"
 # CFLAGS="-fno-common $CFLAGS"
+# CFLAGS="-fvar-tracking -fvar-tracking-assignments $CFLAGS"
 CFLAGS="-fno-common -fno-plt $CFLAGS"
 CFLAGS="-fno-strict-aliasing -fPIC $CFLAGS"
 CFLAGS="-fuse-ld=gold -fuse-linker-plugin $CFLAGS"
-CFLAGS="-fvar-tracking -fvar-tracking-assignments $CFLAGS"
 # CFLAGS="-pipe $CFLAGS"
-# CFLAGS="-march=native -g3 -O3 $CFLAGS"
-# CFLAGS="-march=native -g3 -O3 $CFLAGS"
-CFLAGS="-march=native -gdwarf-4 -g3 -O3 $CFLAGS"
+# CFLAGS="-march=native -gdwarf-4 -g3 -O3 $CFLAGS"
+CFLAGS="-march=native -g3 -O3 $CFLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 export CXXFLAGS="$CFLAGS"
 LDFLAGS="$CFLAGS"
-LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
-# LDFLAGS="-Wl,--sort-common,--as-needed $LDFLAGS"
+# LDFLAGS="-Wl,-O2,-z,relro,-z,now $LDFLAGS"
+# LDFLAGS="-Wl,--as-needed $LDFLAGS"
+# LDFLAGS="-Wl,--as-needed,--sort-common $LDFLAGS"
 # LDFLAGS="-Wl,--warn-unresolved-symbols $LDFLAGS"
+LDFLAGS="-Wl,-O3,-z,relro,-z,now,-z,noexecstack $LDFLAGS"
+LDFLAGS="-Wl,--as-needed,--sort-common,--warn-common $LDFLAGS"
 export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
-# export MAKEFLAGS="-j -l4"
-export MAKEFLAGS="-j4"
+# export MAKEFLAGS="-j -l$NPROC"
+export MAKEFLAGS="-j$NPROC"
 
 # Environment variables
 # export BROWSER=/usr/bin/firefox
