@@ -106,6 +106,7 @@ hc keybind $Mod-Shift-Tab cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-i jumpto  urgent
 hc keybind $Mod-x jumpto  urgent
+hc keybind $Mod-d spawn dmenu_run -z -fn "Fira Code Retina-8"
 # create an empty frame at the specified direction
 hc keybind $Mod-a split   right   0.5
 hc keybind $Mod-z split   bottom  0.5
