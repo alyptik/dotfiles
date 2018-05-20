@@ -10,7 +10,7 @@
 [difftool]
 	prompt = false
 [merge]
-	tool = vimdiff2
+	tool = vimdiff3
 [imap]
 	folder = "[Gmail]/Drafts"
 	host = imaps://imap.google.com
@@ -95,6 +95,7 @@
 	numstat = log -M --oneline --numstat --no-merges
 	diffstat = log -M --oneline --stat --no-merges
 	cos = commit -S -s -v -p
+	cop = commit -S -v -p
 [web]
 	browser = w3m
 [instaweb]

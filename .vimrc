@@ -395,8 +395,8 @@ set undodir=$HOME/.cache/vim/undo
 au QuickFixCmdPost *grep* cwindow
 
 "formal: au BufNewFile,BufRead * setf {filetype}
-au BufNewFile,BufRead *.h set filetype=c
-au BufNewFile,BufRead *.c set filetype=c
+au BufNewFile,BufRead *.[Hh] set filetype=c
+au BufNewFile,BufRead *.[Cc] set filetype=c
 au BufNewFile,BufRead *.jq setf javascript
 au BufNewFile,BufRead *tmux.conf set filetype=tmux
 au BufNewFile,BufRead *nanorc setf nanorc
@@ -668,6 +668,7 @@ let g:easytags_by_filetype='~/.vim/tags'
 let g:easytags_suppress_ctags_warning=1
 " let g:easytags_opts=['--fields=+l --c-kinds=-p']
 let g:easytags_opts=[
+	\ '-GRu', '--langmap=c:+.h.C.H',
 	\ '--fields=+l', '--c-kinds=+l-p',
 	\ '--c++-kinds=+l-p', '--python-kinds=+lz',
 	\ '--extras=+q'
@@ -764,6 +765,7 @@ let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
 let g:clang_cpp_options=''
 	\ . '-std=gnu++14 -stdlib=libc++ '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
+	\ . '-DNACL_TARGET_SUBARCH=64 '
 	\ . '-DNACL_LINUX=1 -DNACL_x86=1 '
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ '
@@ -779,6 +781,7 @@ let g:clang_cpp_options=''
 let g:ale_c_clang_options=''
 	\ . '-std=gnu11 '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
+	\ . '-DNACL_TARGET_SUBARCH=64 '
 	\ . '-DNACL_LINUX=1 -DNACL_x86=1 '
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ '
@@ -841,7 +844,6 @@ let g:ale_c_clangtidy_checks=[
 	\ 'clang-analyzer-security.insecureAPI.mkstemp',
 	\ 'clang-analyzer-security.insecureAPI.mktemp',
 	\ 'clang-analyzer-security.insecureAPI.rand',
-	\ 'clang-analyzer-security.insecureAPI.strcpy',
 	\ 'clang-analyzer-security.insecureAPI.vfork',
 	\ 'clang-analyzer-unix.API',
 	\ 'clang-analyzer-unix.Malloc',
@@ -1276,7 +1278,8 @@ endif
 " " [Files] Extra options for fzf
 " "   e.g. File preview using Highlight
 " "        (http://www.andre-simon.de/doku/highlight/en/highlight.html)
-" let g:fzf_files_options='--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+" let g:fzf_files_options='--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -' \
+"         \ . &lines . '"'
 " " [Buffers] Jump to the existing window if possible
 " let g:fzf_buffers_jump=1
 " " [[B]Commits] Customize the options used by 'git log':
