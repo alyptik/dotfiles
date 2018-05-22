@@ -58,10 +58,18 @@ bind browser y exit
 
 macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
-macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro index,pager c "<change-folder>~/Maildir<enter>" "open a different folder"
-macro index,pager C "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com<enter>" "open a different folder"
-macro index,pager Y "<change-folder>imaps://$my_user:$my_pass@mail.twc.com<enter>" "open a different folder"
+macro index,pager c \
+      "<change-folder>~/Maildir<enter>" \
+      "open ~/Maildir"
+macro index,pager c \
+      "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk/<enter>" \
+      "open alyp.tk inbox"
+macro index,pager C \
+      "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/<enter>" \
+      "open gmail inbox"
+macro index,pager Y \
+      "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com/<enter>" \
+      "open twc inbox"
 # show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
 # Show documentation when pressing F1

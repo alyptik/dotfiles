@@ -17,13 +17,13 @@ auto_view text/x-patch
 set connect_timeout = 10
 set mail_check = 30
 set imap_keepalive = 60
-set imap_pipeline_depth = 10
+set imap_pipeline_depth = 30
 set imap_check_subscribed
 unset imap_passive
-set imap_idle
+unset imap_idle
 set ssl_starttls
-set ssl_force_tls
-unset ssl_use_sslv3
+unset ssl_force_tls
+set ssl_use_sslv3
 
 unset maildir_header_cache_verify
 set header_cache = "$my_cfgdir/cache"
@@ -110,9 +110,14 @@ unset pgp_ignore_subkeys
 set hostname = "gmail.com"
 set realname = "Joey Pabalinas"
 set from = "joeypabalinas@gmail.com"
-set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587"
+# starttls
+set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587/"
+# ssl
+# set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:465/"
 # set from = "alyptik@hawaii.rr.com"
-# set smtp_url = "smtp://$my_user:$my_pass@mail.twc.com:587"
+# set smtp_url = "smtp://$my_twc_user:$my_twc_pass@mail.twc.com:587"
+# set from = "alyptik@alyp.tk"
+# set smtp_url = "smtp://$my_user:$my_pass@mail.alyp.tk:587/"
 
 set mbox_type = Maildir
 set spoolfile = "~/Maildir/"
@@ -147,11 +152,16 @@ mailboxes + ` \
 
 # mailboxes "~/Maildir"
 # mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
-# mailboxes "imaps://$my_user:$my_pass@mail.twc.com/INBOX"
+# mailboxes "imaps://$my_twc_user:$my_twc_pass@mail.twc.com/INBOX"
+# mailboxes "imaps://$my_user:$my_pass@mail.alyp.tk/INBOX"
 
-# set folder = "imaps://$my_user:$my_pass@mail.twc.com/"
-set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
+# starttls
+# set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/"
+# ssl
+set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"
 set spoolfile = "+INBOX"
+# set folder = "imaps://$my_twc_user:$my_twc_pass@mail.twc.com/"
+# set folder = "imaps://$my_user:$my_pass@mail.alyp.tk/"
 
 # System configuration file for Mutt
 #

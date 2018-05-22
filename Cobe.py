@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # Copyright (c) 2015, waratte
 # All rights reserved.
-#
+  
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
 #
@@ -115,13 +115,10 @@ class Cobe(callbacks.Plugin):
                 pass
         if not changed:
             try:
-                res = raw.decode('utf-8')
-                #  enc = chardet.detect(raw)['encoding']
-                #  res = raw.decode(enc)
+                enc = chardet.detect(raw)['encoding']
+                res = raw.decode(enc)
             except:
                 res = raw.decode(enc, 'ignore')
-                pass
-                # res = raw.decode('utf-8')
 
         return res
 
@@ -151,7 +148,7 @@ class Cobe(callbacks.Plugin):
 
             if text and len(text) > 1 and not text.isspace():
 
-                #  self.log.debug("Learning: {0}".format(text.encode('utf-8')))
+                self.log.debug("Learning: {0}".format(text))
                 cobeBrain = Brain(self._getBrainDirectoryForChannel(channel))
                 cobeBrain.learn(text)
 
@@ -188,7 +185,12 @@ class Cobe(callbacks.Plugin):
             if self.magicnick.lower() in response:
                 response = response.replace(self.magicnick.lower(),
                                             re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
-
+            if self.magicnick in response:
+                response = response.replace(self.magicnick,
+                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+            if self.magicnick.lower() in response:
+                response = response.replace(self.magicnick.lower(),
+                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 
         cobeBrain.learn(response) # Let's have the bot learn the wacky things it says
 
@@ -390,6 +392,13 @@ class Cobe(callbacks.Plugin):
                                 response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
                             if self.magicnick.lower() in response:
                                 response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                            if self.magicnick in response:
+                                response = response.replace(self.magicnick,
+                                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                            if self.magicnick.lower() in response:
+                                response = response.replace(self.magicnick.lower(),
+                                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+
 
                     else:
 
@@ -415,6 +424,12 @@ class Cobe(callbacks.Plugin):
                                 response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
                         if self.magicnick.lower() in response:
                                 response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                        if self.magicnick in response:
+                            response = response.replace(self.magicnick,
+                                                        re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                        if self.magicnick.lower() in response:
+                            response = response.replace(self.magicnick.lower(),
+                                                        re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 
                     # lowercase first letter of the string.
                     response = response[0].lower() + response[1:]
@@ -438,6 +453,12 @@ class Cobe(callbacks.Plugin):
                     response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
                 if self.magicnick.lower() in response:
                     response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                if self.magicnick in response:
+                    response = response.replace(self.magicnick,
+                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                if self.magicnick.lower() in response:
+                    response = response.replace(self.magicnick.lower(),
+                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 
                 # lowercase first letter of the string.
                 response = response[0].lower() + response[1:]
@@ -467,6 +488,12 @@ class Cobe(callbacks.Plugin):
 
                 if self.magicnick.lower() in response:
                     response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                if self.magicnick in response:
+                    response = response.replace(self.magicnick,
+                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+                if self.magicnick.lower() in response:
+                    response = response.replace(self.magicnick.lower(),
+                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
 
                 cobeBrain.learn(text)
 
