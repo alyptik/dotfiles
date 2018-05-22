@@ -17,13 +17,13 @@ setterm -blank 1 -powerdown 0 &
 xsetroot -cursor_name left_ptr
 xrdb "/home/alyptik/.Xresources"
 # compton -cCGfF -b -i .85
-compton -b
+# compton -b
 hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/alyptik/.Xmodmap"
 stjerm &
-hilites &
+# hilites &
 transgui &
 pavucontrol &
 udisksctl mount -b "$(findfs LABEL=vm)" &

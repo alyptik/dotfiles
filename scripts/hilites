@@ -1,9 +1,12 @@
 #!/bin/bash
 
+bgcolor="$(herbstclient get frame_border_normal_color)"
 tail_cmd=(tail -Fs 10 "${HOME}/.weechat/pipe")
 dzen_cmd=(dzen2 -sa c -w 2175 -dock -fn "xft:FuraCode Nerd Font-Light:pixelsize=22")
+# dzen_cmd=(dzen2 -sa c -w 2175 -dock -y 16 -fn "xft:Fira Code:style=Light:pixelsize=20:antialias=true:hinting=false" -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' -ta l -bg "$bgcolor" -fg '#efefef')
 
-killall dzen2
+pkill dzen2
+# herbstclient reload
 i3-msg restart
 sleep 2
 

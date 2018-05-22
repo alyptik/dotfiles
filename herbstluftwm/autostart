@@ -9,6 +9,7 @@ hc() {
 hc emit_hook reload
 
 xsetroot -solid '#5A8E3A'
+hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 
 # remove all existing keybindings
 hc keyunbind --all

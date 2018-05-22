@@ -1,21 +1,22 @@
-From ddc159d3e77ac35e733297162259d2fdcb8167fb Mon Sep 17 00:00:00 2001
-Message-Id: <ddc159d3e77ac35e733297162259d2fdcb8167fb.1526644449.git.joeypabalinas@gmail.com>
+From 4aa39e2cdf274ec69abd0bf67a19ee8c50203ec5 Mon Sep 17 00:00:00 2001
+Message-Id: <4aa39e2cdf274ec69abd0bf67a19ee8c50203ec5.1526980146.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Tue, 15 May 2018 13:27:26 -1000
-Subject: [PATCH v4] scripts/tags.sh: use `find` for $ALLSOURCE_ARCHS generation
+Subject: [PATCH v5] scripts/tags.sh: use `find` for $ALLSOURCE_ARCHS generation
 
-Parsing `ls` is fragile at best and _will_ fail when $tree
-contains spaces. Replace this with a find-generated string
-and directly assign it to $ALLSOURCE_ARCHS; a subshell is
-implied by $(), so `cd` doesn't affect the current working
-directory.
+The current code includes 'Kconfig' in ALLSOURCE_ARCHS, but
+it should not (Kconfig is not an architecture). Replace this
+with a find-generated string and directly assign it to
+$ALLSOURCE_ARCHS. The find_all_archs() function is no longer
+needed for a one-liner with obvious semantics, so inline the
+arch generation into the surrounding conditional.
 
 Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
 
  1 file changed, 1 insertion(+), 10 deletions(-)
 
 diff --git a/scripts/tags.sh b/scripts/tags.sh
-index 78e546ff689c2d5f40..c08347fdeef12a7621 100755
+index 78e546ff689c2d5f40..e587610d149271171d 100755
 --- a/scripts/tags.sh
 +++ b/scripts/tags.sh
 @@ -26,24 +26,15 @@ else
@@ -38,7 +39,7 @@ index 78e546ff689c2d5f40..c08347fdeef12a7621 100755
  	ALLSOURCE_ARCHS=${SRCARCH}
  elif [ "${ALLSOURCE_ARCHS}" = "all" ]; then
 -	find_all_archs
-+	ALLSOURCE_ARCHS="$(find "${tree}arch/" -mindepth 1 -maxdepth 1 -type d -printf ' %f')"
++	ALLSOURCE_ARCHS=$(find ${tree}arch/ -mindepth 1 -maxdepth 1 -type d -printf '%f ')
  fi
  
  # find sources in arch/$ARCH

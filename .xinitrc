@@ -36,7 +36,6 @@ setterm -blank 1 -powerdown 0 &
 xsetroot -cursor_name left_ptr
 xrdb "/home/alyptik/.Xresources"
 # compton -cCGfF -b -i .85
-compton -b
 hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
@@ -53,7 +52,7 @@ xrandr --dpi 216 &
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
-default_session="i3";
+default_session="herbstluftwm";
 
 if [ "$1" = xterm ] && [ -n "$2" ]; then
 	session="$2";
@@ -72,100 +71,124 @@ printf '%s\n' "$session" > ~/.WM.last;
 case $session in
 (herbst|herbstluftwm)
 	# /home/alyptik/bin/hilites &
+	compton -b
 	xscreensaver &
 	exec herbstluftwm --locked;;
 (awesome)
+	compton -b
 	xscreensaver &
 	exec awesome;;
 
 (bspwm)
+	compton -b
 	xscreensaver &
 	exec bspwm;;
 
 (budgie-desktop)
+	compton -b
 	gnome-screensaver &
 	exec budgie-desktop;;
 
 (catwm)
+	compton -b
 	xscreensaver &
 	exec catwm;;
 
 (cinnamon)
+	compton -b
 	xscreensaver &
 	exec cinnamon-session;;
 
 (dwm)
+	compton -b
 	xscreensaver &
 	exec dwm;;
 
 (ede)
+	compton -b
 	xscreensaver &
 	exec startede;;
 
 (enlightenment)
+	compton -b
 	xscreensaver &
 	exec enlightenment_start;;
 
 (fluxbox)
+	compton -b
 	xscreensaver &
 	exec startfluxbox;;
 
 (gnome)
+	compton -b
 	gnome-screensaver &
 	exec gnome-session;;
 
 (gnome-classic)
+	compton -b
 	gnome-screensaver &
 	exec gnome-session --session=gnome-classic;;
 
 (i3|i3wm)
+	compton -b
 	/home/alyptik/bin/i3-focus-last &
 	/home/alyptik/bin/hilites &
 	xscreensaver &
 	exec i3;;
 
 (icewm)
+	compton -b
 	xscreensaver &
 	exec icewm-session;;
 
 (jwm)
+	compton -b
 	xscreensaver &
 	exec jwm;;
 
 (kde)
+	compton -b
 	xscreensaver &
 	exec startkde;;
 
 (mate)
+	compton -b
 	xscreensaver &
 	exec mate-session;;
 
 (monster|monsterwm)
+	compton -b
 	xscreensaver &
 	exec monsterwm;;
 
 (notion)
+	compton -b
 	xscreensaver &
 	exec notion;;
 
 (openbox)
+	compton -b
 	xscreensaver &
 	exec openbox-session;;
 
 (unity)
+	compton -b
 	xscreensaver &
 	exec unity;;
 
 (xfce|xfce4)
+	compton -b
 	xscreensaver &
 	exec startxfce4;;
 
 (xmonad)
+	compton -b
 	xscreensaver &
 	exec xmonad;;
 
 # No known session, try to run it as command
 (*)
+	compton -b
 	xscreensaver &
 	exec "$session";;
 esac

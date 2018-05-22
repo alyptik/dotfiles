@@ -668,7 +668,7 @@ let g:easytags_by_filetype='~/.vim/tags'
 let g:easytags_suppress_ctags_warning=1
 " let g:easytags_opts=['--fields=+l --c-kinds=-p']
 let g:easytags_opts=[
-	\ '-GRu', '--langmap=c:+.h.C.H',
+	\ '-GR', '--langmap=c:+.h.C.H',
 	\ '--fields=+l', '--c-kinds=+l-p',
 	\ '--c++-kinds=+l-p', '--python-kinds=+lz',
 	\ '--extras=+q'
@@ -776,8 +776,8 @@ let g:clang_cpp_options=''
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
-	\ . '-Wno-unused-const-variable -Wfloat-equal -Wrestrict '
-	\ . '-Wshadow -Wstrict-overflow '
+	\ . '-Wno-unused-const-variable -Wno-variadic-macros '
+	\ . '-Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow '
 let g:ale_c_clang_options=''
 	\ . '-std=gnu11 '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
@@ -787,13 +787,14 @@ let g:ale_c_clang_options=''
 	\ . '-I./ -I../ -I../../ '
 	\ . '-I./trusted/include/ -I./untrusted/include/ '
 	\ . '-I./include/ -I./src -I./t '
-	\ . '-I/usr/include/python2.7 -I/inc/python3.6m/ '
+	\ . '-I/usr/include/python2.7 -I/usr/include/python3.6m/ '
+	\ . '-I/usr/lind_project/breakpad/src/ '
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
 	\ . '-Wno-unused-function -Wno-unused-parameter '
-	\ . '-Wno-unused-const-variable -Wfloat-equal -Wrestrict '
-	\ . '-Wshadow -Wstrict-overflow '
+	\ . '-Wno-unused-const-variable -Wno-variadic-macros '
+	\ . '-Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow '
 let g:ale_c_clangtidy_options=g:ale_c_clang_options
 let g:ale_c_gcc_options=g:ale_c_clang_options
 let g:clang_c_options=g:ale_c_clang_options
@@ -886,31 +887,6 @@ let g:ale_c_clangtidy_checks=[
 	\ 'google-runtime-member-string-references',
 	\ 'google-runtime-operator',
 	\ 'google-runtime-references',
-	\ 'hicpp-deprecated-headers',
-	\ 'hicpp-exception-baseclass',
-	\ 'hicpp-explicit-conversions',
-	\ 'hicpp-function-size',
-	\ 'hicpp-invalid-access-moved',
-	\ 'hicpp-member-init',
-	\ 'hicpp-move-const-arg',
-	\ 'hicpp-named-parameter',
-	\ 'hicpp-new-delete-operators',
-	\ 'hicpp-no-array-decay',
-	\ 'hicpp-no-assembler',
-	\ 'hicpp-no-malloc',
-	\ 'hicpp-noexcept-move',
-	\ 'hicpp-special-member-functions',
-	\ 'hicpp-static-assert',
-	\ 'hicpp-undelegated-constructor',
-	\ 'hicpp-use-auto',
-	\ 'hicpp-use-emplace',
-	\ 'hicpp-use-equals-default',
-	\ 'hicpp-use-equals-delete',
-	\ 'hicpp-use-noexcept',
-	\ 'hicpp-use-nullptr',
-	\ 'hicpp-use-override',
-	\ 'hicpp-vararg',
-	\ 'llvm-include-order',
 	\ 'llvm-namespace-comment',
 	\ 'llvm-twine-local',
 	\ 'misc-argument-comment',
@@ -1014,86 +990,6 @@ let g:ale_c_clangtidy_checks=[
 	\ 'readability-static-accessed-through-instance',
 	\ 'readability-static-definition-in-anonymous-namespace',
 	\ 'readability-uniqueptr-delete-release',
-	\ ]
-let g:ale_c_clangtidy_checks=[
-	\ 'clang-analyzer-apiModeling.google.GTest',
-	\ 'clang-analyzer-core.CallAndMessage',
-	\ 'clang-analyzer-core.DivideZero',
-	\ 'clang-analyzer-core.DynamicTypePropagation',
-	\ 'clang-analyzer-core.NonNullParamChecker',
-	\ 'clang-analyzer-core.NonnilStringConstants',
-	\ 'clang-analyzer-core.NullDereference',
-	\ 'clang-analyzer-core.StackAddressEscape',
-	\ 'clang-analyzer-core.UndefinedBinaryOperatorResult',
-	\ 'clang-analyzer-core.VLASize',
-	\ 'clang-analyzer-core.builtin.BuiltinFunctions',
-	\ 'clang-analyzer-core.builtin.NoReturnFunctions',
-	\ 'clang-analyzer-core.uninitialized.ArraySubscript',
-	\ 'clang-analyzer-core.uninitialized.Assign',
-	\ 'clang-analyzer-core.uninitialized.Branch',
-	\ 'clang-analyzer-core.uninitialized.CapturedBlockVariable',
-	\ 'clang-analyzer-core.uninitialized.UndefReturn',
-	\ 'clang-analyzer-cplusplus.NewDelete',
-	\ 'clang-analyzer-cplusplus.NewDeleteLeaks',
-	\ 'clang-analyzer-cplusplus.SelfAssignment',
-	\ 'clang-analyzer-deadcode.DeadStores',
-	\ 'clang-analyzer-llvm.Conventions',
-	\ 'clang-analyzer-nullability.NullPassedToNonnull',
-	\ 'clang-analyzer-nullability.NullReturnedFromNonnull',
-	\ 'clang-analyzer-nullability.NullableDereferenced',
-	\ 'clang-analyzer-nullability.NullablePassedToNonnull',
-	\ 'clang-analyzer-nullability.NullableReturnedFromNonnull',
-	\ 'clang-analyzer-optin.cplusplus.VirtualCall',
-	\ 'clang-analyzer-optin.mpi.MPI-Checker',
-	\ 'clang-analyzer-optin.osx.cocoa.localizability.EmptyLocalizationContextChecker',
-	\ 'clang-analyzer-optin.osx.cocoa.localizability.NonLocalizedStringChecker',
-	\ 'clang-analyzer-optin.performance.Padding',
-	\ 'clang-analyzer-optin.portability.UnixAPI',
-	\ 'clang-analyzer-osx.API',
-	\ 'clang-analyzer-osx.NumberObjectConversion',
-	\ 'clang-analyzer-osx.ObjCProperty',
-	\ 'clang-analyzer-osx.SecKeychainAPI',
-	\ 'clang-analyzer-osx.cocoa.AtSync',
-	\ 'clang-analyzer-osx.cocoa.ClassRelease',
-	\ 'clang-analyzer-osx.cocoa.Dealloc',
-	\ 'clang-analyzer-osx.cocoa.IncompatibleMethodTypes',
-	\ 'clang-analyzer-osx.cocoa.Loops',
-	\ 'clang-analyzer-osx.cocoa.MissingSuperCall',
-	\ 'clang-analyzer-osx.cocoa.NSAutoreleasePool',
-	\ 'clang-analyzer-osx.cocoa.NSError',
-	\ 'clang-analyzer-osx.cocoa.NilArg',
-	\ 'clang-analyzer-osx.cocoa.NonNilReturnValue',
-	\ 'clang-analyzer-osx.cocoa.ObjCGenerics',
-	\ 'clang-analyzer-osx.cocoa.RetainCount',
-	\ 'clang-analyzer-osx.cocoa.SelfInit',
-	\ 'clang-analyzer-osx.cocoa.SuperDealloc',
-	\ 'clang-analyzer-osx.cocoa.UnusedIvars',
-	\ 'clang-analyzer-osx.cocoa.VariadicMethodTypes',
-	\ 'clang-analyzer-osx.coreFoundation.CFError',
-	\ 'clang-analyzer-osx.coreFoundation.CFNumber',
-	\ 'clang-analyzer-osx.coreFoundation.CFRetainRelease',
-	\ 'clang-analyzer-osx.coreFoundation.containers.OutOfBounds',
-	\ 'clang-analyzer-osx.coreFoundation.containers.PointerSizedValues',
-	\ 'clang-analyzer-security.FloatLoopCounter',
-	\ 'clang-analyzer-security.insecureAPI.UncheckedReturn',
-	\ 'clang-analyzer-security.insecureAPI.getpw',
-	\ 'clang-analyzer-security.insecureAPI.gets',
-	\ 'clang-analyzer-security.insecureAPI.mkstemp',
-	\ 'clang-analyzer-security.insecureAPI.mktemp',
-	\ 'clang-analyzer-security.insecureAPI.rand',
-	\ 'clang-analyzer-security.insecureAPI.strcpy',
-	\ 'clang-analyzer-security.insecureAPI.vfork',
-	\ 'clang-analyzer-unix.API',
-	\ 'clang-analyzer-unix.Malloc',
-	\ 'clang-analyzer-unix.MallocSizeof',
-	\ 'clang-analyzer-unix.MismatchedDeallocator',
-	\ 'clang-analyzer-unix.StdCLibraryFunctions',
-	\ 'clang-analyzer-unix.Vfork',
-	\ 'clang-analyzer-unix.cstring.BadSizeArg',
-	\ 'clang-analyzer-unix.cstring.NullArg',
-	\ 'clang-analyzer-valist.CopyToSelf',
-	\ 'clang-analyzer-valist.Uninitialized',
-	\ 'clang-analyzer-valist.Unterminated',
 	\ ]
 
 let g:powerline_fonts=0
@@ -1806,13 +1702,13 @@ command! SudoWrite silent w !sudo sponge %
 cabbrev w!! <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SudoWrite' : 'w!!')<CR>
 cabbrev W! w!
 cabbrev Q! q!
-cabbrev wQ! wq!
 cabbrev Wq! wq!
 cabbrev WQ! wq!
-cabbrev QAll! qall!
+cabbrev Wall! wall!
+cabbrev WAll! wall!
+cabbrev Qall! qall!
 cabbrev QAll! qall!
 cabbrev Wqall! wqall!
-cabbrev wQall! wqall!
 cabbrev WQall! wqall!
 
 command! P PlugUpdate
