@@ -60,7 +60,7 @@
 	fa = fetch --ipv4 --all --jobs=4 --recurse-submodules=on-demand
 	reb = rebase
 	lgp = log --graph --oneline --decorate --boundary --first-parent
-	s = diff --histogram --cached
+	s = show --use-mailmap --show-signature -u
 	dc = diff --cached --histogram
 	p = format-patch -M @^ --shortstat -o /patches/
 	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
@@ -96,6 +96,7 @@
 	diffstat = log -M --oneline --stat --no-merges
 	cos = commit -S -s -v -p
 	cop = commit -S -v -p
+	cp = cherry-pick -S -s
 [web]
 	browser = w3m
 [instaweb]

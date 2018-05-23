@@ -2005,9 +2005,12 @@ function! ToggleIndent()
 	if g:tindent== 0
 		set shiftwidth=1
 		let g:tindent=1
-	elseif g:tindent== 1
-		set shiftwidth=4
+	if g:tindent== 1
+		set shiftwidth=2
 		let g:tindent=2
+	elseif g:tindent== 2
+		set shiftwidth=4
+		let g:tindent=3
 	else
 		set shiftwidth=8
 		let g:tindent=0
