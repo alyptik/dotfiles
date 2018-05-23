@@ -105,7 +105,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} || cat {} || tree -C {}) 2>/dev/null | head -200'"
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
-export GIT_PAGER="less -CMRins"
+export GIT_PAGER="less -CFMRins"
 export GOPATH="$HOME/.go"
 export GROFF_NO_SGR=1 man
 # Gtk themes
@@ -151,7 +151,7 @@ export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:$HOME/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:$HOME/lxvst:/store/audio/lxvst"
 # export LESS=CMNRis
-export LESS=CMRins
+export LESS=CFMRins
 # shellcheck disable=SC2039
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # shellcheck disable=SC2039
