@@ -36,24 +36,42 @@ set show-all-if-ambiguous on
 set show-mode-in-prompt on
 set visible-stats on
 
+# gdb macros
+"\e1": "info threads\n"
+"\e2": "info registers\n"
+"\e3": "info locals\n"
+"\e4": "info args\n"
+"\e7": "info args\n"
+"\e8": "info locals\n"
+"\e9": "info registers\n"
+"\e0": "info threads\n"
+"\e-": "set disassemble-next-line off\n"
+"\e=": "set disassemble-next-line on\n"
+"\e;": "tui disable\n"
+"\e'": "tui enable\n"
+"\e,": "layout prev\n"
+"\e/": "layout next\n"
+
+# other readline custom shortcuts
 "\C-k": kill-whole-line
 "\C-u": universal-argument
 "\C-w": backward-kill-word
+"\C-xr": re-read-init-file
 "\C-x\C-r": re-read-init-file
 "\eh": tilde-expand
 "\eu": undo
 "\e[": start-kbd-macro
 "\e]": end-kbd-macro
 "\e\\": call-last-kbd-macro
-# $if node
-#         "\C-i": rlwrap-direct-keypress
-# $endif
+
+# f5 to swap between vi/emacs mode
 $if mode=emacs
 	"\e[15~": vi-editing-mode
 $endif
 $if mode=vi
 	"\e[15~": emacs-editing-mode
 $endif
+
 # ctrl
 "\e[1;5A": beginning-of-line
 "\e[1;5B": end-of-line
