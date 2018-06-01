@@ -211,12 +211,12 @@ else
 	let g:solarized_visibility='normal'
 endif
 
-" colorscheme solarized
 " colorscheme seoul256
 " colorscheme pablo
 colorscheme gruvbox
 syntax on
 syntax enable
+" colorscheme solarized
 filetype on
 filetype plugin on
 filetype indent on
@@ -250,6 +250,8 @@ set magic nostartofline
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 setg tags^=./tags;
+set iskeyword-=- iskeyword^=-
+set isfname-=- isfname^=-
 " setg tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
 set diffopt=filler,context:5,iwhite,vertical
 set omnifunc=syntaxcomplete#Complete
@@ -1254,7 +1256,7 @@ let g:expand_region_text_objects_ruby= {
 " map <Leader>g <Plug>(expand_region_shrink)
 
 " NERDTree ---------------------------------------------------------------------
-"map <silent> <leader>D :execute 'NERDTreeToggle ' . getcwd()<CR>
+"map <silent> <Leader>D :execute 'NERDTreeToggle ' . getcwd()<CR>
 map <silent> <Leader>N :execute 'NERDTreeToggle ' . getcwd()<CR>
 autocmd StdinReadPre * let s:std_in=1
 let g:NERDTreeExtensionHighlightColor={} " this line is needed to avoid error
@@ -1744,23 +1746,48 @@ map [[ ?{<CR>w99[{
 map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
-map <Esc>; ^
-map <Esc>' $
+" map <Esc>; ^
+" map <Esc>' $
+map <Esc>; b
+map <Esc>' e
 map ; :call comfortable_motion#flick(-50)<CR>
 map ' :call comfortable_motion#flick(50)<CR>
 map ,, %
 
+nnoremap <C-z> :stop<CR>
+
+" cscope mappings
+nnoremap <Leader>F :exec('!echo -n '.expand('<cword>').'\| xsel -ib && cs')<CR>
+nnoremap <Leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <Leader>l :call ToggleLocationList()<CR>
+" s: Find this C symbol
+nnoremap  <Leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <Leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <Leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <Leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <Leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <Leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <Leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <Leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
+
 nnoremap gb :ls<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
-nnoremap <leader>f :find *
-nnoremap <leader>s :sfind *
-nnoremap <leader>v :vert sfind *
-" nnoremap <leader>t :tabfind *
-nnoremap <leader>F :find <C-R>=expand('%:h').'/*'<CR>
-nnoremap <leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
-" nnoremap <leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <leader>T :tabfind *
+" nnoremap <Leader>f :find *
+nnoremap <Leader>s :sfind *
+nnoremap <Leader>v :vert sfind *
+" nnoremap <Leader>t :tabfind *
+" nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
+nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
+nnoremap <Leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
+nnoremap <Leader>T :tabfind *
 
 nnoremap <F1> <Esc>:help <C-r>=(expand('<cword>'))<CR>
 vnoremap <F1> "*y<Esc>:help <C-r>=(getreg('*'))<CR>
@@ -2005,7 +2032,7 @@ function! ToggleIndent()
 	if g:tindent== 0
 		set shiftwidth=1
 		let g:tindent=1
-	if g:tindent== 1
+	elseif g:tindent== 1
 		set shiftwidth=2
 		let g:tindent=2
 	elseif g:tindent== 2

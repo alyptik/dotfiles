@@ -34,8 +34,8 @@ set print object on
 set tui border-kind acs
 # set tui border-mode normal
 set tui border-mode bold
-# set tui active-border-mode bold-standout
-set tui active-border-mode reverse
+# set tui active-border-mode reverse
+set tui active-border-mode bold-standout
 
 # functions
 #
@@ -140,24 +140,29 @@ end
 
 define examine-representations
 	if $argc > 0
-		printf "[f] float: "
-		x/f $arg0
-		printf "[d] decimal: "
-		x/d $arg0
-		printf "[u] unsigned decimal: "
-		x/u $arg0
-		printf "[c] char: "
-		x/c $arg0
-		printf "[s] string: "
-		x/s $arg0
-		printf "[a] address: "
-		x/a $arg0
-		printf "[z] hex, zero padded on the left: "
-		x/z $arg0
-		printf "[t] binary: "
-		x/t $arg0
-		printf "[i] instruction: "
-		x/i $arg0
+		set $i = 0
+		while $i < $argc
+			eval "set $cur = $arg%d", $i
+			printf "[f] float: "
+			x/f $cur
+			printf "[d] decimal: "
+			x/d $cur
+			printf "[u] unsigned decimal: "
+			x/u $cur
+			printf "[c] char: "
+			x/c $cur
+			printf "[s] string: "
+			x/s $cur
+			printf "[a] address: "
+			x/a $cur
+			printf "[z] hex, zero padded on the left: "
+			x/z $cur
+			printf "[t] binary: "
+			x/t $cur
+			printf "[i] instruction: "
+			x/i $cur
+			set $i = $i + 1
+		end
 	else
 		printf "[f] float: "
 		x/f $_siginfo._sifields._sigfault.si_addr
@@ -216,5 +221,6 @@ alias -- xi = examine-instructions
 alias -- pr = print-representations
 alias -- xr = examine-representations
 alias -- rip = examine-rip
+alias -- lu = locals-up
 
 # vi:ft=gdb:
