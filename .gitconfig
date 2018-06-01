@@ -122,7 +122,9 @@
 	lineNumber = true
 	patternType = perl
 	extendedRegexp = true
-	fullname = true
+	fullName = false
+	threads = 4
+	fallbackToNoIndex = true
 [log]
 	abbrevCommit = yes
 [format]

@@ -12,11 +12,11 @@ set scalehints
 set noautofocus
 
 let scrollduration=1250
-let homedirectory = '/home/alyptik'
+let homedirectory = $HOME
 let barposition = 'top'
 " let barposition = 'bottom'
 let mapleader = '\\'
-let configpath = '/store/dotfiles/cvimrc.vim'
+let configpath = '~/cvimrc.vim'
 let vimport = '8001'
 " let vimcommand = 'gvim -f --servername VIM'
 let vimcommand = 'gvim -f'
@@ -37,7 +37,7 @@ map <Leader>h :history!<Space>
 map <Leader>p openPasteTab
 map <Leader>, :tabattach<Space>
 map <Leader>. :tabdetach<CR>
-map <Leader>/ :source /store/dotfiles/cvimrc.vim<CR>
+map <Leader>/ :source ~/cvimrc.vim<CR>
 map <Leader>? :open! https://github.com/1995eaton/chromium-vim<CR>
 
 map b :bookmarks!<Space>
@@ -46,7 +46,7 @@ map R reloadAllTabs
 map ` percentScroll
 map <A-a> reloadTab
 map <A-,> goToInput
-map <A-.> :source /store/dotfiles/cvimrc.vim<CR>
+map <A-.> :source ~/cvimrc.vim<CR>
 " map <A-.> :execute<Space><Esc><CR>
 " map <A-.> openLinkSearchBar
 " map <A-.> toggleVisualMode
@@ -55,12 +55,12 @@ map <A-/> lastUsedTab
 map vv toggleVisualMode
 map vy yankHighlight
 map vu clearSearchHighlight
-map ' nextTab
-map ; previousTab
 map = zoomPageIn
 map - zoomPageOut
 map <A--> scrollFullPageUp
 map <A-=> scrollFullPageDown
-map <A-'> scrollPageDown
-map <A-;> scrollPageUp
 map <Space> scrollPageDown
+map ' scrollPageDown
+map ; scrollPageUp
+map <A-'> nextTab
+map <A-;> previousTab

@@ -69,20 +69,21 @@ systemctl restart mpdscribble@alyptik.service mpd
 	#   <eventname>\t<data> [...]
 	# e.g.
 	#   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
-
-	# mpc idleloop player &
+	mpc idleloop player &
 	imapcounter &
+
 	while :; do
-		curtemp="$(</sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)"
 		# "date" output is checked once a second, but an event is only
 		# generated if the output changed compared to the previous run.
 		# date +$'date\t^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
+		curtemp="$(</sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)"
 		echo $'np\t^fg(#909090)'"$(mpc current)"
 		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1' &
 		echo $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
 		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
 		childpid=$!
 	done > >(uniq_linebuffered) &
+
 	hc --idle
 	kill "$childpid"
 } 2> /dev/null | {
@@ -135,7 +136,7 @@ systemctl restart mpdscribble@alyptik.service mpd
 		# small adjustments
 		right="^fg() $separator ^bg() $np ^fg() $separator ^bg() $disk ^fg()"
 		right="$right $separator ^bg() $imap ^fg() $separator ^bg() $temp ^fg()"
-		right="$right $separator ^bg() $date ^fg() $separator"
+		right="$right $separator ^bg() $date ^fg() $separator ^fg() "
 		right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
 		# get width of right aligned text.. and add some space..
 		width=$($textwidth "$font" "$right_text_only    ")
@@ -155,29 +156,23 @@ systemctl restart mpdscribble@alyptik.service mpd
 		# find out event origin
 		case "${cmd[0]}" in
 			tag*)
-				#echo "resetting tags" >&2
 				IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
 				;;
 			disk)
-				#echo "resetting date" >&2
-				disk="${cmd[@]:1}"
+				disk="${cmd[*]:1}"
 				;;
 			imap)
-				imap="${cmd[@]:1}"
-				# echo "resetting imap" >&2
+				imap="${cmd[*]:1}"
 				;;
 			temp)
-				#echo "resetting temp" >&2
-				temp="${cmd[@]:1}"
+				temp="${cmd[*]:1}"
 				;;
 			np|player)
-				#echo "resetting np" >&2
-				np="${cmd[@]:1}"
+				np="${cmd[*]:1}"
 				# np="^fg(#909090)$(mpc current)"
 				;;
 			date)
-				#echo "resetting date" >&2
-				date="${cmd[@]:1}"
+				date="${cmd[*]:1}"
 				;;
 			quit_panel)
 				exit
@@ -202,7 +197,7 @@ systemctl restart mpdscribble@alyptik.service mpd
 			reload)
 				exit
 				;;
-			focus_changed|window_title_changed)
+			focus_changed|window_title_changed|*)
 				windowtitle="${cmd[*]:2}"
 				;;
 			esac
