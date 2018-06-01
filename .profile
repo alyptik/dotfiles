@@ -282,7 +282,6 @@ export ZDOTDIR="$HOME/.zsh.d"
 unset _Z_CMD _Z_DATA _Z_NO_RESOLVE_SYMLINKS
 unset _Z_NO_PROMPT_COMMAND _Z_EXCLUDE_DIRS
 unset _Z_OWNER
-export _FASD_SINK="$HOME/.fasd.log"
 export _Z_NO_RESOLVE_SYMLINKS=true
 # export _Z_NO_PROMPT_COMMAND=true
 # export _Z_OWNER=alyptik
