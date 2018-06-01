@@ -37,10 +37,11 @@ set show-mode-in-prompt on
 set visible-stats on
 
 # gdb macros
-"\e1": "info threads\n"
-"\e2": "info registers\n"
-"\e3": "info locals\n"
-"\e4": "info args\n"
+"\e`": "set $a = $_\nset $b = $_-$r15+nacl_user[1]->r15\n"
+"\e1": "xr $_\n"
+"\e2": "xr $_-$r15+nacl_user[1]->r15\n"
+"\e3": "xi $_\n"
+"\e4": "xi $_-$r15+nacl_user[1]->r15\n"
 "\e7": "info args\n"
 "\e8": "info locals\n"
 "\e9": "info registers\n"

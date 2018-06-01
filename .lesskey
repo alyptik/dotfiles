@@ -46,7 +46,7 @@
 #command
 \kx       back-line
 \\        back-line
-# wtf why won't you let me bind backspace wtf
+\177      back-line
 \b        back-line
 ^H        back-line
 ^?        back-line
