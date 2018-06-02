@@ -1,19 +1,17 @@
-function TRAPINT () {
-	(( nopopd )) || popd >/dev/null 2>&1
-	trap - INT
-	return "$(( 128 + $1 ))"
-}
+local -a repos
+repos=("${C:-/store/dotfiles}" "${P:-/store/code/projects}")
 
-local nopopd orig
-orig="$PWD"
-[[ "$orig" != "${C:-/store/dotfiles}" ]] && pushd "${C:-/store/dotfiles}" >/dev/null 2>&1 || nopopd=1
-if git pull 2>/dev/null; then
-	printf '\n \033[32m %s \n\033[0m' "Pull successful!"
-else
-	git stash
-	git pull && \
-		printf '\n \033[32m %s \n\033[0m' "Stash and pull successful!" || \
-		printf '\n \033[31m %s \n\033[0m' "Error during pull..."
-fi
-(( nopopd )) || popd >/dev/null 2>&1
-trap - INT
+(
+for i in $repos; do
+	cd $i || continue
+	if ! git pull 2>/dev/null; then
+		if git stash && git pull; then
+			print "\n $(tput setaf 10) $i stash and pull successful! \n$(tput sgr0)"
+		else
+			print "\n $(tput setaf 9) error during pull... \n$(tput sgr0)"
+		fi
+		continue
+	fi
+	print "\n $(tput setaf 10) $i pull successful! \n$(tput sgr0)"
+done
+)

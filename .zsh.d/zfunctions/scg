@@ -1,43 +1,23 @@
-(
-	if [[ -d "${C:-/store/dotfiles}" ]]; then
-		cd "${C:-/store/dotfiles}" || return 1
-	elif [[ -d /store/dotfiles ]]; then
-		cd /store/dotfiles || return 1
-	fi
-	git add .
-	if [[ -z "$1" ]]; then
-		if (git commit -v -a -S && git push); then
-			print "\n $(tput setaf 10) dotfiles commit successful! \n$(tput sgr0)"
-		else
-			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
-		fi
-	else
-		if (git commit -v -a -S -m "$2" && git push); then
-			print "\n $(tput setaf 10) dotfiles commit successful! \n$(tput sgr0)"
-		else
-			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
-		fi
-	fi
-)
+local -a repos
+repos=("${C:-/store/dotfiles}" "${P:-/store/code/projects}")
 
 (
-	if [[ -d "${P:-/store/code/projects}" ]]; then
-		cd "${P:-/store/code/projects}" || return 1
-	elif [[ -d "${HOME}/projects" ]]; then
-		cd "${HOME}/projects" || return 1
-	fi
+for i in $repos; do
+	cd $i || continue
 	git add .
-	if [[ -z "$2" ]]; then
+	if ((!$#)); then
 		if (git commit -v -a -S && git push); then
-			print "\n $(tput setaf 10) projects commit successful! \n$(tput sgr0)"
+			print "\n $(tput setaf 10) $i commit successful! \n$(tput sgr0)"
 		else
 			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
 		fi
 	else
-		if (git commit -v -a -S -m "$2" && git push); then
-			print "\n $(tput setaf 10) projects commit successful! \n$(tput sgr0)"
+		if (git commit -v -a -S -m "$1" && git push); then
+			print "\n $(tput setaf 10) $i commit successful! \n$(tput sgr0)"
 		else
 			print "\n $(tput setaf 9) nothing to commit... \n$(tput sgr0)"
 		fi
+		shift
 	fi
+done
 )
