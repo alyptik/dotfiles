@@ -318,7 +318,7 @@ set viewoptions+=curdir
 set hidden
 set nolazyredraw
 " disable folding
-set foldenable=off
+set nofoldenable
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -426,7 +426,7 @@ au BufNewFile,BufRead *.log setf irc
 " au BufNewFile,BufRead *conf set filetype=cfg
 au BufNewFile,BufRead *torrc* setf cfg
 au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
-au BufNewFile,BufRead */.zsh.d/zfunctions/* setf zsh
+au BufNewFile,BufRead *.zsh.d* setf zsh
 au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
 au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
 au BufNewFile,BufRead makepkg.conf* set filetype=sh
