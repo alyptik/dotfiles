@@ -37,7 +37,8 @@ set show-mode-in-prompt on
 set visible-stats on
 
 # gdb macros
-"\e`": "set $a = $_\nset $b = $_-$r15+nacl_user[1]->r15\n"
+"\e`": "p/a *nacl_user[1]@3"
+# "\e`": "set $a = $_\nset $b = $_-$r15+nacl_user[1]->r15\n"
 "\e1": "xr $_\n"
 "\e2": "xr $_-$r15+nacl_user[1]->r15\n"
 "\e3": "xi $_\n"

@@ -1,0 +1,63 @@
+From d2601370c2145d7c79c949b416bc708aed026231 Mon Sep 17 00:00:00 2001
+Message-Id: <d2601370c2145d7c79c949b416bc708aed026231.1527853988.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 31 May 2018 23:34:33 -1000
+Subject: [PATCH v2] src/pacman: strip any leading / in --overwrite arguments
+
+Allow both `pacman -S foo --overwrite /usr/lib/foo.sh` and
+`pacman -S foo --overwrite usr/lib/foo.sh` (with any number
+of leading / ignored) to semantically mean the same thing.
+
+Update the documentation to reflect this change.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/doc/pacman.8.asciidoc b/doc/pacman.8.asciidoc
+index b6f4dd76e1249fd0ec..1bafe3c3c1aedb0051 100644
+--- a/doc/pacman.8.asciidoc
++++ b/doc/pacman.8.asciidoc
+@@ -263,12 +263,13 @@ Upgrade Options (apply to '-S' and '-U')[[UO]]
+ 	overwritten.  Using '\--overwrite' will not allow overwriting a directory
+ 	with a file or installing packages with conflicting files and directories.
+ 	Multiple patterns can be specified by separating them with a comma. May be
+ 	specified multiple times.  Patterns can be negated, such that files
+ 	matching them will not be overwritten, by prefixing them with an
+-	exclamation mark. Subsequent matches will override previous ones. A leading
+-	literal exclamation mark or backslash needs to be escaped.
++	exclamation mark. Subsequent matches will override previous ones. Any
++	leading slashes in the pattern are ignored. A leading literal exclamation
++	mark or backslash needs to be escaped.
+ 
+ 
+ Query Options (apply to '-Q')[[QO]]
+ -----------------------------------
+ *-c, \--changelog*::
+diff --git a/src/pacman/pacman.c b/src/pacman/pacman.c
+index fe54793ea775c03915..f5aa87fadb7a2ef38a 100644
+--- a/src/pacman/pacman.c
++++ b/src/pacman/pacman.c
+@@ -721,11 +721,18 @@ static int parsearg_upgrade(int opt)
+ 			pm_printf(ALPM_LOG_WARNING,
+ 					_("option --force is deprecated; use --overwrite instead\n"));
+ 			config->flags |= ALPM_TRANS_FLAG_FORCE;
+ 			break;
+ 		case OP_OVERWRITE_FILES:
+-			parsearg_util_addlist(&(config->overwrite_files));
++			{
++				char *i, *save = NULL;
++				for(i = strtok_r(optarg, ",", &save); i; i = strtok_r(NULL, ",", &save)) {
++					/* strip leading "/" before adding to option list */
++					i += strspn(i, "/");
++					config->overwrite_files = alpm_list_add(config->overwrite_files, strdup(i));
++				}
++			}
+ 			break;
+ 		case OP_ASDEPS:
+ 			config->flags |= ALPM_TRANS_FLAG_ALLDEPS;
+ 			break;
+ 		case OP_ASEXPLICIT:
+-- 
+2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+
