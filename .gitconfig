@@ -97,6 +97,7 @@
 	cos = commit -S -s -v -p
 	cop = commit -S -v -p
 	cp = cherry-pick -S -s
+	coa = commit -S -v -a
 [web]
 	browser = w3m
 [instaweb]

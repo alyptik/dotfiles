@@ -317,6 +317,8 @@ set nohlsearch
 set viewoptions+=curdir
 set hidden
 set nolazyredraw
+" disable folding
+set foldenable=off
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -903,7 +905,6 @@ let g:ale_c_clangtidy_checks=[
 	\ 'misc-incorrect-roundings',
 	\ 'misc-inefficient-algorithm',
 	\ 'misc-lambda-function-name',
-	\ 'misc-macro-parentheses',
 	\ 'misc-macro-repeated-side-effects',
 	\ 'misc-misplaced-const',
 	\ 'misc-misplaced-widening-cast',
