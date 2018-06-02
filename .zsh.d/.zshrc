@@ -664,7 +664,7 @@ fi
 }
 
 compdef _fman fman
-compdef _fman man
+compdef _man man
 compdef _gem gem
 compdef _git fshow
 compdef _man cppman
