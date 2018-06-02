@@ -109,7 +109,7 @@ call plug#begin(g:plugdir)
 	" Plug 'xolox/vim-notes'
 	" Group dependencies, vim-snippets depends on ultisnips
 	" Plug 'SirVer/ultisnips'
-	Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+	" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 	" Plug 'drmingdrmer/xptemplate'
 	" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 	" Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
@@ -245,16 +245,14 @@ set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
 set ofu=syntaxcomplete#Complete
+" set ofu=completor#action#completefunc cfu=completor#action#completefunc
 set magic nostartofline
 " set termguicolors
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 setg tags^=./tags;
-set iskeyword-=- iskeyword^=-
-set isfname-=- isfname^=-
 " setg tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
 set diffopt=filler,context:5,iwhite,vertical
-set omnifunc=syntaxcomplete#Complete
 " conceal in insert (i), normal (n) and visual (v) modes
 set concealcursor=inv
 " hide concealed text completely unless replacement character is defined
@@ -270,7 +268,9 @@ set display=lastline
 set pastetoggle=<Leader>P
 set spell spl=en_us spf=~/.vim/spell/en.utf-8.add
 set tsr=~/.vim/spell/th_en_US_v2.dat
-set cpt-=d,t,k,s,u cpt-=d cpt-=t cpt-=k cpt-=s cpt-=u cpt+=d,t,k,s,u
+set cpt=.,w,b,u,t,i,d
+" set cpt=.,w,b,u,t,i,d,k,s
+" set cpt-=d,t,k,s,u cpt-=d cpt-=t cpt-=k cpt-=s cpt-=u cpt+=d,t,k,s,u
 set notimeout
 " set timeout timeoutlen=2500 ttimeoutlen=10
 " set notimeout ttimeoutlen=10
@@ -319,6 +319,8 @@ set hidden
 set nolazyredraw
 " disable folding
 set nofoldenable
+set iskeyword^=-
+set isfname^=-
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -447,7 +449,7 @@ au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#comp
 au FileType c set keywordprg=man\ -s
 au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 au FileType h set keywordprg=man\ -s
-au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+" au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 " au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
 " au FileType c setl ofu=ClangComplete cfu=ClangComplete
 " au FileType h setl ofu=ClangComplete cfu=ClangComplete
@@ -1023,15 +1025,13 @@ let g:completor_node_binary='/usr/bin/node'
 let g:completor_clang_binary='/usr/bin/clang'
 let g:completor_gocode_binary='/usr/bin/gocode'
 let g:completor_css_omni_trigger='([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
-let g:completor_disable_ultisnips=1
+" let g:completor_disable_ultisnips=1
 let g:completor_auto_trigger=1
-" inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
-" if (!g:completor_auto_trigger)
-"         inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>")
-" endif
-" inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
-" inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<S-Tab>")
-"let g:slime_paste_file=tempname()
+inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-n>")
+inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<C-x>\<C-p>")
+inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
+" let g:SuperTabDefaultCompletionType = '<c-x><c-u>'
+" let g:slime_paste_file=tempname()
 let g:slime_paste_file='~/.slime_paste'
 let g:ale_python_mypy_options='ignore-missing-imports,mypy_suppress_stub_warnings'
 let g:ale_python_pylint_executable='python2'
