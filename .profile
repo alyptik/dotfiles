@@ -105,7 +105,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} || cat {} || tree -C {}) 2>/dev/null | head -200'"
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
-export GIT_PAGER="less -CFMRins"
+export GIT_PAGER="less -CMRins"
 export GOPATH="$HOME/.go"
 export GROFF_NO_SGR=1 man
 # Gtk themes
