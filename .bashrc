@@ -58,8 +58,8 @@ declare -a tmp
 declare __statstr
 PROMPT_COMMAND='__statstr="$( tmp=("${PIPESTATUS[@]}"); '
 PROMPT_COMMAND+='((tmp)) && printf "|%d" "${tmp[@]}" || :)";'
-PROMPT_COMMAND+='printf "\033[0m\033[38;5;2m"'
 PROMPT_COMMAND+='$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" '
+PROMPT_COMMAND+='printf "\033[0m\033[38;5;2m"'
 PROMPT_COMMAND+='/proc/meminfo`/1024))"\033[38;5;09m/"'
 PROMPT_COMMAND+='$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" '
 PROMPT_COMMAND+='/proc/meminfo`/1024 ))MB"\t\033[m\033[36;11m$(</proc/loadavg)'
