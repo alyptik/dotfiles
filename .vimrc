@@ -169,14 +169,36 @@ endif
 " disable Background Color Erase (BCE) so that color schemes
 " render properly when inside 256-color tmux and GNU screen.
 " see also http://sunaku.github.io/vim-256color-bce.html
+set notermguicolors
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+" let g:gruvbox_contrast_dark='hard'
+" let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_dark='soft'
+" let g:gruvbox_contrast_light='hard'
+let g:gruvbox_contrast_light='medium'
+" let g:gruvbox_contrast_soft='light'
+" let g:gruvbox_improved_strings=1
+" let g:gruvbox_improved_warnings=1
+let g:gruvbox_bold=1
+let g:gruvbox_undercurl=1
+let g:gruvbox_underline=1
+let g:gruvbox_inverse=1
+let g:gruvbox_italic=1
+let g:gruvbox_invert_indent_guides=1
+" let g:gruvbox_termcolors=256
 if &term =~ '256color'
-	set t_ut=
-	set t_Co=256
+	let &t_ut=''
+	let &t_Co=256
 	let g:gruvbox_termcolors=256
 else
-	set t_Co=16
+	let &t_Co=16
 	let g:gruvbox_termcolors=16
 endif
+colorscheme gruvbox
+filetype plugin indent on
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
 
 " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
 execute 'set t_kP=[5;*~'
@@ -211,24 +233,6 @@ else
 	let g:solarized_visibility='normal'
 endif
 
-" colorscheme seoul256
-" colorscheme pablo
-colorscheme gruvbox
-syntax on
-syntax enable
-" colorscheme solarized
-filetype on
-filetype plugin on
-filetype indent on
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-" highlight Comment term=italic cterm=italic
-highlight Comment cterm=italic
-let &colorcolumn=join(range(81,250), ',')
-" gruvbox's dark0, so it just looks like cursorline stops at 80
-highlight ColorColumn guibg=#282828
-" so listchars are only visible on the current line
-highlight SpecialKey guifg=#282828
 " set smartindent
 set cindent
 set cinoptions=:0,+0,(2,J0,{1,}0,>4,)1,m2
@@ -244,12 +248,10 @@ set keywordprg=man\ -s
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
-set ofu=syntaxcomplete#Complete
-" set ofu=completor#action#completefunc cfu=completor#action#completefunc
+" set ofu=syntaxcomplete#Complete
+set ofu=completor#action#completefunc
+set cfu=completor#action#completefunc
 set magic nostartofline
-" set termguicolors
-set t_8f=[38;2;%lu;%lu;%lum
-set t_8b=[48;2;%lu;%lu;%lum
 setg tags^=./tags;
 " setg tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
 set diffopt=filler,context:5,iwhite,vertical
@@ -478,6 +480,23 @@ augroup VIMRC
 augroup END
 autocmd BufEnter PKGBUILD,.env let b:ale_sh_shellcheck_exclusions='SC2034,SC2154,SC2164'
 
+" colors
+syntax enable
+" syntax on
+highlight Normal ctermfg=223 ctermbg=236 guifg=#ebdbb2 guibg=#32302f
+" highlight Function term=bold ctermfg=10 ctermbg=236 gui=bold guifg=Gray guibg=#3c3836
+" highlight Function term=bold cterm=bold ctermfg=4 ctermbg=237 gui=bold guifg=Gray guibg=#3c3836
+" highlight Function term=bold cterm=bold ctermfg=1 ctermbg=236 gui=bold guifg=Gray guibg=#3c3836
+highlight Function term=bold cterm=bold ctermfg=12 ctermbg=236 gui=bold guifg=Gray guibg=#3c3836
+highlight Comment term=italic cterm=italic
+let &colorcolumn=join(range(81,250), ',')
+" gruvbox's dark0, so it just looks like cursorline stops at 80
+highlight ColorColumn ctermbg=237 guibg=#282828
+" so listchars are only visible on the current line
+highlight SpecialKey cterm=bold ctermfg=240 ctermbg=236 guifg=#282828
+" If you like one of the existing styles you can link them:
+highlight link cMember Special
+
 " airline
 let g:airline#extensions#whitespace#enabled=1
 " useful to call for particular file types (e.g., in "ftplugin/*")
@@ -636,21 +655,6 @@ highlight link SearchSpecialSearchType MoreMsg
 let g:mwDefaultHighlightingPalette='maximum'
 let g:solarized_diffmode='high'
 let g:solarized_hitrail=1
-"let g:gruvbox_contrast_dark='hard'
-"let g:gruvbox_contrast_dark='medium'
-"let g:gruvbox_contrast_light='medium'
-"let g:gruvbox_contrast_light='soft'
-let g:gruvbox_contrast_dark=0
-let g:gruvbox_contrast_light=1
-let g:gruvbox_improved_strings=0
-let g:gruvbox_improved_warnings=0
-let g:gruvbox_bold=1
-let g:gruvbox_undercurl=1
-let g:gruvbox_underline=1
-let g:gruvbox_inverse=1
-let g:gruvbox_italic=1
-" let g:gruvbox_termcolors=256
-let g:gruvbox_invert_indent_guides=1
 
 let g:python_highlight_all=1
 let g:OmniCpp_MayCompleteDot=1
@@ -679,10 +683,6 @@ let g:easytags_opts=[
 	\ '--c++-kinds=+l-p', '--python-kinds=+lz',
 	\ '--extras=+q'
 	\ ]
-" If you like one of the existing styles you can link them:
-highlight link cMember Special
-" You can also define your own style if you want:
-" highlight cMember gui=italic
 
 let g:netrw_silent=1
 let g:pdf_convert_on_edit=1
@@ -1968,7 +1968,7 @@ noremap <Esc><F5> ]c
 " " <F5> used by Ctrl-P
 " nnoremap <Esc><F5> :set noscb<CR>
 
-" Clipboard mappings
+" cLIpboard mappings
 vmap <F6> "+y<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>
 vmap <C-F6> <F6>v`>"+x
 vmap <Esc><F6> <F6>v`>
@@ -2003,18 +2003,13 @@ function! ToggleFold()
 	endif
 endfunction
 nnoremap <C-F8> :call ToggleFold()<CR>
-" let g:tverbose=0
-" function! ToggleVerbose()
-"     if g:tverbose
-"         set verbose=0
-"         let g:tverbose=0
-"     else
-"         set verbose=9
-"         let g:tverbose=1
-"     endif
-" endfunction
-" nnoremap <C-F8> :call ToggleVerbose()<CR>
-" let g:thex=0
+nnoremap <Esc><F8> :if exists("g:syntax_on") <Bar>
+	\     syntax off <Bar>
+	\     syntax on <Bar>
+	\ else <Bar>
+	\     syntax off <Bar>
+	\     syntax enable <Bar>
+	\ end
 " function! ToggleHex()
 "     if g:thex== 0
 "         set display=uhex,lastline
@@ -2121,3 +2116,4 @@ nnoremap <Leader>A :call ToggleASM()<CR>
 "behavior: >
 		vmap <Plug>IgnoreMarkSet <Plug>MarkSet
 		xmap <Leader>m <Plug>MarkIWhiteSet
+

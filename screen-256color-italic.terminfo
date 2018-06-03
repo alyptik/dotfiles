@@ -20,7 +20,7 @@
 
 screen-256color-italic|screen-256color with BCE and italics support,
 	am, bce, km, mir, msgr, xenl,
-        colors#0x100, cols#80, it#8, lines#24, pairs#0x7fff,
+	colors#0x100, cols#80, it#8, lines#24, pairs#0x10000,
         acsc=++\,\,--..00``aaffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
         bel=^G, blink=\E[5m, bold=\E[1m, cbt=\E[Z, civis=\E[?25l,
         clear=\E[H\E[J, cnorm=\E[34h\E[?25h, cr=\r,
