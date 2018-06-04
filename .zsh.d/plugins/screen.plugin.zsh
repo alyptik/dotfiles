@@ -9,7 +9,8 @@ if [[ $_GET_HOST == '' ]]; then
 fi
 
 # use the current user as the prefix of the current tab title
-TAB_TITLE_PREFIX='"$(basename $PWD | sed -r "s!alyptik!~!; s!^([[:alnum:]]{1,7}).*!\1!")""$PROMPT_CHAR"'
+TAB_TITLE_PREFIX='"$(basename $PWD | sed -r "s!alyptik!~!; s!^([[:alnum:]]+).*!\1!")""$PROMPT_CHAR"'
+# TAB_TITLE_PREFIX='"$(basename $PWD | sed -r "s!alyptik!~!; s!^([[:alnum:]]{1,7}).*!\1!")""$PROMPT_CHAR"'
 # TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
 
 # when at the shell prompt, show a truncated version of the current path (with
@@ -25,8 +26,8 @@ TAB_HARDSTATUS_PREFIX='"[`'$_GET_PATH'`] "'
 # when at the shell prompt, use the shell name (truncated to remove the path to
 # the shell) as the rest of the title
 TAB_HARDSTATUS_PROMPT='$SHELL:t'
-# when running a command, show the command name and arguments as the rest of
 # the title
+# when running a command, show the command name and arguments as the rest of
 TAB_HARDSTATUS_EXEC='$cmd'
 
 # tell GNU screen what the tab window title ($1) and the hardstatus($2) should be
