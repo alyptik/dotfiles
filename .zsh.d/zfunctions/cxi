@@ -1,6 +1,6 @@
 local pchar
 
-if ((EUID == 0)); then
+if ((EUID)); then
 	pchar='$ '
 else
 	pchar='# '
