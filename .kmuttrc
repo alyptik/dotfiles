@@ -1,5 +1,5 @@
 #
-# ~/.muttrc
+# ~/.kmuttrc
 #
 # Mutt configuration
 
@@ -109,15 +109,15 @@ unset pgp_ignore_subkeys
 
 set realname = "Joey Pabalinas"
 
-set from = "joeypabalinas@gmail.com"
-set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587/"
+# set from = "joeypabalinas@gmail.com"
+# set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587/"
 # set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:465/"
 # set from = "alyptik@hawaii.rr.com"
 # set smtp_url = "smtp://$my_twc_user:$my_twc_pass@mail.twc.com:587"
 # set from = "alyptik@alyp.tk"
 # set smtp_url = "smtp://$my_user:$my_pass@mail.alyp.tk:587/"
-# set from = "alyptik@gmx.com"
-# set smtp_url = "smtp://$my_kindle_user:$my_kindle_pass@mail.gmx.com:587/"
+set from = "alyptik@gmx.com"
+set smtp_url = "smtp://$my_kindle_user:$my_kindle_pass@mail.gmx.com:587/"
 
 set mbox_type = Maildir
 set spoolfile = "~/Maildir/"
