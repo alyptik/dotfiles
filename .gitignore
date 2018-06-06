@@ -58,8 +58,8 @@ oprofile_data/
 .atom/packages/
 .vim/__archive/
 .mixxx/analysis/
-.mutt.d/ox_config/
+.mutt*/ox_config/
 .emacs.d.spacemacs/
-.mutt.d/message_cache/
+.mutt*/message_cache/
 
 # vi:ft=cfg:

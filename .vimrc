@@ -1484,7 +1484,7 @@ let g:startify_session_dir='~/.vim/session'
 " persist all options related to :make
 " let g:session_persist_globals = ['&makeprg', '&makeef']
 
-set sessionoptions+=winpos,globals
+set sessionoptions+=winpos,globals,localoptions
 set sessionoptions-=blank
 set sessionoptions-=help
 " set sessionoptions-=options

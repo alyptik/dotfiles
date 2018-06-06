@@ -58,20 +58,23 @@ bind browser y exit
 
 macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
+# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
+macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
+macro index,pager Y \
+      "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk/<enter>" \
+      "open alyp.tk inbox"
+# macro index,pager Y \
+#       "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com/<enter>" \
+#       "open twc inbox"
+# macro index,pager Y \
+#       "<change-folder>imaps://$my_kindle_user:$my_kindle_pass@mail.gmx.com/<enter>" \
+#       "open gmx inbox"
 macro index,pager c \
       "<change-folder>~/Maildir<enter>" \
       "open ~/Maildir"
-macro index,pager c \
-      "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk/<enter>" \
-      "open alyp.tk inbox"
 macro index,pager C \
-      "<change-folder>imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/<enter>" \
+      "<change-folder>$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/<enter>" \
       "open gmail inbox"
-macro index,pager Y \
-      "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com/<enter>" \
-      "open twc inbox"
-# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
-macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
 # Show documentation when pressing F1
 macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 macro index A \

@@ -134,7 +134,7 @@ systemctl restart mpdscribble@alyptik.service mpd
 		echo -n "$separator"
 		echo -n "^bg()^fg() ${windowtitle//^/^^}"
 		# small adjustments
-		right="^fg() $separator ^bg() $np ^fg() $separator ^bg() $disk ^fg()"
+		right="$np ^fg() $separator ^bg() $disk ^fg()"
 		right="$right $separator ^bg() $imap ^fg() $separator ^bg() $temp ^fg()"
 		right="$right $separator ^bg() $date ^fg() $separator ^fg() "
 		right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
@@ -169,7 +169,9 @@ systemctl restart mpdscribble@alyptik.service mpd
 				;;
 			np|player)
 				np="${cmd[*]:1}"
-				# np="^fg(#909090)$(mpc current)"
+				if [ -n "$np" ]; then
+					np="^fg() $separator ^bg() ^fg(#909090)$np"
+				fi
 				;;
 			date)
 				date="${cmd[*]:1}"
