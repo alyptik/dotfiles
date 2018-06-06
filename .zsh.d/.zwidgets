@@ -39,6 +39,7 @@ function zle-run-help {
 		fi
 		shift args
 	done
+	print - $args
 	if whence $args >/dev/null; then
 		if [[ $args[1] == git || $args[1] == g ]]; then
 			git_cmd=${${(z)$(git config --global "alias.$args[2]" 2>/dev/null)}[1]}
@@ -447,7 +448,7 @@ function git_prompt_string () {
 	ret_str="$GIT_PROMPT_SYMBOL"
 	ret_str+="$(parse_git_state)"
 	ret_str+="$GIT_PROMPT_PREFIX"
-	ret_tr+="%{$fg[yellow]%}"
+	ret_str+="%{$fg[yellow]%}"
 	ret_str+="${git_where#(refs/heads/|tags/)}"
 	ret_str+="$GIT_PROMPT_SUFFIX"
 	print -n - $ret_str

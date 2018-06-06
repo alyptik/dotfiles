@@ -160,8 +160,8 @@ ipAddr = r'%s(?:\.%s){3}' % (octet, octet)
 # Base domain regex off RFC 1034 and 1738
 label = r'[0-9a-z][-0-9a-z]*[0-9a-z]?'
 domain = r'%s(?:\.%s)*\.[a-z][-0-9a-z]*[a-z]?' % (label, label)
-urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^\]>\s]*)?)' % (domain, ipAddr), re.I)
-
+#  urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^\\)\"\>\]\s]*)?)' % (domain, ipAddr), re.I)
+urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^,\?!\}\\\]\>\)"\'\)\s]*)*)' % (domain, ipAddr), re.I)
 
 SCRIPT_NAME    = "urlgrab"
 SCRIPT_AUTHOR  = "David Rubin <drubin [At] smartcube [dot] co [dot] za>"
@@ -173,7 +173,8 @@ SCRIPT_COMMAND = "url"
 
 
 def stripParens(url):
-    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1]
+    #  return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1]
+    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1].rstrip('.,?!>)]}')
 
 def dropChar(c, n, xs):
     if n == 0 or xs == []:

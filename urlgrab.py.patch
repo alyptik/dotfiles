@@ -1,0 +1,33 @@
+diff --git a/urlgrab.py b/urlgrab.py
+index b4dc8e6bc54b1b5b5e..17385558ec19a32872 100644
+--- a/urlgrab.py
++++ b/urlgrab.py
+@@ -158,12 +158,12 @@ from UserDict import UserDict
+ octet = r'(?:2(?:[0-4]\d|5[0-5])|1\d\d|\d{1,2})'
+ ipAddr = r'%s(?:\.%s){3}' % (octet, octet)
+ # Base domain regex off RFC 1034 and 1738
+ label = r'[0-9a-z][-0-9a-z]*[0-9a-z]?'
+ domain = r'%s(?:\.%s)*\.[a-z][-0-9a-z]*[a-z]?' % (label, label)
+-urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^\]>\s]*)?)' % (domain, ipAddr), re.I)
+-
++#  urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^\\)\"\>\]\s]*)?)' % (domain, ipAddr), re.I)
++urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^,\?!\}\\\]\>\)"\'\)\s]*)*)' % (domain, ipAddr), re.I)
+ 
+ SCRIPT_NAME    = "urlgrab"
+ SCRIPT_AUTHOR  = "David Rubin <drubin [At] smartcube [dot] co [dot] za>"
+ SCRIPT_VERSION = "2.8"
+ SCRIPT_LICENSE = "GPL"
+@@ -171,11 +171,12 @@ SCRIPT_DESC    = "Url functionality Loggin, opening of browser, selectable links
+ CONFIG_FILE_NAME= "urlgrab"
+ SCRIPT_COMMAND = "url"
+ 
+ 
+ def stripParens(url):
+-    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1]
++    #  return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1]
++    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1].rstrip('.,?!>)]}')
+ 
+ def dropChar(c, n, xs):
+     if n == 0 or xs == []:
+         return xs
+     elif xs[0] == c:
