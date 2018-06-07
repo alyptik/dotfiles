@@ -324,13 +324,14 @@ function zle-vi-keymap {
 # ALT-I - Paste the selected entry from locate output into the command line
 function fzf-locate-widget {
 	local selected saved_opts
-	# if selected=$(locate / | fzf -q "$LBUFFER"); then
 	saved_opts=$FZF_DEFAULT_OPTS
 	FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
-	selected=$(locate / | $(__fzfcmd) -q "$LBUFFER")
-	LBUFFER=$selected
+	if selected=$(locate / | fzf -q "$LBUFFER"); then
+		LBUFFER=$selected
+	fi
 	FZF_DEFAULT_OPTS=$saved_ops
-	zle -R
+	typeset -f zle-line-init >/dev/null && zle zle-line-init
+	zle reset-prompt
 }
 
 function zle-fh { print -z - "$(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')"; }
@@ -398,7 +399,7 @@ function check_last_exit_code () {
 		EXIT_CODE_PROMPT+="%{$fg_bold[yellow]%}$LAST_EXIT_CODE%{$reset_color%}"
 		EXIT_CODE_PROMPT+="%{$fg[yellow]%}»%{$reset_color%}"
 	fi
-	print -n - "$EXIT_CODE_PROMPT"
+	print -n - $EXIT_CODE_PROMPT
 }
 
 # Show Git branch/tag, or name-rev if on detached head
