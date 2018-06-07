@@ -248,9 +248,9 @@ set keywordprg=man\ -s
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
-" set ofu=syntaxcomplete#Complete
-set ofu=completor#action#completefunc
-set cfu=completor#action#completefunc
+set ofu=syntaxcomplete#Complete
+" set ofu=completor#action#completefunc
+" set cfu=completor#action#completefunc
 set magic nostartofline
 setg tags^=./tags;
 " setg tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
@@ -270,8 +270,8 @@ set display=lastline
 set pastetoggle=<Leader>P
 set spell spl=en_us spf=~/.vim/spell/en.utf-8.add
 set tsr=~/.vim/spell/th_en_US_v2.dat
-set cpt=.,w,b,u,t,i,d
-" set cpt=.,w,b,u,t,i,d,k,s
+" set cpt=.,w,b,u,t,i,d
+set cpt=.,w,b,u,t,i,d,k,s
 " set cpt-=d,t,k,s,u cpt-=d cpt-=t cpt-=k cpt-=s cpt-=u cpt+=d,t,k,s,u
 set notimeout
 " set timeout timeoutlen=2500 ttimeoutlen=10
@@ -430,7 +430,7 @@ au BufNewFile,BufRead *.log setf irc
 " au BufNewFile,BufRead *conf set filetype=cfg
 au BufNewFile,BufRead *torrc* setf cfg
 au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
-au BufNewFile,BufRead *.zsh.d* setf zsh
+au BufNewFile,BufRead /**/.zsh.d/** set filetype=zsh
 au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
 au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
 au BufNewFile,BufRead makepkg.conf* set filetype=sh

@@ -77,10 +77,13 @@ systemctl restart mpdscribble@alyptik.service mpd
 		# generated if the output changed compared to the previous run.
 		# date +$'date\t^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
 		curtemp="$(</sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)"
+		curbat="$(</sys/class/power_supply/BAT0/capacity)"
+		# curbat="$(acpi -bi | perl -F, -ane 'print $F[1] =~ s/^s+//r if $. == 1')"
 		echo $'np\t^fg(#909090)'"$(mpc current)"
 		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1' &
 		echo $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
 		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
+		echo $'bat\t^fg(#efefef)'"$curbat% ⚡"
 		childpid=$!
 	done > >(uniq_linebuffered) &
 
@@ -93,6 +96,7 @@ systemctl restart mpdscribble@alyptik.service mpd
 	disk=""
 	temp=""
 	imap=""
+	bat=""
 
 	while :; do
 		### Output ###
@@ -136,7 +140,8 @@ systemctl restart mpdscribble@alyptik.service mpd
 		# small adjustments
 		right="$np ^fg() $separator ^bg() $disk ^fg()"
 		right="$right $separator ^bg() $imap ^fg() $separator ^bg() $temp ^fg()"
-		right="$right $separator ^bg() $date ^fg() $separator ^fg() "
+		right="$right $separator ^bg() $date ^fg() $separator ^bg() $bat ^fg()"
+		right="$right $separator ^bg() "
 		right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
 		# get width of right aligned text.. and add some space..
 		width=$($textwidth "$font" "$right_text_only    ")
@@ -175,6 +180,9 @@ systemctl restart mpdscribble@alyptik.service mpd
 				;;
 			date)
 				date="${cmd[*]:1}"
+				;;
+			bat)
+				bat="${cmd[*]:1}"
 				;;
 			quit_panel)
 				exit

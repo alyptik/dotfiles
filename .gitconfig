@@ -105,9 +105,9 @@
 [color]
 	ui = auto
 [core]
-	excludesfile = ~/.cvsignore
 	abbrev = 18
 	pager = less
+	excludesFile = /home/alyptik/.cvsignore
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
