@@ -1,19 +1,30 @@
 #!/bin/bash
 
+# can't unfuck shell environment unless sourced
 if [[ "$0" != *bash ]]; then
 	echo 'you need to source this file in order to successfully unfuck your shell!' >&2
 	exit 1
 fi
 
-# build alias and shell function list
-readarray -t alist < <(builtin alias -p | sed -r 's/^alias\s+([^=]+)=.*/\1/')
-readarray -t flist < <(builtin declare -f | sed -rn '/^\w+\s+\(\)/ s/\s+\(\)\s+//p')
+function unfuck_everything()
+{
+	local -a alist flist
 
-# unfuck aliases and shell functions
-if ((!${#alist[@]} || !${#flist[@]})); then
-	echo 'found nothing to unfuck!'
-else
+	# build alias and shell function list
+	builtin readarray -t alist < <(builtin alias -p | sed -r 's/^alias\s+([^=]+)=.*/\1/')
+	builtin readarray -t flist < <(builtin declare -f | sed -rn '/^\w+\s+\(\)/ s/\s+\(\)\s+//p')
+
+	# check for unfuckability
+	if ((!${#alist[@]} || !${#flist[@]})); then
+		echo 'found nothing to unfuck!' >&2
+		return 1
+	fi
+
+	# unfuck aliases and shell functions
 	unalias "${alist[@]}"
 	unset -f "${flist[@]}"
 	echo 'shell unfuck operation succeeded!' >&2
-fi
+}
+
+# commence unfucking
+unfuck_everything
