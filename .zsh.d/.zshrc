@@ -684,7 +684,7 @@ compdef _texinfo info
 compdef _vim v
 compdef _pip pip
 compdef _au au
-compdef _au wau
+compdef _au wa
 compdef _pwns pwns
 compdef azle=autoload
 compdef cg=cgasm

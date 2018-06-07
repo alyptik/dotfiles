@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [[ "$0" != *bash ]]; then
+	echo 'you need to source this file in order to successfully unfuck your shell!' >&2
+	exit 1
+fi
+
+# build alias and shell function list
+readarray -t alist < <(builtin alias -p | sed -r 's/^alias\s+([^=]+)=.*/\1/')
+readarray -t flist < <(builtin declare -f | sed -rn '/^\w+\s+\(\)/ s/\s+\(\)\s+//p')
+
+# unfuck aliases and shell functions
+if ((!${#alist[@]} || !${#flist[@]})); then
+	echo 'found nothing to unfuck!'
+else
+	unalias "${alist[@]}"
+	unset -f "${flist[@]}"
+	echo 'shell unfuck operation succeeded!' >&2
+fi
