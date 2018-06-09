@@ -121,7 +121,7 @@ defbce on
 # defflow interrupt
 # defflow auto
 defflow off
-deflog on
+deflog off
 deflogin on
 defmousetrack off
 defnonblock on
