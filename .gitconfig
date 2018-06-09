@@ -98,6 +98,7 @@
 	cop = commit -S -v -p
 	cp = cherry-pick -S -s
 	coa = commit -S -v -a
+	df = diff --name-only
 [web]
 	browser = w3m
 [instaweb]

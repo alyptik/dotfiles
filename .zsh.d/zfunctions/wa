@@ -9,4 +9,4 @@ done
 
 (alias; declare -f) | command which --tty-only --read-alias --read-functions --show-tilde --show-dot "$@"
 # { (alias; declare -f) | \
-# } 2>/dev/null | less -CRMXis
+# } 2>/dev/null | LESS= less -RMXis

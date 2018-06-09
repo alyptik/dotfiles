@@ -1,5 +1,5 @@
 if [[ "$#" -eq 0 ]]; then
-	youtube-dl --help | less -CRMins
+	youtube-dl --help | LESS= less -RMins
 	return 1
 fi
 
