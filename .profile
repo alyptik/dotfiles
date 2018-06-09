@@ -7,7 +7,7 @@ if test x"$(hostname)" = x"fedora" -o x"$(hostname)" = x"compiler"; then TERM=sc
 # Disable toggling XON/XOFF with ^S/^Q
 if test -t 0; then stty -ixon; fi
 # job number for threaded programs
-if which nproc >/dev/null 2>&1; then NPROC="$(nproc)"; else NPROC=4; fi
+if type nproc >/dev/null 2>&1; then NPROC="$(nproc)"; else NPROC=4; fi
 export NPROC NCPU="$NPROC" nproc="$NPROC" ncpu="$NPROC"
 
 # directory shortcut environment variables
@@ -105,7 +105,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} || cat {} || tree -C {}) 2>/dev/null | head -200'"
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
-export GIT_PAGER="less -CMRins"
+export GIT_PAGER="less -MRins"
 export GOPATH="$HOME/.go"
 export GROFF_NO_SGR=1 man
 # Gtk themes
@@ -150,15 +150,15 @@ export LC_IDENTIFICATION=en_US.UTF-8
 export LOCALE=C
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:$HOME/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:$HOME/lxvst:/store/audio/lxvst"
-# export LESS=CMNRis
-export LESS=CFMRins
+# export LESS=MNRXis
+export LESS=FMRXins
 # shellcheck disable=SC2039
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # shellcheck disable=SC2039
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME=i965 VDPAU_DRIVER=va_gl
-export MANPAGER="less -CMRins"
+export MANPAGER="LESS= less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
 MANPATH="$HOME/.local/share/man:$MANPATH"
@@ -202,7 +202,7 @@ export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export PERLDOC="-i -oman"
 # export PERLDOC_PAGER="most -+C -E"
 # export PERLDOC_PAGER="less -+C -MRXs"
-export PERLDOC_PAGER="less -CMRins"
+export PERLDOC_PAGER="less -MRins"
 # export PLAN9=/usr/lib/plan9 PATH="$PATH:$PLAN9/bin"
 PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig"
 PKG_CONFIG_PATH="$HOME/GNUstep/Library/Libraries/pkgconfig:$PKG_CONFIG_PATH"
@@ -217,7 +217,7 @@ export PRE="$HOME/.local" pre="$PRE"
 # export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,comm"
 export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,utime,pcpu,addr,sz,wchan,stat,state,tname,time,args"
 # Python2 compatibility
-export PYTHON=/store/config/scripts/python-compat
+# export PYTHON=/store/config/scripts/python-compat
 # export PYTHON="/usr/bin/python2.7"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export READNULLCMD=less
@@ -236,7 +236,7 @@ SURF_USERAGENT="Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MOB3OD)"
 SURF_USERAGENT="$SURF_USERAGENT AppleWebKit/537.36 (KHTML, like Gecko)"
 SURF_USERAGENT="$SURF_USERAGENT Chrome/49.0.2623.105 Mobile Safari/537.36"
 export SURF_USERAGENT
-export SYSTEMD_LESS="CFKMRins" journalctl
+export SYSTEMD_LESS="FKMRins" journalctl
 export TERMINAL=st
 export TZ=/usr/share/zoneinfo/posix/Pacific/Honolulu
 export VST_PATH="$HOME/vst:/store/audio/vst:/usr/lib/vst:/usr/local/lib/vst"

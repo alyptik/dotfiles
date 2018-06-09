@@ -43,8 +43,8 @@ include "%L"
 <Multi_key> <m> <i> <n>					: "−"	U2212	# minus
 <Multi_key> <c> <a> <t>					: "🐈"	U1f408	# cat
 <Multi_key> <d> <u> <c> <k>				: "🦆"	U1f98	# duck
-<Multi_key> <d> <o> <g>					: "🐶"	U1f436	# dog
 <Multi_key> <U> <p>					: "↑"	u2191	# up
+<Multi_key> <d> <o> <g>					: "🐶"	U1f436	# dog
 <Multi_key> <D> <O> <W> <N>				: "↓"	U2193	# down
 <Multi_key> <L> <E> <F> <T>				: "←"	U2190	# left
 <Multi_key> <R> <I> <G>	<H> <T>				: "→"	U2192	# right
@@ -289,6 +289,8 @@ include "%L"
 <Multi_key> <colon> <parenleft>         : "☹" U2639 	# white frowning face
 
 # hearts
+<Multi_key> <L> <U> <V>>>       >	: "04♥52♥77♥40♥63♥16♥76♥62♥40♥04♥"	# irc hearts
+<Multi_key> <l> <u> <v>			: "♥♥♥♥♥♥♥♥♥♥"	# hearts
 <Multi_key> <less> <3>                  : "❤" U2764 	# heavy black heart
 <Multi_key> <less> <e>                  : "❥" U2765 	# rotated heavy black heart bullet
 

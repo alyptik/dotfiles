@@ -1027,8 +1027,8 @@ let g:completor_gocode_binary='/usr/bin/gocode'
 let g:completor_css_omni_trigger='([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
 " let g:completor_disable_ultisnips=1
 let g:completor_auto_trigger=1
-inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<C-x>\<C-n>")
-inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<C-x>\<C-p>")
+inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
+inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<Tab>")
 inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<CR>")
 " let g:SuperTabDefaultCompletionType = '<c-x><c-u>'
 " let g:slime_paste_file=tempname()
@@ -1743,16 +1743,18 @@ cnoremap %% <C-r>=expand('%:h').'/'<CR>
 "map [] %
 " map ; ^
 " map ' $
+nnoremap <Esc>; ;
+nnoremap <Esc>' '
 map [[ ?{<CR>w99[{
 map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
-" map <Esc>; ^
-" map <Esc>' $
-map <Esc>; b
-map <Esc>' e
-map ; :call comfortable_motion#flick(-50)<CR>
-map ' :call comfortable_motion#flick(50)<CR>
+" nnoremap <Esc>; ^
+" nnoremap <Esc>' $
+" nnoremap <Esc>; b
+" nnoremap <Esc>' e
+nnoremap ; :call comfortable_motion#flick(-50)<CR>
+nnoremap ' :call comfortable_motion#flick(50)<CR>
 map ,, %
 
 nnoremap <C-z> :stop<CR>
