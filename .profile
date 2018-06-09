@@ -158,7 +158,7 @@ export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
 # Intel VA-API and VDPAU configuration
 # export LIBVA_DRIVER_NAME=i965 VDPAU_DRIVER=va_gl
-export MANPAGER="LESS= less -MRins"
+export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
 MANPATH="$HOME/.local/share/man:$MANPATH"
