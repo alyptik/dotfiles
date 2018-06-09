@@ -235,7 +235,7 @@ __fz_zsh_completion() {
 
 __fz_init_bash_completion() {
   # Enable redrawing line by printf '\e[5n'
-  bind '"\e[0n": redraw-current-line'
+  [[ "$-" == *i* ]] && bind '"\e[0n": redraw-current-line'
 
   complete -o nospace -F __fz_bash_completion "$FZ_CMD"
   complete -o nospace -F __fz_bash_completion "$FZ_SUBDIR_CMD"

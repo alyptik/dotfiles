@@ -6,8 +6,8 @@
 shopt -s expand_aliases autocd hostcomplete histappend
 
 ## Menu completion
-bind 'set menu-complete-display-prefix on'
-bind 'TAB:menu-complete'; bind 'set show-all-if-ambiguous on'
+[[ "$-" == *i* ]] && bind 'set menu-complete-display-prefix on'
+[[ "$-" == *i* ]] && bind 'TAB:menu-complete'; [[ "$-" == *i* ]] && bind 'set show-all-if-ambiguous on'
 
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f /usr/share/doc/find-the-command/ftc.bash ]] \
@@ -113,17 +113,17 @@ function which() {
 }
 export -f which fh
 # CTRL-X-1 - Invoke Readline functions by name
-bind -x '"\C-x2": __fzf_readline'
-bind '"\C-x1": "\C-x2\C-x3"'
-#bind '"\C-r": "\C-a hh \C-j"'
-bind -x '"\C-x1": __fzf_history'
-bind '"\C-r": "\C-x1\e^\er"'
+[[ "$-" == *i* ]] && bind -x '"\C-x2": __fzf_readline'
+[[ "$-" == *i* ]] && bind '"\C-x1": "\C-x2\C-x3"'
+#[[ "$-" == *i* ]] && bind '"\C-r": "\C-a hh \C-j"'
+[[ "$-" == *i* ]] && bind -x '"\C-x1": __fzf_history'
+[[ "$-" == *i* ]] && bind '"\C-r": "\C-x1\e^\er"'
 ## History completion bound to arrow keys
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
+[[ "$-" == *i* ]] && bind '"\e[A": history-search-backward'
+[[ "$-" == *i* ]] && bind '"\e[B": history-search-forward'
 
 ## The following line may also be placed in bashrc to set the mode string
-#bind "set vi-mode-str2 $(printf '1\033[37m\002+\001\033[0m\002')"
-#bind "set vi-mode-str1 $(printf '\033[37m+\033[0m')"
+#[[ "$-" == *i* ]] && bind "set vi-mode-str2 $(printf '1\033[37m\002+\001\033[0m\002')"
+#[[ "$-" == *i* ]] && bind "set vi-mode-str1 $(printf '\033[37m+\033[0m')"
 
 # vi:ft=sh:
