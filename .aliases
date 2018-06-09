@@ -7,6 +7,7 @@ unalias md meminfo node o rd ru s sd sf si u v z zz 2>/dev/null
 
 ## Custom aliases
 
+alias dclear='docker rm --force $(docker container ls -qa); docker rmi --force $(docker image ls -qa)'
 alias pc='pkg-config --libs --cflags'
 alias l='env LESS= less -CMNRis'
 alias ed='ed -vp\*\ '
