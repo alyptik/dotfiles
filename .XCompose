@@ -289,13 +289,13 @@ include "%L"
 <Multi_key> <colon> <parenleft>         : "☹" U2639 	# white frowning face
 
 # hearts
-<Multi_key> <L> <U> <V>>>       >	: "04♥52♥77♥40♥63♥16♥76♥62♥40♥04♥"	# irc hearts
-<Multi_key> <l> <u> <v>			: "♥♥♥♥♥♥♥♥♥♥"	# hearts
+// <Multi_key> <L> <U> <V>>>       >	: "\\0x0304♥\\0x0352♥\\0x0377♥\\0x0340♥\\0x0363♥\\0x0316♥\\0x0376♥\\0x0362♥\\0x0340♥\\0x0304♥"	# irc hearts
 <Multi_key> <less> <3>                  : "❤" U2764 	# heavy black heart
+<Multi_key> <l> <u> <v>			: "♥♥♥♥♥♥♥♥♥♥"	# hearts
 <Multi_key> <less> <e>                  : "❥" U2765 	# rotated heavy black heart bullet
 
 # stars and misc symbols
-<Multi_key> <asterisk> <9>       : "★" U2605 	# black star
+<Multi_key> <asterisk> <9>      	 : "★" U2605 	# black star
 <Multi_key> <asterisk> <0>              : "☆" U2606 	# white star
 <Multi_key> <asterisk> <minus>          : "✪" U272a 	# circled white star
 <Multi_key> <y> <y>                     : "☯" U262f 	# yin yang
