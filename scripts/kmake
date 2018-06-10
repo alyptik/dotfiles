@@ -36,7 +36,7 @@ function cleanup() {
 		cat ../error.log.tmp >>../error.log
 	fi
 	rm -f ../build.log.tmp ../error.log.tmp
-	cd "$save_dir" || exit 2
+	cd "$save_dir" || exit 1
 	trap - INT ERR EXIT
 }
 trap 'cleanup; kill -INT $$;' INT
@@ -63,13 +63,13 @@ while getopts :bcdhkmns opt; do
 		sparse_flag=1
 		;;
 	h)
-		printf 'usage: %s: -bk [-cdhmns] [<make args>]\n' "${0##*/}"
+		printf 'usage: %s -bk [-cdhmns] [<make args>]\n' "${0##*/}" >&2
 		exit
 		;;
 	:|?)
-		printf 'illegal option: -%s\n' "$OPTARG"
-		printf 'usage: %s: -bk [-cdhmns] [<make args>]\n' "${0##*/}"
-		exit 2
+		printf 'illegal option: -%s\n' "$OPTARG" >&2
+		printf 'usage: %s -bk [-cdhmns] [<make args>]\n' "${0##*/}" >&2
+		exit 1
 		;;
 	esac
 done
