@@ -14,7 +14,7 @@ alias dls='docker container ls -a'
 alias dlsi='docker image ls -a'
 alias drm='docker rm --force $(docker container ls -qa)'
 alias drmi='docker rmi --force $(docker image ls -qa)'
-alias drma='docker rm --force $(docker container ls -qa); docker rmi --force $(docker image ls -qa)'
+alias drma='{ docker rm -f $(docker container ls -qa); docker rmi -f $(docker image ls -qa); } 2>/dev/null'
 alias pc='pkg-config --libs --cflags'
 alias l='env LESS= less -CMNRis'
 alias ed='ed -vp\*\ '
@@ -388,7 +388,7 @@ alias nmixxx='sudo renice -n -20 -p $(pgrep mixxx|paste -sd" ") && sudo ionice -
 alias kpulse='systemctl --user stop pulseaudio.socket && pulseaudio --kill || pulseaudio --kill'
 alias archchroot='sudo mount --rbind /sys /mnt/gentoo/sys/; sudo mount --make-rslave /mnt/gentoo/sys/; sudo mount --rbind /dev /mnt/gentoo/dev/; sudo mount --make-rslave /mnt/gentoo/dev/; sudo mount -t tmpfs tmpfs /mnt/gentoo/tmp/; sudo mount -t proc proc /mnt/gentoo/proc/; sudo chroot'
 alias ws='web_search_custom'
-alias aw='BROWSER=chromium arch-wiki'
+alias aw='arch-wiki'
 
 alias sefi="sed 's@/boot/@EFI/arch/@g' /boot/refind_linux.conf | sudo tee /boot/efi/EFI/arch/refind_linux.conf"
 alias tma='tmux attach'

@@ -169,7 +169,8 @@ set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 # set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"
 # set folder = "imaps://$my_twc_user:$my_twc_pass@mail.twc.com/"
 # set folder = "imaps://$my_user:$my_pass@mail.alyp.tk/"
-set spoolfile = "+INBOX"
+set spoolfile = "+[Gmail]/Important"
+# set spoolfile = "+INBOX"
 
 # System configuration file for Mutt
 #

@@ -45,14 +45,15 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 	" Plug 'tpope/vim-obsession'
 	Plug 'xolox/vim-session'
 	Plug 'JCLiang/vim-cscope-utils'
 	Plug 'hdima/python-syntax'
 	Plug 'jungomi/vim-mdnquery'
-	Plug 'osfameron/perl-tags-vim'
+	Plug 'osfameron/perl-tags-vim', {'for': 'perl'}
 	" Plug 'osfameron/perl-tags'
-	Plug 'c9s/perlomni.vim'
+	Plug 'c9s/perlomni.vim', {'for': 'perl'}
 	Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
@@ -75,7 +76,7 @@ call plug#begin(g:plugdir)
 	" Plug 'vim-scripts/maven-ide'
 	" Plug 'chaoren/vim-wordmotion'
 	" Plug 'easymotion/vim-easymotion'
-	Plug 'matze/vim-move'
+	" Plug 'matze/vim-move'
 	Plug 'rhysd/conflict-marker.vim'
 	" Plug 'vim-voom/VOoM'
 	Plug 'thinca/vim-visualstar'
@@ -86,7 +87,7 @@ call plug#begin(g:plugdir)
 	" Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 	" Plug 'junegunn/fzf.vim'
 	" Plug 'junegunn/limelight.vim'
-	Plug 'maksimr/vim-jsbeautify'
+	Plug 'maksimr/vim-jsbeautify', {'for': 'javascript'}
 	Plug 'mileszs/ack.vim'
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
@@ -235,7 +236,7 @@ endif
 
 " set smartindent
 set cindent
-set cinoptions=:0,+0,(2,J0,{1,}0,>4,)1,m2
+" set cinoptions=:0,+0,(2,J0,{1,}0,>4,)1,m2
 " default cinoptions
 " set cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0
 " set cinoptions+=gs,hs,N0,E0,ps,ts,is,+s,c3,C0,/0,(2s
@@ -252,17 +253,17 @@ set ofu=syntaxcomplete#Complete
 " set ofu=completor#action#completefunc
 " set cfu=completor#action#completefunc
 set magic nostartofline
-setg tags^=./tags;
-" setg tags-=~/.vimtags,./tags tags-=~/.vimtags;./tags; tags^=~/.vimtags,./tags
+set tags^=./tags;
+" setg tags-=~/.vimtags,./tags tags-=~/.vimtags,./tags; tags^=~/.vimtags,./tags
 set diffopt=filler,context:5,iwhite,vertical
 " conceal in insert (i), normal (n) and visual (v) modes
 set concealcursor=inv
 " hide concealed text completely unless replacement character is defined
 set conceallevel=2
 set completeopt=menuone
-set nocp cpoptions+=d
+set nocp cpoptions-=d
 set verbose=0
-set updatetime=1000
+set updatetime=5000
 set helpheight=0
 set mouse=a
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
@@ -313,16 +314,13 @@ set showbreak=++++
 " let &showbreak="        "
 set history=10000
 set nohlsearch
-" don't save cwd
-" set viewoptions-=options
-" save :lcd cwd
-set viewoptions+=curdir
 set hidden
-set nolazyredraw
+set lazyredraw
 " disable folding
 set nofoldenable
 set iskeyword^=-
 set isfname^=-
+set virtualedit=block,insert
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -387,18 +385,18 @@ set isfname^=-
 "     "s10" will exclude registers with more than 10 Kbyte of text.
 "     Also see the '<' item above: line count limit.
 
-set viminfofile=$HOME/.viminfo
-set viminfo='1000000,s1000000,!,c,h,n$HOME/.viminfo
+set viminfofile=~/.viminfo
+set viminfo='1000000,s1000000,!,c,h,n~/.viminfo
 " set viminfo='1000000,s1000000,!,%,c,h,n$HOME/.viminfo
 " set viminfo='1000000,<1000000,/1000000,:1000000,@1000000,f1000000,s1000000,!,%,c,n$HOME/.viminfo
 
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
 set backup
-set backupdir=$HOME/.cache/vim/backup
+set backupdir=~/.cache/vim/backup/
 set swapfile
-set directory=$HOME/.cache/vim/swap
+set directory=~/.cache/vim/swap/
 set undofile
-set undodir=$HOME/.cache/vim/undo
+set undodir=~/.cache/vim/undo/
 
 au QuickFixCmdPost *grep* cwindow
 
@@ -1479,16 +1477,24 @@ let g:session_default_overwrite=1
 let g:session_default_to_last=1
 let g:session_default_name='last'
 " let g:session_autosave_to='last'
-let g:session_directory='~/.vim/session'
-let g:startify_session_dir='~/.vim/session'
+let g:session_directory='~/.vim/sessions'
+let g:startify_session_dir='~/.vim/sessions'
 " persist all options related to :make
-" let g:session_persist_globals = ['&makeprg', '&makeef']
+let g:session_persist_globals = ['&makeprg', '&makeef']
 
-set sessionoptions+=winpos,globals,localoptions
-set sessionoptions-=blank
-set sessionoptions-=help
-" set sessionoptions-=options
-" set sessionoptions-=tabpages
+" view options
+set viewdir=~/.vim/view
+" save :lcd cwd
+set vop+=curdir
+" don't save cwd
+set vop-=options
+
+" session options
+set ssop+=winpos ssop+=globals ssop+=resize
+" ssop+=localoptions
+set ssop-=blank ssop-=help ssop-=options ssop-=buffers
+" only include current tab page
+" set ssop-=tabpages
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',
