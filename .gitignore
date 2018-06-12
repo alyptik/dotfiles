@@ -14,7 +14,7 @@ cache
 irc.conf
 urls.log
 iset.conf
-ielay.conf
+relay.conf
 .zcompdump
 .rclone.conf
 rweechat.log
@@ -48,11 +48,11 @@ openvpn/
 .homesick/
 .distcc/
 vimfiles/
-.vim/view/
+.vim/view*/
 .nicotine/
 gifs/thewire/
 .mpdscribble/
-.vim/session/
+.vim/session*/
 oprofile_data/
 .node_modules/
 .atom/packages/

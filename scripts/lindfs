@@ -1,18 +1,18 @@
 #!/bin/sh
 
 cwd="$PWD"
+reset=""
+purple=""
 
-unset \
-	CFLAGS CPATH CPPFLAGS CXXFLAGS LDFLAGS LIBRARY_PATH
-export \
-	LIND_BASE=/usr/lind_project \
-	LIND_SRC=/usr/lind_project/lind \
-	REPY_PATH=/usr/lind_project/lind/repy \
-	NACL_SDK_ROOT=/usr/lind_project/repy/sdk \
-	LIND_MONITOR=/usr/lind_project/reference_monitor \
-	LD_LIBRARY_PATH=/lib/glibc \
-	NACL_SDK_ROOT=/usr/lind_project/lind/repy/sdk \
-	PNACLPYTHON=python2
+export LIND_BASE="${LIND_BASE:-/usr/lind_project}"
+export LIND_SRC="${LIND_SRC:-/usr/lind_project/lind}"
+export LIND_MONITOR="${LIND_MONITOR:-/usr/lind_project/reference_monitor}"
+export NACL_SDK_ROOT="${NACL_SDK_ROOT:-/usr/lind_project/lind/repy/sdk}"
+export REPY_PATH="${REPY_PATH:-/usr/lind_project/lind/repy}"
+export PYTHON="${PYTHON:-/usr/bin/python2}"
+export PNACLPYTHON="${PNACLPYTHON:-/usr/bin/python2}"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
+
 if test $# -ge 0; then
 	args=''
 	for i in $(seq -s' ' 1 $#); do
@@ -22,13 +22,25 @@ if test $# -ge 0; then
 	set -- $args
 fi
 
-cd /usr/lind_project/lind/repy/repy || exit 1
-
-if test "$1" = cp || test "$1" = update; then
-	set -- "$1" "$REPY_PATH/repy" "${@:2}"
+cd "$REPY_PATH/repy" || exit 1
+if command -v tput >/dev/null 2>&1; then
+	reset="$(tput -T xterm sgr0)"
+	purple="$(tput -T xterm setaf 13)"
 fi
-printf 'running: [%s]\n' \
-	"$(tput sgr0)$(tput setaf 13)python2 lind_fs_utils.py $*$(tput sgr0)"
+if test "$1" = cp || test "$1" = rm; then
+	action="$1"
+	shift
+	set -- "$action" "$REPY_PATH/repy" "$@"
+fi
+
+printf 'running: [%s%s%s]\n' "$reset$purple" "python2 lind_fs_utils.py $*" "$reset"
 python2 lind_fs_utils.py "$@"
+ret=$?
+if test "$ret" -ne 0 && test "$1" = cp; then
+	shift
+	python2 lind_fs_utils.py update "$@"
+	ret=$?
+fi
 
 cd "$cwd" || exit 1
+exit "$ret"

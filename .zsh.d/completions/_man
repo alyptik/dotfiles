@@ -32,7 +32,7 @@ _man() {
       --where
       --where-cat
     )
-    [[ $variant == darwin* ]] && modes+=( -t )
+    [[ $variant == darwin* ]] && modes+=(-t)
 
     args=(
       "(${(j< >)modes})"{-f,--whatis}'[display short description (like whatis)]'
@@ -47,7 +47,7 @@ _man() {
         '(-p --preprocessor)'{-p+,--preprocessor=}'[specify roff preprocessor sequence]:preprocessor sequence'
       )
     else
-      args+=( '(-s)-a[display all matching pages]' )
+      args+=('(-s)-a[display all matching pages]')
     fi
     [[ $variant == solaris* ]] || args+=(
       '(-C --config-file)'{-C+,--config-file=}'[specify configuration file]:configuration file:_files'
@@ -148,36 +148,36 @@ _man() {
 
     # Strip (most) long options from non-Linux platforms
     if [[ $variant == darwin* ]]; then
-      args=( ${(M)args:#((#s)|*\))(\*|)(-[^-]|--(help|path|pref|vers))*} )
+      args=(${(M)args:#((#s)|*\))(\*|)(-[^-]|--(help|path|pref|vers))*})
     elif [[ $variant != linux* ]]; then
-      args=( ${(M)args:#((#s)|*\))(\*|)-[^-]*} )
+      args=(${(M)args:#((#s)|*\))(\*|)-[^-]*})
     fi
   fi
 
   _arguments -s -S : $args '*::: :->man' && return 0
   [[ -n $state ]] || return 1
 
-  if (( ! $#_manpath )); then
+  if ((! $#_manpath)); then
     local mp
-    mp=( ${(s.:.)$(manpath 2>/dev/null)} )
-    [[ "$mp" == *:* ]] && mp=( ${(s.:.)mp} )
-    if (( $#mp )); then
-      _manpath=( $mp )
-    elif (( $#manpath )); then
-      _manpath=( $manpath )
+    mp=(${(s.:.)$(manpath 2>/dev/null)})
+    [[ "$mp" == *:* ]] && mp=(${(s.:.)mp})
+    if (($#mp)); then
+      _manpath=($mp)
+    elif (($#manpath)); then
+      _manpath=($manpath)
     fi
   fi
 
-  (( $#_manpath )) ||
-      _manpath=( /usr/man(-/) /(opt|usr)/(pkg|dt|share|X11R6|local)/(cat|)man(-/) )
+  (($#_manpath)) ||
+      _manpath=(/usr/man(-/) /(opt|usr)/(pkg|dt|share|X11R6|local)/(cat|)man(-/))
 
   # Override man path
   [[ -n ${opt_args[-M]} ]] &&
-  _manpath=( ${(s<:>)opt_args[-M]} )
+  _manpath=(${(s<:>)opt_args[-M]})
   # Augment man path
   [[ $variant == (netbsd|openbsd)* ]] &&
   [[ -n ${opt_args[-m]} ]] &&
-  _manpath+=( ${(s<:>)opt_args[-m]} )
+  _manpath+=(${(s<:>)opt_args[-m]})
 
   # `sman' is the SGML manual directory for Solaris 7.
   # 1M is system administrator commands on SVR4
@@ -195,7 +195,7 @@ _man() {
   # Take care: We can't use the sections from these options until we've finished
   # completing them; otherwise (e.g.) -s1:<TAB> will give no results
   if
-    [[ $service != man ]] || [[ $state == sects ]] || (( $+opt_args[-a] ))
+    [[ $service != man ]] || [[ $state == sects ]] || (($+opt_args[-a]))
   then
     sect='*'
   elif
@@ -212,37 +212,46 @@ _man() {
   elif [[ $variant == (dragonfly|freebsd)* ]] && [[ $+opt_args[-S] ]]; then
     noinsert=1
     sect=${opt_args[-S]//:/|}
-  elif (( CURRENT > 1 )) && [[ $variant != solaris* ]]; then
+  elif ((CURRENT > 1)) && [[ $variant != solaris* ]]; then
     noinsert=1
-    sect=$words[1]
+    saved_sect=$words[1]
+    ## "3f" is the only multi-letter section using a self-titled
+    ## directory; every other multi-letter sections uses only
+    ## the first character as its location _except_ "3f" (e.g.
+    ## "3p" is under "man3/" instead of "man3p/"). the parameter
+    #3 expansions use '/' as the substitution sentinel since it
+    ## is the only character that is illegal in a directory name.
+    #
+    sect=${${${saved_sect:/#3f/\/}:0:1}:/#\//3f}
   elif [[ -n ${sect:=$MANSECT} ]]; then
     sect=${sect//:/|}
   fi
 
-  if [[ $sect = (<->*|1M|l|n) || $sect = *\|* ]]; then
+  if [[ $sect = (<->*|1M|l|n|x) || $sect = *\|* ]]; then
     for sect in ${(s.|.)sect}; do
-      if [[ $sect == (<->[cEFMmpS]#|l|n) ]]; then
-        sects+=( $sect )
+      if [[ $sect == (<->[cEFMmnpS]#|l|n|x) ]]; then
+        sects+=($sect)
       else
-        sects+=( ${sect%%[^0-9]#} )
+        sects+=(${sect%%[^0-9]#})
       fi
     done
-    dirs=( $^_manpath/(sman|man|cat)${^sects}*/ )
+    dirs=($^_manpath/(sman|man|cat)${^sects}*/)
     sect=${(j<|>)sects}
     [[ $sect == *'|'* ]] && sect="($sect)"
     awk="\$2 == \"$sect\" {print \$1}"
   else
     sect=
-    dirs=( $^_manpath/(sman|man|cat)*/ )
+    dirs=($^_manpath/(sman|man|cat)*/)
     awk='{print $1}'
   fi
 
   # Solaris 11 and on have a man-index directory that doesn't contain manpages
-  dirs=( ${dirs:#*/man-index/} )
-  sects=( ${(o)${dirs##*(man|cat)}%/} )
+  dirs=(${dirs:#*/man-index/})
+  sects=(${(o)${dirs##*(man|cat)}%/})
+  sects+=(0p 1p 3n 3p)
 
   [[ $state == sects ]] && {
-    if (( ! $#sects )); then
+    if ((! $#sects)); then
       _message 'manual section'
       return 1
     elif [[ $variant == (darwin|dragonfly|freebsd|linux)* ]]; then
@@ -256,40 +265,42 @@ _man() {
   }
 
   if zstyle -t ":completion:${curcontext}:manuals" separate-sections; then
-    local ret=1https://ptpb.pw/IUBn
+    local ret=1
     local -A sect_desc
 
-    (( $#sects )) || return 1
+    (($#sects)) || return 1
 
-    sect_desc+=( [0]="system headers" )
-    sect_desc+=( [0p]="posix headers" )
-    sect_desc+=( [1]="executable programs/shell commands" )
-    sect_desc+=( [1p]="posix executable programs/shell commands" )
-    sect_desc+=( [2]="system calls" )
-    sect_desc+=( [3]="library funciions" )
-    sect_desc+=( [3f]="fortran functions" )
-    sect_desc+=( [3p]="posix functions" )
-    sect_desc+=( [4]="special files" )
-    sect_desc+=( [5]="file formats and conventions" )
-    sect_desc+=( [6]="games" )
-    sect_desc+=( [7]="miscellaneous" )
-    sect_desc+=( [8]="system administration commands" )
-    sect_desc+=( [9]="kernel routines" )
-    sect_desc+=( [n]="tk functions" )
-    sect_desc+=( [x]="x.org functions" )
+    sect_desc[0]="header files"
+    sect_desc[0p]="posix standard header files"
+    sect_desc[1]="executable programs or shell commands"
+    sect_desc[1p]="posix standard executable programs or shell commands"
+    sect_desc[2]="system calls (functions provided by the kernel)"
+    sect_desc[3]="library calls (functions within program libraries)"
+    sect_desc[3f]="fortran functions"
+    sect_desc[3n]="network functions"
+    sect_desc[3p]="posix standard library calls (functions within program libraries)"
+    sect_desc[4]="special files (usually found in /dev)"
+    sect_desc[5]="file formats and conventions (e.g. /etc/passwd)"
+    sect_desc[6]="games"
+    sect_desc[7]="miscellaneous (including macro packages and conventions), e.g. man(7), groff(7)"
+    sect_desc[8]="system administration commands (usually only for root)"
+    sect_desc[9]="kernel routines"
+    sect_desc[l]="local documentation"
+    sect_desc[n]="tk built-in commands"
+    sect_desc[x]="x.org functions"
 
     _tags manuals.${^sects}
     while _tags; do
       for sect_dirname in $sects; do
-        _requested manuals.$sect_dirname expl \
+          _requested manuals.$sect_dirname expl \
                 "manual page, section $sect_dirname ($sect_desc[$sect_dirname])" _man_pages && ret=0
       done
-      (( ret )) || return 0
+      ((ret)) || return 0
     done
     ## To fall back to other sections' manpages when completing filenames, like
     ## the 'else' codepath does:
     #
-    (( ret )) &&
+    ((ret)) &&
     [[ $PREFIX$SUFFIX == */* ]] &&
     [[ $variant == (darwin|dragonfly|freebsd)* ]] && {
       sect_dirname=
@@ -322,9 +333,9 @@ _man_pages() {
     return $?
   fi
 
-  pages=( ${(M)dirs:#*$sect_dirname/} )
-  pages=( ${^pages}/"*$sect${sect:+"*"}" );
-  pages=( ${^~pages}(N:t) )
+  pages=(${(M)dirs:#*$sect_dirname/})
+  pages=(${^pages}/"*$sect${sect:+"*"}")
+  pages=(${^~pages}(N:t))
 
   (($#mrd)) && pages[$#pages+1]=($(awk $awk $mrd))
 

@@ -124,7 +124,7 @@
 	lineNumber = true
 	patternType = perl
 	extendedRegexp = true
-	fullName = false
+	fullname = true
 	threads = 4
 	fallbackToNoIndex = true
 [log]

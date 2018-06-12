@@ -49,17 +49,6 @@ exec 2<>"$_zsh_error"
 KEYTIMEOUT=20
 # bindkey -e
 bindkey -v
-() for 1 { autoload -U "$1" && zle -N "$1"; } select-bracketed select-quoted
-# text object for matching characters between matching pairs of brackets
-() for 1 {
-	bindkey -M viopp "$1" select-bracketed;
-	bindkey -M visual "$1" select-bracketed;
-} {a,i}${(s..)^:-'()[]{}<>bB'}
-# text object for matching characters between a particular delimiter
-() for 1 {
-	bindkey -M viopp "$1" select-quoted
-	bindkey -M visual "$1" select-quoted
-} {a,i}{\',\",\`}
 # _km=emacs _emacs=main _vi=
 _km=vi _emacs= _vi=main
 setescapes
@@ -73,6 +62,17 @@ case "$_km" in
 	printf "$cyellow"
 	;;
 esac
+() for 1 { autoload -U "$1" && zle -N "$1"; } select-bracketed select-quoted
+# text object for matching characters between matching pairs of brackets
+() for 1 {
+	bindkey -M viopp "$1" select-bracketed;
+	bindkey -M visual "$1" select-bracketed;
+} {a,i}${(s..)^:-'()[]{}<>bB'}
+# text object for matching characters between a particular delimiter
+() for 1 {
+	bindkey -M viopp "$1" select-quoted
+	bindkey -M visual "$1" select-quoted
+} {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}
 
 # Cache setup
 ZSH_CACHE_DIR="${ZDOTDIR:-$HOME/.zsh.d}/cache"
