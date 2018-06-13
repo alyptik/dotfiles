@@ -136,7 +136,6 @@ call plug#begin(g:plugdir)
 	Plug 'nsf/gocode', {'tag': 'v.20150303', 'rtp': 'vim'}
 	Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 	Plug 'junegunn/vim-github-dashboard', {'on': ['GHDashboard', 'GHActivity']}
-	Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 	Plug 'kovisoft/paredit', {'for': ['clojure', 'scheme']}
 	Plug 'junegunn/vader.vim',  {'on': 'Vader', 'for': 'vader'}
 	" Unmanaged plugin (manually installed and updated)

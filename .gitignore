@@ -47,6 +47,7 @@ kbox3/
 openvpn/
 .homesick/
 .distcc/
+postfix/
 vimfiles/
 .vim/view*/
 .nicotine/
