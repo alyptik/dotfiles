@@ -320,7 +320,7 @@ set lazyredraw
 set nofoldenable
 set iskeyword^=-
 set isfname^=-
-set virtualedit=block,insert
+set virtualedit=block
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
