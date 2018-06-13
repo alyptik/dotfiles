@@ -14,7 +14,7 @@ foreach (split "\n", `curl -s '$url'`) {
 		my ($name, $url, $vid) = ("", "", "");
 		$name = $2;
 		$url = "https://pornhub.com/view_video.php?viewkey=$1";
-		chomp($vid = `youtube-dl --get-url "$url"`) unless $#ARGV;
+		chomp($vid = `youtube-dl --get-url "$url"`) if $#ARGV;
 		push @hash_list, {
 			name => $name,
 			vid => $vid,
@@ -27,7 +27,7 @@ foreach (split "\n", `curl -s '$url'`) {
 
 foreach (0 .. $results - 1) {
 	if (!$#ARGV) {
-		print "[$hash_list[$_]->{name}] <$hash_list[$_]->{vid}>\n";
+		print "[$hash_list[$_]->{name}] <$hash_list[$_]->{url}>\n";
 	} else {
 		system("saldl -ro '/store/stuff/$hash_list[$_]->{name}.mp4' '$hash_list[$_]->{vid}'");
 	}
