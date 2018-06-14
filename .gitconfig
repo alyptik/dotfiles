@@ -58,7 +58,6 @@
 	d = diff --histogram
 	dr = diff --histogram --relative --no-index
 	fa = fetch --ipv4 --all --jobs=4 --recurse-submodules=on-demand
-	reb = rebase
 	lgp = log --graph --oneline --decorate --boundary --first-parent
 	s = show --use-mailmap --show-signature -u
 	dc = diff --cached --histogram
@@ -85,7 +84,7 @@
 	unset = config --global --unset
 	pl = pull -tj5 --recurse-submodules=on-demand
 	ps = push --follow-tags
-	m = checkout master
+	m = merge
 	fw = grep -FWn --color=auto --break
 	ff = grep -FWn --color=auto --break
 	amend = commit -S -s -v --amend
@@ -99,6 +98,7 @@
 	cp = cherry-pick -S -s
 	coa = commit -S -v -a
 	df = diff --name-only
+	rb = rebase
 [web]
 	browser = w3m
 [instaweb]
