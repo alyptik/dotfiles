@@ -6,23 +6,24 @@
 function ztype () { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
 
 # inline calculator `= 4 * 2`
-function = () { print -r -- "$(($@))"; }
+function = () { print -r - $(($@)); }
 
 # fetch github PRs
 function get_muh_prs () {
-	if ! git rev-list --quite pull-requests; then
-		if ! git remote add pull-requests ${1:-"$(git remote get-url -origin)"}; then
-			return 1
-		fi
+	# fetch PR list
+	if ! git rev-list pull-requests -- >/dev/null 2>&1; then
+		git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || true
 	fi
+
+	# refmap list of PRs at +refs/pull/*/head to pull-request remote
 	git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*'
-	if ! git fetch --quiet pull-requests; then
-		return 1
-	fi
+	git fetch -qj4 pull-requests || exit 1
+
+	# map `git show-branch` to the list of PRs
 	() for 1 { git show-branch ${1##*remotes/}; } $(git branch -r --list 'pull-requests/*')
 }
 
-function zle-run-help {
+function zle-run-help () {
 	local -a args
 	local cmd git_cmd saved match
 	match="${(M)BUFFER##g }"
@@ -68,7 +69,7 @@ function zwc () {
 	fi
 }
 
-function zle-fman {
+function zle-fman () {
 	local -a cmdline mansects
 	local cmd glob section
 	if ((!$#MANSECT)); then
@@ -114,7 +115,7 @@ function zle-fman {
 	zle -R
 }
 
-function zle-zaw-help {
+function zle-zaw-help () {
 	if (($#BUFFER)); then
 		zle push-input
 	fi
@@ -122,7 +123,7 @@ function zle-zaw-help {
 	zle accept-line
 }
 
-function zle-less {
+function zle-less () {
 	local -a args
 	if ((!$#BUFFER)); then
 		args=("${(z)=history[$((HISTCMD-1))]}")
@@ -139,7 +140,7 @@ function zle-less {
 	zle accept-line
 }
 
-function zle-vim {
+function zle-vim () {
 	local -a args
 	if ((!$#BUFFER)); then
 		args=("${(z)=history[$((HISTCMD-1))]}")
@@ -157,7 +158,7 @@ function zle-vim {
 	zle accept-line
 }
 
-function zle-compdef {
+function zle-compdef () {
 	local cmd
 	if [[ -z "$BUFFER" ]]; then
 		LBUFFER="compdef _gnu_generic "
@@ -172,7 +173,7 @@ function zle-compdef {
 	zle accept-line
 }
 
-function zle-backwards-delete-to-char {
+function zle-backwards-delete-to-char () {
 	if ((!$#BUFFER)); then
 		return
 	fi
@@ -181,7 +182,7 @@ function zle-backwards-delete-to-char {
 
 }
 
-function zle-backwards-zap-to-char {
+function zle-backwards-zap-to-char () {
 	read -k 1 -s -r
 	if ((!$#BUFFER)); then
 		return
@@ -190,23 +191,23 @@ function zle-backwards-zap-to-char {
 }
 
 # X clipboard functions
-function insert-x-selection { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"; }
-# function insert-x-selection {
+function insert-x-selection () { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"; }
+# function insert-x-selection () {
 #         local pos="$CURSOR"
 #         LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"
 #         CURSOR="$pos"
 # }
-function append-x-selection { RBUFFER="$(xsel -op </dev/null 2>/dev/null)${RBUFFER}"; }
-function yank-x-selection { print -n -- "$CUTBUFFER" | xsel -ib; }
+function append-x-selection () { RBUFFER="$(xsel -op </dev/null 2>/dev/null)${RBUFFER}"; }
+function yank-x-selection () { print -n -- "$CUTBUFFER" | xsel -ib; }
 
-function zle-list-binds {
+function zle-list-binds () {
 	zle push-input
 	BUFFER="bindkey -L | hi tcsh -"
 	zle accept-line
 	zle -R
 }
 
-function zle-keymap-select {
+function zle-keymap-select () {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
@@ -225,7 +226,7 @@ function zle-keymap-select {
 	zle -R
 }
 
-function zle-line-init {
+function zle-line-init () {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
@@ -249,7 +250,7 @@ function zle-line-init {
 	zle -R
 }
 
-function zle-line-finish {
+function zle-line-finish () {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
@@ -271,7 +272,7 @@ function zle-line-finish {
 	zle -R
 }
 
-function zle-refresh-keymap {
+function zle-refresh-keymap () {
 	setescapes
 	case "$_km" in
 	vi)
@@ -292,7 +293,7 @@ function zle-refresh-keymap {
 	zle -R
 }
 
-function zle-toggle-keymap {
+function zle-toggle-keymap () {
 	setescapes
 	case "$_km" in
 	vi)
@@ -311,18 +312,18 @@ function zle-toggle-keymap {
 	zle -R
 }
 
-function zle-emacs-keymap {
+function zle-emacs-keymap () {
 	setescapes
 	bindkey -e; printf "$cblock"; printf "$cyellow"; _km=emacs; _vi=; _emacs=main
 }
 
-function zle-vi-keymap {
+function zle-vi-keymap () {
 	setescapes
 	bindkey -v; printf "$cline"; printf "$cgrey"; _km=vi; _vi=main; _emacs=
 }
 
 # ALT-I - Paste the selected entry from locate output into the command line
-function fzf-locate-widget {
+function fzf-locate-widget () {
 	local selected saved_opts
 	saved_opts=$FZF_DEFAULT_OPTS
 	FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
@@ -334,9 +335,9 @@ function fzf-locate-widget {
 	zle reset-prompt
 }
 
-function zle-fh { print -z - "$(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')"; }
+function zle-fh () { print -z - "$(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')"; }
 
-function zle-youtube-helper {
+function zle-youtube-helper () {
 	[[ -z "$BUFFER" ]] && return
 	local -a links
 	local i

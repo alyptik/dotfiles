@@ -2,7 +2,7 @@
 
 # fetch PR list
 if ! git rev-list pull-requests -- >/dev/null 2>&1; then
-	git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || exit 1
+	git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || true
 fi
 
 # refmap list of PRs at +refs/pull/*/head to pull-request remote
@@ -12,8 +12,8 @@ git fetch -qj4 pull-requests || exit 1
 # map `git show-branch` to the list of PRs
 
 # posix method
-git branch -r --list 'pull-requests/*' | \
-	while read -r branch; do
+git branch -r --list 'pull-requests/*' \
+	| while read -r branch; do
 		pr="${branch##*remotes/}"
 		git show-branch "$pr" 2>/dev/null
 	done
@@ -24,3 +24,6 @@ git branch -r --list 'pull-requests/*' | \
 #         pr="${i##*remotes/}"
 #         git show-branch "$pr" 2>/dev/null
 # done
+
+# zsh method
+# () for 1 { git show-branch ${1##*remotes/}; } $(git branch -r --list 'pull-requests/*')
