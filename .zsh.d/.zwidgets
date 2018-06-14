@@ -1,15 +1,14 @@
 #!/usr/bin/env zsh
 #
-# .zwidgets
-
-# ZLE shell function section
-function ztype () { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
+# .zwidgets - non-compiled shell functions
 
 # inline calculator `= 4 * 2`
-function = () { print -r - $(($@)); }
+function '='() { print -r - $(($*)); }
+
+function ztype() { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
 
 # fetch github PRs
-function get_muh_prs () {
+function get_muh_prs() {
 	# fetch PR list
 	if ! git rev-list pull-requests -- >/dev/null 2>&1; then
 		git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || true
@@ -23,7 +22,7 @@ function get_muh_prs () {
 	() for 1 { git show-branch ${1##*remotes/}; } $(git branch -r --list 'pull-requests/*')
 }
 
-function zle-run-help () {
+function zle-run-help() {
 	local -a args
 	local cmd git_cmd saved match
 	match="${(M)BUFFER##g }"
@@ -58,7 +57,7 @@ function zle-run-help () {
 }
 
 # compile zwc files
-function zwc () {
+function zwc() {
 	local dot_dir
 	dot_dir=${ZDOTDIR:-$HOME/.zsh.d}
 	if rm -fv $dot_dir/zfuncs.zwc; then
@@ -69,7 +68,7 @@ function zwc () {
 	fi
 }
 
-function zle-fman () {
+function zle-fman() {
 	local -a cmdline mansects
 	local cmd glob section
 	if ((!$#MANSECT)); then
@@ -115,7 +114,7 @@ function zle-fman () {
 	zle -R
 }
 
-function zle-zaw-help () {
+function zle-zaw-help() {
 	if (($#BUFFER)); then
 		zle push-input
 	fi
@@ -123,7 +122,7 @@ function zle-zaw-help () {
 	zle accept-line
 }
 
-function zle-less () {
+function zle-less() {
 	local -a args
 	if ((!$#BUFFER)); then
 		args=("${(z)=history[$((HISTCMD-1))]}")
@@ -140,7 +139,7 @@ function zle-less () {
 	zle accept-line
 }
 
-function zle-vim () {
+function zle-vim() {
 	local -a args
 	if ((!$#BUFFER)); then
 		args=("${(z)=history[$((HISTCMD-1))]}")
@@ -158,7 +157,7 @@ function zle-vim () {
 	zle accept-line
 }
 
-function zle-compdef () {
+function zle-compdef() {
 	local cmd
 	if [[ -z "$BUFFER" ]]; then
 		LBUFFER="compdef _gnu_generic "
@@ -173,7 +172,7 @@ function zle-compdef () {
 	zle accept-line
 }
 
-function zle-backwards-delete-to-char () {
+function zle-backwards-delete-to-char() {
 	if ((!$#BUFFER)); then
 		return
 	fi
@@ -182,7 +181,7 @@ function zle-backwards-delete-to-char () {
 
 }
 
-function zle-backwards-zap-to-char () {
+function zle-backwards-zap-to-char() {
 	read -k 1 -s -r
 	if ((!$#BUFFER)); then
 		return
@@ -191,23 +190,23 @@ function zle-backwards-zap-to-char () {
 }
 
 # X clipboard functions
-function insert-x-selection () { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"; }
-# function insert-x-selection () {
+function insert-x-selection() { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"; }
+# function insert-x-selection() {
 #         local pos="$CURSOR"
 #         LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"
 #         CURSOR="$pos"
 # }
-function append-x-selection () { RBUFFER="$(xsel -op </dev/null 2>/dev/null)${RBUFFER}"; }
-function yank-x-selection () { print -n -- "$CUTBUFFER" | xsel -ib; }
+function append-x-selection() { RBUFFER="$(xsel -op </dev/null 2>/dev/null)${RBUFFER}"; }
+function yank-x-selection() { print -n -- "$CUTBUFFER" | xsel -ib; }
 
-function zle-list-binds () {
+function zle-list-binds() {
 	zle push-input
 	BUFFER="bindkey -L | hi tcsh -"
 	zle accept-line
 	zle -R
 }
 
-function zle-keymap-select () {
+function zle-keymap-select() {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
@@ -226,7 +225,7 @@ function zle-keymap-select () {
 	zle -R
 }
 
-function zle-line-init () {
+function zle-line-init() {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
@@ -250,7 +249,7 @@ function zle-line-init () {
 	zle -R
 }
 
-function zle-line-finish () {
+function zle-line-finish() {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
@@ -272,7 +271,7 @@ function zle-line-finish () {
 	zle -R
 }
 
-function zle-refresh-keymap () {
+function zle-refresh-keymap() {
 	setescapes
 	case "$_km" in
 	vi)
@@ -293,7 +292,7 @@ function zle-refresh-keymap () {
 	zle -R
 }
 
-function zle-toggle-keymap () {
+function zle-toggle-keymap() {
 	setescapes
 	case "$_km" in
 	vi)
@@ -312,18 +311,18 @@ function zle-toggle-keymap () {
 	zle -R
 }
 
-function zle-emacs-keymap () {
+function zle-emacs-keymap() {
 	setescapes
 	bindkey -e; printf "$cblock"; printf "$cyellow"; _km=emacs; _vi=; _emacs=main
 }
 
-function zle-vi-keymap () {
+function zle-vi-keymap() {
 	setescapes
 	bindkey -v; printf "$cline"; printf "$cgrey"; _km=vi; _vi=main; _emacs=
 }
 
 # ALT-I - Paste the selected entry from locate output into the command line
-function fzf-locate-widget () {
+function fzf-locate-widget() {
 	local selected saved_opts
 	saved_opts=$FZF_DEFAULT_OPTS
 	FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
@@ -335,9 +334,9 @@ function fzf-locate-widget () {
 	zle reset-prompt
 }
 
-function zle-fh () { print -z - "$(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')"; }
+function zle-fh() { print -z - "$(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')"; }
 
-function zle-youtube-helper () {
+function zle-youtube-helper() {
 	[[ -z "$BUFFER" ]] && return
 	local -a links
 	local i
@@ -354,10 +353,10 @@ function zle-youtube-helper () {
 # Non-ZLE shell function section
 
 # Make history entries from other zsh instances immediately visible
-function zshreadhist () { fc -p "$HISTFILE"; }
+function zshreadhist() { fc -p "$HISTFILE"; }
 
 # Set term escape strings
-function setescapes () {
+function setescapes() {
 	{
 		[[ "$TERM" =~ ^linux.*$ ]] && return
 		local i tree
@@ -392,7 +391,7 @@ function setescapes () {
 }
 
 # Function to capture exit code of later command.
-function check_last_exit_code () {
+function check_last_exit_code() {
 	local LAST_EXIT_CODE=$?
 	local EXIT_CODE_PROMPT=' '
 	if ((LAST_EXIT_CODE)); then
@@ -404,12 +403,12 @@ function check_last_exit_code () {
 }
 
 # Show Git branch/tag, or name-rev if on detached head
-function parse_git_branch () {
+function parse_git_branch() {
 	(git symbolic-ref --quiet HEAD || git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
 }
 
 # Show different symbols as appropriate for various Git repository states
-function parse_git_state () {
+function parse_git_state() {
 	# Compose GIT_STATE via multiple conditional appends.
 	local GIT_STATE GIT_DIR NUM_AHEAD NUM_BEHIND
 
@@ -441,7 +440,7 @@ function parse_git_state () {
 }
 
 # If inside a Git repository, print its branch and state
-function git_prompt_string () {
+function git_prompt_string() {
 	local ret_str
 	local git_where="$(parse_git_branch)"
 	if [[ -z $git_where ]]; then
@@ -458,7 +457,7 @@ function git_prompt_string () {
 
 # Arch latest news
 # The characters "£, §" are used as metacharacters. They should not be encountered in a feed...
-function news_short () {
+function news_short() {
 	print -n - "$(print - \
 	$(curl -sm 1 ${1:-'https://www.archlinux.org/feeds/news/'} | sed -e ':a;N;$!ba;s/\n/ /g') \
 		| sed -e '
@@ -487,7 +486,7 @@ function news_short () {
 		| awk '{ line[NR] = $0 } END { for (i = NR; i > 0; i -= 2) { print line[i-1]; print line[i] } }'
 }
 
-function news_long () {
+function news_long() {
 	print -n - "$(print - \
 	$(curl -sm 1 ${1:-'https://www.archlinux.org/feeds/news/'} | sed -e ':a;N;$!ba;s/\n/ /g') \
 		| sed -e '
@@ -516,7 +515,7 @@ function news_long () {
 		| sed '/^$/d'
 }
 
-function cleanup () {
+function cleanup() {
 	# cleanup env and temp files
 	if [[ ! -t 9 ]]; then
 		return
