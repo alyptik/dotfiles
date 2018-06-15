@@ -233,8 +233,8 @@ else
 	let g:solarized_visibility='normal'
 endif
 
-" set smartindent
-set cindent
+set smartindent
+" set cindent
 " set cinoptions=:0,+0,(2,J0,{1,}0,>4,)1,m2
 " default cinoptions
 " set cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0
@@ -493,6 +493,9 @@ highlight ColorColumn ctermbg=237 guibg=#282828
 highlight SpecialKey cterm=bold ctermfg=240 ctermbg=236 guifg=#282828
 " If you like one of the existing styles you can link them:
 highlight link cMember Special
+
+" instant markdown preview
+let g:instant_markdown_slow=1
 
 " airline
 let g:airline#extensions#whitespace#enabled=1
