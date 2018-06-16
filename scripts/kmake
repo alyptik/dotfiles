@@ -67,7 +67,7 @@ while getopts :bcdhkmns opt; do
 		exit
 		;;
 	:|?)
-		printf 'illegal option: -%s\n' "$OPTARG" >&2
+		printf 'illegal option letter: %s\n' "'$OPTARG'" >&2
 		printf 'usage: %s -bk [-cdhmns] [<make args>]\n' "${0##*/}" >&2
 		exit 1
 		;;

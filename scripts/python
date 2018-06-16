@@ -1,0 +1,4 @@
+#!/bin/bash
+
+printf '%s\n' "$0 $*"
+exec /usr/bin/python2 "$@"
