@@ -1,4 +1,4 @@
-#===- cindex.py - Python Indexing Library Bindings -----------*- python -*--===#
+#===- cindex.py - Python Indexing Library Bindings -----------*- python2 -*--===#
 #
 #                     The LLVM Compiler Infrastructure
 #
@@ -1656,7 +1656,7 @@ class _CXUnsavedFile(Structure):
     """Helper for passing unsaved file arguments."""
     _fields_ = [("name", c_char_p), ("contents", c_char_p), ('length', c_ulong)]
 
-# Functions calls through the python interface are rather slow. Fortunately,
+# Functions calls through the python2 interface are rather slow. Fortunately,
 # for most symboles, we do not need to perform a function call. Their spelling
 # never changes and is consequently provided by this spelling cache.
 SpellingCache = {
@@ -2094,7 +2094,7 @@ class TranslationUnit(ClangObject):
                 loc = lptr.contents
                 includes.append(FileInclusion(loc.file, File(fobj), loc, depth))
 
-        # Automatically adapt CIndex/ctype pointers to python objects
+        # Automatically adapt CIndex/ctype pointers to python2 objects
         includes = []
         conf.lib.clang_getInclusions(self,
                 callbacks['translation_unit_includes'](visitor), includes)
@@ -3069,7 +3069,7 @@ def register_function(lib, item, ignore_errors):
     try:
         func = getattr(lib, item[0])
     except AttributeError as e:
-        msg = str(e) + ". Please ensure that your python bindings are "\
+        msg = str(e) + ". Please ensure that your python2 bindings are "\
                        "compatible with your libclang.so version."
         if ignore_errors:
             return
@@ -3124,15 +3124,15 @@ class Config:
     def set_compatibility_check(check_status):
         """ Perform compatibility check when loading libclang
 
-        The python bindings are only tested and evaluated with the version of
+        The python2 bindings are only tested and evaluated with the version of
         libclang they are provided with. To ensure correct behavior a (limited)
         compatibility check is performed when loading the bindings. This check
         will throw an exception, as soon as it fails.
 
         In case these bindings are used with an older version of libclang, parts
         that have been stable between releases may still work. Users of the
-        python bindings can disable the compatibility check. This will cause
-        the python bindings to load, even though they are written for a newer
+        python2 bindings can disable the compatibility check. This will cause
+        the python2 bindings to load, even though they are written for a newer
         version of libclang. Failures now arise if unsupported or incompatible
         features are accessed. The user is required to test himself if the
         features he is using are available and compatible between different

@@ -570,7 +570,7 @@ def jumpToLocation(filename, line, column, preview):
     vim.command(command)
   except:
     # For some unknown reason, whenever an exception occurs in
-    # vim.command, vim goes crazy and output tons of useless python
+    # vim.command, vim goes crazy and output tons of useless python2
     # errors, catch those.
     return
   if not preview:

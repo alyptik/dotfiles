@@ -3,7 +3,7 @@
 # Unset previous function/alias instances
 unset -f define defrag fc java l sudo wd which 2>/dev/null
 unalias {1..9} c d es f gbr gco gcs gg gm h history java 2>/dev/null
-unalias md meminfo node o rd ru s sd sf si u v z zz 2>/dev/null
+unalias md meminfo node o rd ru s sd sf si u v xi xo z zz 2>/dev/null
 
 ## Custom aliases
 
@@ -54,7 +54,7 @@ alias thes='define -t'
 alias syn='define -t'
 alias def='define'
 alias bk='bindkey'
-alias gb='(cd "${P:-/store/code/projects}/glowing-bear" && python -m http.server)'
+alias gb='(cd "${P:-/store/code/projects}/glowing-bear" && python2 -m http.server)'
 alias ra='racket'
 alias rl='rlwrap'
 alias ch='rlwrap csi'
@@ -73,7 +73,7 @@ unset _JAVA_OPTIONS
 alias java='java "$_SILENT_JAVA_OPTIONS"'
 alias vg='valgrind'
 alias ip='ip -c'
-alias rline=$'python -c \'import os; import random; os.system("vim %s +%s" % (lambda f: (f, random.randint(1,len(open(f).readlines())+1)))(random.choice([f for f in sum([[os.path.join(p, f) for f in fs] for (p, ds, fs) in os.walk(".")], []) if not ".git" in f])))\''
+alias rline=$'python2 -c \'import os; import random; os.system("vim %s +%s" % (lambda f: (f, random.randint(1,len(open(f).readlines())+1)))(random.choice([f for f in sum([[os.path.join(p, f) for f in fs] for (p, ds, fs) in os.walk(".")], []) if not ".git" in f])))\''
 alias rng='ranger'
 alias i686-qemu='qemu-system-i386 -m 2048 -smp 2 -vga virtio -boot order=d -enable-kvm -machine type=pc,accel=kvm -show-cursor -usbdevice tablet -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time -soundhw hda -net nic -net bridge,br=virbr0 -monitor stdio -monitor pty'
 alias sw='wine "${HOME}/.local/share/steam-wine/WINE.win32/drive_c/Program Files/Steam/Steam.exe" -no-cef-sandbox -no-dwrite'

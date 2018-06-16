@@ -399,48 +399,48 @@ set undodir=~/.cache/vim/undo/
 
 au QuickFixCmdPost *grep* cwindow
 
-"formal: au BufNewFile,BufRead * setf {filetype}
-au BufNewFile,BufRead *.[Hh] set filetype=c
-au BufNewFile,BufRead *.[Cc] set filetype=c
-au BufNewFile,BufRead *.jq setf javascript
-au BufNewFile,BufRead *tmux.conf set filetype=tmux
-au BufNewFile,BufRead *nanorc setf nanorc
-au BufNewFile,BufRead *vimpagerrc setf vim
-au BufNewFile,BufRead *.\(service\|socket\|target\|timer\)* set filetype=sysctl
-"au BufNewFile,BufRead *\(nftables.conf\|.nft\)* setf nftables
-au BufNewFile,BufRead *\(nftables.conf\|.nft\)* set filetype=nftables
-au BufNewFile,BufRead *toxic.conf* set filetype=cfg
-"au BufNewFile,BufRead *conf setf config
-"au BufNewFile,BufRead *conf setf conf
-au BufNewFile,BufRead db.* set filetype=bindzone
-au BufNewFile,BufRead *grub* set filetype=grub
-au BufNewFile,BufRead *.\(cc\|cpp\) set filetype=cpp
-au BufNewFile,BufRead proftpd.\(con\|conf\) set filetype=cterm
-au BufNewFile,BufRead i3.conf set filetype=i3
-au BufNewFile,BufRead *.md set filetype=markdown
-"au BufNewFile,BufRead {/etc/udev/rules.d/,/store/config/}*.rules set filetype=udevrules
-au BufNewFile,BufRead *.txt setf erlang
-au BufNewFile,BufRead *.log setf irc
-au BufNewFile,BufRead /etc/X11/xorg.conf.d/* setf xf86conf
-au BufNewFile,BufRead *named.conf* set filetype=named
-au BufNewFile,BufRead *.log setf irc
-" au BufNewFile,BufRead *conf set filetype=cfg
-au BufNewFile,BufRead *torrc* setf cfg
-au BufNewFile,BufRead /usr/share/highlight/themes/* set filetype=lua
-au BufNewFile,BufRead /**/.zsh.d/** set filetype=zsh
-au BufNewFile,BufRead /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
-au BufNewFile,BufRead nsswitch.conf* set filetype=nsis
-au BufNewFile,BufRead makepkg.conf* set filetype=sh
-au BufNewFile,BufRead *.conf* setf cfg
-au BufNewFile,BufRead /etc/* setf cfg
-au BufNewFile,BufRead *.\(pde\|ino\) set filetype=arduino
-au BufNewFile,BufRead *.vala setf cs
-au BufNewFile,BufRead *.vapi setf cs
-au BufNewFile,BufRead *.gtkaml setf cs
-au BufNewFile,BufRead *.gtkon setf cs
+"formal: au BufNewFile,BufReadPost * setf {filetype}
+au BufNewFile,BufReadPost *.[Hh] set filetype=c
+au BufNewFile,BufReadPost *.[Cc] set filetype=c
+au BufNewFile,BufReadPost *.jq setf javascript
+au BufNewFile,BufReadPost *tmux.conf set filetype=tmux
+au BufNewFile,BufReadPost *nanorc setf nanorc
+au BufNewFile,BufReadPost *vimpagerrc setf vim
+au BufNewFile,BufReadPost *.\(service\|socket\|target\|timer\)* set filetype=sysctl
+"au BufNewFile,BufReadPost *\(nftables.conf\|.nft\)* setf nftables
+au BufNewFile,BufReadPost *\(nftables.conf\|.nft\)* set filetype=nftables
+au BufNewFile,BufReadPost *toxic.conf* set filetype=cfg
+"au BufNewFile,BufReadPost *conf setf config
+"au BufNewFile,BufReadPost *conf setf conf
+au BufNewFile,BufReadPost db.* set filetype=bindzone
+au BufNewFile,BufReadPost *grub* set filetype=grub
+au BufNewFile,BufReadPost *.\(cc\|cpp\) set filetype=cpp
+au BufNewFile,BufReadPost proftpd.\(con\|conf\) set filetype=cterm
+au BufNewFile,BufReadPost i3.conf set filetype=i3
+"au BufNewFile,BufReadPost {/etc/udev/rules.d/,/store/config/}*.rules set filetype=udevrules
+au BufNewFile,BufReadPost *.txt setf erlang
+au BufNewFile,BufReadPost *.log setf irc
+au BufNewFile,BufReadPost /etc/X11/xorg.conf.d/* setf xf86conf
+au BufNewFile,BufReadPost *named.conf* set filetype=named
+au BufNewFile,BufReadPost *.log setf irc
+" au BufNewFile,BufReadPost *conf set filetype=cfg
+au BufNewFile,BufReadPost *torrc* setf cfg
+au BufNewFile,BufReadPost /usr/share/highlight/themes/* set filetype=lua
+au BufNewFile,BufReadPost /**/.zsh.d/** set filetype=zsh
+au BufNewFile,BufReadPost /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
+au BufNewFile,BufReadPost nsswitch.conf* set filetype=nsis
+au BufNewFile,BufReadPost makepkg.conf* set filetype=sh
+au BufNewFile,BufReadPost *.conf* setf cfg
+au BufNewFile,BufReadPost /etc/* setf cfg
+au BufNewFile,BufReadPost *.\(pde\|ino\) set filetype=arduino
+au BufNewFile,BufReadPost *.vala setf cs
+au BufNewFile,BufReadPost *.vapi setf cs
+au BufNewFile,BufReadPost *.gtkaml setf cs
+au BufNewFile,BufReadPost *.gtkon setf cs
+au BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Fallback
-" au BufNewFile,BufRead * setf erlang
+" au BufNewFile,BufReadPost * setf erlang
 
 "au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
 au FileType cpp set keywordprg=cppman
@@ -1560,7 +1560,7 @@ hi BufferNormal term=NONE ctermfg=black ctermbg=darkcyan cterm=NONE
 " Custom mappings
 
 " format json
-nnoremap <Leader>J :%! python -m json.tool<CR>
+nnoremap <Leader>J :%! python2 -m json.tool<CR>
 
 " Search for visually selected text
 " vnoremap // y/<C-r>"<CR>

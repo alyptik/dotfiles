@@ -1,4 +1,4 @@
-#===- enumerations.py - Python Enumerations ------------------*- python -*--===#
+#===- enumerations.py - Python Enumerations ------------------*- python2 -*--===#
 #
 #                     The LLVM Compiler Infrastructure
 #

@@ -475,7 +475,7 @@ let s:tlist_def_perl_settings = 'perl;c:constant;l:label;p:package;s:subroutine'
 let s:tlist_def_php_settings =
             \ 'php;c:class;i:interface;d:constant;v:variable;f:function'
 
-" python language
+" python2 language
 let s:tlist_def_python_settings = 'python;c:class;m:member;f:function'
 
 " cython language

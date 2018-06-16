@@ -9,7 +9,7 @@ set cpo&vim
 let s:python_loaded = 0
 if has('python')
   try
-python <<EOM
+python2 <<EOM
 import vim, threading, subprocess, re, time
 
 class QuickRun(threading.Thread):
@@ -85,13 +85,13 @@ function! s:runner.validate() abort
   if !has('python')
     throw 'Needs +python feature.'
   elseif !s:python_loaded
-    throw 'Loading python code failed.'
+    throw 'Loading python2 code failed.'
   endif
 endfunction
 
 function! s:runner.run(commands, input, session) abort
   let key = string(a:session.continue())
-  python QuickRun(vim.eval('a:commands'),
+  python2 QuickRun(vim.eval('a:commands'),
   \               vim.eval('key'),
   \               vim.eval('a:input')).start()
 endfunction

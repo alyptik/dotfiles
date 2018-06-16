@@ -331,7 +331,7 @@ function! s:clients.python.request(settings)
   " TODO: maxRedirect, retry, outputFile
   let header = ''
   let body = ''
-  python << endpython
+  python2 << endpython
 try:
     class DummyClassForLocalScope:
         def main():

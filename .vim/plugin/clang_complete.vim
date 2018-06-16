@@ -366,13 +366,13 @@ endfunction
 
 function! s:initClangCompletePython()
   if !has('python') && !has('python3')
-    echoe 'clang_complete: No python support available.'
+    echoe 'clang_complete: No python2 support available.'
     echoe 'Cannot use clang library'
-    echoe 'Compile vim with python support to use libclang'
+    echoe 'Compile vim with python2 support to use libclang'
     return 0
   endif
 
-  " Only parse the python library once
+  " Only parse the python2 library once
   if !exists('s:libclang_loaded')
     execute s:py_cmd 'import sys'
     execute s:py_cmd 'import json'

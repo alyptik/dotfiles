@@ -13,7 +13,8 @@ if [[ -t 0 ]]; then
 fi
 
 exec 3<>"$tmp_file"
-trap '{ rm -fv "$tmp_file"; exec 3>&-; trap - INT; kill -INT "$$"; }' INT ERR EXIT
+trap '{ rm -fv "$tmp_file"; exec 3>&-; }' ERR EXIT
+trap '{ rm -fv "$tmp_file"; exec 3>&-; trap - INT; kill -INT "$$"; }' INT
 
 while getopts :aho: opt; do
 	case "$opt" in
@@ -51,5 +52,3 @@ cat <"$log_file" >&3
 for file in "${out_files[@]}"; do
 	(cat </dev/stdin >"$file") <&3
 done
-
-kill -INT "$$"

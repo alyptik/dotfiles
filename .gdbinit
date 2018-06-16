@@ -55,17 +55,17 @@ end
 
 define run-lind
 	if $argc > 1
-		run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /test_case/jp/$arg1.nexe
+		run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /test_cases/$arg1
 		thread $arg0 attach
 	else
-		run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /test_case/jp/fork.nexe
+		run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /test_cases/fork
 		if $argc > 0
 			thread $arg0 attach
 		end
 	end
 end
 document run-lind
-	run-lind [thread] [prog]: Runs /test_case/jp/[prog].nexe attached to [thread].
+	run-lind [thread] [prog]: Runs /test_cases/[prog].nexe attached to [thread].
 end
 
 define segfault-address

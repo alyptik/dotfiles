@@ -1,4 +1,4 @@
-#===- __init__.py - Clang Python Bindings --------------------*- python -*--===#
+#===- __init__.py - Clang Python Bindings --------------------*- python2 -*--===#
 #
 #                     The LLVM Compiler Infrastructure
 #

@@ -19,10 +19,10 @@ let g:autotag_vim_version_sourced=s:autotag_vim_version
 
 if has("python") || has("python3")
    if has("python")
-      python  import sys, os, vim
-      python  sys.path.insert(0, os.path.dirname(vim.eval('expand("<sfile>")')))
-      python  from __future__ import print_function
-      python  from autotag import autotag
+      python import sys, os, vim
+      python sys.path.insert(0, os.path.dirname(vim.eval('expand("<sfile>")')))
+      python from __future__ import print_function
+      python from autotag import autotag
    else
       python3 import sys, os, vim
       python3 sys.path.insert(0, os.path.dirname(vim.eval('expand("<sfile>")')))
@@ -31,7 +31,7 @@ if has("python") || has("python3")
 
    function! AutoTag()
       if has("python")
-         python  autotag()
+         python autotag()
       else
          python3 autotag()
       endif

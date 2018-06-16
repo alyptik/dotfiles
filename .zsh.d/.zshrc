@@ -574,6 +574,7 @@ fi
 #
 # custom compdefs with generated and hardcoded arrays
 () {
+	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
 	local -a defargcmds asmcmds dbpkgs kmods pubkeys seckeys
 
 	defargcmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
@@ -643,7 +644,6 @@ fi
 	high_str+=$'":out format: '
 	high_str+=$'(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" '
 	high_str+=$'"*:file:_files" -- '
-	pinfo_str+=$'_arguments "*:arg:_default" ":info page:_texinfo" -- '
 	qpc_str+=$'_arguments "*:packages:('
 	qpc_str+="${dbpkgs[*]}"
 	qpc_str+=$')" -- '
@@ -658,7 +658,6 @@ fi
 	compdef "$hi_str" hi
 	compdef "$high_str" high
 	compdef "$modprobe_str" modprobe
-	compdef "$pinfo_str" pinfo
 	compdef "$qpc_str" qpc
 	compdef "$reptyr_str" reptyr
 }
@@ -771,7 +770,7 @@ WORDCHARS=
 
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
-zstyle ':completion:*:approximate:'			max-errors 'reply=("$(( ($#PREFIX+$#SUFFIX)/2 ))" numeric)'
+zstyle ':completion:*:approximate:'			max-errors 'reply=("$((($#PREFIX+$#SUFFIX)/2))" numeric)'
 # zstyle ':completion:*:approximate:'			max-errors 5 numeric
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands'	ignored-patterns '(aptitude-*|*\~)'
