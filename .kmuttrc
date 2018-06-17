@@ -3,23 +3,30 @@
 #
 # Mutt configuration
 
-set my_cfgdir = "~/.mutt.d"
-source "gpg2 -dq $HOME/.passwords.asc |"
-source "$my_cfgdir/.mutt_theme"
-source "$my_cfgdir/.mutt_keybinds"
-source "$my_cfgdir/.mutt_aliases"
+set my_gmail_base = "imap"
+# set my_gmail_base = "pop"
+set my_gmail_prot = $my_gmail_base"s"
+set my_gmail_host = $my_gmail_base".gmail.com"
+set my_cfgdir = "~/.mutt"
 
-alternative_order text/plain text/enriched text/html
+my_hdr Cc: Joey Pabalinas <joeypabalinas@gmail.com>
+
+source "gpg2 -dq $HOME/.passwords.asc |"
+source "$my_cfgdir/mutt_theme"
+source "$my_cfgdir/mutt_keybinds"
+source "$my_cfgdir/mutt_aliases"
+
 auto_view text/html
 auto_view text/x-diff
 auto_view text/x-patch
+alternative_order text/plain text/enriched text/html
 
 set connect_timeout = 10
-set mail_check = 30
-set imap_keepalive = 60
-set imap_pipeline_depth = 30
+set mail_check = 5
+set imap_keepalive = 5
+set imap_pipeline_depth = 50
 set imap_check_subscribed
-unset imap_passive
+set imap_passive
 unset imap_idle
 set ssl_starttls
 unset ssl_force_tls
@@ -28,14 +35,15 @@ set ssl_use_sslv3
 unset maildir_header_cache_verify
 set header_cache = "$my_cfgdir/cache"
 set message_cachedir = "$my_cfgdir/message_cache"
-set signature = "$my_cfgdir/.signature"
-set alias_file = "$my_cfgdir/.mutt_aliases"
-set history_file = "$my_cfgdir/.mutt_history"
-set certificate_file = "$my_cfgdir/.mutt_certificates"
+set signature = "$my_cfgdir/signature"
+set alias_file = "$my_cfgdir/mutt_aliases"
+set history_file = "$my_cfgdir/mutt_history"
+set certificate_file = "$my_cfgdir/mutt_certificates"
 set entropy_file = "/dev/urandom"
-set charset = "utf-8"
-set send_charset = "us-ascii:utf-8"
 set editor = "vim"
+set charset = "utf-8"
+set send_charset = "utf-8:us-ascii"
+set assumed_charset = "utf-8:us-ascii"
 
 set prompt_after
 set implicit_autoview
@@ -53,7 +61,9 @@ set menu_move_off
 unset menu_scroll
 set meta_key
 set metoo
+set askcc
 set reply_self
+set edit_headers
 
 set sidebar_visible
 set sidebar_short_path
@@ -108,7 +118,6 @@ set pgp_use_gpg_agent
 unset pgp_ignore_subkeys
 
 set realname = "Joey Pabalinas"
-
 # set from = "joeypabalinas@gmail.com"
 # set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587/"
 # set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:465/"

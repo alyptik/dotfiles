@@ -147,7 +147,7 @@ AUTOPAIR_RBOUNDS[quotes]='[a-zA-Z0-9]'
 AUTOPAIR_RBOUNDS[braces]=''
 ## Array declaring active highlighters names.
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp root)
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets cursor line main pattern regexp root)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line pattern root)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="${ZDOTDIR:-${HOME}/.zsh.d}/plugins/highlighters"
