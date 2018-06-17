@@ -90,7 +90,8 @@ export CLICOLOR=1 REPORTTIME=5
 type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 # ^b: history expansion ^f: quick history substitution #: comment character
 histchars=$'\2\6#'
-HISTFILE="${HOME}/.zsh_history"
+# histchars='!^#'
+HISTFILE="$HOME/.zsh_history"
 
 # zmodules
 () {
@@ -674,7 +675,8 @@ fi
 
 }
 
-compdef _fman fman
+compdef _cpuled cpuled
+compdef _man fman
 compdef _man man
 compdef _gem gem
 compdef _git fshow

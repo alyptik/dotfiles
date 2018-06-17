@@ -209,7 +209,6 @@ alias tptpb="curl --progress-bar -F'c=@-' https://ptpb.pw/\?u=1 | sed 's:$:/text
 alias apb="sed 's:ptpb\.pw/:alyp.tk/pb/:g'"
 alias eth0='sudo ip link set eth0 down && sleep 2 && sudo ip link set eth0 up'
 alias cdef='compdef _gnu_generic'
-alias scpuled='sudo cpuled console -c nfn >/dev/null 2>&1 & disown'
 alias mime='xdg-mime'
 # alias o='xdg-open'
 alias zmv='zmv -v'

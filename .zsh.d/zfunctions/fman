@@ -4,29 +4,33 @@
 local width pager query page section
 
 case "$1" in
-([0-9lnpx]*)
+('')
+	man
+	;;
+([0-9lnx]*)
 	section="$1"
-	shift ;;
+	shift
+	;;
 (*)
-	section="$(man -w "$1" 2>/dev/null | sed -r 's@^.*/man([^/])/[^/]*$@\1@')" ;;
+	section="$(man -w "$1" 2>/dev/null | sed -r 's@^.*/man([^/])/[^/]*$@\1@')"
+	;;
 esac
 
 width="$(tput cols)"
-pager="less"
+pager="env -u LESS less -MRins"
 page="$1"
 shift
 
-[[ -z "$1" ]] && \
-	query= || \
-	query="p$(<<<"$*" tr '[[:upper:]]' '[[:lower:]]' | \
-		tr -d '\n' | \
-		od -tx1 | \
-		sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g; s/^ //; s/\\x20/&\*/g')"
+if (($#)); then
+	query="+/$(<<<"$*" tr '[[:upper:]]' '[[:lower:]]' \
+		| tr -d '\n' \
+		| od -tx1 \
+		| sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g; s/^ //; s/\\x20/&\*/g')"
+fi
 
 env \
-	PAGER="$pager" \
+	MANPAGER="$pager $query" \
 	MANWIDTH="$width" \
-	LESS="CMRins${query}" \
 	GROFF_NO_SGR=1 \
 	LESS_TERMCAP_se=$'\E[0m' \
 	LESS_TERMCAP_me=$'\E[0m' \
