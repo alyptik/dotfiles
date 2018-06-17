@@ -575,31 +575,31 @@ fi
 # custom compdefs with generated and hardcoded arrays
 () {
 	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
-	local -a defargcmds asmcmds dbpkgs kmods pubkeys seckeys
+	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds
 
-	defargcmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
-	defargcmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
-	defargcmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
-	defargcmds+=(ci co col colordiff compton configure conky cower cpanm)
-	defargcmds+=(cppcheck cpulimit crontab ctags curl define dmidecode)
-	defargcmds+=(dumpasn1 expac fasd file flac2all fusermount-glusterfs)
-	defargcmds+=(fusermount3 elftoc free fzf gnome-keyring-daemon gpg-agent)
-	defargcmds+=(help2man highlight hping hsetroot icdiff install keyring)
-	defargcmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
-	defargcmds+=(mpd muttprint mv named neomutt netstat netstat newsbeuter)
-	defargcmds+=(node nohup objconv objdump oomox-cli optipng pacconf)
-	defargcmds+=(pactree paste pisg pstree qemu-img qemu-nbd reptyr resolvconf)
-	defargcmds+=(rfc rg rlwrap rmdir rmlint rst2man rst2man2 saldl scan-build)
-	defargcmds+=(seq shred sox split stat st stjerm strings supybot swapon)
-	defargcmds+=(systool tdrop termite test tic tload transmission-cli)
-	defargcmds+=(transmission-create transmission-daemon transmission-edit)
-	defargcmds+=(transmission-get transmission-gtk transmission-qt)
-	defargcmds+=(transmission-remote transmission-remote-cli)
-	defargcmds+=(transmission-remote-cli transmission-remote-gtk)
-	defargcmds+=(transmission-show transset-df updatedb urxvtc urxvtcd)
-	defargcmds+=(urxvtd vanitygen vimpager x11vnc xbindkeys)
-	defargcmds+=(xsel youtube-dl)
-	defargcmds+=(${$(print -r - /usr/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
+	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
+	gnu_generic_cmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
+	gnu_generic_cmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
+	gnu_generic_cmds+=(ci co col colordiff compton configure conky cower cpanm)
+	gnu_generic_cmds+=(cppcheck cpulimit crontab ctags curl define dmidecode)
+	gnu_generic_cmds+=(dumpasn1 expac fasd file flac2all fusermount-glusterfs)
+	gnu_generic_cmds+=(fusermount3 elftoc free fzf gnome-keyring-daemon gpg-agent)
+	gnu_generic_cmds+=(help2man highlight hping hsetroot icdiff install keyring)
+	gnu_generic_cmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
+	gnu_generic_cmds+=(mpd muttprint mv named neomutt netstat netstat newsbeuter)
+	gnu_generic_cmds+=(node nohup objconv objdump oomox-cli optipng pacconf)
+	gnu_generic_cmds+=(pactree paste pisg pstree qemu-img qemu-nbd reptyr resolvconf)
+	gnu_generic_cmds+=(rfc rg rlwrap rmdir rmlint rst2man rst2man2 saldl scan-build)
+	gnu_generic_cmds+=(seq shred sox split stat st stjerm strings supybot swapon)
+	gnu_generic_cmds+=(systool tdrop termite test tic tload transmission-cli)
+	gnu_generic_cmds+=(transmission-create transmission-daemon transmission-edit)
+	gnu_generic_cmds+=(transmission-get transmission-gtk transmission-qt)
+	gnu_generic_cmds+=(transmission-remote transmission-remote-cli)
+	gnu_generic_cmds+=(transmission-remote-cli transmission-remote-gtk)
+	gnu_generic_cmds+=(transmission-show transset-df updatedb urxvtc urxvtcd)
+	gnu_generic_cmds+=(urxvtd vanitygen vimpager x11vnc xbindkeys)
+	gnu_generic_cmds+=(xsel youtube-dl)
+	gnu_generic_cmds+=(${$(print -r - /usr/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
 
 	if type cgasm &>/dev/null; then
 		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
@@ -652,7 +652,18 @@ fi
 	modprobe_str+="${kmods[*]}"
 	modprobe_str+=$')" -- '
 
-	() for 1 { compdef _gnu_generic "$1"; } $defargcmds
+	() for 1 {
+		if ! type -f _${1##*-} &>/dev/null; then
+			compdef _gnu_generic ${1##*-}
+		fi
+		compdef $1=${1##*-}
+	} $nacl_cmds
+	() for 1 {
+		if ! type -f _$1 &>/dev/null; then
+			compdef _gnu_generic $1
+		fi
+	} $gnu_generic_cmds
+
 	compdef "$cgasm_str" cgasm
 	compdef "$dgpg_str" dgpg
 	compdef "$hi_str" hi
@@ -660,6 +671,7 @@ fi
 	compdef "$modprobe_str" modprobe
 	compdef "$qpc_str" qpc
 	compdef "$reptyr_str" reptyr
+
 }
 
 compdef _fman fman
@@ -675,10 +687,6 @@ compdef _scrs scrs
 compdef _scrs pscrs
 compdef _uscrs uscrs
 compdef _uscrs puscrs
-# compdef _systemctl_status scrs
-# compdef _systemctl_status pscrs
-# compdef _systemctl_status uscrs
-# compdef _systemctl_status puscrs
 compdef _texinfo info
 compdef _vim v
 compdef _pip pip
@@ -709,24 +717,24 @@ hash -d d="${P:-/store/code/projects}/linux/Documentation"
 hash -d djzomg="/sdxc/Music/djzomg"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
-hash -d g="${P:-/store/code/projects}/secure-systems-lab/lind_project/lind/lind_glibc"
+hash -d g="/usr/lind_project/lind/lind_glibc"
 hash -d git="${HOME}/git"
 hash -d hdd="/run/media/alyptik/toshiba1TB"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
 hash -d k="${P:-/store/code/projects}/kernel"
-hash -d l="${P:-/store/code/projects}/linux"
-hash -d lind="${P:-/store/code/projects}/secure-systems-lab/lind_project"
+hash -d l="/usr/lind_project"
+hash -d linux="${P:-/store/code/projects}/linux"
 hash -d magnets="${C:-/store/dotfiles}/magnets"
 hash -d man="${C:-/store/dotfiles}/man"
 hash -d music="/store/music"
-hash -d n="${P:-/store/code/projects}/secure-systems-lab/lind_project/native_client"
+hash -d n="/usr/lind_project/native_client"
 hash -d nginx="/etc/nginx"
 hash -d omz="/usr/share/oh-my-zsh"
 hash -d p="${P:-/store/code/projects}"
 hash -d plugins="/usr/share/oh-my-zsh/plugins"
 hash -d prose="/store/writing"
-hash -d r="${P:-/store/code/projects}/secure-systems-lab/lind_project/repy/repy"
+hash -d r="/usr/lind_project/repy/repy"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
 hash -d s="/sdxc/school"
