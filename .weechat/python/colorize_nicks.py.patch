@@ -1,17 +1,24 @@
-diff --git a/colorize_nicks.py b/colorize_nicks.py
-index 55b1b2fc279987ed55..6b2c5ad2ad60650f75 100644
---- a/colorize_nicks.py
+diff --git a/colorize_nicks.py.orig b/colorize_nicks.py
+index bae61fbc98765073a5..62c8781400b9f30352 100644
+--- a/colorize_nicks.py.orig
 +++ b/colorize_nicks.py
-@@ -87,7 +87,7 @@ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
+@@ -89,11 +89,12 @@ SCRIPT_VERSION = "26"
+ SCRIPT_LICENSE = "GPL"
+ SCRIPT_DESC    = "Use the weechat nick colors in the chat area"
  
  # Based on the recommendations in RFC 7613. A valid nick is composed
  # of anything but " ,*?.!@".
--VALID_NICK = r'([@~&!%+:​-])?([^\s,\*\?\.!@:\'"%#\&]+›?)'
+-VALID_NICK = r'([@~&!%+-])?([^\s,\*?\.!@]+)'
++#  VALID_NICK = r'([@~&!%+-])?([^\s,\*?\.!@]+)'
 +VALID_NICK = r'([@~&!%+-])?([^\s,\*\?\.!@:›»%#\&\'"\+]*[^\s,\*\?\.!@:›»%#\&\'"\+\]])'
  valid_nick_re = re.compile(VALID_NICK)
  ignore_channels = []
  ignore_nicks = []
-@@ -129,7 +129,7 @@ def colorize_config_init():
+ 
+ # Dict with every nick on every channel with its color as lookup value
+@@ -131,11 +132,11 @@ def colorize_config_init():
+         "string", "Comma separated list of nicks", "", 0, 0,
+         "so,root", "so,root", 0, "", "", "", "", "", "")
      colorize_config_option["min_nick_length"] = weechat.config_new_option(
          colorize_config_file, section_look, "min_nick_length",
          "integer", "Minimum length nick to colorize", "",
@@ -20,7 +27,11 @@ index 55b1b2fc279987ed55..6b2c5ad2ad60650f75 100644
      colorize_config_option["colorize_input"] = weechat.config_new_option(
          colorize_config_file, section_look, "colorize_input",
          "boolean", "Whether to colorize input", "", 0,
-@@ -142,6 +142,10 @@ def colorize_config_init():
+         0, "off", "off", 0, "", "", "", "", "", "")
+     colorize_config_option["ignore_tags"] = weechat.config_new_option(
+@@ -144,10 +145,14 @@ def colorize_config_init():
+         "", "", 0, "", "", "", "", "", "")
+     colorize_config_option["greedy_matching"] = weechat.config_new_option(
          colorize_config_file, section_look, "greedy_matching",
          "boolean", "If off, then use lazy matching instead", "", 0,
          0, "on", "on", 0, "", "", "", "", "", "")
@@ -31,7 +42,11 @@ index 55b1b2fc279987ed55..6b2c5ad2ad60650f75 100644
      colorize_config_option["ignore_nicks_in_urls"] = weechat.config_new_option(
          colorize_config_file, section_look, "ignore_nicks_in_urls",
          "boolean", "If on, don't colorize nicks inside URLs", "", 0,
-@@ -212,33 +216,50 @@ def colorize_cb(data, modifier, modifier_data, line):
+         0, "off", "off", 0, "", "", "", "", "", "")
+ 
+@@ -214,45 +219,63 @@ def colorize_cb(data, modifier, modifier_data, line):
+ 
+         # Check that nick is in the dictionary colored_nicks
          if nick in colored_nicks[buffer]:
              nick_color = colored_nicks[buffer][nick]
  
@@ -108,7 +123,8 @@ index 55b1b2fc279987ed55..6b2c5ad2ad60650f75 100644
                  nick_color = colored_nicks[buffer][nick]
                  # The two .? are in case somebody writes "nick:", "nick,", etc
                  # to address somebody
-@@ -247,6 +268,7 @@ def colorize_cb(data, modifier, modifier_data, line):
+                 regex = r"(\A|\s).?(%s).?(\Z|\s)" % re.escape(nick)
+                 match = re.search(regex, line)
                  if match is not None:
                      new_line = line[:match.start(2)] + nick_color+nick+reset + line[match.end(2):]
                      line = new_line
@@ -116,3 +132,5 @@ index 55b1b2fc279987ed55..6b2c5ad2ad60650f75 100644
      return line
  
  def colorize_input_cb(data, modifier, modifier_data, line):
+     ''' Callback that does the colorizing in input '''
+ 

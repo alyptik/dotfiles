@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if ((!$#)); then
+	set -- "/ayy/.supy/mnrmbaught.conf"
+fi
+
+exec /ayy/.local/bin/supybot --disable-multiprocessing "$@"
