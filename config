@@ -5,38 +5,37 @@ Host *
 	ForwardAgent no
 	ForwardX11 no
 	KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
-	#LocalForward localhost:8888 127.0.0.1:80
-	#RhostsRSAAuthentication yes
-	#RSAAuthentication yes
+	# LocalForward localhost:8888 127.0.0.1:80
+	# RhostsRSAAuthentication yes
+	# RSAAuthentication yes
 	PasswordAuthentication yes
 	HostbasedAuthentication yes
 	GSSAPIAuthentication no
 	GSSAPIDelegateCredentials no
-	#BatchMode yes
+	# BatchMode yes
 	CheckHostIP yes
 	AddressFamily any
 	ConnectTimeout 0
-	#CheckHostIP yes
-	#StrictHostKeyChecking ask
+	# CheckHostIP yes
+	# StrictHostKeyChecking ask
 	StrictHostKeyChecking no
 	IdentityFile ~/.ssh/id_gpg
-	#IdentityFile ~/.ssh/id_gpg
-	#IdentityFile ~/.ssh/id_dsa
-	#IdentityFile ~/.ssh/id_ecdsa
-	#IdentityFile ~/.ssh/id_ed25519
+	# IdentityFile ~/.ssh/id_dsa
+	# IdentityFile ~/.ssh/id_ecdsa
+	# IdentityFile ~/.ssh/id_ed25519
 	Port 22
 	Protocol 2
-	#Ciphers +chacha20-poly1305@openssh.com
-	#Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
-	#MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
+	# Ciphers +chacha20-poly1305@openssh.com
+	# Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
+	# MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
 	EscapeChar ~
 	Tunnel yes
-	#Tunnel ethernet
+	# Tunnel ethernet
 	TunnelDevice any:any
 	PermitLocalCommand yes
-	#ProxyCommand ssh -q -W %h:%p gateway.example.com
-	#ProxyCommand ssh 98.150.136.16 nc %h %p
-	#RekeyLimit 1G 1h
+	# ProxyCommand ssh -q -W %h:%p gateway.example.com
+	# ProxyCommand ssh 98.150.136.16 nc %h %p
+	# RekeyLimit 1G 1h
 
 Host mnh
 	Hostname nexthendr.tk

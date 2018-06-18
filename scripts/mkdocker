@@ -1,0 +1,23 @@
+#!/bin/sh
+
+ret=0
+cwd="$PWD"
+
+trap 'cd "$cwd"; exit "$ret"' EXIT
+
+export LIND_PREFIX="${LIND_PREFIX:-$HOME}"
+export LIND_BASE="${LIND_BASE:-$LIND_PREFIX/lind_project}"
+export LIND_SRC="${LIND_SRC:-$LIND_PREFIX/lind_project/lind}"
+export LIND_MONITOR="${LIND_MONITOR:-$LIND_PREFIX/lind_project/reference_monitor}"
+export NACL_SDK_ROOT="${NACL_SDK_ROOT:-$LIND_PREFIX/lind_project/lind/repy/sdk}"
+export REPY_PATH="${REPY_PATH:-$LIND_PREFIX/lind_project/lind/repy}"
+export PYTHON="${PYTHON:-python2}"
+export PNACLPYTHON="${PNACLPYTHON:-python2}"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
+
+
+cd "$LIND_BASE" || exit 1
+
+docker build -t alyptik/lind:base ./docker/base
+docker build -t alyptik/lind:prebuiltsdk ./docker/prebuiltsdk/
+docker build --cache-from=alyptik/lind:prebuiltsdk -t alyptik/lind:latest ./docker/prebuiltsdk/
