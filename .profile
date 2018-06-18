@@ -3,11 +3,12 @@
 # .profile - environment configuration
 
 # conditionals
-if test x"$(hostname)" = x"fedora" -o x"$(hostname)" = x"compiler"; then TERM=screen-256color; fi
+if test "$(hostname)" = fedora -o "$(hostname)" = compiler; then TERM=screen-256color; fi
+if test "$(whoami)" = jp; then locale=C.utf8; else locale=en_US.UTF-8; fi
 # Disable toggling XON/XOFF with ^S/^Q
 if test -t 0; then stty -ixon; fi
 # job number for threaded programs
-if type nproc >/dev/null 2>&1; then NPROC="$(nproc)"; else NPROC=4; fi
+if command -v nproc >/dev/null 2>&1; then NPROC="$(nproc)"; else NPROC=4; fi
 export NPROC NCPU="$NPROC" nproc="$NPROC" ncpu="$NPROC"
 
 # directory shortcut environment variables
@@ -130,24 +131,24 @@ export _JAVA_OPTIONS
 # Configure KWin to use OpenGL ES
 export KWIN_COMPOSE="O2ES"
 export LADSPA_PATH="/usr/lib/ladspa:/usr/local/lib/ladspa:$HOME/ladspa:/store/audio/ladspa"
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
+export LANG="$locale"
+export LANGUAGE="$locale"
 unset LC_ALL
-# export LC_ALL=en_US.UTF-8
-export LC_COLLATE=C
-# export LC_COLLATE=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LC_NUMERIC=en_US.UTF-8
-export LC_TIME=en_US.UTF-8
-export LC_MONETARY=en_US.UTF-8
-export LC_MESSAGES=en_US.UTF-8
-export LC_PAPER=en_US.UTF-8
-export LC_NAME=en_US.UTF-8
-export LC_ADDRESS=en_US.UTF-8
-export LC_TELEPHONE=en_US.UTF-8
-export LC_MEASUREMENT=en_US.UTF-8
-export LC_IDENTIFICATION=en_US.UTF-8
-export LOCALE=C
+# export LC_ALL="$locale"
+export LC_COLLATE="C"
+# export LC_COLLATE="$locale"
+export LC_CTYPE="$locale"
+export LC_NUMERIC="$locale"
+export LC_TIME="$locale"
+export LC_MONETARY="$locale"
+export LC_MESSAGES="$locale"
+export LC_PAPER="$locale"
+export LC_NAME="$locale"
+export LC_ADDRESS="$locale"
+export LC_TELEPHONE="$locale"
+export LC_MEASUREMENT="$locale"
+export LC_IDENTIFICATION="$locale"
+export LOCALE="C"
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:$HOME/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:$HOME/lxvst:/store/audio/lxvst"
 # export LESS=MNRXis
@@ -180,7 +181,9 @@ PATH="$HOME/.cargo/bin:/opt/intel/bin:/store/config/scripts:$PATH"
 PATH="$HOME/.node_modules/bin:$HOME/perl5/bin:$PATH"
 PATH="$HOME/bin:$HOME/.zsh.d/plugins/zplug/bin:$PATH"
 PATH="$HOME/.zplug/bin:$HOME/bin/asski:$LINUX/scripts:$PATH"
-PATH="$(ruby -rrubygems -e "puts Gem.user_dir")/bin:$PATH"
+if commmand -v ruby >/dev/null 2>&1; then
+	PATH="$(ruby -rrubygems -e "puts Gem.user_dir")/bin:$PATH"
+fi
 # PATH="/usr/lib/distcc/bin:$PATH"
 PATH="/usr/lib/ccache/bin:$PATH"
 PATH="/opt/cross/bin:$PATH"

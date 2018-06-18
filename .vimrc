@@ -438,6 +438,7 @@ au BufNewFile,BufReadPost *.vapi setf cs
 au BufNewFile,BufReadPost *.gtkaml setf cs
 au BufNewFile,BufReadPost *.gtkon setf cs
 au BufNewFile,BufReadPost *.md set filetype=markdown
+au BufNewFile,BufReadPost PKGBUILD set filetype=sh
 
 " Fallback
 " au BufNewFile,BufReadPost * setf erlang

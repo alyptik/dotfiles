@@ -1,189 +1,197 @@
 Host *
-    ControlPath ~/.ssh/sockets/%r@%h-%p
-    HashKnownHosts no
-    VisualHostKey yes
-    ForwardAgent no
-    ForwardX11 no
-    KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
-    #LocalForward localhost:8888 127.0.0.1:80
-    #RhostsRSAAuthentication yes
-    #RSAAuthentication yes
-    PasswordAuthentication yes
-    HostbasedAuthentication yes
-    GSSAPIAuthentication no
-    GSSAPIDelegateCredentials no
-    #BatchMode yes
-    CheckHostIP yes
-    AddressFamily any
-    ConnectTimeout 0
-    #CheckHostIP yes
-    #StrictHostKeyChecking ask
-    StrictHostKeyChecking no
-    IdentityFile ~/.ssh/id_gpg
-    #IdentityFile ~/.ssh/id_gpg
-    #IdentityFile ~/.ssh/id_dsa
-    #IdentityFile ~/.ssh/id_ecdsa
-    #IdentityFile ~/.ssh/id_ed25519
-    Port 22
-    Protocol 2
-    #Ciphers +chacha20-poly1305@openssh.com
-    #Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
-    #MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
-    EscapeChar ~
-    Tunnel yes
-    #Tunnel ethernet
-    TunnelDevice any:any
-    PermitLocalCommand yes
-    #ProxyCommand ssh -q -W %h:%p gateway.example.com
-    #ProxyCommand ssh 98.150.136.16 nc %h %p
-    #RekeyLimit 1G 1h
+	ControlPath ~/.ssh/sockets/%r@%h-%p
+	HashKnownHosts no
+	VisualHostKey yes
+	ForwardAgent no
+	ForwardX11 no
+	KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
+	#LocalForward localhost:8888 127.0.0.1:80
+	#RhostsRSAAuthentication yes
+	#RSAAuthentication yes
+	PasswordAuthentication yes
+	HostbasedAuthentication yes
+	GSSAPIAuthentication no
+	GSSAPIDelegateCredentials no
+	#BatchMode yes
+	CheckHostIP yes
+	AddressFamily any
+	ConnectTimeout 0
+	#CheckHostIP yes
+	#StrictHostKeyChecking ask
+	StrictHostKeyChecking no
+	IdentityFile ~/.ssh/id_gpg
+	#IdentityFile ~/.ssh/id_gpg
+	#IdentityFile ~/.ssh/id_dsa
+	#IdentityFile ~/.ssh/id_ecdsa
+	#IdentityFile ~/.ssh/id_ed25519
+	Port 22
+	Protocol 2
+	#Ciphers +chacha20-poly1305@openssh.com
+	#Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
+	#MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
+	EscapeChar ~
+	Tunnel yes
+	#Tunnel ethernet
+	TunnelDevice any:any
+	PermitLocalCommand yes
+	#ProxyCommand ssh -q -W %h:%p gateway.example.com
+	#ProxyCommand ssh 98.150.136.16 nc %h %p
+	#RekeyLimit 1G 1h
 
 Host mnh
-    Hostname nexthendr.tk
-    User mnrmnaugh
-    AddressFamily inet
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	Hostname nexthendr.tk
+	User mnrmnaugh
+	AddressFamily inet
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host nh
-    Hostname nexthendr.tk
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	Hostname nexthendr.tk
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host vm
-    Hostname 192.168.10.2
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	Hostname 192.168.10.2
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host rvm
-    Hostname 192.168.10.2
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	Hostname 192.168.10.2
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host aur.archlinux.org
-    User aur
-    CheckHostIP yes
-    IdentityFile ~/.ssh/aur
+	User aur
+	CheckHostIP yes
+	IdentityFile ~/.ssh/aur
 
 Host github.com
-    Hostname ssh.github.com
-    Port 443
-    User alyptik
-    CheckHostIP yes
-    IdentityFile ~/.ssh/id_gpg
+	Hostname ssh.github.com
+	Port 443
+	User alyptik
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
 
 Host asus
-    HostName 192.168.1.2
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.2
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host surface
-    HostName 192.168.1.98
-    Port 22
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.98
+	Port 22
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host rsurface
-    HostName 192.168.1.98
-    Port 22
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.98
+	Port 22
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host linksys
-    HostName 192.168.1.1
-    Port 22
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.1
+	Port 22
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host wifi
-    HostName 192.168.1.95
-    Port 22
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.95
+	Port 22
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host ayy
-    HostName alyp.tk
-    Port 22
-    User ayy
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName alyp.tk
+	Port 22
+	User ayy
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host rarch
-    HostName alyp.tk
-    Port 22
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName alyp.tk
+	Port 22
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host earch
-    HostName alyp.tk
-    Port 22
-    User alyptik
-    CheckHostIP yes
-    IdentityFile ~/.ssh/id_gpg
+	HostName alyp.tk
+	Port 22
+	User alyptik
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
 
 Host arch
-    HostName 192.168.1.99
-    Port 22
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.99
+	Port 22
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host arch
-    HostName 192.168.1.99
-    Port 22
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.99
+	Port 22
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host http
-    HostName 192.168.1.99
-    Port 22
-    User http
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 192.168.1.99
+	Port 22
+	User http
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host alyp.tk
-    HostName alyp.tk
-    Port 22
-    User http
-    CheckHostIP yes
-    IdentityFile ~/.ssh/id_gpg
+	HostName alyp.tk
+	Port 22
+	User http
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
 
 Host fedora
-    HostName 107.170.203.174
-    Port 22
-    User alyptik
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 107.170.203.174
+	Port 22
+	User alyptik
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host rfedora
-    HostName 107.170.203.174
-    Port 22
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 107.170.203.174
+	Port 22
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host debian
-    HostName 162.243.141.90
-    Port 22
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 162.243.141.90
+	Port 22
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 Host bsd
-    HostName 104.236.172.97
-    Port 22
-    User root
-    CheckHostIP no
-    IdentityFile ~/.ssh/id_gpg
+	HostName 104.236.172.97
+	Port 22
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host nyu
+	Hostname nyu.wtf
+	# Hostname 216.165.113.156
+	Port 22
+	User jp
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
 
 # vi:ft=sshconfig:

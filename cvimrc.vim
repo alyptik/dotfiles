@@ -64,3 +64,5 @@ map ' scrollPageDown
 map ; scrollPageUp
 map <A-'> nextTab
 map <A-;> previousTab
+map <Enter> scrollDown
+map <BS> scrollUp
