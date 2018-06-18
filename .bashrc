@@ -46,8 +46,6 @@ shopt -s expand_aliases autocd hostcomplete histappend
 # shellcheck disable=SC1090 disable=SC1091
 [[ -f "${HOME}/.fzf.bash" ]] && . "${HOME}/.fzf.bash"
 # shellcheck disable=SC1090 disable=SC1091
-[[ -f "${HOME}/.aliases" ]] && . "${HOME}/.aliases"
-# shellcheck disable=SC1090 disable=SC1091
 [[ -f "${HOME}/.bash_funcs" ]] && . "${HOME}/.bash_funcs"
 
 HISTIGNORE='history*'
@@ -100,7 +98,11 @@ fi
 
 ## Custom which/fh for bash
 type fasd >/dev/null 2>&1 && eval "$(fasd --init auto)"
-unset -f fh 2>/dev/null
+unset -f d fh 2>/dev/null
+
+# shellcheck disable=SC1090 disable=SC1091
+[[ -f "${HOME}/.aliases" ]] && . "${HOME}/.aliases"
+
 function fh () {
 	history | \
 		fzf +s --tac | \
