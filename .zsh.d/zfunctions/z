@@ -1,13 +1,14 @@
+local cwd
+cwd="$PWD"
+
 if ((!$#)); then
-	cd "$(fasd -ld 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
+	cd $(fasd -ld 2>&1 | sed "/${PWD:t}/ d" | fzf +s --tac --query "$_last_z_args" | sed 's/^[0-9,.]* *//')
 	return
 fi
 
-local cwd
-cwd="$PWD"
-_last_z_args=("$@")
+_last_z_args="$*"
 fasd_cd "$@"
+
 if [[ "$cwd" == "$PWD" ]]; then
-	# cd $(fasd -ld 2>&1 | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')
 	cd $(fasd -ld 2>&1 | sed "/${PWD:t}/ d" | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')
 fi

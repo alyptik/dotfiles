@@ -89,8 +89,8 @@ export CLICOLOR=1 REPORTTIME=5
 # History stuff
 type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 # ^b: history expansion ^f: quick history substitution #: comment character
-histchars=$'\2\6#'
-# histchars='!^#'
+histchars='!^#'
+# histchars=$'\2\6#'
 HISTFILE="$HOME/.zsh_history"
 
 # zmodules
@@ -126,33 +126,13 @@ HISTFILE="$HOME/.zsh_history"
 
 # zsh syntax highlighting
 #
-#AUTOPAIR_INHIBIT_INIT=${AUTOPAIR_INHIBIT_INIT:-}
-#AUTOPAIR_BETWEEN_WHITESPACE=${AUTOPAIR_BETWEEN_WHITESPACE:-}
-typeset -gA AUTOPAIR_PAIRS
-#AUTOPAIR_PAIRS=('`' '`' "'" "'" '"' '"' '{' '}' '[' ']' '(' ')' '<' '>')
-AUTOPAIR_PAIRS=('`' '`' "'" "'" '"' '"' '{' '}' '[' ']' '(' ')')
-## For example, if AUTOPAIR_LBOUNDS[braces]="[a-zA-Z]", then braces
-## {([) won't be autopaired if the cursor follows an alphabetical character.
-## Individual delimiters can be used too. Setting
-## AUTOPAIR_RBOUNDS['{']="[0-9]" will cause { specifically to not be
-## autopaired when the cursor precedes a number.
-typeset -gA AUTOPAIR_LBOUNDS
-AUTOPAIR_LBOUNDS=('`' '`')
-AUTOPAIR_LBOUNDS[all]='[.:/\!]'
-AUTOPAIR_LBOUNDS[quotes]='[]})a-zA-Z0-9]'
-AUTOPAIR_LBOUNDS[braces]=''
-AUTOPAIR_LBOUNDS["'"]="'"
-typeset -gA AUTOPAIR_RBOUNDS
-AUTOPAIR_RBOUNDS[all]='[[{(<,.:?/%$!a-zA-Z0-9]'
-AUTOPAIR_RBOUNDS[quotes]='[a-zA-Z0-9]'
-AUTOPAIR_RBOUNDS[braces]=''
-## Array declaring active highlighters names.
+ZSH_HIGHLIGHT_PATTERNS+=('rm -rf' 'fg=white,bold,bg=red')
+# Array declaring active highlighters names.
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets cursor line main pattern regexp root)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line pattern root)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="${ZDOTDIR:-${HOME}/.zsh.d}/plugins/highlighters"
-# ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
 
 # git prompt
 #
@@ -170,8 +150,8 @@ GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
 # Zsh autosuggestions
 #
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=25
-# ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 ## Prefix to use when saving original versions of bound widgets
 ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
 # - `default`: Chooses the most recent match.
@@ -257,17 +237,19 @@ case "$_theme" in
 	fi
 
 	# common PS1 section
-	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]'
-	PS1+='"$(($(sed -n "s/MemFree:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
-	PS1+='/proc/meminfo)/1024))"'
-	PS1+='$reset_color$fg[yellow]/'
-	PS1+='"$(($(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
-	PS1+='/proc/meminfo)/1024))MB"		'
+	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]$(('
+	PS1+='($(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1+='/proc/meminfo) - '
+	PS1+='$(sed -n "s/MemAvailable:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1+='/proc/meminfo))/1024'
+	PS1+='))$reset_color$fg[yellow]/'
+	PS1+='$(($(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
+	PS1+='/proc/meminfo)/1024))MB		'
 	PS1+='$reset_color$fg[magenta]$(</proc/loadavg)")'
 	PS1+='$prompt_newline$bold_color$fg[grey]%}['
 	PS1+='$reset_color$fg[white]%}$$:$PPID %j:%l'
 	PS1+='$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	'
-	PS1+='%D{%a %d %b %I:%M:%S%P} '
+	PS1+='%D{%a %R %Z %Y-%m-%d} '
 	# if root, print the prompt character in red.
 	if ((EUID == 0)); then
 		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{'

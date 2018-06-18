@@ -22,14 +22,14 @@ page="$1"
 shift
 
 if (($#)); then
-	query="+/$(<<<"$*" tr '[[:upper:]]' '[[:lower:]]' \
+	query="p'$(<<<"$*" tr '[[:upper:]]' '[[:lower:]]' \
 		| tr -d '\n' \
 		| od -tx1 \
-		| sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g; s/^ //; s/\\x20/&\*/g')"
+		| sed 's/^[0-9]* //;$ d;s/^/ /;s/ /\\x/g; s/^ //; s/\\x20/&\*/g')'"
 fi
 
 env \
-	MANPAGER="$pager $query" \
+	MANPAGER="$pager$query" \
 	MANWIDTH="$width" \
 	GROFF_NO_SGR=1 \
 	LESS_TERMCAP_se=$'\E[0m' \
