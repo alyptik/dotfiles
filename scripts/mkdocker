@@ -18,6 +18,6 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
 cd "$LIND_BASE" || exit 1
 
 docker image rm -f alyptik/lind:base alyptik/lind:prebuiltsdk alyptik/lind:latest
-docker build --no-cache -t alyptik/lind:base ./docker/base || exit 1
-docker build --no-cache -t alyptik/lind:prebuiltsdk ./docker/prebuiltsdk || exit 1
+docker build -t alyptik/lind:base ./docker/base || exit 1
+docker build -t alyptik/lind:prebuiltsdk ./docker/prebuiltsdk || exit 1
 docker build --cache-from=alyptik/lind:prebuiltsdk -t alyptik/lind:latest ./docker/prebuiltsdk || exit 1
