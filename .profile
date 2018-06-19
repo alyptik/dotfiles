@@ -187,8 +187,8 @@ fi
 # PATH="/usr/lib/distcc/bin:$PATH"
 PATH="/usr/lib/ccache/bin:$PATH"
 PATH="/opt/cross/bin:$PATH"
-PATH="/usr/lind_project/native_client/tools/out/nacl-sdk/bin:$PATH"
-PATH="/usr/lind_project/lind/repy/bin:$PATH"
+PATH="$HOME/lind_project/native_client/tools/out/nacl-sdk/bin:$PATH"
+PATH="$HOME/lind_project/lind/repy/bin:$PATH"
 export PATH
 # shellcheck disable=SC2039
 PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"

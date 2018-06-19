@@ -24,15 +24,16 @@ exec 2<>"$_zsh_error"
 	unsetarr+=(histfcntllock globalexport globcomplete globsubst)
 	unsetarr+=(histignorespace histsavebycopy histverify multios nomatch)
 	unsetarr+=(printexitvalue sharehistory verbose)
-	setarr+=(appendhistory autocd autopushd bareglobqual beep casematch cbases)
-	setarr+=(chaselinks clobber completeinword correct cprecedences equals)
-	setarr+=(extendedglob globassign globdots globstarshort hashlistall)
-	setarr+=(histexpiredupsfirst histignorealldups histignoredups)
-	setarr+=(histlexwords histreduceblanks hup incappendhistory)
-	setarr+=(interactivecomments kshglob kshoptionprint listambiguous)
-	setarr+=(longlistjobs magicequalsubst octalzeroes markdirs menucomplete)
-	setarr+=(monitor multibyte notify pathdirs pipefail promptsubst)
-	setarr+=(pushdignoredups pushdminus pushdtohome rematchpcre)
+	setarr+=(appendhistory autocd autopushd bareglobqual beep casematch)
+	setarr+=(cbases chaselinks clobber completeinword correct cprecedences)
+	setarr+=(equals extendedglob globassign globdots globstarshort)
+	setarr+=(hashlistall histexpiredupsfirst histignorealldups)
+	setarr+=(histignoredups histignoredupshistlexwords histreduceblanks hup)
+	setarr+=(incappendhistory interactivecomments kshglob kshoptionprint)
+	setarr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
+	setarr+=(markdirs menucomplete monitor multibyte notify pathdirs)
+	setarr+=(pipefail promptsubst pushdignoredups pushdminus pushdtohome)
+	setarr+=(rematchpcre transientrprompt)
 	# `setopt IGNORE_CLOSE_BRACES` breaks too many things :'(
 	# setarr+=(ignoreclosebraces)
 	() for 1 { setopt "no$1"; }  $unsetarr
@@ -582,7 +583,7 @@ fi
 	gnu_generic_cmds+=(transmission-show transset-df updatedb urxvtc urxvtcd)
 	gnu_generic_cmds+=(urxvtd vanitygen vimpager x11vnc xbindkeys)
 	gnu_generic_cmds+=(xsel youtube-dl)
-	gnu_generic_cmds+=(${$(print -r - /usr/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
+	gnu_generic_cmds+=(${$(print -r - $HOME/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
 
 	if type cgasm &>/dev/null; then
 		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
@@ -701,24 +702,24 @@ hash -d d="${P:-/store/code/projects}/linux/Documentation"
 hash -d djzomg="/sdxc/Music/djzomg"
 hash -d efi="/boot/efi/EFI"
 hash -d euler="${HOME}/code/euler"
-hash -d g="/usr/lind_project/lind/lind_glibc"
+hash -d g="$HOME/lind_project/lind/lind_glibc"
 hash -d git="${HOME}/git"
 hash -d hdd="/run/media/alyptik/toshiba1TB"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
 hash -d k="${P:-/store/code/projects}/kernel"
-hash -d l="/usr/lind_project"
+hash -d l="$HOME/lind_project"
 hash -d linux="${P:-/store/code/projects}/linux"
 hash -d magnets="${C:-/store/dotfiles}/magnets"
 hash -d man="${C:-/store/dotfiles}/man"
 hash -d music="/store/music"
-hash -d n="/usr/lind_project/native_client"
+hash -d n="$HOME/lind_project/native_client"
 hash -d nginx="/etc/nginx"
 hash -d omz="/usr/share/oh-my-zsh"
 hash -d p="${P:-/store/code/projects}"
 hash -d plugins="/usr/share/oh-my-zsh/plugins"
 hash -d prose="/store/writing"
-hash -d r="/usr/lind_project/repy/repy"
+hash -d r="$HOME/lind_project/repy/repy"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
 hash -d s="/sdxc/school"
