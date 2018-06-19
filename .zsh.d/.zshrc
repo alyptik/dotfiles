@@ -28,7 +28,7 @@ exec 2<>"$_zsh_error"
 	setarr+=(cbases chaselinks clobber completeinword correct cprecedences)
 	setarr+=(equals extendedglob globassign globdots globstarshort)
 	setarr+=(hashlistall histexpiredupsfirst histignorealldups)
-	setarr+=(histignoredups histignoredupshistlexwords histreduceblanks hup)
+	setarr+=(histignoredups histignoredups histlexwords histreduceblanks hup)
 	setarr+=(incappendhistory interactivecomments kshglob kshoptionprint)
 	setarr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
 	setarr+=(markdirs menucomplete monitor multibyte notify pathdirs)
