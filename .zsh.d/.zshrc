@@ -10,7 +10,7 @@ _zsh_error="$(mktemp)"
 exec 9>&2
 exec 2<>"$_zsh_error"
 if [[ -f "$_zsh_error" ]]; then
-	rm -fv "$_zsh_error"
+	rm -f "$_zsh_error"
 else
 	cleanup
 fi
@@ -46,7 +46,7 @@ _show_news=0
 # i'm-inside-emacs initialization when the terminal type is "emacs".
 [[ "$EMACS" == t ]] && unsetopt zle
 
-Set emacs or vi as default
+# set emacs or vi as default
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
 KEYTIMEOUT=20
 bindkey -v
