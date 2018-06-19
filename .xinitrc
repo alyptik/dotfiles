@@ -49,7 +49,7 @@ pavucontrol &
 udisksctl mount -b "$(findfs LABEL=vm)" &
 (udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 1; pcmanfm /media/microSDXC) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &
-/home/alyptik/bin/scpuled &
+# /home/alyptik/bin/scpuled &
 dbus-update-activation-environment --systemd DISPLAY
 # shellcheck disable=SC2046
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)

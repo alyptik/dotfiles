@@ -1,22 +1,24 @@
 #!/usr/bin/env zsh
 #
-# .zshrc
-#
-# Zsh interactive shell configuration
+# .zshrc - zsh interactive shell configuration
 
-# Catch EXIT, SIGINT, SIGQUIT, SIGTERM, and SIGTRAP signals for clean up
-trap '{ cleanup; trap -; }' USR1 EXIT
+# catch EXIT, SIGINT, SIGQUIT, SIGTERM, and SIGTRAP signals for clean up
+trap '{ cleanup; trap -; }' USR1 EXIT QUIT TERM
 trap '{ cleanup; trap -; kill -INT $$; }' INT
-trap '{ cleanup; trap -; kill -QUIT $$; }' QUIT
-trap '{ cleanup; trap -; kill -TERM $$; }' TERM
-# theme: 0 = clint / 1 = custom PS1 / * = wtf are u doing
-_show_news=0 _theme=1 _zsh_error="$(mktemp)"
-# Redirect errors to a temporary fd, and then append them to a log file
+_zsh_error="$(mktemp)"
+# redirect errors to a temporary fd, and then append them to a log file
 exec 9>&2
 exec 2<>"$_zsh_error"
-[[ -f "$_zsh_error" ]] && rm -f "$_zsh_error" || cleanup
+if [[ -f "$_zsh_error" ]]; then
+	rm -fv "$_zsh_error"
+else
+	cleanup
+fi
+# print arch linux news on startup
+_show_news=0
 
-## Set/unset options
+# setopt arrays
+#
 () {
 	local -a unsetarr setarr
 	unsetarr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
@@ -39,17 +41,16 @@ exec 2<>"$_zsh_error"
 	() for 1 { setopt "no$1"; }  $unsetarr
 	() for 1 { setopt "$1"; } $setarr
 }
-# Emacs 19.29 or thereabouts stopped using a terminal type of "emacs" in
-# shell buffers, and instead sets it to "dumb". Zsh only kicks in its special
-# I'm-inside-emacs initialization when the terminal type is "emacs".
+# emacs 19.29 or thereabouts stopped using a terminal type of "emacs" in
+# shell buffers, and instead sets it to "dumb". zsh only kicks in its special
+# i'm-inside-emacs initialization when the terminal type is "emacs".
 [[ "$EMACS" == t ]] && unsetopt zle
 
-## Set emacs or vi as default
+Set emacs or vi as default
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
-# Initialize _km for ZLE widgets and set initial cursor color
 KEYTIMEOUT=20
-# bindkey -e
 bindkey -v
+# initialize _km for zle widgets and set initial cursor color
 # _km=emacs _emacs=main _vi=
 _km=vi _emacs= _vi=main
 setescapes
@@ -64,6 +65,7 @@ case "$_km" in
 	;;
 esac
 () for 1 { autoload -U "$1" && zle -N "$1"; } select-bracketed select-quoted
+
 # text object for matching characters between matching pairs of brackets
 () for 1 {
 	bindkey -M viopp "$1" select-bracketed;
@@ -75,7 +77,14 @@ esac
 	bindkey -M visual "$1" select-quoted
 } {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}
 
-# Cache setup
+# cache and history stuff
+if type zshreadhist &>/dev/null; then
+       precmd_functions=(zshreadhist $precmd_functions)
+fi
+# ^b: history expansion ^f: quick history substitution #: comment character
+histchars='!^#'
+# histchars=$'\2\6#'
+HISTFILE="$HOME/.zsh_history"
 ZSH_CACHE_DIR="${ZDOTDIR:-$HOME/.zsh.d}/cache"
 [[ ! -d "$ZSH_CACHE_DIR" ]] && mkdir "$ZSH_CACHE_DIR"
 zstyle ':completion:*'			use-cache yes
@@ -87,14 +96,9 @@ zstyle ':history-search-multi-word'	page-size 5
 autoload -U colors && colors
 eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
-# History stuff
-type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
-# ^b: history expansion ^f: quick history substitution #: comment character
-histchars='!^#'
-# histchars=$'\2\6#'
-HISTFILE="$HOME/.zsh_history"
 
-# zmodules
+# modules
+#
 () {
 	local -a au_arr zle_arr zmod_arr zle_cust
 	au_arr+=(edit-command-line expand-absolute-path)
@@ -130,10 +134,8 @@ HISTFILE="$HOME/.zsh_history"
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf' 'fg=white,bold,bg=red')
 # Array declaring active highlighters names.
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets cursor line main pattern regexp root)
-# ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line pattern root)
-# ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="${ZDOTDIR:-${HOME}/.zsh.d}/plugins/highlighters"
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
 
 # git prompt
 #
@@ -148,28 +150,28 @@ GIT_PROMPT_MERGING="%{$fg[magenta]%}⚡︎%{$reset_color%}"
 GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
 GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
 
-# Zsh autosuggestions
+# zsh autosuggestions
 #
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-## Prefix to use when saving original versions of bound widgets
+# prefix to use when saving original versions of bound widgets
 ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
 # - `default`: Chooses the most recent match.
 # - `match_prev_cmd`: Chooses the most recent match whose preceding history
 # ZSH_AUTOSUGGEST_STRATEGY=default
 ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
-# Widgets that modify the buffer and are not found in any of these
+# widgets that modify the buffer and are not found in any of these
 # arrays will fetch a new suggestion after they are invoked.
-# Widgets in this array will clear the suggestion when invoked.
+# widgets in this array will clear the suggestion when invoked.
 # ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=()
-# Widgets in this array will accept the suggestion when invoked.
+# widgets in this array will accept the suggestion when invoked.
 # ZSH_AUTOSUGGEST_ACCEPT_WIDGETS+=()
-# Widgets in this array will execute the suggestion when invoked.
+# widgets in this array will execute the suggestion when invoked.
 ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=()
-# Widgets in this array will partially accept the suggestion when invoked.
+# widgets in this array will partially accept the suggestion when invoked.
 ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=()
-# Widgets in this array will not trigger any custom behavior.
+# widgets in this array will not trigger any custom behavior.
 ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(append-x-selection insert-x-selection)
 ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(yank-x-selection fzf-locate-widget)
 ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(insert-composed-char)
@@ -221,61 +223,45 @@ autoload -U +X bashcompinit && bashcompinit -u
 [[ "$(type _pacman)" =~ "autoload" ]] && autoload -Uz +X _pacman
 [[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
 
-case "$_theme" in
-# builtin clint prompt
-(0)
-	# continue scanning
-	if type prompt_clint_setup &>/dev/null; then
-		prompt_clint_setup || _theme=1
-	fi ;|
+# common PS1 section
+PS1='$prompt_newline$(print -n "$bold_color$fg[grey]['
+# avoid errors if proc isn't mounted
+if [[ -d /proc ]]; then
+	PS1+='$reset_color$fg[green]$((($('
+	PS1+='sed -nr "s/MemTotal:\s+([0-9]+) kB/\1/Ip" /proc/meminfo) - $('
+	PS1+='sed -nr "s/MemAvailable:\s+([0-9]+) kB/\1/Ip" /proc/meminfo))/1024))'
+	PS1+='$reset_color$fg[yellow]/$(($('
+	PS1+='sed -nr "s/MemTotal:\s+([0-9]+) kB/\1/Ip" /proc/meminfo)/1024))MB'
+	PS1+='$bold_color$fg[grey]] [$fg[magenta]$(</proc/loadavg)"'
+else
+	PS1+='$fg[magenta]wat where is /proc"'
+fi
+PS1+='$bold_color$fg[grey]]) $bold_color$fg[grey]%}['
+PS1+='$reset_color$fg[white]%}j%{$bold_color$fg[grey]%}:%{'
+PS1+='$reset_color$fg[white]%}%j %l'
+PS1+='$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%} '
 
-# custom PS1
-(1)
-	# fallback theme if no /proc
-	if [[ ! -d /proc ]]; then
-		prompt_clint_setup
-		break
-	fi
-
-	# common PS1 section
-	PS1='$prompt_newline%{$(echo -en "$reset_color$fg[green]$(('
-	PS1+='($(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
-	PS1+='/proc/meminfo) - '
-	PS1+='$(sed -n "s/MemAvailable:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
-	PS1+='/proc/meminfo))/1024'
-	PS1+='))$reset_color$fg[yellow]/'
-	PS1+='$(($(sed -n "s/MemTotal:[[:space:]]\+\([0-9]\+\) kB/\1/Ip" '
-	PS1+='/proc/meminfo)/1024))MB		'
-	PS1+='$reset_color$fg[magenta]$(</proc/loadavg)")'
-	PS1+='$prompt_newline$bold_color$fg[grey]%}['
-	PS1+='$reset_color$fg[white]%}$$:$PPID %j:%l'
-	PS1+='$bold_color$fg[grey]%}]%{$reset_color$fg[cyan]%}	'
-	PS1+='%D{%a %R %Z %Y-%m-%d} '
-	# if root, print the prompt character in red.
-	if ((EUID == 0)); then
-		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{'
-		PS1+='$bold_color$fg[grey]%}:%{'
-		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{'
-		PS1+='$bold_color$fg[green]%}+${SHLVL}%{'
-		PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{'
-		PS1+='$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{'
-		PS1+='$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
-	# otherwise, print the prompt in cyan.
-	else
-		PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{'
-		PS1+='$bold_color$fg[grey]%}:%{'
-		PS1+='$reset_color$fg[white]%}${SSH_TTY} %{'
-		PS1+='$bold_color$fg[red]%}+${SHLVL}%{'
-		PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~%{'
-		PS1+='$reset_color$fg[yellow]%} $prompt_newline($SHLVL:%!)%{'
-		PS1+='$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
-	fi ;;
-
-# ?????????? how did you hit this wtf
-(*)
-	(sleep 5; print -r - $'\n\nwat\n') &!
-	prompt_clint_setup ;;
-esac
+# prompt char is cyan for normal users
+if ((EUID)); then
+	PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[green]%}%n@%m%{'
+	PS1+='$bold_color$fg[grey]%}:%{$reset_color$fg[white]%}'
+	PS1+='$SSH_TTY %{$bold_color$fg[red]%}+$SHLVL%{'
+	PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~'
+	PS1+='$prompt_newline%{$bold_color$fg[grey]%}(%{'
+	PS1+='$reset_color$fg[white]%}!!%{$bold_color$fg[grey]%}:%{'
+	PS1+='$reset_color$fg[white]%}%!%{$bold_color$fg[grey]%})%{'
+	PS1+='$reset_color$fg[cyan]%} %(!.#.$) %{$reset_color%}'
+else
+	# prompt char is red for root
+	PS1+='$bold_color$fg[grey]%}[%{$bold_color$fg[red]%}%n@%m%{'
+	PS1+='$bold_color$fg[grey]%}:%{$reset_color$fg[white]%}'
+	PS1+='$SSH_TTY %{$bold_color$fg[green]%}+$SHLVL%{'
+	PS1+='$bold_color$fg[grey]%}] %{$bold_color$fg[yellow]%}%~'
+	PS1+='$prompt_newline%{$bold_color$fg[grey]%}(%{'
+	PS1+='$reset_color$fg[white]%}!!%{$bold_color$fg[grey]%}:%{'
+	PS1+='$reset_color$fg[white]%}%!%{$bold_color$fg[grey]%})%{'
+	PS1+='$bold_color$fg[red]%} %(!.#.$) %{$reset_color%}'
+fi
 
 # bash specific
 [[ -f /etc/profile.d/cnf.sh ]] && \
@@ -294,7 +280,9 @@ esac
 #         . /usr/bin/virtualenvwrapper_lazy.sh
 
 # prompt rice
-[[ "$_show_news" -gt 0 && "$(hostname)" != compiler ]] && news_short
+if ((_show_news)) && [[ "$(hostname)" != compiler ]]; then
+	news_short
+fi
 
 # "Is the internet on fire?" status reports
 () {
@@ -333,7 +321,7 @@ if type zplug >/dev/null 2>&1; then
 	# zplug "b4b4r07/zsh-vimode-visual", defer:3
 	# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 	if ! zplug check --verbose; then
-		print - "Install? [y/N]: "
+		print -r - "Install? [y/N]: "
 		if read -sq; then zplug install; fi
 	fi
 	zplug load --verbose
@@ -346,12 +334,14 @@ aliases[=]='noglob ='
 safetytoggle -n
 
 # 'literal trigger' & fzf-completion keybind to start fuzzy completion
-export FZF_COMPLETION_TRIGGER="//"
-# export FZF_COMPLETION_TRIGGER="**"
+export FZF_COMPLETION_TRIGGER="**"
+# export FZF_COMPLETION_TRIGGER="//"
 export fzf_default_completion="complete-word"
 # export fzf_default_completion="expand-or-complete-prefix"
 
-# bind P and N for EMACS mode
+# custom bindkey commands
+#
+# oh god prepare yourself
 bindkey -M emacs "\C-p" history-substring-search-up
 bindkey -M emacs "\C-n" history-substring-search-down
 # for inside tmux
@@ -361,15 +351,17 @@ bindkey -M emacs "\e[4~" end-of-line
 bindkey -M emacs "\e\e[B" end-of-line
 bindkey -M emacs "\C-k" kill-whole-line
 ## bind k and j for VI mode
-#bindkey -M vicmd "k" history-substring-search-up
-#bindkey -M vicmd "j" history-substring-search-down
+bindkey -M vicmd "k" history-substring-search-up
+bindkey -M vicmd "j" history-substring-search-down
+# bindkey -M vicmd "k" up-line-or-beginning-search
+# bindkey -M vicmd "j" down-line-or-beginning-search
 bindkey -M vicmd "u" undo
 # bindkey -M vicmd "u" vi-undo-change
-bindkey -M vicmd "k" up-line-or-beginning-search
-bindkey -M vicmd "j" down-line-or-beginning-search
 bindkey -M vicmd "Y" vi-yank-eol
 bindkey -M vicmd "P" insert-x-selection
 bindkey -M vicmd "p" append-x-selection
+bindkey -M viins "\C-p" history-substring-search-up
+bindkey -M viins "\C-n" history-substring-search-down
 bindkey -M viins "jj" vi-cmd-mode
 
 # vimode-visual bindings
@@ -425,13 +417,10 @@ if [[ -n "${(M)keymaps#vivis}" ]]; then
 	_modes+=(vivis)
 fi
 
-# oh god prepare yourself
-#
-# custom bindkey commands
 () for 1 {
 	# use \2 and \6 for history expansion
-	bindkey -M "$1" "\C-b" self-insert
-	bindkey -M "$1" "\C-f" self-insert
+	# bindkey -M "$1" "\C-b" self-insert
+	# bindkey -M "$1" "\C-f" self-insert
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" zle-run-help
@@ -488,15 +477,15 @@ fi
 	bindkey -M "$1" "\e[1;3A" end-of-line
 	bindkey -M "$1" "\e[1;2A" end-of-line
 	bindkey -M "$1" "\C-e" end-of-line
-	# bind UP and DOWN arrow keys (compatibility fallback
-	# for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
+	# bind up and down arrow keys (compatibility fallback
+	# for ubuntu 12.04, fedora 21, and macosx 10.9 users)
 	bindkey -M "$1" "$terminfo[kcuu1]" history-substring-search-up
 	bindkey -M "$1" "$terminfo[kcud1]" history-substring-search-down
 	bindkey -M "$1" "\e[5~" history-substring-search-up
 	bindkey -M "$1" "\e[6~" history-substring-search-down
 	bindkey -M "$1" "\e-" history-substring-search-up
 	bindkey -M "$1" "\e=" history-substring-search-down
-	# Fixes from http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
+	# fixes from http://zsh.sourceforge.net/faq/zshfaq03.html#l25
 	bindkey -M "$1" "$(echotc kl)" backward-char
 	bindkey -M "$1" "$(echotc kr)" forward-char
 	bindkey -M "$1" "$(echotc ku)" up-line-or-beginning-search
@@ -519,21 +508,20 @@ fi
 	bindkey -M "$1" "\eOS" zle-compdef
 	bindkey -M "$1" "\e[P" delete-char
 	bindkey -M "$1" "\C-r" redo
-	## Call fman() on current cmdline after word-splitting
+	# call fman() on current cmdline after word-splitting
 	bindkey -M "$1" "\e/" zle-fman
 	bindkey -M "$1" "\e?" where-is
 	bindkey -M "$1" "^Xi" insert-unicode-char
 	bindkey -M "$1" "\C-x\C-i" insert-unicode-char
 	bindkey -M "$1" "\e>" autosuggest-clear
-	## F5: Toggle keymap
-	# bindkey -M "$1" "\ek" zle-toggle-keymap
+	# f5: toggle keymap
 	bindkey -M "$1" "\e[15~" zle-toggle-keymap
 	bindkey -M "$1" "\e[17~" yank-x-selection
 	bindkey -M "$1" "\e[18~" insert-x-selection
 	bindkey -M "$1" "\e[" yank-x-selection
 	bindkey -M "$1" "\e]" insert-x-selection
 	# bindkey -M "$1" "\e[18~" append-x-selection
-	# F9: Insert composed character
+	# f9: insert composed character
 	# bindkey -M emacs "\e[19~" insert-composed-char
 
 	bindkey -M "$1" "\e;" fzf-completion
@@ -546,8 +534,7 @@ fi
 	bindkey -M "$1" "\er" fzf-history-widget
 	bindkey -M "$1" "\C-t" transpose-words
 	bindkey -M "$1" "\et" fzf-file-widget
-	## A Zsh Do What I Mean key. Attempts to predict what you will want to do next.
-	## Usage: Type a command and hit control-u and zsh-dwim will attempt to transform your command.
+	# f8: type a command and zsh-dwim will attempt to transform your command.
 	if zle -la | grep -q dwim; then
 		bindkey -M "$1" "\C-u" dwim
 		bindkey -M "$1" "\e[19~" dwim
@@ -561,6 +548,7 @@ fi
 	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
 	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds
 
+	gnu_generic_cmds+=(${$(print -r - $HOME/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
 	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
 	gnu_generic_cmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
 	gnu_generic_cmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
@@ -570,20 +558,19 @@ fi
 	gnu_generic_cmds+=(fusermount3 elftoc free fzf gnome-keyring-daemon gpg-agent)
 	gnu_generic_cmds+=(help2man highlight hping hsetroot icdiff install keyring)
 	gnu_generic_cmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
-	gnu_generic_cmds+=(mpd muttprint mv named neomutt netstat netstat newsbeuter)
-	gnu_generic_cmds+=(node nohup objconv objdump oomox-cli optipng pacconf)
-	gnu_generic_cmds+=(pactree paste pisg pstree qemu-img qemu-nbd reptyr resolvconf)
-	gnu_generic_cmds+=(rfc rg rlwrap rmdir rmlint rst2man rst2man2 saldl scan-build)
-	gnu_generic_cmds+=(seq shred sox split stat st stjerm strings supybot swapon)
-	gnu_generic_cmds+=(systool tdrop termite test tic tload transmission-cli)
-	gnu_generic_cmds+=(transmission-create transmission-daemon transmission-edit)
-	gnu_generic_cmds+=(transmission-get transmission-gtk transmission-qt)
-	gnu_generic_cmds+=(transmission-remote transmission-remote-cli)
-	gnu_generic_cmds+=(transmission-remote-cli transmission-remote-gtk)
-	gnu_generic_cmds+=(transmission-show transset-df updatedb urxvtc urxvtcd)
-	gnu_generic_cmds+=(urxvtd vanitygen vimpager x11vnc xbindkeys)
-	gnu_generic_cmds+=(xsel youtube-dl)
-	gnu_generic_cmds+=(${$(print -r - $HOME/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
+	gnu_generic_cmds+=(mountpoint mpd muttprint mv named neomutt netstat netstat)
+	gnu_generic_cmds+=(newsbeuter node nohup objconv objdump oomox-cli optipng)
+	gnu_generic_cmds+=(pacconf pactree paste pisg pstree qemu-img qemu-nbd reptyr)
+	gnu_generic_cmds+=(resolvconf rfc rg rlwrap rmdir rmlint rst2man rst2man2)
+	gnu_generic_cmds+=(saldl scan-build seq shred sox split stat st stjerm)
+	gnu_generic_cmds+=(strings supybot swapon systool tdrop termite test tic)
+	gnu_generic_cmds+=(tload transmission-cli transmission-create)
+	gnu_generic_cmds+=(transmission-daemon transmission-edit transmission-get)
+	gnu_generic_cmds+=(transmission-gtk transmission-qt transmission-remote)
+	gnu_generic_cmds+=(transmission-remote-cli transmission-remote-cli)
+	gnu_generic_cmds+=(transmission-remote-gtk transmission-show transset-df)
+	gnu_generic_cmds+=(updatedb urxvtc urxvtcdurxvtd vanitygen vimpager)
+	gnu_generic_cmds+=(x11vnc xbindkeys xsel youtube-dl)
 
 	if type cgasm &>/dev/null; then
 		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
@@ -763,10 +750,8 @@ WORDCHARS=
 
 zstyle ':acceptline'					nocompwarn true
 # allow one error for every two characters typed in approximate completer
-zstyle ':completion:*:approximate:'			max-errors 'reply=("$((($#PREFIX+$#SUFFIX)/2))" numeric)'
+zstyle ':completion:*:approximate:'			max-errors 'reply=("$((($#PREFIX+$#SUFFIX)/3))" numeric)'
 # zstyle ':completion:*:approximate:'			max-errors 5 numeric
-# don't complete backup files as executables
-zstyle ':completion:*:complete:-command-::commands'	ignored-patterns '(aptitude-*|*\~)'
 # start menu completion only if it could find no unambiguous initial string
 zstyle ':completion:*:correct:*'			insert-unambiguous true
 zstyle ':completion:*:corrections'			format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
@@ -809,9 +794,6 @@ zstyle ':completion:*'					matcher-list \
 	# 'm:{a-z\-}={A-Z\_}' \
 	# 'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
 	# 'r:|?=** m:{a-z\-}={A-Z\_}'
-# match uppercase from lowercase
-# zstyle ':completion:*'				matcher-list 'm:{a-z}={A-Z}'
-# zstyle ':completion:*'				matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # recent (as of Dec 2007) zsh versions are able to provide descriptions
 # for commands (read: 1st word in the line) that it will list for the user
@@ -820,7 +802,7 @@ zstyle ':completion:*:-command-:*:'			verbose true
 # provide verbose completion information
 zstyle ':completion:*'					verbose true
 # set format for warnings
-zstyle ':completion:*:warnings'				format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
+zstyle ':completion:*:warnings'				format $'%{\e[0;31m%}no matches for:%{\e[0m%} %d'
 # define files to ignore for zcompile
 zstyle ':completion:*:*:zcompile:*'			ignored-patterns '(*~|*.sw[a-p])'
 # zstyle ':completion:*:*:zcompile:*'			ignored-patterns '(*~|*.zwc)'
@@ -832,34 +814,28 @@ zstyle ':completion:*:processes-names'			command 'ps c -u ${USER} -o command | u
 zstyle ':completion:*:killall:*'			command 'ps -u ${USER} -o cmd'
 # complete manual by their section
 zstyle ':completion:*:manuals'				separate-sections true
-zstyle ':completion:*:manuals*'				insert-sections   true
+zstyle ':completion:*:manuals'				insert-sections   true
 zstyle ':completion:*:man*'				menu yes select
 # provide .. as a completion
 # zstyle ':completion:*'					special-dirs ..
 
 # run rehash on completion so new installed program are found automatically:
-_force_rehash() {
+function _force_rehash() {
 	((CURRENT == 1)) && rehash
 	return 1
 }
 
-# correction
 # try to be smart about when to use what completer...
 zstyle -e ':completion:*'				completer '
 	if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
 		_last_try="$HISTNO$BUFFER$CURSOR"
 		reply=(_complete _expand _match _prefix _correct _approximate)
 	else
-		if [[ $words[1] == (rm|mv|cp) ]]; then
-			reply=(_oldlist _ignored _files)
-		else
-			reply=(_force_rehash _oldlist _ignored _files)
-		fi
+		reply=(_force_rehash _oldlist _ignored _files)
 	fi'
 
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:urls'				local 'www' 'public_html'
-
 # filter-select options
 zstyle ':filter-select:highlight'			matched fg=yellow,standout
 # use $LINES - 10 for filter-select
@@ -871,9 +847,8 @@ zstyle ':filter-select'					case-insensitive yes
 # see below
 zstyle ':filter-select'					extended-search yes
 
-# cleanup
-kill -USR1 $$
-
 # end of .zshrc config
 #
 # all dankness must come to an end :(
+kill -USR1 $$
+
