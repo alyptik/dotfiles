@@ -42,33 +42,37 @@ function cleanup() {
 trap 'cleanup; kill -INT $$;' INT
 trap 'cleanup' ERR EXIT
 
-while getopts :bcdhkmns opt; do
+while getopts :bchkmns opt; do
 	case "$opt" in
 	b)
-		[[ -z "$build_type" ]] && build_type=b
+		[[ -n "$build_type" ]] && continue
+		build_type=b
 		;;
-	c|n)
-		[[ "${append_args[*]}" != *nconfig* ]] && append_args+=(nconfig)
-		;;
-	d)
-		make_cmd=(echo make)
+	c)
+		[[ "${append_args[*]}" == *nconfig* ]] && continue
+		append_args+=(nconfig)
 		;;
 	k)
-		[[ -z "$build_type" ]] && build_type=k
+		[[ -n "$build_type" ]] && continue
+		build_type=k
 		;;
 	m)
-		[[ "${mod_args[*]}" != *modules_install* ]] && mod_args+=("INSTALL_MOD_PATH=$root" modules_install)
+		[[ "${mod_args[*]}" == *modules_install* ]] && continue
+		mod_args+=("INSTALL_MOD_PATH=$root" modules_install)
+		;;
+	n)
+		make_cmd=(echo make)
 		;;
 	s)
 		sparse_flag=1
 		;;
 	h)
-		printf 'usage: %s -bk [-cdhmns] [<make args>]\n' "${0##*/}" >&2
+		printf 'usage: %s -(b|k) [-cdhmns] [<make args>]\n' "${0##*/}" >&2
 		exit
 		;;
 	:|?)
 		printf 'illegal option letter: %s\n' "'$OPTARG'" >&2
-		printf 'usage: %s -bk [-cdhmns] [<make args>]\n' "${0##*/}" >&2
+		printf 'usage: %s -(b|k) [-cdhmns] [<make args>]\n' "${0##*/}" >&2
 		exit 1
 		;;
 	esac
