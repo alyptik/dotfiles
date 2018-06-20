@@ -1,9 +1,8 @@
 #!/bin/sh
 
-ret=0
 cwd="$PWD"
 
-trap 'cd "$cwd"; exit "$ret"' EXIT
+trap 'cd "$cwd"' EXIT
 
 export LIND_PREFIX="${LIND_PREFIX:-$HOME}"
 export LIND_BASE="${LIND_BASE:-$LIND_PREFIX/lind_project}"
