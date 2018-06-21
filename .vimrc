@@ -60,8 +60,8 @@ call plug#begin(g:plugdir)
 	Plug 'lervag/vimtex', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'sheerun/vim-polyglot'
 	Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
-	" Plug 'justmao945/vim-clang'
-	Plug 'Rip-Rip/clang_complete'
+	Plug 'justmao945/vim-clang'
+	" Plug 'Rip-Rip/clang_complete'
 	" Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	" Plug 'chaoren/vim-wordmotion'
@@ -1462,9 +1462,9 @@ let g:startify_session_dir='~/.vim/sessions'
 " persist all options related to :make
 let g:session_persist_globals = ['&makeprg', '&makeef', '&expandtab']
 
-au SessionLoadPost * let g:session_autosave=!empty(xolox#session#find_current_session())
-	\ ? 'prompt'
-	\ : 'no'
+" au SessionLoadPost * let g:session_autosave=!empty(xolox#session#find_current_session())
+"         \ ? 'prompt'
+"         \ : 'no'
 
 " view options
 set viewdir=~/.vim/view
@@ -1472,9 +1472,9 @@ set viewdir=~/.vim/view
 set vop+=curdir vop+=options
 
 " session options
-set ssop+=winpos ssop+=globals ssop+=localoptions ssop+=resize ssop+=tabpages
+set ssop+=winpos ssop+=globals ssop+=resize ssop+=tabpages
 " 'options' can corrupt sessions
-set ssop-=blank ssop-=help ssop-=options ssop-=buffers
+set ssop-=blank ssop-=help ssop-=localoptions ssop-=options ssop-=buffers
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',
