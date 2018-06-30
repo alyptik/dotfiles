@@ -72,7 +72,8 @@ Xft.hinting: 0
 Xft.antialias: 1
 Xft.rgba: rgb
 
-st.font:		Fira Code:style=Retina:pixelsize=30::antialias=true
+st.font:		Fira Code:style=Retina:pixelsize=30:antialias=true
+! st.font:		SourceCodePro:style=Regular:pixelsize=28:antialias=true:hinting=true
 ! st.font:		Fura Code Nerd Font:style=Regular:pixelsize=32:antialias=true:hinting=true
 ! st.font:		SourceCodePro:style=Regular:pixelsize=28:antialias=true:hinting=true
 ! st.font:		Fira Code:style=Retina:pixelsize=28:antialias=true:hinting=true

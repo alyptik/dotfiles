@@ -79,7 +79,7 @@ esac
 
 # cache and history stuff
 if type zshreadhist &>/dev/null; then
-       precmd_functions=(zshreadhist $precmd_functions)
+	precmd_functions=(zshreadhist $precmd_functions)
 fi
 # ^b: history expansion ^f: quick history substitution #: comment character
 histchars='!^#'
@@ -682,9 +682,10 @@ compdef meminfo=free
 hash -d a="${HOME}/code/aur"
 hash -d audio="/sdxc/audio"
 hash -d b="${HOME}/bin/"
+hash -d c="${C:-/store/dotfiles}"
 hash -d calibre="/sdxc/calibre"
 hash -d code="${P:-/store/code/projects}/school"
-hash -d c="${C:-/store/dotfiles}"
+hash -d crash="${P:-/store/code/projects}/secure-systems-lab/CrashSimulator"
 hash -d d="${P:-/store/code/projects}/linux/Documentation"
 hash -d djzomg="/sdxc/Music/djzomg"
 hash -d efi="/boot/efi/EFI"
@@ -709,7 +710,7 @@ hash -d prose="/store/writing"
 hash -d r="$HOME/lind_project/repy/repy"
 hash -d repos="/store/repos"
 hash -d rfc="/usr/share/doc/rfc"
-hash -d s="/sdxc/school"
+hash -d s="${P:-/store/code/projects}/secure-systems-lab"
 hash -d sdxc="/sdxc"
 hash -d surfraw="/usr/lib/surfraw"
 hash -d stuff="/hdd"
