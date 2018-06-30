@@ -1472,9 +1472,9 @@ set viewdir=~/.vim/view
 set vop+=curdir vop+=options
 
 " session options
-set ssop+=winpos ssop+=globals ssop+=resize ssop+=tabpages
+set ssop+=winpos ssop+=globals ssop-=options ssop+=resize ssop+=tabpages
 " 'options' can corrupt sessions
-set ssop-=blank ssop-=help ssop-=localoptions ssop-=options ssop-=buffers
+set ssop-=blank ssop-=help ssop-=localoptions ssop-=buffers
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',
@@ -1682,6 +1682,8 @@ command! Wq wq
 command! WQ wq
 command! Qall qall
 command! Qall qall
+command! Wall wqall
+command! WAll wqall
 command! Wqall wqall
 command! WQall wqall
 "cabbrev wQ <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'wq' : 'wQ')<CR>
