@@ -82,14 +82,14 @@ Host asus
 
 Host surface
 	HostName 192.168.1.98
-	Port 22
+	Port 222
 	User alyptik
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
 Host rsurface
 	HostName 192.168.1.98
-	Port 22
+	Port 222
 	User root
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
@@ -110,49 +110,42 @@ Host wifi
 
 Host ayy
 	HostName alyp.tk
-	Port 22
+	Port 222
 	User ayy
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
 Host rarch
 	HostName alyp.tk
-	Port 22
+	Port 222
 	User root
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
 Host earch
 	HostName alyp.tk
-	Port 22
+	Port 222
 	User alyptik
 	CheckHostIP yes
 	IdentityFile ~/.ssh/id_gpg
 
 Host arch
 	HostName 192.168.1.99
-	Port 22
-	User alyptik
-	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
-
-Host arch
-	HostName 192.168.1.99
-	Port 22
+	Port 222
 	User alyptik
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
 Host http
 	HostName 192.168.1.99
-	Port 22
+	Port 222
 	User http
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
 Host alyp.tk
 	HostName alyp.tk
-	Port 22
+	Port 222
 	User http
 	CheckHostIP yes
 	IdentityFile ~/.ssh/id_gpg
