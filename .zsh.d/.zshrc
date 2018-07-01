@@ -64,7 +64,7 @@ case "$_km" in
 	printf "$cyellow"
 	;;
 esac
-() for 1 { autoload -U "$1" && zle -N "$1"; } select-bracketed select-quoted
+() for 1 { autoload -Uz "$1" && zle -N "$1"; } select-bracketed select-quoted
 
 # text object for matching characters between matching pairs of brackets
 () for 1 {
@@ -98,7 +98,6 @@ eval "$(dircolors -b)"
 export CLICOLOR=1 REPORTTIME=5
 
 # modules
-#
 () {
 	local -a au_arr zle_arr zmod_arr zle_cust
 	au_arr+=(edit-command-line expand-absolute-path)
@@ -728,11 +727,6 @@ hash -d zf="${ZDOTDIR:-$HOME/.zsh.d}/zfunctions"
 hash -d znc="/var/lib/znc/.znc/moddata/log/alyptik/freenode/"
 hash -d zp="${ZDOTDIR:-$HOME/.zsh.d}/plugins"
 hash -d zsh="$ZSH"
-
-# Define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
-WORDCHARS=
-# WORDCHARS='_-*~'
-# WORDCHARS='*?_-.[]~=/&;!#$%^ (){}<>'
 
 # Completion tweaks
 () {

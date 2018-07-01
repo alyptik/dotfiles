@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+set -o errexit
 
 cwd="$PWD"
 
-trap 'cd "$cwd"' EXIT
+trap '{ cd "$cwd"; printf "%s\n" "Done." >&2; }' EXIT
+trap '{ cd "$cwd; "printf "%s\n" "[$0:$LINENO] Docker build failed." >&2; }' ERR
 
 export LIND_PREFIX="${LIND_PREFIX:-$HOME}"
 export LIND_BASE="${LIND_BASE:-$LIND_PREFIX/lind_project}"
@@ -14,10 +17,10 @@ export PYTHON="${PYTHON:-python2}"
 export PNACLPYTHON="${PNACLPYTHON:-python2}"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
 
-cd "$LIND_BASE" || exit 1
+cd "$LIND_BASE"
 
 docker image rm -f alyptik/lind:base alyptik/lind:prebuiltsdk alyptik/lind:naclruntime alyptik/lind:latest
-docker build -t alyptik/lind:base ./docker/base || exit 1
-docker build -t alyptik/lind:prebuiltsdk ./docker/prebuiltsdk || exit 1
-docker build -t alyptik/lind:naclruntime ./docker/naclruntime || exit 1
-docker build --cache-from=alyptik/lind:naclruntime -t alyptik/lind:latest ./docker/naclruntime || exit 1
+docker build --no-cache -t alyptik/lind:base ./docker/base
+docker build --no-cache -t alyptik/lind:prebuiltsdk ./docker/prebuiltsdk
+docker build --no-cache -t alyptik/lind:naclruntime ./docker/naclruntime
+docker build --cache-from=alyptik/lind:naclruntime -t alyptik/lind:latest ./docker/naclruntime
