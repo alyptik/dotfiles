@@ -23,13 +23,14 @@ Host *
 	# IdentityFile ~/.ssh/id_dsa
 	# IdentityFile ~/.ssh/id_ecdsa
 	# IdentityFile ~/.ssh/id_ed25519
-	Port 22
+	# Port 22
 	Protocol 2
 	# Ciphers +chacha20-poly1305@openssh.com
 	# Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
 	# MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
 	EscapeChar ~
-	Tunnel yes
+	# Tunnel yes
+	# Tunnel point-to-point
 	# Tunnel ethernet
 	TunnelDevice any:any
 	PermitLocalCommand yes
@@ -131,7 +132,7 @@ Host earch
 
 Host arch
 	HostName 192.168.1.99
-	Port 222
+	Port 2222
 	User alyptik
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
