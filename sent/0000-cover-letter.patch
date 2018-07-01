@@ -1,21 +1,31 @@
-From ce80925ac82c9c92766504244c8ed07aa73b09e3 Mon Sep 17 00:00:00 2001
-Message-Id: <cover.1523177060.git.joeypabalinas@gmail.com>
+From d35643165a1d1972fd91e547922697a3c785a413 Mon Sep 17 00:00:00 2001
+Message-Id: <cover.1530402641.git.joeypabalinas@gmail.com>
 From: Joey Pabalinas <joeypabalinas@gmail.com>
-Date: Sat, 7 Apr 2018 22:44:20 -1000
-Subject: [PATCH 0/1] *** SUBJECT HERE ***
+To: linux-input@vger.kernel.org
+CC: linux-kernel@vger.kernel.org
+CC: Jiri Kosina <jikos@kernel.org>
+CC: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+CC: Daniel Martin <consume.noise@gmail.com>
+CC: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 30 Jun 2018 13:50:41 -1000
+Subject: [PATCH 0/4] reduce Surface Pro 3 multitouch jitter
 
-*** BLURB HERE ***
+The Surface Pro 3 firmware doesn't reliably send contact lift off
+reports nor handle invalid report values gracefully.
 
-Joey Pabalinas (1):
-  ACPI: prefer bool over int for predicates
+To reduce touchscreen input jitter:
+  - add MT_QUIRK_NOT_SEEN_MEANS_UP to the MT_CLS_WIN_8
+  - drop invalid report values
 
- drivers/acpi/battery.c  |  4 ++--
- drivers/acpi/ec.c       | 20 +++++++++-----------
- drivers/acpi/pci_root.c | 17 ++++++-----------
- drivers/acpi/scan.c     |  6 +++---
- include/acpi/acpi_bus.h |  2 +-
- 5 files changed, 21 insertions(+), 28 deletions(-)
+Joey Pabalinas (4):
+  HID: multitouch: add MT_QUIRK_NOT_SEEN_MEANS_UP to MT_CLS_WIN_8 quirks
+  HID: multitouch: don't check HID_GROUP_MULTITOUCH_WIN_8 for serial protocol
+  HID: multitouch: drop reports containing invalid values
+  HID: multitouch: remove unneeded else conditional cases
+
+ drivers/hid/hid-multitouch.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
 -- 
-2.17.0.rc1.35.g90bbd502d54fe92035.dirty
+2.18.0
 
