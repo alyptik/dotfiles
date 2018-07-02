@@ -1,5 +1,5 @@
 diff --git a/unix.py b/unix.py
-index 97b1230c0a9fe283cd..058f623eca3cb0725c 100644
+index 97b1230c0a9fe283cd..24c135ea602fddd75d 100644
 --- a/unix.py
 +++ b/unix.py
 @@ -1,6 +1,6 @@
@@ -23,7 +23,7 @@ index 97b1230c0a9fe283cd..058f623eca3cb0725c 100644
 -                                        stdin=null)
 +                inst = subprocess.Popen(['zsh', '-c', 'script -qfc "$(print - '
 +                    + repr(text.replace('\\"', '\1').replace('\\\'', '\2'))
-+                    + ' | sed s/\1/\\\"/g | sed s/\2/\\\'/g | sed s/u\'/\'/g)" /dev/null'],
++                    + ' | sed s/\1/\\\"/g | sed s/\2/\\\'/g | sed s/^u\'/\'/g)" /dev/null'],
 +                                    shell=False,
 +                                    stdout=subprocess.PIPE,
 +                                    stderr=subprocess.PIPE,

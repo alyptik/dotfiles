@@ -439,7 +439,7 @@ class Unix(callbacks.Plugin):
             with open(os.devnull) as null:
                 inst = subprocess.Popen(['zsh', '-c', 'script -qfc "$(print - '
                     + repr(text.replace('\\"', '\1').replace('\\\'', '\2'))
-                    + ' | sed s/\1/\\\"/g | sed s/\2/\\\'/g | sed s/u\'/\'/g)" /dev/null'],
+                    + ' | sed s/\1/\\\"/g | sed s/\2/\\\'/g | sed s/^u\'/\'/g)" /dev/null'],
                                     shell=False,
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE,
