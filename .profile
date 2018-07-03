@@ -4,8 +4,8 @@
 
 # conditionals
 if test "$(hostname)" = fedora -o "$(whoami)" = jp; then TERM="screen" locale="C"; else locale="en_US.UTF-8"; fi
-if test -t 0; then stty -ixon; fi
 if command -v nproc >/dev/null 2>&1; then NPROC="$(nproc)"; else NPROC=4; fi
+if test -t 0; then stty -ixon; fi
 export NPROC
 
 # directory shortcut environment variables

@@ -53,7 +53,7 @@ Host nh
 
 Host vm
 	Hostname 192.168.10.2
-	User root
+	User jp
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 

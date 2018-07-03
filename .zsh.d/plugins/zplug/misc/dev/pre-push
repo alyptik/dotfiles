@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if git diff --exit-code --check master..origin/master; then
-    # the same
-    exit 0
-fi
-
-make test
-exit $?

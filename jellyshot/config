@@ -4,7 +4,7 @@
 # shellcheck disable=SC2034
 # SERVER='sigfu.tk'
 SERVER='alyp.tk'
-PORT='222'
+PORT='2222'
 # SERVER_PATH='uhr'
 SERVER_PATH='/srv/http/uhr'
 SUFFIX='uhr'

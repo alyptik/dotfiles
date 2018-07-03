@@ -11,5 +11,9 @@ else
 	shift
 fi
 
-highlight --out-format="${out:-truecolor}" --syntax="${syn:-conf}" --style="${theme:-xoria256}" "$file" | \
-	LESS= less -MNRis
+highlight \
+	--out-format="${out:-ansi}" \
+	--syntax="${syn:-conf}" \
+	--style="${theme:-xoria256}" \
+	"$file" | \
+		LESS= less -MNRis
