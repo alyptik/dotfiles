@@ -99,6 +99,7 @@
 	coa = commit -S -v -a
 	df = diff --name-only
 	rb = rebase
+	cur = am --show-current-patch
 [web]
 	browser = w3m
 [instaweb]
