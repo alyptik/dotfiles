@@ -1,0 +1,312 @@
+diff --git a/plugin.py b/plugin.py
+index ed4b6e48ddf5ec69e8..a9e4ab035f9a52605a 100644
+--- a/plugin.py
++++ b/plugin.py
+@@ -1,9 +1,9 @@
+-###
++# -*- coding: UTF-8 -*-
+ # Copyright (c) 2015, waratte
+ # All rights reserved.
+-#
++  
+ # Redistribution and use in source and binary forms, with or without
+ # modification, are permitted provided that the following conditions are met:
+ #
+ #   * Redistributions of source code must retain the above copyright notice,
+ #     this list of conditions, and the following disclaimer.
+@@ -66,11 +66,11 @@ class Cobe(callbacks.Plugin):
+     """
+     Cobe is frontend to the cobe markov-chain bot for Limnoria/supybot. Use "list Cobe" to list possible
+     commands and "help Cobe <command>" to read their docs.
+     """
+     threaded = True
+-    magicnick = 'cominghomebot'
++    magicnick = 'PLZREPLACEMENICKUNKNOWNWORDSHAHAH'
+     
+     def __init__(self, irc):
+         self.__parent = super(Cobe, self)
+         self.__parent.__init__(irc)
+         
+@@ -98,40 +98,41 @@ class Cobe(callbacks.Plugin):
+         dataDirectory = conf.supybot.directories.data
+         dataDirectory = dataDirectory.dirize(channel.lower() + "/cobe.brain")
+         
+         return 'cobe --brain %s' % dataDirectory
+         
+-    def _decodeIRCMessage(self, raw, preferred_encs = ["utf-8"]):
++    def _decodeIRCMessage(self, raw, preferred_encs = ["UTF-8", "CP1252", "ISO-8859-1"]):
+         """Internal method for decoding IRC messages."""
+ 
+         changed = False
+         for enc in preferred_encs:
+             try:
+-                res = raw
++                res = raw.decode(enc)
+                 changed = True
+                 break
+             except:
+                 pass
+         if not changed:
+             try:
+                 enc = chardet.detect(raw)['encoding']
+-                res = raw
++                res = raw.decode(enc)
+             except:
+-                res = raw
++                res = raw.decode(enc, 'ignore')
+                 
+         return res
+ 
+     def _cleanText(self, text):
+         """Internal method for cleaning text of imperfections."""
+         
+         text = self._decodeIRCMessage(text)         # Decode the string.
+         text = ircutils.stripFormatting(text)       # Strip IRC formatting from the string.
+         text = text.strip()                         # Strip whitespace from beginning and the end of the string.
++
+         if len(text) > 1:
+             # So we don't get an error if the text is too small
+-            
+-            text = text[0].upper() + text[1:]       # Capitalize first letter of the string.
++            text = re.sub(r'^', '\x03\x03', text)
++            #  text = text[0].upper() + text[1:]       # Capitalize first letter of the string.
+             
+         text = utils.str.normalizeWhitespace(text)  # Normalize the whitespace in the string.
+         
+         return text
+         
+@@ -152,11 +153,11 @@ class Cobe(callbacks.Plugin):
+                 if random.randint(0, 10000) <= probability:
+                     self._reply(irc, msg, channel, text)
+                 
+         else: # Nope, let's make it!
+                         
+-            subprocess.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
++            commands.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
+             
+             text = self._cleanText(text)
+             
+             if text and len(text) > 1 and not text.isspace():
+         
+@@ -169,25 +170,35 @@ class Cobe(callbacks.Plugin):
+                 
+     def _reply(self, irc, msg, channel, text):
+         """Send a response to text"""
+         
+         cobeBrain = Brain(self._getBrainDirectoryForChannel(channel))
+-        response = cobeBrain.reply(text)
++        response = cobeBrain.reply(text).encode('utf-8')
+         response = self._strip_nick(irc, msg, response)
+         
+         for i in range(response.lower().count(self.magicnick.lower())):
+             # If first word is nick, switch with the callers nick.
+             if self.magicnick in response:
+-                response = response.replace(self.magicnick, random.choice(list(irc.state.channels[msg.args[0]].users)))
++                response = response.replace(self.magicnick,
++                                            re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+             if self.magicnick.lower() in response:
+-                response = response.replace(self.magicnick.lower(), random.choice(list(irc.state.channels[msg.args[0]].users)))
+-
++                response = response.replace(self.magicnick.lower(),
++                                            re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++            if self.magicnick in response:
++                response = response.replace(self.magicnick,
++                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++            if self.magicnick.lower() in response:
++                response = response.replace(self.magicnick.lower(),
++                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
+         
+         cobeBrain.learn(response) # Let's have the bot learn the wacky things it says
+         
+         self.log.info("Attempting to respond in {0} with message: {1}".format(channel, response))
+         
++        # lowercase first letter of the string.
++        response = response[0].lower() + response[1:]
++
+         # delay the response here so we look real?
+         if self.registryValue('responseDelay', channel):
+             self.log.info("Delayed the response in %s." % channel)
+             delayseconds = time.time() + random.randint(2, 5)
+             schedule.addEvent(irc.queueMsg(ircmsgs.privmsg(channel, response)), delayseconds)
+@@ -218,10 +229,13 @@ class Cobe(callbacks.Plugin):
+             text = ircmsgs.unAction(msg)
+                     
+         if self.registryValue('stripUrls'): # strip URLs
+             text = re.sub(r'(http[^\s]*)', '', text)
+         
++        # strip ›
++        text = re.sub(r'›', '', text)
++
+         if irc.nick.lower() in text.lower():
+             # Were we addressed in the channel?
+             
+             probability = self.registryValue('probabilityWhenAddressed', channel)
+             
+@@ -256,11 +270,11 @@ class Cobe(callbacks.Plugin):
+ 
+         if not irc.isChannel(channel): # Are we in a channel?
+             if os.path.exists(self._getBrainDirectoryForChannel(channel)):
+                 # Does this channel have a brain file?
+                 
+-                size = float(os.path.getsize(self._getBrainDirectoryForChannel(channel)))
++                size = float(os.path.getsize(self.brainDirectories[channel]))
+                 irc.reply("The brain file for the channel {0} is {1}.".format(channel, self._makeSizePretty(size)))
+                 
+             else: # Nope, raise error msg!
+                 irc.error(_("I am missing a brainfile in {0}!".format(channel)), Raise=True)
+                 
+@@ -304,11 +318,11 @@ class Cobe(callbacks.Plugin):
+                 # Nope, create one!
+             
+                 self.log.info("Non-existent brainfile in {0}!".format(channel))
+                 self.log.info("Creating a brainfile now in {0}".format(self._getBrainDirectoryForChannel(channel)))
+                 
+-                subprocess.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
++                commands.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
+                 
+                 text = self._cleanText(text)
+                 if text and len(text) > 1 and not text.isspace():
+             
+                     irc.reply("Learning text: {0}".format(text))
+@@ -334,11 +348,11 @@ class Cobe(callbacks.Plugin):
+             # Nope, create one!
+         
+             self.log.info("Non-existent brainfile in {0}!".format(channel))
+             self.log.info("Creating a brainfile now in {0}".format(self._getBrainDirectoryForChannel(channel)))
+             
+-            subprocess.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
++            commands.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
+             
+             text = self._cleanText(text)
+             if text and len(text) > 1 and not text.isspace():
+         
+                 irc.reply("Learning text: {0}".format(text))
+@@ -365,13 +379,26 @@ class Cobe(callbacks.Plugin):
+                 # Does this channel have a brain file?
+                 
+                     text = self._cleanText(text)
+                     if text and len(text) > 1 and not text.isspace():
+                 
+-                        cobeBrain = Brain(self._getBrainDirectoryForChannel(channel))
+-                        response = cobeBrain.reply(text)#.encode('utf-8')
+-                        irc.reply(response)
++                        cobeBrain = Brain(self.brainDirectories[channel])
++                        response = cobeBrain.reply(text).encode('utf-8')
++                        response = self._strip_nick(irc, msg, response)
++                        for i in range(response.lower().count(self.magicnick.lower())):
++                            # If first word is nick, switch with the callers nick.
++                            if self.magicnick in response:
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                            if self.magicnick.lower() in response:
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                            if self.magicnick in response:
++                                response = response.replace(self.magicnick,
++                                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                            if self.magicnick.lower() in response:
++                                response = response.replace(self.magicnick.lower(),
++                                                            re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
+ 
+                     else:
+             
+                         irc.error(_("No text to reply to!"), Raise=True)
+                     
+@@ -379,17 +406,34 @@ class Cobe(callbacks.Plugin):
+                 # Nope, create one!
+             
+                 self.log.info("Non-existent brainfile in {0}!".format(channel))
+                 self.log.info("Creating a brainfile now in {0}".format(self._getBrainDirectoryForChannel(channel)))
+                 
+-                subprocess.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
++                commands.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
+                 
+                 text = self._cleanText(text)
+                 if text and len(text) > 1 and not text.isspace():
+             
+                     cobeBrain = Brain(self._getBrainDirectoryForChannel(channel))
+-                    response = cobeBrain.reply(text)#.encode('utf-8')
++                    response = cobeBrain.reply(text).encode('utf-8')
++                    response = self._strip_nick(irc, msg, response)
++                    for i in range(response.lower().count(self.magicnick.lower())):
++                        # If first word is nick, switch with the callers nick.
++                        if self.magicnick in response:
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                        if self.magicnick.lower() in response:
++                                response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                        if self.magicnick in response:
++                            response = response.replace(self.magicnick,
++                                                        re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                        if self.magicnick.lower() in response:
++                            response = response.replace(self.magicnick.lower(),
++                                                        re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
++                    # lowercase first letter of the string.
++                    response = response[0].lower() + response[1:]
++
+                     irc.reply(response)
+                     
+                 else:
+                     irc.error(_("No text to reply to!"), Raise=True)
+                 
+@@ -398,11 +442,27 @@ class Cobe(callbacks.Plugin):
+     
+             text = self._cleanText(text)
+             if text and len(text) > 1 and not text.isspace():
+ 
+                 cobeBrain = Brain(self._getBrainDirectoryForChannel(channel))
+-                response = cobeBrain.reply(text)#.encode('utf-8')
++                response = cobeBrain.reply(text).encode('utf-8')
++                response = self._strip_nick(irc, msg, response)
++                # If first word is nick, switch with the callers nick.
++                if self.magicnick in response:
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                if self.magicnick.lower() in response:
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                if self.magicnick in response:
++                    response = response.replace(self.magicnick,
++                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                if self.magicnick.lower() in response:
++                    response = response.replace(self.magicnick.lower(),
++                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
++                # lowercase first letter of the string.
++                response = response[0].lower() + response[1:]
++
+                 irc.reply(response)
+ 
+             else:
+                 irc.error(_("No text to reply to!"), Raise=True)
+ 
+@@ -410,17 +470,31 @@ class Cobe(callbacks.Plugin):
+             # Nope, create one!
+         
+             self.log.info("Non-existent brainfile in {0}!".format(channel))
+             self.log.info("Creating a brainfile now in {0}".format(self._getBrainDirectoryForChannel(channel)))
+             
+-            subprocess.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
++            commands.getoutput('{0} {1}'.format(self._doCommand(channel), 'init'))
+             
+             text = self._cleanText(text)
+             if text and len(text) > 1 and not text.isspace():
+         
+                 irc.reply("Learning text: {0}".format(text))
+                 cobeBrain = Brain(self._getBrainDirectoryForChannel(channel))
++                response = self._strip_nick(irc, msg, response)
++                # If first word is nick, switch with the callers nick.
++                if self.magicnick in response:
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
++                if self.magicnick.lower() in response:
++                    response = response.replace(self.magicnick, re.sub(r'[Kk]', r'κ', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                if self.magicnick in response:
++                    response = response.replace(self.magicnick,
++                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++                if self.magicnick.lower() in response:
++                    response = response.replace(self.magicnick.lower(),
++                                                re.sub(r'[Ee]', r'ε', re.sub(r'^(.)', r'\1​', random.choice(list(irc.state.channels[msg.args[0]].users)), count=1)))
++
+                 cobeBrain.learn(text)
+                 
+             else:
+                 irc.error(_("No text to reply to!"), Raise=True)
+                 
