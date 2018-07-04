@@ -100,6 +100,7 @@
 	df = diff --name-only
 	rb = rebase
 	cur = am --show-current-patch
+	cpc = cherry-pick -S --continue
 [web]
 	browser = w3m
 [instaweb]

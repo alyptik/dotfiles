@@ -1,13 +1,15 @@
 alias jp Joey Pabalinas <joeypabalinas@gmail.com>
 alias k Taylor West <KrokodileGlue@outlook.com>
+alias sangy Santiago Torres <santiago@nyu.edu>
 alias yiwen Li Yiwen <detectivelyw@gmail.com>
+alias preston Preston Moore <pkm266@nyu.edu>
 alias justin Justin Cappos <jcappos@nyu.edu>
 alias brendan Brendan Dolan-Gavitt <brendandg@nyu.edu>
 alias marika Marika A Lewis <mas41@nyu.edu>
-alias sangy Santiago Torres <santiago@nyu.edu>
 alias will William Castillo <wkcastil@hawaii.edu>
 alias lkml Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 alias zsh Zsh Workers Mailing List <zsh-workers@zsh.org>
 alias ssl Secure Systems Lab Maling List <securesystemslab@googlegroups.com>
+alias crash CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>
 
 # vi:ft=muttrc:
