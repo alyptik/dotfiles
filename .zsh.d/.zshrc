@@ -87,13 +87,14 @@ export CLICOLOR=1 REPORTTIME=5
 	au_arr+=(down-line-or-beginning-search filter-select)
 	au_arr+=(insert-composed-char insert-unicode-char)
 	au_arr+=(regexp-replace run-help tetriscurses tetris)
-	au_arr+=(up-line-or-beginning-search zargs zed zmv)
+	au_arr+=(up-line-or-beginning-search which-command)
+	au_arr+=(zargs zed zmv)
 	# zle_arr+=(bracketed-paste bracketed-paste-magic)
 	zle_arr+=(edit-command-line expand-absolute-path)
 	zle_arr+=(down-line-or-beginning-search execute-named-command)
 	zle_arr+=(insert-composed-char insert-unicode-char tetris)
-	zle_arr+=(up-line-or-beginning-search zmv znt-history-widget)
-	zle_arr+=(znt-cd-widget znt-kill-widget)
+	zle_arr+=(up-line-or-beginning-search which-command)
+	zle_arr+=(zmv znt-history-widget znt-cd-widget znt-kill-widget)
 	zmod_arr+=(zsh/curses zsh/datetime zsh/db/gdbm zsh/deltochar zsh/mapfile)
 	zmod_arr+=(zsh/mathfunc zsh/net/socket zsh/net/tcp zsh/pcre zsh/terminfo)
 	zmod_arr+=(zsh/system zsh/zftp zsh/zprof zsh/zpty zsh/zselect)
@@ -103,44 +104,13 @@ export CLICOLOR=1 REPORTTIME=5
 	zle_cust+=(zle-compdef zle-emacs-keymap zle-fh zle-fman zle-less)
 	zle_cust+=(zle-list-binds zle-refresh-keymap zle-run-help zle-toggle-keymap)
 	zle_cust+=(zle-vi-keymap zle-vim zle-youtube-helper zle-zaw-help)
-	() for 1 { autoload -Uz "$1"; } $au_arr
 	() for 1 { zle -N "$1"; } $zle_arr $zle_cust
 	() for 1 { zmodload "$1"; } $zmod_arr
+	() for 1 { autoload -Uz "$1"; } $au_arr
 	# equiv of bash's "help"
-	unalias run-help help 2>/dev/null
+	unalias help run-help which-command 2>/dev/null
 	alias help='run-help'
 }
-
-# zsh syntax highlighting
-typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
-ZSH_HIGHLIGHT_PATTERNS+=('rm -rf' 'fg=white,bold,bg=red')
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
-# git prompt
-GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
-GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
-GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
-GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"
-GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"
-GIT_PROMPT_MERGING="%{$fg[magenta]%}⚡︎%{$reset_color%}"
-GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
-GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
-# zsh autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-ZSH_AUTOSUGGEST_USE_ASYNC=1
-ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
-ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
-ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=()
-ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=()
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(append-x-selection insert-x-selection)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(yank-x-selection fzf-locate-widget)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(insert-composed-char)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-delete-to-char)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-zap-to-char)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-compdef zle-emacs-keymap zle-fh zle-fman)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-less zle-list-binds zle-refresh-keymap)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-run-help zle-toggle-keymap zle-vi-keymap)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-vim zle-youtube-helper zle-zaw-help)
 
 ## load VCS module
 autoload -Uz vcs_info
@@ -238,8 +208,41 @@ aliases[=]='noglob ='
 	$cmdline | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50 && print
 }
 safetytoggle -n
-export FZF_COMPLETION_TRIGGER="**"
-export fzf_default_completion="complete-word"
+
+# fzf
+FZF_COMPLETION_TRIGGER="**"
+fzf_default_completion="complete-word"
+# zsh syntax highlighting
+typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
+ZSH_HIGHLIGHT_PATTERNS+=('rm -rf' 'fg=white,bold,bg=red')
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
+# git prompt
+GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
+GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
+GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
+GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"
+GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"
+GIT_PROMPT_MERGING="%{$fg[magenta]%}⚡︎%{$reset_color%}"
+GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
+GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
+# zsh autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
+ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(which-command)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=()
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=()
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(append-x-selection insert-x-selection)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(yank-x-selection fzf-locate-widget)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(insert-composed-char)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-delete-to-char)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-zap-to-char)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-compdef zle-emacs-keymap zle-fh zle-fman)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-less zle-list-binds zle-refresh-keymap)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-run-help zle-toggle-keymap zle-vi-keymap)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-vim zle-youtube-helper zle-zaw-help)
 
 # custom bindkey commands
 bindkey -M emacs "\C-p" history-substring-search-up
@@ -263,6 +266,13 @@ bindkey -M viins "\C-n" history-substring-search-down
 bindkey -M viins "jj" vi-cmd-mode
 
 () for 1 {
+	bindkey -M "$1" -s "\ea" " | awk "
+	# alias gr='grep --color=auto'
+	bindkey -M "$1" -s "\eg" " | gr "
+	# alias l='env LESS= less -CMNRis'
+	bindkey -M "$1" -s "\el" " | l "
+	bindkey -M "$1" -s "\es" " | sed "
+
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" zle-run-help
@@ -343,9 +353,10 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e\ey" zle-youtube-helper
 	bindkey -M "$1" "\eU" up-case-word
 	bindkey -M "$1" "\e\e\e" _history-complete-newer
-	bindkey -M "$1" "\e," zaw
+	# bindkey -M "$1" "\e," zaw
+	bindkey -M "$1" "\e," spell-word
 	bindkey -M "$1" "\e<" zle-zaw-help
-	bindkey -M "$1" "\ew" zle-backwards-delete-to-char
+	bindkey -M "$1" "\ew" which-command
 	bindkey -M "$1" "\ee" delete-to-char
 	bindkey -M "$1" "\eOP" zle-less
 	bindkey -M "$1" "\eOQ" zle-vim
@@ -624,6 +635,15 @@ zstyle ':filter-select'					max-lines 10
 zstyle ':filter-select'					rotate-list yes
 zstyle ':filter-select'					case-insensitive yes
 zstyle ':filter-select'					extended-search yes
+
+# for the which-command zle widget
+if type -f wa &>/dev/null; then
+	whencecmd=(wa)
+else
+	whencecmd=(whence -fv --)
+fi
+zstyle ':zle:which-command'				whence $whencecmd
+
 # some kind of crazy ass matcher shit for flex comepletions
 zstyle ':completion:*'					matcher-list \
 	'm:{a-z\-}={A-Z\_}' \

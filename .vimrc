@@ -37,6 +37,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'yuttie/comfortable-motion.vim'
 	Plug 'mhinz/vim-startify'
 	Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 	" Plug 'tpope/vim-obsession'
@@ -1773,6 +1774,14 @@ map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
 map ,, %
+
+" open a quickfix window for the last search.
+nnoremap <silent> ,/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+nnoremap <C-z> :stop<CR>
+
+let g:comfortable_motion_no_default_key_mappings=1
+let g:comfortable_motion_scroll_down_key='<C-e>'
+let g:comfortable_motion_scroll_up_key="<C-y>"
 map <C-b> ^
 map <C-f> $
 map ; <C-u>
@@ -1782,9 +1791,12 @@ noremap <silent> <expr> <Esc>; (v:count ? 'k' : 'gk')
 noremap <silent> <expr> <Esc>, (v:count ? 'b' : 'B')
 noremap <silent> <expr> <Esc>/ (v:count ? 'w' : 'W')
 
-" open a quickfix window for the last search.
-nnoremap <silent> ,/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-nnoremap <C-z> :stop<CR>
+" map <Esc>' <C-e>
+" map <Esc>; <C-y>
+" nnoremap <silent> ; :call comfortable_motion#flick(-75)<CR>
+" nnoremap <silent> ' :call comfortable_motion#flick(75)<CR>
+" nnoremap <silent> <C-d> :call comfortable_motion#flick(75)<CR>
+" nnoremap <silent> <C-u> :call comfortable_motion#flick(-75)<CR>
 
 " cscope mappings
 nnoremap <Leader>F :exec('!echo -n '.expand('<cword>').'\| xsel -ib && cs')<CR>
