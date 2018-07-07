@@ -37,6 +37,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'mhinz/vim-startify'
 	Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 	" Plug 'tpope/vim-obsession'
 	Plug 'xolox/vim-session'
@@ -251,8 +252,7 @@ set diffopt=filler,context:5,iwhite,vertical
 set concealcursor=inv
 " hide concealed text completely unless replacement character is defined
 set conceallevel=2
-set completeopt=menuone
-" set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noinsert,noselect
 set nocp cpoptions-=d
 set verbose=0
 set updatetime=5000
@@ -788,9 +788,10 @@ let g:clang_cpp_options=''
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
-	\ . '-Wno-unused-function -Wno-unused-parameter '
-	\ . '-Wno-unused-const-variable -Wno-variadic-macros '
-	\ . '-Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow '
+	\ . '-Wno-unknown-warning-option -Wno-unused-function '
+	\ . '-Wno-unused-parameter -Wno-unused-const-variable '
+	\ . '-Wno-variadic-macros -Wfloat-equal -Wrestrict '
+	\ . '-Wshadow -Wstrict-overflow '
 let g:ale_c_clang_options=''
 	\ . '-std=gnu11 '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
@@ -805,9 +806,10 @@ let g:ale_c_clang_options=''
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
-	\ . '-Wno-unused-function -Wno-unused-parameter '
-	\ . '-Wno-unused-const-variable -Wno-variadic-macros '
-	\ . '-Wfloat-equal -Wrestrict -Wshadow -Wstrict-overflow '
+	\ . '-Wno-unknown-warning-option -Wno-unused-function '
+	\ . '-Wno-unused-parameter -Wno-unused-const-variable '
+	\ . '-Wno-variadic-macros -Wfloat-equal -Wrestrict '
+	\ . '-Wshadow -Wstrict-overflow '
 let g:ale_c_clangtidy_options=g:ale_c_clang_options
 let g:ale_c_gcc_options=g:ale_c_clang_options
 let g:clang_c_options=g:ale_c_clang_options
@@ -1738,10 +1740,12 @@ cabbrev Wqall! wqall!
 cabbrev WQall! wqall!
 
 command! P PlugUpdate
-cabbrev pu PlugUpdate
+command! PU PlugUpgrade
+command! PC PlugClean
+cabbrev p PlugUpdate
+cabbrev pu PlugUpgrade
+cabbrev pc PlugClean
 
-"<C-b> <Home>
-"<C-e> <End>
 cnoremap <C-a> <Home>
 cnoremap <Esc>h <Left>
 cnoremap <Esc>l <Right>
@@ -1769,11 +1773,17 @@ map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
 map ,, %
-map ; :call comfortable_motion#flick(-50)<CR>
-map ' :call comfortable_motion#flick(50)<CR>
-map <Esc>; ^
-map <Esc>' $
+map <C-b> ^
+map <C-f> $
+map ; <C-u>
+map ' <C-d>
+noremap <silent> <expr> <Esc>' (v:count ? 'j' : 'gj')
+noremap <silent> <expr> <Esc>; (v:count ? 'k' : 'gk')
+noremap <silent> <expr> <Esc>, (v:count ? 'b' : 'B')
+noremap <silent> <expr> <Esc>/ (v:count ? 'w' : 'W')
 
+" open a quickfix window for the last search.
+nnoremap <silent> ,/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nnoremap <C-z> :stop<CR>
 
 " cscope mappings
@@ -1855,8 +1865,6 @@ xmap <silent> <Leader>K j<Plug>(ale_next)
 " inoremap <Esc>c <Esc>"+yy<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>li
 " inoremap <Esc>v <Esc>:call setreg("\"",system("xsel -ob 2>/dev/null"))<CR>"+pli
 
-" Open a Quickfix window for the last search.
-nnoremap <silent> ,/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nnoremap <Esc>- :vsplit<CR>:wincmd w<CR>:exec("tag ".expand("<cword>"))<CR>
 vnoremap <Esc>- :vsplit<CR>:wincmd w<CR>:exec("tag ".expand("<cword>"))<CR>
 nnoremap <Esc>= :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
