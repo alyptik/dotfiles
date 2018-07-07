@@ -35,9 +35,8 @@ set pagination off
 # set height unlimited
 # set non-stop on
 # set schedule-multiple on
-set scheduler-locking on
 set backtrace past-entry on
-set backtrace main on
+set backtrace past-main on
 
 # set tui border-kind ascii
 set tui border-kind acs
@@ -75,12 +74,15 @@ end
 
 define run-lind
 	if $argc > 1
-		run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /$arg1
+		run -avv -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /$arg1
 		thread $arg0 attach
 	else
-		run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /fork
 		if $argc > 0
+			run -av -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /fork
 			thread $arg0 attach
+		else
+			run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /fork
+			thread 16 attach
 		end
 	end
 end

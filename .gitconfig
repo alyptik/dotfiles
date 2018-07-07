@@ -32,8 +32,7 @@
 	br = branch
 	co = commit -S -v
 	st = status
-	l = log
-	lu = log --show-signature --color-moved=dimmed_zebra -u
+	lu = log --show-signature --color-moved=zebra -u
 	lg = log --graph --oneline --decorate --boundary
 	lga = log --graph --oneline --decorate --all
 	lgs = log --graph --oneline --decorate --boundary --stat
@@ -102,10 +101,11 @@
 	cur = am --show-current-patch
 	cpc = cherry-pick -S --continue
 	ri = rebase --signoff -S -i
-	ls = log --stat --show-signature --color-moved=dimmed_zebra
-	ld = log --dirstat --show-signature --color-moved=dimmed_zebra
-	ldf = log --dirstat-by-file --show-signature --color-moved=dimmed_zebra
-	lw = log --show-signature --color-moved=dimmed_zebra --word-diff=plain -u
+	ls = log --stat --show-signature --color-moved=zebra
+	ld = log --dirstat --show-signature --color-moved=zebra
+	ldf = log --dirstat-by-file --show-signature --color-moved=zebra
+	lw = log --show-signature --color-moved=zebra --word-diff=plain -u
+	l = log
 [web]
 	browser = w3m
 [instaweb]
