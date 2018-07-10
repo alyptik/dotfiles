@@ -294,6 +294,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	# insert the last word from the previous
 	# history event at the cursor position
 	bindkey -M "$1" "\e\\" insert-last-word
+	bindkey -M "$1" "\e[2~" insert-last-word
 	bindkey -M "$1" "\eE" tetris
 	bindkey -M "$1" "\e\er" znt-history-widget
 	bindkey -M "$1" "\e\et" znt-cd-widget

@@ -225,7 +225,7 @@ desktop_file_to_binary()
         fi
         if [ -r "$file_path" ]; then
             # Remove any arguments (%F, %f, %U, %u, etc.).
-            command="`grep -E "^Exec(\[[^]=]*])?=" "$file" | cut -d= -f 2- | sed 's/ .*$//' | head -n1`"
+            command="`grep -E "^Exec(\[[^]=]*])?=" "$file_path" | cut -d= -f 2- | sed 's/ .*$//' | head -n1`"
             # command="`grep -E "^Exec(\[[^]=]*])?=" "$file_path" | cut -d= -f 2- | first_word`"
             command="`which "$command"`"
             readlink -f "$command"

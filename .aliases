@@ -221,7 +221,7 @@ alias trc='vim "$HOME/.tmux.conf"'
 
 alias zrc='vim "$ZDOTDIR/.zshrc"'
 alias erc='vim "$ZDOTDIR/.zshenv"'
-alias frc='vim ""$ZDOTDIR/.zwidgets"'
+alias frc='vim "$ZDOTDIR/.zwidgets"'
 
 alias us='systemctl --user'
 alias uscdr='systemctl --user daemon-reload'

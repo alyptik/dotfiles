@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for key; do
+	gpg2 --recv-keys "$key" && gpg2 --quick-lsign-key "$key"
+done
