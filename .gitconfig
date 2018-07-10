@@ -105,7 +105,7 @@
 	ld = log --dirstat --show-signature --color-moved=zebra
 	ldf = log --dirstat-by-file --show-signature --color-moved=zebra
 	lw = log --show-signature --color-moved=zebra --word-diff=plain -u
-	l = log
+	l = log --show-signature
 [web]
 	browser = w3m
 [instaweb]
