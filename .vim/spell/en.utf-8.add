@@ -78,3 +78,13 @@ pid
 metadata
 destructors
 CrashSimulator
+mergeable
+undeterministic
+undeterministic
+NaClApp
+NaCl
+NaClAppThreads
+NaClSysFork
+mutexes
+syscall
+untrusted

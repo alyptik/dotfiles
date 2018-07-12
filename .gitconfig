@@ -25,6 +25,8 @@
 	thread = true
 	signedoffbycc = true
 	suppressfrom = true
+	aliasfiletype = mutt
+	aliasesfile = ~/.mutt/mutt_aliases
 [push]
 	default = simple
 	followTags = true
@@ -96,7 +98,6 @@
 	cop = commit -S -v -p
 	cp = cherry-pick -S -s
 	coa = commit -S -v -a
-	df = diff --name-only
 	rb = rebase
 	cur = am --show-current-patch
 	cpc = cherry-pick -S --continue
@@ -106,6 +107,8 @@
 	ldf = log --dirstat-by-file --show-signature --color-moved=zebra
 	lw = log --show-signature --color-moved=zebra --word-diff=plain -u
 	l = log --show-signature
+	dn = diff --name-only
+	rl = reflog
 [web]
 	browser = w3m
 [instaweb]
@@ -115,13 +118,14 @@
 [core]
 	abbrev = 18
 	pager = less
-	excludesFile = /home/alyptik/.cvsignore
+	excludesfile = ~/.cvsignore
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
 	gpgsign = false
 [rerere]
 	enabled = true
+	autoupdate = true
 [pretty]
 	colorful-oneline = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [pull]
@@ -139,7 +143,11 @@
 [format]
 [format]
 	thread = shallow
+	signatureFile = ~/.mutt/signature
+	outputDirectory = ~/patches
 [init]
 	templateDir = /usr/share/git-core/templates
 [rebase]
 	stat = true
+[gpg]
+	program = gpg2

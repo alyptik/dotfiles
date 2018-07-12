@@ -65,8 +65,8 @@ call plug#begin(g:plugdir)
 	Plug 'lervag/vimtex', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'sheerun/vim-polyglot'
-	" Plug 'justmao945/vim-clang'
-	Plug 'Rip-Rip/clang_complete'
+	Plug 'justmao945/vim-clang'
+	" Plug 'Rip-Rip/clang_complete'
 	" Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	" Plug 'chaoren/vim-wordmotion'
@@ -777,15 +777,14 @@ let g:ale_c_flawfinder_executable=1
 let g:ale_c_flawfinder_error_severity=6
 let g:ale_c_cppcheck_options='--enable=style --std=gnu11 --std=posix'
 let g:clang_cpp_options=''
-	\ . '-std=gnu++14 -stdlib=libc++ '
+	\ . '-std=gnu++17 -stdlib=libc++ '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
 	\ . '-DNACL_TARGET_SUBARCH=64 '
 	\ . '-DNACL_LINUX=1 -DNACL_x86=1 '
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
-	\ . '-I./ -I../ -I../../ -I../../../ '
-	\ . '-I./trusted/include/ -I./untrusted/include/ '
-	\ . '-I./include/ -I./src -I./t '
-	\ . '-I/usr/include/python2.7 -I/inc/python3.6m/ '
+	\ . '-I./ -I../ -I../../ -I../../../ -I./src/ -I./t/ '
+	\ . '-I./trusted/include/ -I./untrusted/include -I./include/ '
+	\ . '-I/usr/include/python2.7/ -I/inc/python3.6m/ -I/usr/lind_project/ '
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
@@ -800,11 +799,9 @@ let g:ale_c_clang_options=''
 	\ . '-DNACL_TARGET_SUBARCH=64 '
 	\ . '-DNACL_LINUX=1 -DNACL_x86=1 '
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
-	\ . '-I./ -I../ -I../../ -I../../../ '
-	\ . '-I./trusted/include/ -I./untrusted/include/ '
-	\ . '-I./include/ -I./src -I./t '
-	\ . '-I/usr/include/python2.7 -I/usr/include/python3.6m/ '
-	\ . '-I/usr/lind_project/breakpad/src/ '
+	\ . '-I./ -I../ -I../../ -I../../../ -I./src/ -I./t/ '
+	\ . '-I./trusted/include/ -I./untrusted/include -I./include/ '
+	\ . '-I/usr/include/python2.7/ -I/inc/python3.6m/ -I/usr/lind_project/ '
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
@@ -1512,9 +1509,9 @@ set viewdir=~/.vim/view
 set vop+=curdir vop+=options
 
 " session options
-set ssop+=winpos ssop+=globals ssop-=options ssop+=resize
+set ssop+=winpos ssop+=globals ssop+=options ssop+=resize ssop+=tabpages
 " 'options' can corrupt sessions
-set ssop-=blank ssop-=help ssop-=localoptions ssop-=buffers ssop-=tabpages
+set ssop-=blank ssop-=buffers ssop-=help ssop-=localoptions
 
 let g:startify_skiplist = [
 	\ 'COMMIT_EDITMSG',
