@@ -102,13 +102,14 @@
 	cur = am --show-current-patch
 	cpc = cherry-pick -S --continue
 	ri = rebase --signoff -S -i
-	ls = log --stat --show-signature --color-moved=zebra
 	ld = log --dirstat --show-signature --color-moved=zebra
 	ldf = log --dirstat-by-file --show-signature --color-moved=zebra
 	lw = log --show-signature --color-moved=zebra --word-diff=plain -u
-	l = log --show-signature
+	l = log --stat --show-signature --color-moved=zebra
 	dn = diff --name-only
 	rl = reflog
+	cfggu = config --global --unset
+	cfgu = config --unset
 [web]
 	browser = w3m
 [instaweb]
