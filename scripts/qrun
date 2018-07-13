@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/sH
 
-docker run -it --name=qemu --privileged --ipc=host --cap-add=SYS_PTRACE \
+iso="${1:-$HOME/fedora.iso}"
+shift
+touch /home/jp/hda.qcow2
+docker run -it --rm --name=qemu-container \
+	--privileged --ipc=host --cap-add=SYS_PTRACE \
 	--device /dev/kvm \
-	-v /home/jp/hda.qcow2:/tmp/hda.qcow2 -e QEMU_HDA=/tmp/hda.qcow2 \
-	-e QEMU_HDA_SIZE=100G -e QEMU_CPU=4 -e QEMU_RAM=4096 \
-	-v "/home/jp/${2:-fedora.iso}:/tmp/fedora.iso:ro" -e QEMU_CDROM=/tmp/fedora.iso \
+	-v "$HOME/hda.qcow2:/tmp/hda.qcow2" -e QEMU_HDA=/tmp/hda.qcow2 \
+	-e QEMU_HDA_SIZE=100G -e QEMU_CPU=4 -e QEMU_RAM=8G \
+	-v "$iso:/tmp/${iso##*/}:ro" -e QEMU_CDROM="/tmp/${iso##*/}" \
 	-e QEMU_BOOT='order=d' -e QEMU_PORTS='2375 2376' \
-	"${1:-tianon/qemu}"
+	tianon/qemu "$@"
