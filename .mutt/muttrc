@@ -21,25 +21,30 @@ auto_view text/x-diff
 auto_view text/x-patch
 alternative_order text/plain text/enriched text/html
 
-set connect_timeout = 10
-set mail_check = 5
-set imap_keepalive = 5
-set imap_pipeline_depth = 50
-set imap_check_subscribed
-set imap_passive
-unset imap_idle
 set ssl_starttls
 unset ssl_force_tls
 set ssl_use_sslv3
+set connect_timeout = 600
+set pgp_timeout = 600
+set timeout = 600
+set mail_check = 10
+set imap_keepalive = 10
+set imap_pipeline_depth = 100
+set imap_check_subscribed
+unset imap_passive
+set imap_idle
+unset imap_servernoise
+unset imap_peek
 
-unset maildir_header_cache_verify
+set maildir_header_cache_verify
 set header_cache = "$my_cfgdir/cache"
 set message_cachedir = "$my_cfgdir/message_cache"
 set signature = "$my_cfgdir/signature"
 set alias_file = "$my_cfgdir/mutt_aliases"
 set history_file = "$my_cfgdir/mutt_history"
 set certificate_file = "$my_cfgdir/mutt_certificates"
-set entropy_file = "/dev/urandom"
+# set entropy_file = "/dev/urandom"
+set entropy_file = "/dev/frandom"
 set editor = "vim"
 set charset = "utf-8"
 set send_charset = "utf-8:us-ascii"
@@ -111,11 +116,11 @@ set pgp_list_pubring_command = "gpg2 --no-verbose --batch --with-colons --list-k
 set pgp_list_secring_command = "gpg2 --no-verbose --batch --with-colons --list-secret-keys %r"
 set pgp_autosign
 set pgp_replyencrypt
-set pgp_timeout = 1
 set pgp_good_sign = "^gpg: Good signature from"
-unset pgp_create_traditional
+# unset pgp_create_traditional
 set pgp_use_gpg_agent
 unset pgp_ignore_subkeys
+unset pgp_retainable_sigs
 
 set realname = "Joey Pabalinas"
 set from = "joeypabalinas@gmail.com"

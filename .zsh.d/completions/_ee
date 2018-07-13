@@ -1,0 +1,8 @@
+#compdef _ee ee
+
+local expl
+local -a sessions
+
+sessions+=(${(fo@)$(print -lr - $HOME/.vim/sessions/*(.:t:r) 2>/dev/null)})
+
+_wanted tag expl 'sessions' compadd $sessions

@@ -82,6 +82,8 @@ macro index A \
 	      "mark all new as read"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
 macro index <esc>b "<search>~b " "search in message bodies"
+macro index i "<search> ~F<enter>" "jump to next flagged message"
+macro index I "<search-reverse> ~F<enter>" "jump to previous flagged message"
 macro index,pager,attach,compose \cb "\
 <enter-command> set my_pipe_decode = \$pipe_decode pipe_decode<Enter>\
 <pipe-message> urlview<Enter>\

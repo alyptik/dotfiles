@@ -428,15 +428,15 @@ bindkey -M viins "jj" vi-cmd-mode
 	if type pacman &>/dev/null; then
 		dbpkgs+=(${(fo@)$(pacman -Qq 2>/dev/null)})
 	fi
+	if type find &>/dev/null; then
+		kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) \
+			-type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
+	fi
 	if type gpg2 &>/dev/null; then
 		pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring \
 			--list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
 		seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring \
 			--list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
-	fi
-	if type find &>/dev/null; then
-		kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) \
-			-type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
 	fi
 
 	cgasm_str+=$'_arguments "*:arg:_default" ":assembly instruction:('
@@ -489,10 +489,10 @@ bindkey -M viins "jj" vi-cmd-mode
 	compdef "$modprobe_str" modprobe
 	compdef "$qpc_str" qpc
 	compdef "$reptyr_str" reptyr
-
 }
 
 compdef _cpuled cpuled
+compdef _ee ee
 compdef _man fman
 compdef _man man
 compdef _gem gem
