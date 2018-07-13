@@ -1,4 +1,4 @@
-#!/bin/sH
+#!/bin/sh
 
 iso="${1:-$HOME/fedora.iso}"
 shift
