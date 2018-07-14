@@ -395,7 +395,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
 	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds
 
-	gnu_generic_cmds+=(${$(print -r - $HOME/lind_project/native_client/tools/out/nacl-sdk/bin/*(.)):t})
+	gnu_generic_cmds+=($(print -r - $HOME/lind_project/native_client/tools/out/nacl-sdk/bin/*(.:t)))
 	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
 	gnu_generic_cmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
 	gnu_generic_cmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
@@ -407,11 +407,11 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
 	gnu_generic_cmds+=(mountpoint mpd muttprint mv named neomutt netstat netstat)
 	gnu_generic_cmds+=(newsbeuter node nohup objconv objdump oomox-cli optipng)
-	gnu_generic_cmds+=(pacconf pactree paste pisg pstree qemu-img qemu-nbd reptyr)
-	gnu_generic_cmds+=(resolvconf rfc rg rlwrap rmdir rmlint rst2man rst2man2)
-	gnu_generic_cmds+=(saldl scan-build seq shred sox split stat st stjerm)
-	gnu_generic_cmds+=(strings supybot swapon systool tdrop termite test tic)
-	gnu_generic_cmds+=(tload transmission-cli transmission-create)
+	gnu_generic_cmds+=(pacconf pactree pandoc paste pisg pstree qemu-img)
+	gnu_generic_cmds+=(qemu-nbd reptyr resolvconf rfc rg rlwrap rmdir rmlint)
+	gnu_generic_cmds+=(rst2man rst2man2 saldl scan-build seq shred sox split)
+	gnu_generic_cmds+=(stat st stjerm strings supybot swapon systool tdrop)
+	gnu_generic_cmds+=(termite test tic tload transmission-cli transmission-create)
 	gnu_generic_cmds+=(transmission-daemon transmission-edit transmission-get)
 	gnu_generic_cmds+=(transmission-gtk transmission-qt transmission-remote)
 	gnu_generic_cmds+=(transmission-remote-cli transmission-remote-cli)
@@ -420,10 +420,12 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(x11vnc xbindkeys xsel youtube-dl)
 
 	if type cgasm &>/dev/null; then
-		asmcmds+=(${(o)$({ cgasm -f '.*' | perl -alne '
+		asmcmds+=(${(o)$({ cgasm -f '.*' \
+			| perl -alne '
 				BEGIN{ my @cmds; }
 				push @cmds, split(/ /, lc $F[0] =~ y|/| |r);
-				END{ print join " ", @cmds;}'; } 2>/dev/null)})
+				END{ print join " ", @cmds; }
+			'; } 2>/dev/null)})
 	fi
 	if type pacman &>/dev/null; then
 		dbpkgs+=(${(fo@)$(pacman -Qq 2>/dev/null)})
