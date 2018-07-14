@@ -37,6 +37,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'edkolev/promptline.vim'
 	Plug 'yuttie/comfortable-motion.vim'
 	Plug 'mhinz/vim-startify'
 	Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
