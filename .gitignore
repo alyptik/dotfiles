@@ -53,6 +53,7 @@ vimfiles/
 .nicotine/
 gifs/thewire/
 .mpdscribble/
+.vim/plugged/
 .vim/session*/
 oprofile_data/
 .node_modules/
