@@ -78,7 +78,7 @@ zstyle ':completion::complete:*'	rehash true
 zstyle ':history-search-multi-word'	page-size 5
 autoload -U colors && colors
 eval "$(dircolors -b)"
-export CLICOLOR=1 REPORTTIME=5
+export CLICOLOR=1 REPORTTIME=1
 
 # modules
 () {
@@ -115,8 +115,8 @@ export CLICOLOR=1 REPORTTIME=5
 ## load VCS module
 autoload -Uz vcs_info
 if type vcs_info &>/dev/null; then
-	zstyle ':vcs_info:*' enable git cvs svn
-	zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
+	zstyle ':vcs_info:*' enable git
+	zstyle ':vcs_info:*' disable bzr cdv cvs darcs mtn svk svn tla
 	zstyle ':vcs_info:*' check-for-changes true
 	zstyle ':vcs_info:*:prompt:*' check-for-changes true
 	zstyle ':vcs_info:*:prompt:*' stagedstr "%{$fg[green]%}*%{$reset_color%}"
@@ -196,9 +196,9 @@ fi
 
 # hurry up and source stuff so we can get cow news
 [[ -d "$ZDOTDIR"/plugins ]] && () for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh
+[[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && . /usr/bin/virtualenvwrapper_lazy.sh
 if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
-[[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
 [[ -f "$HOME/.aliases" ]] && . "$HOME/.aliases"
 aliases[=]='noglob ='
 () {

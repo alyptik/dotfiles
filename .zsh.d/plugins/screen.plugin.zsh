@@ -42,7 +42,8 @@ function screen_set ()
 # called by zsh before executing a command
 function screen_preexec ()
 {
-	local PS_FORMAT
+	local PS_FORMAT REPORTTIME
+	REPORTTIME=-1
 	[[ "$TERM" =~ ^screen.*$ ]] || return
 	tty | grep -vq 'tty' || return
 	[[ -n "$STY" && -z "$TMUX" ]] || return
@@ -59,7 +60,8 @@ function screen_preexec ()
 # called by zsh before showing the prompt
 function screen_precmd ()
 {
-	local PS_FORMAT
+	local PS_FORMAT REPORTTIME
+	REPORTTIME=-1
 	[[ "$TERM" =~ ^screen.*$ ]] || return
 	tty | grep -vq 'tty' || return
 	[[ -n "$STY" && -z "$TMUX" ]] || return

@@ -66,8 +66,8 @@ call plug#begin(g:plugdir)
 	Plug 'lervag/vimtex', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'sheerun/vim-polyglot'
-	" Plug 'justmao945/vim-clang'
-	Plug 'Rip-Rip/clang_complete'
+	Plug 'justmao945/vim-clang'
+	" Plug 'Rip-Rip/clang_complete'
 	" Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	" Plug 'chaoren/vim-wordmotion'
