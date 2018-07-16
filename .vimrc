@@ -37,6 +37,7 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	Plug 'vim-jp/vital.vim'
 	Plug 'edkolev/promptline.vim'
 	Plug 'yuttie/comfortable-motion.vim'
 	Plug 'mhinz/vim-startify'
@@ -66,8 +67,8 @@ call plug#begin(g:plugdir)
 	Plug 'lervag/vimtex', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'sheerun/vim-polyglot'
-	Plug 'justmao945/vim-clang'
-	" Plug 'Rip-Rip/clang_complete'
+	" Plug 'justmao945/vim-clang'
+	Plug 'Rip-Rip/clang_complete'
 	" Plug 'mikelue/vim-maven-plugin'
 	" Plug 'vim-scripts/maven-ide'
 	" Plug 'chaoren/vim-wordmotion'
@@ -229,7 +230,7 @@ else
 endif
 
 set smartindent
-" set cindent
+set nocindent
 " set cinoptions=:0,+0,(2,J0,{1,}0,>4,)1,m2
 " default cinoptions
 " set cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0
@@ -243,7 +244,7 @@ set keywordprg=man\ -s
 set nopaste noshowcmd
 set clipboard=unnamedplus,autoselectplus
 " set clipboard=unnamed,autoselect
-set ofu=syntaxcomplete#Complete
+" set ofu=syntaxcomplete#Complete
 " set ofu=completor#action#completefunc
 " set cfu=completor#action#completefunc
 set magic nostartofline
@@ -1036,7 +1037,7 @@ let g:completor_node_binary='/usr/bin/node'
 let g:completor_clang_binary='/usr/bin/clang'
 let g:completor_gocode_binary='/usr/bin/gocode'
 let g:completor_css_omni_trigger='([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
-" let g:completor_disable_ultisnips=1
+let g:completor_disable_ultisnips=1
 let g:completor_auto_trigger=1
 inoremap <expr> <Tab> (pumvisible() ? "\<C-n>" : "\<Tab>")
 inoremap <expr> <S-Tab> (pumvisible() ? "\<C-p>" : "\<Tab>")
@@ -2139,3 +2140,4 @@ nnoremap <Leader>A :call ToggleASM()<CR>
 		vmap <Plug>IgnoreMarkSet <Plug>MarkSet
 		xmap <Leader>m <Plug>MarkIWhiteSet
 
+" vi:ft=vim:

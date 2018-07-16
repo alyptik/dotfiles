@@ -29,7 +29,7 @@
 	aliasesfile = ~/.mutt/mutt_aliases
 [push]
 	default = simple
-	followTags = true
+	followtags = false
 [alias]
 	br = branch
 	co = commit -S -v
