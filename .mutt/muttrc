@@ -21,9 +21,6 @@ auto_view text/x-diff
 auto_view text/x-patch
 alternative_order text/plain text/enriched text/html
 
-set ssl_starttls
-unset ssl_force_tls
-set ssl_use_sslv3
 set connect_timeout = 600
 set pgp_timeout = 600
 set timeout = 600
@@ -35,10 +32,13 @@ unset imap_passive
 set imap_idle
 unset imap_servernoise
 unset imap_peek
+set ssl_starttls
+unset ssl_force_tls
+set ssl_use_sslv3
 
-set maildir_header_cache_verify
-set header_cache = "$my_cfgdir/cache"
-set message_cachedir = "$my_cfgdir/message_cache"
+unset maildir_header_cache_verify
+set header_cache = "$my_cfgdir/hdr_cache"
+set message_cachedir = "$my_cfgdir/msg_cache"
 set signature = "$my_cfgdir/signature"
 set alias_file = "$my_cfgdir/mutt_aliases"
 set history_file = "$my_cfgdir/mutt_history"
@@ -70,6 +70,7 @@ set askcc
 set reply_self
 set edit_headers
 
+unset arrow_cursor
 set sidebar_visible
 set sidebar_short_path
 set sidebar_width = 25

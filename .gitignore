@@ -62,6 +62,7 @@ oprofile_data/
 .mixxx/analysis/
 .mutt*/ox_config/
 .emacs.d.spacemacs/
-.mutt*/message_cache/
+.mutt*/hdr_cache/
+.mutt*/msg_cache/
 
 # vi:ft=cfg:

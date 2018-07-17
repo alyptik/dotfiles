@@ -37,6 +37,10 @@ call plug#begin(g:plugdir)
 		Plug 'carlitux/deoplete-ternjs'
 	endif
 
+	" Plug 'ntpeters/vim-better-whitespace'
+	Plug 'bronson/vim-trailing-whitespace'
+	Plug 'pboettch/vim-cmake-syntax', {'for': 'cmake'}
+	Plug 'richq/vim-cmake-completion', {'for': 'cmake'}
 	Plug 'vim-jp/vital.vim'
 	Plug 'edkolev/promptline.vim'
 	Plug 'yuttie/comfortable-motion.vim'
@@ -56,14 +60,14 @@ call plug#begin(g:plugdir)
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	" Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
-	Plug 'xolox/vim-misc'
+	" Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
 	" Plug 'edkolev/promptline.vim'
 	" Plug 'sudar/vim-arduino-syntax'
 	" Plug 'jplaut/vim-arduino-ino'
 	" Plug 'stevearc/vim-arduino'
 	" Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
-	" Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
+	Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
 	Plug 'lervag/vimtex', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex', 'tex_LatexBox', 'latexdoc']}
 	Plug 'sheerun/vim-polyglot'
@@ -129,7 +133,7 @@ call plug#begin(g:plugdir)
 	" Plug 'junegunn/vim-easy-align'
 	Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 	" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-	Plug 'nsf/gocode', {'tag': 'v.20150303', 'rtp': 'vim'}
+	Plug 'nsf/gocode', {'tag': 'v.20150303', 'rtp': 'vim', 'for': 'go'}
 	" Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 	Plug 'junegunn/vim-github-dashboard', {'on': ['GHDashboard', 'GHActivity']}
 	Plug 'kovisoft/paredit', {'for': ['clojure', 'scheme']}
@@ -281,7 +285,10 @@ set incsearch ignorecase smartcase autoread
 " Turn on alternate screen
 " set t_ti=7[?47h t_te=[2J[?47l8
 set matchpairs=(:),{:},[:],<:>,=:;
-"au FileType c,cpp,java set mps+==:;
+augroup matchPairs
+	au!
+	au FileType c,cpp,java set mps+==:;
+augroup END
 set backspace=indent,eol,start
 set formatoptions+=j
 set list lcs=trail:-,extends:>,precedes:<,nbsp:+
@@ -316,6 +323,8 @@ set nofoldenable
 set iskeyword^=-
 set isfname^=-
 set virtualedit=block
+" use location list for cscope
+set cscopequickfix=s+,g+,d+,c+,t+,e+,f+,i+
 
 " ! : When included, save and restore global variables that start
 "     with an uppercase letter, and don't contain a lowercase
@@ -393,86 +402,77 @@ set directory=~/.cache/vim/swap/
 set undofile
 set undodir=~/.cache/vim/undo/
 
-au QuickFixCmdPost *grep* cwindow
+augroup fileTypes
+	au!
+	au QuickFixCmdPost *grep* cwindow
 
-"formal: au BufNewFile,BufReadPost * setf {filetype}
-au BufNewFile,BufReadPost *.[Hh] set filetype=c
-au BufNewFile,BufReadPost *.[Cc] set filetype=c
-au BufNewFile,BufReadPost *.jq setf javascript
-au BufNewFile,BufReadPost *tmux.conf set filetype=tmux
-au BufNewFile,BufReadPost *nanorc setf nanorc
-au BufNewFile,BufReadPost *vimpagerrc setf vim
-au BufNewFile,BufReadPost *.\(service\|socket\|target\|timer\)* set filetype=sysctl
-"au BufNewFile,BufReadPost *\(nftables.conf\|.nft\)* setf nftables
-au BufNewFile,BufReadPost *\(nftables.conf\|.nft\)* set filetype=nftables
-au BufNewFile,BufReadPost *toxic.conf* set filetype=cfg
-"au BufNewFile,BufReadPost *conf setf config
-"au BufNewFile,BufReadPost *conf setf conf
-au BufNewFile,BufReadPost db.* set filetype=bindzone
-au BufNewFile,BufReadPost *grub* set filetype=grub
-au BufNewFile,BufReadPost *.\(cc\|cpp\) set filetype=cpp
-au BufNewFile,BufReadPost proftpd.\(con\|conf\) set filetype=cterm
-au BufNewFile,BufReadPost i3.conf set filetype=i3
-"au BufNewFile,BufReadPost {/etc/udev/rules.d/,/store/config/}*.rules set filetype=udevrules
-au BufNewFile,BufReadPost *.txt setf erlang
-au BufNewFile,BufReadPost *.log setf irc
-au BufNewFile,BufReadPost /etc/X11/xorg.conf.d/* setf xf86conf
-au BufNewFile,BufReadPost *named.conf* set filetype=named
-au BufNewFile,BufReadPost *.log setf irc
-" au BufNewFile,BufReadPost *conf set filetype=cfg
-au BufNewFile,BufReadPost *torrc* setf cfg
-au BufNewFile,BufReadPost /usr/share/highlight/themes/* set filetype=lua
-au BufNewFile,BufReadPost /**/.zsh.d/** set filetype=zsh
-au BufNewFile,BufReadPost /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
-au BufNewFile,BufReadPost nsswitch.conf* set filetype=nsis
-au BufNewFile,BufReadPost makepkg.conf* set filetype=sh
-au BufNewFile,BufReadPost *.conf* setf cfg
-au BufNewFile,BufReadPost /etc/* setf cfg
-au BufNewFile,BufReadPost *.\(pde\|ino\) set filetype=arduino
-au BufNewFile,BufReadPost *.vala setf cs
-au BufNewFile,BufReadPost *.vapi setf cs
-au BufNewFile,BufReadPost *.gtkaml setf cs
-au BufNewFile,BufReadPost *.gtkon setf cs
-au BufNewFile,BufReadPost *.md set filetype=markdown
-au BufNewFile,BufReadPost PKGBUILD set filetype=sh
+	"formal: au BufNewFile,BufReadPost * setf {filetype}
+	au BufNewFile,BufReadPost *.[Hh] set filetype=c
+	au BufNewFile,BufReadPost *.[Cc] set filetype=c
+	au BufNewFile,BufReadPost *.jq setf javascript
+	au BufNewFile,BufReadPost *tmux.conf set filetype=tmux
+	au BufNewFile,BufReadPost *nanorc setf nanorc
+	au BufNewFile,BufReadPost *vimpagerrc setf vim
+	au BufNewFile,BufReadPost *.\(service\|socket\|target\|timer\)* set filetype=sysctl
+	"au BufNewFile,BufReadPost *\(nftables.conf\|.nft\)* setf nftables
+	au BufNewFile,BufReadPost *\(nftables.conf\|.nft\)* set filetype=nftables
+	au BufNewFile,BufReadPost *toxic.conf* set filetype=cfg
+	"au BufNewFile,BufReadPost *conf setf config
+	"au BufNewFile,BufReadPost *conf setf conf
+	au BufNewFile,BufReadPost db.* set filetype=bindzone
+	au BufNewFile,BufReadPost *grub* set filetype=grub
+	au BufNewFile,BufReadPost *.\(cc\|cpp\) set filetype=cpp
+	au BufNewFile,BufReadPost proftpd.\(con\|conf\) set filetype=cterm
+	au BufNewFile,BufReadPost i3.conf set filetype=i3
+	"au BufNewFile,BufReadPost {/etc/udev/rules.d/,/store/config/}*.rules set filetype=udevrules
+	au BufNewFile,BufReadPost *.txt setf erlang
+	au BufNewFile,BufReadPost *.log setf irc
+	au BufNewFile,BufReadPost /etc/X11/xorg.conf.d/* setf xf86conf
+	au BufNewFile,BufReadPost *named.conf* set filetype=named
+	au BufNewFile,BufReadPost *.log setf irc
+	" au BufNewFile,BufReadPost *conf set filetype=cfg
+	au BufNewFile,BufReadPost *torrc* setf cfg
+	au BufNewFile,BufReadPost /usr/share/highlight/themes/* set filetype=lua
+	au BufNewFile,BufReadPost /**/.zsh.d/** set filetype=zsh
+	au BufNewFile,BufReadPost /tmp/mutt-* set filetype=mail tw=0 wrapmargin=72
+	au BufNewFile,BufReadPost nsswitch.conf* set filetype=nsis
+	au BufNewFile,BufReadPost makepkg.conf* set filetype=sh
+	au BufNewFile,BufReadPost *.conf* setf cfg
+	au BufNewFile,BufReadPost /etc/* setf cfg
+	au BufNewFile,BufReadPost *.\(pde\|ino\) set filetype=arduino
+	au BufNewFile,BufReadPost *.vala setf cs
+	au BufNewFile,BufReadPost *.vapi setf cs
+	au BufNewFile,BufReadPost *.gtkaml setf cs
+	au BufNewFile,BufReadPost *.gtkon setf cs
+	au BufNewFile,BufReadPost *.md set filetype=markdown
+	au BufNewFile,BufReadPost PKGBUILD set filetype=sh
 
-" Fallback
-" au BufNewFile,BufReadPost * setf erlang
+	" fallback
+	au BufNewFile,BufReadPost * setf erlang
 
-"au BufWritePost *.c,*.cc,*.cpp,*.h :silent! !ctags -R &
-au FileType cpp set keywordprg=cppman
-au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-au FileType c set keywordprg=man\ -s
-au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-au FileType h set keywordprg=man\ -s
-" au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
-au FileType c setl ofu=ClangComplete cfu=ClangComplete
-au FileType h setl ofu=ClangComplete cfu=ClangComplete
-" au FileType cpp setl ofu=ClangComplete
-" au FileType c setl ofu=ccomplete#CompleteCpp
-" au FileType h setl ofu=ccomplete#CompleteCpp
-" au FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
-au FileType php setl ofu=phpcomplete#CompletePHP
-au FileType ruby,eruby setl ofu=rubycomplete#Complete
-au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
-au FileType css setl ofu=csscomplete#CompleteCSS
-au FileType udev set filetype=udevrules
-au FileType pandoc set filetype=markdown
-" Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-au FileType haskell setl omnifunc=necoghc#omnifunc
-" filetype marks
-augroup VIMRC
-	autocmd!
-	autocmd BufLeave *.c    normal! mc
-	autocmd BufLeave *.h    normal! mh
-	autocmd BufLeave *.css  normal! mC
-	autocmd BufLeave *.html normal! mH
-	autocmd BufLeave *.js   normal! mJ
-	autocmd BufLeave *.php  normal! mP
+	au FileType cpp set keywordprg=cppman
+	au FileType c set keywordprg=man\ -s
+	au FileType h set keywordprg=man\ -s
+	au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+	au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+	au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
+	" au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
+	" au FileType c setl ofu=ClangComplete cfu=ClangComplete
+	" au FileType h setl ofu=ClangComplete cfu=ClangComplete
+	" au FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+	au FileType php setl ofu=phpcomplete#CompletePHP
+	au FileType ruby,eruby setl ofu=rubycomplete#Complete
+	au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
+	au FileType css setl ofu=csscomplete#CompleteCSS
+	au FileType udev set filetype=udevrules
+	au FileType pandoc set filetype=markdown
+	au FileType haskell setl omnifunc=necoghc#omnifunc
+
+	" special case arch PKGBUILDs
+	au BufEnter PKGBUILD,.env let b:ale_sh_shellcheck_exclusions='SC2034,SC2154,SC2164'
 augroup END
-autocmd BufEnter PKGBUILD,.env let b:ale_sh_shellcheck_exclusions='SC2034,SC2154,SC2164'
+" disable haskell-vim omnifunc
+let g:haskellmode_completion_ghc = 0
 
 " colors
 syntax enable
@@ -491,12 +491,39 @@ highlight SpecialKey cterm=bold ctermfg=240 ctermbg=236 guifg=#282828
 " If you like one of the existing styles you can link them:
 highlight link cMember Special
 
+" better whitespace
+command! FixWhitespace silent! %s/ \+$//
+let g:better_whitespace_enabled=0
+let g:better_whitespace_skip_empty_lines=1
+let g:strip_whitelines_at_eof=1
+let g:show_spaces_that_precede_tabs=1
+let g:better_whitespace_verbosity=0
+" automatically strip trailing whitespace on save
+let g:strip_whitespace_on_save=0
+let g:better_whitespace_filetypes_blacklist=[
+	\ 'diff', 'gitcommit', 'gitsendemail',
+	\ 'unite', 'qf', 'help', 'markdown',
+	\ ]
+nnoremap ]w :NextTrailingWhitespace<CR>
+nnoremap [w :PrevTrailingWhitespace<CR>
+augroup whitespace
+	au!
+	if g:better_whitespace_enabled
+		" highlight whitespace in markdown files, though stripping
+		" remains disabled by the blacklist
+		au FileType markdown EnableWhitespace
+		" do not modify kernel files, even though their type is not
+		" blacklisted and highlighting is enabled
+		au BufRead *linux* DisableStripWhitespaceOnSave
+	endif
+augroup END
+
 " instant markdown preview
 let g:instant_markdown_slow=1
 
 " airline
 let g:airline#extensions#whitespace#enabled=1
-" useful to call for particular file types (e.g., in "ftplugin/*")
+" useful to call for particular file types (e.g., in ftplugin/*)
 " silent! call airline#extensions#whitespace#disable()
 
 " must be all spaces or all tabs before the first non-whitespace character
@@ -624,6 +651,62 @@ let g:airline_symbols.linenr='⭡'
 let g:airline_detect_spell=1
 let g:airline_skip_empty_sections=0
 let g:airline#extensions#tabline#show_buffers=0
+
+" arduino commands
+let g:arduino_cmd='/usr/share/arduino/arduino'
+let g:arduino_dir='/usr/share/arduino'
+let g:arduino_run_headless=1
+let g:arduino_args='--verbose-upload'
+let g:arduino_board='archlinux-arduino:avr:mega'
+" let g:arduino_board='archlinux-arduino:avr:atmegang:atmega168'
+let g:arduino_serial_port_globs=[
+			\ '/dev/ttyACM*',
+			\ '/dev/ttyUSB*',
+			\ '/dev/tty.usbmodem*',
+			\ '/dev/tty.usbserial*'
+			\ ]
+
+" arduino commands
+let g:arduino_cmd='/usr/share/arduino/arduino'
+let g:arduino_dir='/usr/share/arduino'
+let g:arduino_run_headless=1
+let g:arduino_args='--verbose-upload'
+let g:arduino_board='archlinux-arduino:avr:mega'
+" let g:arduino_board='archlinux-arduino:avr:atmegang:atmega168'
+let g:arduino_serial_port_globs=[
+			\ '/dev/ttyACM*',
+			\ '/dev/ttyUSB*',
+			\ '/dev/tty.usbmodem*',
+			\ '/dev/tty.usbserial*'
+			\ ]
+
+" arduino commands
+let g:arduino_cmd='/usr/share/arduino/arduino'
+let g:arduino_dir='/usr/share/arduino'
+let g:arduino_run_headless=1
+let g:arduino_args='--verbose-upload'
+let g:arduino_board='archlinux-arduino:avr:mega'
+" let g:arduino_board='archlinux-arduino:avr:atmegang:atmega168'
+let g:arduino_serial_port_globs=[
+			\ '/dev/ttyACM*',
+			\ '/dev/ttyUSB*',
+			\ '/dev/tty.usbmodem*',
+			\ '/dev/tty.usbserial*'
+			\ ]
+
+" arduino commands
+let g:arduino_cmd='/usr/share/arduino/arduino'
+let g:arduino_dir='/usr/share/arduino'
+let g:arduino_run_headless=1
+let g:arduino_args='--verbose-upload'
+let g:arduino_board='archlinux-arduino:avr:mega'
+" let g:arduino_board='archlinux-arduino:avr:atmegang:atmega168'
+let g:arduino_serial_port_globs=[
+			\ '/dev/ttyACM*',
+			\ '/dev/ttyUSB*',
+			\ '/dev/tty.usbmodem*',
+			\ '/dev/tty.usbserial*'
+			\ ]
 
 " arduino commands
 let g:arduino_cmd='/usr/share/arduino/arduino'
@@ -786,7 +869,8 @@ let g:clang_cpp_options=''
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ -I../../../ -I./src/ -I./t/ '
 	\ . '-I./trusted/include/ -I./untrusted/include -I./include/ '
-	\ . '-I/usr/include/python2.7/ -I/inc/python3.6m/ -I/usr/lind_project/ '
+	\ . '-I/usr/include/python2.7/ -I/inc/python3.6m/ '
+	\ . '-I/usr/lind_project/ -I/usr/lind_project/lind_glibc/sysdeps/nacl/ '
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
@@ -803,7 +887,8 @@ let g:ale_c_clang_options=''
 	\ . '-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 '
 	\ . '-I./ -I../ -I../../ -I../../../ -I./src/ -I./t/ '
 	\ . '-I./trusted/include/ -I./untrusted/include -I./include/ '
-	\ . '-I/usr/include/python2.7/ -I/inc/python3.6m/ -I/usr/lind_project/ '
+	\ . '-I/usr/include/python2.7/ -I/inc/python3.6m/ '
+	\ . '-I/usr/lind_project/ -I/usr/lind_project/lind_glibc/sysdeps/nacl/ '
 	\ . '-Wall -Wextra -pedantic '
 	\ . '-Wno-gnu-statement-expression '
 	\ . '-Wno-missing-braces -Wno-missing-field-initializers '
@@ -1144,10 +1229,11 @@ let g:mdnquery_topics=['js', 'css']
 " Search only for HTML in the current buffer
 let b:mdnquery_topics=['html']
 " Automatically set the topics for HTML files
-au FileType html setlocal keywordprg=:MdnQueryFirstMatch
-au FileType html let b:mdnquery_topics= ['css', 'html']
-"call mdnquery#search('link', ['css', 'html'])
-"call mdnquery#firstMatch('flex align', ['css'])
+augroup mdn
+	au!
+	au FileType html setlocal keywordprg=:MdnQueryFirstMatch
+	au FileType html let b:mdnquery_topics= ['css', 'html']
+augroup END
 
 let g:CtrlSpaceSearchTiming=500
 if executable('ag')
@@ -1407,10 +1493,6 @@ augroup Binary
 	au BufWritePost *.bin if &bin | %!xxd
 	au BufWritePost *.bin set nomod | endif
 augroup END
-"augroup myvimrc
-"    au!
-"    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so /etc/vimrc | if has('gui_running') | so /etc/gvimrc | endif
-"augroup END
 
 " better rainbow parentheses
 augroup rainbowparens
@@ -1501,9 +1583,17 @@ let g:startify_session_dir='~/.vim/sessions'
 " persist all options related to :make
 let g:session_persist_globals = ['&makeprg', '&makeef', '&expandtab']
 
-au SessionLoadPost * let g:session_autosave=!empty(xolox#session#find_current_session())
-	\ ? 'prompt'
-	\ : 'no'
+augroup sessionLoad
+	au!
+	func! InSession()
+		let l:autosave='no'
+		if !empty(xolox#session#find_current_session())
+			l:autosave='prompt'
+		endif
+		return l:autosave
+	endfunc
+	au SessionLoadPost * let g:session_autosave=InSession()
+augroup END
 
 " view options
 set viewdir=~/.vim/view
@@ -1661,9 +1751,10 @@ vnoremap <Leader>rc y:%s/<C-r>"/
 " below pre-fills the current word for you to change.
 nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
 vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
-" Replace tabs with four spaces. Make sure that there is a tab character between
+" Replace tabs with either spaces. Make sure that there is a tab character between
 " the first pair of slashes when you copy this mapping into your .vimrc!
-nnoremap <Leader>rts :%s/	/    /g
+nnoremap <Leader>rts :%s/	/        /g
+nnoremap <Leader>r8t :%s/ \{8\}/	/g
 nnoremap <Leader>r4t :%s/ \{4\}/	/g
 nnoremap <Leader>r2t :%s/ \{2\}/	/g
 
@@ -1725,11 +1816,7 @@ command! Wall wall
 command! WAll wall
 command! Wqall wqall
 command! WQall wqall
-"cabbrev wQ <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'wq' : 'wQ')<CR>
-"cnoremap w!! silent w !sudo dd of=%
-" command! SudoWrite silent w !sudo sponge %
-command! SudoWrite silent w !sudo sponge %
-cabbrev w!! <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SudoWrite' : 'w!!')<CR>
+
 cabbrev W! w!
 cabbrev Q! q!
 cabbrev Wq! wq!
@@ -1747,6 +1834,9 @@ command! PC PlugClean
 cabbrev p PlugUpdate
 cabbrev pu PlugUpgrade
 cabbrev pc PlugClean
+
+command! SudoWrite silent! w !sudo sponge %
+cabbrev w!! <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SudoWrite' : 'w!!')<CR>
 
 cnoremap <C-a> <Home>
 cnoremap <Esc>h <Left>
@@ -1823,8 +1913,8 @@ nnoremap  <Leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
 nnoremap gb :ls<CR>:b<Space>
 " nnoremap gb :call BufferList()<CR>
 " nnoremap <Leader>f :find *
-nnoremap <Leader>s :sfind *
-nnoremap <Leader>v :vert sfind *
+" nnoremap <Leader>s :sfind *
+" nnoremap <Leader>v :vert sfind *
 " nnoremap <Leader>t :tabfind *
 " nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
 nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
