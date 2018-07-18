@@ -35,11 +35,10 @@ if [[ -f "$_zsh_error" ]]; then rm -f "$_zsh_error"; else cleanup; fi
 # emacs mang...
 [[ "$EMACS" == t ]] && unsetopt zle
 () for 1 { zle -N "$1"; } zle-keymap-select zle-line-init zle-line-finish
-KEYTIMEOUT=20
+KEYTIMEOUT=15
 bindkey -v
 # initialize _km for zle widgets and set initial cursor color
 _km=vi _emacs= _vi=main
-# _km=emacs _emacs=main _vi=
 setescapes
 case "$_km" in
 (vi)
@@ -57,8 +56,8 @@ esac
 	autoload -Uz "$1" && zle -N "$1"
 } select-bracketed select-quoted
 () for 1 {
-	bindkey -M viopp "$1" select-bracketed;
-	bindkey -M visual "$1" select-bracketed;
+	bindkey -M viopp "$1" select-bracketed
+	bindkey -M visual "$1" select-bracketed
 } {a,i}${(s..)^:-'()[]{}<>bB'}
 () for 1 {
 	bindkey -M viopp "$1" select-quoted
@@ -78,7 +77,6 @@ zstyle ':completion::complete:*'	rehash true
 zstyle ':history-search-multi-word'	page-size 5
 autoload -U colors && colors
 eval "$(dircolors -b)"
-export CLICOLOR=1 REPORTTIME=1
 
 # modules
 () {
@@ -102,8 +100,9 @@ export CLICOLOR=1 REPORTTIME=1
 	zle_cust+=(insert-x-selection yank-x-selection)
 	zle_cust+=(zle-backwards-delete-to-char zle-backwards-zap-to-char)
 	zle_cust+=(zle-compdef zle-emacs-keymap zle-fh zle-fman zle-less)
-	zle_cust+=(zle-list-binds zle-refresh-keymap zle-run-help zle-toggle-keymap)
-	zle_cust+=(zle-vi-keymap zle-vim zle-youtube-helper zle-zaw-help)
+	zle_cust+=(zle-list-binds zle-locate-widget zle-refresh-keymap)
+	zle_cust+=(zle-run-help zle-toggle-keymap zle-vi-keymap zle-vim)
+	zle_cust+=(zle-youtube-helper zle-zaw-help)
 	() for 1 { zle -N "$1"; } $zle_arr $zle_cust
 	() for 1 { zmodload "$1"; } $zmod_arr
 	() for 1 { autoload -Uz "$1"; } $au_arr
@@ -195,17 +194,18 @@ else
 fi
 
 # hurry up and source stuff so we can get cow news
-[[ -d "$ZDOTDIR"/plugins ]] && () for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh
-[[ -f /usr/bin/virtualenvwrapper_lazy.sh ]] && . /usr/bin/virtualenvwrapper_lazy.sh
+if [[ -d "$ZDOTDIR"/plugins ]]; then () for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh; fi
+if [[ -f /usr/bin/virtualenvwrapper_lazy.sh ]]; then . /usr/bin/virtualenvwrapper_lazy.sh; fi
 if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
-[[ -f "$HOME/.aliases" ]] && . "$HOME/.aliases"
+if [[ -f "$HOME/.aliases" ]]; then . "$HOME/.aliases"; fi
 aliases[=]='noglob ='
 () {
 	local -a host=(host -W 1 -t) dig=(dig +short +timeout=1)
 	local -a cmdline=($host txt istheinternetonfire.com)
 	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	$cmdline | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50 && print
+	$cmdline | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
+	print
 }
 safetytoggle -n
 
@@ -230,19 +230,20 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
-ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
+ZSH_AUTOSUGGEST_STRATEGY=default
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(which-command)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(append-x-selection insert-x-selection)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(yank-x-selection fzf-locate-widget)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(insert-composed-char)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-backwards-delete-to-char)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-backwards-zap-to-char)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-compdef zle-emacs-keymap zle-fh zle-fman)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-less zle-list-binds zle-locate-widget)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-refresh-keymap zle-run-help zle-toggle-keymap)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-vi-keymap zle-vim zle-youtube-helper zle-zaw-help)
 ZSH_AUTOSUGGEST_EXECUTE_WIDGETS+=()
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=()
 ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=()
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(append-x-selection insert-x-selection)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(yank-x-selection fzf-locate-widget)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(insert-composed-char)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-delete-to-char)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-backwards-zap-to-char)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-compdef zle-emacs-keymap zle-fh zle-fman)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-less zle-list-binds zle-refresh-keymap)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-run-help zle-toggle-keymap zle-vi-keymap)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(zle-vim zle-youtube-helper zle-zaw-help)
 
 # custom bindkey commands
 bindkey -M emacs "\C-p" history-substring-search-up
@@ -273,6 +274,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" -s "\el" " | l "
 	bindkey -M "$1" -s "\es" " | sed "
 
+	bindkey -M "$1" "\ef" zle-fh
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" zle-run-help
@@ -384,7 +386,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e\C-i" fasd-complete
 	bindkey -M "$1" "\e[Z" reverse-menu-complete
 	bindkey -M "$1" "\C-i" "$fzf_default_completion"
-	bindkey -M "$1" "\ei" fzf-locate-widget
+	bindkey -M "$1" "\ei" zle-locate-widget
 	bindkey -M "$1" "\er" fzf-history-widget
 	bindkey -M "$1" "\C-t" transpose-words
 	bindkey -M "$1" "\et" fzf-file-widget
@@ -567,6 +569,7 @@ hash -d stuff="/hdd"
 hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
 hash -d tt="/hdd/torrents"
+hash -d tuf="$PROJECTS/secure-systems-lab/tuf"
 hash -d vim="${HOME}/.vim"
 hash -d vm="/run/media/alyptik/vm"
 hash -d wanderlust="/hdd/wanderlust"

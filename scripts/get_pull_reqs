@@ -2,7 +2,7 @@
 
 # fetch PR list
 if ! git rev-list pull-requests -- >/dev/null 2>&1; then
-	git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || true
+	(git remote add pull-requests "${1:-"$(git remote get-url origin)"}") 2>/dev/null || true
 fi
 
 # refmap list of PRs at +refs/pull/*/head to pull-request remote

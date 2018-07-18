@@ -11,7 +11,7 @@ function ztype() { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
 function get_muh_prs() {
 	# fetch PR list
 	if ! git rev-list pull-requests -- >/dev/null 2>&1; then
-		git remote add pull-requests "${1:-"$(git remote get-url origin 2>/dev/null)"}" || true
+		(git remote add pull-requests "${1:-"$(git remote get-url origin)"}") 2>/dev/null || true
 	fi
 
 	# refmap list of PRs at +refs/pull/*/head to pull-request remote
@@ -39,13 +39,12 @@ function zle-run-help() {
 		fi
 		shift args
 	done
-	print - $args
 	if whence $args >/dev/null; then
-		if [[ $args[1] == git || $args[1] == g ]]; then
+		args[1]="${args[1]:/#g/git}"
+		if [[ $args[1] == git && -n $args[2] ]]; then
 			git_cmd=${${(z)$(git config --global "alias.$args[2]" 2>/dev/null)}[1]}
 			[[ -n "$git_cmd" ]] && args[2]=$git_cmd
 		fi
-		args[1]="${args[1]/#g/git}"
 		zle push-input
 		BUFFER="run-help $args"
 	else
@@ -53,7 +52,7 @@ function zle-run-help() {
 		BUFFER="run-help $saved"
 	fi
 	zle accept-line
-	# zle -R
+	zle -R
 }
 
 # compile zwc files
@@ -72,7 +71,7 @@ function zle-fman() {
 	local -a cmdline mansects
 	local cmd glob section
 	if ((!$#MANSECT)); then
-		mansects=(${${(R)${(M)$(print -- /usr/share/man/man* 2>/dev/null)%man*}#man}/\//})
+		mansects=(${${(R)${(M)$(print - /usr/share/man/man* 2>/dev/null)%man*}#man}/\//})
 	else
 		mansects=(${${(s|:|)MANSECT}[@]})
 	fi
@@ -197,7 +196,7 @@ function insert-x-selection() { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/
 #         CURSOR="$pos"
 # }
 function append-x-selection() { RBUFFER="$(xsel -op </dev/null 2>/dev/null)$RBUFFER"; }
-function yank-x-selection() { zle kill-buffer && print -n -- "$CUTBUFFER" | xsel -ib; }
+function yank-x-selection() { zle kill-buffer && print -n - "$CUTBUFFER" | xsel -ib; }
 
 function zle-list-binds() {
 	zle push-input
@@ -321,29 +320,41 @@ function zle-vi-keymap() {
 	bindkey -v; printf "$cline"; printf "$cgrey"; _km=vi; _vi=main; _emacs=
 }
 
-# ALT-I - Paste the selected entry from locate output into the command line
-function fzf-locate-widget() {
-	local selected saved_opts
+# alt-i - paste the selected entry from locate output into the command line
+function zle-locate-widget() {
+	local result saved saved_opts result
+	saved=$BUFFER
 	saved_opts=$FZF_DEFAULT_OPTS
 	FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS"
-	if selected=$(locate / | fzf -q "$LBUFFER"); then
-		LBUFFER=$selected
-	fi
+	zle redisplay
+	result=$(locate / | fzf -i -q "$LBUFFER" -m --tac)
 	FZF_DEFAULT_OPTS=$saved_ops
-	typeset -f zle-line-init >/dev/null && zle zle-line-init
-	zle reset-prompt
+	if [[ -n $result ]]; then
+		LBUFFER=$LBUFFER$result
+	fi
+	zle redisplay
 }
 
-function zle-fh() { print -z - "$(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')"; }
+function zle-fh() {
+	local saved saved_opts result
+	saved=$BUFFER
+	saved_opts=$FZF_DEFAULT_OPTS
+	FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS"
+	zle redisplay
+	result=$(fc -l 1 | sed 's/ *[0-9]* *//' | fzf +s -q "$LBUFFER" +m --tac)
+	FZF_DEFAULT_OPTS=$saved_ops
+	if [[ -n $result ]]; then
+		LBUFFER=$result
+	fi
+	zle redisplay
+}
 
 function zle-youtube-helper() {
 	[[ -z "$BUFFER" ]] && return
 	local -a links
 	local i
 	links=("${(z)=BUFFER}")
-	# links=("${=$(<<<$links sed -r 's/([^ '\'']*)/'\''\1'\''/g')}")
 	links=("${links[@]//(#m)*/'$MATCH'}")
-	#BUFFER="youtube-dl -f 22 $links"
 	BUFFER="youtube-dl $links"
 	CURSOR="${#BUFFER}"
 }
