@@ -633,8 +633,8 @@ zstyle ':completion:*:*:zcompile:*'			ignored-patterns '(*~|*.sw[a-p])'
 zstyle ':completion:correct:'				prompt 'correct to: %e'
 zstyle ':completion:*:processes-names'			command 'ps c -u ${USER} -o command | uniq'
 zstyle ':completion:*:killall:*'			command 'ps -u ${USER} -o cmd'
-zstyle ':completion:*:manuals'				separate-sections true
-zstyle ':completion:*:manuals'				insert-sections   true
+zstyle ':completion:*:manuals*'				separate-sections true
+zstyle ':completion:*:manuals*'				insert-sections   true
 zstyle ':completion:*:man*'				menu yes select
 zstyle ':completion:*:urls'				local 'www' 'public_html'
 zstyle ':filter-select:highlight'			matched fg=yellow,standout
