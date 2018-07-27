@@ -2,10 +2,10 @@
 
 # fetch PR list
 if ! git rev-list pull-requests -- >/dev/null 2>&1; then
-	(git remote add pull-requests "${1:-"$(git remote get-url origin)"}") 2>/dev/null || true
+	git remote add pull-requests "${1:-"$(git remote get-url origin)"}" 2>/dev/null || true
 fi
 
-# refmap list of PRs at +refs/pull/*/head to pull-request remote
+# map list of PRs at +refs/pull/*/head to pull-request remote
 git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*'
 git fetch -qj4 pull-requests || exit 1
 
@@ -14,15 +14,15 @@ git fetch -qj4 pull-requests || exit 1
 # posix method
 git branch -r --list 'pull-requests/*' \
 	| while read -r branch; do
-		pr="${branch##*remotes/}"
-		git show-branch "$pr" 2>/dev/null
+		cur_pr="${branch##*remotes/}"
+		git show-branch "$cur_pr" 2>/dev/null
 	done
 
 # bash method
 # readarray -t pr_list < <(git branch -r --list 'pull-requests/*')
 # for i in "${pr_list[@]}"; do
-#         pr="${i##*remotes/}"
-#         git show-branch "$pr" 2>/dev/null
+#         cur_pr="${i##*remotes/}"
+#         git show-branch "$cur_pr" 2>/dev/null
 # done
 
 # zsh method

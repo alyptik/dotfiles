@@ -112,3 +112,6 @@ SELinux
 IPC
 64-bit
 timezones
+TUF
+libstrace
+httpd
