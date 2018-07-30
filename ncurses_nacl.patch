@@ -1,0 +1,295 @@
+diff --git a/bootstrap b/bootstrap
+new file mode 100755
+index 000000000000000000..940a6d836943a06731
+--- /dev/null
++++ b/bootstrap
+@@ -0,0 +1,14 @@
++#!/bin/bash
++
++if [[ "$*" =~ \b(-h|--help)\b ]]; then
++	./configure --help
++	exit 1
++fi
++
++export CC=x86_64-nacl-gcc CC_FOR_BUILD=x86_64-nacl-gcc
++export CXX=x86_64-nacl-g++ CXX_FOR_BUILD=x86_64-nacl-g++
++export LD=x86_64-nacl-ld LD_FOR_BUILD=x86_64-nacl-ld
++export CFLAGS=-fno-pie CXXFLAGS=-fno-pie LDFLAGS=-fno-pie
++export CHOST=x86_64-pc-nacl
++
++./configure --without-dlsym --without-cxx --without-cxx-binding --without-ada --host=x86_64-pc-nacl "$@"
+diff --git a/config.sub b/config.sub
+index a649350a6ca7f84b03..a63b3803a1af3279bc 100755
+--- a/config.sub
++++ b/config.sub
+@@ -1401,10 +1401,13 @@ case $os in
+ 		os=-zvmoe
+ 		;;
+ 	-dicos*)
+ 		os=-dicos
+ 		;;
++	-nacl*)
++		os=-nacl
++		;;
+ 	-none)
+ 		;;
+ 	*)
+ 		# Get rid of the `-' at the beginning of $os.
+ 		os=`echo $os | sed 's/[^-]*-//'`
+diff --git a/ncurses/base/sigaction.c b/ncurses/base/sigaction.c
+index 36442e090a410f6e28..2c633b1f772424446e 100644
+--- a/ncurses/base/sigaction.c
++++ b/ncurses/base/sigaction.c
+@@ -33,10 +33,13 @@
+  ****************************************************************************/
+ 
+ /* This file provides sigaction() emulation using sigvec() */
+ /* Use only if this is non POSIX system */
+ 
++#define __sigmask(sig) ((int)(1u << ((sig) - 1)))
++#define sigmask __sigmask
++
+ MODULE_ID("$Id: sigaction.c,v 1.14 2003/12/07 01:06:52 tom Exp $")
+ 
+ static int
+ _nc_sigaction(int sig, sigaction_t * sigact, sigaction_t * osigact)
+ {
+diff --git a/ncurses/tty/lib_tstp.c b/ncurses/tty/lib_tstp.c
+index 06c8411caa4d2a2891..820c892648a158c01a 100644
+--- a/ncurses/tty/lib_tstp.c
++++ b/ncurses/tty/lib_tstp.c
+@@ -40,10 +40,13 @@
+ */
+ #include <curses.priv.h>
+ 
+ #include <SigAction.h>
+ 
++#define __sigmask(sig) ((int)(1u << ((sig) - 1)))
++#define sigmask __sigmask
++
+ #if SVR4_ACTION && !defined(_POSIX_SOURCE)
+ #define _POSIX_SOURCE
+ #endif
+ 
+ MODULE_ID("$Id: lib_tstp.c,v 1.37 2008/05/03 16:24:56 tom Exp $")
+@@ -130,109 +133,10 @@ signal_name(int sig)
+  *
+  * This implementation will probably be changed to use signal(3) in
+  * the future.  If nothing else, it's simpler...
+  */
+ 
+-#if USE_SIGTSTP
+-static void
+-tstp(int dummy GCC_UNUSED)
+-{
+-    sigset_t mask, omask;
+-    sigaction_t act, oact;
+-
+-#ifdef SIGTTOU
+-    int sigttou_blocked;
+-#endif
+-
+-    T(("tstp() called"));
+-
+-    /*
+-     * The user may have changed the prog_mode tty bits, so save them.
+-     *
+-     * But first try to detect whether we still are in the foreground
+-     * process group - if not, an interactive shell may already have
+-     * taken ownership of the tty and modified the settings when our
+-     * parent was stopped before us, and we would likely pick up the
+-     * settings already modified by the shell.
+-     */
+-    if (SP != 0 && !SP->_endwin)	/* don't do this if we're not in curses */
+-#if HAVE_TCGETPGRP
+-	if (tcgetpgrp(STDIN_FILENO) == getpgrp())
+-#endif
+-	    def_prog_mode();
+-
+-    /*
+-     * Block window change and timer signals.  The latter
+-     * is because applications use timers to decide when
+-     * to repaint the screen.
+-     */
+-    (void) sigemptyset(&mask);
+-    (void) sigaddset(&mask, SIGALRM);
+-#if USE_SIGWINCH
+-    (void) sigaddset(&mask, SIGWINCH);
+-#endif
+-    (void) sigprocmask(SIG_BLOCK, &mask, &omask);
+-
+-#ifdef SIGTTOU
+-    sigttou_blocked = sigismember(&omask, SIGTTOU);
+-    if (!sigttou_blocked) {
+-	(void) sigemptyset(&mask);
+-	(void) sigaddset(&mask, SIGTTOU);
+-	(void) sigprocmask(SIG_BLOCK, &mask, NULL);
+-    }
+-#endif
+-
+-    /*
+-     * End window mode, which also resets the terminal state to the
+-     * original (pre-curses) modes.
+-     */
+-    endwin();
+-
+-    /* Unblock SIGTSTP. */
+-    (void) sigemptyset(&mask);
+-    (void) sigaddset(&mask, SIGTSTP);
+-#ifdef SIGTTOU
+-    if (!sigttou_blocked) {
+-	/* Unblock this too if it wasn't blocked on entry */
+-	(void) sigaddset(&mask, SIGTTOU);
+-    }
+-#endif
+-    (void) sigprocmask(SIG_UNBLOCK, &mask, NULL);
+-
+-    /* Now we want to resend SIGSTP to this process and suspend it */
+-    act.sa_handler = SIG_DFL;
+-    sigemptyset(&act.sa_mask);
+-    act.sa_flags = 0;
+-#ifdef SA_RESTART
+-    act.sa_flags |= SA_RESTART;
+-#endif /* SA_RESTART */
+-    sigaction(SIGTSTP, &act, &oact);
+-    kill(getpid(), SIGTSTP);
+-
+-    /* Process gets suspended...time passes...process resumes */
+-
+-    T(("SIGCONT received"));
+-    sigaction(SIGTSTP, &oact, NULL);
+-    flushinp();
+-
+-    /*
+-     * If the user modified the tty state while suspended, he wants
+-     * those changes to stick.  So save the new "default" terminal state.
+-     */
+-    def_shell_mode();
+-
+-    /*
+-     * This relies on the fact that doupdate() will restore the
+-     * program-mode tty state, and issue enter_ca_mode if need be.
+-     */
+-    doupdate();
+-
+-    /* Reset the signals. */
+-    (void) sigprocmask(SIG_SETMASK, &omask, NULL);
+-}
+-#endif /* USE_SIGTSTP */
+-
+ static void
+ cleanup(int sig)
+ {
+     /*
+      * Actually, doing any sort of I/O from within an signal handler is
+@@ -240,19 +144,11 @@ cleanup(int sig)
+      * settings on the way out.
+      */
+     if (!_nc_globals.cleanup_nested++
+ 	&& (sig == SIGINT
+ 	    || sig == SIGQUIT)) {
+-#if HAVE_SIGACTION || HAVE_SIGVEC
+-	sigaction_t act;
+-	sigemptyset(&act.sa_mask);
+-	act.sa_flags = 0;
+-	act.sa_handler = SIG_IGN;
+-	if (sigaction(sig, &act, NULL) == 0)
+-#else
+ 	if (signal(sig, SIG_IGN) != SIG_ERR)
+-#endif
+ 	{
+ 	    SCREEN *scan;
+ 	    for (each_screen(scan)) {
+ 		if (scan->_ofp != 0
+ 		    && isatty(fileno(scan->_ofp))) {
+@@ -283,53 +179,12 @@ sigwinch(int sig GCC_UNUSED)
+  */
+ static int
+ CatchIfDefault(int sig, RETSIGTYPE (*handler) (int))
+ {
+     int result;
+-#if HAVE_SIGACTION || HAVE_SIGVEC
+-    sigaction_t old_act;
+-    sigaction_t new_act;
+-
+-    memset(&new_act, 0, sizeof(new_act));
+-    sigemptyset(&new_act.sa_mask);
+-#ifdef SA_RESTART
+-#ifdef SIGWINCH
+-    if (sig != SIGWINCH)
+-#endif
+-	new_act.sa_flags |= SA_RESTART;
+-#endif /* SA_RESTART */
+-    new_act.sa_handler = handler;
+-
+-    if (sigaction(sig, NULL, &old_act) == 0
+-	&& (old_act.sa_handler == SIG_DFL
+-	    || old_act.sa_handler == handler
+-#if USE_SIGWINCH
+-	    || (sig == SIGWINCH && old_act.sa_handler == SIG_IGN)
+-#endif
+-	)) {
+-	(void) sigaction(sig, &new_act, NULL);
+-	result = TRUE;
+-    } else {
+-	result = FALSE;
+-    }
+-#else /* !HAVE_SIGACTION */
+     RETSIGTYPE (*ohandler) (int);
+ 
+-    ohandler = signal(sig, SIG_IGN);
+-    if (ohandler == SIG_DFL
+-	|| ohandler == handler
+-#if USE_SIGWINCH
+-	|| (sig == SIGWINCH && ohandler == SIG_IGN)
+-#endif
+-	) {
+-	signal(sig, handler);
+-	result = TRUE;
+-    } else {
+-	signal(sig, ohandler);
+-	result = FALSE;
+-    }
+-#endif
+     T(("CatchIfDefault - will %scatch %s",
+        result ? "" : "not ", signal_name(sig)));
+     return result;
+ }
+ 
+@@ -346,36 +201,10 @@ CatchIfDefault(int sig, RETSIGTYPE (*handler) (int))
+  */
+ NCURSES_EXPORT(void)
+ _nc_signal_handler(bool enable)
+ {
+     T((T_CALLED("_nc_signal_handler(%d)"), enable));
+-#if USE_SIGTSTP			/* Xenix 2.x doesn't have SIGTSTP, for example */
+-    {
+-	static bool ignore_tstp = FALSE;
+-
+-	if (!ignore_tstp) {
+-	    static sigaction_t new_sigaction, old_sigaction;
+-
+-	    if (!enable) {
+-		new_sigaction.sa_handler = SIG_IGN;
+-		sigaction(SIGTSTP, &new_sigaction, &old_sigaction);
+-	    } else if (new_sigaction.sa_handler != SIG_DFL) {
+-		sigaction(SIGTSTP, &old_sigaction, NULL);
+-	    } else if (sigaction(SIGTSTP, NULL, &old_sigaction) == 0
+-		       && (old_sigaction.sa_handler == SIG_DFL)) {
+-		sigemptyset(&new_sigaction.sa_mask);
+-#ifdef SA_RESTART
+-		new_sigaction.sa_flags |= SA_RESTART;
+-#endif /* SA_RESTART */
+-		new_sigaction.sa_handler = tstp;
+-		(void) sigaction(SIGTSTP, &new_sigaction, NULL);
+-	    } else {
+-		ignore_tstp = TRUE;
+-	    }
+-	}
+-    }
+-#endif /* !USE_SIGTSTP */
+ 
+     if (!_nc_globals.init_signals) {
+ 	if (enable) {
+ 	    CatchIfDefault(SIGINT, cleanup);
+ 	    CatchIfDefault(SIGTERM, cleanup);

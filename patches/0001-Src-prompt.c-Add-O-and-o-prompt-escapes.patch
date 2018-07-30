@@ -1,0 +1,76 @@
+From 157435fa0703c3a6eaf64159c1fa8d988b7e8fc0 Mon Sep 17 00:00:00 2001
+Message-Id: <157435fa0703c3a6eaf64159c1fa8d988b7e8fc0.1532686301.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Thu, 26 Jul 2018 23:46:18 -1000
+Subject: [PATCH] Src/prompt.c: Add %O and %o prompt escapes
+
+Implement %O and %o as shorthands for resetting fg/bg color and
+terminal attributes (underline/standout/boldface) respectively.
+
+Update the documentation to include the two new prompt escapes.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ Doc/Zsh/prompt.yo |  6 ++++++
+ Src/prompt.c      | 19 +++++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/Doc/Zsh/prompt.yo b/Doc/Zsh/prompt.yo
+index 909012c8e787b04fcf..8086c54b2e651923c5 100644
+--- a/Doc/Zsh/prompt.yo
++++ b/Doc/Zsh/prompt.yo
+@@ -244,10 +244,16 @@ colours are allowed in the second format also.
+ )
+ item(tt(%K) LPAR()tt(%k)RPAR())(
+ Start (stop) using a different bacKground colour.  The syntax is
+ identical to that for tt(%F) and tt(%f).
+ )
++item(tt(%O))(
++Reset foreground and background colours to default.
++)
++item(tt(%o))(
++Turn off all terminal attributes (underline/standout/boldface).
++)
+ item(tt(%{)...tt(%}))(
+ Include a string as a literal escape sequence.
+ The string within the braces should not change the cursor
+ position.  Brace pairs can nest.
+ 
+diff --git a/Src/prompt.c b/Src/prompt.c
+index 959ed8e3d57a0286a8..48980e744437bc6b23 100644
+--- a/Src/prompt.c
++++ b/Src/prompt.c
+@@ -567,10 +567,29 @@ putpromptchar(int doprint, int endchar, unsigned int *txtchangep)
+ 	    case 'k':
+ 		txtchangeset(txtchangep, TXTNOBGCOLOUR, TXT_ATTR_BG_ON_MASK);
+ 		txtunset(TXT_ATTR_BG_ON_MASK);
+ 		set_colour_attribute(TXTNOBGCOLOUR, COL_SEQ_BG, TSC_PROMPT);
+ 		break;
++	    case 'O':
++		txtchangeset(txtchangep, TXTNOFGCOLOUR, TXT_ATTR_FG_ON_MASK);
++		txtchangeset(txtchangep, TXTNOBGCOLOUR, TXT_ATTR_BG_ON_MASK);
++		txtunset(TXT_ATTR_FG_ON_MASK);
++		txtunset(TXT_ATTR_BG_ON_MASK);
++		set_colour_attribute(TXTNOFGCOLOUR, COL_SEQ_FG, TSC_PROMPT);
++		set_colour_attribute(TXTNOBGCOLOUR, COL_SEQ_BG, TSC_PROMPT);
++		break;
++	    case 'o':
++		txtchangeset(txtchangep, TXTNOUNDERLINE, TXTUNDERLINE);
++		txtchangeset(txtchangep, TXTNOSTANDOUT, TXTSTANDOUT);
++		txtchangeset(txtchangep, TXTNOBOLDFACE, TXTBOLDFACE);
++		txtunset(TXTUNDERLINE);
++		txtunset(TXTSTANDOUT);
++		txtunset(TXTBOLDFACE);
++		tsetcap(TCUNDERLINEEND, TSC_PROMPT|TSC_DIRTY);
++		tsetcap(TCSTANDOUTEND, TSC_PROMPT|TSC_DIRTY);
++		tsetcap(TCALLATTRSOFF, TSC_PROMPT|TSC_DIRTY);
++		break;
+ 	    case '[':
+ 		if (idigit(*++bv->fm))
+ 		    arg = zstrtol(bv->fm, &bv->fm, 10);
+ 		if (!prompttrunc(arg, ']', doprint, endchar, txtchangep))
+ 		    return *bv->fm;
+-- 
+Cheers,
+Joey Pabalinas
+

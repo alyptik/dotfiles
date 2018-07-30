@@ -3,23 +3,13 @@
 use strict;
 use warnings;
 
-# ($#ARGV == 1) or die "Usage: $0 <string1> <string2>\n";
-#
-# my ($_s1, $_s2) = (@ARGV);
-#
-# my $_result;
-# $_result .= "The Levenshtein distance between ";
-# $_result .= "\"$_s1\" and \"$_s2\" is: ";
-# $_result .= levenshtein($_s1, $_s2);
-# print "$_result\n";
-
-(scalar @ARGV > 2) or die "Usage: $0 <basestring> <comparstring> ...\n";
+$#ARGV or die "Usage: $0 <basestring> <comparstring> ...\n";
 
 my $_base = shift @ARGV;
 
 foreach my $_cmp (@ARGV) {
     my $_result;
-    # $_result .= "\"$_base\" -> \"$_cmp\"  ";
+    # $_result .= "\"$_base\" -> \"$_cmp\": ";
     $_result .= "levenshtein(\"$_base\", \"$_cmp\") -> ";
     $_result .= levenshtein($_base, $_cmp);
     print "$_result\n";
@@ -33,7 +23,7 @@ foreach my $_cmp (@ARGV) {
 # deletions, insertions or substitutions required to transform s1 into
 # s2. The greater the distance, the more different the strings are.
 #
-# The algorithm employs a promimity matrix, which denotes the
+# The algorithm employs a proximity matrix, which denotes the
 # distances between substrings of the two given strings. Read the
 # embedded comments for more info. If you want a deep understanding
 # of the algorithm, printthe matrix for some test strings
@@ -108,7 +98,7 @@ sub levenshtein
             # We can either insert a new char, delete a char of
             # substitute an existing char (with an associated cost)
             #
-            $_mat{$_i}{$_j} = min([$_mat{$_i-1}{$_j} + 1,
+            $_mat{$_i}{$_j} = get_min([$_mat{$_i-1}{$_j} + 1,
                                 $_mat{$_i}{$_j-1} + 1,
                                 $_mat{$_i-1}{$_j-1} + $_cost]);
         }
@@ -126,7 +116,7 @@ sub levenshtein
 
 # minimal element of a list
 #
-sub min
+sub get_min
 {
     my @_list = @{$_[0]};
     my $_min = $_list[0];
