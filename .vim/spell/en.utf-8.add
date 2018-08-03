@@ -116,3 +116,15 @@ TUF
 libstrace
 httpd
 executables
+buildfarm
+dlopen
+wcc
+mmap
+mprotect
+memfd
+linkat
+syscalls
+execve
+fd
+LInd
+ld

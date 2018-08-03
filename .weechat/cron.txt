@@ -2,9 +2,3 @@
 # WeeChat crontab for script cron.py
 # format: min hour monthday month weekday repeat buffer command args
 #
-0 * * * * * irc.znc/freenode.#chee-fanclub command /msg pickleboat owner reload Markov
-20 * * * * * irc.znc/freenode.#chee-fanclub command /msg pickleboat owner reload Markov
-40 * * * * * irc.znc/freenode.#chee-fanclub command /msg pickleboat owner reload Markov
-10 * * * * * irc.znc/freenode.#chee-fanclub command /msg pickleboat owner reload Markov
-30 * * * * * irc.znc/freenode.#chee-fanclub command /msg pickleboat owner reload Markov
-50 * * * * * irc.znc/freenode.#chee-fanclub command /msg pickleboat owner reload Markov

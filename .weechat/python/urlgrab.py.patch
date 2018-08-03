@@ -11,7 +11,7 @@ index b4dc8e6bc54b1b5b5e..17385558ec19a32872 100644
 -urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^\]>\s]*)?)' % (domain, ipAddr), re.I)
 -
 +#  urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^\\)\"\>\]\s]*)?)' % (domain, ipAddr), re.I)
-+urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^,\?!\}\\\]\>\)"\'\)\s]*)*)' % (domain, ipAddr), re.I)
++urlRe = re.compile(r'(\w+://(?:%s|%s)(?::\d+)?(?:/[^!\}\\\]\>"\'\)\s]*)*)' % (domain, ipAddr), re.I)
  
  SCRIPT_NAME    = "urlgrab"
  SCRIPT_AUTHOR  = "David Rubin <drubin [At] smartcube [dot] co [dot] za>"
@@ -25,7 +25,7 @@ index b4dc8e6bc54b1b5b5e..17385558ec19a32872 100644
  def stripParens(url):
 -    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1]
 +    #  return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1]
-+    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1].rstrip('.,?!>)]}')
++    return dropChar(')', url.count(')') - url.count('('), url[::-1])[::-1].rstrip('.!>]}')
  
  def dropChar(c, n, xs):
      if n == 0 or xs == []:
