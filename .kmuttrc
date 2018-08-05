@@ -3,6 +3,9 @@
 #
 # Mutt configuration
 
+set hidden_host
+# set hostname = "gmail.com"
+set hostname = "gmx.com"
 set my_gmail_base = "imap"
 # set my_gmail_base = "pop"
 set my_gmail_prot = $my_gmail_base"s"

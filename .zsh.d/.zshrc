@@ -463,9 +463,9 @@ bindkey -M viins "jj" vi-cmd-mode
 	high_str+=$'":syntax:_files '
 	high_str+=$'-W \'/usr/share/highlight/langDefs\' '
 	high_str+=$'-g \'*.lang(:r)\'" '
-	high_str+=$'":out format: '
-	high_str+=$'(html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg)" '
-	high_str+=$'"*:file:_files" -- '
+	high_str+=$'":out format:( '
+	high_str+=$'html xhtml latex tex rtf odt ansi xterm256 truecolor bbcode pango svg '
+	high_str+=$')" "*:file:_files" -- '
 	qpc_str+=$'_arguments "*:packages:('
 	qpc_str+="${dbpkgs[*]}"
 	qpc_str+=$')" -- '

@@ -9,9 +9,10 @@ else
 	shift
 fi
 
-highlight  \
-	--out-format="${out:-ansi}" \
-	--syntax="${syn:-conf}" \
-	--style=xoria256 \
-	"$file" | \
-		LESS= less -MNRis
+
+LESS= less -MNRis \
+	=(highlight  \
+		--out-format="${out:-ansi}" \
+		--syntax="${syn:-conf}" \
+		--style=xoria256 \
+		=(<"$file"))
