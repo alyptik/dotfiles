@@ -16,7 +16,7 @@ Host *
 	CheckHostIP yes
 	AddressFamily any
 	ConnectTimeout 0
-	# CheckHostIP yes
+	CheckHostIP no
 	# StrictHostKeyChecking ask
 	StrictHostKeyChecking no
 	IdentityFile ~/.ssh/id_gpg
@@ -192,7 +192,7 @@ Host travis
 	Port 9999
 	User travis
 	CheckHostIP no
-	StrictHostKeyChecking no
+	# StrictHostKeyChecking no
 	IdentityFile ~/.ssh/id_gpg
 
 # vi:ft=sshconfig:
