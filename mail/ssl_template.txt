@@ -7,158 +7,54 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-07-16] Joey's Progress Report (CrashSimulator/Lind)
+Subject: [2018-08-06] Joey's Progress Report
 Reply-To:
-In-Reply-To: <20180710070546.gqac5bp7oxzviszm@hobbes.alyptik.lan>
+In-Reply-To:
 
 /*
-* Joey's Progress Report
-*
-* (2018-07-09)
-*/
+ * Joey's Progress Report
+ *
+ * (2018-08-06)
+ */
 
-So this week has been spent mostly on Lind related work; I'm still in the
-process of getting my development environment set up for CrashSimulator
-but it should be ready to go sometime this week.
+This week I've been working on fixing our Travis build for Lind and some
+portability problems rr. I've had to spend a lot of time on a few logistics
+issues with NYU supplier registration, so I wasn't able to get a huge
+amount done this week.
 
-	[CrashSimulator]
+        [CrashSimulator]
 
-	I was able to do a little bit of work on Preston's RR strace branch
-	and send it in as a PR;  we discussed how we having it as a
-	shared library would be great, so I worked on the Makefile a bit
-	and I was able to get his library to compile as both a shared and
-	static library. Of course, there still a lot of work to be done
-	there, but I am in the process of getting a 32-bit QEMU/KVM setup
-	remotely on one of Santiago's workstations at current, and I should be
-	able to spend more time on this project soon.
+        I spent some time doing a little debugging of some weird errors with
+        Preston when running our build of rr, and it turns out that rr itself
+        is working fine, but there are issues with making the our traces
+        portable (mostly an issue in regard to our test suite). At current,
+        it looks like it's the same issues Mozilla was also having, so
+        I've been reading the source code and brainstorming possible
+        solutions.
 
-	[Lind]
+        I've also been trying to figure out how to port our tools to x86_64,
+        since have to test small changes in a 32-bit VM is slightly annoying.
 
-	I've created PRs for both the glibc and native_client parts of
-	Lind which are largely RFCs instead of commits I plan to get
-	merged as is. I received a very helpful comments on them from
-	Preston, Justin, and Santiago, so thank you guys for that.
+        [Lind]
 
-	Of course, any other comments are still welcome, as there is a
-	*lot* of work to get done before I can consider presentable, and
-	often many of the issues which need to be fixed are things which
-	I personally have overlooked.
+        I managed to get a reverse shell up and running in our Travis CI
+        instance for debugging purposes, but I haven't really figured out
+        the cause of our build failures yet.
 
-	The last major bug in my fork() implementation is nested forks
-	not quite working correctly, and I am debating the best way to
-	handle fixing it, as nothing really seems to be working so far.
-
-	For the following test case program:
-
-	1	#include <stdio.h>
-	2	#include <stdlib.h>
-	3	#include <signal.h>
-	4	#include <unistd.h>
-	5	#include <wait.h>
-	6
-	7	static volatile size_t counter = 0;
-	8	#define printf(s, ...) printf("[#%zu:L%u] " s, ++counter, __LINE__, __VA_ARGS__)
-	9
-	10	int main(void)
-	11	{
-	12		int pret = -1, cret = -1, ppret = -1;
-	13		int pid = -1, cpid = -1, ppid = -1, unused = -1;
-	14
-	15		(void)pret, (void)cret, (void)ppret;
-	16		(void)pid, (void)cpid, (void)ppid, (void)unused;
-	17
-	18		printf("pid %d forking\n", getpid());
-	19		fflush(0);
-	20
-	21		switch ((pid = fork())) {
-	22		case -1:
-	23			perror("fork() failed");
-	24			fflush(0);
-	25			exit(EXIT_FAILURE);
-	26		case 0:
-	27			printf("pid %d forking\n", getpid());
-	28			fflush(0);
-	29
-	30			switch ((cpid = fork())) {
-	31			case -1:
-	32				perror("fork() failed");
-	33				fflush(0);
-	34				exit(EXIT_FAILURE);
-	35			case 0:
-	36				printf("pid = %d fork ret = %d\n", getpid(), cpid);
-	37				fflush(0);
-	38				exit(EXIT_SUCCESS);
-	39			}
-	40
-	41			printf("pid = %d fork ret = %d\n", getpid(), cpid);
-	42			fflush(0);
-	43			exit(EXIT_SUCCESS);
-	44		}
-	45
-	46		printf("pid = %d fork ret = %d\n", getpid(), pid);
-	47		fflush(0);
-	48		printf("pid %d forking again\n", getpid());
-	49		fflush(0);
-	50
-	51		switch ((ppid = fork())) {
-	52		case -1:
-	53			perror("fork() failed");
-	54			fflush(0);
-	55			exit(EXIT_FAILURE);
-	56		case 0:
-	57			printf("pid = %d fork ret = %d\n", getpid(), ppid);
-	58			fflush(0);
-	59			exit(EXIT_SUCCESS);
-	60		}
-	61
-	62		printf("pid = %d fork ret = %d\n", getpid(), ppid);
-	63		fflush(0);
-	64
-	65		return 0;
-	66	}
-
-	The output from this program is:
-
-	executing: [sel_ldr -a -- "/lib/glibc/runnable-ld.so" --library-path "/lib/glibc" /fork]
-	Lind v0.9-alpha
-	Last commit:
-	Opening file system...
-	done.
-	[#1:L18] pid 1 forking
-	[#2:L27] pid 2 forking
-	[#2:L46] pid = 1 fork ret = 2
-	[#3:L36] pid = 2 fork ret = 0
-	[#3:L48] pid 1 forking again
-	[#4:L62] pid = 1 fork ret = 3
-	[#4:L57] pid = 3 fork ret = 0
-	Persisting metadata: ...
-	Done persisting metadata.
-
-	So the nested fork doesn't trigger the printf() at line 36 nor
-	the one at like 41.
-
-	I'm currently having each NaClApp track its own children, but
-	now I am rethinking that approach and going with some other
-	method such as having a master thread track the list of
-	parents/children and also take care of calling constructors and
-	destructors etc. That would simplify the accounting and other
-	such tracking, so it's something I am currently working on
-	figuring out.
+        If this takes too long, I may just put it to the side for now
+        and finish up our execve() implementation so we can start getting
+        some testing of real programs done.
 
 /* Plans For Next Week */
 
-	- CrashSimulator: Get my development environment setup finished.
+        - Figure out why our Travis CI build for Lind is failing.
+        - Finish up our LInd execve() implementation.
+        - Start building our LAMP stack for Lind.
+        - Start testing some coreutils programs in Lind.
+        - Work on 64-bit support for CrashSimulator.
+        - See if there are any tractable solutions for our portability issues.
 
-	- Lind: Address changes/suggestions others have given in PRs
-	  comments; especially the ones the suggestion to split up the
-	  commits into more digestible chunks.
-
-	- Lind: Remove some of the unnecessary code leftover from old commits
-	  and make overall style in the project more consistent.
-
-	- Lind: Fix the major bug in my current fork() implementation.
-
-That's all I have for this week, thanks.
+That's all for this week, thanks everyone.
 
 -- 
 Cheers,

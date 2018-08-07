@@ -3,7 +3,7 @@
 # .profile - environment configuration
 
 # conditionals
-if commmand -v ruby >/dev/null 2>&1; then
+if command -v ruby >/dev/null 2>&1; then
 	rubies="$(ruby -rrubygems -e "puts Gem.user_dir")/bin"
 else
 	rubies=""
@@ -323,6 +323,7 @@ unset _Z_OWNER
 export _Z_NO_RESOLVE_SYMLINKS=true
 # export _Z_NO_PROMPT_COMMAND=true
 # export _Z_OWNER=alyptik
+export _FASD_SINK="/store/.fasd.log"
 # used to track arguments of last `z` command
 export _last_z_args
 

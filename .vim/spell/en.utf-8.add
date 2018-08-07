@@ -128,3 +128,5 @@ execve
 fd
 LInd
 ld
+x86
+coreutils
