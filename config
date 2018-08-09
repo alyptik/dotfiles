@@ -83,7 +83,7 @@ Host asus
 
 Host surface
 	HostName 192.168.1.98
-	Port 2222
+	Port 222
 	User alyptik
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg

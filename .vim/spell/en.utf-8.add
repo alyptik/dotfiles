@@ -130,3 +130,12 @@ LInd
 ld
 x86
 coreutils
+chroot
+EIO
+EINTR
+EAGAIN
+errno
+async
+SIGSEGV
+SIGILL
+SIGFPE

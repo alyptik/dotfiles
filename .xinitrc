@@ -19,29 +19,29 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-# feh --bg-scale "/home/alyptik/wallpapers/fifths.png"
-# feh --bg-scale "/home/alyptik/wallpapers/modes.png"
-# hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint '#ebdbb2'
-# hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint '#b8a990'
+# feh --bg-scale "/home/jp/wallpapers/fifths.png"
+# feh --bg-scale "/home/jp/wallpapers/modes.png"
+# hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint '#ebdbb2'
+# hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint '#b8a990'
 # xsetroot -mod 16 16 -fg '#343d46' -bg '#2b303b'
 # tail -f "${HOME}/.weechat/pipe" | dzen2 -sa c -w 2175 -dock -fn "xft:FuraCode Nerd Font-Light:pixelsize=18:antialias=true:hinting=true" &
 # urxvt -kuake-hotkey F10 &
 # urxvtcd -kuake-hotkey F10 &
 # scpuled &
 
-xrandr --dpi 216 &
+# xrandr --dpi 216 &
 xbindkeys &
 xset s noblank &
 xset s off -b -dpms &
 setterm -blank 1 -powerdown 0 &
 xsetroot -cursor_name left_ptr
-hsetroot -fill "/home/alyptik/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
-xrdb "/home/alyptik/.Xresources"
+hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
+xrdb "/home/jp/.Xresources"
 # compton -cCGfF -b -i .85
 # compton -b
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
-xmodmap "/home/alyptik/.Xmodmap"
+xmodmap "/home/jp/.Xmodmap"
 stjerm &
 # hilites &
 transgui &
@@ -49,7 +49,7 @@ pavucontrol &
 udisksctl mount -b "$(findfs LABEL=vm)" &
 (udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 1; pcmanfm /media/microSDXC) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &
-# /home/alyptik/bin/scpuled &
+# /home/jp/bin/scpuled &
 dbus-update-activation-environment --systemd DISPLAY
 # shellcheck disable=SC2046
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
@@ -73,7 +73,7 @@ printf '%s\n' "$session" > ~/.WM.last;
 
 case $session in
 (herbst|herbstluftwm)
-	# /home/alyptik/bin/hilites &
+	# /home/jp/bin/hilites &
 	compton -b
 	xscreensaver &
 	exec herbstluftwm --locked;;
@@ -134,8 +134,8 @@ case $session in
 
 (i3|i3wm)
 	compton -b
-	/home/alyptik/bin/i3-focus-last &
-	/home/alyptik/bin/hilites &
+	/home/jp/bin/i3-focus-last &
+	/home/jp/bin/hilites &
 	xscreensaver &
 	exec i3;;
 

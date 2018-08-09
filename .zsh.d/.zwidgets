@@ -217,7 +217,8 @@ function zle-keymap-select() {
 		printf "$cyellow"
 		;;
 	viins|$_vi)
-		printf "$cline"
+		# printf "$cline"
+		printf "$cblock"
 		printf "$cgrey"
 		;;
 	esac
@@ -234,7 +235,8 @@ function zle-line-init() {
 		printf "$cblock"; printf "$cyellow"
 		;;
 	viins|$_vi)
-		printf "$cline"; printf "$cgrey"
+		# printf "$cline"; printf "$cgrey"
+		printf "$cblock"; printf "$cgrey"
 		;;
 	esac
 	# It should be noted that the O / [ confusion can occur with other keys such as Home and End
@@ -258,7 +260,8 @@ function zle-line-finish() {
 		printf "$cblock"; printf "$cyellow"
 		;;
 	viins|$_vi)
-		printf "$cline"; printf "$cgrey"
+		# printf "$cline"; printf "$cgrey"
+		printf "$cblock"; printf "$cgrey"
 		;;
 	esac
 	# It should be noted that the O / [ confusion can occur with other
@@ -276,7 +279,8 @@ function zle-refresh-keymap() {
 	vi)
 		bindkey -e
 		bindkey -v
-		printf "$cline"
+		# printf "$cline"
+		printf "$cblock"
 		printf "$cgrey";
 		_km=vi _vi=main _emacs=
 		;;
@@ -302,7 +306,8 @@ function zle-toggle-keymap() {
 		;;
 	emacs)
 		bindkey -v
-		printf "$cline"
+		# printf "$cline"
+		printf "$cblock"
 		printf "$cgrey"
 		_km=vi _vi=main _emacs=
 		;;

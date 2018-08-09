@@ -111,13 +111,17 @@ eval "$(dircolors -b)"
 	alias help='run-help'
 }
 
-## load VCS module
+# avoid git parsing
+# unfunction git_prompt_string
+# function git_prompt_string () {}
+# check_vcs=false
+
+# load VCS module
 autoload -Uz vcs_info
 if type vcs_info &>/dev/null; then
 	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:*' disable bzr cdv cvs darcs mtn svk svn tla
-	zstyle ':vcs_info:*' check-for-changes true
-	zstyle ':vcs_info:*:prompt:*' check-for-changes true
+	zstyle ':vcs_info:*:prompt:*' check-for-changes ${check_vcs:-true}
 	zstyle ':vcs_info:*:prompt:*' stagedstr "%{$fg[green]%}*%{$reset_color%}"
 	zstyle ':vcs_info:*:prompt:*' unstagedstr "%{$fg[red]%}*%{$reset_color%}"
 	zstyle ':vcs_info:*:prompt:*' branchformat "%r"
@@ -152,12 +156,13 @@ autoload -U +X compinit && compinit -u
 [[ "$(type _systemctl)" =~ "autoload" ]] && autoload -Uz +X _systemctl
 
 # common PS1 section
-PS1='$prompt_newline$(print -n "%{$bold_color$fg[grey]%}['
+PS1='$prompt_newline$(print -n "%{$reset_color%}%{$bold_color%}%{$fg[grey]%}['
 # avoid errors if proc isn't mounted
 if [[ -d /proc ]]; then
 	PS1+='%{$reset_color%}%{$fg[green]%}$((('
 	PS1+='$(sed -nr "s/MemTotal:\s+([0-9]+) kB/\1/Ip" /proc/meminfo) - '
 	PS1+='$(sed -nr "s/MemAvailable:\s+([0-9]+) kB/\1/Ip" /proc/meminfo))/1024))'
+	PS1+='%{$reset_color%}%{$bold_color%}%{$fg[grey]%}/'
 	PS1+='%{$reset_color%}%{$fg[yellow]%}$(('
 	PS1+='$(sed -nr "s/MemTotal:\s+([0-9]+) kB/\1/Ip" /proc/meminfo)/1024))MB'
 	PS1+='%{$bold_color%}%{$fg[grey]%}] [%{$fg[magenta]%}$(</proc/loadavg)"'
@@ -318,12 +323,10 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e[A" up-line-or-beginning-search
 	bindkey -M "$1" "\eOB" down-line-or-beginning-search
 	bindkey -M "$1" "\e[B" down-line-or-beginning-search
-	bindkey -M "$1" "\eOD" emacs-backward-word
 	bindkey -M "$1" "\e\e[D" emacs-backward-word
 	bindkey -M "$1" "\e[1;5D" emacs-backward-word
 	bindkey -M "$1" "\e[1;3D" emacs-backward-word
 	bindkey -M "$1" "\e[1;2D" emacs-backward-word
-	bindkey -M "$1" "\eOC" emacs-forward-word
 	bindkey -M "$1" "\e\e[C" emacs-forward-word
 	bindkey -M "$1" "\e[1;5C" emacs-forward-word
 	bindkey -M "$1" "\e[1;3C" emacs-forward-word
@@ -594,6 +597,11 @@ function _force_rehash() {
 	((CURRENT == 1)) && rehash
 	return 1
 }
+# only show single character options with '-'
+zstyle -e ':completion:*:options'                    ignored-patterns '
+	if [[ $PREFIX == - ]]; then
+		reply=("--*");
+	fi'
 # try to be smart about when to use what completer...
 zstyle -e ':completion:*'				completer '
 	if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then

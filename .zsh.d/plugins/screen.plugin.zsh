@@ -44,9 +44,9 @@ function screen_preexec ()
 {
 	local PS_FORMAT REPORTTIME
 	REPORTTIME=-1
-	[[ "$TERM" =~ ^screen.*$ ]] || return
-	tty | grep -vq 'tty' || return
-	[[ -n "$STY" && -z "$TMUX" ]] || return
+	# [[ "$TERM" == screen* ]] || return
+	# tty | grep -vq 'tty' || return
+	# [[ -n "$STY" && -z "$TMUX" ]] || return
 	if ps -p "$PPID" | grep -iqw 'screen'; then
 		local -a cmd; cmd=(${(z)1}) # the command string
 		# eval "tab_title=$TAB_TITLE_EXEC"
@@ -62,9 +62,9 @@ function screen_precmd ()
 {
 	local PS_FORMAT REPORTTIME
 	REPORTTIME=-1
-	[[ "$TERM" =~ ^screen.*$ ]] || return
-	tty | grep -vq 'tty' || return
-	[[ -n "$STY" && -z "$TMUX" ]] || return
+	# [[ "$TERM" == screen* ]] || return
+	# tty | grep -vq 'tty' || return
+	# [[ -n "$STY" && -z "$TMUX" ]] || return
 	if ps -p "$PPID" | grep -iqw 'screen'; then
 		# eval "tab_title=$TAB_TITLE_PROMPT"
 		eval "tab_title=$TAB_TITLE_PREFIX:$TAB_TITLE_PROMPT"

@@ -60,7 +60,7 @@ call plug#begin(g:plugdir)
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 	" Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
-	" Plug 'xolox/vim-misc'
+	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
 	" Plug 'edkolev/promptline.vim'
 	" Plug 'sudar/vim-arduino-syntax'
@@ -146,12 +146,13 @@ call plug#end()
 " keys combined with modifiers such as Shift, Control, and Alt.
 " See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
 set nottybuiltin term=$TERM
-if &term =~ '^\(xterm\|st\|rxvt\|tmux\)'
+if &term =~ '^\(xterm\|st\|rxvt\|tmux\|st\)'
 	" let &t_SI .= "\<Esc>[5 q"
 	" let &t_EI .= "\<Esc>[1 q"
 	" " use an orange cursor in insert mode
 	" let &t_SI ^= "\<Esc>]12;Orange"
-	let &t_SI .= "\<Esc>[5 q\<Esc>]12;#b58900\x7"
+	" let &t_SI .= "\<Esc>[5 q\<Esc>]12;#b58900\x7"
+	let &t_SI .= "\<Esc>[1 q\<Esc>]12;#b58900\x7"
 	" " use a red cursor otherwise
 	let &t_EI .= "\<Esc>[1 q\<Esc>]12;Red\x7"
 	silent !echo -ne "\033]12;Red\007"
@@ -160,7 +161,8 @@ elseif &term =~ '^screen'
 	" let &t_SI .= "\<Esc>P\<Esc>[5 q\<Esc>\\"
 	" let &t_EI .= "\<Esc>P\<Esc>[1 q\<Esc>\\"
 	" let &t_SI .= "\<Esc>]12;Orange\<Esc>\\"
-	let &t_SI .= "\<Esc>P\<Esc>[5 q\<Esc>\\\<Esc>P\<Esc>]12;#b58900\x7\<Esc>\\"
+	" let &t_SI .= "\<Esc>P\<Esc>[5 q\<Esc>\\\<Esc>P\<Esc>]12;#b58900\x7\<Esc>\\"
+	let &t_SI .= "\<Esc>P\<Esc>[1 q\<Esc>\\\<Esc>P\<Esc>]12;#b58900\x7\<Esc>\\"
 	let &t_EI .= "\<Esc>P\<Esc>[1 q\<Esc>\\\<Esc>P\<Esc>]12;Red\x7\<Esc>\\"
 	silent !echo -ne "\033P\033]12;Red\007\033\\"
 	" autocmd VimLeave * silent !echo -ne "\033P\033]112\007\033\\"

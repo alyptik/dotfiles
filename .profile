@@ -8,9 +8,12 @@ if command -v ruby >/dev/null 2>&1; then
 else
 	rubies=""
 fi
-if test "$(hostname)" = fedora -o "$(hostname)" = fedoravm -o "$(whoami)" = jp; then
+if test "$(hostname)" = fedora -o "$(hostname)" = fedoravm; then
 	TERM="screen-256color"
 else
+	if test "$TERM" != linux -a "$TERM" != xterm; then
+		TERM="screen-256color-italic"
+	fi
 	locale="en_US.UTF-8"
 fi
 if command -v nproc >/dev/null 2>&1; then

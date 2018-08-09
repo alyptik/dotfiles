@@ -28,6 +28,7 @@ gifs/boobs.jpg
 magnets/*.added
 account_key.json
 account_key.json
+.mutt*/hdr_cache
 .newsbeuter/urls
 .weechat/nicks.db
 urlserver_list.txt
@@ -62,7 +63,6 @@ oprofile_data/
 .mixxx/analysis/
 .mutt*/ox_config/
 .emacs.d.spacemacs/
-.mutt*/hdr_cache/
 .mutt*/msg_cache/
 
 # vi:ft=cfg:

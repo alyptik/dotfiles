@@ -76,7 +76,8 @@ systemctl restart mpdscribble@alyptik.service mpd
 		# "date" output is checked once a second, but an event is only
 		# generated if the output changed compared to the previous run.
 		# date +$'date\t^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
-		curtemp="$(</sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)"
+		# curtemp="$(</sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)"
+		curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
 		curbat="$(</sys/class/power_supply/BAT0/capacity)"
 		# curbat="$(acpi -bi | perl -F, -ane 'print $F[1] =~ s/^s+//r if $. == 1')"
 		echo $'np\t'"$(mpc current)"
