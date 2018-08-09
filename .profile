@@ -8,12 +8,16 @@ if command -v ruby >/dev/null 2>&1; then
 else
 	rubies=""
 fi
-if test "$(hostname)" = fedora -o "$(hostname)" = fedoravm; then
-	TERM="screen-256color"
-else
-	if test "$TERM" != linux -a "$TERM" != xterm; then
-		TERM="screen-256color-italic"
+if test "$TERM" != linux -a "$TERM" != xterm -a $TERM != st-256color; then
+	italic=screen-256color
+	if [[ -d "$HOME/.terminfo" ]]; then
+		TERM="$italic"
+	else
+		TERM="screen"
 	fi
+	unset italic
+fi
+if test "$(hostname)" != fedora -a "$(hostname)" != fedoravm; then
 	locale="en_US.UTF-8"
 fi
 if command -v nproc >/dev/null 2>&1; then

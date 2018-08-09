@@ -8,13 +8,16 @@ tags
 .vimtags
 *_history*
 
+pid
 pipe
+state
 certs
 cache
 irc.conf
 urls.log
 iset.conf
 relay.conf
+.netrwhist
 .zcompdump
 .rclone.conf
 rweechat.log

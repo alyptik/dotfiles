@@ -20,7 +20,7 @@ selfg='#101010'
 # font="-*-fixed-medium-*-*-*-20-*-*-*-*-*-*-*"
 font="-*-terminus-medium-*-*-*-20-*-*-*-*-*-*-*"
 # font="-*-terminus-medium-r-normal--20-*-*-*-*-*-*-*"
-dzenfont="xft:Fira Code:style=Light:pixelsize=20:antialias=true:hinting=false"
+dzenfont="xft:Fira Code:style=Retina:pixelsize=16:antialias=true:hinting=false"
 # dzenfont="$font"
 
 ####
@@ -81,10 +81,11 @@ systemctl restart mpdscribble@alyptik.service mpd
 		curbat="$(</sys/class/power_supply/BAT0/capacity)"
 		# curbat="$(acpi -bi | perl -F, -ane 'print $F[1] =~ s/^s+//r if $. == 1')"
 		echo $'np\t'"$(mpc current)"
-		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1' &
+		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1'
 		echo $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
 		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
-		echo $'bat\t^fg(#efefef)'"$curbat% ⚡"
+		# echo $'bat\t^fg(#efefef)'"$curbat% ⚡"
+		echo $'bat\t^fg(#efefef)'"$curbat%"
 		childpid=$!
 	done > >(uniq_linebuffered) &
 

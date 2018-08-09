@@ -1,0 +1,8 @@
+[Unit]
+Description=RTC script
+
+[Service]
+ExecStart=/store/scripts/rtc
+
+[Install]
+WantedBy=multi-user.target
