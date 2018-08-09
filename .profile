@@ -8,8 +8,8 @@ if command -v ruby >/dev/null 2>&1; then
 else
 	rubies=""
 fi
-if test "$TERM" != linux -a "$TERM" != xterm -a $TERM != st-256color; then
-	italic=screen-256color
+if test "$TERM" != linux -a "$TERM" != xterm; then
+	italic=screen-256color-italic
 	if [[ -d "$HOME/.terminfo" ]]; then
 		TERM="$italic"
 	else
