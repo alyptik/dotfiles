@@ -21,9 +21,9 @@ if test "$(hostname)" != fedora -a "$(hostname)" != fedoravm; then
 	locale="en_US.UTF-8"
 fi
 if command -v nproc >/dev/null 2>&1; then
-	NPROC="$(($(nproc) + 2))"
+	NPROC="$(nproc)"
 else
-	NPROC=6
+	NPROC=4
 fi
 if test -t 0; then
 	stty -ixon
@@ -75,7 +75,8 @@ CFLAGS="-fuse-ld=gold -fuse-linker-plugin $CFLAGS"
 # CFLAGS="-pipe $CFLAGS"
 # CFLAGS="-march=native -gdwarf-4 -g3 -O3 $CFLAGS"
 # CFLAGS="-march=x86-64 -mtune=intel -g3 -O3 $CFLAGS"
-CFLAGS="-pipe -march=native -g -O3 $CFLAGS"
+# CFLAGS="-pipe -march=native -g -O3 $CFLAGS"
+CFLAGS="-pipe -march=x86_64 -mtune=generic -g -O3 $CFLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
@@ -94,7 +95,7 @@ LDFLAGS="-Wl,--sort-common,--warn-common $LDFLAGS"
 export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l$NPROC"
-export MAKEFLAGS="-j$NPROC"
+export MAKEFLAGS="-j$((NPROC + 2))"
 
 # Environment variables
 # export BROWSER=firefox

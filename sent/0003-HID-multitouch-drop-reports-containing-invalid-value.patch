@@ -10,7 +10,7 @@ CC: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 CC: Daniel Martin <consume.noise@gmail.com>
 CC: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Sat, 30 Jun 2018 13:29:56 -1000
-Subject: [PATCH 3/4] HID: multitouch: drop reports containing invalid values
+Subject: [PATCH RESEND 3/4] HID: multitouch: drop reports containing invalid values
 
 Avoid processing reports containing invalid values to reduce
 multitouch input stutter.

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-perl -pe 'chomp if eof' | tee >(xsel -ib)
+tee >(xclip -r -i -sel clip)

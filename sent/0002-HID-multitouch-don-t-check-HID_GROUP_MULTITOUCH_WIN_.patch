@@ -10,7 +10,7 @@ CC: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 CC: Daniel Martin <consume.noise@gmail.com>
 CC: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Sat, 30 Jun 2018 13:23:05 -1000
-Subject: [PATCH 2/4] HID: multitouch: don't check HID_GROUP_MULTITOUCH_WIN_8 for serial protocol
+Subject: [PATCH RESEND 2/4] HID: multitouch: don't check HID_GROUP_MULTITOUCH_WIN_8 for serial protocol
 
 The HID_GROUP_MULTITOUCH_WIN_8 group never needs to check for the serial
 protocol, so avoid setting `td->serial_maybe = true;` in order to avoid

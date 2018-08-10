@@ -10,7 +10,7 @@ CC: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 CC: Daniel Martin <consume.noise@gmail.com>
 CC: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Sat, 30 Jun 2018 13:34:22 -1000
-Subject: [PATCH 4/4] HID: multitouch: remove unneeded else conditional cases
+Subject: [PATCH RESEND 4/4] HID: multitouch: remove unneeded else conditional cases
 
 Elide lone `else` cases and replace `else if` clauses
 with plain `if` conditionals when they occur immediately

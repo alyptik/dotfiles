@@ -425,19 +425,19 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(x11vnc xbindkeys xsel youtube-dl)
 
 	if type cgasm &>/dev/null; then
-		asmcmds+=(${(o)$({ cgasm -f '.*' \
+		asmcmds+=(${(o)$(cgasm -f '.*' \
 			| perl -alne '
 				BEGIN{ my @cmds; }
 				push @cmds, split(/ /, lc $F[0] =~ y|/| |r);
 				END{ print join " ", @cmds; }
-			'; } 2>/dev/null)})
+			' 2>/dev/null)})
 	fi
 	if type pacman &>/dev/null; then
 		dbpkgs+=(${(fo@)$(pacman -Qq 2>/dev/null)})
 	fi
 	if type find &>/dev/null; then
 		kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) \
-			-type f -name '*.ko.gz' 2>/dev/null)%.ko.gz}##*/})
+			-type f -name '*.ko*' 2>/dev/null)%.ko*}##*/})
 	fi
 	if type gpg2 &>/dev/null; then
 		pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring \

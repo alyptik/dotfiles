@@ -10,7 +10,7 @@ CC: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 CC: Daniel Martin <consume.noise@gmail.com>
 CC: Joey Pabalinas <joeypabalinas@gmail.com>
 Date: Sat, 30 Jun 2018 13:13:16 -1000
-Subject: [PATCH 1/4] HID: multitouch: add MT_QUIRK_NOT_SEEN_MEANS_UP to MT_CLS_WIN_8 quirks
+Subject: [PATCH RESEND 1/4] HID: multitouch: add MT_QUIRK_NOT_SEEN_MEANS_UP to MT_CLS_WIN_8 quirks
 
 The firmware found in the touch screen of the Surface Pro 3 is slightly
 buggy and occasionally doesn't send lift off reports for contacts; add
