@@ -189,14 +189,26 @@ function zle-backwards-zap-to-char() {
 }
 
 # x clipboard functions
-function insert-x-selection() { LBUFFER="${LBUFFER}$(xsel -op </dev/null 2>/dev/null)"; }
-# function insert-x-selection() {
-#         local pos="$CURSOR"
-#         LBUFFER="$LBUFFER$(xsel -op </dev/null 2>/dev/null)"
-#         CURSOR="$pos"
-# }
-function append-x-selection() { RBUFFER="$(xsel -op </dev/null 2>/dev/null)$RBUFFER"; }
-function yank-x-selection() { zle kill-buffer && print -n - "$CUTBUFFER" | xsel -ib; }
+function insert-clip-selection() { LBUFFER="$LBUFFER$(xclip -r -o -sel clip </dev/null)"; }
+function insert-x-selection() { LBUFFER="$LBUFFER$(xclip -r -o </dev/null)"; }
+function append-clip-selection() {
+	LBUFFER="$LBUFFER$RBUFFER[1]"
+	RBUFFER="$(xclip -r -o -sel clip </dev/null)${RBUFFER:1}"
+	CURSOR="$#BUFFER"
+}
+function append-x-selection() {
+	LBUFFER="$LBUFFER$RBUFFER[1]"
+	RBUFFER="$(xclip -r -o </dev/null)${RBUFFER:1}"
+	CURSOR="$#BUFFER"
+}
+function yank-clip-selection() {
+	BUFFER="${BUFFER:-$CUTBUFFER}"
+	zle kill-buffer && print -n - "$CUTBUFFER" | xclip -r -i -sel clip;
+}
+function yank-x-selection() {
+	BUFFER="${BUFFER:-$CUTBUFFER}"
+	zle kill-buffer && print -n - "$CUTBUFFER" | xclip -r -i;
+}
 
 function zle-list-binds() {
 	zle push-input
@@ -229,14 +241,17 @@ function zle-line-init() {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
-		printf "$cblock"; printf "$cred"
+		printf "$cblock"
+		printf "$cred"
 		;;
 	emacs|$_emacs)
-		printf "$cblock"; printf "$cyellow"
+		printf "$cblock"
+		printf "$cyellow"
 		;;
 	viins|$_vi)
-		# printf "$cline"; printf "$cgrey"
-		printf "$cblock"; printf "$cgrey"
+		# printf "$cline"
+		printf "$cblock"
+		printf "$cgrey"
 		;;
 	esac
 	# It should be noted that the O / [ confusion can occur with other keys such as Home and End
@@ -254,14 +269,17 @@ function zle-line-finish() {
 	setescapes
 	case "$KEYMAP" in
 	vicmd)
-		printf "$cblock"; printf "$cred"
+		printf "$cblock"
+		printf "$cred"
 		;;
 	emacs|$_emacs)
-		printf "$cblock"; printf "$cyellow"
+		printf "$cblock"
+		printf "$cyellow"
 		;;
 	viins|$_vi)
-		# printf "$cline"; printf "$cgrey"
-		printf "$cblock"; printf "$cgrey"
+		# printf "$cline"
+		printf "$cblock"
+		printf "$cgrey"
 		;;
 	esac
 	# It should be noted that the O / [ confusion can occur with other
@@ -317,12 +335,18 @@ function zle-toggle-keymap() {
 
 function zle-emacs-keymap() {
 	setescapes
-	bindkey -e; printf "$cblock"; printf "$cyellow"; _km=emacs; _vi=; _emacs=main
+	bindkey -e
+	printf "$cblock"
+	printf "$cyellow"
+	_km=emacs _vi= _emacs=main
 }
 
 function zle-vi-keymap() {
 	setescapes
-	bindkey -v; printf "$cline"; printf "$cgrey"; _km=vi; _vi=main; _emacs=
+	bindkey -v
+	printf "$cline"
+	printf "$cgrey"
+	_km=vi _vi=main _emacs=
 }
 
 # alt-i - paste the selected entry from locate output into the command line

@@ -96,8 +96,9 @@ eval "$(dircolors -b)"
 	zmod_arr+=(zsh/curses zsh/datetime zsh/db/gdbm zsh/deltochar zsh/mapfile)
 	zmod_arr+=(zsh/mathfunc zsh/net/socket zsh/net/tcp zsh/pcre zsh/terminfo)
 	zmod_arr+=(zsh/system zsh/zftp zsh/zprof zsh/zpty zsh/zselect)
-	zle_cust+=(append-x-selection fzf-locate-widge insert-composed-char)
-	zle_cust+=(insert-x-selection yank-x-selection)
+	zle_cust+=( fzf-locate-widge insert-composed-char)
+	zle_cust+=(append-clip-selection insert-clip-selection yank-clip-selection)
+	zle_cust+=(append-x-selection insert-x-selection yank-x-selection)
 	zle_cust+=(zle-backwards-delete-to-char zle-backwards-zap-to-char)
 	zle_cust+=(zle-compdef zle-emacs-keymap zle-fh zle-fman zle-less)
 	zle_cust+=(zle-list-binds zle-locate-widget zle-refresh-keymap)
@@ -237,9 +238,10 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX=autosuggest-orig-
 ZSH_AUTOSUGGEST_STRATEGY=default
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(which-command)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(append-clip-selection insert-clip-selection)
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(append-x-selection insert-x-selection)
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(yank-x-selection fzf-locate-widget)
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(insert-composed-char)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(yank-clip-selection yank-x-selection)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(fzf-locate-widget insert-composed-char)
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-backwards-delete-to-char)
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-backwards-zap-to-char)
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(zle-compdef zle-emacs-keymap zle-fh zle-fman)
@@ -279,6 +281,18 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" -s "\el" " | l "
 	bindkey -M "$1" -s "\es" " | sed "
 
+	bindkey -M "$1" "\e[1~" beginning-of-line
+	bindkey -M "$1" "\e[4~" end-of-line
+	bindkey -M "$1" "\ec" yank-x-selection
+	bindkey -M "$1" "\ev" insert-x-selection
+	bindkey -M "$1" "\eC" yank-clip-selection
+	bindkey -M "$1" "\eV" insert-clip-selection
+	bindkey -M "$1" "\e[17~" yank-x-selection
+	bindkey -M "$1" "\e[18~" insert-x-selection
+	bindkey -M "$1" "\e[" yank-x-selection
+	bindkey -M "$1" "\e]" insert-x-selection
+	bindkey -M "$1" "\e{" yank-clip-selection
+	bindkey -M "$1" "\e}" insert-clip-selection
 	bindkey -M "$1" "\ef" zle-fh
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
@@ -341,12 +355,12 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e[1;3A" end-of-line
 	bindkey -M "$1" "\e[1;2A" end-of-line
 	bindkey -M "$1" "\C-e" end-of-line
-	bindkey -M "$1" "$terminfo[kcuu1]" history-substring-search-up
-	bindkey -M "$1" "$terminfo[kcud1]" history-substring-search-down
-	bindkey -M "$1" "\e[5~" history-substring-search-up
-	bindkey -M "$1" "\e[6~" history-substring-search-down
-	bindkey -M "$1" "\e-" history-substring-search-up
-	bindkey -M "$1" "\e=" history-substring-search-down
+	bindkey -M "$1" "$terminfo[kcud1]" emacs-backward-word
+	bindkey -M "$1" "$terminfo[kcuu1]" emacs-forward-word
+	bindkey -M "$1" "\e[6~" emacs-backward-word
+	bindkey -M "$1" "\e[5~" emacs-forward-word
+	bindkey -M "$1" "\e-" emacs-backward-word
+	bindkey -M "$1" "\e=" emacs-forward-word
 	bindkey -M "$1" "$(echotc kl)" backward-char
 	bindkey -M "$1" "$(echotc kr)" forward-char
 	bindkey -M "$1" "$(echotc ku)" up-line-or-beginning-search
@@ -378,11 +392,6 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e>" autosuggest-clear
 	# f5: toggle keymap
 	bindkey -M "$1" "\e[15~" zle-toggle-keymap
-	bindkey -M "$1" "\e[17~" yank-x-selection
-	bindkey -M "$1" "\e[18~" insert-x-selection
-	bindkey -M "$1" "\e[" yank-x-selection
-	bindkey -M "$1" "\e]" insert-x-selection
-	# bindkey -M "$1" "\e[18~" append-x-selection
 	# f9: insert composed character
 	# bindkey -M emacs "\e[19~" insert-composed-char
 	bindkey -M "$1" "\e;" fzf-completion
@@ -393,6 +402,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\er" fzf-history-widget
 	bindkey -M "$1" "\C-t" transpose-words
 	bindkey -M "$1" "\et" fzf-file-widget
+	bindkey -M "$1" "\eC" fzf-cd-widget
 } emacs vicmd viins
 
 # compdefs
