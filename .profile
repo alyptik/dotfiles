@@ -8,7 +8,7 @@ if command -v ruby >/dev/null 2>&1; then
 else
 	rubies=""
 fi
-if test "$TERM" != linux -a "$TERM" != xterm; then
+if [ "$TERM" != linux ] && [ "$TERM" != xterm ]; then
 	italic=screen-256color-italic
 	if [[ -d "$HOME/.terminfo" ]]; then
 		TERM="$italic"
@@ -17,7 +17,7 @@ if test "$TERM" != linux -a "$TERM" != xterm; then
 	fi
 	unset italic
 fi
-if test "$(hostname)" != fedora -a "$(hostname)" != fedoravm; then
+if [ "$(hostname)" != localhost ] && [ "$(hostname)" != fedora ] && [ "$(hostname)" != fedoravm ]; then
 	locale="en_US.UTF-8"
 fi
 if command -v nproc >/dev/null 2>&1; then
@@ -25,7 +25,7 @@ if command -v nproc >/dev/null 2>&1; then
 else
 	NPROC=4
 fi
-if test -t 0; then
+if [ -t 0 ]; then
 	stty -ixon
 fi
 export NPROC

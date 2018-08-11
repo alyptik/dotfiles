@@ -2,7 +2,7 @@
 Description=RTC script
 
 [Service]
-ExecStart=/store/scripts/rtc
+ExecStart=/store/dotfiles/scripts/rtc
 
 [Install]
 WantedBy=multi-user.target
