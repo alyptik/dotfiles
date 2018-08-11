@@ -327,11 +327,11 @@ export ZDOTDIR="$HOME/.zsh.d"
 #     * z -c foo  # restrict matches to subdirs of $PWD
 unset _Z_CMD _Z_DATA _Z_NO_RESOLVE_SYMLINKS
 unset _Z_NO_PROMPT_COMMAND _Z_EXCLUDE_DIRS
-unset _Z_OWNER
+unset _Z_OWNER _FASD_SINK _last_z_args
 export _Z_NO_RESOLVE_SYMLINKS=true
 # export _Z_NO_PROMPT_COMMAND=true
 # export _Z_OWNER=alyptik
-export _FASD_SINK="/store/.fasd.log"
+# export _FASD_SINK="/store/.fasd.log"
 # used to track arguments of last `z` command
 export _last_z_args
 
