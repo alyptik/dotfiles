@@ -12,24 +12,24 @@ if [[ -f "$_zsh_error" ]]; then rm -f "$_zsh_error"; else cleanup; fi
 
 # setopt arrays
 () {
-	local -a unsetarr setarr
-	unsetarr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
-	unsetarr+=(correctall extendedhistory flowcontrol histfcntllock)
-	unsetarr+=(globalexport globcomplete globsubst histignorespace)
-	unsetarr+=(histsavebycopy histverify multios nomatch printexitvalue)
-	unsetarr+=(sharehistory verbose)
-	setarr+=(appendhistory autocd autopushd bareglobqual beep casematch)
-	setarr+=(cbases chaselinks clobber completeinword correct cprecedences)
-	setarr+=(equals extendedglob globassign globdots globstarshort)
-	setarr+=(hashlistall histexpiredupsfirst histignorealldups)
-	setarr+=(histignoredups histignoredups histlexwords histreduceblanks hup)
-	setarr+=(incappendhistory interactivecomments kshglob kshoptionprint)
-	setarr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
-	setarr+=(markdirs menucomplete monitor multibyte notify pathdirs)
-	setarr+=(pipefail promptsubst pushdignoredups pushdminus pushdtohome)
-	setarr+=(rematchpcre transientrprompt)
-	() for 1 { setopt "no$1"; }  $unsetarr
-	() for 1 { setopt "$1"; } $setarr
+	local -a unset__arr set_arr
+	unset_arr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
+	unset_arr+=(correctall extendedhistory flowcontrol histfcntllock)
+	unset_arr+=(globalexport globcomplete globsubst histignorespace)
+	unset_arr+=(histsavebycopy histverify multios nomatch printexitvalue)
+	unset_arr+=(sharehistory verbose)
+	set_arr+=(appendhistory autocd autopushd bareglobqual beep casematch)
+	set_arr+=(cbases chaselinks clobber completeinword correct cprecedences)
+	set_arr+=(equals extendedglob globassign globdots globstarshort)
+	set_arr+=(hashlistall histexpiredupsfirst histignorealldups)
+	set_arr+=(histignoredups histignoredups histlexwords histreduceblanks hup)
+	set_arr+=(incappendhistory interactivecomments kshglob kshoptionprint)
+	set_arr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
+	set_arr+=(markdirs menucomplete monitor multibyte notify pathdirs)
+	set_arr+=(pipefail promptsubst pushdignoredups pushdminus pushdtohome)
+	set_arr+=(rematchpcre transientrprompt)
+	() for 1 { setopt "no$1"; }  $unset_arr
+	() for 1 { setopt "$1"; } $set_arr
 }
 
 # emacs mang...
@@ -304,8 +304,9 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\C-k" kill-whole-line
 	bindkey -M "$1" "\ed" kill-word
 	bindkey -M "$1" "\e[3~" delete-char
-	bindkey -M "$1" "\C-h" backward-delete-char
 	bindkey -M "$1" "\C-?" backward-delete-char
+	bindkey -M "$1" "\C-h" backward-delete-char
+	bindkey -M "$1" "\e\C-h" backward-kill-word
 	bindkey -M "$1" "\e\C-?" backward-kill-word
 	bindkey -M "$1" "\C-o" accept-line-and-down-history
 	bindkey -M "$1" "\e[23~" zle-list-binds
