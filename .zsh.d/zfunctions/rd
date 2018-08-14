@@ -1,1 +1,1 @@
- chromium "https://www.google.com/search?q=site:reddit.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1
+ netsurf "https://www.google.com/search?q=site:reddit.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!

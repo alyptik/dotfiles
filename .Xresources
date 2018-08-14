@@ -109,7 +109,7 @@ stjerm*tabfill:			true
 stjerm*tabpos:			bottom
 ! stjerm*font:			FuraCode Nerd Font
 ! stjerm*font:			Source Code Pro Light 9
-stjerm*font:			Fantasque Sans Mono Regular 8
+stjerm*font:			Fantasque Sans Mono Regular
 ! stjerm*font:			SauceCodePro Nerd Font Light
 
 ! URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\

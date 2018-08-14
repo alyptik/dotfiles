@@ -139,3 +139,6 @@ async
 SIGSEGV
 SIGILL
 SIGFPE
+mutex
+argv
+busybox

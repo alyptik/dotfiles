@@ -544,20 +544,20 @@ compdef _=sudo
 compdef meminfo=free
 
 # named directories
-hash -d a="${HOME}/code/aur"
+hash -d a="$HOME/code/aur"
 hash -d audio="/sdxc/audio"
-hash -d b="${HOME}/bin/"
+hash -d b="$HOME/bin/"
 hash -d c="$CONFIG"
 hash -d calibre="/sdxc/calibre"
 hash -d code="$PROJECTS/school"
 hash -d crash="$PROJECTS/secure-systems-lab/CrashSimulator"
 hash -d d="$PROJECTS/linux/Documentation"
 hash -d djzomg="/sdxc/Music/djzomg"
-hash -d efi="/boot/efi/EFI"
-hash -d euler="${HOME}/code/euler"
+hash -d efi="/boot/EFI"
+hash -d euler="$HOME/code/euler"
 hash -d g="$HOME/lind_project/lind/lind_glibc"
-hash -d git="${HOME}/git"
-hash -d hdd="/run/media/alyptik/toshiba1TB"
+hash -d git="$HOME/git"
+hash -d hdd="/hdd"
 hash -d inc="/usr/include"
 hash -d initcpio="/usr/lib/initcpio/install"
 hash -d k="$PROJECTS/kernel"
@@ -568,7 +568,7 @@ hash -d man="$CONFIG/man"
 hash -d music="/store/music"
 hash -d n="$HOME/lind_project/native_client"
 hash -d nginx="/etc/nginx"
-hash -d omz="/usr/share/oh-my-zsh"
+hash -d omz="/store/code/projects/oh-my-zsh"
 hash -d p="$PROJECTS"
 hash -d plugins="/usr/share/oh-my-zsh/plugins"
 hash -d prose="/store/writing"
@@ -579,13 +579,13 @@ hash -d rfc="/usr/share/doc/rfc"
 hash -d s="$PROJECTS/secure-systems-lab"
 hash -d sdxc="/sdxc"
 hash -d surfraw="/usr/lib/surfraw"
-hash -d stuff="/hdd"
+hash -d stuff="/store/stuff"
 hash -d systemd="/etc/systemd/system"
 hash -d t="/store/torrents"
 hash -d tt="/hdd/torrents"
 hash -d tuf="$PROJECTS/secure-systems-lab/tuf"
-hash -d vim="${HOME}/.vim"
-hash -d vm="/run/media/alyptik/vm"
+hash -d vim="$HOME/.vim"
+hash -d vm="/store/vm"
 hash -d wanderlust="/hdd/wanderlust"
 hash -d words="$CONFIG/unixstories"
 hash -d www="/srv/http"
@@ -599,7 +599,7 @@ hash -d zsh="$ZSH"
 # parse ssh configuration
 () {
 	local -a _ssh_hosts
-	_ssh_hosts=(${${(f@)$(cat ${HOME}/.ssh/{config,known_hosts}(N) /dev/null)}%%,*})
+	_ssh_hosts=(${${(f@)$(cat $HOME/.ssh/{config,known_hosts}(N) /dev/null)}%%,*})
 	_ssh_hosts=(${${(Mu)${${_ssh_hosts##*/}##*@}##*.*}%%:*})
 	zstyle ':completion:*:(ssh|scp|sftp|rsync):*'	hosts $_ssh_hosts
 }

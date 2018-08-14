@@ -7,55 +7,81 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-08-06] Joey's Progress Report
+Subject: [2018-08-13] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-08-06)
+ * (2018-08-13)
  */
 
-This week I've been working on fixing our Travis build for Lind and some
-portability problems rr. I've had to spend a lot of time on a few logistics
-issues with NYU supplier registration, so I wasn't able to get a huge
-amount done this week.
+This week was a little bit painful; glibc rolled out version 2.28 which
+promptly ended up breaking my Lind fork() implementation... I spent most
+of the weekend fixing it, and thankfully I was able to get it working
+again. Aside from that I've slowly been working my way toward getting
+a LAMP stack running in Lind.
 
         [CrashSimulator]
 
-        I spent some time doing a little debugging of some weird errors with
-        Preston when running our build of rr, and it turns out that rr itself
-        is working fine, but there are issues with making the our traces
-        portable (mostly an issue in regard to our test suite). At current,
-        it looks like it's the same issues Mozilla was also having, so
-        I've been reading the source code and brainstorming possible
-        solutions.
-
-        I've also been trying to figure out how to port our tools to x86_64,
-        since have to test small changes in a 32-bit VM is slightly annoying.
+        Most of my time this week was spent on Lind, so there wasn't
+        too much I got done here. I did notice Preston merged a
+        couple of my PRs, though.
 
         [Lind]
 
-        I managed to get a reverse shell up and running in our Travis CI
-        instance for debugging purposes, but I haven't really figured out
-        the cause of our build failures yet.
+        This weekend ended up being a little crazy thanks to
+        glibc 2.28.
 
-        If this takes too long, I may just put it to the side for now
-        and finish up our execve() implementation so we can start getting
-        some testing of real programs done.
+        One of the changes in the new glibc (still am unsure which one,
+        but I suspect it has to do with the IO functions like open/close
+        no longer being being cancellation points and thus no longer
+        async-safe) my previously-working fork() implementation promptly
+        imploded on itself.
+
+        Calls to fork() now spawned 2-3 extra threads, essentially meaning
+        you now had an extra 2-3 copies of the forked "process"; obviously
+        was not intended nor helpful behavior.
+
+        It took a bit of doing, but I was able to work around it by
+        adding a few more mutex locks around our child constructor
+        functions and an "in_fork" flag to the NaClApp struct to keep
+        multiple instances from being spawned. Because of this it is
+        now slightly slower, but it seems to be the only way around
+        this until I figure out the root cause (which may not even be
+        worth the time spent since everything works perfectly fine
+        now).
+
+        Aside from that, I was able to get execve() working, and the
+        dash shell is able to fork()/exec()/pipe(). It still, however,
+        crashes when it tries to do them together (something like
+        `dash -c '/hello'` but `dash -c 'echo hi | /cat'` breaks),
+        which I am thinking has to do with me possibly parsing argv
+        incorrectly, though at this point I can't really say for sure.
+
+        I've also been trying to fix compiler errors building coreutils
+        and busybox, and though they haven't been ironed out yet I
+        definitely feel like Lind is progressing.
 
 /* Plans For Next Week */
 
-        - Figure out why our Travis CI build for Lind is failing.
-        - Finish up our LInd execve() implementation.
+        - Figure out where the bug is in Lind argv handling.
+        - Get execve()/fork()/pipe() to play nice together.
+        - Get coreutils and full shell functionality working
+          in Lind.
         - Start building our LAMP stack for Lind.
-        - Start testing some coreutils programs in Lind.
-        - Work on 64-bit support for CrashSimulator.
-        - See if there are any tractable solutions for our portability issues.
+        - Attempt building other useful utilities such as
+          coreutils and busybox in Lind.
+        - Buy a new laptop so I can get a VM back up and start
+          working on rr again (my Surface Pro 3 bit the dust so
+          currently I am doing all my work on a netbook; not
+          very fun to compile things on :)
 
 That's all for this week, thanks everyone.
 
 -- 
 Cheers,
 Joey Pabalinas
+
+# vi:ft=mail et:
