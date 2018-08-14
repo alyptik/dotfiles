@@ -10,9 +10,6 @@ bind editor "<esc>'" forward-word
 bind editor \ck kill-line
 bind pager g top
 bind pager G bottom
-# bind index g group-reply
-# bind generic,index,browser g first-entry
-# bind generic,index,browser G last-entry
 bind generic,index g first-entry
 bind generic,index G last-entry
 bind index,pager <esc>r root-message
@@ -61,33 +58,37 @@ macro index . "<enter-command>set sort = last-date-received<enter>"
 # show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
 macro index,pager Y \
-      "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk/<enter>" \
-      "open alyp.tk inbox"
-# macro index,pager Y \
-#       "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com/<enter>" \
-#       "open twc inbox"
-# macro index,pager Y \
-#       "<change-folder>imaps://$my_kindle_user:$my_kindle_pass@mail.gmx.com/<enter>" \
-#       "open gmx inbox"
+    "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk/<enter>" \
+    "open alyp.tk inbox"
+macro index,pager Y \
+    "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com/<enter>" \
+    "open twc inbox"
+macro index,pager Y \
+    "<change-folder>imaps://$my_kindle_user:$my_kindle_pass@mail.gmx.com/<enter>" \
+    "open gmx inbox"
 macro index,pager c \
-      "<change-folder>~/Maildir<enter>" \
-      "open ~/Maildir"
+    "<change-folder>~/Maildir<enter>" \
+    "open ~/Maildir"
 macro index,pager C \
-      "<change-folder>$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/<enter>" \
-      "open gmail inbox"
+    "<change-folder>$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/<enter>" \
+    "open gmail inbox"
 # Show documentation when pressing F1
-macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
+macro generic,pager <F1> \
+    "<shell-escape>less /c/mail/mutt_manual.txt<Enter>" \
+    "show mutt documentation"
 macro index A \
-	      "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
-	      "mark all new as read"
+    "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "mark all new as read"
 macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
-macro index <esc>b "<search>~b " "search in message bodies"
-macro index i "<search> ~F<enter>" "jump to next flagged message"
+macro index <esc>b "<search>~b" "search in message bodies"
+macro index i "<search>~F<enter>" "jump to next flagged message"
 macro index I "<search-reverse> ~F<enter>" "jump to previous flagged message"
-macro index,pager,attach,compose \cb "\
-<enter-command> set my_pipe_decode = \$pipe_decode pipe_decode<Enter>\
-<pipe-message> urlview<Enter>\
-<enter-command> set pipe_decode = \$my_pipe_decode; unset my_pipe_decode<Enter>" \
-"call urlview to extract URLs out of a message"
+macro index r "<search>~Q<enter>" "jump to next followup message"
+macro index R "<search-reverse>~Q<enter>" "jump to previous followup message"
+macro index,pager,attach,compose \cb \
+    "<enter-command>set my_pipe_decode = \$pipe_decode pipe_decode<Enter> \
+    <pipe-message>urlview<Enter> \
+    <enter-command>set pipe_decode = \$my_pipe_decode; unset my_pipe_decode<Enter>" \
+    "call urlview to extract URLs out of a message"
 
-# vi:ft=muttrc:
+# vi:ft=muttrc sts=4 sw=4:
