@@ -61,11 +61,11 @@ yeahconsole*colorBD:	rgb:82/a4/d3
 yeahconsole*colorULMode:	true
 yeahconsole*colorUL:	rgb:e4/e4/e4
 
-! Xcursor*theme:	ArchCursorTheme
 Xcursor*theme:	Oxygen_Blue
+! Xcursor*theme:	ArchCursorTheme
 
-! Xft.dpi: 216
 Xft.dpi: 96
+! Xft.dpi: 216
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -107,10 +107,9 @@ stjerm*height:			90%
 stjerm*allowreorder:		true
 stjerm*tabfill:			true
 stjerm*tabpos:			bottom
-! stjerm*font:			FuraCode Nerd Font
-! stjerm*font:			Source Code Pro Light 9
-stjerm*font:			Fantasque Sans Mono Regular
-! stjerm*font:			SauceCodePro Nerd Font Light
+stjerm*font:			Fantasque Sans Mono Light 16
+! stjerm*font:			Source Code Pro Light 16
+! stjerm*font:			FiraCode Nerd Font 16
 
 ! URxvt*font:		xft:Fira Code:style=Retina:pixelsize=26:antialias=true:hinting=true,\
 ! URxvt*font:		xft:SauceCodePro Nerd Font:style=Light:pixelsize=24:antialias=true:hinting=true,\

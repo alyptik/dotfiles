@@ -19,15 +19,14 @@ if [[ -f "$_zsh_error" ]]; then rm -f "$_zsh_error"; else cleanup; fi
 	unset_arr+=(histsavebycopy histverify multios nomatch printexitvalue)
 	unset_arr+=(sharehistory verbose)
 	set_arr+=(appendhistory autocd autopushd bareglobqual beep casematch)
-	set_arr+=(cbases chaselinks clobber completeinword correct cprecedences)
-	set_arr+=(equals extendedglob globassign globdots globstarshort)
-	set_arr+=(hashlistall histexpiredupsfirst histignorealldups)
-	set_arr+=(histignoredups histignoredups histlexwords histreduceblanks hup)
-	set_arr+=(incappendhistory interactivecomments kshglob kshoptionprint)
-	set_arr+=(listambiguous longlistjobs magicequalsubst octalzeroes)
-	set_arr+=(markdirs menucomplete monitor multibyte notify pathdirs)
-	set_arr+=(pipefail promptsubst pushdignoredups pushdminus pushdtohome)
-	set_arr+=(rematchpcre transientrprompt)
+	set_arr+=(cbases chaselinks clobber completeinword correct)
+	set_arr+=(cprecedences equals extendedglob globdots globstarshort)
+	set_arr+=(hashlistall histignorealldups histreduceblanks hup)
+	set_arr+=(incappendhistory interactivecomments kshoptionprint)
+	set_arr+=(listambiguous listpacked longlistjobs magicequalsubst)
+	set_arr+=(octalzeroes markdirs menucomplete monitor multibyte notify)
+	set_arr+=(pathdirs pipefail promptsubst pushdignoredups pushdminus)
+	set_arr+=(pushdtohome rematchpcre transientrprompt)
 	() for 1 { setopt "no$1"; }  $unset_arr
 	() for 1 { setopt "$1"; } $set_arr
 }
@@ -122,6 +121,7 @@ autoload -Uz vcs_info
 if type vcs_info &>/dev/null; then
 	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:*' disable bzr cdv cvs darcs mtn svk svn tla
+	zstyle ':vcs_info:*' check-for-changes ${check_vcs:-true}
 	zstyle ':vcs_info:*:prompt:*' check-for-changes ${check_vcs:-true}
 	zstyle ':vcs_info:*:prompt:*' stagedstr "%{$fg[green]%}*%{$reset_color%}"
 	zstyle ':vcs_info:*:prompt:*' unstagedstr "%{$fg[red]%}*%{$reset_color%}"
