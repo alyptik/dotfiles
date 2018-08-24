@@ -3,34 +3,47 @@
 use strict;
 use warnings;
 
+my (@hash, @url_list);
+
 my $user = "alyptik";
 my $url = "https://www.pornhub.com/users/$user/videos/favorites";
+my $base_dir = "/store/stuff";
 my ($flag, $cnt, $results) = (0, 0, ($ARGV[$#ARGV] // 1));
-my (@hash_list, @url_list);
+my $action = sub {
+		my $entry = shift;
+		if (!$#ARGV) {
+			print "[$entry->{name}] <$entry->{url}>\n";
+			return;
+		}
+		chomp($entry->{vid} = `youtube-dl --get-url "$entry->{url}"`);
+	};
 
-foreach (split "\n", `curl -s '$url'`) {
+for (split "\n", `curl -s '$url'`) {
 	next unless (/Play All Videos/ .. eof);
 	if (/view_video\.php\?viewkey=([^"]+)" title="([^"]+)"/ && ++$flag % 2) {
 		my ($name, $url, $vid) = ("", "", "");
 		$name = $2;
 		$url = "https://pornhub.com/view_video.php?viewkey=$1";
-		chomp($vid = `youtube-dl --get-url "$url"`) if $#ARGV;
-		push @hash_list, {
+		# / can't be used in filenames
+		$name =~ s!/!!g;
+		# replace &, ", and ' html encoded characters
+		$name =~ s!#*\Q&amp;\E!&!g;
+		$name =~ s!#*\Q&quot;\E!"!g;
+		$name =~ s!#*\Q&#039;\E!'!g;
+		push @hash, {
 			name => $name,
-			vid => $vid,
 			url => $url,
+			vid => $vid,
 		};
 		push @url_list, $url;
 		last unless ++$cnt < $results;
 	}
 }
 
-foreach (0 .. $results - 1) {
-	if (!$#ARGV) {
-		print "[$hash_list[$_]->{name}] <$hash_list[$_]->{url}>\n";
-	} else {
-		system("saldl -ro '/store/stuff/$hash_list[$_]->{name}.mp4' '$hash_list[$_]->{vid}'");
-	}
+$action->($hash[$_]) for (0 .. $results - 1);
+
+if ($#ARGV) {
+	system("saldl -ro '$base_dir/$hash[$_]->{name}.mp4' '$hash[$_]->{vid}'") for (0 .. $results - 1);
 }
 
 print "\n";
