@@ -15,19 +15,19 @@ if [[ -f "$_zsh_error" ]]; then rm -f "$_zsh_error"; else cleanup; fi
 	local -a unset__arr set_arr
 	unset_arr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
 	unset_arr+=(correctall extendedhistory flowcontrol histfcntllock)
-	unset_arr+=(globalexport globcomplete globsubst histignorespace)
+	unset_arr+=(globalexport globcomplete globsubst histfcntllock histignorespace)
 	unset_arr+=(histsavebycopy histverify multios nomatch printexitvalue)
 	unset_arr+=(sharehistory verbose)
 	set_arr+=(appendhistory autocd autopushd bareglobqual beep casematch)
-	set_arr+=(cbases chaselinks clobber completeinword correct)
-	set_arr+=(cprecedences equals extendedglob globdots globstarshort)
-	set_arr+=(hashlistall histignorealldups histreduceblanks hup)
-	set_arr+=(incappendhistory interactivecomments kshoptionprint)
-	set_arr+=(listambiguous listpacked longlistjobs magicequalsubst)
+	set_arr+=(cbases chaselinks clobber completeinword correct cprecedences)
+	set_arr+=(equals extendedglob globdots globstarshort hashlistall)
+	set_arr+=(histexpiredupsfirst histignorealldups histignoredups)
+	set_arr+=(histreduceblanks hup incappendhistory interactivecomments)
+	set_arr+=(kshoptionprint listambiguous listpacked longlistjobs magicequalsubst)
 	set_arr+=(octalzeroes markdirs menucomplete monitor multibyte notify)
 	set_arr+=(pathdirs pipefail promptsubst pushdignoredups pushdminus)
 	set_arr+=(pushdtohome rematchpcre transientrprompt)
-	() for 1 { setopt "no$1"; }  $unset_arr
+	() for 1 { unsetopt "$1"; }  $unset_arr
 	() for 1 { setopt "$1"; } $set_arr
 }
 
@@ -69,7 +69,7 @@ histchars='!^#'
 HISTFILE="$HOME/.zsh_history"
 ZSH_CACHE_DIR="$ZDOTDIR/cache"
 [[ ! -d "$ZSH_CACHE_DIR" ]] && mkdir "$ZSH_CACHE_DIR"
-type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
+# type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 zstyle ':completion:*'			use-cache yes
 zstyle ':completion::complete:*'	cache-path "$ZSH_CACHE_DIR"
 zstyle ':completion::complete:*'	rehash true

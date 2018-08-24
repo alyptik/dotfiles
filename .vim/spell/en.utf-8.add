@@ -142,3 +142,4 @@ SIGFPE
 mutex
 argv
 busybox
+sigprocmask

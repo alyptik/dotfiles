@@ -7,76 +7,53 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-08-13] Joey's Progress Report
+Subject: [2018-08-20] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-08-13)
+ * (2018-08-20)
  */
 
-This week was a little bit painful; glibc rolled out version 2.28 which
-promptly ended up breaking my Lind fork() implementation... I spent most
-of the weekend fixing it, and thankfully I was able to get it working
-again. Aside from that I've slowly been working my way toward getting
-a LAMP stack running in Lind.
+This week was mostly spent on Lind; I'm having a few issues getting a VM
+to actually run on a netbook, so I've mostly been reading the
+documentation in the rrapper repository until I can get a new laptop.
 
         [CrashSimulator]
 
-        Most of my time this week was spent on Lind, so there wasn't
-        too much I got done here. I did notice Preston merged a
-        couple of my PRs, though.
+        After spending a day or so trying to get a VM running on my
+        netbook unsuccessfully, I've shelved it for now and have been
+        reading the documentation on writing a mutator which Preston
+        has up in his rrapper repository.
 
         [Lind]
 
-        This weekend ended up being a little crazy thanks to
-        glibc 2.28.
+        I was able to modify our glibc execve() implementation to take
+        normal argument and environment vectors instead of concatenating
+        them into a single space-separated string as the previous
+        implementation did.
 
-        One of the changes in the new glibc (still am unsure which one,
-        but I suspect it has to do with the IO functions like open/close
-        no longer being being cancellation points and thus no longer
-        async-safe) my previously-working fork() implementation promptly
-        imploded on itself.
+        Busybox, coreutils, dash, and bash all now compile without
+        issue, so my next step is getting a LAMP stack up and running. I
+        am still running into a few issues getting busybox to actually
+        run, but that's not really super important at this point so I'm
+        putting it off for now (coreutils and the shells are all pretty
+        much working).
 
-        Calls to fork() now spawned 2-3 extra threads, essentially meaning
-        you now had an extra 2-3 copies of the forked "process"; obviously
-        was not intended nor helpful behavior.
-
-        It took a bit of doing, but I was able to work around it by
-        adding a few more mutex locks around our child constructor
-        functions and an "in_fork" flag to the NaClApp struct to keep
-        multiple instances from being spawned. Because of this it is
-        now slightly slower, but it seems to be the only way around
-        this until I figure out the root cause (which may not even be
-        worth the time spent since everything works perfectly fine
-        now).
-
-        Aside from that, I was able to get execve() working, and the
-        dash shell is able to fork()/exec()/pipe(). It still, however,
-        crashes when it tries to do them together (something like
-        `dash -c '/hello'` but `dash -c 'echo hi | /cat'` breaks),
-        which I am thinking has to do with me possibly parsing argv
-        incorrectly, though at this point I can't really say for sure.
-
-        I've also been trying to fix compiler errors building coreutils
-        and busybox, and though they haven't been ironed out yet I
-        definitely feel like Lind is progressing.
+        I'm still having some issues figuring out why the shells (dash
+        and bash) are segfaulting when I stub rt_sigprocmask(), but
+        hopefully I'll have that ironed out by the end of the week.
 
 /* Plans For Next Week */
 
-        - Figure out where the bug is in Lind argv handling.
-        - Get execve()/fork()/pipe() to play nice together.
-        - Get coreutils and full shell functionality working
-          in Lind.
-        - Start building our LAMP stack for Lind.
-        - Attempt building other useful utilities such as
-          coreutils and busybox in Lind.
-        - Buy a new laptop so I can get a VM back up and start
-          working on rr again (my Surface Pro 3 bit the dust so
-          currently I am doing all my work on a netbook; not
-          very fun to compile things on :)
+        - Figure out why bash and dash segfault when I stub
+          rt_sigprocmask().
+        - Start building Apache with our Lind compiler.
+        - Figure out why busybox segfaults when run in Lind.
+        - Start planning out which exact programs will be part
+          of our LAMP stack.
 
 That's all for this week, thanks everyone.
 

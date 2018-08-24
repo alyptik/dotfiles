@@ -10,11 +10,11 @@ extra_flags=''
 opt_append=''
 extra_append='norandmaps printk.devkmsg=on printk.time=y'
 qemu="qemu-system-x86_64"
-append='root=/dev/vda nopat console=ttyS0'
+append='root=/dev/sda nopat console=ttyS0'
 kernel="$base_dir/obj/linux-x86/arch/x86_64/boot/bzImage"
 display='-nographic'
 image="$base_dir/obj/buildroot-x86/images/rootfs.ext4"
-network='-net nic,macaddr=52:54:00:46:de:42,model=virtio -net bridge,br=virbr0'
+network='-net nic,macaddr=52:54:00:46:de:42 -net bridge,br=virbr0'
 
 while getopts :a:b:i:n:dghkms opt; do
 	case "$opt" in
@@ -68,7 +68,7 @@ extra_flags="$extra_flags $*"
 cmd="$qemu \
 	-kernel $kernel \
 	-append '$append $extra_append $opt_append' \
-	-drive 'file=$image,if=virtio,format=raw' \
+	-drive 'file=$image,format=raw' \
 	-netdev user,hostfwd=tcp::45455-:45455,id=net0 \
 	-m 512M \
 	-smp 2 \

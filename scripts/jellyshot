@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Let trap catch non-zero exit status
+set -E -o pipefail
+
+# Traps for cleanup
+trap '{ cleanup; }' EXIT
+trap '{ cleanup; exit 1; }' ERR
+trap '{ cleanup; trap - INT; kill -INT $$; }' INT
+
+function cleanup () {
+  if [[ -f "$file" ]]; then
+    echo
+    rm -v "$file"
+  fi
+}
+
+function rand_element () {
+  if [[ "$#" -le 1 ]]; then
+    printf "%s\n" "No array passed to rand_element()"
+    exit 1
+  fi
+  eval printf '%s' "\${$(( RANDOM % ${#} + 1 ))}"
+}
+
+ANIMALS=(Aardvark Albatross Alligator Alpaca Ant Anteater Antelope Ape Armadillo Ayeaye Babirusa Baboon Badger Barracuda Bat Bear Beaver Bee Bison Boar buffalo Buffalo Butterfly Camel Caribou Cat Caterpillar Cattle Chamois Cheetah Chicken Chimpanzee Chinchilla Chough Clam Cobra Cockroach Cod Corgi Cormorant Coyote Crab Crane Crocodile Crow Curlew Deer Dinosaur Dog Dogfish Dolphin Donkey Dotterel Dove Dragon Dragonfly Duck Dugong Dunlin Eagle Echidna Eel Eland Elephant Elk Emu Falcon Ferret Finch Fish Flamingo Fly Fossa Fowl Fox Frog Galago Gaur Gazelle Gerbil Gerenuk Giant Giraffe Gnat Gnu Goat Goldfinch Goldfish Goose Gorilla Goshawk Grasshopper Grouse Guanaco Guinea Gull Hamster Hare Hawk Hedgehog Heron Herring Hippopotamus Hornet Horse Human Hummingbird Hyena Jackal Jaguar Jay Jellyfish Joey Kangaroo Kiwi Koala Komodoa Kouprey Kudu Lamprey Lapwing Lark Lemur Leopard Lion Llama Lobster Locust Loris Louse Lyrebird Magpie Mallard Manatee Marten Meerkat Mink Mole Monkey Moose Mosquito Mouse Mule Narwhal Newt Nightingale Octopus Okapi Opossum Oryx Ostrich Otter Owl Ox Oyster Panda Panther Parrot Partridge Peafowl Pelican Penguin Pheasant pig Pig Pigeon Pony Porcupine Porpoise Prairie Quail Quelea Rabbit Raccoon Rail Ram Rat Raven Red Reindeer Rhinoceros Rook Ruff Salamander Salmon Sandpiper Sardine Scorpion Seahorse Seal Sealion Seaurchin Shark Sheep Shrew Shrimp Skunk Snail Snake Spider Squid Squirrel Starling Stingray Stinkbug Stork Swallow Swan Tapir Tarsier Termite Tiger Toad Trout Turkey Turtle Vicuña Viper Vulture Wallaby Walrus Wasp Water Weasel Whale Wolf Wolverine Wombat Woodcock Woodpecker Worm Wren Yak Zebra)
+COLORS=(Black Blue Blue Brown Cerulean Cyan Green Green Lime Magenta Maroon Orange Purple Red Silver Veridian Violet White Yellow)
+VOWELS=(Absurd Amazing Amusing Angry Arrogant Ashamed Astonishing Astounding Awful Beatific Bewildering Breathtaking Broad Bucolic Cheerful Chucklesome Confused Creepy Disconcerting Droll Dulcet Dusty Enormous Evil Fierce Fluffy Foolish Frightened Gentle Gigantic Gratuitous Hilarious Huge Humorous Hysterical Idyllic Jolly Kind Laughable Mellifluous Meretricious Miniature Numinous Proud Quaint Ridiculous Shallow Shocking Silent Silly Soft Startling Stunning Ubiquitous Witty)
+
+vowels="$(rand_element "${VOWELS[@]}")"
+colors="$(rand_element "${COLORS[@]}")"
+animals="$(rand_element "${ANIMALS[@]}")"
+
+name="${vowels}${colors}${animals}.png"
+file="/tmp/${name}"
+config="${XDG_CONFIG_HOME:-${HOME}/.config}/jellyshot/config"
+
+if [[ ! -f "$config" ]]; then
+  printf "%s: %s\n" "No configuration available at" "$config"
+  exit 1
+fi
+
+# shellcheck disable=SC1090
+. "$config"
+
+if ! type import &>/dev/null; then
+  printf "%s\n" "'import' not found in \$PATH"
+  exit 127
+fi
+
+import "$file"
+
+if type optipng &>/dev/null; then
+  optipng "$file" &>/dev/null
+fi
+
+# Add single / prefix if SUFFIX is set
+case "$SUFFIX" in
+(/*)
+  SUFFIX="/${SUFFIX//\/}" ;;
+(?*)
+  SUFFIX="/${SUFFIX%/*}" ;;
+esac
+
+if [[ -z "$SERVER_PATH" ]]; then
+  if [[ -z "$PORT" ]]; then
+    scp "$file" "$SERVER:/home/$USER/public_html/dump/"
+  else
+    scp -P "$PORT" "$file" "$SERVER:/home/$USER/public_html/dump/"
+  fi
+  url="https://$SERVER$SUFFIX/~$USER/dump/$name"
+else
+  if [[ -z "$PORT" ]]; then
+    scp "$file" "$SERVER:$SERVER_PATH/"
+  else
+    scp -P "$PORT" "$file" "$SERVER:$SERVER_PATH/"
+  fi
+  url="https://$SERVER$SUFFIX/$name"
+fi
+
+printf "\n%s\n" "$url"
+
+if type xclip &>/dev/null; then
+  printf "%s" "$url" | xclip -i -selection clipboard
+  printf "%s" "$url" | xclip -i -selection primary
+elif type xsel &>/dev/null; then
+  printf "%s" "$url" | xsel -ib
+  printf "%s" "$url" | xsel -ip
+fi
