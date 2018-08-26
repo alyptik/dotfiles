@@ -69,7 +69,7 @@ histchars='!^#'
 HISTFILE="$HOME/.zsh_history"
 ZSH_CACHE_DIR="$ZDOTDIR/cache"
 [[ ! -d "$ZSH_CACHE_DIR" ]] && mkdir "$ZSH_CACHE_DIR"
-# type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
+type zshreadhist &>/dev/null && precmd_functions=(zshreadhist $precmd_functions)
 zstyle ':completion:*'			use-cache yes
 zstyle ':completion::complete:*'	cache-path "$ZSH_CACHE_DIR"
 zstyle ':completion::complete:*'	rehash true
@@ -111,17 +111,19 @@ eval "$(dircolors -b)"
 	alias help='run-help'
 }
 
-# avoid git parsing
+# uncomment to avoid git parsing
 # unfunction git_prompt_string
 # function git_prompt_string () {}
 # check_vcs=false
+
+RPS1='$(check_last_exit_code)%(?,%F{green},%F{red} ┐❨ツ❩┌ )%f$(git_prompt_string)'
 
 # load VCS module
 autoload -Uz vcs_info
 if type vcs_info &>/dev/null; then
 	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:*' disable bzr cdv cvs darcs mtn svk svn tla
-	zstyle ':vcs_info:*' check-for-changes ${check_vcs:-true}
+	# zstyle ':vcs_info:*' check-for-changes ${check_vcs:-true}
 	zstyle ':vcs_info:*:prompt:*' check-for-changes ${check_vcs:-true}
 	zstyle ':vcs_info:*:prompt:*' stagedstr "%{$fg[green]%}*%{$reset_color%}"
 	zstyle ':vcs_info:*:prompt:*' unstagedstr "%{$fg[red]%}*%{$reset_color%}"
@@ -138,13 +140,11 @@ if type vcs_info &>/dev/null; then
 	zstyle ':vcs_info:git:*' formats \
 		'%F{3}-%F{5}(%F{7}%r/%S%F{2}[%F{2}%m%F{9}%u%F{6}%c%F{2}]%F{5})%f '
 	precmd_functions=(vcs_info $precmd_functions)
-	RPS1='$(check_last_exit_code)%(?,%F{green},%F{red} ┐❨ツ❩┌ )%f$(git_prompt_string)${vcs_info_msg_0_}'
-else
-	RPS1='$(check_last_exit_code)%(?,%F{green},%F{red} ┐❨ツ❩┌ )%f$(git_prompt_string)'
+	RPS1+='${vcs_info_msg_0_}'
 fi
 
 # prepend zcompiled functions/completions to fpath
-fpath[1,0]="${HOME}/.local/share/zsh/site-functions"
+fpath[1,0]="$HOME/.local/share/zsh/site-functions"
 fpath[1,0]="$ZDOTDIR/zcomps.zwc"
 fpath[1,0]="$ZDOTDIR/zfuncs.zwc"
 autoload -U promptinit && promptinit
@@ -223,14 +223,14 @@ typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf' 'fg=white,bold,bg=red')
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets line main pattern regexp)
 # git prompt
-GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
-GIT_PROMPT_PREFIX="%{$fg[green]%}[%{$reset_color%}"
-GIT_PROMPT_SUFFIX="%{$fg[green]%}]%{$reset_color%}"
-GIT_PROMPT_AHEAD="%{$fg[red]%}ANUM%{$reset_color%}"
-GIT_PROMPT_BEHIND="%{$fg[cyan]%}BNUM%{$reset_color%}"
-GIT_PROMPT_MERGING="%{$fg[magenta]%}⚡︎%{$reset_color%}"
-GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
-GIT_PROMPT_MODIFIED="%{$fg[yello w]%}●%{$reset_color%}"
+GIT_PROMPT_SYMBOL="%F{blue}±%f"
+GIT_PROMPT_PREFIX="%F{green}[%f"
+GIT_PROMPT_SUFFIX="%F{green}]%f"
+GIT_PROMPT_AHEAD="%F{red}ANUM%f"
+GIT_PROMPT_BEHIND="%F{cyan}BNUM%f"
+GIT_PROMPT_MERGING="%F{magenta}%{⚡%G%}%f"
+GIT_PROMPT_UNTRACKED="%F{red}●%f"
+GIT_PROMPT_MODIFIED="%F{white}●%f"
 # zsh autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

@@ -35,7 +35,8 @@
 #     m:0x0 + c:74
 
 # tdrop on F9 (c:75)
-"tdrop -n 2 chromium"
+# "tdrop -n 2 chromium"
+"netsurf google.com"
     m:0x0 + c:75
 
 # tdrop on F10 (c:76)

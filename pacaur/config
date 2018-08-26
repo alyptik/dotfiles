@@ -19,13 +19,12 @@
 
 
 #clonedir="${AURDEST:-$tmpdir}"        # clone directory
-#clonedir="${HOME}/aur/tmp-pacaur-${UID}" # clone directory
 #clonedir="/store/aur/tmp-pacaur-${UID}"    # clone directory
-fallback=true                         # pacman fallback to the AUR
-clonedir="/tmp/pacaur-${UID}"    # clone directory
-editor="${EDITOR:-vi}"                # build files editor
+# clonedir="/tmp/pacaur-${UID}"    # clone directory
+clonedir="$HOME/aur/tmp" # clone directory
+editor="${EDITOR:-vim}"                # build files editor
 displaybuildfiles=none                 # display build files (none|diff|full)
 sortby=votes                          # sort method (name|votes|popularity)
 #sortby=popularity                          # sort method (name|votes|popularity)
 sudoloop=true                          # prevent sudo timeout
-
+fallback=true                         # pacman fallback to the AUR
