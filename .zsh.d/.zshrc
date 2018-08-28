@@ -281,6 +281,9 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" -s "\el" " | l "
 	bindkey -M "$1" -s "\es" " | sed "
 
+	# f8: insert composed character
+	# bindkey -M "$1" "\e[19~" insert-composed-char
+
 	bindkey -M "$1" "\e[1~" beginning-of-line
 	bindkey -M "$1" "\e[4~" end-of-line
 	bindkey -M "$1" "\ec" yank-x-selection
@@ -289,6 +292,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\eV" insert-clip-selection
 	bindkey -M "$1" "\e[17~" yank-x-selection
 	bindkey -M "$1" "\e[18~" insert-x-selection
+	bindkey -M "$1" "\e[19~" insert-clip-selection
 	bindkey -M "$1" "\e[" yank-x-selection
 	bindkey -M "$1" "\e]" insert-x-selection
 	bindkey -M "$1" "\e{" yank-clip-selection
@@ -393,8 +397,6 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e>" autosuggest-clear
 	# f5: toggle keymap
 	bindkey -M "$1" "\e[15~" zle-toggle-keymap
-	# f9: insert composed character
-	# bindkey -M emacs "\e[19~" insert-composed-char
 	bindkey -M "$1" "\e;" fzf-completion
 	bindkey -M "$1" "\e\C-i" fasd-complete
 	bindkey -M "$1" "\e[Z" reverse-menu-complete

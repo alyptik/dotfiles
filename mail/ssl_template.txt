@@ -7,14 +7,14 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-08-20] Joey's Progress Report
+Subject: [2018-08-27] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-08-20)
+ * (2018-08-27)
  */
 
 This week was mostly spent on Lind; I'm having a few issues getting a VM

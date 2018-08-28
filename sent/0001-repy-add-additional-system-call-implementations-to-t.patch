@@ -1,0 +1,2697 @@
+From b9bc74359a8a18242c0827d51541a1025c60b590 Mon Sep 17 00:00:00 2001
+Message-Id: <b9bc74359a8a18242c0827d51541a1025c60b590.1535435517.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 27 Aug 2018 17:30:56 -1000
+Subject: [PATCH 1/2] repy: add additional system call implementations to the
+ Lind platform layer
+
+New system calls added:
+  - pipe
+  - pipe2
+  - fork
+  - execv
+  - execve
+  - getppid
+  - waitpid
+  - wait
+  - wait4
+  - sigprocmask
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ src/include/nacl_macros.h                     |   2 +-
+ src/shared/platform/lind_platform.c           | 541 ++++++------
+ src/shared/platform/lind_platform.h           |   8 +
+ src/shared/platform/posix/nacl_host_desc.c    |   2 +
+ src/trusted/desc/nacl_desc_io.c               |  12 +-
+ src/trusted/desc/posix/nacl_desc.c            |   2 +-
+ .../include/bits/nacl_syscalls.h              |  34 +-
+ src/trusted/service_runtime/lind_syscalls.c   | 790 ++++++++++--------
+ src/trusted/service_runtime/nacl_config.h     |  84 +-
+ 9 files changed, 792 insertions(+), 683 deletions(-)
+
+diff --git a/src/include/nacl_macros.h b/src/include/nacl_macros.h
+index cfd52a37e0cfcd8c77..b91d428060d289fd39 100644
+--- a/src/include/nacl_macros.h
++++ b/src/include/nacl_macros.h
+@@ -138,11 +138,11 @@ static inline void *NaClArrayCheckHelper(void *arg) {
+    * The runtime check is only useful when the build system is using
+    * the inappropriate flags (e.g., missing -pedantic -Werror or
+    * -pedantic-error), in which case instead of a compile-time error,
+    * we'd get a runtime error.
+    */
+-  if (NULL != arg) {
++  if (arg) {
+     abort();
+   }
+   return arg;
+ }
+ 
+diff --git a/src/shared/platform/lind_platform.c b/src/shared/platform/lind_platform.c
+index 3e5ede12b4a9e510b4..5dd952f0b8fccd99fb 100644
+--- a/src/shared/platform/lind_platform.c
++++ b/src/shared/platform/lind_platform.c
+@@ -3,30 +3,39 @@
+  *
+  *  Created on: Jul 23, 2013
+  *      Author: sji
+  */
+ 
++#ifdef _POSIX_C_SOURCE
++#  undef _POSIX_C_SOURCE
++#endif
++
+ #include <Python.h>
+ #include <errno.h>
+ 
+-#include "native_client/src/shared/platform/nacl_log.h"
+ #include "native_client/src/shared/platform/lind_platform.h"
++#include "native_client/src/shared/platform/nacl_log.h"
++#include "native_client/src/trusted/service_runtime/include/bits/nacl_syscalls.h"
+ 
+-PyObject* repylib = NULL;
+-PyObject* code = NULL;
+-PyObject* context = NULL;
++int lind_syscall_counter;
++int lind_syscall_invoked_times[NACL_MAX_SYSCALLS];
++double lind_syscall_execution_time[NACL_MAX_SYSCALLS];
+ 
+-static int initialized = 0;
++PyObject *py_repylib;
++PyObject *py_code;
++PyObject *py_context;
++
++static int initialized;
+ 
+ #define REPY_RELPATH "../repy/"
+ 
+-#define GOTO_ERROR_IF_NULL(x) if(!(x)) {goto error;}
++#define GOTO_ERROR_IF_NULL(x) do { if (!(x)) goto error; } while (0)
+ 
+-PyObject* CallPythonFunc(PyObject* context, const char* func, PyObject* args)
++PyObject *CallPythonFunc(PyObject *context, const char *func, PyObject *args)
+ {
+-    PyObject* func_obj = NULL;
+-    PyObject* result = NULL;
++    PyObject *func_obj = NULL;
++    PyObject *result = NULL;
+     func_obj = PyDict_GetItemString(context, func);
+     GOTO_ERROR_IF_NULL(func_obj);
+     GOTO_ERROR_IF_NULL(args);
+     result = PyObject_CallObject(func_obj, args);
+     GOTO_ERROR_IF_NULL(result);
+@@ -35,15 +44,15 @@ error:
+     PyErr_Print();
+     Py_XDECREF(func_obj);
+     return 0;
+ }
+ 
+-static PyObject* CallPythonFunc0(PyObject* context, const char* func)
++static PyObject *CallPythonFunc0(PyObject *context, const char *func)
+ {
+-    PyObject* func_obj = NULL;
+-    PyObject* args = NULL;
+-    PyObject* result = NULL;
++    PyObject *func_obj = NULL;
++    PyObject *args = NULL;
++    PyObject *result = NULL;
+     func_obj = PyDict_GetItemString(context, func);
+     GOTO_ERROR_IF_NULL(func_obj);
+     args = Py_BuildValue("()");
+     GOTO_ERROR_IF_NULL(args);
+     result = PyObject_CallObject(func_obj, args);
+@@ -54,15 +63,15 @@ error:
+     Py_XDECREF(func_obj);
+     Py_XDECREF(args);
+     return 0;
+ }
+ 
+-static PyObject* CallPythonFunc1(PyObject* context, const char* func, PyObject* arg)
++static PyObject *CallPythonFunc1(PyObject *context, const char *func, PyObject *arg)
+ {
+-    PyObject* func_obj = NULL;
+-    PyObject* args = NULL;
+-    PyObject* result = NULL;
++    PyObject *func_obj = NULL;
++    PyObject *args = NULL;
++    PyObject *result = NULL;
+     func_obj = PyDict_GetItemString(context, func);
+     GOTO_ERROR_IF_NULL(func_obj);
+     args = Py_BuildValue("(O)", arg);
+     GOTO_ERROR_IF_NULL(args);
+     result = PyObject_CallObject(func_obj, args);
+@@ -75,16 +84,16 @@ error:
+     return 0;
+ }
+ 
+ int LindPythonInit(void)
+ {
+-    PyObject* path = NULL;
+-    PyObject* repylib_name = NULL;
+-    PyObject* result = NULL;
+-    PyObject* repy_main_func = NULL;
+-    PyObject* repy_main_args = NULL;
+-    char* argv[] = {"dummy"};
++    PyObject *path = NULL;
++    PyObject *repylib_name = NULL;
++    PyObject *result = NULL;
++    PyObject *repy_main_func = NULL;
++    PyObject *repy_main_args = NULL;
++    char *argv[] = {"dummy"};
+ 
+     if(initialized++) {
+         return 1;
+     }
+     Py_SetProgramName("dummy");
+@@ -95,46 +104,48 @@ int LindPythonInit(void)
+     path = PySys_GetObject("path");
+     GOTO_ERROR_IF_NULL(path);
+     PyList_Append(path, PyString_FromString(REPY_RELPATH));
+ 
+     repylib_name = PyString_FromString("repylib");
+-    repylib = PyImport_Import(repylib_name);
+-    GOTO_ERROR_IF_NULL(repylib);
+-    repy_main_func = PyObject_GetAttrString(repylib, "repy_main");
++    py_repylib = PyImport_Import(repylib_name);
++    GOTO_ERROR_IF_NULL(py_repylib);
++    repy_main_func = PyObject_GetAttrString(py_repylib, "repy_main");
+     GOTO_ERROR_IF_NULL(repy_main_func);
+     repy_main_args = Py_BuildValue("([sssss])", "lind", "--safebinary", REPY_RELPATH"restrictions.lind",
+             REPY_RELPATH"lind_server.py", "./dummy.nexe");
+     result = PyObject_CallObject(repy_main_func, repy_main_args);
+     GOTO_ERROR_IF_NULL(result);
+     PyOS_AfterFork();
+-    PyArg_ParseTuple(result, "OO", &code, &context);
+-    GOTO_ERROR_IF_NULL(code && context);
+-    result = PyEval_EvalCode((PyCodeObject*)code, context, context);
++    PyArg_ParseTuple(result, "OO", &py_code, &py_context);
++    GOTO_ERROR_IF_NULL(py_code && py_context);
+     GOTO_ERROR_IF_NULL(result);
++    result = PyEval_EvalCode((PyCodeObject *)py_code, py_context, py_context);
++    UNREFERENCED_PARAMETER(result);
+     PyEval_ReleaseLock();
+     return 1;
++
+ error:
+     initialized = 0;
+     PyErr_Print();
+     PyEval_ReleaseLock();
+     return 0;
+ }
+ 
+ int LindPythonFinalize(void)
+ {
+     int retval = 0;
+-    PyObject* repy_finalize_func = NULL;
+-    PyObject* repy_finalize_args = NULL;
+-    PyObject* result = NULL;
++    PyObject *repy_finalize_func = NULL;
++    PyObject *repy_finalize_args = NULL;
++    PyObject *result = NULL;
+     PyGILState_STATE gstate;
+     gstate = PyGILState_Ensure();
+     if(!initialized) {
+         return 0;
+     }
+-    result = CallPythonFunc0(context, "finalize");
++    result = CallPythonFunc0(py_context, "finalize");
+     GOTO_ERROR_IF_NULL(result);
+-    repy_finalize_func = PyObject_GetAttrString(repylib, "finalize");
++    repy_finalize_func = PyObject_GetAttrString(py_repylib, "finalize");
+     GOTO_ERROR_IF_NULL(repy_finalize_func);
+     repy_finalize_args = Py_BuildValue("()");
+     result = PyObject_CallObject(repy_finalize_func, repy_finalize_args);
+     GOTO_ERROR_IF_NULL(result);
+     Py_Finalize();
+@@ -144,29 +155,29 @@ int LindPythonFinalize(void)
+ error:
+     PyErr_Print();
+ cleanup:
+     Py_XDECREF(repy_finalize_func);
+     Py_XDECREF(result);
+-    Py_XDECREF(code);
+-    Py_XDECREF(context);
+-    Py_XDECREF(repylib);
++    Py_XDECREF(py_code);
++    Py_XDECREF(py_context);
++    Py_XDECREF(py_repylib);
+     PyGILState_Release(gstate);
+     return retval;
+ }
+ 
+ int GetHostFdFromLindFd(int lindFd)
+ {
+     int retval = -1;
+-    PyObject* pyLindFd = NULL;
+-    PyObject* pyHostFd = NULL;
++    PyObject *pyLindFd = NULL;
++    PyObject *pyHostFd = NULL;
+     PyGILState_STATE gstate;
+     gstate = PyGILState_Ensure();
+     if(lindFd < 0) {
+         goto cleanup;
+     }
+     pyLindFd = PyInt_FromLong(lindFd);
+-    pyHostFd = CallPythonFunc1(context, "GetHostFdFromLindFd", pyLindFd);
++    pyHostFd = CallPythonFunc1(py_context, "GetHostFdFromLindFd", pyLindFd);
+     GOTO_ERROR_IF_NULL(pyHostFd);
+     if(!PyInt_CheckExact(pyHostFd)) {
+         goto error;
+     }
+     retval = (int)PyInt_AsLong(pyHostFd);
+@@ -179,16 +190,16 @@ cleanup:
+     NaClLog(3, "host_fd:%d for lind_fd:%d\n", retval, lindFd);
+     PyGILState_Release(gstate);
+     return retval;
+ }
+ 
+-int ParseResponse(PyObject* response, int* isError, int* code, char** dataOrMessage, int* len)
++int ParseResponse(PyObject *response, int *isError, int *code, char **dataOrMessage, int *len)
+ {
+     int retval = 0;
+-    PyObject* attrIsError = NULL;
+-    PyObject* attrCode = NULL;
+-    PyObject* attrDataOrMessage = NULL;
++    PyObject *attrIsError = NULL;
++    PyObject *attrCode = NULL;
++    PyObject *attrDataOrMessage = NULL;
+ 
+     NaClLog(3, "Entered ParseResponse\n");
+ 
+     attrIsError = PyObject_GetAttrString(response, "is_error");
+     GOTO_ERROR_IF_NULL(attrIsError);
+@@ -238,93 +249,98 @@ cleanup:
+     Py_XDECREF(attrDataOrMessage);
+     return retval;
+ }
+ 
+ 
+-#define CHECK_NOT_NULL(x) \
+-        if(!(x)) { return -EINVAL; }
++#define CHECK_NOT_NULL(x) do { if (!(x)) return -EINVAL; } while (0)
+ 
+-#define LIND_API_PART1 \
+-        int retval = 0; \
+-        int _code = 0; \
+-        int _isError = 0; \
+-        char* _data = NULL; \
+-        int _len = 0; \
+-        int _offset = 0; \
+-        PyObject* callArgs = NULL; \
+-        PyObject* response = NULL; \
+-        PyGILState_STATE gstate; \
+-        gstate = PyGILState_Ensure();
++#define LIND_API_PART1                                                  \
++        int retval = 0;                                                 \
++        int _code = 0;                                                  \
++        int _isError = 0;                                               \
++        char *_data = NULL;                                             \
++        int _len = 0;                                                   \
++        int _offset = 0;                                                \
++        PyObject *callArgs = NULL;                                      \
++        PyObject *response = NULL;                                      \
++        PyGILState_STATE gstate;                                        \
++        gstate = PyGILState_Ensure()
+ 
+-#define LIND_API_PART2 \
+-        if(!context) { \
+-            retval = -1;\
+-            errno = ENOSYS;\
+-            goto cleanup;\
+-        } \
+-        GOTO_ERROR_IF_NULL(callArgs); \
+-        response = CallPythonFunc(context, "LindSyscall", callArgs); \
+-        ParseResponse(response, &_isError, &_code, &_data, &_len); \
+-        errno = _isError?_code:0; \
+-        retval = _isError?-1:_code; \
+-        UNREFERENCED_PARAMETER(_offset);
++#define LIND_API_PART2                                                  \
++        if (!py_context) {                                              \
++            retval = -1;                                                \
++            errno = ENOSYS;                                             \
++            goto cleanup;                                               \
++        }                                                               \
++        GOTO_ERROR_IF_NULL(callArgs);                                   \
++        response = CallPythonFunc(py_context, "LindSyscall", callArgs); \
++        ParseResponse(response, &_isError, &_code, &_data, &_len);      \
++        errno = _isError ? _code : 0;                                   \
++        retval = _isError ? -1 : _code;                                 \
++        UNREFERENCED_PARAMETER(_offset)
+ 
+-#define LIND_API_PART3 \
+-        goto cleanup; \
+-        error: \
+-            PyErr_Print(); \
+-        cleanup: \
+-            Py_XDECREF(callArgs); \
+-            Py_XDECREF(response); \
+-            PyGILState_Release(gstate); \
+-            return retval;
++#define LIND_API_PART3                                                  \
++        goto cleanup;                                                   \
++        error:                                                          \
++            PyErr_Print();                                              \
++        cleanup:                                                        \
++            Py_XDECREF(callArgs);                                       \
++            Py_XDECREF(response);                                       \
++            PyGILState_Release(gstate);                                 \
++            return retval
+ 
+-#define COPY_DATA(var, maxlen) \
+-        if(!_isError) { \
+-            assert(_len<=(int)(maxlen));\
+-            if(var) { \
+-                assert(_data!=NULL); \
+-                memcpy((var), _data, _len); \
+-            } \
++#define COPY_DATA(var, maxlen)                                          \
++        if (!_isError) {                                                \
++            assert(_len<=(int)(maxlen));                                \
++            if(var) {                                                   \
++                assert(_data!=NULL);                                    \
++                memcpy((var), _data, _len);                             \
++            }                                                           \
+         }
+ 
+-#define COPY_DATA_OFFSET(var, maxlen, total, current) \
+-        if(!_isError) { \
+-            assert(((int*)_data)[(current)]<=(int)(maxlen));\
+-            if(var) { \
+-                assert(_data!=NULL); \
+-                memcpy((var), _data+sizeof(int)*(total)+_offset, ((int*)_data)[(current)]); \
+-            } \
+-        } \
+-        _offset += ((int*)_data)[(current)];
++#define COPY_DATA_OFFSET(var, maxlen, total, current)                   \
++        if (_data) {                                                    \
++            if (!_isError) {                                            \
++                assert(((int*)_data)[(current)]<=(int)(maxlen));        \
++                if (var) {                                              \
++                    assert(_data!=NULL);                                \
++                    memcpy((var),                                       \
++                           _data + sizeof(int) * (total) + _offset,     \
++                           ((int *)_data)[(current)]);                  \
++                }                                                       \
++            }                                                           \
++            _offset += ((int*)_data)[(current)];                        \
++        }
+ 
+-#define DUMP_DATA(x) printf(#x" = 0x%"NACL_PRIX64"\n", (uint64_t)(x));
++#define DUMP_DATA(x) printf(#x" = %#lx\n", (uint64_t)(x))
+ 
+ #if 0
+-#define DUMP_STAT(x) \
+-        DUMP_DATA((x)->st_dev); \
+-        DUMP_DATA((x)->st_ino); \
+-        DUMP_DATA((x)->st_nlink); \
+-        DUMP_DATA((x)->st_mode); \
+-        DUMP_DATA(S_ISREG((x)->st_mode)); \
+-        DUMP_DATA(S_ISDIR((x)->st_mode)); \
+-        DUMP_DATA(S_ISCHR((x)->st_mode)); \
+-        DUMP_DATA(S_ISBLK((x)->st_mode)); \
+-        DUMP_DATA(S_ISFIFO((x)->st_mode)); \
+-        DUMP_DATA(S_ISLNK((x)->st_mode)); \
+-        DUMP_DATA(S_ISSOCK((x)->st_mode)); \
+-        DUMP_DATA((x)->st_uid); \
+-        DUMP_DATA((x)->st_gid); \
+-        DUMP_DATA((x)->st_rdev); \
+-        DUMP_DATA((x)->st_size); \
+-        DUMP_DATA((x)->st_blksize); \
+-        DUMP_DATA((x)->st_blocks)
++# define DUMP_STAT(x)                                                  \
++        do {                                                           \
++            DUMP_DATA((x)->st_dev);                                    \
++            DUMP_DATA((x)->st_ino);                                    \
++            DUMP_DATA((x)->st_nlink);                                  \
++            DUMP_DATA((x)->st_mode);                                   \
++            DUMP_DATA(S_ISREG((x)->st_mode));                          \
++            DUMP_DATA(S_ISDIR((x)->st_mode));                          \
++            DUMP_DATA(S_ISCHR((x)->st_mode));                          \
++            DUMP_DATA(S_ISBLK((x)->st_mode));                          \
++            DUMP_DATA(S_ISFIFO((x)->st_mode));                         \
++            DUMP_DATA(S_ISLNK((x)->st_mode));                          \
++            DUMP_DATA(S_ISSOCK((x)->st_mode));                         \
++            DUMP_DATA((x)->st_uid);                                    \
++            DUMP_DATA((x)->st_gid);                                    \
++            DUMP_DATA((x)->st_rdev);                                   \
++            DUMP_DATA((x)->st_size);                                   \
++            DUMP_DATA((x)->st_blksize);                                \
++            DUMP_DATA((x)->st_blocks);                                 \
++        } while (0)
+ #else
+-#define DUMP_STAT(x)
++# define DUMP_STAT(x) do {/* no-op */} while (0)
+ #endif
+ 
+-int lind_pread(int fd, void* buf, int count, off_t offset)
++int lind_pread(int fd, void *buf, int count, off_t offset)
+ {
+     off_t cur_pos=0;
+     int ret = 0;
+     cur_pos = lind_lseek (0, fd, SEEK_CUR);
+     lind_lseek(offset, fd, SEEK_SET);
+@@ -344,107 +360,108 @@ int lind_pwrite(int fd, const void *buf, int count, off_t offset)
+     return ret;
+ }
+ 
+ int lind_access (int version, const char *file)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[is])", LIND_safe_fs_access, version, file);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_unlink (const char *name)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[s])", LIND_safe_fs_unlink, name);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_link (const char *from, const char *to)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ss])", LIND_safe_fs_link, from, to);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_chdir (const char *name)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[s])", LIND_safe_fs_chdir, name);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_mkdir (int mode, const char *path)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[is])", LIND_safe_fs_mkdir, mode, path);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_rmdir (const char *path)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[is])", LIND_safe_fs_rmdir, path);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_xstat (int version, const char *path, struct lind_stat *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[is])", LIND_safe_fs_xstat, version, path);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+     DUMP_STAT(buf);
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_open (int flags, int mode, const char *path)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
++    // printf("\n [***Debug!***][lind_open] opening file: %s \n", path);
+     callArgs = Py_BuildValue("(i[iis])", LIND_safe_fs_open, flags, mode, path);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_close (int fd)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[i])", LIND_safe_fs_close, fd);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_read (int fd, int size, void *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_fs_read, fd, size);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, size)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_write (int fd, size_t count, const void *buf)
+ {
+-    LIND_API_PART1
+-    CHECK_NOT_NULL(buf)
++    LIND_API_PART1;
++    CHECK_NOT_NULL(buf);
+     callArgs = Py_BuildValue("(i[iis#])", LIND_safe_fs_write, fd, count, buf, count);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int _lind_lseek (off_t offset, int fd, int whence, off_t * ret)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iii])", LIND_safe_fs_lseek, offset, fd, whence);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(ret, sizeof(*ret))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_lseek (off_t offset, int fd, int whence)
+ {
+     off_t ret_off=0;
+@@ -456,223 +473,211 @@ int lind_lseek (off_t offset, int fd, int whence)
+     return ret_off;
+ }
+ 
+ int lind_fxstat (int fd, int version, struct lind_stat *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_fs_fxstat, fd, version);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+     DUMP_STAT(buf);
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_fstatfs (int fd, struct lind_statfs *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[i])", LIND_safe_fs_fstatfs, fd);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_statfs (const char *path, struct lind_statfs *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[s])", LIND_safe_fs_statfs, path);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_noop (void)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[])", LIND_debug_noop);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+-int lind_getpid (pid_t * buf)
++int lind_getpid (pid_t *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[])", LIND_sys_getpid);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_dup (int oldfd)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[i])", LIND_safe_fs_dup, oldfd);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_dup2 (int oldfd, int newfd)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_fs_dup, oldfd, newfd);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_getdents (int fd, size_t nbytes, char *buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_fs_getdents, fd, nbytes);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, nbytes)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_fcntl_get (int fd, int cmd)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_fs_fcntl, fd, cmd);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_fcntl_set (int fd, int cmd, long set_op)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iil])", LIND_safe_fs_fcntl, fd, cmd, set_op);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_socket (int domain, int type, int protocol)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iii])", LIND_safe_net_socket, domain, type, protocol);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_bind (int sockfd, socklen_t addrlen, const struct sockaddr *addr)
+ {
+-    LIND_API_PART1
+-    CHECK_NOT_NULL(addr)
++    LIND_API_PART1;
++    CHECK_NOT_NULL(addr);
+     callArgs = Py_BuildValue("(i[iis#])", LIND_safe_net_bind, sockfd, addrlen, addr, addrlen);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_send (int sockfd, size_t len, int flags, const void *buf)
+ {
+-    LIND_API_PART1
+-    CHECK_NOT_NULL(buf)
++    LIND_API_PART1;
++    CHECK_NOT_NULL(buf);
+     callArgs = Py_BuildValue("(i[iiis#])", LIND_safe_net_send, sockfd, len, flags, buf, len);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_recv (int sockfd, size_t len, int flags, void *buf)
+ {
+-    LIND_API_PART1
+-    CHECK_NOT_NULL(buf)
++    LIND_API_PART1;
++    CHECK_NOT_NULL(buf);
+     callArgs = Py_BuildValue("(i[iii])", LIND_safe_net_recv, sockfd, len, flags);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, len)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_connect (int sockfd, socklen_t addrlen, const struct sockaddr *src_addr)
+ {
+-    LIND_API_PART1
+-    CHECK_NOT_NULL(src_addr)
++    LIND_API_PART1;
++    CHECK_NOT_NULL(src_addr);
+     callArgs = Py_BuildValue("(i[iis#])", LIND_safe_net_connect, sockfd, addrlen, src_addr, addrlen);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_listen (int sockfd, int backlog)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_net_listen, sockfd, backlog);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
++/* unimplemented */
+ int lind_sendto (int sockfd, size_t len, int flags, socklen_t addrlen, const struct sockaddr_in *dest_addr, const void *buf)
+ {
+     UNREFERENCED_PARAMETER(sockfd);
+     UNREFERENCED_PARAMETER(len);
+     UNREFERENCED_PARAMETER(flags);
+     UNREFERENCED_PARAMETER(addrlen);
+     UNREFERENCED_PARAMETER(dest_addr);
+     UNREFERENCED_PARAMETER(buf);
+-    /*CHECK_NOT_NULL(dest_addr);
+-    CHECK_NOT_NULL(buf);
+-    LIND_API_PART1
+-    callArgs = Py_BuildValue("(i[iiiis#s#])", LIND_safe_net_sendto, sockfd, len, addrlen, dest_addr, addrlen, buf, len);
+-    LIND_API_PART2
+-    LIND_API_PART3*/
+-
+-    // unimplemented
+     return 0;
+ }
+ 
+ int lind_accept (int sockfd, socklen_t addrlen)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_net_accept, sockfd, addrlen);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+-int lind_getpeername (int sockfd, socklen_t addrlen_in, __SOCKADDR_ARG addr, socklen_t * addrlen_out)
++/* unimplemented */
++int lind_getpeername (int sockfd, socklen_t addrlen_in, __SOCKADDR_ARG addr, socklen_t *addrlen_out)
+ {
+     UNREFERENCED_PARAMETER(sockfd);
+     UNREFERENCED_PARAMETER(addrlen_in);
+     UNREFERENCED_PARAMETER(addr);
+     UNREFERENCED_PARAMETER(addrlen_out);
+-    /*LIND_API_PART1
+-    callArgs = Py_BuildValue("(i[ii])", LIND_safe_net_getpeername, sockfd, addrlen);
+-    LIND_API_PART2
+-    LIND_API_PART3*/
+-
+-    // unimplemented
+     return 0;
+ }
+ 
+ int lind_setsockopt (int sockfd, int level, int optname, socklen_t optlen, const void *optval)
+ {
+-    LIND_API_PART1
+-    CHECK_NOT_NULL(optval)
++    LIND_API_PART1;
++    CHECK_NOT_NULL(optval);
+     callArgs = Py_BuildValue("(i[iiiis#])", LIND_safe_net_setsockopt, sockfd, level, optname, optlen, optval, optlen);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_getsockopt (int sockfd, int level, int optname, socklen_t optlen, void *optval)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iiii])", LIND_safe_net_getsockopt, sockfd, level, optname, optlen);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(optval, optlen)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_shutdown (int sockfd, int how)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_net_shutdown, sockfd, how);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+ int lind_select (int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
+         struct timeval *timeout, struct select_results *result)
+ {
+-    PyObject* readFdObj = NULL;
+-    PyObject* writeFdObj = NULL;
+-    PyObject* exceptFdObj = NULL;
+-    PyObject* timeValObj = NULL;
+-    LIND_API_PART1
++    PyObject *readFdObj = NULL;
++    PyObject *writeFdObj = NULL;
++    PyObject *exceptFdObj = NULL;
++    PyObject *timeValObj = NULL;
++    LIND_API_PART1;
+     if(readfds) {
+         readFdObj = PyString_FromStringAndSize((char*)readfds, sizeof(fd_set));
+     } else {
+         readFdObj = Py_None;
+         Py_INCREF(readFdObj);
+@@ -699,92 +704,92 @@ int lind_select (int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptf
+             writeFdObj, exceptFdObj, timeValObj);
+     Py_XDECREF(readFdObj);
+     Py_XDECREF(writeFdObj);
+     Py_XDECREF(exceptFdObj);
+     Py_XDECREF(timeValObj);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(result, sizeof(*result))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_getifaddrs (int ifaddrs_buf_siz, void *ifaddrs)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[i])", LIND_safe_net_getifaddrs, ifaddrs_buf_siz);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(ifaddrs, ifaddrs_buf_siz)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+-int lind_recvfrom (int sockfd, size_t len, int flags, socklen_t addrlen, socklen_t * addrlen_out, void *buf, struct sockaddr *src_addr)
++int lind_recvfrom (int sockfd, size_t len, int flags, socklen_t addrlen, socklen_t *addrlen_out, void *buf, struct sockaddr *src_addr)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iiii])", LIND_safe_net_recvfrom, sockfd, len, flags, addrlen);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA_OFFSET(addrlen_out, sizeof(*addrlen_out), 3, 0)
+     COPY_DATA_OFFSET(buf, len, 3, 1)
+     COPY_DATA_OFFSET(src_addr, sizeof(*src_addr), 3, 2)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_poll (int nfds, int timeout, struct pollfd *fds_in, struct pollfd *fds_out)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iis#])", LIND_safe_net_poll, nfds, timeout, fds_in, sizeof(struct pollfd)*nfds);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(fds_out, sizeof(struct pollfd)*nfds)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_socketpair (int domain, int type, int protocol, int *fds)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[iii])", LIND_safe_net_socketpair, domain, type, protocol);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(fds, sizeof(int)*2)
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_getuid (uid_t * buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[])", LIND_safe_sys_getuid);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_geteuid (uid_t * buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[])", LIND_safe_sys_geteuid);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_getgid (gid_t * buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[])", LIND_safe_sys_getgid);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_getegid (gid_t * buf)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[])", LIND_safe_sys_getegid);
+-    LIND_API_PART2
++    LIND_API_PART2;
+     COPY_DATA(buf, sizeof(*buf))
+-    LIND_API_PART3
++    LIND_API_PART3;
+ }
+ 
+ int lind_flock (int fd, int operation)
+ {
+-    LIND_API_PART1
++    LIND_API_PART1;
+     callArgs = Py_BuildValue("(i[ii])", LIND_safe_fs_flock, fd, operation);
+-    LIND_API_PART2
+-    LIND_API_PART3
++    LIND_API_PART2;
++    LIND_API_PART3;
+ }
+ 
+diff --git a/src/shared/platform/lind_platform.h b/src/shared/platform/lind_platform.h
+index b40e67fb069e5e8a63..58968a0e6d077dfb59 100644
+--- a/src/shared/platform/lind_platform.h
++++ b/src/shared/platform/lind_platform.h
+@@ -6,10 +6,18 @@
+  */
+ 
+ #ifndef LIND_PLATFORM_H_
+ #define LIND_PLATFORM_H_
+ 
++#ifdef _POSIX_C_SOURCE
++#  undef _POSIX_C_SOURCE
++#endif
++
++#ifdef _XOPEN_SOURCE
++#  undef _XOPEN_SOURCE
++#endif
++
+ #include <sys/types.h>
+ #if NACL_LINUX
+ #include <sys/statfs.h>
+ #endif
+ #include <sys/stat.h>
+diff --git a/src/shared/platform/posix/nacl_host_desc.c b/src/shared/platform/posix/nacl_host_desc.c
+index 69165933ca76e8a16f..a256012bbbdad8eb09 100644
+--- a/src/shared/platform/posix/nacl_host_desc.c
++++ b/src/shared/platform/posix/nacl_host_desc.c
+@@ -320,10 +320,11 @@ int NaClHostDescPosixDup(struct NaClHostDesc  *d,
+                          int                  flags) {
+   int host_desc;
+ 
+   if (NULL == d) {
+     NaClLog(LOG_FATAL, "NaClHostDescPosixDup: 'this' is NULL\n");
++    return -NACL_ABI_EBADF;
+   }
+   /*
+    * Sanitize access flags.
+    */
+   if (0 != (flags & ~NACL_ALLOWED_OPEN_FLAGS)) {
+@@ -354,10 +355,11 @@ int NaClHostDescPosixDup(struct NaClHostDesc  *d,
+ int NaClHostDescPosixTake(struct NaClHostDesc *d,
+                           int                 posix_d,
+                           int                 flags) {
+   if (NULL == d) {
+     NaClLog(LOG_FATAL, "NaClHostDescPosixTake: 'this' is NULL\n");
++    return -NACL_ABI_EBADF;
+   }
+   /*
+    * Sanitize access flags.
+    */
+   if (0 != (flags & ~NACL_ALLOWED_OPEN_FLAGS)) {
+diff --git a/src/trusted/desc/nacl_desc_io.c b/src/trusted/desc/nacl_desc_io.c
+index 8cc7df6e0691ec56fa..4916973cf9295b31d7 100644
+--- a/src/trusted/desc/nacl_desc_io.c
++++ b/src/trusted/desc/nacl_desc_io.c
+@@ -42,11 +42,11 @@
+  * NaClDescIoDesc is the subclass that wraps host-OS descriptors
+  * provided by NaClHostDesc (which gives an OS-independent abstraction
+  * for host-OS descriptors).
+  */
+ 
+-struct NaClDescVtbl const kNaClDescIoDescVtbl;  /* fwd */
++extern struct NaClDescVtbl const kNaClDescIoDescVtbl;  /* fwd */
+ 
+ static int NaClDescIoDescSubclassCtor(struct NaClDescIoDesc  *self,
+                                       struct NaClHostDesc    *hd) {
+   struct NaClDesc *basep = (struct NaClDesc *) self;
+ 
+@@ -61,20 +61,24 @@ static int NaClDescIoDescSubclassCtor(struct NaClDescIoDesc  *self,
+ int NaClDescIoDescCtor(struct NaClDescIoDesc  *self,
+                        struct NaClHostDesc    *hd) {
+   struct NaClDesc *basep = (struct NaClDesc *) self;
+   int rv;
+ 
+-  basep->base.vtbl = (struct NaClRefCountVtbl const *) NULL;
++  if (!basep) {
++    return -NACL_ABI_EBADF;
++  }
++  basep->base.vtbl = 0;
+   if (!NaClDescCtor(basep)) {
+     return 0;
+   }
+   rv = NaClDescIoDescSubclassCtor(self, hd);
+   if (!rv) {
+     (*NACL_VTBL(NaClRefCount, basep)->Dtor)((struct NaClRefCount *) basep);
+   }
+-  (*NACL_VTBL(NaClDesc, basep)->
+-   SetFlags)(basep, hd->flags & NACL_ABI_O_ACCMODE);
++  if (hd) {
++    NACL_VTBL(NaClDesc, basep)->SetFlags(basep, hd->flags & NACL_ABI_O_ACCMODE);
++  }
+   return rv;
+ }
+ 
+ static void NaClDescIoDescDtor(struct NaClRefCount *vself) {
+   struct NaClDescIoDesc *self = (struct NaClDescIoDesc *) vself;
+diff --git a/src/trusted/desc/posix/nacl_desc.c b/src/trusted/desc/posix/nacl_desc.c
+index d8a3600a8ce0670ee3..c17a8a3b9ac0549015 100644
+--- a/src/trusted/desc/posix/nacl_desc.c
++++ b/src/trusted/desc/posix/nacl_desc.c
+@@ -66,11 +66,11 @@ int32_t NaClAbiStatHostDescStatXlateCtor(struct nacl_abi_stat    *dst,
+       /* stdin/out/err can be inherited, so this is okay */
+       m = NACL_ABI_S_IFCHR;
+       break;
+ #endif
+     default:
+-      NaClLog(LOG_INFO,
++      NaClLog(1,
+               ("NaClAbiStatHostDescStatXlateCtor:"
+                " Unusual NaCl descriptor type (not constructible)."
+                " The NaCl app has a file with st_mode = 0%o."
+                " (This is normal for std{in,out,err}, or other"
+                " inherited/injected files.)\n"),
+diff --git a/src/trusted/service_runtime/include/bits/nacl_syscalls.h b/src/trusted/service_runtime/include/bits/nacl_syscalls.h
+index 55cf3b00befad07433..ec5b82176b89bf7427 100644
+--- a/src/trusted/service_runtime/include/bits/nacl_syscalls.h
++++ b/src/trusted/service_runtime/include/bits/nacl_syscalls.h
+@@ -20,19 +20,20 @@
+ #define NACL_sys_null                    1
+ #define NACL_sys_nameservice             2
+ 
+ #define NACL_sys_dup                     8
+ #define NACL_sys_dup2                    9
+-#define NACL_sys_open                   10
+-#define NACL_sys_close                  11
+-#define NACL_sys_read                   12
+-#define NACL_sys_write                  13
+-#define NACL_sys_lseek                  14
+-#define NACL_sys_ioctl                  15
+-#define NACL_sys_stat                   16
+-#define NACL_sys_fstat                  17
+-#define NACL_sys_chmod                  18
++#define NACL_sys_dup3                   10
++#define NACL_sys_open                   11
++#define NACL_sys_close                  12
++#define NACL_sys_read                   13
++#define NACL_sys_write                  14
++#define NACL_sys_lseek                  15
++#define NACL_sys_ioctl                  16
++#define NACL_sys_stat                   17
++#define NACL_sys_fstat                  18
++#define NACL_sys_chmod                  19
+ /* no fchmod emulation on windows */
+ 
+ #define NACL_sys_brk                    20
+ #define NACL_sys_mmap                   21
+ #define NACL_sys_munmap                 22
+@@ -107,10 +108,21 @@
+  * These syscall numbers are set aside for use in tests that add
+  * syscalls that must coexist with the normal syscalls.
+  */
+ #define NACL_sys_test_syscall_1         111
+ #define NACL_sys_test_syscall_2         112
+-#define NACL_sys_lind_syscall         113
++#define NACL_sys_lind_syscall           113
+ 
+-#define NACL_MAX_SYSCALLS               114
++#define NACL_sys_pipe                   114
++#define NACL_sys_pipe2                  115
++#define NACL_sys_fork                   116
++#define NACL_sys_execv                  117
++#define NACL_sys_execve                 118
++#define NACL_sys_getppid                119
++#define NACL_sys_waitpid                120
++#define NACL_sys_wait                   121
++#define NACL_sys_wait4                  122
++#define NACL_sys_sigprocmask            123
++
++#define NACL_MAX_SYSCALLS               256
+ 
+ #endif
+diff --git a/src/trusted/service_runtime/lind_syscalls.c b/src/trusted/service_runtime/lind_syscalls.c
+index 6f5cf0d515b67c5e7d..60994568ff25fe1a62 100644
+--- a/src/trusted/service_runtime/lind_syscalls.c
++++ b/src/trusted/service_runtime/lind_syscalls.c
+@@ -3,17 +3,23 @@
+  *
+  *  Created on: Jun 27, 2013
+  *      Author: sji
+  */
+ 
++#ifdef _POSIX_C_SOURCE
++# undef _POSIX_C_SOURCE
++#endif
+ 
+ #include <Python.h>
+ 
+ #include <stdio.h>
+ #include <assert.h>
+ #include <sys/mman.h>
+ #include <fcntl.h>
++#include <stdlib.h>
++#include <unistd.h>
++#include <string.h>
+ 
+ #include "native_client/src/shared/platform/nacl_sync_checked.h"
+ #include "native_client/src/shared/platform/nacl_log.h"
+ #include "native_client/src/shared/platform/nacl_host_desc.h"
+ #include "native_client/src/shared/platform/lind_platform.h"
+@@ -26,213 +32,218 @@
+ #include "native_client/src/trusted/service_runtime/nacl_config.h"
+ #include "native_client/src/trusted/service_runtime/nacl_app_thread.h"
+ #include "native_client/src/trusted/service_runtime/nacl_copy.h"
+ #include "native_client/src/trusted/service_runtime/lind_syscalls.h"
+ 
+-
+-#define GOTO_ERROR_IF_NULL(x) if(!(x)) {goto error;}
+-
+-extern PyObject* context;
++extern PyObject *py_context;
+ 
+ #define MAX_INARGS 16
+ #define MAX_OUTARGS 16
+ 
+-typedef enum _LindArgType {AT_INT, AT_STRING, AT_STRING_OPTIONAL, AT_DATA, AT_DATA_OPTIONAL} LindArgType;
++typedef enum _LindArgType {
++    AT_INT,
++    AT_STRING,
++    AT_STRING_OPTIONAL,
++    AT_DATA,
++    AT_DATA_OPTIONAL
++} LindArgType;
+ 
+-struct NaClDescVtbl const kNaClDescIoDescVtbl;
++extern struct NaClDescVtbl const kNaClDescIoDescVtbl;
+ 
+ typedef struct _LindArg
+ {
+     LindArgType type;
+     uint64_t ptr;
+     uint64_t len;
+ } LindArg;
+ 
+-void DumpArg(const LindArg *arg)
++static inline void DumpArg(const LindArg *arg)
+ {
+     printf("%"NACL_PRId64":%"NACL_PRIu64":%"NACL_PRIu64"\n", (uint64_t)arg->type, arg->ptr, arg->len);
+ }
+ 
+-//If error occurs, any data malloc'ed in Preprocess must be freed before return
+-//otherwise, they must be freed in Cleanup
++/*
++ * If error occurs, any data malloc'ed in Preprocess
++ * must be freed before return otherwise, they must
++ * be freed in Cleanup
++ */
+ typedef int(*PreprocessType)(struct NaClApp*, uint32_t, LindArg*, void**);
+ typedef int(*PostprocessType)(struct NaClApp*, int, int*, char*, int, void*);
+ typedef int(*CleanupType)(struct NaClApp*, uint32_t, LindArg*, void*);
+ 
+ typedef struct _StubType {PreprocessType pre; PostprocessType post; CleanupType clean;} StubType;
+ 
+ static int NaClFdToRepyFD(struct NaClApp *nap, int NaClFd) {
+-	struct NaClDesc *ndp;
+-	int retval;
+-	NaClFastMutexLock(&nap->desc_mu);
+-	ndp = NaClGetDescMu(nap, NaClFd);
+-	NaClFastMutexUnlock(&nap->desc_mu);
+-	if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) {
+-		retval = -1;
+-		goto cleanup;
+-	}
+-	retval = ((struct NaClDescIoDesc *)ndp)->hd->d;
++        struct NaClDesc *ndp;
++        int retval;
++        NaClFastMutexLock(&nap->desc_mu);
++        ndp = NaClGetDescMu(nap, NaClFd);
++        NaClFastMutexUnlock(&nap->desc_mu);
++        if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) {
++                retval = -1;
++                goto cleanup;
++        }
++        retval = ((struct NaClDescIoDesc *)ndp)->hd->d;
+ cleanup:
+-	NaClDescSafeUnref(ndp);
+-	NaClLog(3, "NaClFdToRepyFD: %d->%d\n", NaClFd, retval);
+-	return retval;
++        NaClDescSafeUnref(ndp);
++        NaClLog(1, "NaClFdToRepyFD: %d->%d\n", NaClFd, retval);
++        return retval;
+ }
+ 
+ static int NaClHostDescCtor(struct NaClHostDesc  *d,
+                             int fd,
+                             int flags) {
+   d->d = fd;
+   d->flags = flags;
+-  NaClLog(3, "NaClHostDescCtor: success.\n");
++  NaClLog(1, "%s\n", "NaClHostDescCtor: success.");
+   return 0;
+ }
+ 
+ struct FcntlExchangeData {
+-	struct NaClHostDesc* nhd;
+-	int minFd;
++        struct NaClHostDesc *nhd;
++        int minFd;
+ };
+ 
+-int LindFcntlPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata) {
+-	int retval;
+-	int lindFd;
+-	NaClLog(3, "Entered LindFcntlPreprocess inNum=%8u\n", inNum);
+-	*xchangedata = 0;
+-	lindFd = NaClFdToRepyFD(nap, (int)(*(int64_t*)&inArgs[0].ptr));
+-	if(lindFd<0) {
+-		retval = -NACL_ABI_EINVAL;
+-		goto cleanup;
+-	}
+-	inArgs[0].ptr = lindFd;
+-	if(inNum>=3 && (inArgs[1].ptr == 0 /*F_DUPFD*/ || inArgs[1].ptr == 1030 /*F_DUPFD_CLOEXEC*/)) {
+-		*xchangedata = (struct FcntlExchangeData*)malloc(sizeof(struct FcntlExchangeData));
+-		if(!*xchangedata) {
+-			retval = -NACL_ABI_ENOMEM;
+-			goto cleanup;
+-		}
+-		((struct FcntlExchangeData*)(*xchangedata))->nhd = (struct NaClHostDesc*)malloc(sizeof(struct NaClHostDesc));
+-		if(!((struct FcntlExchangeData*)(*xchangedata))->nhd) {
+-			retval = -NACL_ABI_ENOMEM;
+-			free(*xchangedata);
+-			goto cleanup;
+-		}
+-		((struct FcntlExchangeData*)(*xchangedata))->minFd = (int)(*(int64_t*)&inArgs[2].ptr);
+-		NaClLog(3, "MinFD: %d\n", ((struct FcntlExchangeData*)(*xchangedata))->minFd);
+-	}
+-	retval = 0;
+-	cleanup:
+-	NaClLog(3, "Exiting LindFcntlPreprocess\n");
+-	return retval;
++int LindFcntlPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata) {
++        int retval;
++        int lindFd;
++        NaClLog(1, "Entered LindFcntlPreprocess inNum=%8u\n", inNum);
++        *xchangedata = 0;
++        lindFd = NaClFdToRepyFD(nap, (int)(*(int64_t*)&inArgs[0].ptr));
++        if(lindFd<0) {
++                retval = -NACL_ABI_EINVAL;
++                goto cleanup;
++        }
++        inArgs[0].ptr = lindFd;
++        if(inNum>=3 && (inArgs[1].ptr == 0 /*F_DUPFD*/ || inArgs[1].ptr == 1030 /*F_DUPFD_CLOEXEC*/)) {
++                *xchangedata = (struct FcntlExchangeData*)malloc(sizeof(struct FcntlExchangeData));
++                if(!*xchangedata) {
++                        retval = -NACL_ABI_ENOMEM;
++                        goto cleanup;
++                }
++                ((struct FcntlExchangeData*)(*xchangedata))->nhd = (struct NaClHostDesc*)malloc(sizeof(struct NaClHostDesc));
++                if(!((struct FcntlExchangeData*)(*xchangedata))->nhd) {
++                        retval = -NACL_ABI_ENOMEM;
++                        free(*xchangedata);
++                        goto cleanup;
++                }
++                ((struct FcntlExchangeData*)(*xchangedata))->minFd = (int)(*(int64_t *)&inArgs[2].ptr);
++                NaClLog(1, "MinFD: %d\n", ((struct FcntlExchangeData*)(*xchangedata))->minFd);
++        }
++        retval = 0;
++cleanup:
++        NaClLog(1, "%s\n", "Exiting LindFcntlPreprocess");
++        return retval;
+ }
+ 
+-int LindFcntlPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata) {
+-	struct NaClHostDesc  *hd;
+-	int minFd;
+-	UNREFERENCED_PARAMETER(nap);
+-	UNREFERENCED_PARAMETER(iserror);
+-	UNREFERENCED_PARAMETER(data);
+-	UNREFERENCED_PARAMETER(len);
+-	NaClLog(3, "Entered LindFcntlPostprocess\n");
+-	if(xchangedata) {
+-		hd = ((struct FcntlExchangeData*)xchangedata)->nhd;
+-		NaClHostDescCtor(hd, *code, NACL_ABI_O_RDWR);
+-		minFd = ((struct FcntlExchangeData*)xchangedata)->minFd;
+-		NaClLog(3, "Try to find a valid FD: %d\n", minFd);
+-		NaClFastMutexLock(&nap->desc_mu);
+-		while(DynArrayGet(&nap->desc_tbl, minFd)) {
+-			++minFd;
+-		}
+-		NaClLog(3, "Found a valid FD: %d\n", minFd);
+-		if (!DynArraySet(&nap->desc_tbl, minFd, ((struct NaClDesc *) NaClDescIoDescMake(hd)))) {
+-		NaClLog(LOG_FATAL,
+-				"NaClSetDesc: could not set descriptor %d to 0x%08"
+-				NACL_PRIxPTR"\n",
+-				minFd,
+-				(uintptr_t) hd);
+-		}
+-		NaClFastMutexUnlock(&nap->desc_mu);
+-		*code = minFd;
+-	}
+-	NaClLog(3, "Exiting LindFcntlPostprocess\n");
+-	return 0;
++int LindFcntlPostprocess(struct NaClApp *nap,
++                         int iserror,
++                         int *code,
++                         char *data,
++                         int len,
++                         void *xchangedata) {
++        struct NaClHostDesc  *hd;
++        int minFd;
++        UNREFERENCED_PARAMETER(nap);
++        UNREFERENCED_PARAMETER(iserror);
++        UNREFERENCED_PARAMETER(data);
++        UNREFERENCED_PARAMETER(len);
++        NaClLog(1, "%s\n", "Entered LindFcntlPostprocess");
++        if(xchangedata) {
++                hd = ((struct FcntlExchangeData*)xchangedata)->nhd;
++                NaClHostDescCtor(hd, *code, NACL_ABI_O_RDWR);
++                minFd = ((struct FcntlExchangeData*)xchangedata)->minFd;
++                NaClLog(1, "Try to find a valid FD: %d\n", minFd);
++                NaClFastMutexLock(&nap->desc_mu);
++                while(DynArrayGet(&nap->desc_tbl, minFd)) {
++                        ++minFd;
++                }
++                NaClLog(1, "Found a valid FD: %d\n", minFd);
++                if (!DynArraySet(&nap->desc_tbl, minFd, ((struct NaClDesc *) NaClDescIoDescMake(hd)))) {
++                NaClLog(LOG_FATAL,
++                                "NaClSetDesc: could not set descriptor %d to 0x%08"
++                                NACL_PRIxPTR"\n",
++                                minFd,
++                                (uintptr_t) hd);
++                }
++                NaClFastMutexUnlock(&nap->desc_mu);
++                *code = minFd;
++        }
++        NaClLog(1, "%s\n", "Exiting LindFcntlPostprocess");
++        return 0;
+ }
+ 
+-int LindFcntlCleanup(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void* xchangedata) {
+-	UNREFERENCED_PARAMETER(nap);
+-	UNREFERENCED_PARAMETER(inNum);
+-	UNREFERENCED_PARAMETER(inArgs);
+-	if(xchangedata) {
+-		free(xchangedata);
+-	}
+-	return 0;
++int LindFcntlCleanup(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void *xchangedata) {
++        UNREFERENCED_PARAMETER(nap);
++        UNREFERENCED_PARAMETER(inNum);
++        UNREFERENCED_PARAMETER(inArgs);
++        if(xchangedata) {
++                free(xchangedata);
++        }
++        return 0;
+ }
+ 
+ 
+-int LindSelectCleanup(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void* xchangedata)
++int LindSelectCleanup(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void *xchangedata)
+ {
+     UNREFERENCED_PARAMETER(nap);
+     UNREFERENCED_PARAMETER(inNum);
+-    if(xchangedata) {
+-		if(inArgs[1].ptr) {
+-			free((void*)inArgs[1].ptr);
+-		}
+-		if(inArgs[2].ptr) {
+-			free((void*)inArgs[2].ptr);
+-		}
+-		if(inArgs[3].ptr) {
+-			free((void*)inArgs[3].ptr);
+-		}
+-    	free(xchangedata);
++    if (xchangedata) {
++        free((void *)inArgs[1].ptr);
++        free((void *)inArgs[2].ptr);
++        free((void *)inArgs[3].ptr);
++        free(xchangedata);
+     }
+     return 0;
+ }
+ 
+-int LindSelectPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindSelectPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     struct NaClDesc *ndp = NULL;
+     int hfd;
+     int retval = 0;
+-    int* mapdata;
++    int *mapdata;
+     fd_set rs;
+     fd_set ws;
+     fd_set es;
+     int64_t max_fd;
+     int64_t max_hfd = -1;
+-    NaClLog(3, "Entered LindSelectPreprocess inNum=%8u\n", inNum);
++    NaClLog(1, "Entered LindSelectPreprocess inNum=%8u\n", inNum);
+     max_fd = *(int64_t*)&inArgs[0].ptr;
+-    if(inArgs[1].ptr) {
++    if (inArgs[1].ptr) {
+         rs = *(fd_set*)inArgs[1].ptr;
+-        inArgs[1].ptr=(uintptr_t)malloc(sizeof(fd_set));
+-        if (NULL == (void*)inArgs[1].ptr) {
++        inArgs[1].ptr = (uintptr_t)malloc(sizeof(fd_set));
++        if (!inArgs[1].ptr) {
+             retval = -NACL_ABI_ENOMEM;
+             goto finish;
+         }
+         FD_ZERO((fd_set*)inArgs[1].ptr);
+     }
+     if(inArgs[2].ptr) {
+         ws = *(fd_set*)inArgs[2].ptr;
+-        inArgs[2].ptr=(uintptr_t)malloc(sizeof(fd_set));
+-        if (NULL == (void*)inArgs[2].ptr) {
++        inArgs[2].ptr = (uintptr_t)malloc(sizeof(fd_set));
++        if (!inArgs[2].ptr) {
+             retval = -NACL_ABI_ENOMEM;
+             goto cleanup_rs;
+         }
+         FD_ZERO((fd_set*)inArgs[2].ptr);
+     }
+     if(inArgs[3].ptr) {
+         es = *(fd_set*)inArgs[3].ptr;
+-        inArgs[3].ptr=(uintptr_t)malloc(sizeof(fd_set));
+-        if (NULL == (void*)inArgs[3].ptr) {
++        inArgs[3].ptr = (uintptr_t)malloc(sizeof(fd_set));
++        if (!inArgs[3].ptr) {
+             retval = -NACL_ABI_ENOMEM;
+             goto cleanup_ws;
+         }
+         FD_ZERO((fd_set*)inArgs[3].ptr);
+     }
+-    *xchangedata = malloc(sizeof(int)*(FD_SETSIZE+1));
+-    if (NULL == *xchangedata) {
++    *xchangedata = malloc(sizeof(int) * (FD_SETSIZE + 1));
++    if (!*xchangedata) {
+         retval = -NACL_ABI_ENOMEM;
+         goto cleanup_es;
+     }
+-    memset(*xchangedata, 0xFF, sizeof(int)*FD_SETSIZE);
++    memset(*xchangedata, 0xFF, sizeof(int) * FD_SETSIZE);
+     mapdata = &((int*)(*xchangedata))[1];
+     NaClFastMutexLock(&nap->desc_mu);
+     for(int i=0; i<max_fd; ++i) {
+         ndp = NULL;
+         if((inArgs[1].ptr && FD_ISSET(i, &rs)) ||
+@@ -257,50 +268,54 @@ int LindSelectPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, v
+                 NaClDescSafeUnref(ndp);
+                 retval = -NACL_ABI_EINVAL;
+                 goto cleanup_xdata;
+             }
+             if(inArgs[1].ptr && FD_ISSET(i, &rs)) {
+-                NaClLog(3, "%d in RS with host desc %d\n", i, hfd);
++                NaClLog(1, "%d in RS with host desc %d\n", i, hfd);
+                 FD_SET(hfd, (fd_set*)inArgs[1].ptr);
+             }
+             if(inArgs[2].ptr && FD_ISSET(i, &ws)) {
+-                NaClLog(3, "%d in WS with host desc %d\n", i, hfd);
++                NaClLog(1, "%d in WS with host desc %d\n", i, hfd);
+                 FD_SET(hfd, (fd_set*)inArgs[2].ptr);
+             }
+             if(inArgs[3].ptr && FD_ISSET(i, &es)) {
+-                NaClLog(3, "%d in ES with host desc %d\n", i, hfd);
++                NaClLog(1, "%d in ES with host desc %d\n", i, hfd);
+                 FD_SET(hfd, (fd_set*)inArgs[3].ptr);
+             }
+         }
+     }
+-    *(int64_t*)&inArgs[0].ptr = max_hfd+1;
+-    ((int*)(*xchangedata))[0] = max_hfd+1;
+-    NaClLog(3, "max_fd is set to %"NACL_PRId64" was %"NACL_PRId64"\n", *(int64_t*)&inArgs[0].ptr, max_fd);
++    *(int64_t *)&inArgs[0].ptr = max_hfd + 1;
++    ((int *)(*xchangedata))[0] = max_hfd + 1;
++    NaClLog(1, "max_fd is set to %"NACL_PRId64" was %"NACL_PRId64"\n", *(int64_t *)&inArgs[0].ptr, max_fd);
+     NaClFastMutexUnlock(&nap->desc_mu);
+     goto finish;
+ cleanup_xdata:
+     free(*xchangedata);
+ cleanup_es:
+     if(inArgs[3].ptr) {
+-        free((void*)inArgs[3].ptr);
++        free((void *)inArgs[3].ptr);
+     }
+ cleanup_ws:
+     if(inArgs[2].ptr) {
+-        free((void*)inArgs[2].ptr);
++        free((void *)inArgs[2].ptr);
+     }
+ cleanup_rs:
+     if(inArgs[1].ptr) {
+-        free((void*)inArgs[1].ptr);
++        free((void *)inArgs[1].ptr);
+     }
+ finish:
+-    NaClLog(3, "Exiting LindSelectPreprocess\n");
++    NaClLog(1, "%s\n", "Exiting LindSelectPreprocess");
+     return retval;
+ }
+ 
+-int LindSelectPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
+-{
+-    int* mapdata;
++int LindSelectPostprocess(struct NaClApp *nap,
++                          int iserror,
++                          int *code,
++                          char *data,
++                          int len,
++                          void *xchangedata) {
++    int *mapdata;
+     int max_hfd;
+     int retval = 0;
+     fd_set rs;
+     fd_set ws;
+     fd_set es;
+@@ -314,144 +329,158 @@ int LindSelectPostprocess(struct NaClApp *nap, int iserror, int* code, char* dat
+     max_hfd = ((int*)xchangedata)[0];
+     mapdata = &((int*)xchangedata)[1];
+     for(int i=0; i<max_hfd; ++i) {
+         if(FD_ISSET(i, &((struct select_results*)data)->r)) {
+             if(-1 != mapdata[i]) {
+-                NaClLog(3, "%d in RS with nacl desc %d\n", i, mapdata[i]);
++                NaClLog(1, "%d in RS with nacl desc %d\n", i, mapdata[i]);
+                 FD_SET(mapdata[i], &rs);
+             } else {
+-                NaClLog(3, "%d in RS not valid, ignored\n", i);
++                NaClLog(1, "%d in RS not valid, ignored\n", i);
+             }
+         }
+         if(FD_ISSET(i, &((struct select_results*)data)->w)) {
+             if(-1 != mapdata[i]) {
+-                NaClLog(3, "%d in WS with nacl desc %d\n", i, mapdata[i]);
++                NaClLog(1, "%d in WS with nacl desc %d\n", i, mapdata[i]);
+                 FD_SET(mapdata[i], &ws);
+             } else {
+-                NaClLog(3, "%d in WS not valid, ignored\n", i);
++                NaClLog(1, "%d in WS not valid, ignored\n", i);
+             }
+         }
+         if(FD_ISSET(i, &((struct select_results*)data)->e)) {
+             if(-1 != mapdata[i]) {
+-                NaClLog(3, "%d in ES with nacl desc %d\n", i, mapdata[i]);
++                NaClLog(1, "%d in ES with nacl desc %d\n", i, mapdata[i]);
+                 FD_SET(mapdata[i], &es);
+             } else {
+-                NaClLog(3, "%d in ES not valid, ignored\n", i);
++                NaClLog(1, "%d in ES not valid, ignored\n", i);
+             }
+         }
+     }
+     ((struct select_results*)data)->r = rs;
+     ((struct select_results*)data)->w = ws;
+     ((struct select_results*)data)->e = es;
+     return retval;
+ }
+ 
+-#define CONVERT_NACL_DESC_TO_LIND_START \
+-    int retval = 0; \
+-    struct NaClDesc * ndp; \
+-    UNREFERENCED_PARAMETER(inNum); \
++#define CONVERT_NACL_DESC_TO_LIND_START	                                                        \
++    int retval = 0;                                                                             \
++    struct NaClDesc * ndp;                                                                      \
++    UNREFERENCED_PARAMETER(inNum);                                                              \
+     UNREFERENCED_PARAMETER(xchangedata)
+ 
+-#define CONVERT_NACL_DESC_TO_LIND_END \
+-cleanup: \
+-    NaClDescSafeUnref(ndp); \
++#define CONVERT_NACL_DESC_TO_LIND_END                                                           \
++cleanup:                                                                                        \
++    NaClDescSafeUnref(ndp);                                                                     \
+     return retval
+ 
+-#define CONVERT_NACL_DESC_TO_LIND(x) \
+-    NaClFastMutexLock(&nap->desc_mu); \
+-    ndp = NaClGetDescMu(nap, (int)(*(int64_t*)&inArgs[(x)].ptr)); \
+-    NaClFastMutexUnlock(&nap->desc_mu); \
+-    if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) { \
+-        retval = -NACL_ABI_EINVAL; \
+-        goto cleanup; \
+-    } \
++#define CONVERT_NACL_DESC_TO_LIND(x)                                                            \
++    NaClFastMutexLock(&nap->desc_mu);                                                           \
++    ndp = NaClGetDescMu(nap, (int)(*(int64_t*)&inArgs[(x)].ptr));                               \
++    NaClFastMutexUnlock(&nap->desc_mu);                                                         \
++    if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) {       \
++        retval = -NACL_ABI_EINVAL;                                                              \
++        goto cleanup;                                                                           \
++    }                                                                                           \
+     *(int64_t*)&inArgs[(x)].ptr = ((struct NaClDescIoDesc *)ndp)->hd->d;
+ 
+-
+-#define ALLOC_RET_DESC() \
+-    int retval = 0; \
+-    UNREFERENCED_PARAMETER(nap); \
+-    UNREFERENCED_PARAMETER(inNum); \
+-    UNREFERENCED_PARAMETER(inArgs); \
+-    *xchangedata = malloc(sizeof(struct NaClHostDesc)); \
+-    if (NULL == *xchangedata) { \
+-      retval = -NACL_ABI_ENOMEM; \
+-      goto cleanup; \
+-    } \
+-cleanup: \
++#define ALLOC_RET_DESC()                                                                        \
++    int retval = 0;                                                                             \
++    UNREFERENCED_PARAMETER(nap);                                                                \
++    UNREFERENCED_PARAMETER(inNum);                                                              \
++    UNREFERENCED_PARAMETER(inArgs);                                                             \
++    *xchangedata = malloc(sizeof(struct NaClHostDesc));                                         \
++    if (!*xchangedata) {                                                                 \
++      retval = -NACL_ABI_ENOMEM;                                                                \
++      goto cleanup;                                                                             \
++    }                                                                                           \
++cleanup:                                                                                        \
+     return retval
+ 
+-#define CONVERT_NACL_DESC_TO_LIND_AND_ALLOC_RET_DESC(x) \
+-    int retval = 0; \
+-    struct NaClDesc* ndp; \
+-    UNREFERENCED_PARAMETER(inNum); \
+-    *xchangedata = malloc(sizeof(struct NaClHostDesc)); \
+-    if (NULL == *xchangedata) { \
+-      retval = -NACL_ABI_ENOMEM; \
+-      goto cleanup; \
+-    } \
+-    NaClFastMutexLock(&nap->desc_mu); \
+-    ndp = NaClGetDescMu(nap, (int)(*(int64_t*)&inArgs[(x)].ptr)); \
+-    NaClFastMutexUnlock(&nap->desc_mu); \
+-    if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) { \
+-        retval = -NACL_ABI_EINVAL; \
+-        goto cleanup; \
+-    } \
+-    *(int64_t*)&inArgs[(x)].ptr = ((struct NaClDescIoDesc *)ndp)->hd->d; \
+-cleanup: \
+-    NaClDescSafeUnref(ndp); \
++#define CONVERT_NACL_DESC_TO_LIND_AND_ALLOC_RET_DESC(x)                                         \
++      int retval = 0;                                                                           \
++      struct NaClDesc *ndp = {0};                                                               \
++      UNREFERENCED_PARAMETER(inNum);                                                            \
++      *xchangedata = malloc(sizeof(struct NaClHostDesc));                                       \
++      if (!*xchangedata) {                                                               \
++        retval = -NACL_ABI_ENOMEM;                                                              \
++        goto cleanup;                                                                           \
++      }                                                                                         \
++      NaClFastMutexLock(&nap->desc_mu);                                                         \
++      ndp = NaClGetDescMu(nap, (int)(*(int64_t*)&inArgs[(x)].ptr));                             \
++      NaClFastMutexUnlock(&nap->desc_mu);                                                       \
++      if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) {     \
++          retval = -NACL_ABI_EINVAL;                                                            \
++          goto cleanup;                                                                         \
++      }                                                                                         \
++      *(int64_t*)&inArgs[(x)].ptr = ((struct NaClDescIoDesc *)ndp)->hd->d;                      \
++cleanup:                                                                                        \
++      NaClDescSafeUnref(ndp);                                                                   \
++      return retval
++
++#define BUILD_AND_RETURN_NACL_DESC()                                                            \
++    int retval = 0;                                                                             \
++    struct NaClHostDesc  *hd;                                                                   \
++    UNREFERENCED_PARAMETER(iserror);                                                            \
++    UNREFERENCED_PARAMETER(data);                                                               \
++    UNREFERENCED_PARAMETER(len);                                                                \
++    hd = (struct NaClHostDesc*)xchangedata;                                                     \
++    NaClHostDescCtor(hd, *code, NACL_ABI_O_RDWR);                                               \
++    *code = NaClSetAvail(nap, ((struct NaClDesc *) NaClDescIoDescMake(hd)));                    \
+     return retval
+ 
+-#define BUILD_AND_RETURN_NACL_DESC() \
+-    int retval = 0; \
+-    struct NaClHostDesc  *hd; \
+-    UNREFERENCED_PARAMETER(iserror); \
+-    UNREFERENCED_PARAMETER(data); \
+-    UNREFERENCED_PARAMETER(len); \
+-    hd = (struct NaClHostDesc*)xchangedata; \
+-    NaClHostDescCtor(hd, *code, NACL_ABI_O_RDWR); \
+-    *code = NaClSetAvail(nap, ((struct NaClDesc *) NaClDescIoDescMake(hd))); \
+-    return retval
+-
+-int LindSocketPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindSocketPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     ALLOC_RET_DESC();
+ }
+ 
+-int LindSocketPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
++int LindSocketPostprocess(struct NaClApp *nap,
++                          int iserror,
++                          int *code,
++                          char *data,
++                          int len,
++                          void *xchangedata)
+ {
+     BUILD_AND_RETURN_NACL_DESC();
+ }
+ 
+-int LindAcceptPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindAcceptPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     CONVERT_NACL_DESC_TO_LIND_AND_ALLOC_RET_DESC(0);
+ }
+ 
+-int LindAcceptPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
++int LindAcceptPostprocess(struct NaClApp *nap,
++                          int iserror,
++                          int *code,
++                          char *data,
++                          int len,
++                          void *xchangedata)
+ {
+     BUILD_AND_RETURN_NACL_DESC();
+ }
+ 
+-int LindCommonPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindCommonPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     CONVERT_NACL_DESC_TO_LIND_START;
+     CONVERT_NACL_DESC_TO_LIND(0);
+     CONVERT_NACL_DESC_TO_LIND_END;
+ }
+ 
+-int LindEpollCreatePreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindEpollCreatePreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     ALLOC_RET_DESC();
+ }
+ 
+-int LindEpollCreatePostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
++int LindEpollCreatePostprocess(struct NaClApp *nap,
++                               int iserror,
++                               int *code,
++                               char *data,
++                               int len,
++                               void *xchangedata)
+ {
+     BUILD_AND_RETURN_NACL_DESC();
+ }
+ 
+-int LindEpollCtlPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindEpollCtlPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     CONVERT_NACL_DESC_TO_LIND_START;
+     CONVERT_NACL_DESC_TO_LIND(0);
+     CONVERT_NACL_DESC_TO_LIND(2);
+     CONVERT_NACL_DESC_TO_LIND_END;
+@@ -469,22 +498,27 @@ struct epoll_event
+ {
+   uint32_t events;
+   epoll_data_t data;
+ };
+ 
+-int LindEpollWaitPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindEpollWaitPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     CONVERT_NACL_DESC_TO_LIND_START;
+     CONVERT_NACL_DESC_TO_LIND(0);
+     CONVERT_NACL_DESC_TO_LIND_END;
+ }
+ 
+-int LindEpollWaitPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
++int LindEpollWaitPostprocess(struct NaClApp *nap,
++                             int iserror,
++                             int *code,
++                             char *data,
++                             int len,
++                             void *xchangedata)
+ {
+     int retval = 0;
+     int nfds;
+-    struct epoll_event* pfds;
++    struct epoll_event *pfds;
+     struct NaClDesc * ndp;
+     int hfd;
+     UNREFERENCED_PARAMETER(nap);
+     UNREFERENCED_PARAMETER(iserror);
+     UNREFERENCED_PARAMETER(code);
+@@ -509,26 +543,31 @@ int LindEpollWaitPostprocess(struct NaClApp *nap, int iserror, int* code, char*
+         }
+     }
+     return retval;
+ }
+ 
+-int LindSocketPairPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindSocketPairPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     int retval = 0;
+     UNREFERENCED_PARAMETER(nap);
+     UNREFERENCED_PARAMETER(inNum);
+     UNREFERENCED_PARAMETER(inArgs);
+     *xchangedata = malloc(sizeof(struct NaClHostDesc)*2);
+-    if (NULL == *xchangedata) {
++    if (!*xchangedata) {
+       retval = -NACL_ABI_ENOMEM;
+       goto cleanup;
+     }
+ cleanup:
+     return retval;
+ }
+ 
+-int LindSocketPairPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
++int LindSocketPairPostprocess(struct NaClApp *nap,
++                              int iserror,
++                              int *code,
++                              char *data,
++                              int len,
++                              void *xchangedata)
+ {
+     int retval = 0;
+     struct NaClHostDesc  *hd;
+     int lind_fd;
+     UNREFERENCED_PARAMETER(iserror);
+@@ -547,46 +586,46 @@ struct poll_map
+ {
+     int nacl_fd;
+     int lind_fd;
+ };
+ 
+-int LindPollPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void** xchangedata)
++int LindPollPreprocess(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void** xchangedata)
+ {
+     int retval = 0;
+-    struct pollfd* pfds;
+-    struct pollfd* inpfds;
+-    struct poll_map* mapdata;
++    struct pollfd *pfds;
++    struct pollfd *inpfds;
++    struct poll_map *mapdata;
+     int nfds;
+-    struct NaClDesc* ndp;
++    struct NaClDesc *ndp;
+     UNREFERENCED_PARAMETER(inNum);
+     nfds = (int)inArgs[0].ptr;
+     if(nfds <= 0) {
+         retval = -NACL_ABI_EINVAL;
+         goto finish;
+     }
+     inpfds = (struct pollfd*)inArgs[2].ptr;
+-    if(NULL == inpfds) {
++    if(!inpfds) {
+         retval = -NACL_ABI_EINVAL;
+         goto finish;
+     }
+     *xchangedata = malloc(sizeof(int)+sizeof(struct poll_map)*nfds);
+-    if (NULL == *xchangedata) {
++    if (!*xchangedata) {
+       retval = -NACL_ABI_ENOMEM;
+       goto finish;
+     }
+     ((int*)(*xchangedata))[0] = nfds; //first sizeof(int) bytes contains # of fds
+     mapdata = (struct poll_map*)&((int*)(*xchangedata))[1]; //map data begins after sizeof(int) bytes
+-    pfds = malloc(sizeof(pfds)*nfds);
+-    if (NULL == pfds) {
++    pfds = malloc(sizeof *pfds * nfds);
++    if (!pfds) {
+       retval = -NACL_ABI_ENOMEM;
+       goto cleanup_xdata;
+     }
+     NaClFastMutexLock(&nap->desc_mu);
+     for(int i=0; i<nfds; ++i) {
+         pfds[i] = inpfds[i];
+         ndp = NaClGetDescMu(nap, inpfds[i].fd);
+-        if(NULL == ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) {
++        if(!ndp || ndp->base.vtbl != (struct NaClRefCountVtbl const *)&kNaClDescIoDescVtbl) {
+             NaClDescSafeUnref(ndp);
+             retval = -NACL_ABI_EINVAL;
+             goto cleanup_pfds;
+         }
+         pfds[i].fd = ((struct NaClDescIoDesc*)ndp)->hd->d;
+@@ -603,105 +642,114 @@ cleanup_xdata:
+     free(*xchangedata);
+ finish:
+     return retval;
+ }
+ 
+-int LindPollPostprocess(struct NaClApp *nap, int iserror, int* code, char* data, int len, void* xchangedata)
++int LindPollPostprocess(struct NaClApp *nap,
++                        int iserror,
++                        int *code,
++                        char *data,
++                        int len,
++                        void *xchangedata)
+ {
+     int retval = 0;
+-    struct poll_map* mapdata;
++    struct poll_map *mapdata;
+     int nfds;
+-    struct pollfd* pfds;
++    struct pollfd *pfds;
+     UNREFERENCED_PARAMETER(nap);
+     UNREFERENCED_PARAMETER(iserror);
+     UNREFERENCED_PARAMETER(code);
+     UNREFERENCED_PARAMETER(len);
+-    nfds = ((int*)xchangedata)[0]; //first sizeof(int) bytes contains # of fds
+-    mapdata = (struct poll_map*)&((int*)xchangedata)[1]; //map data begins after sizeof(int) bytes
++    nfds = ((int *)xchangedata)[0]; //first sizeof(int) bytes contains # of fds
++    mapdata = (struct poll_map*)&((int *)xchangedata)[1]; //map data begins after sizeof(int) bytes
+     pfds = (struct pollfd*)data;
+-    for(int i=0; i<nfds; ++i) {
+-        for(int j=0; j<nfds; ++j) {
++    for(int i = 0; i < nfds; ++i) {
++        for(int j = 0; j < nfds; ++j) {
+             if(pfds[i].fd == mapdata[j].lind_fd) {
+                 pfds[i].fd = mapdata[j].nacl_fd;
+             }
+         }
+     }
+     return retval;
+ }
+ 
+-int LindPollCleanup(struct NaClApp *nap, uint32_t inNum, LindArg* inArgs, void* xchangedata)
++int LindPollCleanup(struct NaClApp *nap, uint32_t inNum, LindArg *inArgs, void *xchangedata)
+ {
+     UNREFERENCED_PARAMETER(nap);
+     UNREFERENCED_PARAMETER(inNum);
+     if(xchangedata) {
+-		free((void*)inArgs[2].ptr);
+-		free(xchangedata);
++        free((void*)inArgs[2].ptr);
++        free(xchangedata);
+     }
+     return 0;
+ }
+ 
+-StubType stubs[]    =   {{NULL, NULL, NULL}, // 0
+-                         {NULL, NULL, NULL}, // 1 LIND_debug_noop
+-                         {NULL, NULL, NULL}, // 2 LIND_safe_fs_access
+-                         {NULL, NULL, NULL}, // 3 LIND_debug_trace
+-                         {NULL, NULL, NULL}, // 4 LIND_safe_fs_unlink
+-                         {NULL, NULL, NULL}, // 5 LIND_safe_fs_link
+-                         {NULL, NULL, NULL}, // 6 LIND_safe_fs_chdir
+-                         {NULL, NULL, NULL}, // 7 LIND_safe_fs_mkdir
+-                         {NULL, NULL, NULL}, // 8 LIND_safe_fs_rmdir
+-                         {NULL, NULL, NULL}, // 9 LIND_safe_fs_xstat
+-                         {NULL, NULL, NULL}, // 10 LIND_safe_fs_open
+-                         {NULL, NULL, NULL}, // 11
+-                         {NULL, NULL, NULL}, // 12
+-                         {NULL, NULL, NULL}, // 13
+-                         {NULL, NULL, NULL}, // 14
+-                         {NULL, NULL, NULL}, // 15
+-                         {NULL, NULL, NULL}, // 16
+-                         {NULL, NULL, NULL}, // 17
+-                         {NULL, NULL, NULL}, // 18
+-                         {LindCommonPreprocess, NULL, NULL}, // 19 LIND_safe_fs_fstatfs
+-                         {NULL, NULL, NULL}, // 20
+-                         {NULL, NULL, NULL}, // 21
+-                         {NULL, NULL, NULL}, // 22
+-                         {NULL, NULL, NULL}, // 23
+-                         {NULL, NULL, NULL}, // 24
+-                         {NULL, NULL, NULL}, // 25
+-                         {NULL, NULL, NULL}, // 26
+-                         {NULL, NULL, NULL}, // 27
+-                         {LindFcntlPreprocess, LindFcntlPostprocess, LindFcntlCleanup}, // 28 LIND_safe_fs_fcntl
+-                         {NULL, NULL, NULL}, // 29
+-                         {NULL, NULL, NULL}, // 30
+-                         {NULL, NULL, NULL}, // 31
+-                         {LindSocketPreprocess, LindSocketPostprocess, NULL}, // 32 LIND_safe_net_socket
+-                         {LindCommonPreprocess, NULL, NULL}, // 33 LIND_safe_net_bind
+-                         {LindCommonPreprocess, NULL, NULL}, // 34 LIND_safe_net_send
+-                         {LindCommonPreprocess, NULL, NULL}, // 35 LIND_safe_net_sendto
+-                         {LindCommonPreprocess, NULL, NULL}, // 36 LIND_safe_net_recv
+-                         {LindCommonPreprocess, NULL, NULL}, // 37 LIND_safe_net_recvfrom
+-                         {LindCommonPreprocess, NULL, NULL}, // 38 LIND_safe_net_connect
+-                         {LindCommonPreprocess, NULL, NULL}, // 39 LIND_safe_net_listen
+-                         {LindAcceptPreprocess, LindAcceptPostprocess, NULL}, // 40 LIND_safe_net_accept
+-                         {LindCommonPreprocess, NULL, NULL}, // 41 LIND_safe_net_getpeername
+-                         {LindCommonPreprocess, NULL, NULL}, // 42 LIND_safe_net_getsockname
+-                         {LindCommonPreprocess, NULL, NULL}, // 43 LIND_safe_net_getsockopt
+-                         {LindCommonPreprocess, NULL, NULL}, // 44 LIND_safe_net_setsockopt
+-                         {LindCommonPreprocess, NULL, NULL}, // 45 LIND_safe_net_shutdown
+-                         {LindSelectPreprocess, LindSelectPostprocess, LindSelectCleanup}, // 46 LIND_safe_net_select
+-                         {NULL, NULL, NULL}, // 47
+-                         {LindPollPreprocess, LindPollPostprocess, LindPollCleanup}, // 48 LIND_safe_net_poll
+-                         {LindSocketPairPreprocess, LindSocketPairPostprocess, NULL}, // 49 LIND_safe_net_socketpair
+-                         {NULL, NULL, NULL}, // 50
+-                         {NULL, NULL, NULL}, // 51
+-                         {NULL, NULL, NULL}, // 52
+-                         {NULL, NULL, NULL}, // 53
+-                         {NULL, NULL, NULL}, // 54
+-                         {NULL, NULL, NULL}, // 55
+-                         {LindEpollCreatePreprocess, LindEpollCreatePostprocess, NULL}, // 56 epoll_create
+-                         {LindEpollCtlPreprocess, NULL, NULL}, // 57 epoll_ctl
+-                         {LindEpollWaitPreprocess, LindEpollWaitPostprocess, NULL}, // 58 epoll_wait
+-                         {LindCommonPreprocess, NULL, NULL}, // 59 sendmsg
+-                         {LindCommonPreprocess, NULL, NULL}}; // 60 recvmsg
++StubType stubs[] = {
++        {0}, // 0
++        {0}, // 1 LIND_debug_noop
++        {0}, // 2 LIND_safe_fs_access
++        {0}, // 3 LIND_debug_trace
++        {0}, // 4 LIND_safe_fs_unlink
++        {0}, // 5 LIND_safe_fs_link
++        {0}, // 6 LIND_safe_fs_chdir
++        {0}, // 7 LIND_safe_fs_mkdir
++        {0}, // 8 LIND_safe_fs_rmdir
++        {0}, // 9 LIND_safe_fs_xstat
++        {0}, // 10 LIND_safe_fs_open
++        {0}, // 11
++        {0}, // 12
++        {0}, // 13
++        {0}, // 14
++        {0}, // 15
++        {0}, // 16
++        {0}, // 17
++        {0}, // 18
++        {LindCommonPreprocess, 0, 0}, // 19 LIND_safe_fs_fstatfs
++        {0}, // 20
++        {0}, // 21
++        {0}, // 22
++        {0}, // 23
++        {0}, // 24
++        {0}, // 25
++        {0}, // 26
++        {0}, // 27
++        {LindFcntlPreprocess, LindFcntlPostprocess, LindFcntlCleanup}, // 28 LIND_safe_fs_fcntl
++        {0}, // 29
++        {0}, // 30
++        {0}, // 31
++        {LindSocketPreprocess, LindSocketPostprocess, 0}, // 32 LIND_safe_net_socket
++        {LindCommonPreprocess, 0, 0}, // 33 LIND_safe_net_bind
++        {LindCommonPreprocess, 0, 0}, // 34 LIND_safe_net_send
++        {LindCommonPreprocess, 0, 0}, // 35 LIND_safe_net_sendto
++        {LindCommonPreprocess, 0, 0}, // 36 LIND_safe_net_recv
++        {LindCommonPreprocess, 0, 0}, // 37 LIND_safe_net_recvfrom
++        {LindCommonPreprocess, 0, 0}, // 38 LIND_safe_net_connect
++        {LindCommonPreprocess, 0, 0}, // 39 LIND_safe_net_listen
++        {LindAcceptPreprocess, LindAcceptPostprocess, 0}, // 40 LIND_safe_net_accept
++        {LindCommonPreprocess, 0, 0}, // 41 LIND_safe_net_getpeername
++        {LindCommonPreprocess, 0, 0}, // 42 LIND_safe_net_getsockname
++        {LindCommonPreprocess, 0, 0}, // 43 LIND_safe_net_getsockopt
++        {LindCommonPreprocess, 0, 0}, // 44 LIND_safe_net_setsockopt
++        {LindCommonPreprocess, 0, 0}, // 45 LIND_safe_net_shutdown
++        {LindSelectPreprocess, LindSelectPostprocess, LindSelectCleanup}, // 46 LIND_safe_net_select
++        {0}, // 47
++        {LindPollPreprocess, LindPollPostprocess, LindPollCleanup}, // 48 LIND_safe_net_poll
++        {LindSocketPairPreprocess, LindSocketPairPostprocess, 0}, // 49 LIND_safe_net_socketpair
++        {0}, // 50
++        {0}, // 51
++        {0}, // 52
++        {0}, // 53
++        {0}, // 54
++        {0}, // 55
++        {LindEpollCreatePreprocess, LindEpollCreatePostprocess, 0}, // 56 epoll_create
++        {LindEpollCtlPreprocess, 0, 0}, // 57 epoll_ctl
++        {LindEpollWaitPreprocess, LindEpollWaitPostprocess, 0}, // 58 epoll_wait
++        {LindCommonPreprocess, 0, 0}, // 59 sendmsg
++        {LindCommonPreprocess, 0, 0}, // 60
++        {0} // yiwen: 61 LIND_sys_pipe
++};
++
+ 
+ static int NaClCopyZStr(struct NaClApp *nap,
+                         char           *dst_buffer,
+                         size_t         dst_buffer_bytes,
+                         uintptr_t      src_sys_addr) {
+@@ -718,113 +766,124 @@ static int NaClCopyZStr(struct NaClApp *nap,
+ }
+ 
+ int32_t NaClSysLindSyscall(struct NaClAppThread *natp,
+                            uint32_t callNum,
+                            uint32_t inNum,
+-                           void* inArgs,
++                           void *inArgs,
+                            uint32_t outNum,
+-                           void* outArgs)
++                           void *outArgs)
+ {
+     struct NaClApp *nap = natp->nap;
+     int retval = -NACL_ABI_EINVAL;
+-    uintptr_t argSysAddr;
+-    char stringArg[NACL_CONFIG_PATH_MAX];
+-    LindArg inArgSys[MAX_INARGS];
+-    LindArg outArgSys[MAX_OUTARGS];
+-    PyObject* callArgs = NULL;
+-    PyObject* apiArg = NULL;
+-    PyObject* response = NULL;
+-    PyGILState_STATE gstate;
+-    unsigned int i;
+-    int offset;
+-    int _code;
+-    int _isError;
+-    char* _data;
+-    int _len;
+-    void* xchangeData;
++    uintptr_t argSysAddr = 0;
++    char stringArg[NACL_CONFIG_PATH_MAX] = {0};
++    LindArg inArgSys[MAX_INARGS] = {0};
++    LindArg outArgSys[MAX_OUTARGS] = {0};
++    PyObject *callArgs = NULL;
++    PyObject *apiArg = NULL;
++    PyObject *response = NULL;
++    PyGILState_STATE gstate = {0};
++    unsigned int i = 0;
++    int offset = 0;
++    int _code = 0;
++    int _isError = 0;
++    char *_data = NULL;
++    int _len = 0;
++    void *xchangeData = NULL;
++    clock_t lind_sys_begin = 0;
++    clock_t lind_sys_finish = 0;
+ 
+-    NaClLog(3, "Entered NaClSysLindSyscall callNum=%8u inNum=%8u outNum=%8u\n", callNum, inNum, outNum);
++    NaClLog(1, "[NaClSysLindSyscall] Entered: callNum=%u inNum=%u outNum=%u\n", callNum, inNum, outNum);
++
++    // yiwen: start recording time for making a Lind system call, this includes the time to parse and prepare the argument passing right now
++    lind_sys_begin = clock();
+ 
+     gstate = PyGILState_Ensure();
+ 
+-    if(inNum>MAX_INARGS || outNum>MAX_OUTARGS) {
++    if (inNum>MAX_INARGS || outNum>MAX_OUTARGS) {
+         NaClLog(LOG_ERROR, "NaClSysLindSyscall: Number of in/out arguments too large\n");
+         retval = -NACL_ABI_EINVAL;
+         goto cleanup;
+     }
+ 
+-    if((inNum && !inArgs) || (outNum && !outArgs)) {
++    if ((inNum && !inArgs) || (outNum && !outArgs)) {
+         NaClLog(LOG_ERROR, "NaClSysLindSyscall: in/out arguments are NULL\n");
+         retval = -NACL_ABI_EFAULT;
+         goto cleanup;
+     }
+ 
+-    if(inNum && !NaClCopyInFromUser(nap, inArgSys, (uintptr_t)inArgs, sizeof(LindArg)*inNum)) {
+-        NaClLog(LOG_ERROR, "NaClSysLindSyscall: invalid input argument address\n");
++    if (inNum && !NaClCopyInFromUser(nap, inArgSys, (uintptr_t)inArgs, sizeof(LindArg)*inNum)) {
+         retval = -NACL_ABI_EFAULT;
++        NaClLog(LOG_ERROR, "NaClSysLindSyscall: invalid input argument address\n");
+         goto cleanup;
+     }
+ 
+-    for(uint32_t i=0; i<inNum; ++i) {
+-        if(inArgSys[i].type != AT_INT) {
+-            if(inArgSys[i].ptr) {
+-                argSysAddr = NaClUserToSysAddrRange(nap, (uintptr_t)inArgSys[i].ptr, inArgSys[i].len);
++    for (uint32_t j = 0; j<inNum; ++j) {
++        if(inArgSys[j].type != AT_INT) {
++            if(inArgSys[j].ptr) {
++                argSysAddr = NaClUserToSysAddrRange(nap, (uintptr_t)inArgSys[j].ptr, inArgSys[j].len);
+                 if(kNaClBadAddress == argSysAddr) {
+                     NaClLog(LOG_ERROR, "NaClSysLindSyscall: invalid input data address\n");
+                     retval = -NACL_ABI_EFAULT;
+                     goto cleanup;
+                 }
+-                inArgSys[i].ptr = argSysAddr;
+-            } else if(inArgSys[i].type == AT_DATA || inArgSys[i].type == AT_STRING) {
++                inArgSys[j].ptr = argSysAddr;
++            } else if(inArgSys[j].type == AT_DATA || inArgSys[j].type == AT_STRING) {
+                 NaClLog(LOG_ERROR, "NaClSysLindSyscall: mandatory input is NULL\n");
+                 retval = -NACL_ABI_EFAULT;
+                 goto cleanup;
+             }
+         }
+     }
+ 
+-    if(outNum && !NaClCopyInFromUser(nap, outArgSys, (uintptr_t)outArgs, sizeof(LindArg)*outNum)) {
++    if (outNum && !NaClCopyInFromUser(nap, outArgSys, (uintptr_t)outArgs, sizeof(LindArg)*outNum)) {
+         NaClLog(LOG_ERROR, "NaClSysLindSyscall: invalid output argument address\n");
+         retval = -NACL_ABI_EFAULT;
+         goto cleanup;
+     }
+ 
+-    for(uint32_t i=0; i<outNum; ++i) {
+-		//mandatory output address is zero
+-		if(outArgSys[i].type == AT_INT || (!outArgSys[i].ptr && outArgSys[i].type == AT_DATA)) {
+-			retval = -NACL_ABI_EFAULT;
+-			goto cleanup;
+-		}
++    for (uint32_t j = 0; j < outNum; ++j) {
++        //mandatory output address is zero
++        if(outArgSys[j].type == AT_INT || (!outArgSys[j].ptr && outArgSys[j].type == AT_DATA)) {
++                retval = -NACL_ABI_EFAULT;
++                goto cleanup;
++        }
+     }
+ 
+-    /*
+-    // For debugging
+-    for(int i=0; i<(int)inNum; ++i) {
+-        DumpArg(&inArgSys[i]);
++    // yiwen: handle lind_pipe here.
++    //        the pipe() call should initialize the pipe buffer
++    //        and returns two fds for the pipe
++    if (callNum == 61) {
++        int data[2] = {9001, 9002};
++        int len = 8;
++        int error = NaClCopyOutToUser(nap, (uintptr_t)outArgSys[0].ptr, data, len);
++        if (!error) {
++            NaClLog(LOG_ERROR, "NaClCopyOutToUser: failed! \n");
++        }
++        retval = 0;
++        goto cleanup;
+     }
+ 
+-    for(int i=0; i<(int)outNum; ++i) {
+-        DumpArg(&outArgSys[i]);
+-    }*/
+-
+-    if(stubs[callNum].pre) {
++    if (stubs[callNum].pre) {
+         retval = stubs[callNum].pre(nap, inNum, inArgSys, &xchangeData);
+-        if(retval) {
++        if (retval) {
+             goto cleanup;
+         }
+     }
+ 
+     callArgs = PyList_New(0);
+     apiArg = PyTuple_New(2);
+     PyTuple_SetItem(apiArg, 0, PyInt_FromLong(callNum));
+     PyTuple_SetItem(apiArg, 1, callArgs);
+ 
+-    for(i=0; i<inNum; ++i) {
++    for (i=0; i<inNum; ++i) {
+         switch(inArgSys[i].type) {
+         case AT_INT:
+-            NaClLog(3, "Int argument: %"NACL_PRId64", %"NACL_PRIu64"\n", *(int64_t*)&inArgSys[i].ptr, inArgSys[i].len);
+-            PyList_Append(callArgs, PyInt_FromLong(*(int64_t*)&inArgSys[i].ptr));
++            NaClLog(1, "Int argument: %" NACL_PRId64 ", %" NACL_PRIu64 "\n",
++                    *(int64_t *)&inArgSys[i].ptr,
++                    inArgSys[i].len);
++            PyList_Append(callArgs, PyInt_FromLong(*(int64_t *)&inArgSys[i].ptr));
+             break;
+         case AT_STRING:
+         case AT_STRING_OPTIONAL:
+             if(inArgSys[i].ptr) {
+                 PyGILState_Release(gstate);
+@@ -832,20 +891,22 @@ int32_t NaClSysLindSyscall(struct NaClAppThread *natp,
+                     gstate = PyGILState_Ensure();
+                     if (stringArg[0] == '\0') {
+                         NaClLog(LOG_ERROR, "NaClSysLindSyscall: input string is empty\n");
+                         retval = -NACL_ABI_EFAULT;
+                     } else {
+-                        NaClLog(LOG_ERROR, "NaClSysLindSyscall: input string is too long (>%d)\n", NACL_CONFIG_PATH_MAX);
++                        NaClLog(LOG_ERROR,
++                                "NaClSysLindSyscall: input string is too long (>%d)\n",
++                                NACL_CONFIG_PATH_MAX);
+                         retval = -NACL_ABI_ENAMETOOLONG;
+                     }
+                     goto cleanup;
+                 }
+                 gstate = PyGILState_Ensure();
+-                NaClLog(3, "String argument: %s\n", stringArg);
++                NaClLog(1, "String argument: %s\n", stringArg);
+                 PyList_Append(callArgs, PyString_FromString(stringArg));
+             } else if(inArgSys[i].type == AT_STRING_OPTIONAL) {
+-                NaClLog(3, "Optional empty string argument\n");
++                NaClLog(1, "%s\n", "Optional empty string argument");
+                 PyList_Append(callArgs, Py_None);
+                 Py_INCREF(Py_None);
+             } else {
+                 NaClLog(LOG_ERROR, "NaClSysLindSyscall: input string is NULL\n");
+                 retval = -NACL_ABI_EFAULT;
+@@ -853,18 +914,20 @@ int32_t NaClSysLindSyscall(struct NaClAppThread *natp,
+             }
+             break;
+         case AT_DATA:
+         case AT_DATA_OPTIONAL:
+             if(inArgSys[i].ptr) {
+-                NaClLog(3, "Data argument of length: %u\n", (unsigned int)inArgSys[i].len);
++                NaClLog(1, "Data argument of length: %u\n", (unsigned int)inArgSys[i].len);
+                 PyGILState_Release(gstate);
+                 NaClXMutexLock(&nap->mu);
+                 gstate = PyGILState_Ensure();
+-                PyList_Append(callArgs, PyString_FromStringAndSize((char*)inArgSys[i].ptr, inArgSys[i].len));
++                PyList_Append(callArgs,
++                              PyString_FromStringAndSize((char *)inArgSys[i].ptr,
++                              inArgSys[i].len));
+                 NaClXMutexUnlock(&nap->mu);
+             } else if(inArgSys[i].type == AT_DATA_OPTIONAL) {
+-                NaClLog(3, "Optional empty data argument\n");
++                NaClLog(1, "%s\n", "Optional empty data argument");
+                 PyList_Append(callArgs, Py_None);
+                 Py_INCREF(Py_None);
+             } else {
+                 NaClLog(LOG_ERROR, "NaClSysLindSyscall: input data is NULL\n");
+                 retval = -NACL_ABI_EFAULT;
+@@ -876,39 +939,51 @@ int32_t NaClSysLindSyscall(struct NaClAppThread *natp,
+             retval = -NACL_ABI_EINVAL;
+             goto cleanup;
+         }
+     }
+ 
+-    response = CallPythonFunc(context, "LindSyscall", apiArg);
+-    GOTO_ERROR_IF_NULL(response);
++    response = CallPythonFunc(py_context, "LindSyscall", apiArg);
++    if (!response) {
++        goto error;
++    }
++
+     ParseResponse(response, &_isError, &_code, &_data, &_len);
+     if(!_isError) {
+         if(stubs[callNum].post) {
+             stubs[callNum].post(nap, _isError, &_code, _data, _len, xchangeData);
+         }
+         if(outNum == 1) {
+             assert(((unsigned int)_len)<=outArgSys[0].len);
+             PyGILState_Release(gstate);
+-            if(outArgSys[0].ptr && !NaClCopyOutToUser(nap, (uintptr_t)outArgSys[0].ptr, _data, _len)) {
+-            	gstate = PyGILState_Ensure();
+-                retval = -NACL_ABI_EFAULT;
+-                goto cleanup;
++            if(outArgSys[0].ptr && !NaClCopyOutToUser(nap,
++                                                      (uintptr_t)outArgSys[0].ptr,
++                                                      _data,
++                                                      _len)) {
++                 gstate = PyGILState_Ensure();
++                 retval = -NACL_ABI_EFAULT;
++                 goto cleanup;
+             }
+             gstate = PyGILState_Ensure();
+         } else if (outNum > 1) {
+             offset = 0;
+             for(i=0; i<outNum; ++i) {
+-                NaClLog(3, "Out#%d, len=%"NACL_PRIu32", maxlen=%"NACL_PRIu64"\n",i, (unsigned int)(((int*)_data)[i]), outArgSys[i].len);
+-                assert(((unsigned int)(((int*)_data)[i]))<=outArgSys[i].len);
++                NaClLog(1, "Out#%d, len = %" NACL_PRIu32
++                        "maxlen=%" NACL_PRIu64 "\n",
++                        i, (unsigned int)(((int *)_data)[i]),
++                        outArgSys[i].len);
++                CHECK(((unsigned int)(((int*)_data)[i])) <= outArgSys[i].len);
+                 PyGILState_Release(gstate);
+-                if(outArgSys[i].ptr && !NaClCopyOutToUser(nap, (uintptr_t)outArgSys[i].ptr, _data+sizeof(int)*outNum+offset, ((int*)_data)[i])) {
+-                	gstate = PyGILState_Ensure();
++                if(outArgSys[i].ptr && !NaClCopyOutToUser(nap,
++                                                          (uintptr_t)outArgSys[i].ptr,
++                                                          _data + sizeof(int) * outNum+offset,
++                                                          ((int *)_data)[i])) {
++                    gstate = PyGILState_Ensure();
+                     retval = -NACL_ABI_EFAULT;
+                     goto cleanup;
+                 }
+                 gstate = PyGILState_Ensure();
+-                offset += ((int*)_data)[i];
++                offset += ((int *)_data)[i];
+             }
+         }
+     }
+     if(stubs[callNum].clean) {
+         stubs[callNum].clean(nap, inNum, inArgSys, xchangeData);
+@@ -920,7 +995,14 @@ error:
+     NaClLog(LOG_ERROR, "NaClSysLindSyscall: Python error\n");
+ cleanup:
+     Py_XDECREF(apiArg);
+     Py_XDECREF(response);
+     PyGILState_Release(gstate);
++
++    // yiwen: record the ending time of the Lind system call, this includes the post-processing of arguments right now
++    lind_sys_finish = clock();
++    // yiwen: record Lind system call timing info
++    lind_syscall_counter++;
++    lind_syscall_invoked_times[callNum]++;
++    lind_syscall_execution_time[callNum] += (double)(lind_sys_finish - lind_sys_begin) / CLOCKS_PER_SEC;
+     return retval;
+ }
+diff --git a/src/trusted/service_runtime/nacl_config.h b/src/trusted/service_runtime/nacl_config.h
+index 1144a0260ff5792428..f47df88c9b9eb2788d 100644
+--- a/src/trusted/service_runtime/nacl_config.h
++++ b/src/trusted/service_runtime/nacl_config.h
+@@ -15,11 +15,11 @@
+ 
+ #include "native_client/src/include/nacl_base.h"
+ #include "native_client/src/include/nacl_asm.h"
+ 
+ /* maximum number of elf program headers allowed. */
+-#define NACL_MAX_PROGRAM_HEADERS  128
++#define NACL_MAX_PROGRAM_HEADERS      128
+ 
+ /*
+  * NACL_BLOCK_SHIFT is defined per-architecture, below.
+  *
+  * This value must be consistent with what the compiler generates.
+@@ -33,16 +33,15 @@
+ #define NACL_PAGESIZE                 (1U << NACL_PAGESHIFT)
+ 
+ #define NACL_MAP_PAGESHIFT            16
+ #define NACL_MAP_PAGESIZE             (1U << NACL_MAP_PAGESHIFT)
+ 
++/* NACL_MAP_PAGESIFT >= NACL_PAGESHIFT must hold */
+ #if NACL_MAP_PAGESHIFT < NACL_PAGESHIFT
+ # error "NACL_MAP_PAGESHIFT smaller than NACL_PAGESHIFT"
+ #endif
+-
+-/* NACL_MAP_PAGESIFT >= NACL_PAGESHIFT must hold */
+-#define NACL_PAGES_PER_MAP            (1 << (NACL_MAP_PAGESHIFT-NACL_PAGESHIFT))
++#define NACL_PAGES_PER_MAP            (1 << (NACL_MAP_PAGESHIFT - NACL_PAGESHIFT))
+ 
+ #define NACL_MEMORY_ALLOC_RETRY_MAX   256 /* see win/sel_memory.c */
+ 
+ /*
+  * NACL_KERN_STACK_SIZE: The size of the secure stack allocated for
+@@ -62,31 +61,27 @@
+  * during the processing of the syscall, so beware running into
+  * NACL_KERN_STACK_SIZE above.
+  */
+ #define NACL_CONFIG_PATH_MAX          1024
+ 
+-/*
+- * newfd value for dup2 must be below this value.
+- */
+-#define NACL_MAX_FD                   4096
+-
+ /*
+  * Macro for the start address of the trampolines.
+  */
+ #if defined(NACL_TARGET_ARM_THUMB2_MODE)
+ /*
+  * Defining the start of the trampolines to something less than 64k allows
+  * better representation with thumb2 immediates.
+  */
+-#define NACL_SYSCALL_START_ADDR       0x8000
++# define NACL_SYSCALL_START_ADDR      0x8000
+ #else
+ /*
+  * The first 64KB (16 pages) are inaccessible.  On x86, this is to prevent
+  * addr16/data16 attacks.
+  */
+-#define NACL_SYSCALL_START_ADDR       (16 << NACL_PAGESHIFT)
+-#endif
++# define NACL_SYSCALL_START_ADDR      (16 << NACL_PAGESHIFT)
++#endif /* defined(NACL_TARGET_ARM_THUMB2_MODE) */
++
+ /* Macro for the start address of a specific trampoline.  */
+ #define NACL_SYSCALL_ADDR(syscall_number) \
+     (NACL_SYSCALL_START_ADDR + (syscall_number << NACL_SYSCALL_BLOCK_SHIFT))
+ 
+ /*
+@@ -113,19 +108,20 @@
+  * NACL_TRAMPOLINE_START gives the address of the first trampoline.
+  * NACL_TRAMPOLINE_END gives the address of the first byte after the
+  * trampolines.
+  */
+ #if defined(NACL_TARGET_ARM_THUMB2_MODE)
+-#define NACL_TRAMPOLINE_START 0x8000
+-#define NACL_TRAMPOLINE_SIZE 0x8000
++# define NACL_TRAMPOLINE_START       0x8000
++# define NACL_TRAMPOLINE_SIZE        0x8000
+ #else
+-#define NACL_NULL_REGION_SHIFT  16
+-#define NACL_TRAMPOLINE_START   (1 << NACL_NULL_REGION_SHIFT)
+-#define NACL_TRAMPOLINE_SHIFT   16
+-#define NACL_TRAMPOLINE_SIZE    (1 << NACL_TRAMPOLINE_SHIFT)
++# define NACL_NULL_REGION_SHIFT      16
++# define NACL_TRAMPOLINE_START       (1 << NACL_NULL_REGION_SHIFT)
++# define NACL_TRAMPOLINE_SHIFT       16
++# define NACL_TRAMPOLINE_SIZE        (1 << NACL_TRAMPOLINE_SHIFT)
+ #endif  /* defined(NACL_TARGET_ARM_THUMB2_MODE) */
+-#define NACL_TRAMPOLINE_END     (NACL_TRAMPOLINE_START + NACL_TRAMPOLINE_SIZE)
++
++#define NACL_TRAMPOLINE_END          (NACL_TRAMPOLINE_START + NACL_TRAMPOLINE_SIZE)
+ 
+ /*
+  * Extra required space at the end of static text (and dynamic text,
+  * if any).  The intent is to stop a thread from "walking off the end"
+  * of a text region into another.  Four bytes suffices for all
+@@ -142,11 +138,11 @@
+  * space to fill with HALT instructions, we (attempt to) ensure that
+  * such op-code absorption cannot happen, and at least one of these
+  * HALTs will cause the untrusted thread to abort, and take down the
+  * whole NaCl app.
+  */
+-#define NACL_HALT_SLED_SIZE     32
++#define NACL_HALT_SLED_SIZE      32
+ 
+ /*
+  * If NACL_MASK_INODES is defined to be 1, then NACL_FAKE_INODE_NUM is
+  * used throughout as inode number returned in stat/fstat/getdents
+  * system calls.  If NACL_MASK_INODES is defined to be 0, then the
+@@ -154,55 +150,55 @@
+  * inode numbers are a miniscule information leak; more importantly,
+  * it is yet another platform difference since none of the standard
+  * Windows filesystems have inode numbers.
+  */
+ #if !defined(NACL_MASK_INODES)
+-# define NACL_MASK_INODES 1
++# define NACL_MASK_INODES         1
+ #endif
+ #if !defined(NACL_FAKE_INODE_NUM) /* allow alternate value */
+-# define NACL_FAKE_INODE_NUM     0x6c43614e
++# define NACL_FAKE_INODE_NUM      0x6c43614e
+ #endif
+ 
+ /*
+  * Block sizes, op-codes that are used in NaCl, and trampoline related
+  * constants that simplify making the C code architecture independent.
+  */
+ #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86
+ 
+-# define NACL_BLOCK_SHIFT         (5)
++# define NACL_BLOCK_SHIFT         5
+ 
+-# define NACL_NOOP_OPCODE    0x90
+-# define NACL_HALT_OPCODE    0xf4
+-# define NACL_HALT_LEN       1           /* length of halt instruction */
+-# define NACL_HALT_WORD      0xf4f4f4f4U
++# define NACL_NOOP_OPCODE         0x90
++# define NACL_HALT_OPCODE         0xf4
++# define NACL_HALT_LEN            1           /* length of halt instruction */
++# define NACL_HALT_WORD           0xf4f4f4f4u
+ 
+-# define NACL_X86_TRAP_FLAG      (1 << 8)
+-# define NACL_X86_DIRECTION_FLAG (1 << 10)
++# define NACL_X86_TRAP_FLAG       (1 << 8)
++# define NACL_X86_DIRECTION_FLAG  (1 << 10)
+ 
+ # if NACL_BUILD_SUBARCH == 32
+ #  define NACL_ELF_E_MACHINE      EM_386
+ /*
+  * The untrusted stack looks like this on x86-32:
+  *   esp-0x0: syscall args pushed by untrusted code before calling trampoline
+  *   esp-0x4: 4 byte return address pushed by untrusted code's call
+  *   esp-0xc: 8 bytes pushed by the trampoline's lcall instruction
+  */
+-#  define NACL_TRAMPRET_FIX       (-0xc)
+-#  define NACL_USERRET_FIX        (-0x4)
+-#  define NACL_SYSARGS_FIX        (0)
++#  define NACL_TRAMPRET_FIX       (-0x0c)
++#  define NACL_USERRET_FIX        (-0x04)
++#  define NACL_SYSARGS_FIX        0
+ /*
+  * System V Application Binary Interface, Intel386 Architcture
+  * Processor Supplement, section 3-10, says stack alignment is
+  * 4-bytes, but gcc-generated code can require 16-byte alignment
+  * (depending on compiler flags in force) for SSE instructions, so we
+  * must do so here as well.
+  */
+-#  define NACL_STACK_ALIGN_MASK   (0xf)
+-#  define NACL_STACK_ARGS_SIZE    (0)
+-#  define NACL_STACK_GETS_ARG     (1)
+-#  define NACL_STACK_PAD_BELOW_ALIGN (4)
+-#  define NACL_STACK_RED_ZONE     (0)
++#  define NACL_STACK_ALIGN_MASK   0x0f
++#  define NACL_STACK_ARGS_SIZE    0
++#  define NACL_STACK_GETS_ARG     1
++#  define NACL_STACK_PAD_BELOW_ALIGN 4
++#  define NACL_STACK_RED_ZONE     0
+ 
+ # elif NACL_BUILD_SUBARCH == 64
+ #  define NACL_ELF_E_MACHINE      EM_X86_64
+ /*
+  * The untrusted stack looks like this on x86-64:
+@@ -216,24 +212,24 @@
+ /*
+  * System V Application Binary Interface, AMD64 Architecture Processor
+  * Supplement, at http://www.x86-64.org/documentation/abi.pdf, section
+  * 3.2.2 discusses stack alignment.
+  */
+-#  define NACL_STACK_ALIGN_MASK   (0xf)
+-#  define NACL_STACK_ARGS_SIZE    (0)
+-#  define NACL_STACK_GETS_ARG     (0)
+-#  define NACL_STACK_PAD_BELOW_ALIGN (8)
+-#  define NACL_STACK_RED_ZONE     (128)
++#  define NACL_STACK_ALIGN_MASK   0x0f
++#  define NACL_STACK_ARGS_SIZE    0
++#  define NACL_STACK_GETS_ARG     0
++#  define NACL_STACK_PAD_BELOW_ALIGN 8
++#  define NACL_STACK_RED_ZONE     128
+ # else /* NACL_BUILD_SUBARCH */
+ #  error Unknown platform!
+ # endif /* NACL_BUILD_SUBARCH */
+ 
+ #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_arm
+ # include "native_client/src/include/arm_sandbox.h"
+ 
+ # define NACL_ELF_E_MACHINE       EM_ARM
+-# define NACL_BLOCK_SHIFT         (4)
++# define NACL_BLOCK_SHIFT         4
+ 
+ # if defined(NACL_TARGET_ARM_THUMB2_MODE)
+ #  define NACL_NOOP_OPCODE        0x46c0      /* mov r8, r8 */
+ #  define NACL_HALT_OPCODE        0xbe00      /* bkpt 0x0000 */
+ #  define NACL_HALT_LEN           2           /* length of halt instruction */
+@@ -244,11 +240,11 @@
+ #  define NACL_HALT_LEN           4           /* length of halt instruction */
+ #  define NACL_HALT_WORD          NACL_HALT_OPCODE
+ # endif  /* defined(NACL_TARGET_ARM_THUMB2_MODE) */
+ 
+ /* 16-byte bundles, 1G address space */
+-# define NACL_CONTROL_FLOW_MASK      0xC000000F
++# define NACL_CONTROL_FLOW_MASK   0xC000000F
+ 
+ # define NACL_DATA_FLOW_MASK      0xC0000000
+ 
+ /*
+  * The untrusted stack looks like this on ARM:
+-- 
+Cheers,
+Joey Pabalinas
+

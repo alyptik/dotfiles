@@ -1,0 +1,11 @@
+[Unit]
+Description=Dropbear SSH Daemon
+After=network.target
+
+[Service]
+Type=simple
+#ExecStart=/usr/bin/dropbear -g -a -p 222 -F -P /run/dropbear.pid
+ExecStart=/usr/bin/dropbear -p  '0.0.0.0: 222' -R -g -F -a -P /run/dropbear.pid
+
+[Install]
+WantedBy=multi-user.target

@@ -143,3 +143,8 @@ mutex
 argv
 busybox
 sigprocmask
+userspace
+Runtime
+IRT
+NPTL
+intentioned
