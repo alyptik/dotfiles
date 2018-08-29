@@ -2,26 +2,15 @@
 #
 # Use a different browser depending on url
 
-# trap '{ cleanup; trap - INT EXIT; kill -INT $$; }' INT
-# trap '{ cleanup; trap - INT EXIT; }' EXIT
-#
-# function cleanup () {
-#         [[ -t 9 ]] || return
-#         exec >&8
-#         exec 2>&9
-#         exec 8>&-
-#         exec 9>&-
-# }
+function mpvcmd () {
+	notify-send "mpv: loading..." "$1"
+	mpv --loop-file=inf "$@"
+}
 
-# exec 8>&1
-# exec 9>&2
-# exec >/dev/null
-# exec 2>/dev/null
-
+# this is definitely not parsing html with bash i promise
 function imguhr() {
 	local url
 	local -a display_cmd popup_cmd
-	# this is definitely not parsing html with bash
 	popup_cmd=(notify-send "mpv: loading...")
 	display_cmd=(mpv '--loop-file=inf' '--')
 	url="$(curl -L "$1" 2>/dev/null | grep -F '<meta itemprop="contentURL"')"
@@ -38,11 +27,6 @@ function imguhr() {
 	fi
 	"${popup_cmd[@]}" "$url"
 	"${display_cmd[@]}" "$url"
-}
-
-function mpvcmd () {
-	notify-send "mpv: loading..." "$1"
-	mpv --loop-file=inf "$@"
 }
 
 function _plu () {
