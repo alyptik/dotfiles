@@ -18,19 +18,31 @@
 # exec >/dev/null
 # exec 2>/dev/null
 
-function imgurredirect () {
-    url="$(curl "$1" 2>/dev/null | grep '<meta property="og:image"')"
-    url="${url/*content=\"/}"
-    url="${url/*\" \/>$/}"
-    feh --insecure "$url"
-    # gio open "$@"
-    # chromium "$url"
-    # pyb.py "$url"
+function imguhr() {
+	local url
+	local -a display_cmd popup_cmd
+	# this is definitely not parsing html with bash
+	popup_cmd=(notify-send "mpv: loading...")
+	display_cmd=(mpv '--loop-file=inf' '--')
+	url="$(curl -L "$1" 2>/dev/null | grep -F '<meta itemprop="contentURL"')"
+	# retry if no videos found
+	if [[ -z "$url" ]]; then
+		popup_cmd=(notify-send "feh: loading...")
+		display_cmd=(feh '--insecure' '--')
+		url="$(curl -L "$1" 2>/dev/null | grep -F '<meta property="og:image"')"
+	fi
+	url="${url##*content=\"}"
+	url="${url%%\"*}"
+	if ! command -v notify-send >/dev/null 2>&1; then
+		popup_cmd=(:)
+	fi
+	"${popup_cmd[@]}" "$url"
+	"${display_cmd[@]}" "$url"
 }
 
 function mpvcmd () {
-    notify-send "mpv: loading..." "$1"
-    mpv --loop-file=inf "$@"
+	notify-send "mpv: loading..." "$1"
+	mpv --loop-file=inf "$@"
 }
 
 function _plu () {
@@ -45,8 +57,8 @@ function _plu () {
 		mpvcmd "$1" ;;
 	(*://i.imgur.com/*)
 		feh --insecure "$1" ;;
-	(*://imgur.com/*)
-		imgurredirect "$1" ;;
+	(*://imgur.com/*|*://m.imgur.com/*)
+		imguhr "$1" ;;
 	(*.jpg|*.jpeg|*.png)
 		feh --insecure "$1" ;;
 	(*://dpaste.de/*)
