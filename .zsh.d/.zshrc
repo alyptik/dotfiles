@@ -511,6 +511,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	compdef "$reptyr_str" reptyr
 }
 
+compdef _bat bat
 compdef _cpuled cpuled
 compdef _ee ee
 compdef _man fman
@@ -538,7 +539,6 @@ compdef e=vim
 compdef g=git
 compdef gnpm=npm
 compdef oomox=oomox-cli
-compdef p=perl
 compdef pkgconf=pkg-config
 compdef run=gcc
 compdef xs=xsel

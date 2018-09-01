@@ -7,55 +7,75 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-08-27] Joey's Progress Report
+Subject: [2018-08-29] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-08-27)
+ * (2018-08-29)
  */
 
-This week was mostly spent on Lind; I'm having a few issues getting a VM
-to actually run on a netbook, so I've mostly been reading the
-documentation in the rrapper repository until I can get a new laptop.
+This week was mostly spent fixing the last few smudges in our PR adding
+single-process, thread-only emulation of the Linux fork() system call to
+NaCl, as well as on assessing possible difficulties/issues in adding 64-bit
+support to CrashSimulator.
 
         [CrashSimulator]
 
-        After spending a day or so trying to get a VM running on my
-        netbook unsuccessfully, I've shelved it for now and have been
-        reading the documentation on writing a mutator which Preston
-        has up in his rrapper repository.
+        Progress is slow, but so far there aren't any huge obstacles
+        I've noticed standing in the way; syscallreplay had no issues
+        whatsoever, so I am currently in the process of getting rr to
+        compile without errors.
+
+        I did run into one specific issue with glibc 2.26 adding
+        a shadow stack pointer member to their ucontext_t structure.
+        This ended up breaking the kernel ABI tests, and it took
+        a bit of digging to find the upstream rr issue [1] about
+        it (the static assertions failures are not very descriptive
+        about _why_ they fail, which is something I plan to fix
+        eventually).
+
+        I've sort of just band-aided it for now by just adding the
+        missing member; I think it's more important to just get rr
+        built and revisit this in the future, as the upstream solution
+        was to remove the ucontext_t structure completely and I don't
+        yet actually know if CrashSimulator would still need it for
+        anything.
 
         [Lind]
 
-        I was able to modify our glibc execve() implementation to take
-        normal argument and environment vectors instead of concatenating
-        them into a single space-separated string as the previous
-        implementation did.
+        The glibc PR has been running smoothly; the changes which were
+        suggested during review were minor and easy to fix, so I've just
+        merged that one in so I can concentrate on the NaCl PR (I have
+        basically zero concerns about our glibc code).
 
-        Busybox, coreutils, dash, and bash all now compile without
-        issue, so my next step is getting a LAMP stack up and running. I
-        am still running into a few issues getting busybox to actually
-        run, but that's not really super important at this point so I'm
-        putting it off for now (coreutils and the shells are all pretty
-        much working).
+        After double checking that I've addressed as many problems as
+        I could brought up during review, I've spent the rest of the
+        week cutting out everything except the absolutely minimum that
+        both made sense and was required for fork() to work, and cleaned
+        it up before condensing it into a final PR; I feel much more
+        comfortable merging this one, mostly because of all the tiny
+        errors which were caught and fixed during code review.
 
-        I'm still having some issues figuring out why the shells (dash
-        and bash) are segfaulting when I stub rt_sigprocmask(), but
-        hopefully I'll have that ironed out by the end of the week.
+        I haven't triple checked all of it yet and won't be pinging specific
+        people for review until I've had a chance to do so.
+
+        That being said, you are more than welcome to take a look [2]
+        or make any comments if you happen to be intrigued (or bored :).
 
 /* Plans For Next Week */
 
-        - Figure out why bash and dash segfault when I stub
-          rt_sigprocmask().
-        - Start building Apache with our Lind compiler.
-        - Figure out why busybox segfaults when run in Lind.
-        - Start planning out which exact programs will be part
-          of our LAMP stack.
+        - Continue assessing the difficulty of porting CrashSimulator
+          to x86_64.
+        - Finish cleaning up my NaCl fork() PR, then ping a couple people
+          for code review.
 
 That's all for this week, thanks everyone.
+
+[1] https://github.com/mozilla/rr/issues/2237
+[2] https://github.com/Lind-Project/native_client/pull/6
 
 -- 
 Cheers,

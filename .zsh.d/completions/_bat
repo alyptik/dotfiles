@@ -1,0 +1,35 @@
+#compdef bat
+
+local curcontext="$curcontext" state line
+local -a langs themes
+typeset -A opt_args
+
+_arguments -s \
+	{-l,--language=}'[Set the language for syntax highlighting.]:language:->list_langs' \
+	--style='[Configure display style.]:style:(auto full plain changes header grid numbers)' \
+	--color='[When to use color.]:when:(auto never always)' \
+	--paging='[Specify when to use the pager]:when:(auto never always)' \
+	--wrap='[When to wrap text.]:mode:(character never)' \
+	--list-languages'[Display a list of supported languages]' \
+	--theme='[Set the theme for syntax highlighting.]:theme:->list_themes' \
+	--line-range='[Print a specified range or ranges of lines from the files.]:range' \
+	--list-themes'[Display a list of supported themes for syntax highlighting]' \
+	{-n,--number}'[Show line numbers (no other decorations).]' \
+	-u'[This option exists for POSIX-compliance reasons and is simply ignored.]' \
+	{-h,--help}'[Print this help message.]' \
+	{-V,--version}'[Show version information.]' \
+	'*:' -- && ret=0
+
+case $state in
+list_langs)
+	langs=("${(f)$(bat --list-languages \
+		| perl -alne 'next if /^\s/;
+			$F[0] =~ s/\e[^m]+m//g;
+			print $F[0];')}")
+	compadd -Q -a langs && ret=0
+	;;
+list_themes)
+	themes=("${(f)$(bat --list-themes | sed "/[[:blank:]]/ s/.*/'&'/")}")
+	compadd -Q -a themes && ret=0
+	;;
+esac

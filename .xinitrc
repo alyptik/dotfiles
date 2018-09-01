@@ -30,6 +30,7 @@ fi
 # scpuled &
 
 # xrandr --dpi 216 &
+xrandr --output LVDS-1 --brightness 1.5 &
 xbindkeys &
 xset s noblank &
 xset s off -b -dpms &

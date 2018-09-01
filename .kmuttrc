@@ -73,7 +73,7 @@ set askcc
 set reply_self
 set edit_headers
 
-set sidebar_visible
+unset sidebar_visible
 set sidebar_short_path
 set sidebar_width = 25
 set sidebar_delim_chars = "/."

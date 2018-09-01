@@ -3,6 +3,13 @@
 # .profile - environment configuration
 
 # conditionals
+if command -v bat >/dev/null 2>&1; then
+	dump_cmd=bat
+elif command -v less >/dev/null 2>&1; then
+	dump_cmd=less
+else
+	dump_cmd=cat
+fi
 if command -v ruby >/dev/null 2>&1; then
 	rubies="$(ruby -rrubygems -e "puts Gem.user_dir")/bin"
 else
@@ -70,7 +77,8 @@ CFLAGS="-fuse-ld=gold -fuse-linker-plugin $CFLAGS"
 # CFLAGS="-march=native -gdwarf-4 -g3 -O3 $CFLAGS"
 # CFLAGS="-march=x86-64 -mtune=intel -g3 -O3 $CFLAGS"
 # CFLAGS="-pipe -march=native -g -O3 $CFLAGS"
-CFLAGS="-pipe -march=x86_64 -mtune=generic -g -O3 $CFLAGS"
+# CFLAGS="-pipe -march=x86-64 -mtune=generic -g -O3 $CFLAGS"
+CFLAGS="-march=x86-64 -mtune=generic  -O3 $CFLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
@@ -183,8 +191,6 @@ export LESS=FMRXins
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # shellcheck disable=SC2039
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
-# Intel VA-API and VDPAU configuration
-# export LIBVA_DRIVER_NAME=i965 VDPAU_DRIVER=va_gl
 export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
@@ -246,7 +252,7 @@ export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,pcpu,sz,wchan,sta
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2"
 export PYTHONSTARTUP="$HOME/.pythonrc"
-export READNULLCMD=less
+export READNULLCMD="$dump_cmd"
 export REPORTTIME=5
 export RLWRAP_EDITOR="vim '+call cursor(%L,%C)'"
 export QEMU_AUDIO_DRV=pa
