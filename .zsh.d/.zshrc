@@ -511,6 +511,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	compdef "$reptyr_str" reptyr
 }
 
+compdef _bat b
 compdef _bat bat
 compdef _cpuled cpuled
 compdef _ee ee

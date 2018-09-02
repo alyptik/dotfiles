@@ -1,3 +1,22 @@
 #!/bin/sh
 
-exec bat "$@"
+for f; do
+	case "$f" in
+	*.h)
+		set -- --language=C "$@"
+		break;;
+	*.hpp)
+		set -- --language=C++ "$@"
+		break;;
+	*.txt)
+		set -- --language=Markdown "$@"
+		break;;
+	esac
+done
+
+# stdin
+if ((!$#)); then
+	set -- --language=C
+fi
+
+exec bat --theme=1337 "$@"

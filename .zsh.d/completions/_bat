@@ -1,4 +1,4 @@
-#compdef bat
+#compdef b bat
 
 local curcontext="$curcontext" state line
 local -a langs themes

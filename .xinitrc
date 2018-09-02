@@ -19,38 +19,24 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-# feh --bg-scale "/home/jp/wallpapers/fifths.png"
-# feh --bg-scale "/home/jp/wallpapers/modes.png"
-# hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint '#ebdbb2'
-# hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint '#b8a990'
-# xsetroot -mod 16 16 -fg '#343d46' -bg '#2b303b'
-# tail -f "${HOME}/.weechat/pipe" | dzen2 -sa c -w 2175 -dock -fn "xft:FuraCode Nerd Font-Light:pixelsize=18:antialias=true:hinting=true" &
-# urxvt -kuake-hotkey F10 &
-# urxvtcd -kuake-hotkey F10 &
-# scpuled &
-
 # xrandr --dpi 216 &
-xrandr --output LVDS-1 --brightness 1.5 &
-xbindkeys &
-xset s noblank &
-xset s off -b -dpms &
-setterm -blank 1 -powerdown 0 &
-# xsetroot -cursor_name left_ptr
+# xrandr --output LVDS-1 --brightness 1.5 &
+xbindkeys
+xset s noblank
+xset s off -b -dpms
+setterm -blank 1 -powerdown 0
 xrdb "/home/jp/.Xresources"
-# compton -cCGfF -b -i .85
-# compton -b
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/jp/.Xmodmap"
 stjerm &
-# hilites &
 transgui &
 pavucontrol &
 # udisksctl mount -b "$(findfs LABEL=vm)" &
-(udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 1; pcmanfm /media/microSDXC) &
+(udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 2; pcmanfm /sdxc /sdxc/papers) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &
-# /home/jp/bin/scpuled &
 dbus-update-activation-environment --systemd DISPLAY
+# xsetroot -cursor_name left_ptr
 hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 # shellcheck disable=SC2046
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
@@ -74,22 +60,22 @@ printf '%s\n' "$session" > ~/.WM.last;
 
 case $session in
 (herbst|herbstluftwm)
-	# /home/jp/bin/hilites &
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec herbstluftwm --locked;;
+
 (awesome)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec awesome;;
 
 (bspwm)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec bspwm;;
 
 (budgie-desktop)
-	compton -b
+	# compton -b
 	gnome-screensaver &
 	exec budgie-desktop;;
 
@@ -104,95 +90,95 @@ case $session in
 	exec cinnamon-session;;
 
 (dwm)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec dwm;;
 
 (ede)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec startede;;
 
 (enlightenment)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec enlightenment_start;;
 
 (fluxbox)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec startfluxbox;;
 
 (gnome)
-	compton -b
+	# compton -b
 	gnome-screensaver &
 	exec gnome-session;;
 
 (gnome-classic)
-	compton -b
+	# compton -b
 	gnome-screensaver &
 	exec gnome-session --session=gnome-classic;;
 
 (i3|i3wm)
-	compton -b
+	# compton -b
 	/home/jp/bin/i3-focus-last &
 	/home/jp/bin/hilites &
 	xscreensaver &
 	exec i3;;
 
 (icewm)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec icewm-session;;
 
 (jwm)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec jwm;;
 
 (kde)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec startkde;;
 
 (mate)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec mate-session;;
 
 (monster|monsterwm)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec monsterwm;;
 
 (notion)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec notion;;
 
 (openbox)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec openbox-session;;
 
 (unity)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec unity;;
 
 (xfce|xfce4)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec startxfce4;;
 
 (xmonad)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec xmonad;;
 
 # No known session, try to run it as command
 (*)
-	compton -b
+	# compton -b
 	xscreensaver &
 	exec "$session";;
 esac
