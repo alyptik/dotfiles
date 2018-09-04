@@ -4,7 +4,7 @@ local curcontext="$curcontext" state line
 local -a langs themes
 typeset -A opt_args
 
-_arguments -s \
+_arguments -C \
 	{-l,--language=}'[Set the language for syntax highlighting.]:language:->list_langs' \
 	--style='[Configure display style.]:style:(auto full plain changes header grid numbers)' \
 	--color='[When to use color.]:when:(auto never always)' \
@@ -18,7 +18,7 @@ _arguments -s \
 	-u'[This option exists for POSIX-compliance reasons and is simply ignored.]' \
 	{-h,--help}'[Print this help message.]' \
 	{-V,--version}'[Show version information.]' \
-	'*:' -- && ret=0
+	'*:' && ret=0
 
 case $state in
 list_langs)
@@ -26,10 +26,8 @@ list_langs)
 		| perl -alne 'next if /^\s/;
 			$F[0] =~ s/\e[^m]+m//g;
 			print $F[0];')}")
-	compadd -Q -a langs && ret=0
-	;;
+	compadd -Q -a langs && ret=0 ;;
 list_themes)
 	themes=("${(f)$(bat --list-themes | sed "/[[:blank:]]/ s/.*/'&'/")}")
-	compadd -Q -a themes && ret=0
-	;;
+	compadd -Q -a themes && ret=0 ;;
 esac

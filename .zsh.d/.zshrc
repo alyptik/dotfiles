@@ -209,8 +209,8 @@ aliases[=]='noglob ='
 () {
 	local -a host=(host -W 1 -t) dig=(dig +short +timeout=1)
 	local -a cmdline=($host txt istheinternetonfire.com)
-	local muhcow="$(print -l - /usr/share/cows/*(.:r:t) | sort -R | head -1)"
-	$cmdline | cut -f2 -d'"' | cowsay -f "$muhcow" -W 50
+	local -a muhcows=($(print - /usr/share/cows/*.cow(.:r:t)))
+	$cmdline | cut -f2 -d'"' | cowsay -W 50 -f $muhcows[$((RANDOM % $#muhcows + 1))]
 	print
 }
 safetytoggle -n

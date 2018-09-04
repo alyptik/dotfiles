@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "evil-escape" "20180624.319" "Escape from anything with a customizable key sequence" '((emacs "24") (evil "1.0.9") (cl-lib "0.5")) :commit "73b30bfd912f40657b1306ee5849d215f0f9ffbd" :keywords '("convenience" "editing" "evil") :authors '(("Sylvain Benner" . "sylvain.benner@gmail.com")) :maintainer '("Sylvain Benner" . "sylvain.benner@gmail.com") :url "https://github.com/syl20bnr/evil-escape")

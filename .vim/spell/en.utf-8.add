@@ -152,3 +152,11 @@ subrepositories
 ucontext
 ABI
 VPS
+mktemp
+tmpfs
+ramdisk
+stdout
+lseek
+subshells
+subshell
+stdin
