@@ -2,12 +2,15 @@
 
 import imaplib
 import time
-import os.path
+import os
 
-with open(os.path.expanduser('~/.imapcounter')) as f:
-    HOST = f.readline().strip()
-    USER = f.readline().strip()
-    PW = f.readline().strip()
+with os.popen("gpg2 -dq ~/.passwords.asc") as f:
+    HOST = 'imap.gmail.com'
+    f.readline()
+    f.readline()
+    USER = f.readline().split("=")[1].strip().strip('"')
+    PW = f.readline().split("=")[1].strip().strip('"')
+    f.close()
 
 def parse_status(s):
     s = s[0].decode('utf8'); mbox, status = s.split(' ', 1)
@@ -27,9 +30,6 @@ def main():
                         print("imap\t"
                             + f"^fg(#909090){stats['MESSAGES']} "
                             + f"^fg(#efefef)({stats['UNSEEN']})", flush=True)
-                        #  print("imap\t^fg(#898989)Inbox: "
-                        #      + f"^fg(#898989){stats['MESSAGES']} "
-                        #      + f"^fg(#efefef)({stats['UNSEEN']})", flush=True)
                     last = stats
                     time.sleep(5)
         except (OSError, imaplib.IMAP4.error) as e:

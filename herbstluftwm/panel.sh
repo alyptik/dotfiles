@@ -15,13 +15,8 @@ panel_height=16
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
-# font="xft:FiraCode-Light:pixelsize=18:antialias=true:hinting=false"
-# font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
-# font="-*-fixed-medium-*-*-*-20-*-*-*-*-*-*-*"
 font="-*-terminus-medium-*-*-*-20-*-*-*-*-*-*-*"
-# font="-*-terminus-medium-r-normal--20-*-*-*-*-*-*-*"
 dzenfont="xft:Fira Code:style=Retina:pixelsize=16:antialias=true:hinting=false"
-# dzenfont="$font"
 
 ####
 # Try to find textwidth binary.
@@ -65,7 +60,8 @@ systemctl restart mpdscribble@alyptik.service mpd
 
 {
 	### Event generator ###
-	# based on different input data (mpc, date, hlwm hooks, ...) this generates events, formed like this:
+	# based on different input data (mpc, date, hlwm hooks, ...)
+	# this generates events, formed like this:
 	#   <eventname>\t<data> [...]
 	# e.g.
 	#   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
@@ -73,18 +69,12 @@ systemctl restart mpdscribble@alyptik.service mpd
 	imapcounter &
 
 	while :; do
-		# "date" output is checked once a second, but an event is only
-		# generated if the output changed compared to the previous run.
-		# date +$'date\t^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
-		# curtemp="$(</sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input)"
 		curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
 		curbat="$(</sys/class/power_supply/BAT0/capacity)"
-		# curbat="$(acpi -bi | perl -F, -ane 'print $F[1] =~ s/^s+//r if $. == 1')"
 		echo $'np\t'"$(mpc current)"
 		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1'
 		echo $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
 		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
-		# echo $'bat\t^fg(#efefef)'"$curbat% ⚡"
 		echo $'bat\t^fg(#efefef)'"$curbat%"
 		childpid=$!
 	done > >(uniq_linebuffered) &
@@ -194,7 +184,7 @@ systemctl restart mpdscribble@alyptik.service mpd
 				if [ "${cmd[1]}" -ne "$monitor" ]; then
 					continue
 				fi
-				if [ "${cmd[1]}" = "current" ] && [ "$currentmonidx" -ne "$monitor" ] ; then
+				if [ "${cmd[1]}" = "current" ] && [ "$currentmonidx" -ne "$monitor" ]; then
 					continue
 				fi
 				echo "^togglehide()"

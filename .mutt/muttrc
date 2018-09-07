@@ -4,6 +4,7 @@
 # Mutt configuration
 
 set hidden_host
+set use_domain
 set hostname = "gmail.com"
 # set hostname = "gmx.com"
 set my_gmail_base = "imap"
@@ -38,6 +39,7 @@ unset imap_peek
 set ssl_starttls
 unset ssl_force_tls
 set ssl_use_sslv3
+set imap_delim_chars = "/."
 
 unset maildir_header_cache_verify
 set header_cache = "$my_cfgdir/hdr_cache"
@@ -46,8 +48,8 @@ set signature = "$my_cfgdir/signature"
 set alias_file = "$my_cfgdir/mutt_aliases"
 set history_file = "$my_cfgdir/mutt_history"
 set certificate_file = "$my_cfgdir/mutt_certificates"
-# set entropy_file = "/dev/urandom"
-set entropy_file = "/dev/frandom"
+# set entropy_file = "/dev/frandom"
+set entropy_file = "/dev/urandom"
 set editor = "vim"
 set charset = "utf-8"
 set send_charset = "utf-8:us-ascii"
@@ -78,7 +80,7 @@ set sidebar_visible
 set sidebar_short_path
 set sidebar_width = 25
 set sidebar_delim_chars = "/."
-unset sidebar_folder_indent
+set sidebar_folder_indent
 set sidebar_indent_string = "  "
 unset sidebar_new_mail_only
 set sidebar_next_new_wrap
@@ -94,12 +96,15 @@ set sidebar_sort_method = "unsorted"
 set mail_check_stats
 set allow_ansi
 unset pager_stop
-set sort = "last-date-received"
-# set sort = "threads"
 # set sort = "reverse-threads"
+set sort = "threads"
+# set sort = "last-date-received"
 set sort_aux = "last-date-received"
 set sort_browser = "date"
 set uncollapse_jump
+set collapse_all
+set collapse_flagged
+set collapse_unread
 unset text_flowed
 set indent_string = "> "
 unset strict_threads
@@ -138,21 +143,29 @@ set smtp_url = "smtp://$my_gmail_user:$my_gmail_pass@smtp.gmail.com:587/"
 # set smtp_url = "smtp://$my_kindle_user:$my_kindle_pass@mail.gmx.com:587/"
 
 set mbox_type = Maildir
-set spoolfile = "~/Maildir/"
-set folder = "~/Maildir/"
 # the default mask hides dotfiles and maildirs are dotfiles now.
 set mask = ".*"
 # this line intentionally commented out
 # set mask = "!^\.[^.]"
+
+set spoolfile = "~/Maildir/"
+set folder = "~/Maildir/"
 set record = "+.Sent"
 set postponed = "+.Drafts"
+
+# unmailboxes *
+
+# mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
+# mailboxes "imaps://$my_twc_user:$my_twc_pass@mail.twc.com/INBOX"
+# mailboxes "imaps://$my_user:$my_pass@mail.alyp.tk/INBOX"
+# mailboxes "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/INBOX"
 
 mailboxes + ` \
 	for file in ~/Maildir/.*; do \
 		box=$(basename "$file"); \
 		if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
-		-a ! "$box" = '.subscriptions' ]; then \
-			echo -n "\"+$box\" "; \
+			-a ! "$box" = '.subscriptions' ]; then \
+		    echo -n "\"+$box\" "; \
 		fi; \
 	done; \
 	for folder in ~/Maildir/*; do \
@@ -160,7 +173,8 @@ mailboxes + ` \
 			box=$(basename "$folder"); \
 				for file in ~/Maildir/$box/.*; do \
 					box2=$(basename "$file"); \
-					if [ ! "$box2" = '.' -a ! "$box2" = '..' -a ! "$box2" = '.customflags' \
+					if [ ! "$box2" = '.' -a ! "$box2" = '..' \
+						-a ! "$box2" = '.customflags' \
 						-a ! "$box2" = '.subscriptions' ]; then \
 					echo -n "\"+$box/$box2\" "; \
 				fi; \
@@ -168,11 +182,9 @@ mailboxes + ` \
 		fi; \
 	done`
 
-# mailboxes "~/Maildir"
-# mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
-# mailboxes "imaps://$my_twc_user:$my_twc_pass@mail.twc.com/INBOX"
-# mailboxes "imaps://$my_user:$my_pass@mail.alyp.tk/INBOX"
-# mailboxes "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/INBOX"
+set imap_login = "$my_gmail_user"
+set imap_user = "$my_gmail_user"
+set imap_pass = "$my_gmail_pass"
 
 set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 # set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+ns_bin=/usr/bin/netsurf
+
+if ! test -x "$ns_bin"; then
+	ns_bin=/usr/bin/netsurf-gtk
+	if ! test -x "$ns_bin"; then
+		ns_bin=/usr/bin/netsurf-gtk3
+	fi
+fi
+
+exec "$ns_bin" "$@"
