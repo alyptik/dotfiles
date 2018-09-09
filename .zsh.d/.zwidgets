@@ -568,16 +568,16 @@ function news_long() {
 
 # cleanup env and temp files
 function cleanup() {
-	if [[ ! -t 9 ]]; then
+	if [[ -t 2 ]] || ((!$+_stderr)); then
 		return
 	fi
 	if (read -u 0 </dev/stdin) <&2; then
-		perl -e 'print "\n\n" . "—"x72 . "\n"' >> "/store/zsh-log-${UID}.log"
-		date +'%a %d %b %I:%M:%S%P %Z %Y-%m-%d' >> "/store/zsh-log-${UID}.log"
+		perl -e 'print "\n\n" . "—"x72 . "\n"' >> "/store/zsh-log-$UID.log"
+		date +'%a %d %b %I:%M:%S%P %Z %Y-%m-%d' >> "/store/zsh-log-$UID.log"
 		print -rf "\n$(tput setaf 9)%s$(tput sgr0)\n" 'the following errors were detected:'
-		(sed 's/^.*$/\t&/' /dev/stdin | tee -a /store/zsh-log-${UID}.log) <&2
-		perl -e 'print "—"x72 . "\n\n"' >> "/store/zsh-log-${UID}.log"
+		(sed 's/^.*$/\t&/' /dev/stdin | tee -a /store/zsh-log-$UID.log) <&2
+		perl -e 'print "—"x72 . "\n\n"' >> "/store/zsh-log-$UID.log"
 	fi
-	exec 2>&9
-	exec 9>&-
+	exec 2>&$_stderr
+	exec {_stderr}>&-
 }

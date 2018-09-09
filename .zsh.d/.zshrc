@@ -3,12 +3,12 @@
 # .zshrc - zsh stuff and thingys
 
 # redirect errors to a temporary fd, and then append them to a log file
-trap '{ cleanup; trap -; }' USR1 EXIT QUIT TERM
+trap '{ cleanup; trap -; }' USR1 ERR EXIT
 trap '{ cleanup; trap -; kill -INT $$; }' INT
 _zsh_error="$(mktemp)"
-exec 9>&2
+exec {_stderr}>&2
 exec 2<>"$_zsh_error"
-if [[ -f "$_zsh_error" ]]; then rm -f "$_zsh_error"; else cleanup; fi
+rm -f -- "$_zsh_error"
 
 # setopt arrays
 () {
@@ -410,16 +410,18 @@ bindkey -M viins "jj" vi-cmd-mode
 
 # compdefs
 () {
-	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
+	local nacl_path cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
 	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds
 
-	gnu_generic_cmds+=($(print -r - $HOME/lind_project/native_client/tools/out/nacl-sdk/bin/*(.:t)))
+	nacl_path="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin"
+	gnu_generic_cmds+=($(print -rl - $nacl_path/*(.:t)))
 	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
 	gnu_generic_cmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
 	gnu_generic_cmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
-	gnu_generic_cmds+=(ci clang-tidy co col colordiff compton configure conky cower)
-	gnu_generic_cmds+=(cpanm cppcheck cpulimit crontab ctags curl define dmidecode)
-	gnu_generic_cmds+=(dumpasn1 expac fasd file flac2all fusermount-glusterfs)
+	gnu_generic_cmds+=(ci clang-tidy co col colordiff compton configure conky)
+	gnu_generic_cmds+=(cower cpanm cppcheck cpulimit crontab ctags curl db2x_manxml)
+	gnu_generic_cmds+=(db2x_texixml db2x_xsltproc docbook2man docbook2texi define)
+	gnu_generic_cmds+=(dmidecode dumpasn1 expac fasd file flac2all fusermount-glusterfs)
 	gnu_generic_cmds+=(fusermount3 elftoc free fzf gnome-keyring-daemon gpg-agent)
 	gnu_generic_cmds+=(help2man highlight hping hsetroot icdiff install keyring)
 	gnu_generic_cmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim more)
@@ -552,12 +554,14 @@ hash -d audio="/sdxc/audio"
 hash -d b="$HOME/bin/"
 hash -d c="$CONFIG"
 hash -d calibre="/sdxc/calibre"
+hash -d cepl="$PROJECTS/cepl"
 hash -d code="$PROJECTS/school"
 hash -d crash="$PROJECTS/secure-systems-lab/CrashSimulator"
 hash -d d="$PROJECTS/linux/Documentation"
 hash -d djzomg="/sdxc/Music/djzomg"
 hash -d efi="/boot/EFI"
 hash -d euler="$HOME/code/euler"
+hash -d f="$PROJECTS/libfsm"
 hash -d g="$HOME/lind_project/lind/lind_glibc"
 hash -d git="$HOME/git"
 hash -d hdd="/hdd"
@@ -646,15 +650,15 @@ zstyle ':completion:*'					menu select
 zstyle ':completion:*:messages'				format '%d'
 zstyle ':completion:*:options'				description 'yes'
 zstyle ':completion:*:options'				auto-description '%d'
-zstyle ':completion:*:processes'			command 'ps -au$USER'
+zstyle ':completion:*:processes'			command 'ps -au $USER'
 zstyle ':completion:*:*:-subscript-:*'			tag-order indexes parameters
 zstyle ':completion:*:-command-:*:'			verbose true
 zstyle ':completion:*'					verbose true
 zstyle ':completion:*:warnings'				format $'%{\e[0;31m%}no matches for:%{\e[0m%} %d'
 zstyle ':completion:*:*:zcompile:*'			ignored-patterns '(*~|*.sw[a-p])'
 zstyle ':completion:correct:'				prompt 'correct to: %e'
-zstyle ':completion:*:processes-names'			command 'ps c -u ${USER} -o command | uniq'
-zstyle ':completion:*:killall:*'			command 'ps -u ${USER} -o cmd'
+zstyle ':completion:*:processes-names'			command 'ps c -u $USER -o command | uniq'
+zstyle ':completion:*:killall:*'			command 'ps -u $USER -o cmd'
 zstyle ':completion:*:manuals*'				separate-sections true
 zstyle ':completion:*:manuals*'				insert-sections   true
 zstyle ':completion:*:man*'				menu yes select
@@ -679,5 +683,5 @@ zstyle ':completion:*'					matcher-list \
 	'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
 	'r:|?=** m:{a-z\-}={A-Z\_}'
 
-# all dankness must come to an end :(
+# run cleanup trap
 kill -USR1 $$

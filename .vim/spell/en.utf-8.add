@@ -161,3 +161,8 @@ subshells
 subshell
 stdin
 LKML
+getpid
+repy
+posix
+args
+lind

@@ -39,7 +39,7 @@ set ssl_starttls
 unset ssl_force_tls
 set ssl_use_sslv3
 
-unset header_cache_compress
+# unset header_cache_compress
 unset maildir_header_cache_verify
 set header_cache = "$my_cfgdir/hdr_cache"
 set message_cachedir = "$my_cfgdir/msg_cache"
