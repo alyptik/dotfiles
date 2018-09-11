@@ -4,7 +4,7 @@
 # Mutt configuration
 
 set hidden_host
-set use_domain
+unset use_domain
 set hostname = "gmail.com"
 # set hostname = "gmx.com"
 set my_gmail_base = "imap"
@@ -13,9 +13,19 @@ set my_gmail_prot = $my_gmail_base"s"
 set my_gmail_host = $my_gmail_base".gmail.com"
 set my_cfgdir = "~/.mutt"
 
+lists -group sl ^dev@suckless\\.org$
+lists -group zsh ^zsh-(users|workers)@zsh\\.org$
+lists -group arch ^(arch|pacman)-.*@archlinux\\.org$
+lists -group lkml @vger\\.kernel\\.org$ ^kernelnewbies@kernelnewbies\\.org$
+
+alternates -group manoa ^joeyp@hawaii\\.edu$
+alternates -group riseup ^alyptik@riseup\\.net$
+alternates -group gmail ^(alyptik|joeypabalinas|kinchahoy)@gmail\\.com$
+
 my_hdr Cc: Joey Pabalinas <joeypabalinas@gmail.com>
 
-source "gpg2 -dq $HOME/.passwords.asc |"
+source "gpg2 -dq $HOME/.passwords.gpg |"
+# source "gpg2 -dq $HOME/.passwords.asc |"
 source "$my_cfgdir/mutt_theme"
 source "$my_cfgdir/mutt_keybinds"
 source "$my_cfgdir/mutt_aliases"
@@ -25,7 +35,43 @@ auto_view text/x-diff
 auto_view text/x-patch
 alternative_order text/plain text/enriched text/html
 
-set connect_timeout = 600
+set mail_check_stats
+set allow_ansi
+unset pager_stop
+set sort = "threads"
+# set sort = "last-date-received"
+set sort_aux = "last-date-received"
+set sort_browser = "date"
+set uncollapse_jump
+set uncollapse_new
+set collapse_all
+set collapse_flagged
+unset collapse_unread
+unset text_flowed
+set indent_string = "> "
+unset strict_threads
+set sort_re
+set reply_regexp = "^(\[[^\]]+\][ \t]+)*((re([\[0-9\]+])*|aw):|\[(patch|resend|rfc)[^\]]*\]:?)[ \t]*"
+
+unset arrow_cursor
+set sidebar_visible
+set sidebar_short_path
+set sidebar_width = 25
+set sidebar_delim_chars = "/."
+set sidebar_folder_indent
+set sidebar_indent_string = "  "
+unset sidebar_new_mail_only
+set sidebar_next_new_wrap
+# set sidebar_divider_char = " ▐ "
+set sidebar_divider_char = " │ "
+# set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
+# set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
+set sidebar_format = "%B %?N?(%N)? %* %S"
+# set sidebar_sort_method = "path"
+set sidebar_sort_method = "unsorted"
+# set sidebar_on_right = no
+
+set connect_timeout = 10
 set pgp_timeout = 600
 set timeout = 600
 set mail_check = 10
@@ -75,42 +121,6 @@ set askcc
 set reply_self
 set edit_headers
 
-unset arrow_cursor
-set sidebar_visible
-set sidebar_short_path
-set sidebar_width = 25
-set sidebar_delim_chars = "/."
-set sidebar_folder_indent
-set sidebar_indent_string = "  "
-unset sidebar_new_mail_only
-set sidebar_next_new_wrap
-# set sidebar_divider_char = " ▐ "
-set sidebar_divider_char = " │ "
-# set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
-# set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
-set sidebar_format = "%B %?N?(%N)? %* %S"
-# set sidebar_sort_method = "path"
-set sidebar_sort_method = "unsorted"
-# set sidebar_on_right = no
-
-set mail_check_stats
-set allow_ansi
-unset pager_stop
-# set sort = "reverse-threads"
-set sort = "threads"
-# set sort = "last-date-received"
-set sort_aux = "last-date-received"
-set sort_browser = "date"
-set uncollapse_jump
-set collapse_all
-set collapse_flagged
-set collapse_unread
-unset text_flowed
-set indent_string = "> "
-unset strict_threads
-unset sort_re
-set reply_regexp = "^(re([\\[0-9\\]+])*|aw):[ \t]*"
-
 set pgp_verify_command = "gpg2 --no-verbose --batch --output - --verify %s %f"
 set pgp_decrypt_command = "gpg2 --passphrase-fd 0 --no-verbose --batch --output - %f"
 set pgp_sign_command = "gpg2 --no-verbose --batch --quiet --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
@@ -153,13 +163,6 @@ set folder = "~/Maildir/"
 set record = "+.Sent"
 set postponed = "+.Drafts"
 
-# unmailboxes *
-
-# mailboxes "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com/INBOX"
-# mailboxes "imaps://$my_twc_user:$my_twc_pass@mail.twc.com/INBOX"
-# mailboxes "imaps://$my_user:$my_pass@mail.alyp.tk/INBOX"
-# mailboxes "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/INBOX"
-
 mailboxes + ` \
 	for file in ~/Maildir/.*; do \
 		box=$(basename "$file"); \
@@ -182,9 +185,9 @@ mailboxes + ` \
 		fi; \
 	done`
 
-set imap_login = "$my_gmail_user"
-set imap_user = "$my_gmail_user"
-set imap_pass = "$my_gmail_pass"
+set my_gmail_user = `gpg2 -dq ~/.passwords.gpg | sed '3 !d; s/"$//; s/.*"//'`
+set my_gmail_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
+set imap_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
 
 set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 # set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"

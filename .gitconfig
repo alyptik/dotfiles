@@ -110,6 +110,7 @@
 	rl = reflog
 	cfggu = config --global --unset
 	cfgu = config --unset
+	rd = range-diff
 [web]
 	browser = w3m
 [instaweb]
@@ -152,3 +153,5 @@
 	stat = true
 [gpg]
 	program = gpg2
+[checkout]
+	defaultremote = up

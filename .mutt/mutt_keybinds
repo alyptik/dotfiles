@@ -45,11 +45,14 @@ bind generic,index,pager,browser h help
 bind generic,index,pager,browser <esc>k what-key
 bind generic,index,pager <esc>K mail-key
 # apply to tagged pattern
-bind index ^^ imap-fetch-mail
+bind index ^ imap-fetch-mail
 bind index <esc>a tag-prefix
 bind index <esc>N toggle-new
 # bind index <return> next-line
 bind index o display-message
+bind generic,index,pager <tab> next-new-then-unread
+bind generic,index,pager <esc><tab> previous-new-then-unread
+bind generic,index,pager <backtab> previous-new-then-unread
 bind attach <return> view-mailcap
 bind browser y exit
 

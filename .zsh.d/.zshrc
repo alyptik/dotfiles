@@ -267,8 +267,8 @@ bindkey -M vicmd "j" history-substring-search-down
 bindkey -M vicmd "u" undo
 # bindkey -M vicmd "u" vi-undo-change
 bindkey -M vicmd "Y" vi-yank-eol
-bindkey -M vicmd "P" insert-x-selection
-bindkey -M vicmd "p" append-x-selection
+bindkey -M vicmd "p" vi-put-after
+bindkey -M vicmd "P" vi-put-before
 bindkey -M viins "\C-p" history-substring-search-up
 bindkey -M viins "\C-n" history-substring-search-down
 bindkey -M viins "jj" vi-cmd-mode

@@ -8,37 +8,39 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-09-05] Joey's Progress Report
+Subject: [2018-09-08] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-09-05)
+ * (2018-09-08)
  */
 
-This week I don't have too much to report. I spent most of it cleaning
-up and finalizing my NaCl PR [1] and pinging a few people for review.
-There were a few spots that needed tiny touch-ups which were caught by
-review; I've addressed/fixed them and am currently waiting for more
-feedback to come in.
+This week I spent re-reading the Lind and CrashSimulator papers and
+going over the code to see how the systems correlate with each part of
+the papers. I did notice a few little things to be cleaned up, so I made
+a quick PR for syscallreplay to avoid pointer aliasing issues.
 
-I've also been brainstorming the best way to handle portable environments
-(a Dockerfile or VM seem like the best canidates so far) with regard to
-CrashSimulator, but haven't conclusively figured out yet what would be the
-best route to go.
+I've spent the majority of my time learning how the Repy part of Lind
+works, as it's the part of the system I understand the least. I made
+a development branch and started the skeleton of the pipe() Python
+implementation, granted I'm still piecing together exactly how each part
+of the system works so it's still pretty rough.
 
-/* Plans For Next Week */
+I was, however, able to get Glibc to call into Repy instead of NaCl fairly
+easily, and as I start to understand the system better it will become
+even smoother sailing.
 
-        - Address suggestions and comments on my NaCl fork() PR as they
-          come in.
-        - Continue to do research on what the best way to tackle a
-          portable environment for CrashSimulator would be.
+* Plans For Next Week */
+
+        - Continue to study the Repy subsystem of Lind.
+        - Start to flesh out the Python implementation of pipe().
+        - Continue to review CrashSimulator code and look for places to
+          make improvements.
 
 That's all for this week, thanks.
-
-[1] https://github.com/Lind-Project/native_client/pull/6
 
 -- 
 Cheers,
