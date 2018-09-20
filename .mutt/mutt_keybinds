@@ -44,8 +44,9 @@ bind generic,index,pager,browser ? search-reverse
 bind generic,index,pager,browser h help
 bind generic,index,pager,browser <esc>k what-key
 bind generic,index,pager <esc>K mail-key
+# bind generic,index,pager ^ imap-fetch-mail
+bind generic,index,pager ^ sync-mailbox
 # apply to tagged pattern
-bind index ^ imap-fetch-mail
 bind index <esc>a tag-prefix
 bind index <esc>N toggle-new
 # bind index <return> next-line

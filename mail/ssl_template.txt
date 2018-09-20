@@ -8,37 +8,43 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-09-08] Joey's Progress Report
+Subject: [2018-09-17] Joey's Progress Report
 Reply-To:
-In-Reply-To:
+In-Reply-To: <20180704085945.472wsnw4xezjozag@hobbes.alyptik.lan>
 
 /*
  * Joey's Progress Report
  *
- * (2018-09-08)
+ * (2018-09-17)
  */
 
-This week I spent re-reading the Lind and CrashSimulator papers and
-going over the code to see how the systems correlate with each part of
-the papers. I did notice a few little things to be cleaned up, so I made
-a quick PR for syscallreplay to avoid pointer aliasing issues.
+This week I had to fix up a couple of errors with the x86-64 CrashSimulator
+dependencies, and reading over the syscallreplay and rr code while I
+wait for the laptop I've ordered to come in. It should be coming within the
+next week, and then I can get back to being able to actually test things
+again.
 
-I've spent the majority of my time learning how the Repy part of Lind
-works, as it's the part of the system I understand the least. I made
-a development branch and started the skeleton of the pipe() Python
-implementation, granted I'm still piecing together exactly how each part
-of the system works so it's still pretty rough.
+I've also been reading over the Lind Repy code and poking at it so that
+little by little I can figure out how changing it behaves. There were
+a few places with questionable style, but I don't want to really make
+and non-essential changes to the code yet until I am certain I understand
+how the system works.
 
-I was, however, able to get Glibc to call into Repy instead of NaCl fairly
-easily, and as I start to understand the system better it will become
-even smoother sailing.
+In addition, I've been cleaning up my execve() implementation to prep for
+a future PR. The only real thing I have to figure out here is the correct
+way to get the Repy implementation of pipe to interface nicely with my C
+code (and actually act like a pipe() transparently).
 
 * Plans For Next Week */
 
-        - Continue to study the Repy subsystem of Lind.
-        - Start to flesh out the Python implementation of pipe().
-        - Continue to review CrashSimulator code and look for places to
-          make improvements.
+        - Continue to work on the Repy implementation of pipe().
+        - Setup my development environment once my new laptop comes
+          in
+        - Test out the x86-64 parts of CrashSimulator I've already
+          finished and make sure they still function correctly.
+        - Figure out a workaround for the glibc `ucontext_t`
+          changes which end up breaking the ABI for anything
+          using that structure (such as rr).
 
 That's all for this week, thanks.
 

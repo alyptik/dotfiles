@@ -647,3 +647,5 @@ stjerm*color15:	#ebdbb2
 
 ! Turn on/off ISO 14755 5.2 mode (default enabled).
 ! URxvt*iso14755_52:	boolean
+
+! vi:ft=xdefaults:
