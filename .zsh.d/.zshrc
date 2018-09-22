@@ -628,14 +628,16 @@ zstyle -e ':completion:*'				completer '
 	else
 		reply=(_force_rehash _oldlist _ignored _files)
 	fi'
+# allow one error for every two characters typed in approximate completer
+zstyle -e ':completion:*:approximate:*'			max-errors '
+	reply=("$((($#PREFIX+$#SUFFIX)/3))" numeric)'
+# zstyle ':completion:*:approximate:*'			max-errors 5 numeric
+zstyle ':completion:*:correct:*'			original true
+zstyle ':completion:*:correct:*'			insert-unambiguous true
+
 # completion tweaks
 zstyle ':acceptline'					nocompwarn true
-# allow one error for every two characters typed in approximate completer
-zstyle ':completion:*:approximate:'			max-errors 'reply=("$((($#PREFIX+$#SUFFIX)/3))" numeric)'
-# zstyle ':completion:*:approximate:'			max-errors 5 numeric
-zstyle ':completion:*:correct:*'			insert-unambiguous true
 zstyle ':completion:*:corrections'			format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
-zstyle ':completion:*:correct:*'			original true
 zstyle ':completion:*:default'				list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*:descriptions'			format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
 zstyle ':completion:*:*:cd:*:directory-stack'		menu yes select

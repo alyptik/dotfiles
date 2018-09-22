@@ -195,4 +195,11 @@ Host travis
 	# StrictHostKeyChecking no
 	IdentityFile ~/.ssh/id_gpg
 
+Host linode
+	Hostname 172.105.224.162
+	Port 22
+	User jp
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
 # vi:ft=sshconfig:
