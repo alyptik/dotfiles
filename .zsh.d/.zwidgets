@@ -189,16 +189,16 @@ function zle-backwards-zap-to-char() {
 }
 
 # x clipboard functions
-function insert-clip-selection() { LBUFFER="$LBUFFER$(xclip -r -o -sel clip </dev/null)"; }
-function insert-x-selection() { LBUFFER="$LBUFFER$(xclip -r -o </dev/null)"; }
+function insert-clip-selection() { LBUFFER="$LBUFFER$(xclip -r -o -sel clip </dev/null 2>/dev/null)"; }
+function insert-x-selection() { LBUFFER="$LBUFFER$(xclip -r -o </dev/null 2>/dev/null)"; }
 function append-clip-selection() {
 	LBUFFER="$LBUFFER$RBUFFER[1]"
-	RBUFFER="$(xclip -r -o -sel clip </dev/null)${RBUFFER:1}"
+	RBUFFER="$(xclip -r -o -sel clip </dev/null 2>/dev/null)${RBUFFER:1}"
 	CURSOR="$#BUFFER"
 }
 function append-x-selection() {
 	LBUFFER="$LBUFFER$RBUFFER[1]"
-	RBUFFER="$(xclip -r -o </dev/null)${RBUFFER:1}"
+	RBUFFER="$(xclip -r -o </dev/null 2>/dev/null)${RBUFFER:1}"
 	CURSOR="$#BUFFER"
 }
 function yank-clip-selection() {

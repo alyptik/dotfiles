@@ -8,43 +8,33 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-09-17] Joey's Progress Report
+Subject: [2018-09-26] Joey's Progress Report
 Reply-To:
 In-Reply-To: <20180704085945.472wsnw4xezjozag@hobbes.alyptik.lan>
 
 /*
  * Joey's Progress Report
  *
- * (2018-09-17)
+ * (2018-09-26)
  */
 
-This week I had to fix up a couple of errors with the x86-64 CrashSimulator
-dependencies, and reading over the syscallreplay and rr code while I
-wait for the laptop I've ordered to come in. It should be coming within the
-next week, and then I can get back to being able to actually test things
-again.
+This week I've been incredibly busy with a combination of addressing
+Yiwen's review of my PR, a lot of Repy-related infrastructure discussions,
+suggestions, and review with Albert, and getting my current development
+environment backed up and my files and keys ready to transfer to my new
+system.
 
-I've also been reading over the Lind Repy code and poking at it so that
-little by little I can figure out how changing it behaves. There were
-a few places with questionable style, but I don't want to really make
-and non-essential changes to the code yet until I am certain I understand
-how the system works.
-
-In addition, I've been cleaning up my execve() implementation to prep for
-a future PR. The only real thing I have to figure out here is the correct
-way to get the Repy implementation of pipe to interface nicely with my C
-code (and actually act like a pipe() transparently).
+My laptop is going to be in tomorrow and I still have a ton to do, so this
+progress report is going to be a bit short. I will be back to full speed on
+everything before the end of the week finally...
 
 * Plans For Next Week */
 
-        - Continue to work on the Repy implementation of pipe().
-        - Setup my development environment once my new laptop comes
-          in
-        - Test out the x86-64 parts of CrashSimulator I've already
-          finished and make sure they still function correctly.
-        - Figure out a workaround for the glibc `ucontext_t`
-          changes which end up breaking the ABI for anything
-          using that structure (such as rr).
+        - Continue work and discussion on Repy and start to
+          plan out my execve() and other PRs.
+        - Move my development environment over to my new laptop.
+        - Address new review and suggestions on my Lind PR's.
+        - Setup my CrashSimulator VM and other development tools.
 
 That's all for this week, thanks.
 

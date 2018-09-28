@@ -18,9 +18,11 @@ lists -group zsh ^zsh-(users|workers)@zsh\\.org$
 lists -group arch ^(arch|pacman)-.*@archlinux\\.org$
 lists -group lkml @vger\\.kernel\\.org$ ^kernelnewbies@kernelnewbies\\.org$
 
-alternates -group manoa ^joeyp@hawaii\\.edu$
-alternates -group riseup ^alyptik@riseup\\.net$
+alternates -group server ^(jp|joeypabalinas)@(opsec\\.dogo|sigb\\.us)$
+alternates -group server ^(jp|joeypabalinas)@alyptik\\.(com|org)$
 alternates -group gmail ^(alyptik|joeypabalinas|kinchahoy)@gmail\\.com$
+alternates -group riseup ^alyptik@riseup\\.net$
+alternates -group manoa ^joeyp@hawaii\\.edu$
 
 my_hdr Cc: Joey Pabalinas <joeypabalinas@gmail.com>
 
@@ -71,11 +73,11 @@ set sidebar_format = "%B %?N?(%N)? %* %S"
 set sidebar_sort_method = "unsorted"
 # set sidebar_on_right = no
 
-set connect_timeout = 10
 set pgp_timeout = 600
-set timeout = 600
+set timeout = 120
 set mail_check = 10
 set imap_keepalive = 10
+set connect_timeout = 30
 set imap_pipeline_depth = 100
 set imap_check_subscribed
 unset imap_passive
@@ -88,8 +90,10 @@ set ssl_use_sslv3
 set imap_delim_chars = "/."
 
 unset maildir_header_cache_verify
+# unset header_cache
+unset message_cachedir
 set header_cache = "$my_cfgdir/hdr_cache"
-set message_cachedir = "$my_cfgdir/msg_cache"
+# set message_cachedir = "$my_cfgdir/msg_cache"
 set alias_file = "$my_cfgdir/mutt_aliases"
 set history_file = "$my_cfgdir/mutt_history"
 set certificate_file = "$my_cfgdir/mutt_certificates"
@@ -104,7 +108,8 @@ set assumed_charset = "utf-8:us-ascii"
 set prompt_after
 set implicit_autoview
 set include
-set abort_nosubject = ask-yes
+set abort_nosubject = no
+set abort_unmodified = yes
 set save_history = 10000
 set history = 10000
 set history_remove_dups
@@ -117,8 +122,8 @@ set menu_move_off
 unset menu_scroll
 set meta_key
 set metoo
-set askcc
-set reply_self
+unset askcc
+set reply_self = no
 set edit_headers
 
 set pgp_verify_command = "gpg2 --no-verbose --batch --output - --verify %s %f"
@@ -187,7 +192,8 @@ mailboxes + ` \
 
 set my_gmail_user = `gpg2 -dq ~/.passwords.gpg | sed '3 !d; s/"$//; s/.*"//'`
 set my_gmail_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
-set imap_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
+# set imap_user = `gpg2 -dq ~/.passwords.gpg | sed '3 !d; s/"$//; s/.*"//'`
+# set imap_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
 
 set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 # set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"

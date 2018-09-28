@@ -4,7 +4,7 @@ zmodload zsh/zpty
 for key; do
 	gpg2 --recv-keys "$key" || continue
 	zpty -e lsign gpg2 --lsign-key "$key"
-	zpty -w lsign $'y\n\n'
+	zpty -w lsign $'y\ny\n'
 	zpty -r lsign
 	zpty -d lsign
 done

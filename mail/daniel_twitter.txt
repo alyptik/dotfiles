@@ -1,0 +1,74 @@
+> What prompted you to send this message?
+
+It was really just a gut reaction. I'm not a hugely social person, and
+for the most part I avoid using most social media platform aside from
+posting the occasional tweet.
+
+I do most of my open source development via various mailing lists,
+which I have found to be a bit less prone to the pointlessly toxic
+arguments you see on places like Reddit or Twitter.
+
+There's always going to be some disagreement of course, but usually it
+was engineering related, where a bunch of people good at something
+were arguing about the best way to do that something, and often this
+resulted in a resolution everyone accepted. Sure, maybe they weren't
+thrilled about the end result, but a bunch of people arguing about a
+problem domain they both know well themselves and have some trust
+that the people they disagree with know it well too allows for
+compromise.
+
+Then of course, something like this happens.
+
+Suddenly, we have people arguing about things where it's clear neither
+side trusts the other to have a clue, and to make matters worse, people
+on the outside seeing this lack of sanity now start to assumptions about
+how *terrible* things must be if there are discussions like this going on.
+
+What tipped me over the edge was the attacking of the people who have
+the incredibly difficult job of having to pick who is right in this
+mess. Being in a position of authority means you don't always get to
+make the calls your gut is telling you to make. More importantly, you
+have to be ready to take all the blame when an unpopular decision needs
+to be made.
+
+I do agree that problems exist and need to be addressed, but with all
+this bickering it just makes it that much harder to even tell what
+takes priority.
+
+> Are you against the Linux CoC as it currently stands?
+
+Yes.
+
+> If so, how in your mind could it be improved?
+
+The same way we improve everything else in the kernel: publicly reviewed
+patches where even the people who don't attend kernel summits are allowed
+to have a say.
+
+For something which is not a CVE (sometimes these aren't discussed
+publicly to avoid major security problems on enterprise distros) I
+don't see why that context shouldn't be public before the fact.
+
+> Do you think Linux development is a meritocracy? What are your
+> thoughts on the idea that this kind of structure works unfairly
+> against marginalized people?
+
+I am not of the opinion that meritocracy is a good idea, but regardless, in
+my experience kernel development is not a meritocracy. We might be a bit
+more sarcastic than most, and sometimes we need to be told we are out of
+line, but we do not judge your worth by code quality alone. We are not
+robots, and if we see you are being an insensitive prick we WILL call you
+out on it and not just shrug it off because you write "good code."
+
+> Have a lot of people reached out to you after you posted that message?
+
+None, you are actually the first, which I was sort of glad about, honestly.
+My email thread had no real positive effect and the replies to it (which
+were completely unrelated to any part of my email...) just ended up being
+tinder for the very crap I was hoping to rally people people against. I
+didn't really mind just letting it die.
+
+> Do you think devs will actually rescind their code from Linux?
+
+I don't know. But even if they did, it's not fair to hold that
+against them. It's their code and their hard work after all.

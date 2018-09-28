@@ -110,6 +110,76 @@ Host wifi
 	IdentityFile ~/.ssh/id_gpg
 
 Host ayy
+	HostName alyptik.org
+	Port 2222
+	User ayy
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host rarch
+	HostName alyptik.org
+	Port 2222
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host earch
+	HostName alyptik.org
+	Port 2222
+	User alyptik
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
+
+Host http
+	HostName 192.168.1.99
+	Port 2222
+	User http
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host alyptik.org
+	HostName alyptik.org
+	Port 2222
+	User http
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
+
+Host ayy
+	HostName alyptik.com
+	Port 2222
+	User ayy
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host rarch
+	HostName alyptik.com
+	Port 2222
+	User root
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host earch
+	HostName alyptik.com
+	Port 2222
+	User alyptik
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
+
+Host http
+	HostName 192.168.1.99
+	Port 2222
+	User http
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+Host alyptik.com
+	HostName alyptik.com
+	Port 2222
+	User http
+	CheckHostIP yes
+	IdentityFile ~/.ssh/id_gpg
+
+Host ayy
 	HostName alyp.tk
 	Port 2222
 	User ayy
@@ -199,6 +269,14 @@ Host linode
 	Hostname 172.105.224.162
 	Port 22
 	User jp
+	CheckHostIP no
+	IdentityFile ~/.ssh/id_gpg
+
+
+Host lenovo
+	Hostname 192.168.1.100
+	Port 22
+	User root
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
