@@ -19,7 +19,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-# xrandr --dpi 216 &
+xrandr --dpi 260 &
 # xrandr --output LVDS-1 --brightness 1.5 &
 xbindkeys
 xset s noblank
@@ -32,7 +32,8 @@ xmodmap "/home/jp/.Xmodmap"
 stjerm &
 transgui &
 pavucontrol &
-# udisksctl mount -b "$(findfs LABEL=vm)" &
+compton -b
+udisksctl mount -b "$(findfs LABEL=backups)" &
 (udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 2; pcmanfm /sdxc /sdxc/papers) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &
 dbus-update-activation-environment --systemd DISPLAY
@@ -60,125 +61,101 @@ printf '%s\n' "$session" > ~/.WM.last;
 
 case $session in
 (herbst|herbstluftwm)
-	# compton -b
 	xscreensaver &
 	exec herbstluftwm --locked;;
 
 (awesome)
-	# compton -b
 	xscreensaver &
 	exec awesome;;
 
 (bspwm)
-	# compton -b
 	xscreensaver &
 	exec bspwm;;
 
 (budgie-desktop)
-	# compton -b
 	gnome-screensaver &
 	exec budgie-desktop;;
 
 (catwm)
-	compton -b
 	xscreensaver &
 	exec catwm;;
 
 (cinnamon)
-	compton -b
 	xscreensaver &
 	exec cinnamon-session;;
 
 (dwm)
-	# compton -b
 	xscreensaver &
 	exec dwm;;
 
 (ede)
-	# compton -b
 	xscreensaver &
 	exec startede;;
 
 (enlightenment)
-	# compton -b
 	xscreensaver &
 	exec enlightenment_start;;
 
 (fluxbox)
-	# compton -b
 	xscreensaver &
 	exec startfluxbox;;
 
 (gnome)
-	# compton -b
 	gnome-screensaver &
 	exec gnome-session;;
 
 (gnome-classic)
-	# compton -b
 	gnome-screensaver &
 	exec gnome-session --session=gnome-classic;;
 
 (i3|i3wm)
-	# compton -b
 	/home/jp/bin/i3-focus-last &
 	/home/jp/bin/hilites &
 	xscreensaver &
 	exec i3;;
 
 (icewm)
-	# compton -b
 	xscreensaver &
 	exec icewm-session;;
 
 (jwm)
-	# compton -b
 	xscreensaver &
 	exec jwm;;
 
 (kde)
-	# compton -b
 	xscreensaver &
 	exec startkde;;
 
 (mate)
-	# compton -b
 	xscreensaver &
 	exec mate-session;;
 
 (monster|monsterwm)
-	# compton -b
 	xscreensaver &
 	exec monsterwm;;
 
 (notion)
-	# compton -b
 	xscreensaver &
 	exec notion;;
 
 (openbox)
-	# compton -b
 	xscreensaver &
 	exec openbox-session;;
 
 (unity)
-	# compton -b
 	xscreensaver &
 	exec unity;;
 
 (xfce|xfce4)
-	# compton -b
 	xscreensaver &
 	exec startxfce4;;
 
 (xmonad)
-	# compton -b
 	xscreensaver &
 	exec xmonad;;
 
 # No known session, try to run it as command
 (*)
-	# compton -b
 	xscreensaver &
 	exec "$session";;
 esac

@@ -1,5 +1,5 @@
 
-	netsurf "https://translate.google.com/#auto/en/$(<<<${*} sed 's/http:\/\//☃/g &!
+	gio open "https://translate.google.com/#auto/en/$(<<<${*} sed 's/http:\/\//☃/g &!
 		s/https:\/\//⛇/g
 		s/\//∞/g
 		s/%/%25/g

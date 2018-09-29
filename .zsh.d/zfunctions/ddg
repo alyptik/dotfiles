@@ -1,1 +1,1 @@
- netsurf "https://www.duckduckgo.com/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!
+ gio open "https://www.duckduckgo.com/?q=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!

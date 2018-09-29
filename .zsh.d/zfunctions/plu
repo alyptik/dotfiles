@@ -7,7 +7,7 @@ function imgurredirect () {
     url="${url/*\" \/>$/}"
     feh --insecure "$url"
     # gio open "$@"
-    # netsurf "$url" &!
+    # gio open "$url" &!
     # pyb.py "$url"
 }
 

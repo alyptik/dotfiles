@@ -62,7 +62,6 @@ call plug#begin(g:plugdir)
 	" Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
 	Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
-	" Plug 'edkolev/promptline.vim'
 	" Plug 'sudar/vim-arduino-syntax'
 	" Plug 'jplaut/vim-arduino-ino'
 	" Plug 'stevearc/vim-arduino'
@@ -107,7 +106,7 @@ call plug#begin(g:plugdir)
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'w0rp/ale'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
-	" Plug 'Terryma/vim-multiple-cursors'
+	Plug 'Terryma/vim-multiple-cursors'
 	" Plug 'xolox/vim-notes'
 	" Group dependencies, vim-snippets depends on ultisnips
 	" Plug 'SirVer/ultisnips'
@@ -118,7 +117,7 @@ call plug#begin(g:plugdir)
 	Plug 'Shougo/vimproc.vim', {'do': 'make'}
 	Plug 'maralla/completor.vim'
 	" Plug 'FredKSchott/CoVim'
-	" Plug 'ctrlpvim/ctrlp.vim'
+	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'Rykka/riv.vim'
 	" Plug 'Rykka/InstantRst'
 	Plug 'scrooloose/nerdcommenter'

@@ -1,2 +1,2 @@
-# netsurf "https://google.com/search?q=site:en.cppreference.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!
- netsurf "http://en.cppreference.com/mwiki/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!
+# gio open "https://google.com/search?q=site:en.cppreference.com+$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!
+ gio open "http://en.cppreference.com/mwiki/index.php?search=$(<<<"$*" tr ' ' '+')" >/dev/null 2>&1 &!

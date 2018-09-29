@@ -83,8 +83,8 @@ Host asus
 
 Host surface
 	HostName 192.168.1.98
-	Port 222
-	User alyptik
+	Port 22
+	User jp
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 
@@ -276,7 +276,7 @@ Host linode
 Host lenovo
 	Hostname 192.168.1.100
 	Port 22
-	User root
+	User jp
 	CheckHostIP no
 	IdentityFile ~/.ssh/id_gpg
 

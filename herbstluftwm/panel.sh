@@ -11,12 +11,13 @@ fi
 x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
-panel_height=16
+panel_height=32
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
-font="-*-terminus-medium-*-*-*-20-*-*-*-*-*-*-*"
-dzenfont="xft:Fira Code:style=Retina:pixelsize=16:antialias=true:hinting=false"
+font="-*-terminus-*-*-*-32-*-*-*-*-*-*-*"
+# dzenfont="xft:Source Code Pro:pixelsize=30:antialias=true:hinting=false"
+dzenfont="xft:Fira Code:style=Light:pixelsize=30:antialias=true:hinting=false"
 
 ####
 # Try to find textwidth binary.

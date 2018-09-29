@@ -12,7 +12,7 @@ set scalehints
 set noautofocus
 
 let scrollduration=1250
-let homedirectory = $HOME
+let homedirectory = '/home/jp'
 let barposition = 'top'
 " let barposition = 'bottom'
 let mapleader = '\\'

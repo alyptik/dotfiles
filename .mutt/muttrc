@@ -89,7 +89,7 @@ unset ssl_force_tls
 set ssl_use_sslv3
 set imap_delim_chars = "/."
 
-unset maildir_header_cache_verify
+set maildir_header_cache_verify
 # unset header_cache
 unset message_cachedir
 set header_cache = "$my_cfgdir/hdr_cache"

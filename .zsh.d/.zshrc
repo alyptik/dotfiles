@@ -431,7 +431,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(qemu-nbd reptyr resolvconf rfc rg rlwrap rmdir rmlint)
 	gnu_generic_cmds+=(rst2man rst2man2 saldl scan-build seq shellcheck shred sox split)
 	gnu_generic_cmds+=(stat st stjerm strings supybot swapon sysctl systool tdrop)
-	gnu_generic_cmds+=(termite test tic tload transmission-cli transmission-create)
+	gnu_generic_cmds+=(termite test tic tiv tload transmission-cli transmission-create)
 	gnu_generic_cmds+=(transmission-daemon transmission-edit transmission-get)
 	gnu_generic_cmds+=(transmission-gtk transmission-qt transmission-remote)
 	gnu_generic_cmds+=(transmission-remote-cli transmission-remote-cli)
