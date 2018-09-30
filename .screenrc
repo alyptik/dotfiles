@@ -105,10 +105,11 @@ startup_message off
 attrcolor b ".I"
 attrcolor i "+b"
 attrcolor u "+u"
-sorendition "+bi Dw"
+rendition so "=s dG"
+# sorendition "+bi Dw"
 # sorendition "+biu Dw"
-# rendition bell "=bu"
 layout autosave on
+compacthist on
 nethack on
 autodetach on
 # altscreen off
@@ -127,8 +128,8 @@ deflog off
 deflogin on
 defmousetrack off
 defnonblock on
-defobuflimit 1024
-defscrollback 1000
+defobuflimit 4096
+defscrollback 10000
 # password none'
 bell on
 vbell on

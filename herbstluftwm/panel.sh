@@ -56,8 +56,10 @@ fi
 
 hc pad "$monitor" "$panel_height"
 pkill -9 dzen2
+pkill -9 pactl
+pkill -9 mpc
 pkill -f 'python3.*imap'
-systemctl restart mpdscribble@alyptik.service mpd
+systemctl restart mpdscribble@jp.service mpd
 
 {
 	### Event generator ###
@@ -66,25 +68,29 @@ systemctl restart mpdscribble@alyptik.service mpd
 	#   <eventname>\t<data> [...]
 	# e.g.
 	#   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
-	mpc idleloop player &
 	imapcounter &
+	mpc idleloop player &
+	pactl subscribe | grep --line-buffered sink | sed -ue $'s/.*/volume\t ^fg(#909090)' &
 
 	while :; do
 		curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
 		curbat="$(</sys/class/power_supply/BAT0/capacity)"
+		curvol="$(pacmd dump-volumes | sed -r '1 !d; s/[^%]* ([0-9]+%) .*/\1/')"
 		echo $'np\t'"$(mpc current)"
-		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1'
+		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1' &
 		echo $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
 		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
-		echo $'bat\t^fg(#efefef)'"$curbat%"
-		childpid=$!
+		echo $'bat\t^fg(#efefef)'"$curbat%  ⚡"
+		echo $'volume\t^fg(#909090)'"$curvol  ♪"
+		# childpid=$!
 	done > >(uniq_linebuffered) &
 
 	hc --idle
-	kill "$childpid"
+	# kill "$childpid"
 } 2> /dev/null | {
 	IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
 	visible=true
+	volume=""
 	date=""
 	disk=""
 	temp=""
@@ -131,7 +137,8 @@ systemctl restart mpdscribble@alyptik.service mpd
 		echo -n "$separator"
 		echo -n "^bg()^fg() ${windowtitle//^/^^}"
 		# small adjustments
-		right="$np ^fg() $separator ^bg() $disk ^fg()"
+		# right="$np ^fg() $separator ^bg() $disk ^fg()"
+		right="$np $separator ^bg() $volume ^fg() $separator ^bg() $disk ^fg()"
 		right="$right $separator ^bg() $imap ^fg() $separator ^bg() $temp ^fg()"
 		right="$right $separator ^bg() $date ^fg() $separator ^bg() $bat ^fg()"
 		right="$right $separator ^bg() "
@@ -168,8 +175,11 @@ systemctl restart mpdscribble@alyptik.service mpd
 			np|player)
 				np="${cmd[*]:1}"
 				if [ -n "$np" ]; then
-					np="^fg() $separator ^bg() ^fg(#909090)$np"
+					np="^fg() $separator ^bg() ^fg(#efefef)$np"
 				fi
+				;;
+			volume)
+				volume="${cmd[*]:1}"
 				;;
 			date)
 				date="${cmd[*]:1}"
