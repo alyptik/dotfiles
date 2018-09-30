@@ -4,35 +4,28 @@ shopt -s extglob
 
 auditctl -e 0
 
-# printf '%s\n' "/store/cores/core.%e.%p.%P" |
-# printf '%s\n' "core.%e.%p" |
-printf '%s\n' "|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" |
-	tee /proc/sys/kernel/core_pattern
+# <<<'%s' "/store/cores/core.%e.%p.%P" |
+# <<<'%s' "core.%e.%p" |
+<<<'%s' "|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" tee /proc/sys/kernel/core_pattern
 
 # Analog stereo card
 # eg. SOUND_CARD_PCI_ID=03:00.0 (use `lspci | grep -i audio`)
-SOUND_CARD_PCI_ID=00:1b.0
-# HDMI
-# SOUND_CARD_PCI_ID=00:03.0
+SOUND_CARD_PCI_ID=00:1f.3
 
 setpci -v -d *:* latency_timer=b0
 setpci -v -s "$SOUND_CARD_PCI_ID" latency_timer=ff
 
-printf "performance\nperformance\nperformance\nperformance\n" |
-	tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+for i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+	<<<"performance" tee "$i"
+done
 
-# printf "kyber\n" |
-# printf "bfq\n" |
-printf "mq-deadline\n" |
-	tee /sys/block/sd*/queue/scheduler
+for i in /sys/block/nvme*/queue/add_random /sys/block/md*/queue/add_random; do
+	<<<"0" tee "$i"
+done
 
-printf "2048\n" |
-	tee /sys/class/rtc/rtc0/max_user_freq
-printf "2048\n" |
-	tee /proc/sys/dev/hpet/max-user-freq
+<<<"kyber" tee /sys/block/sd*/queue/scheduler
+# <<<"bfq" tee /sys/block/sd*/queue/scheduler
+# <<<"mq-deadline" tee /sys/block/sd*/queue/scheduler
 
-#SOUND_CARD_PCI_ID=00:03.0 ## HDMI card
-#printf '%s' "2048" | sudo tee '/sys/class/rtc/rtc0/max_user_freq' '/proc/sys/dev/hpet/max-user-freq' > /dev/nullSOUND_CARD_PCI_IDSOUND_CARD_PCI_IDSOUNDSOUND_CARD_PCI_IDSOUND_CARD_PCI_ID_CARD_PCI_ID
-#sudo su -c 'echo 2048 > /sys/class/rtc/rtc0/max_user_freq'
-#sudo su -c 'echo 2048 > /proc/sys/dev/hpet/max-user-freq'
-#cat '/sys/class/rtc/rtc0/max_user_freq' '/proc/sys/dev/hpet/max-user-freq'
+<<<"2048" tee /sys/class/rtc/rtc0/max_user_freq
+<<<"2048" tee /proc/sys/dev/hpet/max-user-freq

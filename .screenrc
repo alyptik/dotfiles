@@ -120,7 +120,7 @@ log off
 # truecolor on
 defautonuke off
 defencoding utf8
-defbce on
+defbce off
 # defflow interrupt
 # defflow auto
 defflow off
