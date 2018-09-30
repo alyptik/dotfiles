@@ -1,6 +1,6 @@
 nameserver 8.8.8.8
 nameserver 8.8.4.4
-nameserver 192.168.1.2
+nameserver 24.25.227.55
 nameserver 2001:470:20::2
 nameserver 2620:0:ccc::2
 nameserver 2620:0:ccd::2

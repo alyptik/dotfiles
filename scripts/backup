@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# track line number and arguments of current function
+args="$*"
+line="$LINENO"
+start_time="$(date +%s)"
+err_signals=(ERR INT)
+
+# wrapper for desired logging command
+#
+function print() {
+	printf '%s\n' "$@"
+}
+
+# calculate total build time
+#
+function get_script_time() {
+	if ((start_time)); then
+		end_time="$(date +%s)"
+		diff_time="$((end_time - start_time))"
+		print $'\a' "It took $diff_time seconds."
+	fi
+	print "" "All done."
+}
+
+# print out error information and abort
+#
+function abort() {
+	local func
+	func="${FUNCNAME[1]}"
+	print "" "[$0:$line] Error: [function: $func()] [arguments: ${args:-(nil)}]." "" >&2
+	exit 1
+}
+
+# verify target directory
+fallback_mnt='/media/backups'
+backup_dir="$(findmnt -n -S LABEL=backups -o TARGET)/rootfs"
+if (($?)); then
+	print "Warning: Backups partition not mounted so using $fallback_mnt as fallback mountpoint." "" >&2
+	sudo mount -L backups "$fallback_mnt"
+	backup_dir="$fallback_mnt/rootfs"
+fi
+print "Using $backup_dir destination." >&2
+
+# set cleanup traps
+trap -- 'get_script_time' EXIT
+trap -- 'args="$*" line="$LINENO" abort' "${err_signals[@]}"
+
+# backup with exclusion of transient directories
+sudo rsync -ahhsvAHSX \
+	--delete \
+	--exclude={'/dev/*','/proc/*','/sys/*','/tmp/*','/run/*','/mnt/*','/media/*','/lost+found/*','/home/*/.gvfs'} \
+	--info=flist2,name,progress2,stats2 \
+	--numeric-ids \
+	/ "$backup_dir/"

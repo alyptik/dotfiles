@@ -117,7 +117,7 @@ ignorecase on
 altscreen on
 cjkwidth off
 log off
-truecolor on
+# truecolor on
 defautonuke off
 defencoding utf8
 defbce on
@@ -128,7 +128,7 @@ deflog off
 deflogin on
 defmousetrack off
 defnonblock on
-defobuflimit 4096
+defobuflimit 512
 defscrollback 10000
 # password none'
 bell on
