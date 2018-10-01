@@ -3,8 +3,8 @@
 
 # <file system> <dir> <type> <options> <dump> <pass>
 # /dev/md127 UUID=42e6211f-9700-4675-9c7c-a3cf6b6dd415
-LABEL=rootfs        	/         	xfs       	rw,relatime,attr2,inode64,sunit=128,swidth=256,noquota	0 1
-# LABEL=rootfs        	/         	xfs       	rw,noatime,attr2,inode64,sunit=256,swidth=256,noquota	0 1
+LABEL=rootfs        	/         	xfs       	rw,noatime,attr2,inode64,sunit=256,swidth=256,noquota	0 1
+# LABEL=rootfs        	/         	xfs       	rw,relatime,attr2,inode64,sunit=128,swidth=256,noquota	0 1
 
 # /dev/sda1 UUID=DB64-1F2C
 LABEL=esp           	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 2

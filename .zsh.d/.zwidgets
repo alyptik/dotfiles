@@ -400,7 +400,7 @@ function zshreadhist() {
 	new_lines=${(M)$(wc -l ${HISTFILE:-$HOME/.zsh_history})##[0-9]##}
 	old_lines=${old_lines:-0}
 	new_lines=${new_lines:-0}
-	if ((new_lines < 100 && new_lines < old_lines)); then
+	if ((new_lines > 100 && new_lines > old_lines)); then
 		cat <"$HISTFILE" >/store/history/.zsh_history.tmp
 	fi
 	fc -p "$HISTFILE"
