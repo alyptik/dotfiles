@@ -1,8 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/store/dotfiles'
 let g:netrw_dirhist_2='/store'
 let g:netrw_dirhist_3='/store/dotfiles'
 let g:netrw_dirhist_4='/home/jp/.screen'
 let g:netrw_dirhist_5='/store/dotfiles/.git'
 let g:netrw_dirhist_6='/store/dotfiles/.vim/plugged/perl-tags-vim/perllib/perl-tags/t'
+let g:netrw_dirhist_7='/etc/postfix'
