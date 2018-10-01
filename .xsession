@@ -14,6 +14,7 @@ stjerm &
 transgui &
 pavucontrol &
 compton -b
+/usr/lib/notify-osd/notify-osd &
 udisksctl mount -b "$(findfs LABEL=backups)" &
 (udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 2; pcmanfm /sdxc /sdxc/papers) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 1; transmission-remote -tall -s) &

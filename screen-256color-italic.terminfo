@@ -21,7 +21,7 @@
 # colors#0x100, cols#80, it#8, lines#24, pairs#0x10000,
 
 screen-256color-italic|screen-256color with BCE and italics support,
-        am, bce, km, mir, msgr, xenl,
+        am, km, mir, msgr, xenl,
         colors#0x100, cols#80, it#8, lines#24, pairs#0x10000,
         acsc=++\,\,--..00``aaffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
         bel=^G, blink=\E[5m, bold=\E[94m\E[1m, cbt=\E[Z, civis=\E[?25l,
