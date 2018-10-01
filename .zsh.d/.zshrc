@@ -521,6 +521,7 @@ compdef _man fman
 compdef _man man
 compdef _gem gem
 compdef _git fshow
+compdef _herbstclient hc
 compdef _man cppman
 compdef _man tldr
 compdef _pacaur apacman

@@ -26,8 +26,7 @@ alternates -group manoa ^joeyp@hawaii\\.edu$
 
 my_hdr Cc: Joey Pabalinas <joeypabalinas@gmail.com>
 
-source "gpg2 -dq $HOME/.passwords.gpg |"
-# source "gpg2 -dq $HOME/.passwords.asc |"
+source "gpg2 -dq $HOME/.passwords.asc |"
 source "$my_cfgdir/mutt_theme"
 source "$my_cfgdir/mutt_keybinds"
 source "$my_cfgdir/mutt_aliases"
@@ -39,7 +38,7 @@ alternative_order text/plain text/enriched text/html
 
 set mail_check_stats
 set allow_ansi
-unset pager_stop
+set pager_stop
 set sort = "threads"
 # set sort = "last-date-received"
 set sort_aux = "last-date-received"
@@ -89,11 +88,11 @@ unset ssl_force_tls
 set ssl_use_sslv3
 set imap_delim_chars = "/."
 
-set maildir_header_cache_verify
+unset maildir_header_cache_verify
 # unset header_cache
-unset message_cachedir
+# unset message_cachedir
 set header_cache = "$my_cfgdir/hdr_cache"
-# set message_cachedir = "$my_cfgdir/msg_cache"
+set message_cachedir = "$my_cfgdir/msg_cache"
 set alias_file = "$my_cfgdir/mutt_aliases"
 set history_file = "$my_cfgdir/mutt_history"
 set certificate_file = "$my_cfgdir/mutt_certificates"
@@ -190,10 +189,10 @@ mailboxes + ` \
 		fi; \
 	done`
 
-set my_gmail_user = `gpg2 -dq ~/.passwords.gpg | sed '3 !d; s/"$//; s/.*"//'`
-set my_gmail_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
-# set imap_user = `gpg2 -dq ~/.passwords.gpg | sed '3 !d; s/"$//; s/.*"//'`
-# set imap_pass = `gpg2 -dq ~/.passwords.gpg | sed '4 !d; s/"$//; s/.*"//'`
+set my_gmail_user = `gpg2 -dq ~/.passwords.asc | sed '3 !d; s/"$//; s/.*"//'`
+set my_gmail_pass = `gpg2 -dq ~/.passwords.asc | sed '4 !d; s/"$//; s/.*"//'`
+# set imap_user = `gpg2 -dq ~/.passwords.asc | sed '3 !d; s/"$//; s/.*"//'`
+# set imap_pass = `gpg2 -dq ~/.passwords.asc | sed '4 !d; s/"$//; s/.*"//'`
 
 set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 # set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"
