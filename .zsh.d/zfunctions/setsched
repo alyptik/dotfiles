@@ -1,4 +1,4 @@
 if [[ -n "$1" ]]; then
-	printf "%s\n" "$1" | sudo tee /sys/block/sd*/queue/scheduler
+	<<<"$1" sudo tee /sys/block/nvme*/queue/scheduler >/dev/null
 fi
-cat /sys/block/sd*/queue/scheduler
+cat /sys/block/nvme*/queue/scheduler

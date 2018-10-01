@@ -2,7 +2,7 @@
 
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
-geometry=( $(herbstclient monitor_rect "$monitor") )
+geometry=( $(hc monitor_rect "$monitor") )
 if [ -z "$geometry" ] ;then
 	echo "Invalid monitor $monitor"
 	exit 1
@@ -58,7 +58,7 @@ hc pad "$monitor" "$panel_height"
 pkill -9 dzen2
 pkill -9 pactl
 pkill -9 mpc
-pkill -f 'python3.*imap'
+pkill -9 -f 'python3.*imap'
 systemctl restart mpdscribble@jp.service mpd
 
 {
@@ -68,9 +68,11 @@ systemctl restart mpdscribble@jp.service mpd
 	#   <eventname>\t<data> [...]
 	# e.g.
 	#   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
-	imapcounter &
-	mpc idleloop player &
-	pactl subscribe | grep --line-buffered sink | sed -ue $'s/.*/volume\t ^fg(#909090)' &
+
+	childpids=()
+	imapcounter & childpids+=($!)
+	mpc idleloop player & childpids+=($!)
+	bash -c $'pactl subscribe | grep --line-buffered sink | sed -u "s/.*/volume\t ^fg(#909090)"' & childpids+=($!)
 
 	while :; do
 		curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
@@ -82,12 +84,11 @@ systemctl restart mpdscribble@jp.service mpd
 		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
 		echo $'bat\t^fg(#efefef)'"$curbat%  ⚡"
 		echo $'volume\t^fg(#909090)'"$curvol  ♪"
-		# childpid=$!
-	done > >(uniq_linebuffered) &
+	done > >(uniq_linebuffered) & childpids+=($!)
 
 	hc --idle
-	# kill "$childpid"
-} 2> /dev/null | {
+	kill -9 "${childpids[@]}"
+} 2>/dev/null | {
 	IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
 	visible=true
 	volume=""

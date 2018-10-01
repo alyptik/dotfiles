@@ -4,8 +4,8 @@ shopt -s extglob
 
 auditctl -e 0
 
-# <<<'%s' "/store/cores/core.%e.%p.%P" |
-# <<<'%s' "core.%e.%p" |
+# <<<'%s' "/store/cores/core.%e.%p.%P" tee /proc/sys/kernel/core_pattern
+# <<<'%s' "core.%e.%p" tee /proc/sys/kernel/core_pattern
 <<<'%s' "|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" tee /proc/sys/kernel/core_pattern
 
 # Analog stereo card
@@ -23,9 +23,9 @@ for i in /sys/block/nvme*/queue/add_random /sys/block/md*/queue/add_random; do
 	<<<"0" tee "$i"
 done
 
-<<<"kyber" tee /sys/block/sd*/queue/scheduler
-# <<<"bfq" tee /sys/block/sd*/queue/scheduler
-# <<<"mq-deadline" tee /sys/block/sd*/queue/scheduler
+# <<<"kyber" tee /sys/block/nvme*/queue/scheduler
+# <<<"bfq" tee /sys/block/nvme*/queue/scheduler
+<<<"mq-deadline" tee /sys/block/nvme*/queue/scheduler
 
 <<<"2048" tee /sys/class/rtc/rtc0/max_user_freq
 <<<"2048" tee /proc/sys/dev/hpet/max-user-freq
