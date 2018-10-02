@@ -7,6 +7,15 @@ unalias md meminfo node o p2b rd ru s sd sf si u v which-command 2>/dev/null
 unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
+
+alias nshow='notmuch show --entire-thread=true --decrypt=true'
+alias nsearch='notmuch search'
+alias nget='notmuch config get'
+alias nset='notmuch config set'
+alias nlist='notmuch config list'
+alias nconf='notmuch config'
+alias nnew='notmuch new'
+alias n='notmuch'
 alias bmake='env -u MAKEFLAGS bmake'
 alias ly='lynx -accept_all_cookies -prettysrc -session="$HOME/.lynx_session" -short_url -use_mouse'
 alias rstview='restview'
@@ -56,7 +65,6 @@ alias _='sudo -H '
 alias pythong='python2'
 alias yt='noglob youtube-dl -f bestaudio --write-all-thumbnails --write-description'
 alias mdn='mdn-query'
-alias n='node'
 # alias n='rlwrap -a -A -D 2 -p"Purple" -S"> " node'
 # alias node='env NODE_NO_READLINE=1 rlwrap -D 2 -p"Purple" -S"> " node'
 alias pf='pkgfile'

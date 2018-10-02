@@ -13,6 +13,12 @@ set my_gmail_prot = $my_gmail_base"s"
 set my_gmail_host = $my_gmail_base".gmail.com"
 set my_cfgdir = "~/.mutt"
 
+# notmuch configuration
+set nm_default_uri = "notmuch:///home/jp/Maildir"
+virtual-mailboxes "self" "notmuch://?query=query:self"
+virtual-mailboxes "patches" "notmuch://?query=query:patches"
+virtual-mailboxes "fastly" "notmuch://?query=query:fastly"
+
 lists -group sl ^dev@suckless\\.org$
 lists -group zsh ^zsh-(users|workers)@zsh\\.org$
 lists -group arch ^(arch|pacman)-.*@archlinux\\.org$
@@ -171,7 +177,7 @@ mailboxes + ` \
 	for file in ~/Maildir/.*; do \
 		box=$(basename "$file"); \
 		if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
-			-a ! "$box" = '.subscriptions' ]; then \
+			-a !"$box" = '.notmuch' -a ! "$box" = '.subscriptions' ]; then \
 		    echo -n "\"+$box\" "; \
 		fi; \
 	done; \
@@ -182,6 +188,7 @@ mailboxes + ` \
 					box2=$(basename "$file"); \
 					if [ ! "$box2" = '.' -a ! "$box2" = '..' \
 						-a ! "$box2" = '.customflags' \
+						-a ! "$box2" = '.notmuch' \
 						-a ! "$box2" = '.subscriptions' ]; then \
 					echo -n "\"+$box/$box2\" "; \
 				fi; \

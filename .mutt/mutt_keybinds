@@ -56,6 +56,12 @@ bind generic,index,pager <esc><tab> previous-new-then-unread
 bind generic,index,pager <backtab> previous-new-then-unread
 bind attach <return> view-mailcap
 bind browser y exit
+bind generic,index,pager v sidebar-toggle-virtual
+bind generic,index l collapse-thread
+bind pager k previous-line
+bind pager j next-line
+bind pager <up> previous-line
+bind pager <down> next-line
 
 macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
