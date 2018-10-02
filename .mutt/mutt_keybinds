@@ -56,8 +56,9 @@ bind generic,index,pager <esc><tab> previous-new-then-unread
 bind generic,index,pager <backtab> previous-new-then-unread
 bind attach <return> view-mailcap
 bind browser y exit
-bind generic,index,pager v sidebar-toggle-virtual
+bind generic,index,pager <esc>l sidebar-toggle-virtual
 bind generic,index l collapse-thread
+bind generic,index v collapse-thread
 bind pager k previous-line
 bind pager j next-line
 bind pager <up> previous-line

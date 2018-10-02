@@ -395,8 +395,8 @@ function zle-youtube-helper() {
 # Make history entries from other zsh instances immediately visible
 function zshreadhist() {
 	fc -p "$HISTFILE"
-	mkdir -p /store/history
-	touch /store/history/.zsh_history.tmp
+	\mkdir -p /store/history
+	\touch /store/history/.zsh_history.tmp
 	old_lines=${(M)$(wc -l /store/history/.zsh_history.tmp)##[0-9]##}
 	new_lines=${(M)$(wc -l ${HISTFILE:-$HOME/.zsh_history})##[0-9]##}
 	old_lines=${old_lines:-0}
