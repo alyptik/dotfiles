@@ -143,7 +143,7 @@ export GOPATH="$HOME/.go"
 export GROFF_NO_SGR=1
 # Gtk themes
 # export GTK_DEBUG=all
-export GTK_IM_MODULE="xim" QT_IM_MODULE="xim" XMODIFIERS="@im=none"
+# export GTK_IM_MODULE="xim" QT_IM_MODULE="xim" XMODIFIERS="@im=none"
 # export GTK_IM_MODULE="fcitx" QT_IM_MODULE="fcitx" XMODIFIERS="@im=fcitx"
 # export GTK_IM_MODULE="ibus" QT_IM_MODULE="ibus" XMODIFIERS="@im=ibus"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"

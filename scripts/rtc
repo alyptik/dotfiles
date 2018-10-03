@@ -4,9 +4,9 @@ shopt -s extglob
 
 auditctl -e 0
 
-# <<<'%s' "/store/cores/core.%e.%p.%P" tee /proc/sys/kernel/core_pattern
-# <<<'%s' "core.%e.%p" tee /proc/sys/kernel/core_pattern
-<<<'%s' "|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" tee /proc/sys/kernel/core_pattern
+# <<<"/store/cores/core.%e.%p.%P" tee /proc/sys/kernel/core_pattern
+# <<<"core.%e.%p" tee /proc/sys/kernel/core_pattern
+<<<"|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" tee /proc/sys/kernel/core_pattern
 
 # Analog stereo card
 # eg. SOUND_CARD_PCI_ID=03:00.0 (use `lspci | grep -i audio`)
@@ -16,16 +16,17 @@ setpci -v -d *:* latency_timer=b0
 setpci -v -s "$SOUND_CARD_PCI_ID" latency_timer=ff
 
 for i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
-	<<<"performance" tee "$i"
+	<<<"powersave" tee "$i"
+	# <<<"performance" tee "$i"
 done
 
 for i in /sys/block/nvme*/queue/add_random /sys/block/md*/queue/add_random; do
 	<<<"0" tee "$i"
 done
 
-# <<<"kyber" tee /sys/block/nvme*/queue/scheduler
+<<<"kyber" tee /sys/block/nvme*/queue/scheduler
 # <<<"bfq" tee /sys/block/nvme*/queue/scheduler
-<<<"mq-deadline" tee /sys/block/nvme*/queue/scheduler
+# <<<"mq-deadline" tee /sys/block/nvme*/queue/scheduler
 
 <<<"2048" tee /sys/class/rtc/rtc0/max_user_freq
 <<<"2048" tee /proc/sys/dev/hpet/max-user-freq

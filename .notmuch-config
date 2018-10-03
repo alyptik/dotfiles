@@ -12,7 +12,7 @@
 #
 
 [database]
-path=/home/jp/Maildir
+path=/home/jp/Maildir/gmail
 
 # User configuration
 #

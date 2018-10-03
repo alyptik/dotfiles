@@ -14,7 +14,7 @@ set my_gmail_host = $my_gmail_base".gmail.com"
 set my_cfgdir = "~/.mutt"
 
 # notmuch configuration
-set nm_default_uri = "notmuch:///home/jp/Maildir"
+set nm_default_uri = "notmuch:///home/jp/Maildir/gmail"
 virtual-mailboxes "self" "notmuch://?query=query:self"
 virtual-mailboxes "patches" "notmuch://?query=query:patches"
 virtual-mailboxes "fastly" "notmuch://?query=query:fastly"
@@ -94,7 +94,7 @@ unset ssl_force_tls
 set ssl_use_sslv3
 set imap_delim_chars = "/."
 
-unset maildir_header_cache_verify
+set maildir_header_cache_verify
 # unset header_cache
 # unset message_cachedir
 set header_cache = "$my_cfgdir/hdr_cache"
@@ -176,8 +176,15 @@ set postponed = "+.Drafts"
 mailboxes + ` \
 	for file in ~/Maildir/.*; do \
 		box=$(basename "$file"); \
-		if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
-			-a !"$box" = '.notmuch' -a ! "$box" = '.subscriptions' ]; then \
+		if [ ! "$box" = '.gmailieer.json' \
+			-a ! "$box" = '.gmailieer.json.bak' \
+			-a ! "$box" = '.credentials.gmailieer.json' \
+			-a ! "$box" = '.lock' \
+			-a ! "$box" = '.' \
+			-a ! "$box" = '..' \
+			-a ! "$box" = '.customflags' \
+			-a ! "$box" = '.notmuch' \
+			-a ! "$box" = '.subscriptions' ]; then \
 		    echo -n "\"+$box\" "; \
 		fi; \
 	done; \
@@ -186,7 +193,12 @@ mailboxes + ` \
 			box=$(basename "$folder"); \
 				for file in ~/Maildir/$box/.*; do \
 					box2=$(basename "$file"); \
-					if [ ! "$box2" = '.' -a ! "$box2" = '..' \
+					if [ ! "$box2" = '.gmailieer.json' \
+                                                -a ! "$box" = '.gmailieer.json.bak' \
+						-a ! "$box2" = '.credentials.gmailieer.json' \
+						-a ! "$box2" = '.lock' \
+						-a ! "$box2" = '.' \
+                                                -a ! "$box2" = '..' \
 						-a ! "$box2" = '.customflags' \
 						-a ! "$box2" = '.notmuch' \
 						-a ! "$box2" = '.subscriptions' ]; then \
