@@ -1,0 +1,3 @@
+for arg; do
+	notmuch search query:$arg
+done

@@ -14,15 +14,19 @@ set my_gmail_host = $my_gmail_base".gmail.com"
 set my_cfgdir = "~/.mutt"
 
 # notmuch configuration
-set nm_default_uri = "notmuch:///home/jp/Maildir/gmail"
+set nm_default_uri = "notmuch://$HOME/Maildir/gmail"
 virtual-mailboxes "self" "notmuch://?query=query:self"
-virtual-mailboxes "patches" "notmuch://?query=query:patches"
 virtual-mailboxes "fastly" "notmuch://?query=query:fastly"
+virtual-mailboxes "ssl" "notmuch://?query=query:ssl"
+virtual-mailboxes "patches" "notmuch://?query=query:patches"
+virtual-mailboxes "linus" "notmuch://?query=query:linus"
+virtual-mailboxes "lkml" "notmuch://?query=query:lkml"
 
 lists -group sl ^dev@suckless\\.org$
 lists -group zsh ^zsh-(users|workers)@zsh\\.org$
 lists -group arch ^(arch|pacman)-.*@archlinux\\.org$
 lists -group lkml @vger\\.kernel\\.org$ ^kernelnewbies@kernelnewbies\\.org$
+lists -group ssl ^(securesystemslab|crashsimulator-dev@)@googlegroups.com$
 
 alternates -group server ^(jp|joeypabalinas)@(opsec\\.dogo|sigb\\.us)$
 alternates -group server ^(jp|joeypabalinas)@alyptik\\.(com|org)$

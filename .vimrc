@@ -1838,7 +1838,7 @@ func! Reset()
 endfunc
 command! R :call Reset()
 
-command! SudoWrite silent! w !sudo sponge %
+command! SudoWrite silent! w !sudo dd status=none of=%
 cabbrev w!! <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SudoWrite' : 'w!!')<CR>
 
 cnoremap <C-a> <Home>

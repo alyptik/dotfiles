@@ -24,9 +24,9 @@ for i in /sys/block/nvme*/queue/add_random /sys/block/md*/queue/add_random; do
 	<<<"0" tee "$i"
 done
 
-<<<"kyber" tee /sys/block/nvme*/queue/scheduler
+# <<<"kyber" tee /sys/block/nvme*/queue/scheduler
 # <<<"bfq" tee /sys/block/nvme*/queue/scheduler
-# <<<"mq-deadline" tee /sys/block/nvme*/queue/scheduler
+<<<"mq-deadline" tee /sys/block/nvme*/queue/scheduler
 
 <<<"2048" tee /sys/class/rtc/rtc0/max_user_freq
 <<<"2048" tee /proc/sys/dev/hpet/max-user-freq

@@ -102,6 +102,7 @@ export ARCHFLAGS="-arch x86-64"
 # export BROWSER=lynx
 # export BROWSER=netsurf
 export CLICOLOR=1
+export COGL_ATLAS_DEFAULT_BLIT_MODE=framebuffer
 export CORRECT_IGNORE='_?*'
 # Audio plugins
 DSSI_PATH="/usr/local/lib/dssi:/usr/lib/dssi"
@@ -187,6 +188,7 @@ export LESS="FMRXins"
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # shellcheck disable=SC2039
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
+export LIBGL_DRI3_DISABLE=1
 export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
@@ -243,6 +245,7 @@ export PLAN9=/opt/plan9
 # shellcheck disable=SC2039
 export PATH="${PATH//:$PLAN9\/bin}$PLAN9/bin" MANPATH="${MANPATH//:$PLAN9\/man}:$PLAN9/share/man"
 export PRE="$HOME/.local" pre="$PRE"
+export PRIMUS_SYNC=1
 export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,pcpu,sz,wchan,stat,state,tname,time,args"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2"

@@ -126,8 +126,8 @@
 [commit]
 	gpgsign = false
 [rerere]
-	enabled = true
-	autoupdate = true
+	enabled = false
+	autoupdate = false
 [pretty]
 	colorful-oneline = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [pull]

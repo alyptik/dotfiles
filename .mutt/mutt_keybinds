@@ -68,15 +68,16 @@ macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
 # show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
-macro index,pager Y \
-    "<change-folder>imaps://$my_user:$my_pass@mail.alyp.tk/<enter>" \
-    "open alyp.tk inbox"
-macro index,pager Y \
-    "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com/<enter>" \
-    "open twc inbox"
-macro index,pager Y \
-    "<change-folder>imaps://$my_kindle_user:$my_kindle_pass@mail.gmx.com/<enter>" \
-    "open gmx inbox"
+macro index,pager Y "<change-folder>?" "open a different folder/mailbox"
+# macro index,pager Y \
+#     "<change-folder>imaps://$my_user:$my_pass@alyptik.org/Inbox<enter>" \
+#     "open alyp.tk inbox"
+# macro index,pager Y \
+#     "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com:993/Inbox<enter>" \
+#     "open twc inbox"
+# macro index,pager Y \
+#     "<change-folder>imaps://$my_kindle_user:$my_kindle_pass@mail.gmx.com:993/Inbox<enter>" \
+#     "open gmx inbox"
 macro index,pager c \
     "<change-folder>~/Maildir<enter>" \
     "open ~/Maildir"
