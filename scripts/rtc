@@ -16,8 +16,8 @@ setpci -v -d *:* latency_timer=b0
 setpci -v -s "$SOUND_CARD_PCI_ID" latency_timer=ff
 
 for i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
-	<<<"powersave" tee "$i"
-	# <<<"performance" tee "$i"
+	# <<<"powersave" tee "$i"
+	<<<"performance" tee "$i"
 done
 
 for i in /sys/block/nvme*/queue/add_random /sys/block/md*/queue/add_random; do

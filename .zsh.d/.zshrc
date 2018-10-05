@@ -437,7 +437,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(transmission-remote-cli transmission-remote-cli)
 	gnu_generic_cmds+=(transmission-remote-gtk transmission-show transset-df)
 	gnu_generic_cmds+=(updatedb urxvtc urxvtcdurxvtd vanitygen vimpager)
-	gnu_generic_cmds+=(x11vnc xbindkeys xsel youtube-dl)
+	gnu_generic_cmds+=(x11vnc xbacklight xbindkeys xsel youtube-dl)
 
 	if type cgasm &>/dev/null; then
 		asmcmds+=(${(o)$(cgasm -f '.*' \

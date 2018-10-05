@@ -11,15 +11,25 @@ function ztype() { () for 1 { print -r - ${${(z)$(whence -w $1)}[2]}; } "$@"; }
 function get_muh_prs() {
 	# fetch PR list
 	if ! git rev-list pull-requests -- >/dev/null 2>&1; then
-		(git remote add pull-requests "${1:-"$(git remote get-url origin)"}") 2>/dev/null || true
+		# remove broken remote if exists
+		git remote show pull-requests >/dev/null 2>&1 && git remote remove pull-requests
+		# map list of PRs at +refs/pull/*/head to pull-request remote
+		git remote add pull-requests "${1:-"$(git remote get-url up || git remote get-url origin)"}" 2>/dev/null
+		git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*'
+		git fetch -qj8 pull-requests || exit 1
 	fi
-
-	# refmap list of PRs at +refs/pull/*/head to pull-request remote
-	git config remote.pull-requests.fetch '+refs/pull/*/head:refs/remotes/pull-requests/*'
-	git fetch -qj4 pull-requests || exit 1
-
 	# map `git show-branch` to the list of PRs
-	() for 1 { git show-branch ${1##*remotes/}; } $(git branch -r --list 'pull-requests/*')
+	() for 1 { git show-branch $1; } ${(f@)$(git branch -r --list 'pull-requests/*')}
+}
+
+# set branch to pull from upstream but push to origin
+function set_muh_upstream() {
+	local branch
+	branch=${${(z)$(git branch)}[2]}
+	git config branch.$branch.remote up
+	git config branch.$branch.pushremote origin
+	print -rf 'remote:\t\t%s\n' - $(git config branch.$branch.remote)
+	print -rf 'push remote:\t%s\n' - $(git config branch.$branch.pushremote)
 }
 
 function zle-run-help() {

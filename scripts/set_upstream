@@ -1,0 +1,8 @@
+#!/bin/sh
+
+branch="$(git branch | sed 's/^\*[[:space:]]*//' | tr -d '\n')"
+
+git config branch."$branch".remote up
+git config branch."$branch".pushremote origin
+printf 'remote:\t\t%s\n' "$(git config branch."$branch".remote)"
+printf 'push remote:\t%s\n' "$(git config branch."$branch".pushremote)"

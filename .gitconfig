@@ -48,7 +48,7 @@
 	bvv = branch -vv
 	re = remote
 	squash = rebase -i origin/master
-	mail = send-email outgoing/*
+	mail = send-email --signed-off-by-cc --cc-cover --to-cover --no-chain-reply-to --thread
 	ch = checkout
 	t = tag
 	bi = bisect
@@ -152,6 +152,6 @@
 [rebase]
 	stat = true
 [gpg]
-	program = gpg2
+	program = gpg
 [checkout]
 	defaultremote = up

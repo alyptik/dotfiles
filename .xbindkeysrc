@@ -57,17 +57,17 @@
 
 # toggle Touchpad
 # "t-xinput.sh"
-"[[ $(xinput list-props $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}') | grep '\bDevice Enabled\b'|sed 's/.*\(.\)$/\1/') -eq 0 ]] && xinput enable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}') || xinput disable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
+"toggle_touchpad"
     m:0xc + c:61
     Control+Alt + slash
 
 # disable touchpad
-"xinput disable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
+"xinput disable $(xinput | awk '/TouchPad/ { sub("id=",""); print $6}')"
     m:0xc + c:60
     Control+Alt + period
 
 # enable touchpad
-"xinput enable $(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')"
+"xinput enable $(xinput | awk '/TouchPad/ { sub("id=",""); print $6}')"
     m:0xc + c:59
     Control+Alt + comma
 

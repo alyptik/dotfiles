@@ -1,0 +1,14 @@
+#!/bin/sh
+
+dev_id="$(xinput | awk '/TouchPad/ { sub("id=",""); print $6}')"
+
+is_enabled() {
+	return $(( !$(xinput list-props "$1" | sed '/Device Enabled/!d; s/.*\(.\)$/\1/') ))
+}
+
+if is_enabled "$dev_id"; then
+	xinput disable "$dev_id" || exit "$?"
+	exit
+fi
+
+xinput enable "$dev_id" || exit "$?"
