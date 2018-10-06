@@ -123,12 +123,12 @@ autoload -Uz vcs_info
 if type vcs_info &>/dev/null; then
 	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:*' disable bzr cdv cvs darcs mtn svk svn tla
-	# zstyle ':vcs_info:*' check-for-changes ${check_vcs:-true}
+	zstyle ':vcs_info:*' check-for-changes ${check_vcs:-true}
 	zstyle ':vcs_info:*:prompt:*' check-for-changes ${check_vcs:-true}
-	zstyle ':vcs_info:*:prompt:*' stagedstr "%{$fg[green]%}*%{$reset_color%}"
-	zstyle ':vcs_info:*:prompt:*' unstagedstr "%{$fg[red]%}*%{$reset_color%}"
+	zstyle ':vcs_info:*:prompt:*' stagedstr "%F{blue}*%f"
+	zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{red}*%f"
 	zstyle ':vcs_info:*:prompt:*' branchformat "%r"
-	zstyle ':vcs_info:*:prompt:*' formats "%u%c%{$fg[green]%}[%b]%{$reset_color%}"
+	zstyle ':vcs_info:*:prompt:*' formats "%u%c%F{green}[%b]%f"
 	zstyle ':vcs_info:*:prompt:*' nvcsformats ""
 	zstyle ':vcs_info:*' actionformats \
 		'%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
@@ -231,6 +231,7 @@ GIT_PROMPT_BEHIND="%F{cyan}BNUM%f"
 GIT_PROMPT_MERGING="%F{magenta}%{⚡%G%}%f"
 GIT_PROMPT_UNTRACKED="%F{red}●%f"
 GIT_PROMPT_MODIFIED="%F{white}●%f"
+GIT_PROMPT_STAGED="%F{blue}●%f"
 # zsh autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

@@ -111,6 +111,7 @@
 	cfggu = config --global --unset
 	cfgu = config --unset
 	rd = range-diff
+	lo = log --oneline --decorate --all
 [web]
 	browser = w3m
 [instaweb]

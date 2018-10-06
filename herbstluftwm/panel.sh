@@ -75,7 +75,8 @@ systemctl restart mpdscribble@jp.service mpd
 	bash -c $'pactl subscribe | grep --line-buffered sink | sed -u "s/.*/volume\t ^fg(#909090)"' & childpids+=($!)
 
 	while :; do
-		curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
+		curtemp="$(</sys/devices/virtual/thermal/thermal_zone0/temp)"
+		# curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
 		curbat="$(</sys/class/power_supply/BAT0/capacity)"
 		curvol="$(pacmd dump-volumes | sed -r '1 !d; s/[^%]* ([0-9]+%) .*/\1/')"
 		echo $'np\t'"$(mpc current)"

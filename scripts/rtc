@@ -1,32 +1,45 @@
-#!/bin/bash
+#!/bin/sh
 
-shopt -s extglob
+# turn off auditing
+sudo auditctl -e 0
 
-auditctl -e 0
+# set core dump pattern
+core_pat="|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e"
+# core_pat="core.%e.%p"
+# core_pat="/store/cores/core.%e.%p.%P"
+printf '%s\n' "$core_pat" | sudo tee /proc/sys/kernel/core_pattern
 
-# <<<"/store/cores/core.%e.%p.%P" tee /proc/sys/kernel/core_pattern
-# <<<"core.%e.%p" tee /proc/sys/kernel/core_pattern
-<<<"|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e" tee /proc/sys/kernel/core_pattern
+# find analog stereo card: eg. pci_snd_id=03:00.0 (use `lspci | grep -i audio`)
+# and maximize the pci latency timer of the pci sound card and raise the
+# latency timer of all other pci peripherals (default is 64hz).
+pci_snd_id="$(lspci | awk '/Audio/{print $1}')"
+if test -n "$pci_snd_id"; then
+	sudo setpci -v -d '*:*' latency_timer=b0
+	sudo setpci -v -s "$pci_snd_id" latency_timer=ff
+fi
 
-# Analog stereo card
-# eg. SOUND_CARD_PCI_ID=03:00.0 (use `lspci | grep -i audio`)
-SOUND_CARD_PCI_ID=00:1f.3
-
-setpci -v -d *:* latency_timer=b0
-setpci -v -s "$SOUND_CARD_PCI_ID" latency_timer=ff
-
-for i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
-	# <<<"powersave" tee "$i"
-	<<<"performance" tee "$i"
+# set cpu governor
+for i in /sys/devices/system/cpu/cpu[0-9]; do
+	cpu_gov=performance
+	# cpu_gov=powersave
+	printf '%s\n' "$cpu_gov" | sudo tee "$i/cpufreq/scaling_governor"
 done
 
-for i in /sys/block/nvme*/queue/add_random /sys/block/md*/queue/add_random; do
-	<<<"0" tee "$i"
+for i in /sys/block/*; do
+	# set io scheduler
+	io_sched=kyber
+	# io_sched=bfq
+	# io_sched=mq-deadline
+	printf '%s\n' "$io_sched" | sudo tee "$i/queue/scheduler"
+	# don't collect entropy from solid state drives
+	case "${i##*/}" in
+	nvme*|md*|mmc*)
+		printf '%s\n' "0" | sudo tee "$i/queue/add_random";;
+	*)
+		printf '%s\n' "1" | sudo tee "$i/queue/add_random";;
+	esac
 done
 
-# <<<"kyber" tee /sys/block/nvme*/queue/scheduler
-# <<<"bfq" tee /sys/block/nvme*/queue/scheduler
-<<<"mq-deadline" tee /sys/block/nvme*/queue/scheduler
-
-<<<"2048" tee /sys/class/rtc/rtc0/max_user_freq
-<<<"2048" tee /proc/sys/dev/hpet/max-user-freq
+# increase rtc interrupt frequency (default is 64hz)
+printf '%s\n' "2048" | sudo tee /sys/class/rtc/rtc0/max_user_freq
+printf '%s\n' "2048" | sudo tee /proc/sys/dev/hpet/max-user-freq
