@@ -283,6 +283,8 @@ alias rm='rm -v'
 alias mv='mv -v'
 alias cp='cp -v --reflink=auto'
 alias ln='ln -v'
+alias chown='chown -c'
+alias chmod='chmod -c'
 # this one saved by butt so many times
 alias wget='wget -c'
 

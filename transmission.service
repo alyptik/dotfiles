@@ -1,22 +1,22 @@
 [Unit]
 Description=Transmission BitTorrent Daemon
-After=network.target
+Wants=network-online.target
+After=network.target network-online.target
 
 [Service]
 Type=notify
 #User=transmission
 User=jp
 ExecStart=/usr/bin/transmission-daemon -f --log-info
-# -g /home/alyptik/.config/transmission
 #ExecStart=/usr/bin/transmission-daemon -f --log-info -g /home/alyptik/.config/transmission
 ExecReload=/bin/kill -s HUP $MAINPID
-RestrictAddressFamilies=~AF_INET6
-# RestrictAddressFamilies=AF_INET
-PrivateTmp=true
-ProtectSystem=full
+# RestrictAddressFamilies=~AF_INET6
+# PrivateTmp=true
+# ProtectSystem=full
+# ReadWritePaths=/hdd/headbobbers /hdd/torrents /store/torrents /home/jp/.config/transmission-daemon
 IOSchedulingClass=best-effort
 CPUSchedulingPolicy=batch
-LimitNOFILE=8096
+LimitNOFILE=4096
 
 [Install]
 WantedBy=default.target
