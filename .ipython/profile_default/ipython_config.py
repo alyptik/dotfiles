@@ -315,7 +315,7 @@ c.TerminalInteractiveShell.highlighting_style = 'monokai'
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}
 
 ## Enable mouse support in the prompt
-#c.TerminalInteractiveShell.mouse_support = False
+c.TerminalInteractiveShell.mouse_support = True
 
 ## Class used to generate Prompt token for prompt_toolkit
 #c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'

@@ -105,9 +105,10 @@ startup_message off
 attrcolor b ".I"
 attrcolor i "+b"
 attrcolor u "+u"
-rendition so "=s dG"
+rendition so "=s"
+# rendition so "=s dG"
 # sorendition "+bi Dw"
-# sorendition "+biu Dw"
+# sorendition "rbiu Dw"
 layout autosave on
 compacthist on
 nethack on
@@ -117,7 +118,7 @@ ignorecase on
 altscreen on
 cjkwidth off
 log off
-# truecolor on
+truecolor on
 defautonuke off
 defencoding utf8
 defbce off
@@ -130,7 +131,8 @@ defmousetrack off
 defnonblock on
 defobuflimit 512
 defscrollback 10000
-# password none'
+# password none
+multiuser off
 bell on
 vbell on
 msgminwait 1
@@ -180,8 +182,14 @@ hardstatus on
 caption always
 hardstatus alwayslastline
 windowlist string "%4n %h%=%f"
-caption string "%{= kK}%{+b ..}%?%E%{+r ..}%?%?%P%{+u ..}%?:%{+b ..}%?%E%{+r kK}%?%?%P%{+u kK}%?:%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?[%{+b kG}%?%E%{+r kG}%?%?%P%{+u kG}%? %S %{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?]%{+b kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%= %?%-Lw%?%{+b kR}%?%E%{+r kR}%?%?%P%{+u kR}%?%n*%f %t%?%{+b kR}%?%E%{+r kR}%?%?%P%{+u kR}%?(%u)%?%{=b kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%?%+Lw%? %=%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?[%{+b kG}%?%E%{+r kG}%?%?%P%{+u kG}%? %h %{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?]%{-b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?:%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?:%5`"
-hardstatus string "%{= kK}%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?[ %{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%3`%{= kR}%?%E%{+r kR}%?%?%P%{+u kR}%?@%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%H%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?Load%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?: %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?%2` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%=[ %{kM}%?%E%{+r kM}%?%?%P%{+u kM}%?%1`%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{kB}%?%E%{+r kB}%?%?%P%{+u kB}%?%4` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%5`"
+
+# truecolor version
+caption string "%{-}%{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?:%{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?:%{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?[%{+b 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%? %S %{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?]%{+b 15;0}%?%E%{+r 15;0}%?%?%P%{+u 15;0}%?%= %?%-Lw%?%{+b 9;0}%?%E%{+r 9;0}%?%?%P%{+u 9;0}%?%n*%f %t%?%{+b 9;0}%?%E%{+r 9;0}%?%?%P%{+u 9;0}%?(%u)%?%{=b 15;0}%?%E%{+r 15;0}%?%?%P%{+u 15;0}%?%?%+Lw%? %=%{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?[%{+b 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%? %h %{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?]%{-b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?:%{+b 0;i0}%?%E%{+r 0;i0}%?%?%P%{+u 0;i0}%?:%5`%{-}"
+hardstatus string "%{-}%{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%?[ %{= 7;0}%?%E%{+r 7;0}%?%?%P%{+u 7;0}%?%3`%{= 9;0}%?%E%{+r 9;0}%?%?%P%{+u 9;0}%?@%{= 7;0}%?%E%{+r 7;0}%?%?%P%{+u 7;0}%?%H%{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%? ][ %{= 3;0}%?%E%{+r 3;0}%?%?%P%{+u 3;0}%?Load%{= 7;0}%?%E%{+r 7;0}%?%?%P%{+u 7;0}%?: %{= 3;0}%?%E%{+r 3;0}%?%?%P%{+u 3;0}%?%2` %{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%?]%=[ %{13;0}%?%E%{+r 13;0}%?%?%P%{+u 13;0}%?%1`%{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%? ][ %{12;0}%?%E%{+r 12;0}%?%?%P%{+u 12;0}%?%4` %{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%?]%5`%{-}"
+
+# 256-color version
+# caption string "%{-}%{= kK}%{+b ..}%?%E%{+r ..}%?%?%P%{+u ..}%?:%{+b ..}%?%E%{+r kK}%?%?%P%{+u kK}%?:%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?[%{+b kG}%?%E%{+r kG}%?%?%P%{+u kG}%? %S %{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?]%{+b kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%= %?%-Lw%?%{+b kR}%?%E%{+r kR}%?%?%P%{+u kR}%?%n*%f %t%?%{+b kR}%?%E%{+r kR}%?%?%P%{+u kR}%?(%u)%?%{=b kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%?%+Lw%? %=%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?[%{+b kG}%?%E%{+r kG}%?%?%P%{+u kG}%? %h %{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?]%{-b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?:%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?:%5`%{-}"
+# hardstatus string "%{-}%{= kK}%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?[ %{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%3`%{= kR}%?%E%{+r kR}%?%?%P%{+u kR}%?@%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%H%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?Load%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?: %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?%2` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%=[ %{kM}%?%E%{+r kM}%?%?%P%{+u kM}%?%1`%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{kB}%?%E%{+r kB}%?%?%P%{+u kB}%?%4` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%5`%{-}"
 
 chdir /p/linux
 

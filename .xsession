@@ -10,14 +10,14 @@ xrdb "/home/jp/.Xresources"
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/jp/.Xmodmap"
-stjerm &
-transgui &
-pavucontrol &
-compton -b
-GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 udisksctl mount -b "$(findfs LABEL=backups)" &
 (udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 5; pcmanfm /sdxc /sdxc/papers) &
-(udisksctl mount -b "$(findfs LABEL=toshiba5TB)"; sleep 5; transmission-remote -tall -s) &
+(udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
+pavucontrol &
+stjerm &
+transgui &
+compton -b
+GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 dbus-update-activation-environment --systemd DISPLAY
 # xsetroot -cursor_name left_ptr
 hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5

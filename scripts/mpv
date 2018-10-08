@@ -1,0 +1,3 @@
+#!/bin/bash
+
+primusrun /usr/bin/mpv "$@" || exec /usr/bin/mpv "$@"

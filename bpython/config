@@ -83,9 +83,9 @@ incremental_search = C-s
 
 [curtsies]
 
-# Allow the the completion and docstring box above the current line
+# Allow the completion and docstring box above the current line
 # (default: False)
-list_above = False
+list_above = True
 
 # Enables two fish (the shell) style features:
 # Previous line key will search for the current line (like reverse incremental
@@ -93,4 +93,4 @@ list_above = False
 # from history. (default: True)
 right_arrow_completion = True
 
-# vi: set filetype=conf:
+# vi: set filetype=python:

@@ -93,11 +93,17 @@
     m:0x0 + c:122
     XF86AudioLowerVolume
 
-## Mute
+# speaker mute
 #"amixer set Master 0%"
 "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     m:0x0 + c:121
     XF86AudioMute
+
+# mic mute
+# "mute_mic"
+"pactl set-source-mute 1 toggle"
+    m:0x0 + c:198
+    XF86AudioMicMute
 
 # mouse pagedown
 #"xdotool key 'Shift+Page_Up'"

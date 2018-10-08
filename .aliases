@@ -293,8 +293,8 @@ alias fastping='ping -c 100 -s1'
 alias fp='ping -c 100 -s1'
 alias ports='ss -tulanp'
 
-alias enft='sudo vim /etc/nftables.nft'
-alias rnft='sudo nft -f /etc/nftables.nft'
+alias enft='sudo vim /etc/nftables.conf'
+alias rnft='sudo nft -f /etc/nftables.conf'
 alias lnft='vim -c "setf nftables" <(sudo nft list ruleset -a)'
 
 alias start-wmin='sudo /etc/webmin/start'
