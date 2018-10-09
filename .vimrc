@@ -442,6 +442,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost PKGBUILD set filetype=sh
 	au BufNewFile,BufReadPost fcr-* set filetype=crontab
 	au BufNewFile,BufReadPost *.\(repy\|mix\) set filetype=python
+	au BufNewFile,BufReadPost *.rules set filetype=udevrules
 
 	" fallback
 	au BufNewFile,BufReadPost * setf cfg

@@ -1,11 +1,10 @@
-local cur_dir="$PWD"
+local tmp_dir
+tmp_dir="$HOME/aur/tmp"
 
-mkdir -p /tmp/aur &>/dev/null
-cower -t /tmp/aur -dd "$@"
+mkdir -p "$tmp_dir" &>/dev/null
+cower -t "$tmp_dir" -dd "$@"
 
-for i; do
-	cd "/tmp/aur/$1" &>/dev/null || continue
+for pkg; do
+	cd "/tmp/aur/$pkg" &>/dev/null || continue
 	return 0
 done
-
-cd "$cur_dir" || return 2

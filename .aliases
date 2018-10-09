@@ -80,7 +80,7 @@ alias m='make clean && PREFIX=~/.local make install && scan-build make -B asan &
 alias urb='define -u'
 alias thes='define -t'
 alias syn='define -t'
-alias def='define'
+alias def='dict'
 alias bk='bindkey'
 alias gb='(cd "${P:-/store/code/projects}/glowing-bear" && python2 -m http.server)'
 alias ra='racket'

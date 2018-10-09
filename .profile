@@ -104,6 +104,7 @@ export ARCHFLAGS="-arch x86-64"
 export CLICOLOR=1
 export COGL_ATLAS_DEFAULT_BLIT_MODE=framebuffer
 export CORRECT_IGNORE='_?*'
+export DRI_PRIME=1
 # Audio plugins
 DSSI_PATH="/usr/local/lib/dssi:/usr/lib/dssi"
 DSSI_PATH="$HOME/dssi:/store/audio/dssi:$DSSI_PATH"
@@ -179,6 +180,7 @@ export LC_ADDRESS="$locale"
 export LC_TELEPHONE="$locale"
 export LC_MEASUREMENT="$locale"
 export LC_IDENTIFICATION="$locale"
+export LIBVA_DRIVER_NAME=vdpau
 export LOCALE="C"
 export LV2_PATH="/usr/lib/lv2:/usr/local/lib/lv2:$HOME/lv2:/store/audio/lv2"
 export LXVST_PATH="/usr/lib/lxvst:/usr/local/lib/lxvst:$HOME/lxvst:/store/audio/lxvst"
@@ -188,7 +190,7 @@ export LESS="FMRXins"
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # shellcheck disable=SC2039
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
-export LIBGL_DRI3_DISABLE=1
+# export LIBGL_DRI3_DISABLE=1
 export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
@@ -279,6 +281,7 @@ TIME="%J
 TIMEFMT="$TIME"
 export TiME TIMEFMT
 export TZ=/usr/share/zoneinfo/posix/Pacific/Honolulu
+export VDPAU_DRIVER=nvidia
 export VST_PATH="$HOME/vst:/store/audio/vst:/usr/lib/vst:/usr/local/lib/vst"
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2

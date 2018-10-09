@@ -33,34 +33,34 @@ function set_muh_upstream() {
 }
 
 function zle-run-help() {
-	local -a args
-	local cmd git_cmd saved match
-	match="${(M)BUFFER##g }"
-	saved="$BUFFER"
-	args=(${(z)BUFFER})
-	while (($#args > 1)); do
-		cmd=$args[1]
-		if [[ $(ztype $cmd) == alias ]]; then
-			cmd=${${$(whence -va $args[1])}[(w)6]}
-			args[1]=$cmd
-		fi
-		if [[ $cmd != sudo ]]; then
-			break
-		fi
-		shift args
-	done
-	if whence $args >/dev/null; then
-		args[1]="${args[1]:/#g/git}"
-		if [[ $args[1] == git && -n $args[2] ]]; then
-			git_cmd=${${(z)$(git config --global "alias.$args[2]" 2>/dev/null)}[1]}
-			[[ -n "$git_cmd" ]] && args[2]=$git_cmd
-		fi
-		zle push-input
-		BUFFER="run-help $args"
+	local -a cmd fallback final
+	# isolate the last command in the list
+	cmd[1]="${BUFFER##*(;|\||&|\(|\)|\{|\}|\||\`|do|then|else|time|sudo|_)##}"
+	cmd[1]="${cmd[1]/#[[:blank:]]#}"
+	cmd[1]="${cmd[1]%%[[:blank:]]*}"
+	cmd[2]="${BUFFER##*$cmd[1]}"
+	cmd[2]="${cmd[2]/#[[:blank:]]#}"
+	cmd[2]="${cmd[2]%%[[:blank:];\|&\(\)\{\}\|\`]*}"
+	# fallback to the first command in the list
+	fallback[1]="${(R)${${b#(sudo|_)}/#[[:blank:]]#}%%[[:blank:]][^ ]*}"
+	fallback[2]="${BUFFER#*$fallback[1]}"
+	fallback[2]="${fallback[2]/#[[:blank:]]#}"
+	fallback[2]="${fallback[2]%%[[:blank:];\|&\(\)\{\}\|\`]*}"
+	# use fallback if cmd is invalid
+	if command -v $cmd[1] >/dev/null 2>&1; then
+		final=(${cmd[1]:/#g/git} $cmd[2])
 	else
-		zle push-input
-		BUFFER="run-help $saved"
+		final=(${fallback[1]:/#g/git} $fallback[2])
 	fi
+	# resolve git aliases
+	if [[ $final[1] == git && -n $final[2] ]]; then
+		git_final=${${(z)$(git config --global "alias.$final[2]" 2>/dev/null)}[1]}
+		if [[ -n "$git_final" ]]; then
+			final[2]=$git_final
+		fi
+	fi
+	zle push-input
+	BUFFER="run-help $final"
 	zle accept-line
 	zle -R
 }
@@ -94,8 +94,7 @@ function zle-fman() {
 	(${~${(j:|:)mansects[@]}})
 		section="${cmdline[1]}"
 		shift cmdline
-		cmd="${cmdline[1]}"
-		;;
+		cmd="${cmdline[1]}";;
 	(*)
 		# Brute force search because “man -w”
 		# breaks when stdin isn't a terminal
@@ -105,8 +104,7 @@ function zle-fman() {
 				section="${${i%/*}##*/man}"
 				break
 			fi
-		done
-		;;
+		done;;
 	esac
 	if  [[ "$cmd" == zsh ]]; then
 		cmd="zshall"
@@ -156,7 +154,6 @@ function zle-vim() {
 		args=("${(z)=BUFFER}")
 	fi
 	# eval needed to resolve static named directories
-	# until ( [[ ! "${args[1]}" =~ ^..?$ ]] && eval "[[ -e ${args[1]} ]]" ); do
 	while ([[ "${args[1]}" =~ ^..?$ || ! -e "${(e)args[1]}" ]]); do
 		# Prevent infinite loop
 		((${#args} > 1)) || return
@@ -167,17 +164,25 @@ function zle-vim() {
 }
 
 function zle-compdef() {
-	local cmd
+	local cmd fallback final
 	if [[ -z "$BUFFER" ]]; then
 		LBUFFER="compdef _gnu_generic "
 		return
 	fi
-	# isolate the actual command
-	cmd="${BUFFER##(;|\||&|\(|\)|\{|\}|\`|do|then|else|time|sudo)#}"
+	# isolate the last command in the list
+	cmd="${BUFFER##*(;|\||&|\(|\)|\{|\}|\||\`|do|then|else|time|sudo|_)##}"
 	cmd="${cmd/#[[:blank:]]#}"
 	cmd="${cmd%%[[:blank:]]*}"
+	# fallback to the first command in the list
+	fallback="${(R)${${b#(sudo|_)}/#[[:blank:]]#}%%[[:blank:]][^ ]*}"
+	# use fallback if cmd is invalid
+	if command -v $cmd >/dev/null; then
+		final=$cmd
+	else
+		final=$fallback
+	fi
 	zle push-input
-	BUFFER="compdef _gnu_generic $cmd"
+	BUFFER="compdef _gnu_generic $final"
 	zle accept-line
 }
 
@@ -232,17 +237,14 @@ function zle-keymap-select() {
 	case "$KEYMAP" in
 	vicmd)
 		printf "$cblock"
-		printf "$cred"
-		;;
+		printf "$cred";;
 	emacs|$_emacs)
 		printf "$cblock"
-		printf "$cyellow"
-		;;
+		printf "$cyellow";;
 	viins|$_vi)
-		# printf "$cline"
-		printf "$cblock"
-		printf "$cgrey"
-		;;
+		printf "$cline"
+		# printf "$cblock"
+		printf "$cgrey";;
 	esac
 	zle -R
 }
@@ -252,17 +254,14 @@ function zle-line-init() {
 	case "$KEYMAP" in
 	vicmd)
 		printf "$cblock"
-		printf "$cred"
-		;;
+		printf "$cred";;
 	emacs|$_emacs)
 		printf "$cblock"
-		printf "$cyellow"
-		;;
+		printf "$cyellow";;
 	viins|$_vi)
-		# printf "$cline"
-		printf "$cblock"
-		printf "$cgrey"
-		;;
+		printf "$cline"
+		# printf "$cblock"
+		printf "$cgrey";;
 	esac
 	# It should be noted that the O / [ confusion can occur with other keys such as Home and End
 	# http://zsh.sourceforge.net/FAQ/zshfaq03.html#l25
@@ -280,17 +279,14 @@ function zle-line-finish() {
 	case "$KEYMAP" in
 	vicmd)
 		printf "$cblock"
-		printf "$cred"
-		;;
+		printf "$cred";;
 	emacs|$_emacs)
 		printf "$cblock"
-		printf "$cyellow"
-		;;
+		printf "$cyellow";;
 	viins|$_vi)
-		# printf "$cline"
-		printf "$cblock"
-		printf "$cgrey"
-		;;
+		printf "$cline"
+		# printf "$cblock"
+		printf "$cgrey";;
 	esac
 	# It should be noted that the O / [ confusion can occur with other
 	# keys such as Home and End …
@@ -307,18 +303,16 @@ function zle-refresh-keymap() {
 	vi)
 		bindkey -e
 		bindkey -v
-		# printf "$cline"
-		printf "$cblock"
-		printf "$cgrey";
-		_km=vi _vi=main _emacs=
-		;;
+		printf "$cline"
+		# printf "$cblock"
+		printf "$cgrey"
+		_km=vi _vi=main _emacs="";;
 	emacs)
 		bindkey -v
 		bindkey -e
 		printf "$cblock"
-		printf "$cyellow";
-		_km=emacs _vi= _emacs=main
-		;;
+		printf "$cyellow"
+		_km=emacs _vi="" _emacs=main;;
 	esac
 	zle -R
 }
@@ -329,16 +323,14 @@ function zle-toggle-keymap() {
 	vi)
 		bindkey -e
 		printf "$cblock"
-		printf "$cyellow";
-		_km=emacs _vi= _emacs=main
-		;;
+		printf "$cyellow"
+		_km=emacs _vi="" _emacs=main;;
 	emacs)
 		bindkey -v
-		# printf "$cline"
-		printf "$cblock"
+		printf "$cline"
+		# printf "$cblock"
 		printf "$cgrey"
-		_km=vi _vi=main _emacs=
-		;;
+		_km=vi _vi=main _emacs="";;
 	esac
 	zle -R
 }
@@ -348,7 +340,7 @@ function zle-emacs-keymap() {
 	bindkey -e
 	printf "$cblock"
 	printf "$cyellow"
-	_km=emacs _vi= _emacs=main
+	_km=emacs _vi="" _emacs=main
 }
 
 function zle-vi-keymap() {
@@ -356,7 +348,7 @@ function zle-vi-keymap() {
 	bindkey -v
 	printf "$cline"
 	printf "$cgrey"
-	_km=vi _vi=main _emacs=
+	_km=vi _vi=main _emacs=""
 }
 
 # alt-i - paste the selected entry from locate output into the command line
@@ -433,7 +425,7 @@ function setescapes() {
 		cgrey='\033]12;#a0a0a0\007'
 		cyellow='\033]12;#b58900\007'
 		if [[ "$TERM" =~ (linux|xterm.*) ]]; then
-			cblock= cline=
+			cblock="" cline=""
 			return
 		elif ([[ -n "$TMUX" ]] && [[ -z "$STY" ]]); then
 			for i in cblock cline cred cgrey cyellow; do
@@ -446,7 +438,7 @@ function setescapes() {
 				eval "$i="'\\033P'"\${$i}"'\\033\\\\'
 			done
 		elif [[ $tree =~ ^(termite|stjerm|qterminal)$ ]]; then
-			cblock= cline=
+			cblock="" cline=""
 		fi
 	} 2>/dev/null
 }

@@ -8,43 +8,39 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2019-10-01] Joey's Progress Report
+Subject: [2019-10-07] Joey's Progress Report
 Reply-To:
 In-Reply-To: <20180704085945.472wsnw4xezjozag@hobbes.alyptik.lan>
 
 /*
  * Joey's Progress Report
  *
- * (2018-10-01)
+ * (2018-10-07)
  */
 
-This week I've spent getting the development environment for CrashSimulator
-up and running, as well as taking care of some small Lind-related cleanups
-and integration.
+This week I spent cleaning up my Lind execve() changes and rebasing them
+into a PR. With a lot of the needed infrastructure changes taken care of
+already in my previous fork() PR, this ended up being fairly smooth,
+with only about 600 lines of code added.
 
-I've gotten most of rr working currently; I was able to successfully record
-a trace and play it back. I haven't completely gotten the VM parts of it
-working yet, but since I'm mostly concentrating on 64-bit support this
-shouldn't be too much of a problem.
+This also included a temporary (but working) internal runtime implementation
+of pipe(), although the goal is still to have this handled completely within
+Repy eventually. I also spent some time going over python docs and thinking
+about the best way to use "threading" for our purposes in this implementation.
+In addition, I did already get some review on my PR from Justin and Brendan
+and addressed the issues they brought up.
 
-The PR for Lind has been merged in, and now I'm going to give the Repy
-parts of it some thought to see ts there is a simple way to update it to
-the latest Repy v2.
-
-I'm not going to spend too much time on that however, and after the Repy
-update I will be focusing on getting my execve() PR cleaned up and ready
-to go so that we can continue moving forward with Lind.
+I've been neglecting CrashSimulator a bit, so I'm going to be figuring
+out the mutators over this coming week, as well as working out our
+python-based pipe() implementation for Lind.
 
 * Plans For Next Week */
 
-        - Start figuring out how to do traces and write mutators for
+        - Read the documentation on how to do traces and write mutators for
           CrashSimulator.
-        - Figure out if there is a quick and easy way to update our
-          Repy code in Lind.
-        - Start prepping the execve() part of NaCl for a PR into the
-          Lind branch.
-        - Give the entire build system for Lind a quick run through and
-          see if there are unneeded parts of it which we can eliminate.
+        - Try and actually write a mutator for CrashSimulator.
+        - Respond to code review suggestions on my Lind execve() PR.
+        - Figure out a concrete implementation plan for pipe().
 
 That's all for this week, thanks.
 

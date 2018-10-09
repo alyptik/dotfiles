@@ -1,3 +1,8 @@
 #!/bin/bash
 
-ip link set tap0 up
+# or if bridge-utils isn't installed
+ip tuntap add tap0 mode tap
+ip link set dev tap0 up
+ip link add br0 type bridge
+ip link set tap0 master br0
+ip link set eth0 master br0

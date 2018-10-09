@@ -1,0 +1,3 @@
+KERNEL=="br", GROUP="kvm", MODE="0660", OPTIONS+="static_node=net/br"
+KERNEL=="tap", GROUP="kvm", MODE="0660", OPTIONS+="static_node=net/tap"
+KERNEL=="tun", GROUP="kvm", MODE="0660", OPTIONS+="static_node=net/tun"

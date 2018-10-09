@@ -112,6 +112,7 @@
 	cfgu = config --unset
 	rd = range-diff
 	lo = log --oneline --decorate --all
+	cpa = cherry-pick -S --abort
 [web]
 	browser = w3m
 [instaweb]
