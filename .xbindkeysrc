@@ -30,30 +30,60 @@
 # keystate_scrolllock = enable
 # keystate_capslock = enable
 
-# tdrop on F8 (c:74)
-# "tdrop -n 1 current"
-#     m:0x0 + c:74
+# primary copy
+"xclip -r -o -sel prim | xclip -r -i -sel prim"
+    m:0x9 + c:54
+    Shift+Alt + c
+
+# clipboard copy
+"xclip -r -o sel prim | xclip -r -i -sel clip"
+    m:0x8 + c:54
+    Alt + c
+
+# primary paste
+"sh -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
+    m:0x9 + c:55
+    Shift+Alt + v
+
+# clipboard paste
+"sh -c 'xclip -r -o -sel clip | xvkbd -xsendevent -file - 2>/dev/null'"
+    m:0x8 + c:55
+    Alt + v
+
+# show xbindkeys bindings
+"xbindkeys_show"
+    m:0x0 + c:67
+    F1
+
+# primary paste on F7 (c:73)
+"sh -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
+    m:0x0 + c:73
+    F7
+
+# clipboard paste on F8 (c:74)
+"sh -c 'xclip -r -o -sel clip | xvkbd -xsendevent -file - 2>/dev/null'"
+    m:0x0 + c:74
+    F8
 
 # tdrop on F9 (c:75)
 "tdrop -n 2 chromium"
     m:0x0 + c:75
+    F9
 
 # tdrop on F10 (c:76)
 "tdrop -n 3 st"
     m:0x0 + c:76
+    F10
 
 # tdrop on F11 (c:95)
 "tdrop -n 4 st"
     m:0x0 + c:95
+    F11
 
 # tdrop on F12 (c:96)
 # "tdrop -n 5 st"
 #     m:0x0 + c:96
-
-# show xbindkeys bindings
-"xbindkeys_show"
-    m:0xc + c:24
-    Control+Alt + q
+#     F12
 
 # toggle Touchpad
 # "t-xinput.sh"
@@ -133,7 +163,7 @@
 
 # xclip copy
 # "xclip -f -sel clip"
- m:0x0 + b:2
+ # m:0x0 + b:2
 
 # restart kwin
 # "kwin_x11 --replace"
