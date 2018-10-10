@@ -41,12 +41,12 @@
     Alt + c
 
 # primary paste
-"sh -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
+"sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
     m:0x9 + c:55
     Shift+Alt + v
 
 # clipboard paste
-"sh -c 'xclip -r -o -sel clip | xvkbd -xsendevent -file - 2>/dev/null'"
+"sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
     m:0x8 + c:55
     Alt + v
 
@@ -55,13 +55,23 @@
     m:0x0 + c:67
     F1
 
+# primary paste
+# "sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
+#     m:0x1 + c:118
+#     Shift + Insert
+
+# clipboard paste
+"sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
+    m:0x0 + c:118
+    Insert
+
 # primary paste on F7 (c:73)
-"sh -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
+"sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
     m:0x0 + c:73
     F7
 
 # clipboard paste on F8 (c:74)
-"sh -c 'xclip -r -o -sel clip | xvkbd -xsendevent -file - 2>/dev/null'"
+"sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
     m:0x0 + c:74
     F8
 
