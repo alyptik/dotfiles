@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# primusrun sh -c 'exec steam-native "$@"' _ "$@"
+exec primusrun steam-native "$@"

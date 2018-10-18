@@ -20,20 +20,20 @@ fi
 
 # set cpu governor
 for i in /sys/devices/system/cpu/cpu[0-9]; do
-	cpu_gov=performance
-	# cpu_gov=powersave
+	# cpu_gov=performance
+	cpu_gov=powersave
 	printf '%s\n' "$cpu_gov" | sudo tee "$i/cpufreq/scaling_governor"
 done
 
 for i in /sys/block/*; do
 	# set io scheduler
-	io_sched=kyber
+	io_sched=mq-deadline
+	# io_sched=kyber
 	# io_sched=bfq
-	# io_sched=mq-deadline
 	printf '%s\n' "$io_sched" | sudo tee "$i/queue/scheduler"
 	# don't collect entropy from solid state drives
 	case "${i##*/}" in
-	nvme*|md*|mmc*)
+	nvme*|md*|mmc*|loop*)
 		printf '%s\n' "0" | sudo tee "$i/queue/add_random";;
 	*)
 		printf '%s\n' "1" | sudo tee "$i/queue/add_random";;

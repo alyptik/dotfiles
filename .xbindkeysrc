@@ -66,14 +66,14 @@
     Insert
 
 # primary paste on F7 (c:73)
-"sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
-    m:0x0 + c:73
-    F7
+# "sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
+#     m:0x0 + c:73
+#     F7
 
 # clipboard paste on F8 (c:74)
-"sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
-    m:0x0 + c:74
-    F8
+# "sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
+#     m:0x0 + c:74
+#     F8
 
 # tdrop on F9 (c:75)
 "tdrop -n 2 chromium"
@@ -112,12 +112,14 @@
     Control+Alt + comma
 
 # decrease brightness
-"xbacklight -dec 10"
+# "xbacklight -dec 10"
+"bash -c '<<<$(( ($(</sys/class/backlight/intel_backlight/brightness) > 100) ? ($(</sys/class/backlight/intel_backlight/brightness) - 100) : 100 )) sudo tee /sys/class/backlight/intel_backlight/brightness'"
     m:0xc + c:20
     Control+Alt + minus
 
 ## increase brightness
-"xbacklight -inc 10"
+# "xbacklight -inc 10"
+"bash -c '<<<$(( ($(</sys/class/backlight/intel_backlight/brightness) < 900) ? ($(</sys/class/backlight/intel_backlight/brightness) + 100) : 1000 )) sudo tee /sys/class/backlight/intel_backlight/brightness'"
     m:0xc + c:21
     Control+Alt + equal
 
