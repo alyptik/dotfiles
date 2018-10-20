@@ -53,7 +53,7 @@ call plug#begin(g:plugdir)
 	Plug 'jungomi/vim-mdnquery'
 	" Plug 'osfameron/perl-tags', {'for': 'perl'}
 	" Plug 'osfameron/perl-tags-vim', {'for': 'perl'}
-	Plug 'alyptik/perl-tags-vim', {'for': 'perl', 'branch': 'https'}
+	" Plug 'alyptik/perl-tags-vim', {'for': 'perl', 'branch': 'https'}
 	Plug 'c9s/perlomni.vim', {'for': 'perl'}
 	Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'

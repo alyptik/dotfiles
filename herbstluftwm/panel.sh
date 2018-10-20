@@ -44,13 +44,13 @@ if awk -Wv 2>/dev/null | head -1 | grep -q '^mawk'; then
 	# mawk needs "-W interactive" to line-buffer stdout correctly
 	# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=593504
 	uniq_linebuffered() {
-	  awk -W interactive '$0 != l { print ; l=$0 ; fflush(); }' "$@"
+		awk -W interactive '$0 != l {print; fflush(); l=$0}' "$@"
 	}
 else
 	# other awk versions (e.g. gawk) issue a warning with "-W interactive", so
 	# we don't want to use it there.
 	uniq_linebuffered() {
-	  awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
+		awk '$0 != l {print; fflush(); l=$0}' "$@"
 	}
 fi
 
@@ -59,7 +59,7 @@ pkill -9 dzen2
 pkill -9 pactl
 pkill -9 mpc
 pkill -9 -f 'python3.*imap'
-systemctl restart mpdscribble@jp.service mpd
+systemctl restart mpdscribble@jp.service mpd &
 
 {
 	### Event generator ###
@@ -72,25 +72,30 @@ systemctl restart mpdscribble@jp.service mpd
 	childpids=()
 	imapcounter & childpids+=($!)
 	mpc idleloop player & childpids+=($!)
-	bash -c $'pactl subscribe | grep --line-buffered sink | sed -u "s/.*/volume\t ^fg(#909090)"' & childpids+=($!)
+	(pactl subscribe | grep --line-buffered sink | sed -u "s/.*/volume\t^fg(#909090)" && sleep 2) & childpids+=($!)
 
 	while :; do
 		curtemp="$(</sys/devices/virtual/thermal/thermal_zone0/temp)"
 		# curtemp="$(</sys/devices/virtual/hwmon/hwmon0/temp1_input)"
 		curbat="$(</sys/class/power_supply/BAT0/capacity)"
-		curvol="$(pacmd dump-volumes | sed -r '1 !d; s/[^%]* ([0-9]+%) .*/\1/')"
+		if ((curbat > 96)); then
+			curbat=100
+			icon=⚇
+		fi
+		curvol="$(pacmd dump-volumes | sed -ne '1 s/[^%]* \([0-9][0-9]*%\) .*/\1/p')"
 		echo $'np\t'"$(mpc current)"
-		df -Th / | perl -alne 'print "disk\t^fg(#efefef)$F[6] - $F[4]" unless $. == 1' &
 		echo $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
-		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
-		echo $'bat\t^fg(#efefef)'"$curbat%  ⚡"
+		echo $'bat\t^fg(#efefef)'"$curbat% ${icon:-⚡}"
 		echo $'volume\t^fg(#909090)'"$curvol  ♪"
+		df -h / | awk $'NR == 2 {print "disk\t^fg(#efefef)", $6, "-", $4}'
+		date +$'date\t^fg(#efefef)%a %R %Z ^fg(#909090)%Y-%m-%d'
 	done > >(uniq_linebuffered) & childpids+=($!)
 
 	hc --idle
+
 	kill -9 "${childpids[@]}"
 } 2>/dev/null | {
-	IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
+	IFS=$'\t' read -ra tags <<< "$(hc tag_status "$monitor")"
 	visible=true
 	volume=""
 	date=""
@@ -107,7 +112,7 @@ systemctl restart mpdscribble@jp.service mpd
 		bordercolor="#26221C"
 		separator="^bg()^fg($selbg)|"
 		# draw tags
-		for i in "${tags[@]}" ; do
+		for i in "${tags[@]}"; do
 			case ${i:0:1} in
 				'#')
 					echo -n "^bg($selbg)^fg($selfg)"
@@ -127,9 +132,9 @@ systemctl restart mpdscribble@jp.service mpd
 			esac
 			if [ ! -z "$dzen2_svn" ] ; then
 				# clickable tags if using SVN dzen
-				echo -n "^ca(1,\"${herbstclient_command[@]:-herbstclient}\" "
+				echo -n "^ca(1,\"${herbstclient_command[*]:-herbstclient}\" "
 				echo -n "focus_monitor \"$monitor\" && "
-				echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
+				echo -n "\"${herbstclient_command[*]:-herbstclient}\" "
 				echo -n "use \"${i:1}\") ${i:1} ^ca()"
 			else
 				# non-clickable tags if using older dzen
@@ -146,7 +151,7 @@ systemctl restart mpdscribble@jp.service mpd
 		right="$right $separator ^bg() "
 		right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
 		# get width of right aligned text.. and add some space..
-		width=$($textwidth "$font" "$right_text_only    ")
+		width=$("$textwidth" "$font" "$right_text_only    ")
 		echo -n "^pa($(($panel_width - $width)))$right"
 		echo
 

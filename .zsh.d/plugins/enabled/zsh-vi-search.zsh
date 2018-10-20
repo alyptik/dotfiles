@@ -1,0 +1,1 @@
+../zsh-vi-search/src/zsh-vi-search.zsh

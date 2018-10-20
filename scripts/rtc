@@ -20,8 +20,8 @@ fi
 
 # set cpu governor
 for i in /sys/devices/system/cpu/cpu[0-9]; do
-	# cpu_gov=performance
-	cpu_gov=powersave
+	cpu_gov=performance
+	# cpu_gov=powersave
 	printf '%s\n' "$cpu_gov" | sudo tee "$i/cpufreq/scaling_governor"
 done
 

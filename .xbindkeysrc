@@ -31,24 +31,24 @@
 # keystate_capslock = enable
 
 # primary copy
-"xclip -r -o -sel prim | xclip -r -i -sel prim"
-    m:0x9 + c:54
-    Shift+Alt + c
+# "xclip -r -o -sel prim | xclip -r -i -sel prim"
+#     m:0x9 + c:54
+#     Shift+Alt + c
 
 # clipboard copy
-"xclip -r -o sel prim | xclip -r -i -sel clip"
-    m:0x8 + c:54
-    Alt + c
+# "xclip -r -o sel prim | xclip -r -i -sel clip"
+#     m:0x8 + c:54
+#     Alt + c
 
 # primary paste
-"sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
-    m:0x9 + c:55
-    Shift+Alt + v
+# "sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
+#     m:0x9 + c:55
+#     Shift+Alt + v
 
 # clipboard paste
-"sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
-    m:0x8 + c:55
-    Alt + v
+# "sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
+#     m:0x8 + c:55
+#     Alt + v
 
 # show xbindkeys bindings
 "xbindkeys_show"
@@ -56,12 +56,12 @@
     F1
 
 # primary paste
-# "sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
+# "sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
 #     m:0x1 + c:118
 #     Shift + Insert
 
 # clipboard paste
-"sh -c 'xclip -r -o -sel clip | xvkbd -no-sync -file - 2>/dev/null'"
+"sh -c 'xclip -r -o -sel prim | xvkbd -no-sync -file - 2>/dev/null'"
     m:0x0 + c:118
     Insert
 

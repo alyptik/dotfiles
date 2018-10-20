@@ -280,7 +280,7 @@ TIME="%J
 [exit: %W] ([voluntary: %w]+[involuntary: %c] context-switches)"
 TIMEFMT="$TIME"
 export TiME TIMEFMT
-export TZ=/usr/share/zoneinfo/posix/Pacific/Honolulu
+# export TZ=/usr/share/zoneinfo/posix/Pacific/Honolulu
 export VDPAU_DRIVER=nvidia
 export VST_PATH="$HOME/vst:/store/audio/vst:/usr/lib/vst:/usr/local/lib/vst"
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3

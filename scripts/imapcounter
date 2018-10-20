@@ -31,10 +31,10 @@ def main():
                             + f"^fg(#909090){stats['MESSAGES']} "
                             + f"^fg(#efefef)({stats['UNSEEN']})", flush=True)
                     last = stats
-                    time.sleep(5)
+                    time.sleep(600)
         except (OSError, imaplib.IMAP4.error) as e:
             print(e)
-            time.sleep(5)
+            time.sleep(600)
 
 if __name__ == '__main__':
     main()
