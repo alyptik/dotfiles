@@ -61,8 +61,9 @@ yeahconsole*colorBD:	rgb:82/a4/d3
 yeahconsole*colorULMode:	true
 yeahconsole*colorUL:	rgb:e4/e4/e4
 
-Xcursor*theme:	Oxygen_Blue
+! Xcursor*theme:	Jp
 ! Xcursor*theme:	ArchCursorTheme
+Xcursor*theme:	Oxygen_Blue
 
 ! Xft.dpi: 96
 ! Xft.dpi: 216

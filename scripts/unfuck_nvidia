@@ -1,0 +1,17 @@
+#!/bin/sh
+
+nvidia_drv="$(find /usr/src/ -mindepth 1 -maxdepth 1 -name 'nvidia-*' -printf %f -quit)"
+kern_ver="$(find /usr/lib/modules/ -mindepth 1 -maxdepth 1 -name '*-dirty' -printf %f -quit)"
+
+if test -z "$nvidia_drv"; then
+	printf '%s\n' 'no nvidia dkms sources found at /usr/src/nvidia-*' >&2
+	exit 1
+fi
+
+grep -Flr LICENSE -- "/usr/src/$nvidia_drv" \
+	| while read -r f; do
+		printf '%s\n' "running: sudo sed -i '/MODULE_LICENSE(\".*\");/ s/\\(MODULE_LICENSE(\"\\)[^\"]\\+\"/\1GPL v2\"/g' $f"
+		sudo sed -i '/MODULE_LICENSE(".*");/ s/\(MODULE_LICENSE("\)[^"]\+"/\1GPL v2"/g' "$f"
+	done
+
+sudo dkms install "nvidia/${nvidia_drv##*-}" -k "$kern_ver"

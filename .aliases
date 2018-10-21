@@ -8,6 +8,8 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias orun='optimusrun'
+alias prun='primusrun'
 alias ez='exec zsh'
 alias gpl='(cd ~/Maildir/gmail && gmi pull && notmuch new)'
 alias nshow='notmuch show --entire-thread=true --decrypt=true'
