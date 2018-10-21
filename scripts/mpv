@@ -6,4 +6,4 @@ export DRI_PRIME=1
 export LIBVA_DRIVER_NAME=vdpau
 export VDPAU_DRIVER=nvidia
 
-primusrun /usr/bin/mpv "$@" || /usr/bin/mpv "$@"
+primusrun /usr/bin/mpv "$@" || /usr/bin/mpv --vo=xv "$@"

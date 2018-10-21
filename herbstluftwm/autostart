@@ -19,6 +19,9 @@ hc keyunbind --all
 # Mod=Mod1    # Use alt as the main modifier
 Mod=Mod4   # Use the super key as the main modifier
 
+# list keybindings
+hc keybind $Mod-F1 spawn xterm -e sh -c "if command -v bat >/dev/null; then pager=bat; else pager=less; fi; herbstclient list_keybinds | \"\$pager\""
+
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
@@ -50,7 +53,7 @@ hc keybind $Mod-Shift-l     shift right
 hc keybind $Mod-u       split   bottom  0.5
 hc keybind $Mod-o       split   right   0.5
 # let the current frame explode into subframes
-hc keybind $Mod-Control-space split explode
+hc keybind $Mod-Control-space   split   explode
 
 # resizing frames
 resizestep=0.05
@@ -156,6 +159,9 @@ hc rule focus=on # normally focus new clients
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+# setup pseudotiling for keybind listings
+hc rule class=XTerm pseudotile=on
+hc rule class=Xbindkeys_show pseudotile=on
 
 # unlock, just to be sure
 hc unlock
@@ -168,7 +174,7 @@ herbstclient set tree_style '╾│ ├└╼─┐'
 # hc detect_monitors
 
 # find the panel
-panel=~/.config/herbstluftwm/panel.sh
+panel="$HOME/.config/herbstluftwm/panel.sh"
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
 for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     # start it on each monitor
