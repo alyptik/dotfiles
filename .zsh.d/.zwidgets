@@ -404,7 +404,7 @@ function zshreadhist() {
 		print -r - 'you messed up your history file bruh'
 		return
 	fi
-	fc -p "$HOME/.zsh_history"
+	fc -R "$HOME/.zsh_history"
 	\mkdir -p /store/history
 	\touch /store/history/.zsh_history.tmp
 	cat <"$HOME/.zsh_history" >/store/history/.zsh_history.tmp

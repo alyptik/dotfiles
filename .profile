@@ -39,7 +39,7 @@ export NPROC
 export CONFIG="/store/dotfiles"
 export LINUX="$PROJECTS/linux"
 export PROJECTS="/store/code/projects"
-export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS"
+export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" pre="$HOME/.local"
 
 # compiler environment
 unset CARCH CCACHE_DISABLE CFLAGS CCFLAGS

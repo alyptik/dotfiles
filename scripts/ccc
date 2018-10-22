@@ -1,3 +1,4 @@
 #!/bin/sh
 
-bc -l <<<"$@"
+printf '%s\n' "running: gcc -Wall -Wextra -pedantic -std=c11 -fsanitize=address,alignment,undefined -g3 -Og \"$1\" -o /tmp/1 && /tmp/1"
+gcc -Wall -Wextra -pedantic -std=c11 -fsanitize=address,alignment,undefined -g3 -Og "$@" -o /tmp/1 && /tmp/1
