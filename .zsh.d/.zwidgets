@@ -42,7 +42,7 @@ function zle-run-help() {
 	cmd[2]="${cmd[2]/#[[:blank:]]#}"
 	cmd[2]="${cmd[2]%%[[:blank:];\|&\(\)\{\}\|\`]*}"
 	# fallback to the first command in the list
-	fallback[1]="${(R)${${b#(sudo|_)}/#[[:blank:]]#}%%[[:blank:]][^ ]*}"
+	fallback[1]="${(R)${${BUFFER#(sudo|_)}/#[[:blank:]]#}%%[[:blank:]][^ ]*}"
 	fallback[2]="${BUFFER#*$fallback[1]}"
 	fallback[2]="${fallback[2]/#[[:blank:]]#}"
 	fallback[2]="${fallback[2]%%[[:blank:];\|&\(\)\{\}\|\`]*}"

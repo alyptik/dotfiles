@@ -8,6 +8,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias pcfm='pcmanfm'
 alias orun='optimusrun'
 alias prun='primusrun'
 alias ez='exec zsh'
