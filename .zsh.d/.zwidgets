@@ -58,6 +58,9 @@ function zle-run-help() {
 		if [[ -n "$git_final" ]]; then
 			final[2]=$git_final
 		fi
+	# use the zshall manpage when the command is zsh
+	elif [[ $final[1] == zsh ]]; then
+		final[1]="zshall"
 	fi
 	zle push-input
 	BUFFER="run-help $final"
@@ -106,7 +109,7 @@ function zle-fman() {
 			fi
 		done;;
 	esac
-	if  [[ "$cmd" == zsh ]]; then
+	if  [[ $cmd == zsh ]]; then
 		cmd="zshall"
 	fi
 	# Setting “section=zshall” is a bit misleading but

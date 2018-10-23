@@ -369,7 +369,7 @@ alias nmixxx='sudo renice -n -20 -p $(pgrep mixxx|paste -sd" ") && sudo ionice -
 alias kpulse='systemctl --user stop pulseaudio.socket && pulseaudio --kill || pulseaudio --kill'
 alias archchroot='sudo mount --rbind /sys /mnt/gentoo/sys/; sudo mount --make-rslave /mnt/gentoo/sys/; sudo mount --rbind /dev /mnt/gentoo/dev/; sudo mount --make-rslave /mnt/gentoo/dev/; sudo mount -t tmpfs tmpfs /mnt/gentoo/tmp/; sudo mount -t proc proc /mnt/gentoo/proc/; sudo chroot'
 alias ws='web_search_custom'
-alias aw='arch-wiki'
+alias aw='BROWSER=chromium arch-wiki'
 alias tma='tmux attach'
 alias wm='wemux'
 alias pix="curl --progress-bar -n -F'f:1=<-' ix.io"

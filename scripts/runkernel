@@ -78,7 +78,6 @@ cmd="$qemu \
 	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
 	-show-cursor \
 	-usb -device usb-tablet \
-	-soundhw all \
 	$monitor $display $network $extra_flags \
 "
 
