@@ -1,0 +1,459 @@
+
+|=-------------=[ Hacker OPSEC with The Grugq ]=-------------=|
+|=-----------------------------------------------------------=|
+|=--------=[ the grugq <grugq@anti-forensics.com> ]=---------=|
+|=--------------=[ www.anti-forensics.com ]=-----------------=|
+|=-=[ https://blogsofwar.com/hacker-opsec-with-the-grugq/ ]=-=|
+
+The Grugq is a world renowned information security researcher with
+15 years of industry experience. Grugq started his career at a Fortune
+100 company, before transitioning to @stake, where he was forced to
+resign for publishing a Phrack article on anti-forensics. Since then
+the Grugq has presented on anti-forensics at dozens of international
+security conferences, as well as talks on numerous other security
+topics. As an independent information security consultant the Grugq
+has performed engagements for a wide range of customers, from startups
+to enterprises and the public sector. He has worked as a professional
+penetration tester, a developer, and a full time security researcher.
+The Grugq’s research has always been heavily biased towards
+counterintelligence aspects of information security. His research has
+been referenced in books, papers, magazines, and newspapers. Currently
+an independent researcher, the grugq is actively engaged in exploring
+the intersection of traditional tradecraft and the hacker skillset,
+learning the techniques that covert organisations use to operate
+clandestinely and applying them to the Internet. You can follow him
+on Twitter @thegrugq.
+
+John Little: You blog and have given conference presentations on Hacker
+OPSEC. You started doing this before the recent NSA revelations (and
+the general hysteria surrounding intelligence collection) but you
+were already warning hackers that states had superseded them as the
+internet’s apex predator. In just a couple of years we’ve moved from
+the seeming invincibility of LulzSec, to high profile busts, and now
+onto serious concerns being raised about the every aspect of the internet’s
+architecture, security models, and tools. Rock solid OPSEC is a refuge
+but maintaining it for long periods of time under significant pressure
+is very difficult. The deck is obviously stacked against anyone trying
+to evade state surveillance or prosecution so where do freedom fighters
+and those with less noble intentions go from here?
+
+The Grugq: You raise a number of interesting points. I’ll ramble on
+about them in a moment, but before that I’d like to clarify for your
+readers a bit about where I am coming from. Firstly, I am not a “privacy
+advocate”, I am an information security researcher. My career in information
+security has been mostly focused around denial and deception at the
+technical level.
+
+Recently, however, I became aware that this “fetishizing the technology”
+approach is simply not effective in the real world. So I turned to
+studying clandestine skills used in espionage and by illicit groups,
+such as narcotics cartels and terrorist groups. The tradecraft of
+these clandestine organizations is what I am trying to extract, inject
+with hacker growth hormone, and then teach to those who need real
+security: journalists; executives traveling to adversarial environments;
+silly kids making stupid life altering mistakes, etc.
+
+The media has actually expressed a lot of interest in improving their
+security posture, and I am engaged in helping some journalists develop
+good OPSEC habits. Or at least, learn what those habits would be,
+so they have some idea of what to aspire to. There is a strange intransigence
+with some who reject improved security with the line: “but we’re not
+criminals! Why do we need this?” Well, the only answer I have is that
+OPSEC is prophylactic, you might not need it now, but when you do,
+you can’t activate it retroactively. As I phrased it in my “The Ten
+Hack Commandments” — be proactively paranoid, it doesn’t work retroactively.
+
+
+So, that’s how I’ve arrived at hacker tradecraft, and where I’m trying
+to take it. On to the issues you’ve raised about good OPSEC and living
+a clandestine life.
+
+The stress of the clandestine lifestyle is something that people tend
+to gloss over all too easily. This is an observation that comes up
+frequently in the literature about terrorist groups, espionage agents,
+and revolutionaries. There are a lot of compound issues which combine
+to make this sort of “good OPSEC” lifestyle very unhealthy for the
+human mind:
+
+    Isolation
+    Compartmentation of the ego
+    Paranoia related stress
+
+Isolation provides the strongest security, and all good security involves
+a significant investment in maintaining a low profile, “going underground”,
+“off the grid”, etc. This means that the clandestine operative has
+reduced visibility over the social and political landscape, and their
+telemetry will suffer. Degraded telemetry means they will be unable
+to self-correct and reorient to what is happening around them. If
+they are part of a cell, a group of operatives in communal isolation,
+they will tend to self reinforce their ideology. Effectively radicalizing
+and distancing themselves further from the mainstream norms of society.
+This additional isolation can create a feedback loop.
+
+If the operative isn’t living a completely isolated clandestine lifestyle
+in their Unabomber cabin, they will have to isolate parts of their
+individual selves to compartment the different aspects of their lives.
+There will be their normal public life, the one face they show to
+the world, and also a sharded ego with their clandestine life. Maintaining
+strict compartmentation of the mind is stressful, the sharded individual
+will be a sum less than the total of the parts.
+
+As if that wasn’t enough, there is the constant fear of discovery,
+that the clandestine cover will be stripped away by the adversary.
+This leaves the operative constantly fretting about the small details
+of each clandestine operational activity. Coupled with the compartmentalization
+of the self, the operative also has to stress about each non-operational
+activity, will this seemingly innocent action be the trigger that
+brings it all crashing down?
+
+Seriously, maintaining a strong security posture for prolonged periods
+of time is an extremely stressful and difficult act. Operatives working
+for the intelligence agencies have a significantly easier time of
+it than those on the other side of the protection of the state: e.g.
+their agents; hackers; terrorists, and narcos. The “legal” operatives
+have peers that they can confide in and unwind with thanks to the
+protections of the nation state. The true clandestine agents must
+be guarded with their peers, the public and the adversary. Any peer
+might be an informant, either now or in the future. Opening up and
+being friendly with their peers is part of what lead to the unraveling
+of the lulzsec hacker group.
+
+This leaves people who need to operate clandestinely and use the internet
+with a real problem. How can you be on the Internet and isolated?
+Well, compartmentation is the only answer, but it is expensive and
+fragile, even a single error or mistake can destroy the whole thing.
+This is why I’ve advocated that people who seek to operate clandestinely
+combine deception, that is, multiple covers, for their compartmented
+activities. It is possible to embed tripwires into the cover identities
+and be alerted when they’re blown.
+
+My thinking these days is that an operative must minimize the time
+that they are engaged in a clandestine operation. Something like the
+theory of special operations, the period of vulnerability only grows
+the longer the operation goes on. Clandestine operational activity
+must be compartmented, it must be planned, it must be short in duration,
+and it must be rehearsed (or at least, composed of habitual actions).
+It is possible to do, and I believe that even non-experts can pull
+it off, but it must be limited in scope and duration. Prolonged exposure
+to underground living is caustic to the soul.
+
+John Little: There is a significant amount of paranoia circulating
+in hacker and activist communities right now. How much of it is justified?
+More importantly, how should people go about conducting a realistic
+personal risk assessment before they start piling on layer after layer
+of OPSEC? How can they strike that balance between the tedium and
+isolation and security that is “good enough”?
+
+The Grugq: There is certainly a great deal of paranoia, some of it
+justified, some of it unjustified, and some of it misdirected. I think
+it is important to remember that paranoia is unhealthy, it is paralyzing,
+it is divisive, and it is harmful to operational effectiveness. The
+goal to aim for is caution. Allowing the adversary to inflict paranoia
+on you, or your group, gives them an easy psychological operation
+“win”. So lets drop the paranoia and figure out what security precautions
+we must take in order to operate safely and effectively.
+
+As you bring up, the core to effective security is performing a risk
+assessment, deciding what information is most important to protect,
+and then developing mitigation strategies to safe guard that information.
+There are books and manuals that go into this in great depth, so I
+won’t spend a lot of time on the details.
+
+A risk assessment should focus on the most high impact items first.
+To determine this, you list your adversaries and group them by intent
+and capability. So the NSA would have a very high capability, but
+probably has a low intent of targeting you. Then you make a list of
+information about your secrets, what you are trying to protect, and
+group that based on the negative impact it would have if it were in
+the hands of an opponent. The most damaging information must be protected
+from the likely and the most capable adversaries.
+
+Generally speaking, if you’re engaged in a clandestine activity that
+you want to protect, the core information to secure is:
+
+    Your identity
+    Your clandestine activity
+    Your association with the activity
+
+So lets take the example of the Dread Pirate Roberts, who’s been in
+the news recently after he got arrested. His adversaries were highly
+capable, including a wide range of law enforcement officials from
+across the globe. They were highly motivated, because DPR and his
+site were very high profile. So you have high capability, and high
+intent. Not looking good so far.
+
+The information that was most important was his personal real world
+identity, followed by his location. Protecting that information would
+require:
+
+    Robust compartmentation
+    Reducing his exposure to the most capable adversaries (e.g. leave
+the USA)
+    A strong disinformation campaign
+    Limiting his time in “the dragonworld” (to use J. Bells’ term
+for the underground)
+
+For most people engaged in a clandestine activity this list is probably
+what they will want to follow. The exact mitigation enacted for each
+component in the list is case dependent. As we discussed earlier,
+and as you’ve said, we need to find a good balance between an aggressive
+security posture and living a rewarding life.
+
+Remember, the goal is to reduce the quantity and the quality of information
+available to the adversary.
+
+John Little: So a point which both of us comment on with some regularity
+is the fact that security is rooted in behavior rather than technology.
+That’s always been true to some extent but never more than now. Tools
+are suspect, almost across the board. And a lot of assumptions about
+security have to be tossed aside. But one thing is certain, hackers
+adapt to the adversary. Terrorists do this well too. An attacker who
+can successfully parse all this and adapt is going to be a very significant
+threat. How can states counter the advanced threats? How can they
+counter hackers who know how to manage OPSEC and technical security
+to evade detection?
+
+The Grugq: HUMINT. More of it.
+
+The role of SIGINT in intelligence has basically been this weird bubble,
+starting around WWII when the love of SIGINT started until recently,
+when some of the SIGINT capabilities are starting to go dark. SIGINT
+is much more attractive than HUMINT. Signals don’t lie. They don’t
+forget. They don’t show up late to meetings, or provided intelligence
+information that is deliberately deceptive. SIGINT is the heroin of
+intelligence collection. The whole world got hooked on it when they
+discovered it, and it has had a very good run… it will probably continue
+to be useful for decades more, but really… the real utility of SIGINT
+will start to diminish now. It has to. The amount of encryption being
+deployed means that many mass collection capabilities will start to
+go dark. I, of course, am in total favour of this. I think that the
+privacy and protection of the entire Internet are more important than
+the ability of the US government to model the “chatter” between everyone
+using the Internet. The reduced security that the US government has
+tried (and succeeded) to force on the entire world is makes all of
+us less safe against any adversary.
+
+SIGINT is really the sort of intelligence collection technique that
+needs to lose its prominence in the pantheon of intelligence gods.
+It is very easy for a serious adversary to defeat: basic tradecraft
+from the days of Allen Dulles will work (leave the phone behind, have
+the meeting while taking a walk). This tradecraft technique is described
+by Dulles, in 50 year old KGB manuals, and by Hizbollah operatives
+last year. The only way to catch people who are capable of any sort
+of OPSEC / tradecraft is via: a) Mistakes that they make (very easy
+for amateurs to make mistakes), or b) Via HUMINT. Spies catch spies,
+as the saying goes. It might be updated to, spies catch clandestine
+operatives.
+
+Historically, the value of HUMINT has been very hit and miss, but
+those “hits” are extremely valuable. The major successes of the Cold
+War were almost all the result of human beings who became spies for
+the opposition: Ames, Hanssen, Walker, Howard, Tolkachev, etc. There
+are myriad cases with terrorist groups as well, informants is the
+best weapon against them. Relying on SIGINT is essentially relying
+on the adversary (terrorist groups) having poor tradecraft and terrible
+counterintelligence practices. This is simply not the case, at least
+not with sophisticated dangerous groups.
+
+Double down on HUMINT and scale back SIGINT. SIGINT can be evaded,
+but HUMINT, essentially exploiting trust relationships, will always
+bite you in the ass.
+
+John Little: Hackers are going to have to evolve in the same direction
+though aren’t they? Technology isn’t their salvation from an OPSEC
+perspective, in fact it is really the weakest link in their security
+model, so they will have to fully embrace good old-fashioned tradecraft
+and deception to avoid detection. Do you see an appreciation of that
+in the hacking community? It seems like a lot of big name hackers
+are still making fairly simple OPSEC mistakes.
+
+The Grugq: Exactly, this is really the understanding that needs to
+sink in: technology alone will not save you. Hacker culture, almost
+by definition, is technology obsessed. We fetishize technology and
+gadgets, and this leads us to the deep-seated belief that if we just
+use the right tool, our problems will be solved. This mindset is fundamentally
+wrong. At best, I would call it misguided, but really I believe that
+most of the time it is actually counter productive.
+
+Trust is the weakest link in the security chain, it is what will get
+you in the most trouble. This goes double for trusting in technology
+(even, as Bruce Schneier says “trust the math”). Tech is not the path
+to security. Security comes from the way that you live your life,
+not the tools. The tools are simply enablers. They’re utilities. OPSEC
+is a practice.
+
+Expecting the tools to provide security for you is like buying a set
+of weights and then sitting around waiting for your fitness to improve.
+The fallacy that technology will provide the solution has to be seen
+for what it is, a false promise. There is nothing that will protect
+secrets better than not telling them to people!
+
+Good OPSEC is founded on the same basic principles that have governed
+clandestine activities since the dawn of time. Hackers might be new,
+but good hackers require the same set of skills as the second oldest
+profession. Good OPSEC is timeless, and it stems from the application
+of the principles of clandestine operation, using caution and common
+sense.
+
+The “73 Rules of Spycraft” by Allen Dulles was written before the
+Internet, before hacker culture (even phreaker culture) existed. I
+believe it is one of the most valuable guides available to understanding
+how to implement OPSEC. (As an interesting aside, harking back to
+one of my previous points, Dulles recommends taking vacations to get
+away from the stress of “work”.)
+
+There are a lot of very public hackers who exhibit terrible security
+practices. Many of them are techno fetishists rather than espionage
+geeks, consequently they fail to understand how limited their knowledge
+is. Its the Dunning–Kruger effect in full tilt. They don’t do the
+research on their opposition and don’t know what sort of techniques
+will be used against them. By the time they figure it out, they are
+usually just an opportunity for the rest of us to practice Lessons
+Learned analysis. Of course the great tragedy is that many of the
+hacker community suffer from hubris that prevents them from actually
+learning from other’s failures.
+
+A friend of mine paraphrase Brian Snow (formerly of the NSA) “our
+security comes not from our expertise, but from the sufferance of
+our opposition”. As soon as the adversary is aware of the existence
+of secrets worth discovering, and has the resources available to pursue
+them, hackers rapidly learn how good their OPSEC is.
+
+John Little: I’ve always been amazed at the very public profiles of
+some hackers, especially where conferences are concerned. Granted,
+most are legitimate security researchers but there are also many in
+the community who occupy a grey area that is guaranteed to draw attention
+from intelligence or law enforcement agencies. Are hackers largely
+underestimating the skill with which intelligence agencies can penetrate,
+encircle, and absorb aspects of their community? Are we in for significant
+changes in the relationship between IC/LE and hackers, how hackers
+view themselves from a security standpoint, and how hackers engage
+each other?
+
+The Grugq: Yes, very much so. There is a growing awareness of the
+altered threat landscape, and the need for an improved security posture.
+For decades the hacker community has been myopically focused on SIGINT
+threats, the sorts of technical attacks that have technical solutions.
+The HUMINT threat has been misunderstood, or ignored completely. That
+is changing as the hacker community is starting to learn and practice
+counterintelligence.
+
+It is a difficult transition though, as some core counterintelligence
+principles run directly counter to the hacker ethos. There are a lot
+of factors at play, but one of the important ones is that hacker culture
+is very much a research culture. There is a great deal of knowledge
+exchange that goes on rather freely within various segments of the
+community. The problem, of course, is that the trading of information,
+which is so central to hacker culture, is the antithesis of a strong
+security posture. Many hackers realize this, so they only share with
+trusted friends, who then only share with their trusted friends, who
+then… and then suddenly everyone is on lists and someone is going
+to jail.
+
+Security conferences are important events for hackers where they disseminate
+their research and findings, and socialize. This makes these events
+very target rich environments for intelligence agencies looking to
+build dossiers on hackers. They can see who is socializing with whom,
+attempt to recruit people, elicit information on capabilities, install
+malware on computers, collect intel from computers, and so on. That
+hackers would expose themselves to these activities seems very counterproductive
+for robust security. What gives?
+
+The hacker community has a slightly different set of moral and ethical
+guidelines than mainstream society, which leads to problems with the
+authorities. Broadly speaking, few hackers view breaking into a system
+as unethical or morally wrong. Damaging the system, stealing information,
+or otherwise abusing the system is wrong. Simply accessing it is a
+challenge. The police, of course, view things differently: an illegal
+act is an illegal act.
+
+For hackers the secret knowledge that they discover from active research
+is something to be proud of, and so we’re very excited to brag about
+our findings, activities or capabilities. This information is treated
+as something that will be kept within the community, bound by the
+FrieNDA. Of course, this is all based on trust, which is a very dangerous
+foundation for any security system. As Dulles’ says, the second greatest
+vice is vanity, the third is drink. Security conferences are not the
+places to avoid those vices!
+
+So there is certainly this dynamic of wanting to brag about our discoveries
+from active research, but at the same time the tension of “what will
+happen if this leaks?”. These days we know what will happen, over
+zealous law enforcement and prosecution: weev, Aaron Schwartz, Stephen
+Watt, Dan Cuthbert, etc. The authorities view hackers as modern day
+witches, something to be feared and destroyed. It is unfortunate for
+the hacker community in many ways. Intelligent people who could contribute
+to mainstream society have their lives destroyed. So the repercussions
+of what are generally harmless activities can be devastating and life
+altering. Unfortunately, the protections that hackers turn to tend
+to be technological, but the problem is humans.
+
+The hacker community is easy prey for law enforcement and the intelligence
+community. Very few hackers are savvy enough to spot a recruitment
+pitch, or to understand that what they think is amusing others view
+as criminal. I think this is starting to change. These days there
+is a lot less discussion about illegal hacking of systems (whether
+for monetary gain or not), and more about how to protect against the
+massive Internet surveillance that has been made public.
+
+In this, I think, the hacker community and the general public are
+finding a lot of common cause against the LE/IC. There is a lot of
+good that will come out of this realization that the technology of
+privacy is actually important and should be ubiquitous, and easy to
+use. The default should be secure. Of course, as we know, this won’t
+help that much if someone is going around making basic OPSEC errors.
+So strong privacy protections for everyone will make the job of the
+LE/IC a bit harder, but it will also make everyone safer. I think
+that is a fair trade off.
+
+Similarly, I think a lot of hackers would be quite happy to help the
+LE/IC community with technology support and ideas. The problem is
+that the relationship is a difficult one to establish. The IC is a
+black-hole, sucking in information and returning nothing. I don’t
+know how there can be meaningful engagement between the two communities,
+which I believe is a tremendous shame. There is a lot that can be
+learned from both sides, and I would love for the IC to contribute
+back. Law enforcement doesn’t interest me that much. Personally, my
+interest with LE begins and ends with studying their tools techniques
+and procedures for counterintelligence purposes. Something, that historically
+at least, few other hackers actually do. That is changing.
+
+Hackers are learning to tighten up their security posture, they are
+learning about the tools techniques and procedures that get used against
+them, and they are learning how to protect themselves. Of course,
+the preponderance of criminal activity is committed in places where
+lax enforcement of computer crime laws allows blackhats to operate
+inside “protected territory”. In the long term, this is an extremely
+dangerous situation for those guys, of course, because without an
+adversarial environment they won’t learn how to operate securely.
+When the rules change, they will be caught out, completely unprepared.
+
+
+The intelligence agencies and law enforcement departments have decades
+of organizational history and knowledge. The individual members can
+display wide ranges of skill and competence, but the resources and
+core knowledge of the organization dwarf what any individual hacker
+has available. Many of the skills that a hacker needs to learn, his
+clandestine tradecraft and OPSEC, are the sort of skills that organizations
+are excellent at developing and disseminating. These are not very
+good skill-sets for an individual to learn through trial and error,
+because those errors have significant negative consequences. An organization
+can afford to lose people as it learns how to deal with the adversary;
+but individual cannot afford to make a similar sacrifice — after all,
+who would benefit from your negative example?
+
+The skills that hackers do have, the highly technical capabilities
+they can bring to the game, are not useful against an adversary who’s
+primary skill is manipulating other people. Knowing how to configure
+a firewall, use Tor, encrypt everything, etc. isn’t going to do much
+good if you also attend a conference without a highly tuned functioning
+spook-dar and a working knowledge of anti-elicitation techniques.
+The hackers are hopelessly outclassed at this game. Hell, the majority
+of them don’t even know that they’re playing!
+
+Times are changing though, and hackers are starting to learn: OPSEC
+will get you through times of no crypto better than crypto will get
+you through times of no OPSEC.
+
+
+vi:ft=mail:

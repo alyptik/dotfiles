@@ -76,10 +76,6 @@ systemctl restart --user mpd
 		# no match means laptop is connected to AC
 		if [ "$(</sys/class/power_supply/BAT0/status)" != Discharging ]; then
 			icon=⚇
-			# workaround for current capacity bug where 100% battery charge is never reached
-			if (( curbat > 96 )); then
-				curbat=100
-			fi
 		fi
 		printf '%s\n' $'temp\t^fg(#909090)'"$((curtemp / 1000))° C"
 		printf '%s\n' $'bat\t^fg(#efefef)'"$curbat% ${icon:-⚡}"
