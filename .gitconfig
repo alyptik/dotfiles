@@ -1,7 +1,7 @@
 [user]
 	email = joeypabalinas@gmail.com
 	name = Joey Pabalinas
-	signingkey = AEEBCB7D68725419
+	signingkey = 64DF4E375F4066B6
 [diff]
 	tool = vimdiff2
 	renameLimit = 24167

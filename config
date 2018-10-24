@@ -19,10 +19,9 @@ Host *
 	CheckHostIP no
 	# StrictHostKeyChecking ask
 	StrictHostKeyChecking no
-	IdentityFile ~/.ssh/id_gpg
-	# IdentityFile ~/.ssh/id_dsa
-	# IdentityFile ~/.ssh/id_ecdsa
-	# IdentityFile ~/.ssh/id_ed25519
+	# # IdentityFile ~/.ssh/id_dsa
+	# # IdentityFile ~/.ssh/id_ecdsa
+	# # IdentityFile ~/.ssh/id_ed25519
 	# Port 22
 	Protocol 2
 	# Ciphers +chacha20-poly1305@openssh.com
@@ -43,211 +42,181 @@ Host mnh
 	User mnrmnaugh
 	AddressFamily inet
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host nh
 	Hostname nexthendr.tk
 	User alyptik
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host vm
 	Hostname 192.168.10.2
 	User jp
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host rvm
 	Hostname 192.168.10.2
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host aur.archlinux.org
 	User aur
 	CheckHostIP yes
-	IdentityFile ~/.ssh/aur
+	# IdentityFile ~/.ssh/aur
 
 Host github.com
 	Hostname ssh.github.com
 	Port 443
 	User alyptik
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host asus
 	HostName 192.168.1.2
 	User alyptik
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host surface
 	HostName 192.168.1.98
 	Port 22
 	User jp
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host rsurface
 	HostName 192.168.1.98
 	Port 2222
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host linksys
 	HostName 192.168.1.1
 	Port 22
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host wifi
 	HostName 192.168.1.95
 	Port 22
 	User alyptik
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host ayy
 	HostName alyptik.org
 	Port 2222
 	User ayy
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host rarch
 	HostName alyptik.org
 	Port 2222
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host earch
 	HostName alyptik.org
 	Port 2222
 	User alyptik
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host http
 	HostName 192.168.1.99
 	Port 2222
 	User http
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host alyptik.org
 	HostName alyptik.org
 	Port 2222
 	User http
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host ayy
 	HostName alyptik.com
 	Port 2222
 	User ayy
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host rarch
 	HostName alyptik.com
 	Port 2222
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host earch
 	HostName alyptik.com
 	Port 2222
 	User alyptik
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host http
 	HostName 192.168.1.99
 	Port 2222
 	User http
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host alyptik.com
 	HostName alyptik.com
 	Port 2222
 	User http
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host ayy
 	HostName alyp.tk
 	Port 2222
 	User ayy
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host rarch
 	HostName alyp.tk
 	Port 2222
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host earch
 	HostName alyp.tk
 	Port 2222
 	User alyptik
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host arch
 	HostName 192.168.1.99
 	Port 2222
 	User alyptik
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host http
 	HostName 192.168.1.99
 	Port 2222
 	User http
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host alyp.tk
 	HostName alyp.tk
 	Port 2222
 	User http
 	CheckHostIP yes
-	IdentityFile ~/.ssh/id_gpg
 
 Host fedora
 	HostName 107.170.203.174
 	Port 22
 	User alyptik
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host rfedora
 	HostName 107.170.203.174
 	Port 22
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host debian
 	HostName 162.243.141.90
 	Port 22
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host bsd
 	HostName 104.236.172.97
 	Port 22
 	User root
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host nyu
 	Hostname nyu.wtf
@@ -255,7 +224,6 @@ Host nyu
 	Port 22
 	User jp
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 Host travis
 	Hostname localhost
@@ -263,14 +231,12 @@ Host travis
 	User travis
 	CheckHostIP no
 	# StrictHostKeyChecking no
-	IdentityFile ~/.ssh/id_gpg
 
 Host linode
 	Hostname 172.105.224.162
 	Port 22
 	User jp
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 
 Host lenovo
@@ -278,6 +244,5 @@ Host lenovo
 	Port 22
 	User jp
 	CheckHostIP no
-	IdentityFile ~/.ssh/id_gpg
 
 # vi:ft=sshconfig:
