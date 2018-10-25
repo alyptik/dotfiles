@@ -103,4 +103,4 @@ macro index,pager,attach,compose \cb \
     <enter-command>set pipe_decode = \$my_pipe_decode; unset my_pipe_decode<Enter>" \
     "call urlview to extract URLs out of a message"
 
-# vi:ft=muttrc sts=4 sw=4:
+# vi:ft=neomuttrc sts=4 sw=4:

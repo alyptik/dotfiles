@@ -22,4 +22,4 @@ alias crash CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>
 alias zsh Zsh Workers Mailing List <zsh-workers@zsh.org>
 alias lkml Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 
-# vi:ft=muttrc:
+# vi:ft=neomuttrc:

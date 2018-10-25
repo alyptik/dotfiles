@@ -75,13 +75,13 @@ Host asus
 	CheckHostIP no
 
 Host surface
-	HostName 192.168.1.98
+	HostName 192.168.1.97
 	Port 22
 	User jp
 	CheckHostIP no
 
 Host rsurface
-	HostName 192.168.1.98
+	HostName 192.168.1.97
 	Port 2222
 	User root
 	CheckHostIP no

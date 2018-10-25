@@ -93,4 +93,4 @@ color body          brightblue          black       "(https?|ftp)://[\-\.,/%~_:?
 # color tilde brightmagenta black
 # color index black color197 "~N"
 
-# vi:ft=muttrc:
+# vi:ft=neomuttrc:

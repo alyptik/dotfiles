@@ -5531,4 +5531,4 @@ attachments   -I message/external-body
 # ``tuning'' section of the manual for performance considerations.
 #
 
-# vi:ft=muttrc:
+# vi:ft=neomuttrc:

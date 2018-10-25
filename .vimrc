@@ -419,6 +419,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *.\(cc\|cpp\) set filetype=cpp
 	au BufNewFile,BufReadPost proftpd.\(con\|conf\) set filetype=cterm
 	au BufNewFile,BufReadPost i3.conf set filetype=i3
+	au BufNewFile,BufReadPost *ssl_template* setf mail
 	au BufNewFile,BufReadPost *.txt setf erlang
 	au BufNewFile,BufReadPost *.log setf irc
 	au BufNewFile,BufReadPost /etc/X11/xorg.conf.d/* setf xf86conf
@@ -441,7 +442,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *.md set filetype=markdown
 	au BufNewFile,BufReadPost PKGBUILD set filetype=sh
 	au BufNewFile,BufReadPost fcr-* set filetype=crontab
-	au BufNewFile,BufReadPost *.\(repy\|mix\) set filetype=python
+	au BufNewFile,BufReadPost *.\(r[2e]py\|mix\) set filetype=python
 	au BufNewFile,BufReadPost *.rules set filetype=udevrules
 
 	" fallback

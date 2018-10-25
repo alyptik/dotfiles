@@ -8,52 +8,47 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2019-10-14] Joey's Progress Report
+Subject: [2018-10-24] Joey's Progress Report
 Reply-To:
-In-Reply-To: <20180704085945.472wsnw4xezjozag@hobbes.alyptik.lan>
+In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-10-14)
+ * (2018-10-24)
  */
 
-This week I spent reading about the Python C API, and figuring out
-exactly what happens when you call into Repy from inside of NaCl.
+This week was mostly working on the CrashSimulator close() mutator, with a
+little bit of time spent merging in the execve() PR to Lind.
 
-It's a lot weirder than I had thought it would be, and I'm still trying
-to figure out if functions like `PyGILState_Ensure()` and `PyGILState_Release()`
-are needed (the Python 2 documentation [1] recommends them when calling into
-Python from C-created pthreads.
+I was actually able to get the mutator written for close() fairly easily,
+however I was (and still sort of am, admittedly) having trouble figuring
+out how to correctly _run_ the modified trace file so that it uses the
+config.ini with the desired changes.
 
-I've also been working on figuring out a way to have different threads
-of execution share state, things like buffers and locks, which will be
-needed to implement pipe() inside of the Repy code.
+    * The docs for this part are kind of lacking in my opinion, and I think
+      this should be fixed up a little more before having other people come
+      onto the CrashSimulator project cold; otherwise, they would be in for
+      some minor frustration.
 
-I'm also going to need to keep a list of which file descriptors refer
-to pipes, since those need to be handled specially. I'm probably
-going to end up storing that bookeeping information inside of the
-`filedescriptortable` array, and just add an additional flag to specify
-that that it refers to a pipe.
+I've also been trying out the Docker image method as an alternative to get it
+running, and although there were a few snafus building it, I'm currently
+coalescing all of the needed Dockerfile changes into a PR for rrapper and they
+are all fairly small ones. In addition, I also submitted a couple of small rr
+PRs for bugfixes and spelling which Preston has already merged in this week.
 
-In addition, I took care of some minor cleanups in our Repy code such as
-removing trailing whitespace, and have been reading about CrashSimulator
-mutators.
-
-[1] https://docs.python.org/2/c-api/init.html
+I've also been slowly learning the Python C API, as well as refreshing
+myself on how the rest of Python works at the same time, so I can get pipe()
+implemented smoothly in the coming week.
 
 * Plans For Next Week */
 
-        - Continue to read the documentation for CrashSimulator
-          mutators.
-        - Continue to respond to code reviews and suggestions on
-          my Lind execve() PR.
-        - Begin implementing pipe() in our Repy code.
+        - Continue to work on the mutator for CrashSimulator.
+        - Work with Preston to improve the rrapper documentation.
+        - Implementing pipe() in our Repy code for Lind.
 
 That's all for this week, thanks.
 
 -- 
 Cheers,
 Joey Pabalinas
-
-# vi:ft=mail et:
