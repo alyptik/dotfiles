@@ -45,6 +45,7 @@ bind/account_key.json
 .weechat/script/plugins.xml.gz
 
 rfc/
+misc/
 logs/
 certs/
 perl5/
