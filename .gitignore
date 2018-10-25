@@ -13,6 +13,7 @@ pipe
 state
 certs
 cache
+mpd/log
 irc.conf
 urls.log
 iset.conf
