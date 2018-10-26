@@ -444,6 +444,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost fcr-* set filetype=crontab
 	au BufNewFile,BufReadPost *.\(r[2e]py\|mix\) set filetype=python
 	au BufNewFile,BufReadPost *.rules set filetype=udevrules
+	au BufNewFile,BufReadPost *.mail set filetype=mail
 
 	" fallback
 	au BufNewFile,BufReadPost * setf cfg

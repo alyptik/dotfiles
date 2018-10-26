@@ -30,7 +30,7 @@ setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/jp/.Xmodmap"
 udisksctl mount -b "$(findfs LABEL=backups)" &
-(udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 5; pcmanfm /sdxc /sdxc/papers) &
+(udisksctl mount -b "$(findfs LABEL=microSDXC)"; sleep 5; pcmanfm /sdxc /sdxc/papers /sdxc/work) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 pavucontrol &
 stjerm &

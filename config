@@ -61,7 +61,7 @@ Host rvm
 Host aur.archlinux.org
 	User aur
 	CheckHostIP yes
-	# IdentityFile ~/.ssh/aur
+	IdentityFile ~/.ssh/aur
 
 Host github.com
 	Hostname ssh.github.com
@@ -104,6 +104,12 @@ Host ayy
 	User ayy
 	CheckHostIP no
 
+Host arch
+	HostName alyptik.org
+	Port 2222
+	User alyptik
+	CheckHostIP no
+
 Host rarch
 	HostName alyptik.org
 	Port 2222
@@ -117,79 +123,13 @@ Host earch
 	CheckHostIP yes
 
 Host http
-	HostName 192.168.1.99
-	Port 2222
-	User http
-	CheckHostIP no
-
-Host alyptik.org
 	HostName alyptik.org
 	Port 2222
 	User http
 	CheckHostIP yes
-
-Host ayy
-	HostName alyptik.com
-	Port 2222
-	User ayy
-	CheckHostIP no
-
-Host rarch
-	HostName alyptik.com
-	Port 2222
-	User root
-	CheckHostIP no
-
-Host earch
-	HostName alyptik.com
-	Port 2222
-	User alyptik
-	CheckHostIP yes
-
-Host http
-	HostName 192.168.1.99
-	Port 2222
-	User http
-	CheckHostIP no
 
 Host alyptik.com
 	HostName alyptik.com
-	Port 2222
-	User http
-	CheckHostIP yes
-
-Host ayy
-	HostName alyp.tk
-	Port 2222
-	User ayy
-	CheckHostIP no
-
-Host rarch
-	HostName alyp.tk
-	Port 2222
-	User root
-	CheckHostIP no
-
-Host earch
-	HostName alyp.tk
-	Port 2222
-	User alyptik
-	CheckHostIP yes
-
-Host arch
-	HostName 192.168.1.99
-	Port 2222
-	User alyptik
-	CheckHostIP no
-
-Host http
-	HostName 192.168.1.99
-	Port 2222
-	User http
-	CheckHostIP no
-
-Host alyp.tk
-	HostName alyp.tk
 	Port 2222
 	User http
 	CheckHostIP yes
@@ -230,7 +170,6 @@ Host travis
 	Port 9999
 	User travis
 	CheckHostIP no
-	# StrictHostKeyChecking no
 
 Host linode
 	Hostname 172.105.224.162

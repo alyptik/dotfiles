@@ -62,6 +62,10 @@ case "$SUFFIX" in
   SUFFIX="/${SUFFIX%/*}" ;;
 esac
 
+if [[ -n "$USER" ]]; then
+  SERVER="$USER@$SERVER"
+fi
+
 if [[ -z "$SERVER_PATH" ]]; then
   if [[ -z "$PORT" ]]; then
     scp "$file" "$SERVER:/home/$USER/public_html/dump/"

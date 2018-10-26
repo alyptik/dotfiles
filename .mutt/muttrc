@@ -26,8 +26,8 @@ virtual-mailboxes "lkml" "notmuch://?query=query:lkml"
 lists -group sl ^dev@suckless\\.org$
 lists -group zsh ^zsh-(users|workers)@zsh\\.org$
 lists -group arch ^(arch|pacman)-.*@archlinux\\.org$
-lists -group lkml @vger\\.kernel\\.org$ ^kernelnewbies@kernelnewbies\\.org$
 lists -group ssl ^(securesystemslab|crashsimulator-dev@)@googlegroups.com$
+lists -group lkml @vger\\.kernel\\.org$ ^kernelnewbies@kernelnewbies\\.org$ ^igvt-g@lists\\.01\\.org$
 
 alternates -group server ^(jp|joeypabalinas)@(opsec\\.dogo|sigb\\.us)$
 alternates -group server ^(jp|joeypabalinas)@alyptik\\.(com|org)$

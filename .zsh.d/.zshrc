@@ -549,6 +549,7 @@ compdef run=gcc
 compdef xs=xsel
 compdef _=sudo
 compdef meminfo=free
+compdef run-qemu=qemu-system-x86_64
 
 # named directories
 hash -d a="$HOME/code/aur"
@@ -598,6 +599,7 @@ hash -d vim="$HOME/.vim"
 hash -d vm="/store/vm"
 hash -d wanderlust="/hdd/wanderlust"
 hash -d words="$CONFIG/unixstories"
+hash -d w="/w"
 hash -d www="/srv/http"
 hash -d z="$ZDOTDIR"
 hash -d zc="$ZDOTDIR/completions"

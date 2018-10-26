@@ -1,8 +1,16 @@
+pager=(env -u LESS less -MNRis)
+
+if command -v hi >/dev/null 2>&1; then
+	pager=(hi asm -)
+elif command -v bat >/dev/null 2>&1; then
+	pager=(bat --language=c -)
+fi
+
 if [[ $1 == -*v* || $2 == -*v* ]]; then
 	if [[ $2 == -*v* ]]; then
 		set -- "$2" "$1" "${@:3}"
 	fi
-	cgasm "${@:1:2}" | LESS= less -MNRis "${@:3}"
+	cgasm "${@:1:2}" | $pager
 	return
 fi
 

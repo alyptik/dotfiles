@@ -43,7 +43,7 @@ fi
 uniq_linebuffered() { awk '$0 != l {print; fflush(); l=$0}'; }
 
 # watch for pulseaudio volume changes
-pa_vol() { pactl subscribe | grep --line-buffered sink | sed -u "s/.*/volume\t^fg(#909090)" && sleep 2; }
+pa_vol() { pactl subscribe | grep --line-buffered sink | sed -u "s/.*/volume\t^fg(#909090)"; }
 
 hc pad "$monitor" "$panel_height"
 pkill -9 dzen2
