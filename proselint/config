@@ -1,0 +1,6 @@
+{
+  "checks": {
+    "typography.exclamation": true,
+    "typography.diacritical_marks": true
+  }
+}

@@ -445,6 +445,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *.\(r[2e]py\|mix\) set filetype=python
 	au BufNewFile,BufReadPost *.rules set filetype=udevrules
 	au BufNewFile,BufReadPost *.mail set filetype=mail
+	au BufNewFile,BufReadPost *proselint* set filetype=json
 
 	" fallback
 	au BufNewFile,BufReadPost * setf cfg
