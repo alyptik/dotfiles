@@ -42,6 +42,7 @@ fi
 
 # shellcheck disable=SC1090
 . "$config"
+host="$SERVER"
 
 if ! type import &>/dev/null; then
   printf "%s\n" "'import' not found in \$PATH"
@@ -72,14 +73,14 @@ if [[ -z "$SERVER_PATH" ]]; then
   else
     scp -P "$PORT" "$file" "$SERVER:/home/$USER/public_html/dump/"
   fi
-  url="https://$SERVER$SUFFIX/~$USER/dump/$name"
+  url="https://$host$SUFFIX/~$USER/dump/$name"
 else
   if [[ -z "$PORT" ]]; then
     scp "$file" "$SERVER:$SERVER_PATH/"
   else
     scp -P "$PORT" "$file" "$SERVER:$SERVER_PATH/"
   fi
-  url="https://$SERVER$SUFFIX/$name"
+  url="https://$host$SUFFIX/$name"
 fi
 
 printf "\n%s\n" "$url"

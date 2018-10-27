@@ -59,8 +59,8 @@ call plug#begin(g:plugdir)
 	Plug 'xtal8/traces.vim'
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
-	" Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
 	Plug 'xolox/vim-misc'
+	" Plug 'xolox/vim-easytags' | Plug 'xolox/vim-misc'
 	Plug 'kien/rainbow_parentheses.vim'
 	" Plug 'sudar/vim-arduino-syntax'
 	" Plug 'jplaut/vim-arduino-ino'
@@ -489,6 +489,7 @@ highlight ColorColumn ctermbg=237 guibg=#282828
 highlight SpecialKey cterm=bold ctermfg=240 ctermbg=236 guifg=#282828
 " If you like one of the existing styles you can link them:
 highlight link cMember Special
+" syntax on
 
 " better whitespace
 command! FixWhitespace silent! %s/ \+$//
@@ -743,26 +744,26 @@ let g:OmniCpp_MayCompleteScope=1
 let g:easytags_on_cursorhold=1
 let g:easytags_always_enabled=0
 let g:easytags_async=1
-let g:easytags_auto_highlight=0
+let g:easytags_auto_highlight=1
 let g:easytags_syntax_keyword='always'
 " let g:easytags_syntax_keyword='auto'
 let g:easytags_python_enabled=1
-let g:easytags_dynamic_files=0
+let g:easytags_dynamic_files=1
 let g:easytags_resolve_links=1
 let g:easytags_include_members=1
 let g:easytags_autorecurse=0
-let g:easytags_by_filetype='~/.vim/tags'
+" let g:easytags_by_filetype='~/.vim/tags'
 "let g:easytags_events=['BufWritePost', 'CursorHold']
 "let g:easytags_events=['BufWritePost', 'CursorHold', 'CursorHoldI']
 "let g:easytags_events=['BufWritePost', 'CursorHoldI']
-let g:easytags_suppress_ctags_warning=1
+let g:easytags_suppress_ctags_warning=0
 " let g:easytags_opts=['--fields=+l --c-kinds=-p']
-let g:easytags_opts=[
-	\ '-GR', '--langmap=c:+.h.C.H',
-	\ '--fields=+l', '--c-kinds=+l-p',
-	\ '--c++-kinds=+l-p', '--python-kinds=+lz',
-	\ '--extras=+q'
-	\ ]
+" let g:easytags_opts=[
+"         \ '-GR', '--langmap=c:+.h.C.H',
+"         \ '--fields=+l', '--c-kinds=+l-p',
+"         \ '--c++-kinds=+l-p', '--python-kinds=+lz',
+"         \ '--extras=+q'
+"         \ ]
 
 let g:netrw_silent=1
 let g:pdf_convert_on_edit=1

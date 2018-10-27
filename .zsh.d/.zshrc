@@ -427,7 +427,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(help2man highlight hping hsetroot icdiff install keyring)
 	gnu_generic_cmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim mkchromecast)
 	gnu_generic_cmds+=(more mountpoint mpd muttprint mv named ncat neomutt netstat)
-	gnu_generic_cmds+=(newsbeuter node nohup objconv objdump oomox-cli openvpn)
+	gnu_generic_cmds+=(newsbeuter newsboat node nohup objconv objdump oomox-cli openvpn)
 	gnu_generic_cmds+=(optipng pacconf pactree pandoc paste pisg pstree qemu-img)
 	gnu_generic_cmds+=(qemu-nbd reptyr resolvconf rfc rg rlwrap rmdir rmlint)
 	gnu_generic_cmds+=(rst2man rst2man2 saldl scan-build seq shellcheck shred sox split)
