@@ -1,0 +1,138 @@
+# include	  modules/enabled/*.conf;
+
+error_log  logs/error.log;
+error_log  logs/notice-error.log  notice;
+error_log  logs/info-error.log  info;
+user http http;
+worker_processes  4;
+worker_rlimit_nofile 32;
+# worker_rlimit_nofile 1024;
+#pid        logs/nginx.pid;
+
+events {
+	worker_connections 64;
+	# worker_connections  1024;
+}
+
+http {
+	#include	  sites/enabled/*.conf;
+	include       mime.types;
+	default_type  application/octet-stream;
+	limit_conn_log_level info;
+	log_format  xfs  '$arg_id|$arg_usr|$remote_addr|$body_bytes_sent|$status';
+	sendfile        on;
+	tcp_nopush      on;
+	gzip            on;
+	access_log      off;
+	tcp_nodelay     on;
+	# directio        4m;
+	output_buffers 3 512k;
+	reset_timedout_connection on;
+	open_file_cache max=5000 inactive=20s;
+	open_file_cache_valid    30s;
+	open_file_cache_min_uses 2;
+	open_file_cache_errors   on;
+	client_body_buffer_size 32k;
+	server_tokens off;
+	autoindex off;
+	keepalive_timeout  0;
+
+	# Redirect non-https traffic to https
+
+	# Redirect non-http traffic to http
+	server {
+		listen		76.173.133.37:443;
+		server_name	www.opsec.dog www.ohfu.tk www.fsckingfu.tk www.sigfu.tk opsec.dog alyp.tk ohfu.tk fsckingfu.tk sigfu.tk;
+		if ($scheme != "http") { rewrite ^/(.*) http://$host/$1; }
+		# if ($scheme != "http") { return 302 http://alyp.tk/; }
+	}
+
+	## HTTPS server
+	server {
+		listen		76.173.133.37:80;
+		server_name	www.opsec.dog www.ohfu.tk www.fsckingfu.tk www.sigfu.tk opsec.dog ohfu.tk fsckingfu.tk sigfu.tk alyp.tk www.alyp.tk;
+		root /srv/http;
+		# proxy_cache nginx_cache;
+		location / {
+			index index.html index.htm index.php;
+			autoindex on;
+			#fancyindex_css_href /l.css;
+			#fancyindex on;
+			#fancyindex_exact_size off;
+		}
+	}
+
+	server {
+		listen       127.0.0.1:80;
+		server_name  localhost;
+		location / {
+			root   /srv/http;
+			index  stats/cheestats.html;
+		}
+		location ~ [a-z]+stats$ {
+			rewrite ^/(stats/|)(.*) /stats/$2.html;
+		}
+		location ~ (aot|void|chee)$ {
+			set $suf stats;
+			rewrite ^/(stats/|)(.*) /stats/$2$suf.html;
+		}
+		location ~ omp {
+			rewrite ^/(stats/|)omp(stats|) /stats/cheestats.html;
+		}
+		location ~ ^/resume$ {
+			rewrite ^/(.*) /$1.pdf;
+		}
+		location /stream/ { proxy_pass http://127.0.0.1:8000/; }
+		location /znc_ { proxy_pass http://arch.alyptik.lan:8001; }
+		location ~ \.php$ {
+			fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+			fastcgi_index index.php;
+			include fastcgi.conf;
+		}
+		# deny access to .htaccess files, if Apache's document root
+		# concurs with nginx's one
+		location ~ /\.ht {
+			deny  all;
+		}
+		error_page  404              /404.html;
+		# redirect server error pages to the static page /50x.html
+		error_page   500 502 503 504  /50x.html;
+		location = /50x.html {
+			root   /usr/share/nginx/html;
+		}
+	}
+
+	# server {
+	#         listen       192.168.1.99:80;
+	#         server_name  arch.alyptik.lan;
+	#         location / {
+	#                 root   /srv/http/;
+	#                 index  index.html index.htm;
+	#         }
+	#         location /roundcube/ { proxy_pass http://127.0.0.1:80/roundcube/; }
+	#         location /icecast/ { proxy_pass http://127.0.0.1:8000/; }
+	#         location /znc/ {
+	#                 # proxy_pass http://127.0.0.1:8001/ ;
+	#                 return 302 http://192.168.1.99:8001 ;
+	#         }
+	#         location ~ \.php$ {
+	#                 #fastcgi_pass 127.0.0.1:9000; (depending on your php-fpm socket configuration)
+	#                 fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+	#                 fastcgi_index index.php;
+	#                 include fastcgi.conf;
+	#         }
+	#         error_page  404              /404.html;
+	#         # redirect server error pages to the static page /50x.html
+	#         error_page   500 502 503 504  /50x.html;
+	#         location = /50x.html {
+	#                 root   /usr/share/nginx/html;
+	#         }
+	#         # deny access to .htaccess files, if Apache's document root
+	#         # concurs with nginx's one
+	#         #
+	#         location ~ /\.ht {
+	#                 deny  all;
+	#         }
+	# }
+}
+

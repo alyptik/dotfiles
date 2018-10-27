@@ -51,12 +51,12 @@ certs/
 perl5/
 kbox3/
 openvpn/
-.homesick/
 .distcc/
 postfix/
 vimfiles/
-.vim/view*/
+.homesick/
 .nicotine/
+.vim/view*/
 gifs/thewire/
 .mpdscribble/
 .vim/plugged/
@@ -67,7 +67,10 @@ oprofile_data/
 .vim/__archive/
 .mixxx/analysis/
 .mutt*/ox_config/
-.emacs.d.spacemacs/
 .mutt*/msg_cache/
+.emacs.d.spacemacs/
+
+nginx/*
+!nginx/nginx.conf*
 
 # vi:ft=cfg:

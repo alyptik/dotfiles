@@ -1,0 +1,448 @@
+include	  modules/enabled/*.conf;
+
+error_log  logs/error.log;
+error_log  logs/notice-error.log  notice;
+error_log  logs/info-error.log  info;
+user http http;
+worker_processes  8;
+worker_rlimit_nofile 1024;
+# pid        logs/nginx.pid;
+
+events {
+	# worker_connections 8;
+	worker_connections  1024;
+}
+
+http {
+	#include	  sites/enabled/*.conf;
+	include       mime.types;
+	types_hash_max_size 4096;
+	# types_hash_bucket_size 128;
+	default_type  application/octet-stream;
+	limit_conn_log_level info;
+	log_format  xfs  '$arg_id|$arg_usr|$remote_addr|$body_bytes_sent|$status';
+	sendfile        on;
+	sendfile_max_chunk 2m;
+	tcp_nopush      on;
+	gzip            on;
+	gunzip          on;
+	gzip_types      text/plain application/xml;
+	gzip_proxied    no-cache no-store private expired auth;
+	gzip_min_length 1000;
+	access_log      off;
+	tcp_nodelay     on;
+	# directio        2m;
+	output_buffers 3 512k;
+	reset_timedout_connection on;
+	open_file_cache max=1000 inactive=5s;
+	open_file_cache_valid    1s;
+	open_file_cache_min_uses 2;
+	open_file_cache_errors   on;
+	client_body_buffer_size 32k;
+	server_tokens off;
+	autoindex off;
+	keepalive_timeout 10;
+
+	# proxy_cache_path /tmp/nginx levels=1:2 keys_zone=nginx_cache:10m max_size=1g inactive=60m use_temp_path=off;
+	proxy_cache_path /etc/nginx/cache levels=1:2 keys_zone=nginx_cache:10m max_size=5g inactive=60m use_temp_path=off;
+	proxy_cache_revalidate on;
+	proxy_cache_min_uses 2;
+	proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+	proxy_cache_lock on;
+
+	# Redirect non-https traffic to https
+	server {
+		listen		76.173.133.37:80;
+		server_name	www.opsec.dog www.ohfu.tk www.fsckingfu.tk www.sigfu.tk opsec.dog alyp.tk ohfu.tk fsckingfu.tk sigfu.tk;
+		if ($scheme != "https") { rewrite ^/(.*) https://$host/$1; }
+	}
+
+	## HTTPS server
+	server {
+		listen		76.173.133.37:443 ssl;
+		server_name	www.opsec.dog www.sigfu.tk opsec.dog sigfu.tk alyp.tk www.alyp.tk;
+		ssl_certificate /etc/letsencrypt/live/alyptik.com/fullchain.pem; # managed by Certbot
+		ssl_certificate_key /etc/letsencrypt/live/alyptik.com/privkey.pem; # managed by Certbot
+		# include /etc/letsencrypt/options-ssl-nginx.conf;
+		ssl_trusted_certificate /etc/letsencrypt/live/alyptik.com/chain.pem;
+		ssl_stapling on;
+		ssl_stapling_verify on;
+		ssl_session_cache    shared:SSL:10m;
+		ssl_session_timeout  5m;
+		ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+		ssl_prefer_server_ciphers  on;
+		ssl_dhparam /etc/ssl/dhparams.pem;
+		add_header Strict-Transport-Security "max-age=15768000; preload";
+		# add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; ";
+		add_header SHeader "always set X-Frame-Options DENY; ";
+		# add_header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; st    yle-src 'self'; frame-ancestors 'none'";
+		add_header X-Content-Type-Options "nosniff";
+		add_header X-Frame-Options "SAMEORIGIN";
+		add_header X-XSS-Protection "1; mode=block";
+		add_header Referrer-Policy "same-origin";
+		root /srv/http;
+		proxy_cache nginx_cache;
+		location / {
+			autoindex on;
+			index index.html index.htm index.php;
+			try_files $uri $uri/ $uri.html =404;
+		}
+		location /uhr {
+			autoindex off;
+			default_type text/plain;
+		}
+		location ~ [a-z]+stats$ {
+			rewrite ^/(stats/|)(.*) /stats/$2.html;
+		}
+		location ~ (aot|void|chee)$ {
+			set $suf stats;
+			rewrite ^/(stats/|)(.*) /stats/$2$suf.html;
+		}
+		location ~ omp {
+			rewrite ^/(stats/|)omp(stats|) /stats/cheestats.html;
+		}
+		location ~ lei[^\.] {
+			rewrite ^/(.*) /lei.html;
+		}
+		location ~ ^/resume$ {
+			rewrite ^/(.*) /$1.pdf;
+		}
+		location /payload {
+			proxy_pass http://127.0.0.1:4567/payload;
+		}
+		location /cj {
+			proxy_set_header  Host $host;
+			proxy_set_header  X-Forwarded-Proto $scheme;
+			proxy_set_header  X-Real-IP $remote_addr;
+			proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header  X-Url-Scheme $scheme;
+			proxy_redirect    off;
+			proxy_max_temp_file_size 0;
+			return 302 http://webchat.freenode.net/?channels=%23cjeopardy&uio=MTY9dHJ1ZSYyPXRydWUmND10cnVlJjk9dHJ1ZSYxMD10cnVlJjExPTE3NCYxNT10cnVlb6;
+		}
+		# location /webmin {
+		#         proxy_set_header  Host $host;
+		#         proxy_set_header  X-Forwarded-Proto $scheme;
+		#         proxy_set_header  X-Real-IP $remote_addr;
+		#         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+		#         proxy_set_header  X-Url-Scheme $scheme;
+		#         proxy_redirect    off;
+		#         proxy_max_temp_file_size 0;
+		#         proxy_pass http://192.168.1.99:10000/ ;
+		# }
+		location /mpd.ogg {
+			proxy_set_header  Host $host;
+			proxy_set_header  X-Forwarded-Proto $scheme;
+			proxy_set_header  X-Real-IP $remote_addr;
+			proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header  X-Url-Scheme $scheme;
+			proxy_redirect    off;
+			proxy_max_temp_file_size 0;
+			proxy_pass http://alyptik.ddns.net:8888 ;
+		}
+		location /pb {
+			proxy_set_header  Host $host;
+			proxy_set_header  X-Forwarded-Proto $scheme;
+			proxy_set_header  X-Real-IP $remote_addr;
+			proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header  X-Url-Scheme $scheme;
+			proxy_redirect    off;
+			proxy_max_temp_file_size 0;
+			proxy_pass https://ptpb.pw/ ;
+			#rewrite ^/pb/(.*) $scheme://ptpb.pw/$1;
+		}
+		location /icecast {
+			proxy_set_header  Host $host;
+			proxy_set_header  X-Forwarded-Proto $scheme;
+			proxy_set_header  X-Real-IP $remote_addr;
+			proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header  X-Url-Scheme $scheme;
+			proxy_redirect    off;
+			proxy_max_temp_file_size 0;
+			proxy_pass http://arch.alyptik.lan/icecast/;
+			# proxy_pass http://192.168.1.99/icecast/;
+		}
+		location /stream {
+			proxy_set_header  Host $host;
+			proxy_set_header  X-Forwarded-Proto $scheme;
+			proxy_set_header  X-Real-IP $remote_addr;
+			proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header  X-Url-Scheme $scheme;
+			proxy_redirect    off;
+			proxy_max_temp_file_size 0;
+			proxy_pass http://arch.alyptik.lan/icecast/stream;
+			# proxy_pass http://192.168.1.99/icecast/stream;
+			# return 302 https://alyp.tk/icecast/stream;
+			# return 302 http://alyptik.ddns.net:8000/stream ;
+		}
+		location /znc {
+			proxy_pass http://107.170.203.174:8001;
+			# return 302 http://107.170.203.174:8001;
+		}
+		location ~ \.php$ {
+			fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+			fastcgi_index index.php;
+			include fastcgi.conf;
+		}
+		# error_page  404                  /404.html;
+		# redirect server error pages to the static page /50x.html
+		# error_page  500 502 503 504     /50x.html;
+		# location = /50x.html {
+		#         root   /usr/share/nginx/html;
+		# }
+		error_page  404 500 502 503 504  /404.htm;
+		location ~ 404\.htm$ {
+			rewrite ^/.* $scheme://$host/404.html;
+		}
+		location ~ favicon\.ico$ {
+			log_not_found off;
+		}
+		# deny access to .htaccess files, if Apache's document root
+		# concurs with nginx's one
+		location ~ /\.ht {
+			deny  all;
+		}
+	}
+
+	server {
+		listen		76.173.133.37:443 ssl;
+		server_name	www.fsckingfu.tk www.ohfu.tk fsckingfu.tk ohfu.tk;
+		ssl_certificate /etc/letsencrypt/live/alyptik.com/fullchain.pem; # managed by Certbot
+		ssl_certificate_key /etc/letsencrypt/live/alyptik.com/privkey.pem; # managed by Certbot
+			#include				 /etc/letsencrypt/options-ssl-nginx.conf;
+			ssl_trusted_certificate /etc/letsencrypt/live/alyptik.com/chain.pem;
+			ssl_stapling on;
+			ssl_stapling_verify on;
+			ssl_session_cache    shared:SSL:10m;
+			ssl_session_timeout  5m;
+			#ssl_ciphers  HIGH:!aNULL:!MD5;
+			ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+			ssl_prefer_server_ciphers  on;
+			ssl_dhparam /etc/ssl/dhparams.pem;
+			add_header Strict-Transport-Security "max-age=15768000; preload";
+			# add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; ";
+			add_header SHeader "always set X-Frame-Options DENY; ";
+			# add_header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; st    yle-src 'self'; frame-ancestors 'none'";
+			add_header X-Content-Type-Options "nosniff";
+			add_header X-Frame-Options "SAMEORIGIN";
+			add_header X-XSS-Protection "1; mode=block";
+			add_header Referrer-Policy "same-origin";
+			root /usr/share/webapps/wallabag/web;
+			proxy_cache nginx_cache;
+			location / {
+			# try to serve file directly, fallback to app.php
+			try_files $uri /app.php$is_args$args;
+		}
+		location ~ ^/app\.php(/|$) {
+			fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+			fastcgi_split_path_info ^(.+\.php)(/.*)$;
+			include fastcgi_params;
+			# When you are using symlinks to link the document root to the
+			# current version of your application, you should pass the real
+			# application path instead of the path to the symlink to PHP
+			# FPM.
+			# Otherwise, PHP's OPcache may not properly detect changes to
+			# your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+			# for more information).
+			fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
+			fastcgi_param DOCUMENT_ROOT $realpath_root;
+			# Prevents URIs that include the front controller. This will 404:
+			# http://domain.tld/app.php/some-path
+			# Remove the internal directive to allow URIs like this
+			internal;
+		}
+		# return 404 for all other php files not matching the front controller
+		# this prevents access to other php files you don't want to be accessible.
+		location ~ \.php$ {
+			return 404;
+		}
+		error_log /var/log/nginx/wallabag_error.log;
+		access_log /var/log/nginx/wallabag_access.log;
+		error_page  404              /404.html;
+		# redirect server error pages to the static page /50x.html
+		error_page   500 502 503 504  /50x.html;
+		location = /50x.html {
+			root   /usr/share/nginx/html;
+		}
+	}
+
+	server {
+		listen		76.173.133.37:443 ssl;
+		server_name	www.youlosethega.me youlosethega.me;
+		ssl_certificate /etc/letsencrypt/live/alyptik.com/fullchain.pem; # managed by Certbot
+		ssl_certificate_key /etc/letsencrypt/live/alyptik.com/privkey.pem; # managed by Certbot
+			#include				 /etc/letsencrypt/options-ssl-nginx.conf;
+			ssl_trusted_certificate /etc/letsencrypt/live/alyptik.com/chain.pem;
+			ssl_stapling on;
+			ssl_stapling_verify on;
+		ssl_session_cache    shared:SSL:10m;
+		ssl_session_timeout  5m;
+		#ssl_ciphers  HIGH:!aNULL:!MD5;
+		ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+		ssl_prefer_server_ciphers  on;
+			ssl_dhparam /etc/ssl/dhparams.pem;
+			add_header Strict-Transport-Security "max-age=15768000; preload";
+			# add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; ";
+			add_header SHeader "always set X-Frame-Options DENY; ";
+			# add_header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; st    yle-src 'self'; frame-ancestors 'none'";
+			add_header X-Content-Type-Options "nosniff";
+			add_header X-Frame-Options "SAMEORIGIN";
+			add_header X-XSS-Protection "1; mode=block";
+			add_header Referrer-Policy "same-origin";
+		proxy_cache nginx_cache;
+		# location / { proxy_pass http://107.170.203.174:8001/; }
+		location / { return 302 107.170.203.174:8001; }
+		# return 404 for all other php files not matching the front controller
+		# this prevents access to other php files you don't want to be accessible.
+		location ~ \.php$ {
+			return 404;
+		}
+		error_page  404              /404.html;
+		# redirect server error pages to the static page /50x.html
+		error_page   500 502 503 504  /50x.html;
+		location = /50x.html {
+			root   /usr/share/nginx/html;
+		}
+	}
+
+	server {
+		listen		76.173.133.37:443 ssl;
+		#listen		76.173.133.37 80;
+		server_name	cube.opsec.dog cube.ohfu.tk cube.fsckingfu.tk cube.sigfu.tk webmail.opsec.dog webmail.ohfu.tk webmail.fsckingfu.tk webmail.sigfu.tk webmail.alyp.tk;
+		ssl_certificate      /etc/letsencrypt/live/alyptik.com/fullchain.pem;
+		ssl_certificate_key  /etc/letsencrypt/live/alyptik.com/privkey.pem;
+			#include				 /etc/letsencrypt/options-ssl-nginx.conf;
+			ssl_trusted_certificate /etc/letsencrypt/live/alyptik.com/chain.pem;
+			ssl_stapling on;
+			ssl_stapling_verify on;
+		ssl_session_cache    shared:SSL:10m;
+		ssl_session_timeout  5m;
+		ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+		ssl_prefer_server_ciphers  on;
+			ssl_dhparam /etc/ssl/dhparams.pem;
+			add_header Strict-Transport-Security "max-age=15768000; preload";
+			# add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; ";
+			add_header SHeader "always set X-Frame-Options DENY; ";
+			# add_header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; st    yle-src 'self'; frame-ancestors 'none'";
+			add_header X-Content-Type-Options "nosniff";
+			add_header X-Frame-Options "SAMEORIGIN";
+			add_header X-XSS-Protection "1; mode=block";
+			add_header Referrer-Policy "same-origin";
+		location / {
+			proxy_set_header  Host $host;
+			proxy_set_header  X-Forwarded-Proto $scheme;
+			proxy_set_header  X-Real-IP $remote_addr;
+			proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header  X-Url-Scheme $scheme;
+			proxy_redirect    off;
+			proxy_max_temp_file_size 0;
+			return 302 https://alyp.tk/roundcube/ ;
+		}
+		location ~ \.php$ {
+			fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+			fastcgi_index index.php;
+			include fastcgi.conf;
+		}
+	}
+
+	server {
+		listen		76.173.133.37:443 ssl;
+		#listen		76.173.133.37 80;
+		server_name	alyptik.nazi.net ufukin.nazi.net;
+		ssl_certificate      /etc/letsencrypt/live/alyptik.com/fullchain.pem;
+		ssl_certificate_key  /etc/letsencrypt/live/alyptik.com/privkey.pem;
+			#include				 /etc/letsencrypt/options-ssl-nginx.conf;
+			ssl_trusted_certificate /etc/letsencrypt/live/alyptik.com/chain.pem;
+			ssl_stapling on;
+			ssl_stapling_verify on;
+		ssl_session_cache    shared:SSL:10m;
+		ssl_session_timeout  5m;
+		ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+		ssl_prefer_server_ciphers  on;
+			ssl_dhparam /etc/ssl/dhparams.pem;
+			add_header Strict-Transport-Security "max-age=15768000; preload";
+			# add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; ";
+			add_header SHeader "always set X-Frame-Options DENY; ";
+			# add_header Content-Security-Policy "default-src 'none'; img-src 'self'; script-src 'self'; st    yle-src 'self'; frame-ancestors 'none'";
+			add_header X-Content-Type-Options "nosniff";
+			add_header X-Frame-Options "SAMEORIGIN";
+			add_header X-XSS-Protection "1; mode=block";
+			add_header Referrer-Policy "same-origin";
+		location / {
+			return 500;
+		}
+	}
+
+	server {
+		listen       127.0.0.1:80;
+		server_name  localhost;
+		location / {
+			root   /srv/http;
+			# index  stats/cheestats.html;
+		}
+		location ~ [a-z]+stats$ {
+			rewrite ^/(stats/|)(.*) /stats/$2.html;
+		}
+		location ~ (aot|void|chee)$ {
+			set $suf stats;
+			rewrite ^/(stats/|)(.*) /stats/$2$suf.html;
+		}
+		location ~ omp {
+			rewrite ^/(stats/|)omp(stats|) /stats/cheestats.html;
+		}
+		location ~ ^/resume$ {
+			rewrite ^/(.*) /$1.pdf;
+		}
+		location /stream/ { proxy_pass http://127.0.0.1:8000/; }
+		location /znc_ { proxy_pass http://arch.alyptik.lan:8001; }
+		location ~ \.php$ {
+			fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+			fastcgi_index index.php;
+			include fastcgi.conf;
+		}
+		# deny access to .htaccess files, if Apache's document root
+		# concurs with nginx's one
+		location ~ /\.ht {
+			deny  all;
+		}
+		error_page  404              /404.html;
+		# redirect server error pages to the static page /50x.html
+		error_page   500 502 503 504  /50x.html;
+		location = /50x.html {
+			root   /usr/share/nginx/html;
+		}
+	}
+
+	# server {
+	#         listen       192.168.1.99:80;
+	#         server_name  arch.alyptik.lan;
+	#         location / {
+	#                 root   /srv/http/;
+	#                 index  index.html index.htm;
+	#         }
+	#         location /roundcube/ { proxy_pass http://127.0.0.1:80/roundcube/; }
+	#         location /icecast/ { proxy_pass http://127.0.0.1:8000/; }
+	#         location /znc/ {
+	#                 # proxy_pass http://127.0.0.1:8001/ ;
+	#                 return 302 http://192.168.1.99:8001 ;
+	#         }
+	#         location ~ \.php$ {
+	#                 #fastcgi_pass 127.0.0.1:9000; (depending on your php-fpm socket configuration)
+	#                 fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+	#                 fastcgi_index index.php;
+	#                 include fastcgi.conf;
+	#         }
+	#         error_page  404              /404.html;
+	#         # redirect server error pages to the static page /50x.html
+	#         error_page   500 502 503 504  /50x.html;
+	#         location = /50x.html {
+	#                 root   /usr/share/nginx/html;
+	#         }
+	#         # deny access to .htaccess files, if Apache's document root
+	#         # concurs with nginx's one
+	#         #
+	#         location ~ /\.ht {
+	#                 deny  all;
+	#         }
+	# }
+}
