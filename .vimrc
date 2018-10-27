@@ -877,6 +877,7 @@ let g:clang_cpp_options=''
 	\ . '-Wno-unused-parameter -Wno-unused-const-variable '
 	\ . '-Wno-variadic-macros -Wfloat-equal -Wrestrict '
 	\ . '-Wshadow -Wstrict-overflow '
+	\ . system('printf "-I%s " /usr/lib/modules/*/build/include')
 let g:ale_c_clang_options=''
 	\ . '-std=gnu11 '
 	\ . '-DNACL_BUILD_ARCH=x86 -DNACL_BUILD_SUBARCH=64 '
@@ -893,6 +894,7 @@ let g:ale_c_clang_options=''
 	\ . '-Wno-unused-parameter -Wno-unused-const-variable '
 	\ . '-Wno-variadic-macros -Wfloat-equal -Wrestrict '
 	\ . '-Wshadow -Wstrict-overflow '
+	\ . system('printf "-I%s " /usr/lib/modules/*/build/include')
 let g:ale_c_clangtidy_options=g:ale_c_clang_options
 let g:ale_c_gcc_options=g:ale_c_clang_options
 let g:clang_c_options=g:ale_c_clang_options

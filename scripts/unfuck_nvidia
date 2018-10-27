@@ -10,8 +10,8 @@ fi
 
 grep -Flr LICENSE -- "/usr/src/$nvidia_drv" \
 	| while read -r f; do
-		printf '%s\n' "running: sudo sed -i '/MODULE_LICENSE(\"GPL.*\");/ s/\\(MODULE_LICENSE(\"\\)[^\"]\\+\"/\1GPL v2\"/g' $f"
-		sudo sed -i '/MODULE_LICENSE("GPL.*");/ s/\(MODULE_LICENSE("\)[^"]\+"/\1GPL v2"/g' "$f"
+		printf '%s\n' "running: sudo sed -i '/MODULE_LICENSE(\".*\");/ s/\\(MODULE_LICENSE(\"\\)[^\"]\\+\"/\1GPL v2\"/g' $f"
+		sudo sed -i '/MODULE_LICENSE(".*");/ s/\(MODULE_LICENSE("\)[^"]\+"/\1GPL v2"/g' "$f"
 	done
 
 sudo dkms install "nvidia/${nvidia_drv##*-}" -k "$kern_ver"
