@@ -1,10 +1,10 @@
 #!/bin/bash
 
-trap '{ pkill socat; }' ERR EXIT INT HUP
+# socat -lydaemon TCP4-LISTEN:6666,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:qj3m7wxqk4pfqwob.onion:6667,socksport=9050
+# socat -lydaemon TCP4-LISTEN:6667,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:dtlbunzs5b7s5sl775quwezleyeplxzicdoh3cnhm7feolxmkfd42nqd.onion:6697,socksport=9050
+socat TCP4-LISTEN:6666,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:qj3m7wxqk4pfqwob.onion:6667,socksport=9050 &
+socat TCP4-LISTEN:6667,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:dtlbunzs5b7s5sl775quwezleyeplxzicdoh3cnhm7feolxmkfd42nqd.onion:6697,socksport=9050 &
 
-socat -lydaemon TCP4-LISTEN:6666,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:qj3m7wxqk4pfqwob.onion:6667,socksport=9050
-socat -lydaemon TCP4-LISTEN:6667,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:dtlbunzs5b7s5sl775quwezleyeplxzicdoh3cnhm7feolxmkfd42nqd.onion:6697,socksport=9050
-# socat TCP4-LISTEN:6666,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:qj3m7wxqk4pfqwob.onion:6667,socksport=9050
-# socat TCP4-LISTEN:6667,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:dtlbunzs5b7s5sl775quwezleyeplxzicdoh3cnhm7feolxmkfd42nqd.onion:6697,socksport=9050
+# ExecStart=/usr/bin/sh -c 'socat TCP4-LISTEN:6666,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:qj3m7wxqk4pfqwob.onion:6667,socksport=9050 & socat TCP4-LISTEN:6667,fork,bind=127.0.0.1 SOCKS4A:127.0.0.1:dtlbunzs5b7s5sl775quwezleyeplxzicdoh3cnhm7feolxmkfd42nqd.onion:6697,socksport=9050' 
 
 wait
