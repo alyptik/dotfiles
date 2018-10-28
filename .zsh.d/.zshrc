@@ -416,9 +416,9 @@ bindkey -M viins "jj" vi-cmd-mode
 
 	nacl_path="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin"
 	gnu_generic_cmds+=($(print -rl - $nacl_path/*(.:t)))
-	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bsdtar)
-	gnu_generic_cmds+=(calcc canto-curses canto-daemon canto-remote catdoc ccache)
-	gnu_generic_cmds+=(cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
+	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bnf)
+	gnu_generic_cmds+=(bsdtar calcc canto-curses canto-daemon canto-remote catdoc)
+	gnu_generic_cmds+=(ccache cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
 	gnu_generic_cmds+=(ci clang-tidy co col colordiff compton configure conky)
 	gnu_generic_cmds+=(cower cpanm cppcheck cpulimit crontab ctags curl db2x_manxml)
 	gnu_generic_cmds+=(db2x_texixml db2x_xsltproc docbook2man docbook2texi define)
