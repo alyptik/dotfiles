@@ -84,7 +84,7 @@ function zle-fman() {
 	local -a cmdline mansects
 	local cmd glob section
 	if ((!$#MANSECT)); then
-		mansects=(${${(R)${(M)$(print - /usr/share/man/man* 2>/dev/null)%man*}#man}/\//})
+		mansects=(${${(R)${(M)$(:-/usr/share/man/man*)%man*}#man}/\//})
 	else
 		mansects=(${${(s|:|)MANSECT}[@]})
 	fi
@@ -516,8 +516,7 @@ function git_prompt_string() {
 # Arch latest news
 # The characters "£, §" are used as metacharacters. They should not be encountered in a feed...
 function news_short() {
-	print -n - "$(print - \
-	$(curl -sm 1 ${1:-'https://www.archlinux.org/feeds/news/'} | sed -e ':a;N;$!ba;s/\n/ /g') \
+	print -n - "$(<<<$(curl -sm 1 ${1:-'https://www.archlinux.org/feeds/news/'} | sed -e ':a;N;$!ba;s/\n/ /g') \
 		| sed -e '
 			s/&amp;/\&/g
 			s/&lt;\|&#60;/</g
@@ -545,8 +544,7 @@ function news_short() {
 }
 
 function news_long() {
-	print -n - "$(print - \
-	$(curl -sm 1 ${1:-'https://www.archlinux.org/feeds/news/'} | sed -e ':a;N;$!ba;s/\n/ /g') \
+	print -n - "$(<<<$(curl -sm 1 ${1:-'https://www.archlinux.org/feeds/news/'} | sed -e ':a;N;$!ba;s/\n/ /g') \
 		| sed -e '
 			s/&amp;/\&/g
 			s/&lt;\|&#60;/</g

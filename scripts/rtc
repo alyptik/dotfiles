@@ -11,15 +11,15 @@ printf '%s\n' "$core_pat" | sudo tee /proc/sys/kernel/core_pattern
 
 # find analog stereo card: eg. pci_snd_id=03:00.0 (use `lspci | grep -i audio`)
 # and maximize the pci latency timer of the pci sound card and raise the
-# latency timer of all other pci peripherals (default is 64hz).
+# latency timer of all other pci peripherals (default is 0x40 or 64hz).
 pci_snd_id="$(lspci | awk '/Audio/{print $1}')"
 if test -n "$pci_snd_id"; then
 	sudo setpci -v -d '*:*' latency_timer=b0
 	sudo setpci -v -s "$pci_snd_id" latency_timer=ff
 fi
 
-# set cpu governor
 for i in /sys/devices/system/cpu/cpu[0-9]; do
+	# set cpu governor
 	cpu_gov=performance
 	# cpu_gov=powersave
 	printf '%s\n' "$cpu_gov" | sudo tee "$i/cpufreq/scaling_governor"
@@ -27,8 +27,8 @@ done
 
 for i in /sys/block/*; do
 	# set io scheduler
-	io_sched=mq-deadline
-	# io_sched=kyber
+	io_sched=kyber
+	# io_sched=mq-deadline
 	# io_sched=bfq
 	printf '%s\n' "$io_sched" | sudo tee "$i/queue/scheduler"
 	# don't collect entropy from solid state drives

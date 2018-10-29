@@ -74,7 +74,7 @@ zstyle ':completion:*'			use-cache yes
 zstyle ':completion::complete:*'	cache-path "$ZSH_CACHE_DIR"
 zstyle ':completion::complete:*'	rehash true
 zstyle ':history-search-multi-word'	page-size 5
-autoload -U colors && colors
+autoload -Uz colors && colors
 eval "$(dircolors -b)"
 
 # modules
@@ -147,10 +147,10 @@ fi
 fpath[1,0]="$HOME/.local/share/zsh/site-functions"
 fpath[1,0]="$ZDOTDIR/zcomps.zwc"
 fpath[1,0]="$ZDOTDIR/zfuncs.zwc"
-autoload -U promptinit && promptinit
-autoload -U +X compinit && compinit -u
+autoload -Uz promptinit && promptinit
+autoload -Uz +X compinit && compinit -u
 # autoload functions/completions in *.zwc files
-() for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(M@z)fpath%%*.zwc}"
+() for 1 2 { autoload -Uwz "$1"; autoload -Uwz +X "$2"; } "${(@Mz)fpath%%*.zwc}"
 # autoload completion for systemctl subcommand compdefs
 [[ "$(type _git)" =~ "autoload" ]] && autoload -Uz +X _git
 [[ "$(type _pacman)" =~ "autoload" ]] && autoload -Uz +X _pacman
@@ -201,19 +201,33 @@ fi
 
 # hurry up and source stuff so we can get cow news
 if [[ -d "$ZDOTDIR"/plugins ]]; then () for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh; fi
-if [[ -f /usr/bin/virtualenvwrapper_lazy.sh ]]; then . /usr/bin/virtualenvwrapper_lazy.sh; fi
+if [[ -f /usr/bin/virtualenvwrapper.sh ]]; then . /usr/bin/virtualenvwrapper.sh; fi
+# if [[ -f /usr/bin/virtualenvwrapper_lazy.sh ]]; then . /usr/bin/virtualenvwrapper_lazy.sh; fi
 if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
 if [[ -f "$HOME/.aliases" ]]; then . "$HOME/.aliases"; fi
+safetytoggle -n
+
+# add noglob aliases
 aliases[=]='noglob ='
+aliases[g]='noglob g'
+aliases[o]='noglob o'
+aliases[cb]='noglob cb'
+aliases[pe]='noglob perl -pe'
+aliases[yt]='noglob youtube-dl -f bestaudio --write-all-thumbnails --write-description'
+aliases[ampv]='noglob mpv --no-video --load-unsafe-playlists --ytdl-format=bestaudio/best'
+
+# woo cow
 () {
-	local -a host=(host -W 1 -t) dig=(dig +short +timeout=1)
-	local -a cmdline=($host txt istheinternetonfire.com)
-	local -a muhcows=($(print - /usr/share/cows/*.cow(.:r:t)))
+	local -a cmdline dig host muhcows
+	host=(host -W 1 -t)
+	dig=(dig +short +timeout=1)
+	cmdline=($host txt istheinternetonfire.com)
+	muhcows=(${:-/usr/share/cows/*.cow(.:r:t)})
 	$cmdline | cut -f2 -d'"' | cowsay -W 50 -f $muhcows[$((RANDOM % $#muhcows + 1))]
+	# add an extra newline
 	print
 }
-safetytoggle -n
 
 # fzf
 FZF_COMPLETION_TRIGGER="**"
@@ -411,11 +425,11 @@ bindkey -M viins "jj" vi-cmd-mode
 
 # compdefs
 () {
-	local nacl_path cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str
-	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds
+	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str sched_str
+	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds schedulers
 
-	nacl_path="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin"
-	gnu_generic_cmds+=($(print -rl - $nacl_path/*(.:t)))
+	schedulers+=(${${(s. .)$(</sys/block/sda/queue/scheduler)}//[\[\]]/})
+	gnu_generic_cmds+=(${:-"$HOME"/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin/*(.:t)})
 	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bnf)
 	gnu_generic_cmds+=(bsdtar calcc canto-curses canto-daemon canto-remote catdoc)
 	gnu_generic_cmds+=(ccache cd2raw cdcd cdr2raw cdrdao cd-read cdu cgasm chromium)
@@ -492,6 +506,9 @@ bindkey -M viins "jj" vi-cmd-mode
 	modprobe_str+=$'_arguments "*:arg:_default" ":modules:('
 	modprobe_str+="${kmods[*]}"
 	modprobe_str+=$')" -- '
+	sched_str+=$'_arguments "*:arg:_default" ":schedulers:('
+	sched_str+="${schedulers[*]}"
+	sched_str+=$')" -- '
 
 	() for 1 {
 		if ! type -f _${1##*-} &>/dev/null; then
@@ -512,6 +529,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	compdef "$modprobe_str" modprobe
 	compdef "$qpc_str" qpc
 	compdef "$reptyr_str" reptyr
+	compdef "$sched_str" setsched
 }
 
 compdef _bat b

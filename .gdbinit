@@ -248,5 +248,6 @@ alias -- xr = examine-representations
 alias -- rip = examine-rip
 alias -- lu = locals-up
 alias -- hs = help-set
+alias -- maps = info proc mappings
 
 # vi:ft=gdb:

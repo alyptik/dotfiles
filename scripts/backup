@@ -49,7 +49,7 @@ trap -- 'args="$*" line="$LINENO" abort' "${err_signals[@]}"
 # backup with exclusion of transient directories
 sudo rsync -ahhsvAHSX \
 	--delete \
-	--exclude={'/dev/*','/proc/*','/sys/*','/tmp/*','/run/*','/mnt/*','/media/*','/lost+found/*','/home/*/.gvfs'} \
+	--exclude={'/dev/*','/proc/*','/sys/*','/tmp/*','/run/*','/mnt/*','/media/*','/lost+found/*','/home/*/.gvfs','/store/torrents/*'} \
 	--info=flist2,name,progress2,stats2 \
 	--numeric-ids \
 	/ "$backup_dir/"
