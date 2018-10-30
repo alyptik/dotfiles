@@ -76,6 +76,7 @@ zstyle ':completion::complete:*'	rehash true
 zstyle ':history-search-multi-word'	page-size 5
 autoload -Uz colors && colors
 eval "$(dircolors -b)"
+typeset -gx ZLS_COLORS
 
 # modules
 () {
@@ -92,10 +93,11 @@ eval "$(dircolors -b)"
 	zle_arr+=(insert-composed-char insert-unicode-char tetris)
 	zle_arr+=(up-line-or-beginning-search which-command)
 	zle_arr+=(zmv znt-history-widget znt-cd-widget znt-kill-widget)
-	zmod_arr+=(zsh/curses zsh/datetime zsh/db/gdbm zsh/deltochar zsh/mapfile)
-	zmod_arr+=(zsh/mathfunc zsh/net/socket zsh/net/tcp zsh/pcre zsh/terminfo)
-	zmod_arr+=(zsh/system zsh/zftp zsh/zprof zsh/zpty zsh/zselect)
-	zle_cust+=( fzf-locate-widge insert-composed-char)
+	zmod_arr+=(zsh/clone zsh/complist zsh/curses zsh/datetime zsh/db/gdbm)
+	zmod_arr+=(zsh/deltochar zsh/mapfile zsh/mathfunc zsh/net/socket)
+	zmod_arr+=(zsh/net/tcp zsh/pcre zsh/terminfo zsh/system zsh/zftp)
+	zmod_arr+=(zsh/zprof zsh/zpty zsh/zselect)
+	zle_cust+=(fzf-locate-widge insert-composed-char)
 	zle_cust+=(append-clip-selection insert-clip-selection yank-clip-selection)
 	zle_cust+=(append-x-selection insert-x-selection yank-x-selection)
 	zle_cust+=(zle-backwards-delete-to-char zle-backwards-zap-to-char)
@@ -206,7 +208,6 @@ if [[ -f /usr/bin/virtualenvwrapper.sh ]]; then . /usr/bin/virtualenvwrapper.sh;
 if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
 if [[ -f "$HOME/.aliases" ]]; then . "$HOME/.aliases"; fi
-safetytoggle -n
 
 # add noglob aliases
 aliases[=]='noglob ='
@@ -228,6 +229,7 @@ aliases[ampv]='noglob mpv --no-video --load-unsafe-playlists --ytdl-format=besta
 	# add an extra newline
 	print
 }
+safetytoggle -n
 
 # fzf
 FZF_COMPLETION_TRIGGER="**"

@@ -10,7 +10,7 @@ else
 fi
 
 
-LESS= less -MNRis \
+LESS= less -MNRSis \
 	=(highlight  \
 		--out-format="${out:-ansi}" \
 		--syntax="${syn:-conf}" \

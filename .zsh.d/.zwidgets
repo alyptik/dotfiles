@@ -70,14 +70,9 @@ function zle-run-help() {
 
 # compile zwc files
 function zwc() {
-	local dot_dir
-	dot_dir=${ZDOTDIR:-$HOME/.zsh.d}
-	if rm -fv $dot_dir/zfuncs.zwc; then
-		zcompile -MUz $dot_dir/zfuncs.zwc $dot_dir/zfunctions/*
-	fi
-	if rm -fv $dot_dir/zcomps.zwc; then
-		zcompile -MUz $dot_dir/zcomps.zwc $dot_dir/completions/enabled/*
-	fi
+	zrecompile -p -- \
+		-MUz $ZDOTDIR/zfuncs.zwc $ZDOTDIR/zfunctions/* -- \
+		-MUz $ZDOTDIR/zcomps.zwc $ZDOTDIR/completions/enabled/*
 }
 
 function zle-fman() {

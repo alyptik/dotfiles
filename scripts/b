@@ -15,7 +15,7 @@ for f; do
 done
 
 # stdin
-if ((!$#)); then
+if test -z "$*"; then
 	set -- --language=C
 fi
 

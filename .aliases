@@ -8,6 +8,11 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias yki='ykinfo'
+alias ykpg='yubikey-personalization-gui'
+alias ykp='ykpersonalize'
+alias ykg='ykman-gui'
+alias yk='ykman'
 alias pe='perl -pe'
 alias ampv='mpv --no-video --load-unsafe-playlists --ytdl-format=bestaudio/best'
 alias yt='youtube-dl -f bestaudio --write-all-thumbnails --write-description'

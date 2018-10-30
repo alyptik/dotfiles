@@ -4,4 +4,3 @@
 # See udisks(8)
 # ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="0"
 ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"
-#ENV{ID_FS_USAGE}=="*", ENV{UDISKS_FILESYSTEM_SHARED}="0"

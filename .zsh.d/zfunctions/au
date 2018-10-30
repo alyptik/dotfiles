@@ -1,2 +1,4 @@
-[[ -z "$*" ]] && return 1
+if ((!$#)); then
+	return 1
+fi
 autoload -Uz +X "$@"
