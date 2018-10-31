@@ -35,6 +35,17 @@ if [ -t 0 ]; then
 fi
 export NPROC
 
+# configure pinentry to use the correct tty
+if command -v tty >/dev/null 2>&1 && command -v gpg >/dev/null 2>&1; then
+	unset SSH_AGENT_PID
+	if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne "$$" ]; then
+	  SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+	fi
+	GPG_TTY="$(tty)"
+	export GPG_TTY SSH_AUTH_SOCK
+	gpg-connect-agent updatestartuptty /bye >/dev/null
+fi
+
 # directory shortcut environment variables
 export CONFIG="/store/dotfiles"
 export LINUX="$PROJECTS/linux"
