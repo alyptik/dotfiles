@@ -20,7 +20,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 xrandr --dpi 260 &
-# xrandr --output LVDS-1 --brightness 1.5 &
 xbindkeys
 xset s noblank
 xset s off -b -dpms
@@ -36,10 +35,9 @@ pavucontrol &
 stjerm &
 transgui &
 compton -b
-GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
-dbus-update-activation-environment --systemd DISPLAY
-# xsetroot -cursor_name left_ptr
+env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
+dbus-update-activation-environment --systemd DISPLAY
 # shellcheck disable=SC2046
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
@@ -48,9 +46,9 @@ default_session="herbstluftwm";
 
 if [ "$1" = xterm ] && [ -n "$2" ]; then
 	session="$2";
-elif [ "$1"x = x ]; then
+elif [ -z "$1" ]; then
 	if [ -e ~/.WM.default ]; then
-		session="$(cat ~/.WM.default)";
+		session="$(<"$HOME/.WM.default")";
 	else
 		session="$default_session";
 	fi;
@@ -58,105 +56,105 @@ else
 	session="$1";
 fi
 
-printf '%s\n' "$session" > ~/.WM.last;
+printf '%s\n' "$session" > "$HOME/.WM.last";
 
 case $session in
-(herbst|herbstluftwm)
+herbst|herbstluftwm)
 	xscreensaver &
 	exec herbstluftwm --locked;;
 
-(awesome)
+awesome)
 	xscreensaver &
 	exec awesome;;
 
-(bspwm)
+bspwm)
 	xscreensaver &
 	exec bspwm;;
 
-(budgie-desktop)
+budgie-desktop)
 	gnome-screensaver &
 	exec budgie-desktop;;
 
-(catwm)
+catwm)
 	xscreensaver &
 	exec catwm;;
 
-(cinnamon)
+cinnamon)
 	xscreensaver &
 	exec cinnamon-session;;
 
-(dwm)
+dwm)
 	xscreensaver &
 	exec dwm;;
 
-(ede)
+ede)
 	xscreensaver &
 	exec startede;;
 
-(enlightenment)
+enlightenment)
 	xscreensaver &
 	exec enlightenment_start;;
 
-(fluxbox)
+fluxbox)
 	xscreensaver &
 	exec startfluxbox;;
 
-(gnome)
+gnome)
 	gnome-screensaver &
 	exec gnome-session;;
 
-(gnome-classic)
+gnome-classic)
 	gnome-screensaver &
 	exec gnome-session --session=gnome-classic;;
 
-(i3|i3wm)
+i3|i3wm)
 	/home/jp/bin/i3-focus-last &
 	/home/jp/bin/hilites &
 	xscreensaver &
 	exec i3;;
 
-(icewm)
+icewm)
 	xscreensaver &
 	exec icewm-session;;
 
-(jwm)
+jwm)
 	xscreensaver &
 	exec jwm;;
 
-(kde)
+kde)
 	xscreensaver &
 	exec startkde;;
 
-(mate)
+mate)
 	xscreensaver &
 	exec mate-session;;
 
-(monster|monsterwm)
+monster|monsterwm)
 	xscreensaver &
 	exec monsterwm;;
 
-(notion)
+notion)
 	xscreensaver &
 	exec notion;;
 
-(openbox)
+openbox)
 	xscreensaver &
 	exec openbox-session;;
 
-(unity)
+unity)
 	xscreensaver &
 	exec unity;;
 
-(xfce|xfce4)
+xfce|xfce4)
 	xscreensaver &
 	exec startxfce4;;
 
-(xmonad)
+xmonad)
 	xscreensaver &
 	exec xmonad;;
 
 # No known session, try to run it as command
-(*)
+*)
 	xscreensaver &
 	exec "$session";;
 esac

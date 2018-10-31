@@ -19,19 +19,33 @@ if command -v ruby >/dev/null 2>&1; then
 else
 	rubies=""
 fi
-if [ "$TERM" != linux ] && [ "$TERM" != xterm ] && [ -d "$HOME/.terminfo" ]; then
-	TERM=screen-256color-italic
+if [ -d "$HOME/.terminfo" ]; then
+	case "$TERM" in
+	linux*|xterm*)
+		TERM=xterm-256color;;
+	screen*)
+		TERM=screen-256color-italic;;
+	*)
+		if [ -n "$STY" ] || [ -n "$SSH_CONNECTION" ]; then
+			TERM=screen-256color-italic
+		fi;;
+	esac
 fi
-if [ "$(hostname)" != localhost ] && [ "$(hostname)" != fedora ] && [ "$(hostname)" != fedoravm ]; then
-	locale="en_US.UTF-8"
+if command -v hostname >/dev/null 2>&1; then
+	case "$(hostname)" in
+	localhost|fedora*)
+		locale="C";;
+	*)
+		locale="en_US.UTF-8";;
+	esac
+fi
+if [ -t 0 ]; then
+	stty -ixon
 fi
 if command -v nproc >/dev/null 2>&1; then
 	NPROC="$(nproc)"
 else
-	NPROC=2
-fi
-if [ -t 0 ]; then
-	stty -ixon
+	NPROC=4
 fi
 export NPROC
 

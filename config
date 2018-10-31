@@ -165,10 +165,10 @@ Host nyu
 	User jp
 	CheckHostIP no
 
-Host travis
-	Hostname localhost
-	Port 9999
-	User travis
+Host localhost
+	Hostname 127.0.0.1
+	Port 22
+	User jp
 	CheckHostIP no
 
 Host linode
@@ -176,7 +176,6 @@ Host linode
 	Port 22
 	User jp
 	CheckHostIP no
-
 
 Host lenovo
 	Hostname 192.168.1.100
