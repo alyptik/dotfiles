@@ -86,7 +86,7 @@ typeset -gx ZLS_COLORS
 	au_arr+=(insert-composed-char insert-unicode-char)
 	au_arr+=(regexp-replace run-help tetriscurses tetris)
 	au_arr+=(up-line-or-beginning-search which-command)
-	au_arr+=(zargs zed zmv)
+	au_arr+=(zargs zed zmv zrecompile)
 	# zle_arr+=(bracketed-paste bracketed-paste-magic)
 	zle_arr+=(edit-command-line expand-absolute-path)
 	zle_arr+=(down-line-or-beginning-search execute-named-command)
@@ -203,8 +203,6 @@ fi
 
 # hurry up and source stuff so we can get cow news
 if [[ -d "$ZDOTDIR"/plugins ]]; then () for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh; fi
-if [[ -f /usr/bin/virtualenvwrapper.sh ]]; then . /usr/bin/virtualenvwrapper.sh; fi
-# if [[ -f /usr/bin/virtualenvwrapper_lazy.sh ]]; then . /usr/bin/virtualenvwrapper_lazy.sh; fi
 if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
 if [[ -f "$HOME/.aliases" ]]; then . "$HOME/.aliases"; fi
@@ -558,6 +556,7 @@ compdef _pip pip
 compdef _au au
 compdef _au wa
 compdef _pwns pwns
+compdef _ykman ykman
 compdef azle=autoload
 compdef cg=cgasm
 compdef e=vim

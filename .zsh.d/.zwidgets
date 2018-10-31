@@ -72,7 +72,12 @@ function zle-run-help() {
 function zwc() {
 	zrecompile -p -- \
 		-MUz $ZDOTDIR/zfuncs.zwc $ZDOTDIR/zfunctions/* -- \
-		-MUz $ZDOTDIR/zcomps.zwc $ZDOTDIR/completions/enabled/*
+		-MUz $ZDOTDIR/zcomps.zwc $ZDOTDIR/completions/enabled/* -- \
+		-MUz $ZDOTDIR/.zcompdump.zwc $ZDOTDIR/.zcompdump -- \
+		-MUz $ZDOTDIR/.zwidgets.zwc $ZDOTDIR/.zwidgets -- \
+		-MUz $ZDOTDIR/.zshenv.zwc $ZDOTDIR/.zshenv -- \
+		-MUz $ZDOTDIR/.zshrc.zwc $ZDOTDIR/.zshrc -- \
+		-MUz $ZDOTDIR/.zlogout.zwc $ZDOTDIR/.zlogout
 }
 
 function zle-fman() {
