@@ -1,10 +1,38 @@
 #!/bin/zsh
 
+gpg_home="$HOME/.gnupg"
+gpg_dir="$HOME/.certs/gpg"
+gpg_tmp="$gpg_dir/gpgtmp"
+pubring="$gpg_home/pubring.kbx"
+master_key="master-0x02e95b4f4f3643e9.asc"
+
+# initialize temporary gpg homedir
+mkdir -pv "$gpg_tmp" || return 1
+chmod -c 0700 "$gpg_tmp" || return 1
+ln -sfv -- "$gpg_home/gpg.conf" "$gpg_tmp/"
+ln -sfv -- "$gpg_home/gpg-agent.conf" "$gpg_tmp/"
+
+# make sure master key exists and is readable
+if [[ ! -r "$gpg_dir/$master_key" ]]; then
+	return 1
+fi
+
+# locally sign each key with master
 zmodload zsh/zpty
 for key; do
-	gpg2 --recv-keys "$key" || continue
-	zpty -e lsign gpg2 --lsign-key "$key"
-	zpty -w lsign $'y\ny\n'
+	gpg --recv-keys "$key" || continue
+	gpg --homedir "$gpg_tmp" --import "$gpg_dir/$master_key"
+	zpty -e lsign gpg --homedir "$gpg_tmp" --keyring "$pubring" --edit-key "$key"
+	zpty -w lsign $'trust\n'
+	zpty -w lsign $'4\n'
+	zpty -w lsign $'y\n'
+	zpty -w lsign $'lsign\n'
+	zpty -w lsign $'y\n'
+	zpty -w lsign $'y\n'
+	zpty -w lsign $'save\n'
 	zpty -r lsign
 	zpty -d lsign
 done
+
+# cleanup temporary homedir
+rm -rfv -- "${gpg_tmp:?}"

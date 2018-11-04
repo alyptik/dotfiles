@@ -1,0 +1,19 @@
+local string
+local -a key
+
+if [[ -f ~/.zkbd/$TERM-$VENDOR-$OSTYPE ]]; then
+  source ~/.zkbd/$TERM-$VENDOR-$OSTYPE || echo >&2 "Warning: failed to parse zkbd file $TERM-$VENDOR-$OSTYPE"
+elif [[ -z $TERM ]]; then
+  echo >&2 "Warning: \$TERM is empty!"
+else
+  echo >&2 "Warning: no zkbd file definition found for $TERM-$VENDOR-$OSTYPE"
+fi
+
+if [[ "$1" = -s ]]; then
+  string=-s
+  shift
+fi
+
+if [[ -n $key[$1] ]]; then
+	builtin bindkey $s "${key[$1]}" "$2"
+fi

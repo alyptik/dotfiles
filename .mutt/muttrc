@@ -95,8 +95,8 @@ set imap_idle
 unset imap_servernoise
 unset imap_peek
 set ssl_starttls
-unset ssl_force_tls
-set ssl_use_sslv3
+set ssl_force_tls
+unset ssl_use_sslv3
 set imap_delim_chars = "/."
 
 unset maildir_header_cache_verify

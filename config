@@ -1,9 +1,14 @@
 Host *
-	ControlPath ~/.ssh/sockets/%r@%h-%p
+	ControlMaster auto
+	ControlPath ~/.ssh/sockets/%C
+	# ControlPersist yes
+	# ControlPersist no
+	ControlPersist 10m
 	HashKnownHosts no
 	VisualHostKey yes
 	ForwardAgent no
-	ForwardX11 no
+	ForwardX11 yes
+	ForwardX11Trusted yes
 	KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
 	# LocalForward localhost:8888 127.0.0.1:80
 	# RhostsRSAAuthentication yes
@@ -19,9 +24,9 @@ Host *
 	CheckHostIP no
 	# StrictHostKeyChecking ask
 	StrictHostKeyChecking no
-	# # IdentityFile ~/.ssh/id_dsa
-	# # IdentityFile ~/.ssh/id_ecdsa
-	# # IdentityFile ~/.ssh/id_ed25519
+	# IdentityFile ~/.ssh/id_dsa
+	# IdentityFile ~/.ssh/id_ecdsa
+	# IdentityFile ~/.ssh/id_ed25519
 	# Port 22
 	Protocol 2
 	# Ciphers +chacha20-poly1305@openssh.com
@@ -41,7 +46,7 @@ Host mnh
 	Hostname nexthendr.tk
 	User mnrmnaugh
 	AddressFamily inet
-	CheckHostIP no
+	CheckHostIP yes
 
 Host nh
 	Hostname nexthendr.tk
@@ -61,7 +66,6 @@ Host rvm
 Host aur.archlinux.org
 	User aur
 	CheckHostIP yes
-	IdentityFile ~/.ssh/aur
 
 Host github.com
 	Hostname ssh.github.com
@@ -163,7 +167,7 @@ Host nyu
 	# Hostname 216.165.113.156
 	Port 22
 	User jp
-	CheckHostIP no
+	CheckHostIP yes
 
 Host localhost
 	Hostname 127.0.0.1
@@ -175,7 +179,7 @@ Host linode
 	Hostname 172.105.224.162
 	Port 22
 	User jp
-	CheckHostIP no
+	CheckHostIP yes
 
 Host lenovo
 	Hostname 192.168.1.100

@@ -57,11 +57,12 @@ printf '%s\n' "[compiling: ${CC:-gcc} -Wall -Wextra -pedantic -std=c11 -g3 $* -o
 
 # if passed -g run program through gdb
 if [ -n "$gdb_cmd" ]; then
-	printf '%s\n' "[executing: $gdb_cmd $tmp_file]"
-	"$gdb_cmd" "$tmp_file"
+	printf '%s\n' "[executing: $gdb_cmd -ex 'r' $tmp_file]"
+	"$gdb_cmd" -ex 'r' "$tmp_file"
+	exit $?
 fi
 
 # if not passed -g run program normally
 printf '%s\n' "[executing: $tmp_file]"
 "$tmp_file"
-exit "$?"
+exit $?

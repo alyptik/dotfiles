@@ -134,7 +134,7 @@ defscrollback 10000
 # password none
 multiuser off
 bell on
-vbell on
+vbell off
 msgminwait 1
 vbellwait 2
 msgwait 3

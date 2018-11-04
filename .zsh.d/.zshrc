@@ -12,7 +12,7 @@ rm -f -- "$_zsh_error"
 
 # setopt arrays
 () {
-	local -a unset__arr set_arr
+	local -a unset_arr set_arr
 	unset_arr+=(alwaystoend autolist automenu caseglob casematch checkjobs)
 	unset_arr+=(correctall extendedhistory flowcontrol histfcntllock)
 	unset_arr+=(globalexport globcomplete globsubst histfcntllock histignorespace)
@@ -86,7 +86,7 @@ typeset -gx ZLS_COLORS
 	au_arr+=(insert-composed-char insert-unicode-char)
 	au_arr+=(regexp-replace run-help tetriscurses tetris)
 	au_arr+=(up-line-or-beginning-search which-command)
-	au_arr+=(zargs zed zmv zrecompile)
+	au_arr+=(zargs zed zkbd zmv zrecompile)
 	# zle_arr+=(bracketed-paste bracketed-paste-magic)
 	zle_arr+=(edit-command-line expand-absolute-path)
 	zle_arr+=(down-line-or-beginning-search execute-named-command)
@@ -207,6 +207,9 @@ if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
 if [[ -f "$HOME/.aliases" ]]; then . "$HOME/.aliases"; fi
 
+# add function reserved word alias
+aliases[fun]='function'
+
 # add noglob aliases
 aliases[=]='noglob ='
 aliases[g]='noglob g'
@@ -317,6 +320,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" zle-run-help
 	bindkey -M "$1" "\eu" undo
+	bindkey -M "$1" "\eU" redo
 	bindkey -M "$1" "\ey" yank-pop
 	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\C-q" push-line
@@ -392,9 +396,8 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\C-x\C-e" edit-command-line
 	bindkey -M "$1" "\e\ey" zle-youtube-helper
 	bindkey -M "$1" "\eU" up-case-word
-	bindkey -M "$1" "\e\e\e" _history-complete-newer
-	# bindkey -M "$1" "\e," zaw
 	bindkey -M "$1" "\e," spell-word
+	bindkey -M "$1" "\ez" zaw
 	bindkey -M "$1" "\e<" zle-zaw-help
 	bindkey -M "$1" "\ew" which-command
 	bindkey -M "$1" "\ee" delete-to-char
@@ -403,7 +406,12 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\eOR" insert-unicode-char
 	bindkey -M "$1" "\eOS" zle-compdef
 	bindkey -M "$1" "\e[P" delete-char
-	bindkey -M "$1" "\C-r" redo
+	bindkey -M "$1" "\C-r" history-incremental-search-backward
+	bindkey -M "$1" "\C-xr" history-incremental-search-backward
+	bindkey -M "$1" "\C-x\C-r" history-incremental-search-backward
+	bindkey -M "$1" "\C-s" history-incremental-search-forward
+	bindkey -M "$1" "\C-xs" history-incremental-search-forward
+	bindkey -M "$1" "\C-x\C-s" history-incremental-search-forward
 	# call fman() on current cmdline after word-splitting
 	bindkey -M "$1" "\e/" zle-fman
 	bindkey -M "$1" "\e?" where-is
@@ -421,13 +429,19 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\C-t" transpose-words
 	bindkey -M "$1" "\et" fzf-file-widget
 	bindkey -M "$1" "\eC" fzf-cd-widget
+
+	# move the cursor anywhere (will blow your mind)
+	local _km=$1
+	function _move_cursor { print -rn - $'\e['$WIDGET[-1] }
+	() for 1 { zle -N "move-cursor-$1" _move_cursor; bindkey -M "$_km" "\e[1;6$1" move-cursor-$1 } {A..D}
 } emacs vicmd viins
 
 # compdefs
 () {
-	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str sched_str
-	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys nacl_cmds schedulers
+	local cgasm_str dgpg_str hi_str high_str reptyr_str modprobe_str sched_str lgpg_str fpath_str
+	local -a gnu_generic_cmds asmcmds dbpkgs kmods pubkeys seckeys allkeys nacl_cmds schedulers fpath_comps
 
+	fpath_comps=(${:-$^fpath/**(.:t)})
 	schedulers+=(${${(s. .)$(</sys/block/sda/queue/scheduler)}//[\[\]]/})
 	gnu_generic_cmds+=(${:-"$HOME"/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin/*(.:t)})
 	gnu_generic_cmds+=(as auracle autopep8 autopep8-python2 basename bash bnf)
@@ -469,18 +483,21 @@ bindkey -M viins "jj" vi-cmd-mode
 		kmods+=(${${(f0@)$(find /usr/lib/modules/$(uname -r) \
 			-type f -name '*.ko*' 2>/dev/null)%.ko*}##*/})
 	fi
-	if type gpg2 &>/dev/null; then
+	if type gpg &>/dev/null; then
 		pubkeys+=(${${(Mo)$(gpg2 -k --no-default-keyring \
 			--list-options no-show-photos 2>/dev/null):%<*>}//(<|>)/})
 		seckeys+=(${${(Mo)$(gpg2 -K --no-default-keyring \
 			--list-options no-show-photos  2>/dev/null):%<*>}//(<|>)/})
+		allkeys+=($pubkeys $seckeys)
+		allkeys=(${(u)allkeys})
 	fi
 
 	cgasm_str+=$'_arguments "*:arg:_default" ":assembly instruction:('
 	cgasm_str+="${asmcmds[*]}"
 	cgasm_str+=')" -- '
-	# dgpg_str+=$'_arguments "*:arg:_default" ":public key:('
-	# dgpg_str+="${pubkeys[*]}"
+	lgpg_str+=$'_arguments "*:arg:_default" ":public key:('
+	lgpg_str+="${allkeys[*]}"
+	lgpg_str+=$')" -- '
 	dgpg_str+=$'_arguments "*:arg:_default" ":secret keys:('
 	dgpg_str+="${seckeys[*]}"
 	dgpg_str+=$')" -- '
@@ -509,6 +526,9 @@ bindkey -M viins "jj" vi-cmd-mode
 	sched_str+=$'_arguments "*:arg:_default" ":schedulers:('
 	sched_str+="${schedulers[*]}"
 	sched_str+=$')" -- '
+	fpath_str+=$'_arguments "*:arg:_default" ":autoload functions:('
+	fpath_str+="${fpath_comps[*]}"
+	fpath_str+=$')" -- '
 
 	() for 1 {
 		if ! type -f _${1##*-} &>/dev/null; then
@@ -523,6 +543,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	} $gnu_generic_cmds
 
 	compdef "$cgasm_str" cgasm
+	compdef "$lgpg_str" lgpg
 	compdef "$dgpg_str" dgpg
 	compdef "$hi_str" hi
 	compdef "$high_str" high
@@ -530,6 +551,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	compdef "$qpc_str" qpc
 	compdef "$reptyr_str" reptyr
 	compdef "$sched_str" setsched
+	compdef "$fpath_str" fcomp
 }
 
 compdef _bat b

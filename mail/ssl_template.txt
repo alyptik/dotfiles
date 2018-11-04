@@ -8,44 +8,47 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-10-24] Joey's Progress Report
+Subject: [2018-10-31] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-10-24)
+ * (2018-10-31)
  */
 
-This week was mostly working on the CrashSimulator close() mutator, with a
-little bit of time spent merging in the execve() PR to Lind.
+This week I spent most of my time improving the parts of CrashSimulator
+related to ease of use when testing. I made a couple pull requests to
+fix up the documentation and Dockerfile parts of Preston's rrapper
+repository, and currently have recording and replaying traces working
+fairly smoothly on my main development system.
 
-I was actually able to get the mutator written for close() fairly easily,
-however I was (and still sort of am, admittedly) having trouble figuring
-out how to correctly _run_ the modified trace file so that it uses the
-config.ini with the desired changes.
+I don't think CrashSimulator has a working CI system in place right now,
+Lind definitely does not, and so my focus for the coming week is going to
+be to work with Lukas to try and get a CI working for Lind as well as
+try to also set one up for CrashSimulator.
 
-    * The docs for this part are kind of lacking in my opinion, and I think
-      this should be fixed up a little more before having other people come
-      onto the CrashSimulator project cold; otherwise, they would be in for
-      some minor frustration.
+It seems like the best approach in regarding Lind would be to leverage
+Docker to split the original, monolithic build into manageable and discrete
+parts. This would solve the original issue of build timeouts in Travis CI,
+and once we have a working CI build, we can set up web-hooks so that, as an
+example, a commit pushed to the NaCl subrepository might trigger a build of
+the main project repository.
 
-I've also been trying out the Docker image method as an alternative to get it
-running, and although there were a few snafus building it, I'm currently
-coalescing all of the needed Dockerfile changes into a PR for rrapper and they
-are all fairly small ones. In addition, I also submitted a couple of small rr
-PRs for bugfixes and spelling which Preston has already merged in this week.
+Once this is all setup for Lind, it will be easy to build and verify a
+LAMP stack for NaCl in a reliable way.
 
-I've also been slowly learning the Python C API, as well as refreshing
-myself on how the rest of Python works at the same time, so I can get pipe()
-implemented smoothly in the coming week.
+I'm not sure what problems would be encountered when trying to setup a
+Travis CI instance for CrashSimulator, but I can't think of any reasons
+why it wouldn't be possible, so that would be the next step once I have
+a working template I can borrow from Lind, as it shares many of the same
+subrepository-based challenges.
 
 * Plans For Next Week */
 
-        - Continue to work on the mutator for CrashSimulator.
-        - Work with Preston to improve the rrapper documentation.
-        - Implementing pipe() in our Repy code for Lind.
+        - Work on getting Travis CI integration for Lind running smoothly.
+        - Work on adding Travis CI integration to CrashSimulator.
 
 That's all for this week, thanks.
 

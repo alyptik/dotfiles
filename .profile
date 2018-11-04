@@ -39,9 +39,6 @@ if command -v hostname >/dev/null 2>&1; then
 		locale="en_US.UTF-8";;
 	esac
 fi
-if [ -t 0 ]; then
-	stty -ixon
-fi
 if command -v nproc >/dev/null 2>&1; then
 	NPROC="$(nproc)"
 else
@@ -50,15 +47,18 @@ fi
 export NPROC
 
 # configure pinentry to use the correct tty
-if command -v tty >/dev/null 2>&1 && command -v gpg-connect-agent >/dev/null 2>&1; then
-	unset SSH_AGENT_PID
-	if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne "$$" ]; then
-	  SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+if [ -t 0 ]; then
+	stty -ixon
+	if command -v tty >/dev/null 2>&1 && command -v gpgconf >/dev/null 2>&1 && command -v gpg-connect-agent >/dev/null 2>&1; then
+		unset SSH_AGENT_PID
+		if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne "$$" ]; then
+		  SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+		fi
+		GPG_TTY="$(tty)"
+		export GPG_TTY SSH_AUTH_SOCK
+		# gpgconf --launch gpg-agent
+		gpg-connect-agent updatestartuptty /bye >/dev/null
 	fi
-	GPG_TTY="$(tty)"
-	export GPG_TTY SSH_AUTH_SOCK
-	# gpgconf --launch gpg-agent
-	gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
 
 # directory shortcut environment variables

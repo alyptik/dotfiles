@@ -1,0 +1,5 @@
+typeset -g -A key
+
+key[F1]='^[[1;5P'
+key[F2]='^[OQ'
+key[F3]='^C'

@@ -8,6 +8,11 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias sc='sysctl'
+alias gpge='gpg --edit-key'
+alias gpgl='gpg --list-keys'
+alias gpgs='gpg --list-secret-keys'
+alias gpgr='gpg --recv-keys'
 alias yki='ykinfo'
 alias ykpg='yubikey-personalization-gui'
 alias ykp='ykpersonalize'

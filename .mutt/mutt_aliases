@@ -13,13 +13,17 @@ alias lukas Lukas Puehringer <lukas.puehringer@nyu.edu>
 alias yiwen Li Yiwen <detectivelyw@gmail.com>
 alias preston Preston Moore <pkm266@nyu.edu>
 alias alan Alan Cao <alcao758@gmail.com>
+alias xu Xu Congyu <xu.congyu@nyu.edu>
 alias justin Justin Cappos <jcappos@nyu.edu>
 alias brendan Brendan Dolan-Gavitt <brendandg@nyu.edu>
+alias julio Julio Rivera <jr847@nyu.edu>
 alias marika Marika Lewis <marikalewis@nyu.edu>
+alias emerald Emerald M Knox <emerald.knox@nyu.edu>
 alias bhakti Bhakti Jinjuwadia <bhakti.parekh@nyu.edu>
 alias ssl Secure Systems Lab Mailing List <securesystemslab@googlegroups.com>
 alias crash CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>
 alias zsh Zsh Workers Mailing List <zsh-workers@zsh.org>
 alias lkml Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+alias majordomo Majordomo <majordomo@vger.kernel.org>
 
 # vi:ft=neomuttrc:

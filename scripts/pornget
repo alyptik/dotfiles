@@ -43,7 +43,7 @@ for (split "\n", `curl -s '$url'`) {
 $action->($hash[$_]) for (0 .. $results - 1);
 
 if ($#ARGV) {
-	system("saldl -ro '$base_dir/$hash[$_]->{name}.mp4' '$hash[$_]->{vid}'") for (0 .. $results - 1);
+	system("aria2c -x 16 -s 16 -k 4M -o '$base_dir/$hash[$_]->{name}.mp4' '$hash[$_]->{vid}'") for (0 .. $results - 1);
 }
 
 print "\n";
