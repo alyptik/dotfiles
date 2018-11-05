@@ -34,10 +34,10 @@
 	br = branch
 	co = commit -S -v
 	st = status
-	lu = log --show-signature --color-moved=zebra -u
-	lg = log --graph --oneline --decorate --boundary
-	lga = log --graph --oneline --decorate --all
-	lgs = log --graph --oneline --decorate --boundary --stat
+	lu = log --color-moved=zebra -u
+	lg = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --boundary
+	lga = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --all
+	lgs = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --stat
 	graph = log --graph --stat --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
 	unstage = reset HEAD --
 	cfg = config
@@ -59,11 +59,11 @@
 	d = diff --histogram
 	dr = diff --histogram --relative --no-index
 	fa = fetch --ipv4 --all --jobs=4 --recurse-submodules=on-demand
-	lgp = log --graph --oneline --decorate --boundary --first-parent
+	lgp = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --first-parent
 	s = show --use-mailmap --show-signature -u
 	dc = diff --cached --histogram
 	p = format-patch -M @^ --shortstat -o /patches/
-	la = !git --no-replace-objects log --color --graph --pretty=colorful-oneline --abbrev-commit --all
+	la = log --graph --color --pretty --decorate --stat --color-moved=zebra --all
 	sub = submodule
 	f = grep -Fn --color=auto --break
 	g = grep -Pn --color=auto --break
@@ -104,8 +104,8 @@
 	ri = rebase --signoff -S -i
 	ld = log --dirstat --show-signature --color-moved=zebra
 	ldf = log --dirstat-by-file --show-signature --color-moved=zebra
-	lw = log --show-signature --color-moved=zebra --word-diff=plain -u
-	l = log --stat --show-signature --color-moved=zebra
+	lw = log --color-moved=zebra --word-diff=plain -u
+	l = log --stat --color-moved=zebra
 	dn = diff --name-only
 	rl = reflog
 	cfggu = config --global --unset
@@ -113,6 +113,8 @@
 	rd = range-diff
 	lo = log --oneline --decorate --all
 	cpa = cherry-pick -S --abort
+	ls = log --stat --show-signature --color-moved=zebra
+	ll = log --pretty=colorful-oneline --color --decorate --abbrev-commit --stat
 [web]
 	browser = w3m
 [instaweb]
