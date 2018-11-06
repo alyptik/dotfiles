@@ -4,6 +4,7 @@ gpg_home="$HOME/.gnupg"
 gpg_dir="$HOME/.certs/gpg"
 gpg_tmp="$gpg_dir/gpgtmp"
 pubring="$gpg_home/pubring.kbx"
+trustdb="$gpg_home/trustdb.gpg"
 master_key="master-0x02e95b4f4f3643e9.asc"
 
 # initialize temporary gpg homedir
@@ -22,7 +23,7 @@ zmodload zsh/zpty
 for key; do
 	gpg --recv-keys "$key" || continue
 	gpg --homedir "$gpg_tmp" --import "$gpg_dir/$master_key"
-	zpty -e lsign gpg --homedir "$gpg_tmp" --keyring "$pubring" --edit-key "$key"
+	zpty -e lsign gpg --homedir "$gpg_tmp" --keyring "$pubring" --trustdb-name "$trustdb" --edit-key "$key"
 	zpty -w lsign $'trust\n'
 	zpty -w lsign $'4\n'
 	zpty -w lsign $'y\n'

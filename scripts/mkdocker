@@ -19,8 +19,11 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
 
 cd "$LIND_BASE"
 
-docker image rm -f alyptik/lind:base alyptik/lind:prebuiltsdk alyptik/lind:naclruntime alyptik/lind:latest
-docker build --compress --no-cache -t alyptik/lind:base ./docker/base
-docker build --compress --no-cache -t alyptik/lind:prebuiltsdk ./docker/prebuiltsdk
-docker build --compress --no-cache -t alyptik/lind:naclruntime ./docker/naclruntime
-docker build --compress --cache-from=alyptik/lind:naclruntime -t alyptik/lind:latest ./docker/naclruntime
+for tag in base prebuiltsdk naclruntime; do
+	docker image rm -f "alyptik/lind:$tag"
+	docker build --no-cache -t "alyptik/lind:$tag" "./docker/$tag"
+	docker push "alyptik/lind:$tag"
+done
+docker image rm -f "alyptik/lind:latest"
+docker build --cache-from=alyptik/lind:naclruntime -t alyptik/lind:latest ./docker/naclruntime
+docker push alyptik/lind:latest

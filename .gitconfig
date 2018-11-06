@@ -34,7 +34,7 @@
 	br = branch
 	co = commit -S -v
 	st = status
-	lu = log --color-moved=zebra -u
+	lu = log --show-signature --color-moved=zebra -u
 	lg = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --boundary
 	lga = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --all
 	lgs = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --stat
@@ -83,7 +83,7 @@
 	ra = rebase --abort
 	update = pull -v --ff-only
 	unset = config --global --unset
-	pl = pull -tj5 --recurse-submodules=on-demand
+	pl = pull -tj8 --recurse-submodules=yes
 	ps = push --follow-tags
 	m = merge
 	fw = grep -FWn --color=auto --break
@@ -104,7 +104,7 @@
 	ri = rebase --signoff -S -i
 	ld = log --dirstat --show-signature --color-moved=zebra
 	ldf = log --dirstat-by-file --show-signature --color-moved=zebra
-	lw = log --color-moved=zebra --word-diff=plain -u
+	lw = log --show-signature --color-moved=zebra --word-diff=plain -u
 	l = log --stat --color-moved=zebra
 	dn = diff --name-only
 	rl = reflog

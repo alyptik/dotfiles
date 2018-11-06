@@ -1,0 +1,34 @@
+From 7bd077a0052b13d013ce388a9e86f9704e5c7d17 Mon Sep 17 00:00:00 2001
+Message-Id: <7bd077a0052b13d013ce388a9e86f9704e5c7d17.1541473387.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Mon, 5 Nov 2018 16:24:21 -1000
+Subject: [PATCH] g10: fix segfault when using both --card-edit and --with-keygrip flags
+
+* g10/card-util.c (print_keygrip): Add NULL check.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ g10/card-util.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/g10/card-util.c b/g10/card-util.c
+index 5205798b6a9ac486ff..1f2919fc2bb0091549 100644
+--- a/g10/card-util.c
++++ b/g10/card-util.c
+@@ -270,10 +270,12 @@ print_shax_fpr_colon (estream_t fp,
+ static void
+ print_keygrip (estream_t fp, const unsigned char *grp)
+ {
+   int i;
+ 
++  if (!fp)
++    return;
+   if (opt.with_keygrip)
+     {
+       tty_fprintf (fp, "      keygrip ....: ");
+       for (i=0; i < 20 ; i++, grp++)
+         es_fprintf (fp, "%02X", *grp);
+-- 
+Cheers,
+Joey Pabalinas
+

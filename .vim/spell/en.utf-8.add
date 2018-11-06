@@ -197,3 +197,6 @@ linter
 sanitizer
 subrepository
 Lukas
+symlink
+toolchain
+virtualenv
