@@ -25,9 +25,9 @@ color sidebar_ordinary      color243    color235
 color	normal	color252	black
 color   body    brightwhite     black         "^[[:space:]].*"
 color   body    yellow          black         "^(diff)[^[:alpha:]].*"
-color   body    cyan            black         "^(Signed-off-by).*"
+color   body    cyan            black         "^((Acked|Co-Developed|Reported-by|Reviewed|Signed-off|Suggested-by|Tested-by)-by|Fixes).*"
 color   body    cyan            black         "^(Docker-DCO-1.1-Signed-off-by).*"
-color   body    brightwhite     black         "^(Cc)"
+color   body    brightwhite     black         "^([Cc]{2})"
 color   body    yellow          black         "^diff \-.*"
 color   body    brightwhite     black         "^index [a-f0-9].*"
 color   body    brightblue      black         "^---$"

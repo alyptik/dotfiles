@@ -51,18 +51,25 @@ emacs)
 esac
 
 # vi motion stuff
-for w in select-bracketed select-quoted; do
-	autoload -Uz $w
-	zle -N $w
-done
-for m in visual viopp; do
-	for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
-		bindkey -M $m $c select-bracketed
-	done
-	for c in {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}; do
-		bindkey -M $m $c select-quoted
-	done
-done
+() for 1 {
+	autoload -Uz $1
+	zle -N $1
+} select-bracketed select-quoted
+
+# lol
+() for 1 {
+	() for 1 2 { bindkey -M $1 $2 select-bracketed; } ${(s: :)^:-$1 {a,i}${(s..)^:-'()[]{}<>bB'}}
+	() for 1 2 { bindkey -M $1 $2 select-quoted; } ${(s: :)^:-$1 {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}}
+} visual viopp
+# above is equivalent to this:
+# for m in visual viopp; do
+#         for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+#                 bindkey -M $m $c select-bracketed
+#         done
+#         for c in {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}; do
+#                 bindkey -M $m $c select-quoted
+#         done
+# done
 
 # ^b: history expansion ^f: quick history substitution #: comment character
 # histchars=$'\2\6#'
@@ -98,7 +105,7 @@ typeset -gx ZLS_COLORS
 	zmod_arr+=(zsh/deltochar zsh/mapfile zsh/mathfunc zsh/net/socket)
 	zmod_arr+=(zsh/net/tcp zsh/pcre zsh/terminfo zsh/system zsh/zftp)
 	zmod_arr+=(zsh/zprof zsh/zpty zsh/zselect)
-	zle_cust+=(fzf-locate-widge insert-composed-char)
+	zle_cust+=(fzf-locate-widget insert-composed-char)
 	zle_cust+=(append-clip-selection insert-clip-selection yank-clip-selection)
 	zle_cust+=(append-x-selection insert-x-selection yank-x-selection)
 	zle_cust+=(zle-backwards-delete-to-char zle-backwards-zap-to-char)
@@ -203,7 +210,7 @@ else
 fi
 
 # hurry up and source stuff so we can get cow news
-if [[ -d "$ZDOTDIR"/plugins ]]; then () for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh; fi
+() for 1 { . "$1"; } "$ZDOTDIR"/plugins/enabled/*.zsh(N)
 if type fasd &>/dev/null; then eval "$(fasd --init auto)"; fi
 if type filter-select &>/dev/null; then filter-select -i; bindkey -M filterselect "\C-e" accept-search; fi
 if [[ -f "$HOME/.aliases" ]]; then . "$HOME/.aliases"; fi
@@ -227,7 +234,7 @@ aliases[ampv]='noglob mpv --no-video --load-unsafe-playlists --ytdl-format=besta
 	dig=(dig +short +timeout=1)
 	cmdline=($host txt istheinternetonfire.com)
 	muhcows=(${:-/usr/share/cows/*.cow(.:r:t)})
-	$cmdline | cut -f2 -d'"' | cowsay -W 50 -f $muhcows[$((RANDOM % $#muhcows + 1))]
+	$cmdline | cut -f2 -d'"' | cowsay -W 50 -f ${muhcows[RANDOM % $#muhcows + 1]}
 	# add an extra newline
 	print
 }
@@ -676,7 +683,7 @@ zstyle -e ':completion:*'				completer '
 	fi'
 # allow one error for every two characters typed in approximate completer
 zstyle -e ':completion:*:approximate:*'			max-errors '
-	reply=("$((($#PREFIX+$#SUFFIX)/3))" numeric)'
+	reply=("$((($#PREFIX+$#SUFFIX)/2))" numeric)'
 # zstyle ':completion:*:approximate:*'			max-errors 5 numeric
 zstyle ':completion:*:correct:*'			original true
 zstyle ':completion:*:correct:*'			insert-unambiguous true
@@ -719,11 +726,11 @@ zstyle ':filter-select'					extended-search yes
 
 # for the which-command zle widget
 if type -f wa &>/dev/null; then
-	whencecmd=(wa)
+	whence_cmd=(wa)
 else
-	whencecmd=(whence -fv --)
+	whence_cmd=(whence -fv --)
 fi
-zstyle ':zle:which-command'				whence $whencecmd
+zstyle ':zle:which-command'				whence $whence_cmd
 
 # some kind of crazy ass matcher shit for flex comepletions
 zstyle ':completion:*'					matcher-list \
