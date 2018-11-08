@@ -5,6 +5,6 @@ mkdir -p "$tmp_dir" &>/dev/null
 cower -t "$tmp_dir" -dd "$@"
 
 for pkg; do
-	cd "/tmp/aur/$pkg" &>/dev/null || continue
+	cd "$tmp_dir/$pkg" &>/dev/null || continue
 	return 0
 done

@@ -2,10 +2,10 @@
 
 set -o errexit
 
-cwd="$PWD"
+push_flag=""
+usage="usage: ${0##*/} -[hp]"
 
-trap '{ cd "$cwd"; printf "%s\n" "Done." >&2; }' EXIT
-trap '{ cd "$cwd"; printf "%s\n" "[$0:$LINENO] Docker build failed." >&2; }' ERR
+trap '{ printf "%s\n" "[$0:$LINENO] Docker build failed." >&2; exit 1; }' ERR
 
 export LIND_PREFIX="${LIND_PREFIX:-$HOME}"
 export LIND_BASE="${LIND_BASE:-$LIND_PREFIX/lind_project}"
@@ -19,11 +19,36 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
 
 cd "$LIND_BASE"
 
+# option handling
+while getopts :hp opt; do
+	case "$opt" in
+	# push docker images
+	p)
+		push_flag=1;;
+	# show usage information
+	h)
+		printf '%s\n' "$usage" >&2
+		exit;;
+	# wtf ???
+	:|?)
+		printf 'illegal option: -%s\n' "$OPTARG" >&2
+		printf '%s\n' "$usage" >&2
+		false;;
+	esac
+done
+shift "$((OPTIND - 1))"
+
 for tag in base prebuiltsdk naclruntime; do
 	docker image rm -f "alyptik/lind:$tag"
 	docker build --no-cache -t "alyptik/lind:$tag" "./docker/$tag"
-	docker push "alyptik/lind:$tag"
+	if [[ -n "$push_flag" ]]; then
+		docker push "alyptik/lind:$tag"
+	fi
 done
+
+# special case "latest" tag
 docker image rm -f "alyptik/lind:latest"
 docker build --cache-from=alyptik/lind:naclruntime -t alyptik/lind:latest ./docker/naclruntime
-docker push alyptik/lind:latest
+if [[ -n "$push_flag" ]]; then
+	docker push alyptik/lind:latest
+fi

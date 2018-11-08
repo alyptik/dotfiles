@@ -8,47 +8,50 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-10-31] Joey's Progress Report
+Subject: [2018-11-06] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-10-31)
+ * (2018-11-06)
  */
 
-This week I spent most of my time improving the parts of CrashSimulator
-related to ease of use when testing. I made a couple pull requests to
-fix up the documentation and Dockerfile parts of Preston's rrapper
-repository, and currently have recording and replaying traces working
-fairly smoothly on my main development system.
+This week I worked on finalizing a working Travis CI configuration for
+Lind. The strategy which eventually ended up working was to split up the
+large toolchain build into three parts: downloading and checking out the
+source repositories, building the custom glibc/gcc toolchain, and
+building nacl/repy then installing them to the final target directory.
 
-I don't think CrashSimulator has a working CI system in place right now,
-Lind definitely does not, and so my focus for the coming week is going to
-be to work with Lukas to try and get a CI working for Lind as well as
-try to also set one up for CrashSimulator.
+Splitting it up this way worked around the original problem of the
+Travis CI build timing out at 50 minutes, the current hard maximum, and
+although I'm still working on figuring out a way to get the download and
+glibc parts of the build automated, the nacl/repy build is the most
+frequently worked on part of Lind and the part which benefits the most
+from having a CI system set up.
 
-It seems like the best approach in regarding Lind would be to leverage
-Docker to split the original, monolithic build into manageable and discrete
-parts. This would solve the original issue of build timeouts in Travis CI,
-and once we have a working CI build, we can set up web-hooks so that, as an
-example, a commit pushed to the NaCl subrepository might trigger a build of
-the main project repository.
+I created a PR for this Travis CI configuration and have so far received
+some review on it from Lukas. After it's fixed up and I've addressed
+any comments I receive in code review, I'll be merging it into the main
+branch.
 
-Once this is all setup for Lind, it will be easy to build and verify a
-LAMP stack for NaCl in a reliable way.
-
-I'm not sure what problems would be encountered when trying to setup a
-Travis CI instance for CrashSimulator, but I can't think of any reasons
-why it wouldn't be possible, so that would be the next step once I have
-a working template I can borrow from Lind, as it shares many of the same
-subrepository-based challenges.
+I also worked on a 32-bit Docker build of CrashSimulator which, although
+it does currently build successfully, I have doubts about it working
+100% correctly. Preston is going to test it out and let me know later
+whether or not he is able to use it for his classes, and we can decide
+based on that if is a useful avenue to pursue further.
 
 * Plans For Next Week */
 
-        - Work on getting Travis CI integration for Lind running smoothly.
-        - Work on adding Travis CI integration to CrashSimulator.
+        - Help Preston out with addressing issues that students post
+          to his pkmoore/rrapper repository over the coming weeks.
+        - Figure out why running dash/bash background jobs segfault
+          in Lind.
+        - Figure out an approach to automate the download and glibc
+          parts of our Lind builds.
+        - Revise my Travis CI nacl PR as comments come in and eventually
+          merge it.
 
 That's all for this week, thanks.
 

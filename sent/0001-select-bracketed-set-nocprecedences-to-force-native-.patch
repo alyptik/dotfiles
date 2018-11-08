@@ -1,0 +1,45 @@
+From 389ebb53e6d5b8cfe9985af3d41574679e5ce4b8 Mon Sep 17 00:00:00 2001
+Message-Id: <389ebb53e6d5b8cfe9985af3d41574679e5ce4b8.1541547033.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Tue, 6 Nov 2018 13:25:14 -1000
+Subject: [PATCH] select-bracketed: set nocprecedences to force native precedence ordering
+
+With cprecedences set, expressions like `1 + (idx-1) & ~1` are evaluated as
+`(1 + (idx-1)) & ~1` instead of the intended `1 + ((idx-1) & ~1)`. Set the
+nocprecedences option and add clarifying parenthesis to the ambiguous
+expressions.
+
+Signed-off-by: Joey Pabalinas <joeypabalinas@gmail.com>
+---
+ Functions/Zle/select-bracketed | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Functions/Zle/select-bracketed b/Functions/Zle/select-bracketed
+index d467bb8047466faa32..add5b70f0c9fd72215 100644
+--- a/Functions/Zle/select-bracketed
++++ b/Functions/Zle/select-bracketed
+@@ -10,17 +10,17 @@
+ #	for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+ #	  bindkey -M $m $c select-bracketed
+ #	done
+ #     done
+ 
+-setopt localoptions noksharrays
++setopt localoptions nocprecedences noksharrays
+ 
+ local style=${${1:-$KEYS}[1]} matching="(){}[]<>bbBB"
+ local -i find=${NUMERIC:-1} idx=${matching[(I)[${${1:-$KEYS}[2]}]]}%9
+ (( idx )) || return 1 # no corresponding closing bracket
+-local lmatch=${matching[1 + (idx-1) & ~1]}
+-local rmatch=${matching[1 + (idx-1) | 1]}
++local lmatch=${matching[1 + ((idx-1) & ~1)]}
++local rmatch=${matching[1 + ((idx-1) | 1)]}
+ local -i start=CURSOR+1 end=CURSOR+1 rfind=find
+ 
+ [[ $BUFFER[start] = "$rmatch" ]] && (( start--, end-- ))
+ if (( REGION_ACTIVE  && MARK != CURSOR)); then
+   (( MARK < CURSOR && (start=end=MARK+1) ))
+-- 
+Cheers,
+Joey Pabalinas
+

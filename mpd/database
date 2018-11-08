@@ -1,6 +1,6 @@
 info_begin
 format: 2
-mpd_version: 0.21
+mpd_version: 0.21.1
 fs_charset: UTF-8
 tag: Artist
 tag: Album
@@ -224,7 +224,7 @@ Format: 44100:24:2
 mtime: 1514612631
 song_end
 song_begin: 04 The White Umbrella.mp3
-Time: 522.473000
+Time: 522.472000
 Artist: *shels
 Title: The White Umbrella
 Album: Sea of the Dying Dhow
@@ -808,7 +808,7 @@ Format: 44100:16:2
 mtime: 1491200479
 song_end
 song_begin: 04 - Thing Called Love.flac
-Time: 260.840000
+Time: 260.839000
 Artist: Above & Beyond
 Title: Thing Called Love
 Album: Acoustic
@@ -1101,7 +1101,7 @@ Format: 44100:24:2
 mtime: 1540085000
 song_end
 song_begin: 6 - Tip of the Hat, Punch in the Face.mp3
-Time: 261.955000
+Time: 261.954000
 Artist: And So I Watch You From Afar
 Title: Tip of the Hat, Punch in the Face
 Album: And So I Watch You From Afar
@@ -1649,7 +1649,7 @@ Format: 44100:24:2
 mtime: 1540085406
 song_end
 song_begin: Animals As Leaders - 2009 - Animals As Leaders - 12 - Song of Solomon.mp3
-Time: 256.626000
+Time: 256.625000
 Artist: Animals As Leaders
 Title: Song of Solomon
 Album: Animals As Leaders
@@ -4499,7 +4499,7 @@ Format: 44100:24:2
 mtime: 1526206678
 song_end
 song_begin: 07 - thief.mp3
-Time: 129.384000
+Time: 129.383000
 Artist: Caligula's Horse
 Title: Thief
 Album: The Tide, The Thief & River's End
@@ -7491,7 +7491,7 @@ Format: 44100:24:2
 mtime: 1491037930
 song_end
 song_begin: 04 Nosebleed (Live).mp3
-Time: 261.018000
+Time: 261.017000
 Artist: Deftones
 Title: Nosebleed (Live)
 Album: Back To School (Mini Maggit)
@@ -9144,7 +9144,7 @@ Format: 44100:24:2
 mtime: 1524690086
 song_end
 song_begin: 06.Absurdity.mp3
-Time: 256.705000
+Time: 256.704000
 Artist: Drewsif Stalin's Musical Endeavors
 Title: Absurdity
 Album: Absurdity
@@ -12739,7 +12739,7 @@ Format: 44100:24:2
 mtime: 1540086218
 song_end
 song_begin: 13 - 1990 Quantrillions De Tonnes.mp3
-Time: 260.388000
+Time: 260.387000
 Artist: Gojira
 Title: 1990 Quantrillions de Tonnes
 Album: Terra Incognita
@@ -13212,7 +13212,7 @@ Format: 44100:24:2
 mtime: 1540086623
 song_end
 song_begin: 04. Liquid Fire.mp3
-Time: 257.828000
+Time: 257.827000
 Artist: Gojira
 Title: Liquid Fire
 Album: L'enfant sauvage (Special Edition)
@@ -15264,7 +15264,7 @@ Format: 44100:24:2
 mtime: 1513970405
 song_end
 song_begin: 09. Over Mode.mp3
-Time: 515.761000
+Time: 515.760000
 Artist: Infected Mushroom
 Title: Over Mode
 Album: The Gathering
@@ -15957,7 +15957,7 @@ Format: 44100:24:2
 mtime: 1513970357
 song_end
 song_begin: 04. Heavy Weight.mp3
-Time: 521.064000
+Time: 521.063000
 Playlist: yes
 Artist: Infected Mushroom
 Title: Heavy weight
@@ -16420,7 +16420,7 @@ Format: 44100:24:2
 mtime: 1513970340
 song_end
 song_begin: 10 Fields of Grey (feat. Shasha Grey).mp3
-Time: 259.657000
+Time: 259.656000
 Artist: Infected Mushroom
 Title: Fields of Grey (feat. Shasha Grey)
 Album: Converting Vegetarians II
@@ -16745,7 +16745,7 @@ Format: 44100:24:2
 mtime: 1513970727
 song_end
 song_begin: 05. Xerox - Gravity Waves (Infected Mushroom 2017 Remix).mp3
-Time: 516.362000
+Time: 516.361000
 Artist: Xerox
 Title: Gravity Waves (Infected Mushroom 2017 Remix)
 Album: Return To The Sauce
@@ -16834,7 +16834,7 @@ Format: 44100:16:2
 mtime: 1501682641
 song_end
 song_begin: 102 Ghost Key (Alternate Demo Version).flac
-Time: 514.906000
+Time: 514.905000
 Album: Temporal
 Artist: Isis
 Date: 2012
@@ -16906,7 +16906,7 @@ Format: 44100:16:2
 mtime: 1501685834
 song_end
 song_begin: 202 Hand of Doom.flac
-Time: 518.733000
+Time: 518.732000
 Album: Temporal
 Artist: Isis
 Date: 2012
@@ -17453,7 +17453,7 @@ Format: 44100:16:2
 mtime: 1501683994
 song_end
 song_begin: 03 Hand of Doom.flac
-Time: 516.733000
+Time: 516.732000
 Album: Sawblade
 Artist: Isis
 Date: 2000
@@ -17993,7 +17993,7 @@ directory: (2005) Live III
 mtime: 1501659614
 begin: albums/Isis/Live/(2005) Live III
 song_begin: 01 So Did We.flac
-Time: 524.146000
+Time: 524.145000
 Album: Live III
 Artist: Isis
 Date: 2005
@@ -18699,7 +18699,7 @@ Format: 44100:24:2
 mtime: 1463026970
 song_end
 song_begin: 08 - Carrying.mp3
-Time: 256.104000
+Time: 256.103000
 Artist: Jukebox the Ghost
 Title: Carrying
 Album: Everything Under the Sun
@@ -21389,7 +21389,7 @@ Format: 44100:24:2
 mtime: 1490586616
 song_end
 song_begin: 09 Aqua Dementia.mp3
-Time: 259.977000
+Time: 259.976000
 Artist: Mastodon
 Title: Aqua Dementia
 Album: Live in Stockholm 2005
@@ -27433,7 +27433,7 @@ Format: 44100:16:2
 mtime: 1490512036
 song_end
 song_begin: 03 - The Soundless Dawn Came Alive As Cities Began To Mark The Horizon..flac
-Time: 259.066000
+Time: 259.065000
 Artist: Red Sparowes
 Title: The Soundless Dawn Came Alive As Cities Began To Mark The Horizon.
 Album: At the Soundless Dawn
@@ -27557,7 +27557,7 @@ Format: 44100:16:2
 mtime: 1490511424
 song_end
 song_begin: 05. Annihilate The Sparrow, That Stealer Of Seed....flac
-Time: 523.146000
+Time: 523.145000
 Artist: Red Sparowes
 Title: 'Annihilate The Sparrow, That Stealer Of Seed, And Our Harvests Will Abound; We Will Watch Our Wealth Flood In.'
 Album: Every Red Heart Shines Toward The Red Sun
@@ -32594,7 +32594,7 @@ Format: 44100:24:2
 mtime: 1482118405
 song_end
 song_begin: 06 Janet (Live).mp3
-Time: 259.840000
+Time: 259.839000
 Artist: The Format
 Title: Janet (Live)
 Album: And Now I Hope You're Alright (Live From CA)
@@ -37146,7 +37146,7 @@ directory: Tool - 2001 - Lateralus
 mtime: 1502157586
 begin: albums/Tool/Tool - 2001 - Lateralus
 song_begin: 01 - The Grudge.flac
-Time: 516.266000
+Time: 516.265000
 Artist: Tool
 Title: The Grudge
 Album: Lateralus
@@ -38557,7 +38557,7 @@ Format: 44100:24:2
 mtime: 1482602270
 song_end
 song_begin: Crocoloko - Sex Drugs Goa Trance.mp3
-Time: 522.031000
+Time: 522.030000
 Artist: Crocoloko
 Title: Sex Drugs Goa Trance
 Format: 44100:24:2
@@ -38685,7 +38685,7 @@ Format: 48000:24:2
 mtime: 1482601604
 song_end
 song_begin: Infernal Machine - Loin King (Bliss Remix 2013).mp3
-Time: 518.112000
+Time: 518.111000
 Artist: Infernal Machine
 Title: Loin King (Bliss Remix 2013)
 Format: 44100:24:2
@@ -39332,7 +39332,7 @@ Format: 44100:f:2
 mtime: 1483717992
 song_end
 song_begin: Siam - Dolphins in Space (Classic Neo Goa Trance Mix).ogg
-Time: 522.170000
+Time: 522.169000
 Album: 100 Top Goa Psy Trance Hits 2016
 Artist: Siam
 Date: 2016
@@ -39574,7 +39574,7 @@ Format: 44100:f:2
 mtime: 1483716628
 song_end
 song_begin: Nash Mafia Blues - Wrath of God.ogg
-Time: 518.435000
+Time: 518.434000
 Album: 100 Top Goa Psy Trance Hits 2016
 Artist: Nash Mafia Blues
 Date: 2016
@@ -39688,7 +39688,7 @@ Format: 44100:24:2
 mtime: 1482603254
 song_end
 song_begin: Travma - Maximum Pain.mp3
-Time: 518.478000
+Time: 518.477000
 Artist: Travma
 Title: Maximum Pain
 Album: 303 From God
@@ -39782,7 +39782,7 @@ Format: 44100:24:2
 mtime: 1482602808
 song_end
 song_begin: Power Source - Granada (Agababa Mix).mp3
-Time: 521.560000
+Time: 521.559000
 Artist: Power Source
 Title: Granada (Agababa Mix)
 Album: A Taste of Transient
@@ -39881,7 +39881,7 @@ Format: 44100:24:2
 mtime: 1483962226
 song_end
 song_begin: Astral Projection - Chaos.mp3
-Time: 521.012000
+Time: 521.011000
 Artist: Astral Projection
 Title: Chaos
 Album: Amen
@@ -42783,7 +42783,7 @@ Format: 44100:24:2
 mtime: 1482602032
 song_end
 song_begin: Astral Projection - Let There Be Light (Outsiders Remix).mp3
-Time: 520.045000
+Time: 520.044000
 Artist: Astral Projection
 Title: Let There Be Light (Outsiders Remix)
 Album: Let There Be Light (Outsiders Remix)
@@ -43612,7 +43612,7 @@ Format: 44100:24:2
 mtime: 1482603894
 song_end
 song_begin: Cydonia - Anaconda.mp3
-Time: 512.026000
+Time: 512.025000
 Artist: Cydonia
 Title: Anaconda
 Album: Microsdxc
@@ -44632,7 +44632,7 @@ Format: 44100:24:2
 mtime: 1483962442
 song_end
 song_begin: Dark Nebula - One Reality Two Another.mp3
-Time: 520.463000
+Time: 520.462000
 Artist: Dark Nebula
 Title: One Reality Two Another
 Album: Psionic Moon-Selected By Dr Magnus
@@ -45415,7 +45415,7 @@ Format: 44100:16:2
 mtime: 1479123334
 song_end
 song_begin: The Green Nuns of the Revolution - Conflict.flac
-Time: 515.800000
+Time: 515.799000
 Album: Rock Bitch Mafia
 Artist: The Green Nuns of the Revolution
 Date: 1997
@@ -45577,7 +45577,7 @@ Format: 44100:24:2
 mtime: 1482608200
 song_end
 song_begin: Shiwa 2000 - Bluez Like Me.mp3
-Time: 258.638000
+Time: 258.637000
 Artist: Shiwa 2000
 Title: Bluez Like Me
 Album: Runkmeditation & Perstantra
@@ -45972,7 +45972,7 @@ Format: 44100:24:2
 mtime: 1483963594
 song_end
 song_begin: Artifact303 - In Your Mind.mp3
-Time: 521.795000
+Time: 521.794000
 Artist: Artifact303
 Title: In Your Mind
 Album: Space Of Power
@@ -46171,7 +46171,7 @@ Format: 44100:24:2
 mtime: 1482602266
 song_end
 song_begin: Zopmanika - Cosmic Influence.mp3
-Time: 513.175000
+Time: 513.174000
 Artist: Zopmanika
 Title: Cosmic Influence
 Album: Svemirski Hod
@@ -46455,7 +46455,7 @@ Format: 44100:24:2
 mtime: 1483962220
 song_end
 song_begin: Ra - Gateway Eight (Cosmic Dimension Remix).mp3
-Time: 519.627000
+Time: 519.626000
 Artist: Ra
 Title: Gateway Eight (Cosmic Dimension Remix)
 Album: Ten Spins Around the Sun CD2: Remixes
@@ -46944,7 +46944,7 @@ Format: 44100:24:2
 mtime: 1483963776
 song_end
 song_begin: MFG - Space Travel.mp3
-Time: 522.266000
+Time: 522.265000
 Artist: MFG
 Title: Space Travel
 Album: The Prophecy
@@ -47208,7 +47208,7 @@ Format: 48000:24:2
 mtime: 1482605146
 song_end
 song_begin: Travma - Desert Wind.mp3
-Time: 515.608000
+Time: 515.607000
 Artist: Travma
 Title: Desert Wind
 Album: TRANCELACIYA Vol.2 (GOA EDITION)
@@ -47919,7 +47919,7 @@ Format: 44100:24:2
 mtime: 1490432430
 song_end
 song_begin: Patrick Cassidy ft. Sibéal - 17 Mise Éire II.mp3
-Time: 256.705000
+Time: 256.704000
 Artist: Patrick Cassidy ft. Sibéal
 Title: 17 Mise Éire II
 Format: 44100:24:2
@@ -47998,7 +47998,7 @@ Format: 44100:24:2
 mtime: 1490433278
 song_end
 song_begin: The Chemical Brothers - Asleep By Day (Zoo DJs Remix).mp3
-Time: 515.526000
+Time: 515.525000
 Artist: The Chemical Brothers
 Title: Asleep By Day (Zoo DJs Remix)
 Album: Asleep By Day (Zoo DJs Remix) [12'' Bootleg Vinyl - CHEM 1]
@@ -48578,7 +48578,7 @@ Format: 44100:24:2
 mtime: 1478029636
 song_end
 song_begin: Dogzilla - Without You (Simon Patterson's 'Dead Dog' Remix).mp3
-Time: 517.906000
+Time: 517.905000
 Artist: Dogzilla
 Title: Without You (Simon Patterson's 'Dead Dog' Remix)
 Genre: Trance
@@ -50645,7 +50645,7 @@ Format: 44100:24:2
 mtime: 1478029986
 song_end
 song_begin: Lustral - Everytime (Nalin And Kane Mix).mp3
-Time: 514.194000
+Time: 514.193000
 Artist: Lustral
 Title: Everytime (Nalin & Kane Mix)
 Album: A State Of Trance Classics
@@ -54985,7 +54985,7 @@ Format: 44100:24:2
 mtime: 1468493826
 song_end
 song_begin: Lustral ft. Nalin & Kane vs. Sasha - Everytime Xpander (Markus Schulz Mashup).mp3
-Time: 513.257000
+Time: 513.256000
 Artist: Lustral ft. Nalin & Kane vs. Sasha
 Title: Everytime Xpander (Markus Schulz Mashup)
 Album: Everytime Xpander
@@ -55463,7 +55463,7 @@ Format: 44100:24:2
 mtime: 1468401190
 song_end
 song_begin: David Forbes - Foldback.mp3
-Time: 523.598000
+Time: 523.597000
 Artist: David Forbes
 Title: Foldback
 Album: Foldback
@@ -57069,7 +57069,7 @@ Format: 44100:24:2
 mtime: 1478738852
 song_end
 song_begin: Ronski Speed With Stoneface & Terminal - Incognition (Club Mix).mp3
-Time: 521.795000
+Time: 521.794000
 Artist: Ronski Speed With Stoneface & Terminal
 Title: Incognition (Club Mix)
 Album: Incognition / Drowning Sunlight
@@ -57237,7 +57237,7 @@ Format: 44100:24:2
 mtime: 1476893454
 song_end
 song_begin: Terry Bones vs. Fred Baker pres. Water Planet - Introspection (Original Mix).mp3
-Time: 513.622000
+Time: 513.621000
 Artist: Terry Bones vs. Fred Baker pres. Water Planet
 Title: Introspection (Original Mix)
 Album: Introspection
@@ -58984,7 +58984,7 @@ Format: 44100:24:2
 mtime: 1474565840
 song_end
 song_begin: Tilt ft. Cherri Miller - My Spirit (Original Tilt Mix).mp3
-Time: 522.762000
+Time: 522.761000
 Artist: Tilt ft. Cherri Miller
 Title: My Spirit (Original Tilt Mix)
 Album: My Spirit
@@ -59865,7 +59865,7 @@ Format: 44100:24:2
 mtime: 1478030438
 song_end
 song_begin: Faithless - We Come One (Rollo & Sister Bliss Remix).mp3
-Time: 515.108000
+Time: 515.107000
 Artist: Faithless
 Title: We Come One (Rollo & Sister Bliss Remix)
 Album: Outrospective
@@ -59908,7 +59908,7 @@ Format: 44100:24:2
 mtime: 1468401644
 song_end
 song_begin: Nick Terranova  Austin Leeds - This Is What U Need (Extended).mp3
-Time: 260.496000
+Time: 260.495000
 Artist: Nick Terranova & Austin Leeds
 Title: This Is What U Need (Extended Mix)
 Album: Pacha New York (Mixed By Jonat
@@ -61304,7 +61304,7 @@ Format: 44100:24:2
 mtime: 1478030292
 song_end
 song_begin: Paul Van Dyk ft. Natascha Seidel - Beautiful Place (Salt Tank Remix).mp3
-Time: 522.762000
+Time: 522.761000
 Artist: Paul Van Dyk ft. Natascha Seidel
 Title: Beautiful Place (Salt Tank Remix)
 Album: Seven Ways
@@ -61501,7 +61501,7 @@ Format: 44100:24:2
 mtime: 1468493810
 song_end
 song_begin: Simon Patterson - Smack.mp3
-Time: 514.324000
+Time: 514.323000
 Artist: Simon Patterson
 Title: Smack (John Askew Remix)
 Album: Smack (John Askew Remix)
@@ -62825,7 +62825,7 @@ Format: 44100:24:2
 mtime: 1470588270
 song_end
 song_begin: York - The Awakening (Original Mix).mp3
-Time: 516.362000
+Time: 516.361000
 Artist: York
 Title: The Awakening (Original Mix)
 Album: The Awakening 2013
@@ -63250,7 +63250,7 @@ Format: 44100:24:2
 mtime: 1472233628
 song_end
 song_begin: Mark Sherry - The Pillars of Creation (Original Mix).mp3
-Time: 514.011000
+Time: 514.010000
 Artist: Mark Sherry
 Title: The Pillars of Creation (Original Mix)
 Album: The Pillars of Creation
@@ -67654,7 +67654,7 @@ Format: 44100:24:2
 mtime: 1515824407
 song_end
 song_begin: Keep Your Eyes On Me.mp3
-Time: 16.380000
+Time: 16.379000
 Artist: K1nch
 Title: Keep Your Eyes On Me
 Genre: Blues
@@ -69819,7 +69819,7 @@ Format: 44100:24:2
 mtime: 1490432430
 song_end
 song_begin: Patrick Cassidy ft. Sibéal - 17 Mise Éire II.mp3
-Time: 256.705000
+Time: 256.704000
 Artist: Patrick Cassidy ft. Sibéal
 Title: 17 Mise Éire II
 Format: 44100:24:2
@@ -69898,7 +69898,7 @@ Format: 44100:24:2
 mtime: 1490433278
 song_end
 song_begin: The Chemical Brothers - Asleep By Day (Zoo DJs Remix).mp3
-Time: 515.526000
+Time: 515.525000
 Artist: The Chemical Brothers
 Title: Asleep By Day (Zoo DJs Remix)
 Album: Asleep By Day (Zoo DJs Remix) [12'' Bootleg Vinyl - CHEM 1]
@@ -70347,4 +70347,28 @@ song_end
 end: Unity (LCC Jazz Ensemble)
 playlist_begin: catpoop.m3u
 mtime: 1486623231
+playlist_end
+playlist_begin: DI.FM - Chillstep.pls
+mtime: 1541564403
+playlist_end
+playlist_begin: DI.FM - Dark DnB.pls
+mtime: 1541564459
+playlist_end
+playlist_begin: DI.FM - Hard Techno.pls
+mtime: 1541564454
+playlist_end
+playlist_begin: DI.FM - Liquid DnB.pls
+mtime: 1541564449
+playlist_end
+playlist_begin: DI.FM - DJ Mixes.pls
+mtime: 1541564562
+playlist_end
+playlist_begin: DI.FM - Drum and Bass.pls
+mtime: 1541564633
+playlist_end
+playlist_begin: DI.FM - Favorites.pls
+mtime: 1541564675
+playlist_end
+playlist_begin: DI.FM - Oldschool Techno & Trance .pls
+mtime: 1541614634
 playlist_end

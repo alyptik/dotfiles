@@ -16,6 +16,7 @@ set auto-load libthread-db on
 # source ~/.gdbinit-gef.py
 
 # set disassembly intel
+set confirm off
 set history filename ~/.gdb_history
 set history save on
 set history size unlimited

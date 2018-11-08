@@ -40,28 +40,29 @@ bindkey -v
 _km=vi _emacs= _vi=main
 setescapes
 case "$_km" in
-(vi)
+vi)
 	printf "$cblock"
 	printf "$cgrey"
 	;;
-(emacs)
+emacs)
 	printf "$cblock"
 	printf "$cyellow"
 	;;
 esac
 
 # vi motion stuff
-() for 1 {
-	autoload -Uz "$1" && zle -N "$1"
-} select-bracketed select-quoted
-() for 1 {
-	bindkey -M viopp "$1" select-bracketed
-	bindkey -M visual "$1" select-bracketed
-} {a,i}${(s..)^:-'()[]{}<>bB'}
-() for 1 {
-	bindkey -M viopp "$1" select-quoted
-	bindkey -M visual "$1" select-quoted
-} {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}
+for w in select-bracketed select-quoted; do
+	autoload -Uz $w
+	zle -N $w
+done
+for m in visual viopp; do
+	for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+		bindkey -M $m $c select-bracketed
+	done
+	for c in {a,i}${(s..)^:-\'\"\`\|,./:;-=+@}; do
+		bindkey -M $m $c select-quoted
+	done
+done
 
 # ^b: history expansion ^f: quick history substitution #: comment character
 # histchars=$'\2\6#'
@@ -395,7 +396,6 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\C-xe" edit-command-line
 	bindkey -M "$1" "\C-x\C-e" edit-command-line
 	bindkey -M "$1" "\e\ey" zle-youtube-helper
-	bindkey -M "$1" "\eU" up-case-word
 	bindkey -M "$1" "\e," spell-word
 	bindkey -M "$1" "\ez" zaw
 	bindkey -M "$1" "\e<" zle-zaw-help
