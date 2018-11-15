@@ -1,0 +1,7 @@
+#!/bin/bash
+
+(sleep 1 && screen -S work -X prev && screen -S work -X kill && screen -S work -X screen) & disown
+if ! screen -ls work; then
+	screen -dmS work
+fi
+screen -S work -X chdir /l && screen -S work -X screen && screen -x work

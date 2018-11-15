@@ -8,50 +8,41 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-11-06] Joey's Progress Report
+Subject: [2018-11-12] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-11-06)
+ * (2018-11-12)
  */
 
-This week I worked on finalizing a working Travis CI configuration for
-Lind. The strategy which eventually ended up working was to split up the
-large toolchain build into three parts: downloading and checking out the
-source repositories, building the custom glibc/gcc toolchain, and
-building nacl/repy then installing them to the final target directory.
+I spent some time cleaning up my Travis CI PR for Lind and attempting to
+get httpd compiled using the Lind toolchain. I've been having to fix a
+lot of weird compiler errors related to the Apache Portable Runtime that
+httpd uses, and I'm still trying to iron those out completely.
 
-Splitting it up this way worked around the original problem of the
-Travis CI build timing out at 50 minutes, the current hard maximum, and
-although I'm still working on figuring out a way to get the download and
-glibc parts of the build automated, the nacl/repy build is the most
-frequently worked on part of Lind and the part which benefits the most
-from having a CI system set up.
+I've been looking at how the previous httpd was compiled and trying to
+work off off that, so it should be good to go by the end of the week. My
+Travis CI PR is almost ready for me to ask Lukas for another round of
+review.
 
-I created a PR for this Travis CI configuration and have so far received
-some review on it from Lukas. After it's fixed up and I've addressed
-any comments I receive in code review, I'll be merging it into the main
-branch.
-
-I also worked on a 32-bit Docker build of CrashSimulator which, although
-it does currently build successfully, I have doubts about it working
-100% correctly. Preston is going to test it out and let me know later
-whether or not he is able to use it for his classes, and we can decide
-based on that if is a useful avenue to pursue further.
+I've spent some time trying to fix a couple issues Preston was having in
+his rrtest script, such as a PR I made to slim down the original output
+and only print out the most relevant lines. There were also a couple
+places I needed to add array bounds checking and adjust the number of
+context lines printed when too close to the head and tail of the list.
 
 * Plans For Next Week */
 
-        - Help Preston out with addressing issues that students post
-          to his pkmoore/rrapper repository over the coming weeks.
-        - Figure out why running dash/bash background jobs segfault
-          in Lind.
-        - Figure out an approach to automate the download and glibc
-          parts of our Lind builds.
-        - Revise my Travis CI nacl PR as comments come in and eventually
-          merge it.
+        - Continue to help Preston out with addressing issues posted
+          to his pkmoore/rrapper and pkmoore/rr repositories.
+        - Finalize my Travis CI PR and ask Lukas for another round of
+          review.
+        - Get httpd successfully compiled and figure out which parts of
+          it are broken, if any.
+        - Start compiling the rest of the LAMP stack.
 
 That's all for this week, thanks.
 
