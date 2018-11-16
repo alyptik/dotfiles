@@ -1,5 +1,6 @@
 #!/bin/bash
 
+screen -wipe work
 (sleep 1 && screen -S work -X prev && screen -S work -X kill && screen -S work -X screen) & disown
 if ! screen -ls work; then
 	screen -dmS work

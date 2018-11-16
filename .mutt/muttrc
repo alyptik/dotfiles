@@ -92,7 +92,7 @@ set connect_timeout = 30
 set imap_pipeline_depth = 100
 set imap_check_subscribed
 unset imap_passive
-set imap_idle
+unset imap_idle
 unset imap_servernoise
 unset imap_peek
 set ssl_starttls

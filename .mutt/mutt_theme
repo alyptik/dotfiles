@@ -58,9 +58,10 @@ color index_date    magenta             color235
 color index_subject yellow              color235    %A
 color index_author  brightcolor101      color235    %A
 color index_flags   brightblue          color235    %A
-color index         white               color235    ~O      # unread
-color index         brightcolor65       color235    ~N      # new
-color index         color244            color235    ~R      # replied
+color index         color244            color235    ~R      # default
+color index         brightcolor70       color235    ~N      # new
+color index         brightcolor65       color235    ~O      # unread
+color index         brightcolor68       color235    ~Q      # replies
 color header        brightcolor101      default     "^[Ff]rom:"
 color header        brightcolor101      default     "^[Tt]o:"
 color header        yellow              default     "^[Cc]c:"

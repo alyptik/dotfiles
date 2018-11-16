@@ -27,8 +27,8 @@ done
 
 for i in /sys/block/*; do
 	# set io scheduler
-	io_sched=kyber
-	# io_sched=mq-deadline
+	io_sched=mq-deadline
+	# io_sched=kyber
 	# io_sched=bfq
 	printf '%s\n' "$io_sched" | sudo tee "$i/queue/scheduler"
 	# don't collect entropy from solid state drives
