@@ -1,6 +1,8 @@
 include "%L"
 
 ## start alyptik
+<Multi_key> <asterisk> <underscore>			: "🌠" U1F320	# the more you know
+<Multi_key> <asterisk> <equal>				: "🌠" U1F320	# the more you know
 <Multi_key> <colon> <colon>				: "∘" U2218	# function composition symbol
 <Multi_key> <0> <x>					: "🐂" U1f402	# ox
 <Multi_key> <p> <a> <n> <t> <s>				: "👖" U1f456	# pants
@@ -180,6 +182,10 @@ include "%L"
 <Multi_key> <r> <l>			: "⇄"		# rlarr
 
 <Multi_key> <Return> <Return> 		: "↵"
+<Multi_key> <Return> <less>		: "↵"
+<Multi_key> <less> <Return>		: "↵"
+<Multi_key> <Return> <greater>		: "⤷"
+<Multi_key> <greater> <Return>		: "⤷"
 
 # arrows on keypad
 
