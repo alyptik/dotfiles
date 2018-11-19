@@ -38,15 +38,22 @@ alternates -group manoa ^joeyp@hawaii\\.edu$
 
 my_hdr Cc: Joey Pabalinas <joeypabalinas@gmail.com>
 
-source "gpg2 -dq $HOME/.passwords.asc |"
+source "gpg -dq $HOME/.passwords.asc |"
 source "$my_cfgdir/mutt_theme"
 source "$my_cfgdir/mutt_keybinds"
 source "$my_cfgdir/mutt_aliases"
 
+# we want to see some MIME types inline, see below this code listing for explanation
 auto_view text/html
 auto_view text/x-diff
 auto_view text/x-patch
+auto_view application/msword
+auto_view application/pdf
 alternative_order text/plain text/enriched text/html
+
+# make default search pattern to search in To, Cc and Subject
+set simple_search = "~f %s | ~C %s | ~s %s"
+set pager_format = "[%Z] %C/%m at %[%H:%M] from %.20n - %s%* -- (%P)"
 
 set mail_check_stats
 set allow_ansi
@@ -64,7 +71,7 @@ unset text_flowed
 set indent_string = "> "
 unset strict_threads
 set sort_re
-set reply_regexp = "^(\[[^\]]+\][ \t]+)*((re([\[0-9\]+])*|aw):|\[(patch|resend|rfc)[^\]]*\]:?)[ \t]*"
+set reply_regex = "^(\[[^\]]+\][ \t]+)*((re([\[0-9\]+])*|aw):|\[(patch|resend|rfc)[^\]]*\]:?)[ \t]*"
 
 unset arrow_cursor
 set sidebar_visible
@@ -113,8 +120,11 @@ set entropy_file = "/dev/urandom"
 # set entropy_file = "/dev/frandom"
 set editor = "vim"
 set charset = "utf-8"
-set send_charset = "utf-8:us-ascii"
-set assumed_charset = "utf-8:us-ascii"
+# character set on sent messages
+set send_charset = "utf-8"
+# if there is no character set given on incoming messages, it is probably windows
+set assumed_charset = "iso-8859-1"
+# set assumed_charset = "utf-8:us-ascii"
 
 set prompt_after
 set implicit_autoview
@@ -149,8 +159,8 @@ set pgp_export_command = "gpg2 --no-verbose --export --armor %r"
 set pgp_verify_key_command = "gpg2 --no-verbose --batch --fingerprint --check-sigs %r"
 set pgp_list_pubring_command = "gpg2 --no-verbose --batch --with-colons --list-keys %r"
 set pgp_list_secring_command = "gpg2 --no-verbose --batch --with-colons --list-secret-keys %r"
-set pgp_autosign
-set pgp_replyencrypt
+set crypt_autosign
+set crypt_replyencrypt
 set pgp_good_sign = "^gpg: Good signature from"
 # unset pgp_create_traditional
 set pgp_use_gpg_agent
@@ -226,18 +236,17 @@ set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 set spoolfile = "+[Gmail]/Important"
 # set spoolfile = "+INBOX"
 
+# do not show all headers, just a few
+ignore *
+unignore from subject to cc date x-mailer x-url user-agent
+# and in this order
+unhdr_order *
+hdr_order date from to cc bcc subject
+# show spam score (from SpamAssassin only) when reading a message
+spam "X-Spam-Score: ([0-9\\.]+).*" "SA: %1"
+
 # System configuration file for Mutt
 #
-
-# Default list of header fields to weed when displaying.
-# Ignore all lines by default...
-ignore *
-
-# ... then allow these through.
-unignore from: subject to cc date x-mailer x-url user-agent
-
-# Display the fields in this order
-hdr_order date from to cc subject
 
 # If Mutt is unable to determine your site's domain name correctly, you can
 # set the default here.

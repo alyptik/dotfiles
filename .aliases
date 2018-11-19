@@ -8,6 +8,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias curl='curl -s'
 alias sc='sysctl'
 alias gpge='gpg --edit-key'
 alias gpgl='gpg --list-keys'

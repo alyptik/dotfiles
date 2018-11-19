@@ -29,6 +29,7 @@ weechat_crash*
 !.distcc/hosts
 .newsboat/urls
 gifs/boobs.jpg
+.vim/.netrwhist
 magnets/*.added
 account_key.json
 account_key.json

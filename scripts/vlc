@@ -1,0 +1,10 @@
+#!/bin/sh
+
+unset LIBGL_DRI3_DISABLE
+# export LIBGL_DRI3_DISABLE=1
+export DRI_PRIME=1
+export LIBVA_DRIVER_NAME=vdpau
+export VDPAU_DRIVER=nvidia
+
+optirun /usr/bin/vlc "$@" || /usr/bin/vlc "$@"
+# primusrun /usr/bin/vlc "$@" || /usr/bin/vlc "$@"

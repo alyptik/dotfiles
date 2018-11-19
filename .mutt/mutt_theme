@@ -70,7 +70,7 @@ color header        brightcolor101      default     "^[Ss]ubject:"
 color body          brightred           black       "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"
 color body          brightblue          black       "(https?|ftp)://[\-\.,/%~_:?& = \#a-zA-Z0-9]+"
 
-# voidead's colors
+# # voidead's colors
 # color hdrdefault color252 black
 # color quoted color69 black
 # color signature blue black
@@ -98,5 +98,28 @@ color body          brightblue          black       "(https?|ftp)://[\-\.,/%~_:?
 # color search color46 black
 # color tilde brightmagenta black
 # color index black color197 "~N"
+
+
+# # brighten up stuff with colors, for more coloring examples see:
+# # http://aperiodic.net/phil/configs/mutt/colors
+# color normal      white          black
+# color hdrdefault  green          default
+# color quoted      green          default
+# color quoted1     yellow         default
+# color quoted2     red            default
+# color signature   cyan           default
+# color indicator   brightyellow   red
+# color error       brightred      default
+# color status      brightwhite    blue
+# color tree        brightmagenta  black
+# color tilde       blue           default
+# color attachment  brightyellow   default
+# color markers     brightred      default
+# color message     white          black
+# color search      brightwhite    magenta
+# color bold        brightyellow   default
+# # if you don't like the black progress bar at the bottom of the screen,
+# # comment out the following line
+# color progress    white          black
 
 # vi:ft=neomuttrc:

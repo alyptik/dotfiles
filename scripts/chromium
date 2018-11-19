@@ -1,3 +1,8 @@
 #!/bin/sh
 
-exec env LIBGL_DRI3_DISABLE=1 /bin/chromium "$@"
+export DRI_PRIME=0
+export LIBGL_DRI3_DISABLE=0
+
+exec /usr/bin/chromium "$@"
+# optirun /usr/bin/chromium "$@" || exec /usr/bin/chromium "$@"
+# primusrun /usr/bin/chromium "$@" || exec /usr/bin/chromium "$@"

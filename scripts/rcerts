@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # domains=(alyp.tk sigfu.tk fsckingfu.tk)
 # subs=(mail cube www webmail stream)

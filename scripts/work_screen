@@ -1,8 +1,18 @@
 #!/bin/bash
 
 screen -wipe work
-(sleep 1 && screen -S work -X prev && screen -S work -X kill && screen -S work -X screen) & disown
+
+(sleep 2 && screen -S work -X select 0 && screen -S work -X kill && screen -S work -X screen) & disown
+
 if ! screen -ls work; then
 	screen -dmS work
 fi
-screen -S work -X chdir /l && screen -S work -X screen && screen -x work
+
+screen -S work -X chdir /l
+screen -S work -X screen
+screen -S work -X screen
+screen -S work -X screen
+
+(sleep 2 && screen -S work -X select 0) & disown
+
+screen -x work
