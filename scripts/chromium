@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export DRI_PRIME=0
+export DRI_PRIME=1
 export LIBGL_DRI3_DISABLE=0
 
 exec /usr/bin/chromium "$@"

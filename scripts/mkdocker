@@ -2,8 +2,11 @@
 
 set -o errexit
 
-push_flag=""
-usage="usage: ${0##*/} -[hp]"
+usage="usage: ${0##*/} -[hps]"
+squash=()
+
+push_cmd=(printf '[skipping: %s %s %s]\n' docker push)
+build_stages=(base prebuiltsdk naclruntime)
 
 trap '{ printf "%s\n" "[$0:$LINENO] Docker build failed." >&2; exit 1; }' ERR
 
@@ -20,11 +23,14 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
 cd "$LIND_BASE"
 
 # option handling
-while getopts :hp opt; do
+while getopts :hps opt; do
 	case "$opt" in
+	# squash final image
+	s)
+		squash=(--squash);;
 	# push docker images
 	p)
-		push_flag=1;;
+		push_cmd=(docker push);;
 	# show usage information
 	h)
 		printf '%s\n' "$usage" >&2
@@ -38,17 +44,14 @@ while getopts :hp opt; do
 done
 shift "$((OPTIND - 1))"
 
-for tag in base prebuiltsdk naclruntime; do
+for tag in "${build_stages[@]}"; do
 	docker image rm -f "alyptik/lind:$tag"
-	docker build --no-cache -t "alyptik/lind:$tag" "./docker/$tag"
-	if [[ -n "$push_flag" ]]; then
-		docker push "alyptik/lind:$tag"
+	docker build "${squash[@]}" -t "alyptik/lind:$tag" "./docker/$tag"
+	"${push_cmd[@]}" "alyptik/lind:$tag"
+	# special case the last tag
+	if [[ "$tag" == "${build_stages[-1]}" ]]; then
+		docker image rm -f "alyptik/lind:latest"
+		docker build "${squash[@]}" --cache-from="alyptik/lind:$tag" -t alyptik/lind:latest "./docker/$tag"
+		"${push_cmd[@]}" "alyptik/lind:latest"
 	fi
 done
-
-# special case "latest" tag
-docker image rm -f "alyptik/lind:latest"
-docker build --cache-from=alyptik/lind:naclruntime -t alyptik/lind:latest ./docker/naclruntime
-if [[ -n "$push_flag" ]]; then
-	docker push alyptik/lind:latest
-fi
