@@ -8,41 +8,103 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-11-12] Joey's Progress Report
+Subject: [2018-11-21] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
 /*
  * Joey's Progress Report
  *
- * (2018-11-12)
+ * (2018-11-21)
  */
 
-I spent some time cleaning up my Travis CI PR for Lind and attempting to
-get httpd compiled using the Lind toolchain. I've been having to fix a
-lot of weird compiler errors related to the Apache Portable Runtime that
-httpd uses, and I'm still trying to iron those out completely.
+This week I talked a bit with Preston and the others about what would be
+needed to finish our our conversion to 64-bit. It seems to mostly just
+be renaming registers without syscallreplay, so I'm going to see if I
+can take care of that and hopefully just have everything work.
 
-I've been looking at how the previous httpd was compiled and trying to
-work off off that, so it should be good to go by the end of the week. My
-Travis CI PR is almost ready for me to ask Lukas for another round of
-review.
+Apache does compile successfully for Lind, but running it segfaults, and
+in gdb underlying problem isn't really clear. The segfault happens on what
+looks like a NULL dereference at first glance, but looking at the
+faulting instruction shows that it's exploding on a memmove() call:
 
-I've spent some time trying to fix a couple issues Preston was having in
-his rrtest script, such as a PR I made to slim down the original output
-and only print out the most relevant lines. There were also a couple
-places I needed to add array bounds checking and adjust the number of
-context lines printed when too close to the head and tail of the list.
+> $ lind -g /bin/httpd -h
+> executing: [gdb -q -ex 'run -a -- /lib/glibc/runnable-ld.so --library-path /lib/glibc /bin/httpd -h' sel_ldr]
+> 
+> [...]
+> 
+> Lind v1.0-rc2
+> Opening file system...  done.
+> [32298,4150227584:19:16:40.486428] BYPASSING ALL ACL CHECKS
+> Thread 4 "sel_ldr" received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7ffff5cd1700 (LWP 32371)]
+> 0x00007ffff7761ce7 in __memmove_avx_unaligned_erms () from /usr/lib/libc.so.6
+> 
+> @ [#4:__memmove_avx_unaligned_erms()] backtrace
+> #0 0x00007ffff7761ce7 in __memmove_avx_unaligned_erms () from /usr/lib/libc.so.6
+> #1 0x0000555555599481 in NaClCopyInFromUserAndDropLock (nap=0x7fffffff9f60, dst_sys_ptr=0x7ffff5cd0dd4, src_usr_addr=4294900968, num_bytes=12) at src/trusted/service_runtime/nacl_copy.c:43
+> #2 0x000055555557c5ea in NaClSysReadDecoder (natp=0x5555559a4070) at scons-out/dbg-linux-x86-64/gen/native_client/src/trusted/service_runtime/nacl_syscall_handlers.c:590
+> #3 0x000055555559c18f in NaClSyscallCSegHook (ntcp=0x5555559a4070) at src/trusted/service_runtime/nacl_syscall_hook.c:149
+> #4 0x000055555558edbc in NaClSyscallSegRegsSaved () at src/trusted/service_runtime/arch/x86_64/nacl_syscall_64.S:211
+> #5 0x00007ffff5cd0e80 in ?? ()
+> #6 0x000055555558ed34 in NaClStartThreadInApp (natp=0x239401151dc0, new_prog_ctr=0) at src/trusted/service_runtime/arch/x86_64/nacl_switch_to_app_64.c:86
+> Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+> 
+> @ [#4:__memmove_avx_unaligned_erms()] fault_addr
+> $1 = (void *)0x0
+> 
+> @ [#4:__memmove_avx_unaligned_erms()] print_rip
+> => 0x7ffff7761ce7 <__memmove_avx_unaligned_erms+135>:   mov    -0x8(%rsi,%rdx,1),%rcx
+>    0x7ffff7761cec <__memmove_avx_unaligned_erms+140>:   mov    (%rsi),%rsi
+>    0x7ffff7761cef <__memmove_avx_unaligned_erms+143>:   mov    rcx,-0x8(%rdi,%rdx,1)
+>    0x7ffff7761cf4 <__memmove_avx_unaligned_erms+148>:   mov    rsi,(%rdi)
+>    0x7ffff7761cf7 <__memmove_avx_unaligned_erms+151>:   retq   0x7ffff7761cf8 <__memmove_avx_unaligned_erms+152>:   mov -0x4(%rsi,%rdx,1),%ecx
+> 
+> @ [#4:__memmove_avx_unaligned_erms()] info registers
+> rax 0x7ffff5cd0dd4 140737317244372
+> rbx 0xfffefd2c 4294901036
+> rcx 0x6172753076646117 7021803620029194519
+> rdx 0xc 12
+> rsi 0x6172753076646117 7021803620029194519
+> rdi 0x7ffff5cd0dd4 140737317244372
+> rbp 0x7ffff5cd0db0 0x7ffff5cd0db0
+> rsp 0x7ffff5cd0d78 0x7ffff5cd0d78
+> r8 0x7fffffffb5f0 140737488336368
+> r9 0x0 0
+> r10 0x0 0
+> r11 0x2394013adf40 39118582767424
+> r12 0x0 0
+> r13 0x0 0
+> r14 0x0 0
+> r15 0x239400000000 39118562131968
+> rip 0x7ffff7761ce7 0x7ffff7761ce7 <__memmove_avx_unaligned_erms+135>
+> eflags 0x10202 [ IF RF ]
+> cs 0x33 51
+> ss 0x2b 43
+> ds 0x0 0
+> es 0x0 0
+> fs 0x0 0
+> gs 0x0 0
 
-* Plans For Next Week */
+So it's actually trying to read from an unmapped address, and that's putting
+it lightly. The number 0x6172753076646117 (the base source address in %rsi)
+is _huge_, and well outside the range of both the 48-bit virtual AND the
+52-bit physical address spaces allowed by x86-64.
 
-        - Continue to help Preston out with addressing issues posted
-          to his pkmoore/rrapper and pkmoore/rr repositories.
-        - Finalize my Travis CI PR and ask Lukas for another round of
-          review.
-        - Get httpd successfully compiled and figure out which parts of
-          it are broken, if any.
-        - Start compiling the rest of the LAMP stack.
+I'm still trying to figure out why exactly it's on with a read()
+system call as shown from the NaClSysReadDecoder() in the backtrace,
+so I'm currently reading through the httpd source and seeing where it
+calls read() and read-related IO functions.
+
+I've also been working on getting PHP and MySQL compiled so that if nothing
+else, we can simply try a different HTTP server.
+
+/* Plan For Next Week */
+
+- Rename all the 32-bit registers in syscallreplay and test out if
+  anything else is needed for 64-bit support.
+- Continue to try to get httpd working.
+- Fix remaining build errors during PHP/MySQL compilation.
 
 That's all for this week, thanks.
 

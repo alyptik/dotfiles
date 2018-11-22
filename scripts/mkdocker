@@ -2,8 +2,9 @@
 
 set -o errexit
 
-usage="usage: ${0##*/} -[hps]"
+usage="usage: ${0##*/} -[hnps]"
 squash=()
+nocache=()
 
 push_cmd=(printf '[skipping: %s %s %s]\n' docker push)
 build_stages=(base prebuiltsdk naclruntime)
@@ -23,7 +24,7 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
 cd "$LIND_BASE"
 
 # option handling
-while getopts :hps opt; do
+while getopts :hnps opt; do
 	case "$opt" in
 	# squash final image
 	s)
@@ -31,6 +32,9 @@ while getopts :hps opt; do
 	# push docker images
 	p)
 		push_cmd=(docker push);;
+	# disable cache
+	n)
+		nocache=(--no-cache);;
 	# show usage information
 	h)
 		printf '%s\n' "$usage" >&2
@@ -46,7 +50,7 @@ shift "$((OPTIND - 1))"
 
 for tag in "${build_stages[@]}"; do
 	docker image rm -f "alyptik/lind:$tag"
-	docker build "${squash[@]}" -t "alyptik/lind:$tag" "./docker/$tag"
+	docker build "${nocache[@]}" "${squash[@]}" -t "alyptik/lind:$tag" "./docker/$tag"
 	"${push_cmd[@]}" "alyptik/lind:$tag"
 	# special case the last tag
 	if [[ "$tag" == "${build_stages[-1]}" ]]; then

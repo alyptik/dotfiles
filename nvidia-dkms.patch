@@ -117,19 +117,6 @@ index 1b9148ee70dcc6b58b..e37788d39323f402e7 100644
    MODULE_INFO(supported, "external");
  #endif
  #if defined(MODULE_VERSION)
-diff --git a/nvidia-uvm/uvm_common.c b/nvidia-uvm/uvm_common.c
-index a5259e59c42f2b42b1..b70662fd8f02ac9f20 100644
---- a/nvidia-uvm/uvm_common.c
-+++ b/nvidia-uvm/uvm_common.c
-@@ -376,7 +376,7 @@ module_exit(uvm_exit);
- int uvm_enable_builtin_tests = 0;
- module_param(uvm_enable_builtin_tests, int, S_IRUGO);
- MODULE_PARM_DESC(uvm_enable_builtin_tests,
-                  "Enable the UVM built-in tests. (This is a security risk)");
- 
--MODULE_LICENSE("MIT");
-+MODULE_LICENSE("GPL v2");
- MODULE_INFO(supported, "external");
 diff --git a/nvidia-uvm/uvm_unsupported.c b/nvidia-uvm/uvm_unsupported.c
 index 041912173f63d0775c..5dbf9c3ebe4789e62b 100644
 --- a/nvidia-uvm/uvm_unsupported.c

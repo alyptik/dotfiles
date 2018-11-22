@@ -1,8 +1,8 @@
 #!/bin/sh
 
 nvidia_patch=/c/nvidia-dkms.patch
-nvidia_drv="$(find /usr/src/ -mindepth 1 -maxdepth 1 -name 'nvidia-*' -printf %f -quit)"
-kern_ver="$(find /usr/lib/modules/ -mindepth 1 -maxdepth 1 -name '*-dirty' -printf %f -quit)"
+nvidia_drv="$(find /usr/src/ -mindepth 1 -maxdepth 1 -name '*nvidia-*' -printf '%f\n'| LANG=C sort -t'-' -bk2,3rn | head -n1)"
+kern_ver="$(find /usr/lib/modules/ -mindepth 1 -maxdepth 1 -name '*-dirty' -printf '%f\n')"
 
 if ! test -r "$nvidia_patch"; then
 	printf '%s\n' 'no nvidia dkms patch found at "$nvidia_patch"' >&2
@@ -14,6 +14,7 @@ if test -z "$nvidia_drv"; then
 	exit 1
 fi
 
+# alternative method
 # grep -Flr LICENSE -- "/usr/src/$nvidia_drv" \
 #         | while read -r f; do
 #                 printf '%s\n' "running: sudo sed -i '/MODULE_LICENSE(\".*\");/ s/\\(MODULE_LICENSE(\"\\)[^\"]\\+\"/\1GPL v2\"/g' $f"
