@@ -63,12 +63,53 @@ bind pager k previous-line
 bind pager j next-line
 bind pager <up> previous-line
 bind pager <down> next-line
+bind index \eg root-message
+bind index \ev collapse-all
+
+# newsgroup bindings
+#
+# open a different newsgroup
+bind index,pager y change-newsgroup
+# edit the Followup-To field
+bind compose o edit-followup-to
+# edit the newsgroups list
+bind compose N edit-newsgroups
+# edit the X-Comment-To field
+bind compose x edit-x-comment-to
+# mark all articles in newsgroup as read
+bind browser,index \ey catchup
+# mark all articles in newsgroup as unread
+bind browser \eY uncatchup
+# post message to newsgroup
+bind index,pager P post-message
+# # followup to newsgroup
+# bind attach,index,pager F followup-message
+# # load list of all newsgroups from NNTP server
+# bind browser g reload-active
+# # subscribe to current mbox (IMAP/NNTP only)
+# bind browser s subscribe
+# # subscribe to newsgroups matching a pattern
+# bind browser S subscribe-pattern
+# # unsubscribe from current mbox (IMAP/NNTP only)
+# bind browser u unsubscribe
+# # unsubscribe from newsgroups matching a pattern
+# bind browser U unsubscribe-pattern
+# # forward to newsgroup
+# bind attach,index,pager \eF forward-to-group
+# # get all children of the current message
+# bind index \eg get-children
+# # get parent of the current message
+# bind index \eG get-parent
+# # reconstruct thread containing current message
+# bind index \e? reconstruct-thread
+# # get message with Message-Id
+# bind index \CG get-message
 
 macro index , "<enter-command>set sort = threads<enter>"
 macro index . "<enter-command>set sort = last-date-received<enter>"
 # show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
 # macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
-macro index,pager y "<change-folder>?" "open a different folder/mailbox"
+macro index,pager \ey "<change-folder>?" "open a different folder/mailbox"
 macro index,pager Y \
     "<change-folder>imaps://$my_user:$my_pass@alyptik.org/Inbox<enter>" \
     "open alyptik.org inbox"

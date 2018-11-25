@@ -53,7 +53,13 @@ alternative_order text/plain text/enriched text/html
 
 # make default search pattern to search in To, Cc and Subject
 set simple_search = "~f %s | ~C %s | ~s %s"
+set folder_format = "%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"
 set pager_format = "[%Z] %C/%m at %[%H:%M] from %.20n - %s%* -- (%P)"
+set index_format = "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
+set group_index_format = "%4C %M%N %5s  %-45.45f %d"
+set sidebar_format = "%B %?N?(%N)? %* %S"
+# set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
+# set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
 
 set mail_check_stats
 set allow_ansi
@@ -71,7 +77,7 @@ unset text_flowed
 set indent_string = "> "
 unset strict_threads
 set sort_re
-set reply_regex = "^(\[[^\]]+\][ \t]+)*((re([\[0-9\]+])*|aw):|\[(patch|resend|rfc)[^\]]*\]:?)[ \t]*"
+set reply_regex = "^(\[[^\]]+\][ \t]*)*(([Rr][Ee]([\[0-9\]+])*|[Aa][Ww]):|\[([Pp][Aa][Tt][Cc][Hh]|[Rr][Ee][Ss][Ee][Nn][Dd]|[Rr][Ff][Cc])[^\]]*\]:?)[ \t]*"
 
 unset arrow_cursor
 set sidebar_visible
@@ -84,12 +90,28 @@ unset sidebar_new_mail_only
 set sidebar_next_new_wrap
 # set sidebar_divider_char = " ▐ "
 set sidebar_divider_char = " │ "
-# set sidebar_format = "%B %?F?[%F]? %* %?N?%N/?%S"
-# set sidebar_format = "%B %?N?(%N)? %?F?[%F]? %* %S"
-set sidebar_format = "%B %?N?(%N)? %* %S"
 # set sidebar_sort_method = "path"
 set sidebar_sort_method = "unsorted"
 # set sidebar_on_right = no
+
+set ask_follow_up = yes
+set ask_x_comment_to = yes
+set catchup_newsgroup = yes
+set followup_to_poster = ask-yes
+set inews = ''
+set mime_subject = yes
+set newsgroups_charset = "utf-8"
+set newsrc = '~/.newsrc'
+set news_cache_dir = '~/.mutt/news_cache'
+set nntp_authenticators = 'user'
+set nntp_context = 32767
+set nntp_listgroup = yes
+set nntp_load_description = yes
+set post_moderated = ask-yes
+set save_unsubscribed = yes
+set show_new_news = yes
+set show_only_unread = no
+set x_comment_to = yes
 
 set pgp_timeout = 600
 set smime_timeout = 600
@@ -99,10 +121,11 @@ set connect_timeout = 10
 set nm_open_timeout = 10
 set imap_poll_timeout = 15
 set imap_keepalive = 5
+set nntp_poll = 0
 set imap_pipeline_depth = 100
 set imap_check_subscribed
 unset imap_passive
-set imap_idle
+unset imap_idle
 unset imap_servernoise
 unset imap_peek
 set ssl_starttls
@@ -227,10 +250,13 @@ mailboxes + ` \
 		fi; \
 	done`
 
-set my_gmail_user = `gpg2 -dq ~/.passwords.asc | sed '3 !d; s/"$//; s/.*"//'`
-set my_gmail_pass = `gpg2 -dq ~/.passwords.asc | sed '4 !d; s/"$//; s/.*"//'`
-# set imap_user = `gpg2 -dq ~/.passwords.asc | sed '3 !d; s/"$//; s/.*"//'`
-# set imap_pass = `gpg2 -dq ~/.passwords.asc | sed '4 !d; s/"$//; s/.*"//'`
+# set my_gmail_user = `gpg2 -dq ~/.passwords.asc | sed '3 !d; s/"$//; s/.*"//'`
+# set my_gmail_pass = `gpg2 -dq ~/.passwords.asc | sed '4 !d; s/"$//; s/.*"//'`
+set imap_user = $my_gmail_user
+set imap_pass = $my_gmail_pass
+set nntp_pass = $my_news_user
+set nntp_user = $my_news_pass
+set news_server = "news://$my_news_user:$my_news_pass@news.eternal-september.org:119/"
 
 set folder = "$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/"
 # set folder = "imaps://$my_gmail_user:$my_gmail_pass@imap.gmail.com:993/"

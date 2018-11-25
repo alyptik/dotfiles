@@ -1,11 +1,11 @@
 #!/bin/zsh
 
-gpg_home=redickted
-gpg_dir=redickted
-gpg_tmp=redickted
-pubring=redickted
-trustdb=redickted
-master_key=redickted
+gpg_home="$HOME/.gnupg"
+gpg_dir="$HOME/.keys/gpg"
+gpg_tmp="$gpg_dir/gpgtmp"
+pubring="$gpg_home/pubring.kbx"
+trustdb="$gpg_home/trustdb.gpg"
+master_key="$gpg_dir/master-0x02e95b4f4f3643e9.asc"
 
 # initialize temporary gpg homedir
 mkdir -pv "$gpg_tmp" || return 1

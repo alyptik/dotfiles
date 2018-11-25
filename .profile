@@ -2,7 +2,7 @@
 #
 # .profile - environment configuration
 
-# conditionals
+# set command being passed as READNULLCMD
 if command -v bat >/dev/null 2>&1; then
 	if command -v b >/dev/null 2>&1; then
 		dump_cmd="b"
@@ -14,11 +14,15 @@ elif command -v less >/dev/null 2>&1; then
 else
 	dump_cmd="cat"
 fi
+
+# set ruby gems path
 if command -v ruby >/dev/null 2>&1; then
 	rubies="$(ruby -rrubygems -e "puts Gem.user_dir")/bin"
 else
 	rubies=""
 fi
+
+# force TERM over ssh
 if [ -d "$HOME/.terminfo" ]; then
 	case "$TERM" in
 	linux*|xterm*)
@@ -31,6 +35,8 @@ if [ -d "$HOME/.terminfo" ]; then
 		fi;;
 	esac
 fi
+
+# set locale
 if command -v hostname >/dev/null 2>&1; then
 	case "$(hostname)" in
 	localhost|fedora*)
@@ -39,6 +45,8 @@ if command -v hostname >/dev/null 2>&1; then
 		locale="en_US.UTF-8";;
 	esac
 fi
+
+# query number of cores
 if command -v nproc >/dev/null 2>&1; then
 	NPROC="$(nproc)"
 else
@@ -79,12 +87,13 @@ export CCACHE_DISABLE=1
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
 # sparse configuraiton
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
-# CF="$CF -fmax-warnings=unlimited"
-CF="$CF -Wptr-subtraction-blows -Wtypesign"
-CF="$CF -Wdefault-bitfield-sign -Wparen-string"
+CF="$CF -fmax-warnings=unlimited"
+CF="$CF -Wdefault-bitfield-sign -Wdo-while"
+CF="$CF -Wparen-string -Wptr-subtraction-blows"
+CF="$CF -Wtypesign"
 CF="$CF -Wno-undef -Wno-unknown-attribute"
 CF="$CF -Wno-pointer-arith -Wno-shadow -Wno-sizeof-bool"
-CF="$CF -Wno-do-while -Wno-non-pointer-null"
+CF="$CF -Wno-non-pointer-null"
 export CF
 export DISTCC_HOSTS="127.0.0.1,lzo,cpp 192.168.1.99,lzo,cpp"
 GCC_COLORS="error=01;31:warning=01;35:note=01;36:range1=32:range2=34"
@@ -99,12 +108,13 @@ CFLAGS="-Wno-error -Wno-implicit-fallthrough"
 # CFLAGS="$CFLAGS -fvar-tracking -fvar-tracking-assignments"
 # CFLAGS="$CFLAGS -fdiagnostics-color=always"
 # CFLAGS="$CFLAGS -fdiagnostics-generate-patch"
-CFLAGS="$CFLAGS -fno-strict-aliasing -fno-plt -fPIC"
+CFLAGS="$CFLAGS -fPIC -fstack-protector-strong"
 CFLAGS="$CFLAGS -fuse-ld=gold -fuse-linker-plugin"
+CFLAGS="$CFLAGS -fno-plt -fno-strict-aliasing"
 # CFLAGS="$CFLAGS -march=native -gdwarf-4 -g3 -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=intel -g3 -O3"
 # CFLAGS="$CFLAGS -pipe -march=native -g -O3"
-CFLAGS="$CFLAGS -pipe -march=x86-64 -mtune=generic -g -O3"
+CFLAGS="$CFLAGS -march=x86-64 -mtune=generic -g3 -O3"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
@@ -215,7 +225,8 @@ export LESS="FMRXins"
 export LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_me=$'\E[0m' LESS_TERMCAP_us=$'\E[4;32;4;132m'
 # shellcheck disable=SC2039
 export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\E[1;31m'
-export LIBGL_DRI3_DISABLE=1
+unset LIBGL_DRI3_DISABLE
+# export LIBGL_DRI3_DISABLE=1
 export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
@@ -327,7 +338,7 @@ export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_DATA_HOME="$HOME/.local/share"
 export ZDOTDIR="$HOME/.zsh.d"
 
-# zsh z plugin environment
+# z environment
 #
 # maintains a jump-list of the directories you actually use
 #

@@ -41,6 +41,7 @@ urlserver_list.txt
 .mutt_certificates
 bind/bind.keys.v9_8
 bind/account_key.json
+.newsbeuter/cookies.txt
 .weechat/python/lastfm2.py
 .weechat/chanop_mode_cache.dat
 .weechat/script/plugins.xml.gz
@@ -68,7 +69,9 @@ oprofile_data/
 .vim/__archive/
 .mixxx/analysis/
 .mutt*/ox_config/
+.mutt*/hdr_cache/
 .mutt*/msg_cache/
+.mutt*/news_cache/
 .emacs.d.spacemacs/
 
 nginx/*
