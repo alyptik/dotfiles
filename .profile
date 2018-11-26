@@ -73,7 +73,8 @@ fi
 export CONFIG="/store/dotfiles"
 export LINUX="$PROJECTS/linux"
 export PROJECTS="/store/code/projects"
-export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" pre="$HOME/.local"
+export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" PREFIX="$HOME/.local"
+export c="$C" h="$H" l="$L" p="$P" pre="$PREFIX"
 
 # compiler environment
 unset CARCH CCACHE_DISABLE CFLAGS CCFLAGS

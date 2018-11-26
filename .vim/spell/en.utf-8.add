@@ -206,3 +206,6 @@ seekable
 inodes
 unmapped
 nvidia
+writeback
+zram
+Hm

@@ -8,6 +8,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias upstream="git config branch.\$(git branch | sed '/^\\*/ !d; s/^\\* //').remote up && git config branch.\$(git branch | sed '/^\\*/ !d; s/^\\* //').pushremote origin"
 alias curl='curl -s'
 alias sc='sysctl'
 alias gpge='gpg --edit-key'

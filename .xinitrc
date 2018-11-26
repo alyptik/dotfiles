@@ -32,7 +32,7 @@ udisksctl mount -b "$(findfs LABEL=backups)" &
 (udisksctl mount -b "$(findfs LABEL=sdxc)"; sleep 5; pcmanfm /sdxc /sdxc/papers /sdxc/work) &
 (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 pavucontrol &
-pan &
+# pan &
 stjerm &
 transgui &
 compton -b

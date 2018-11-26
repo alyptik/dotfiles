@@ -3,6 +3,9 @@
 #
 # Mutt configuration
 
+# devel/help
+# set help_doc_dir = "/p/test-doc"
+
 set hidden_host
 unset use_domain
 set hostname = "gmail.com"
@@ -115,13 +118,13 @@ set x_comment_to = yes
 
 set pgp_timeout = 600
 set smime_timeout = 600
-set timeout = 10
+set timeout = 60
+set nntp_poll = 10
 set mail_check = 10
 set connect_timeout = 10
 set nm_open_timeout = 10
 set imap_poll_timeout = 15
 set imap_keepalive = 5
-set nntp_poll = 0
 set imap_pipeline_depth = 100
 set imap_check_subscribed
 unset imap_passive
