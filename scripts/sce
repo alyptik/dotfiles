@@ -1,0 +1,42 @@
+#!/bin/sh
+
+stype='system'
+sudo='sudo'
+was_err=0
+
+if [ -z "$*" ]; then
+	exit 1
+fi
+
+case "$*" in
+*--user*)
+	stype='user'
+	sudo='';;
+esac
+
+for service in "$@"; do
+	case "$service" in
+	*--user*)
+		continue;;
+	*.*)
+		sfile="/usr/lib/systemd/$stype/$service";;
+	*)
+		sfile="/usr/lib/systemd/$stype/$service.service";;
+	esac
+	if [ ! -e "$sfile" ]; then
+		was_err=1
+		continue
+	fi
+	if [ -z "$sudo" ]; then
+		"${EDITOR:-vim}" "$sfile"
+		continue
+	fi
+	"$sudo" "${EDITOR:-vim}" "$sfile"
+done
+
+if [ -z "$sudo" ]; then
+	systemctl --user daemon-reload
+else
+	sudo systemctl daemon-reload
+fi
+exit "$was_err"
