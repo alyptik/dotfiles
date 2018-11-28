@@ -62,7 +62,7 @@
 	lgp = log --pretty=colorful-oneline --color --graph --decorate --abbrev-commit --first-parent
 	s = show --use-mailmap --show-signature -u
 	dc = diff --cached --histogram
-	p = format-patch -M @^ --shortstat -o /patches/
+	p = format-patch -M @~ --stat --stdout
 	la = log --graph --color --pretty --decorate --stat --color-moved=zebra --all
 	sub = submodule
 	f = grep -Fn --color=auto --break
@@ -115,6 +115,7 @@
 	cpa = cherry-pick -S --abort
 	ls = log --stat --show-signature --color-moved=zebra
 	ll = log --pretty=colorful-oneline --color --decorate --abbrev-commit --stat
+	patch = format-patch --stat --cover-letter -o /patches
 [web]
 	browser = w3m
 [instaweb]

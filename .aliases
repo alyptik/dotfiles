@@ -8,6 +8,8 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias acked='printf "%s-by: Joey Pabalinas <joeypabalinas@gmail.com>\n" Acked Co-Developed Reported Reviewed Signed-off Suggested Tested | xclip -i -f -sel prim'
+alias reviwed='printf "%s\n" "Acked-by: Joey Pabalinas <joeypabalinas@gmail.com>" "Reviewed-by: Joey Pabalinas <joeypabalinas@gmail.com>" | xpi'
 alias upstream="git config branch.\$(git branch | sed '/^\\*/ !d; s/^\\* //').remote up && git config branch.\$(git branch | sed '/^\\*/ !d; s/^\\* //').pushremote origin"
 alias curl='curl -s'
 alias sc='sysctl'

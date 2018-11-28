@@ -231,7 +231,7 @@ unset LIBGL_DRI3_DISABLE
 export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
 MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
-MANPATH="$HOME/.local/share/man:$MANPATH"
+MANPATH="$HOME/.local/share/man:$HOME/perl5/share/man:$MANPATH"
 export MANPATH
 export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:3f"
 export MESA_GL_VERSION_OVERRIDE="4.5COMPAT"
@@ -282,7 +282,7 @@ export PKG_CONFIG_PATH
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:$PLAN9/bin"
 export PLAN9=/opt/plan9
 # shellcheck disable=SC2039
-export PATH="${PATH//:$PLAN9\/bin}$PLAN9/bin" MANPATH="${MANPATH//:$PLAN9\/man}:$PLAN9/share/man"
+export PATH="${PATH//:$PLAN9\/bin}:$PLAN9/bin" MANPATH="${MANPATH//:$PLAN9\/man}:$PLAN9/share/man"
 export PRE="$HOME/.local" pre="$PRE"
 export PRIMUS_SYNC=1
 export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,pcpu,sz,wchan,stat,state,tname,time,args"

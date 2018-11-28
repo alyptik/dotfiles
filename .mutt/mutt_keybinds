@@ -16,6 +16,7 @@ bind index,pager <esc>r root-message
 bind index,pager <esc>P parent-message
 bind index,pager <esc>p previous-subthread
 bind index,pager <esc>n next-subthread
+bind generic,index,pager \er followup-message
 bind generic,index,pager R group-reply
 bind generic,index,pager B sidebar-toggle-visible
 bind generic,index,pager \cP sidebar-prev
