@@ -101,7 +101,7 @@ set sidebar_sort_method = "unsorted"
 
 set ask_follow_up = yes
 set ask_x_comment_to = yes
-set catchup_newsgroup = yes
+set catchup_newsgroup = ask-yes
 set followup_to_poster = ask-yes
 set inews = ''
 set mime_subject = yes
@@ -127,8 +127,8 @@ unset imap_peek
 set imap_check_subscribed
 
 set imap_pipeline_depth = 500
-set pgp_timeout = 600
-set smime_timeout = 600
+set pgp_timeout = 300
+set smime_timeout = 300
 set imap_poll_timeout = 30
 set imap_keepalive = 30
 set timeout = 30
