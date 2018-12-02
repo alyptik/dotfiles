@@ -134,6 +134,7 @@ export LDFLAGS
 export MAKEFLAGS="-j$((NPROC + 2)) -l$NPROC"
 
 # Environment variables
+export ANDROID_HOME="$HOME/Android/Sdk"
 export ARCHFLAGS="-arch x86-64"
 # export BROWSER=firefox
 # export BROWSER=chromium
@@ -180,6 +181,11 @@ export FZF_DEFAULT_OPTS FZF_CTRL_T_COMMAND FZF_DEFAULT_COMMAND
 # export GDK_SCALE=2.25
 export GIT_PAGER="less -MRins"
 export GOPATH="$HOME/.go"
+# Use  the GROFF_NO_SGR environment variable to revert to the old
+# behaviour, printing a bold character c with the sequence `c BACKSPACE c' and
+# an italic character c by the sequence `_ BACKSPACE c'.  At the same time,
+# color output is disabled.
+# unset GROFF_NO_SGR
 export GROFF_NO_SGR=1
 # Gtk themes
 # export GTK_DEBUG=all
@@ -198,6 +204,12 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=on"
 _JAVA_OPTIONS="$_JAVA_OPTIONS -Dsun.java2d.opengl=true"
 export _JAVA_OPTIONS
+# export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+# export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-12-openjdk
+# export JAVA_HOME=/usr/lib/jvm/java-9-jdk
+# export JAVA_HOME=/usr/lib/jvm/java-10-jdk
+# export JAVA_HOME=/usr/lib/jvm/java-11-jdk
 # Configure KWin to use OpenGL ES
 export KWIN_COMPOSE="O2ES"
 export LADSPA_PATH="/usr/lib/ladspa:/usr/local/lib/ladspa:$HOME/ladspa:/store/audio/ladspa"
@@ -231,9 +243,12 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 unset LIBGL_DRI3_DISABLE
 # export LIBGL_DRI3_DISABLE=1
 export MANPAGER="env -u LESS less -MRins"
-MANPATH="/usr/lib/plan9/man:/usr/local/texlive/2016/texmf-dist/doc/man"
-MANPATH="/opt/intel/man/common:/usr/local/man:/usr/share/man:$MANPATH"
-MANPATH="$HOME/.local/share/man:$HOME/perl5/share/man:$MANPATH"
+MANPATH="/usr/local/man:/usr/share/man"
+MANPATH="/usr/lib/plan9/man:$MANPATH"
+MANPATH="/opt/intel/man/common:$MANPATH"
+MANPATH="$HOME/perl5/share/man:$MANPATH"
+MANPATH="$HOME/.local/share/man:$MANPATH"
+MANPATH="$CONFIG/man:$MANPATH"
 export MANPATH
 export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:3f"
 export MESA_GL_VERSION_OVERRIDE="4.5COMPAT"
@@ -249,9 +264,12 @@ PATH="/usr/lib/ccache/bin:$PATH"
 PATH="/opt/android-sdk/platform-tool:$PATH"
 PATH="/opt/TIS-100:/opt/cuda/bin:$PATH"
 PATH="/opt/cross/bin:/opt/intel/bin:$PATH"
+PATH="$ANDROID_HOME/platform-tools:$PATH"
 PATH="$HOME/.node_modules/bin:$PATH"
+PATH="$ANDROID_HOME/tools:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/perl5/bin:$PATH"
+PATH="$JAVA_HOME/bin:$PATH"
 PATH="$rubies:$PATH"
 PATH="$LINUX/scripts:$PATH"
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"
@@ -260,6 +278,8 @@ PATH="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin:$PATH"
 # shellcheck disable=SC2039
 # elide empty PATH components
 PATH="${PATH//::/:}"
+PATH="${PATH#:}"
+PATH="${PATH%:}"
 export PATH
 # shellcheck disable=SC2039
 PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"

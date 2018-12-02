@@ -31,8 +31,6 @@ bind generic,index,pager \e] sidebar-next
 bind generic,index,pager \e\\ sidebar-open
 bind generic,index,pager,browser ";" half-up
 bind generic,index,pager,browser "'" half-down
-bind generic,index,pager,browser "\e;" half-up
-bind generic,index,pager,browser "\e'" half-down
 bind generic,index,pager,browser - first-entry
 bind generic,index,pager,browser = last-entry
 bind generic,index,pager,browser \e- first-entry
@@ -53,6 +51,8 @@ bind index \ea tag-prefix
 bind index \eN toggle-new
 # bind index <return> next-line
 bind index o display-message
+bind generic,index,pager "\e;" sync-mailbox
+bind generic,index,pager "\e'" read-thread
 bind generic,index,pager <tab> next-new-then-unread
 bind generic,index,pager \e<tab> previous-new-then-unread
 bind generic,index,pager <backtab> previous-new-then-unread

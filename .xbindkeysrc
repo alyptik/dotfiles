@@ -56,9 +56,9 @@
     shift + F1
 
 # show herbstluftwm bindings
-"herbstclient spawn xterm -e sh -c 'if command -v bat >/dev/null; then pager=bat; fi;  herbstclient list_keybinds | ${pager:-less}'"
-    m:0x0 + c:67
-    F1
+# "herbstclient spawn xterm -e sh -c 'if command -v bat >/dev/null; then pager=bat; fi;  herbstclient list_keybinds | ${pager:-less}'"
+#     m:0x0 + c:67
+#     F1
 
 # primary paste
 # "sh -c 'xclip -r -o -sel clip | xvkbd -xsendevent -file - 2>/dev/null'"

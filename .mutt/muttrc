@@ -123,19 +123,19 @@ set x_comment_to = yes
 unset imap_idle
 unset imap_passive
 unset imap_servernoise
-unset imap_peek
+set imap_peek
 set imap_check_subscribed
 
 set imap_pipeline_depth = 500
 set pgp_timeout = 300
 set smime_timeout = 300
-set imap_poll_timeout = 30
-set imap_keepalive = 30
+set imap_poll_timeout = 60
 set timeout = 30
 set nm_open_timeout = 10
 set connect_timeout = 10
-set mail_check = 10
+set imap_keepalive = 10
 set nntp_poll = 10
+set mail_check = 5
 
 set ssl_starttls
 set ssl_force_tls

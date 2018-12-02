@@ -13,16 +13,21 @@ chmod -c 0700 "$gpg_tmp" || return 1
 ln -sfv -- "$gpg_home/gpg.conf" "$gpg_tmp/"
 ln -sfv -- "$gpg_home/gpg-agent.conf" "$gpg_tmp/"
 
-# make sure master key exists and is readable
-if [[ ! -r "$master_key" ]]; then
+# cleanup temporary homedir
+trap 'rm -rfv -- "${gpg_tmp:?}"' ERR EXIT
+# hacky workaround for zsh's refusal to execute nested traps like that caused by INT
+trap 'exit' INT HUP QUIT
+
+# make sure master key exists and is readable then attempt import
+if [[ ! -r "$master_key" ]] || ! gpg --homedir "$gpg_tmp" --keyring "$pubring" --trustdb-name "$trustdb" --import "$master_key"; then
 	return 1
 fi
 
 # locally sign each key with master
 zmodload zsh/zpty
+
 for key; do
-	gpg --homedir "$gpg_tmp" --keyring "$pubring" --trustdb-name "$trustdb" --recv-keys "$key" || continue
-	gpg --homedir "$gpg_tmp" --import "$master_key"
+	gpg --recv-keys "$key" || continue
 	zpty -e lsign gpg --homedir "$gpg_tmp" --keyring "$pubring" --trustdb-name "$trustdb" --edit-key "$key"
 	zpty -w lsign $'trust\n4\ny\n'
 	zpty -w lsign $'lsign\ny\ny\n'
@@ -30,6 +35,3 @@ for key; do
 	zpty -r lsign
 	zpty -d lsign
 done
-
-# cleanup temporary homedir
-rm -rfv -- "${gpg_tmp:?}"
