@@ -8,7 +8,7 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-11-28] Joey's Progress Report
+Subject: [2018-12-09] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
@@ -16,43 +16,43 @@ In-Reply-To:
  * Joey's Progress Report
  */
 
-This week I did a lot of debugging with Lind, trying to figure
-why it seems to be exploding with httpd. So far I haven't had
-much luck, so I'm going to be revisiting each part of my code
-with small, isolated test cases to try and pinpoint exactly
-what the root cause is.
+This week I reviewed a couple of Alan's PRs for the rrapper repository
+and continued to work on x86-64 support for CrashSimulator. I have
+noticed that the event numbers change a bit in x86-64 and so I assume
+something weird is offsetting the strace output and causing CrashSimulator
+to detect the incorrect line number to system call mapping.
 
-So far, what I've been able to determine is that the conditions
-involve the usage of fork() and exec() together. I haven't been
-able to concretely confirm it yet, but after some contemplation
-by mentally stepping through each part of that code sequence, the
-one thing that sticks out is that fork() is copying all of the
-parent state to a child which exec() then replaces the process
-image of. Because of this, my theory is that there is some sort
-of mismatch between unintended parent state which has persisted
-into the child which causes the subsequent exec() to explode in
-such a spectacular way.
+I'm still looking into exactly where this happens, but, as far
+as I can tell, this is the only real issue left in my x86-64 port,
+so we're pretty close.
 
-I'm currently looking at each part of my fork()/exec() implementation
-and trying to pinpoint exactly where the issue lies.
+I attempted to get MySQL and PHP compiled for Lind, but the compiler
+errors thrown by both are still a work in progress. MySQL particularly
+is what happens to be giving me the largest headache, but all of the
+errors so far have been fairly simple to fix, and it's just a matter
+of painstakingly doing the work.
 
-Apart from that, I converted Preston's syscallreplay to 64-bit and
-attempted to get CrashSimulator up and running,  but it's still
-misbehaving on my 64-bit system. The docker image running the 32-bit
-Ubuntu works perfectly, so I'm going to poke at this a bit more
-and I feel like if it still stubbornly refuses to budge, then it
-might be better to shelf this 64-bit port for now.
+I'm now fairly confident my segfaulting problems in Lind are related
+to copying the full dynamic text section and correctly mapping it, so
+I'm currently studying the shm implementation inside of NaCl so I can
+figure out what functions I need to call to do so. I'm also studying
+the fork implementation inside of the Linux kernel to see exactly how
+they handle everything compared to my implementation.
 
-The docker image addresses most of the concerns I had about usability,
-my main rationale for porting to 64-bit, so even if this is the case
-and we have to live with the 32-bit docker image, it's not a huge loss.
+Additionally, it seems I need to rethink my method of duplicating
+stdout/stderr, as currently the host-mapped file descriptors don't
+get copied when fed to dup2(). I also need to emulate or stub stdin
+(currently there is no file descriptor 0 at all) to have shell-style
+pipes like `foo | bar` work correctly.
 
 /* Plans For Next Week */
 
-- Continue to try and get our 64-bit port of CrashSimulator working
-  smoothly.
-- Continue to try to get httpd working.
-- Attempt to debug exactly why fork()/exec() isn't working correctly.
+- Find out the root cause of the strace line number inconsistencies.
+- Fix the remaining compiler errors in the MySQL/PHP Lind build.
+- Correctly handle the dynamic shm text in NaCl.
+- Fix the broken behavior when feeding host-mapped file descriptors
+  to system calls like dup2()
+- Emulate or stub standard input for file descriptor 0.
 
 That's all for this week, thanks.
 

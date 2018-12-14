@@ -38,7 +38,7 @@ bind @ number 2
 bind \# number 3
 bind $ number 4
 bind % number 5
-bind ^ number 6
+bind \^ number 6
 bind & number 7
 bind * number 8
 bind ( number 9

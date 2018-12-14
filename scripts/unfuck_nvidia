@@ -23,5 +23,5 @@ fi
 
 cd "/usr/src/$nvidia_drv" || exit 1
 printf '%s\n' "running: sudo patch -p1 <$nvidia_patch"
-sudo patch -p1 <"$nvidia_patch"
+sudo patch -Np1 <"$nvidia_patch"
 sudo dkms install "nvidia/${nvidia_drv##*-}" -k "$kern_ver"
