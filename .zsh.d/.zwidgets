@@ -35,17 +35,17 @@ function set_muh_upstream() {
 function zle-run-help() {
 	local -a cmd fallback final
 	# isolate the last command in the list
-	cmd[1]="${BUFFER##*(;|\||&|\(|\)|\{|\}|\||\`|do|then|else|time|sudo|_)##}"
+	cmd[1]="${BUFFER##*(\||&|\(|\)|\{|\}|\||\`|do|then|else|time|sudo|_)##}"
 	cmd[1]="${cmd[1]/#[[:blank:]]#}"
 	cmd[1]="${cmd[1]%%[[:blank:]]*}"
-	cmd[2]="${BUFFER##*$cmd[1]}"
+	cmd[2]="${BUFFER#*$cmd[1]}"
 	cmd[2]="${cmd[2]/#[[:blank:]]#}"
-	cmd[2]="${cmd[2]%%[[:blank:];\|&\(\)\{\}\|\`]*}"
+	cmd[2]="${cmd[2]%%[[:blank:];\|&\(\)\{\}\`]*}"
 	# fallback to the first command in the list
-	fallback[1]="${(R)${${BUFFER#(sudo|_)}/#[[:blank:]]#}%%[[:blank:]][^ ]*}"
+	fallback[1]="${(R)${${BUFFER#(sudo|_)}/#[[:blank:]]#}%[[:blank:]][^ ]*}"
 	fallback[2]="${BUFFER#*$fallback[1]}"
 	fallback[2]="${fallback[2]/#[[:blank:]]#}"
-	fallback[2]="${fallback[2]%%[[:blank:];\|&\(\)\{\}\|\`]*}"
+	fallback[2]="${fallback[2]%%[[:blank:];\|&\(\)\{\}\`]*}"
 	# use fallback if cmd is invalid
 	if command -v $cmd[1] >/dev/null 2>&1; then
 		final=(${cmd[1]:/#g/git} $cmd[2])
@@ -53,6 +53,9 @@ function zle-run-help() {
 		final=(${fallback[1]:/#g/git} $fallback[2])
 	fi
 	# resolve git aliases
+	if [[ $final[1] == g ]]; then
+		final[1]=git
+	fi
 	if [[ $final[1] == git && -n $final[2] ]]; then
 		git_final=${${(z)$(git config --global "alias.$final[2]" 2>/dev/null)}[1]}
 		if [[ -n "$git_final" ]]; then
