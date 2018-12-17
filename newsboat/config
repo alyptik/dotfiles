@@ -77,7 +77,7 @@ bind-key K prev-feed
 #
 # Default value: no
 #
-# auto-reload yes
+auto-reload yes
 
 ####  bind-key
 #
@@ -149,9 +149,9 @@ bind-key K prev-feed
 #
 # Syntax: <path>
 #
-# Default value: "~/.newsbeuter/cache.db"
 #
 # cache-file "/tmp/testcache.db"
+cache-file "~/newsboat/cache.db"
 
 ####  cleanup-on-quit
 #
@@ -278,7 +278,7 @@ download-full-page yes
 #
 # Default value: 1
 #
-# download-retries 4
+download-retries 4
 
 ####  download-timeout
 #
@@ -290,7 +290,7 @@ download-full-page yes
 #
 # Default value: 30
 #
-# download-timeout 60
+download-timeout 60
 
 ####  error-log
 #
@@ -369,7 +369,7 @@ download-full-page yes
 #
 # Default value: 20
 #
-feedhq-min-items 100
+feedhq-min-items 200
 
 ####  feedhq-password
 #
@@ -545,8 +545,8 @@ html-renderer "w3m -dump -T text/html"
 # Default value: n/a
 #
 # ignore-article "*" "title =~ \\"Windows\\""
-ignore-article "http://github.com/alyptik.private.atom?token=AOoGnkKB2QaTj9gPonZXEbCarRqbYlK9ks62X0hnwA==" "title =~ \"starred\""
-ignore-article "https://github.com/alyptik.private.atom?token=AOoGnkKB2QaTj9gPonZXEbCarRqbYlK9ks62X0hnwA==" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
+# ignore-article "https://github.com/alyptik.private.atom?token=AOoGngGUPMOcRMk5QT_z7JCXV0eGOcGuks66JAODwA==" "title =~ \"starred\""
+# ignore-article "https://github.com/alyptik.private.atom?token=AOoGngGUPMOcRMk5QT_z7JCXV0eGOcGuks66JAODwA==" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
 #ignore-article "~GitHub Activity" "title =~ \"starred\""
 #ignore-article "~GitHub Stars" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
 
@@ -563,7 +563,7 @@ ignore-article "https://github.com/alyptik.private.atom?token=AOoGnkKB2QaTj9gPon
 # Default value: download
 #
 ignore-mode "download"
-#ignore-mode "display"
+# ignore-mode "display"
 
 ####  include
 #
@@ -629,7 +629,7 @@ include "~/.newsbeuter/colors/gruvbox"
 
 ####  max-browser-tabs
 #
-# Set the maximum number of articles to open in a browser when using the 
+# Set the maximum number of articles to open in a browser when using the
 # open-all-unread-in-browser or open-all-unread-in-browser-and-mark-read
 # commands.
 #
@@ -757,7 +757,7 @@ newsblur-min-items 100
 #
 # Default value: no
 #
-# notify-screen yes
+notify-screen yes
 
 ####  notify-xterm
 #

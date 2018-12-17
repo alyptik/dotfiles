@@ -8,4 +8,4 @@ for i in "$@"; do
 
 done
 
-<<<"https://alyp.tk/uhr/${arg1}" tee >(perl -pe 'chomp if eof' | xsel -ib)
+<<<"https://alyptik.org/uhr/${arg1}" tee >(perl -pe 'chomp if eof' | xsel -ib)

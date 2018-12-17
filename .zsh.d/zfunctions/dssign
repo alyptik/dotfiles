@@ -2,8 +2,8 @@
 	[[ ${PWD} != /etc/bind ]] && pushd . >/dev/null 2>&1
 	cd "/etc/bind"
 	if [[ -z "${1}" ]]; then
-			printf '%b' 'no zone specified!\nsign "alyp.tk"? (Y/n)' ; read ans
-			[[ ${ans} =~ ([ \t]*[Yy].*|) ]] && { popd >/dev/null 2>&1; dssign 'alyp.tk'; return 0; }
+			printf '%b' 'no zone specified!\nsign "alyptik.org"? (Y/n)' ; read ans
+			[[ ${ans} =~ ([ \t]*[Yy].*|) ]] && { popd >/dev/null 2>&1; dssign 'alyptik.org'; return 0; }
 			echo -n "\r\nenter zone(s) to sign: "
 	read -r ans2
 	[[ -z "${ans2}" ]] && {

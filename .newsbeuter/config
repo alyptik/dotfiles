@@ -149,7 +149,7 @@ bind-key K prev-feed
 #
 # Syntax: <path>
 #
-# Default value: "~/.newsbeuter/cache.db"
+Default value: "~/.newsbeuter/cache.db"
 #
 # cache-file "/tmp/testcache.db"
 
@@ -545,10 +545,10 @@ download-full-page yes
 # Default value: n/a
 #
 # ignore-article "*" "title =~ \\"Windows\\""
-ignore-article "http://github.com/alyptik.private.atom?token=AOoGnkKB2QaTj9gPonZXEbCarRqbYlK9ks62X0hnwA==" "title =~ \"starred\""
-ignore-article "https://github.com/alyptik.private.atom?token=AOoGnkKB2QaTj9gPonZXEbCarRqbYlK9ks62X0hnwA==" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
-#ignore-article "~GitHub Activity" "title =~ \"starred\""
-#ignore-article "~GitHub Stars" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
+ignore-article "https://github.com/alyptik.private.atom?token=AOoGngGUPMOcRMk5QT_z7JCXV0eGOcGuks66JAODwA==" "title =~ \"starred\""
+# ignore-article "https://github.com/alyptik.private.atom?token=AOoGngGUPMOcRMk5QT_z7JCXV0eGOcGuks66JAODwA==" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
+# ignore-article "~GitHub Activity" "title =~ \"starred\""
+# ignore-article "~GitHub Stars" "title =~ \"(pushed|comment|created|merged|opened|closed)\""
 
 ####  ignore-mode
 #
@@ -562,8 +562,8 @@ ignore-article "https://github.com/alyptik.private.atom?token=AOoGnkKB2QaTj9gPon
 #
 # Default value: download
 #
-ignore-mode "download"
-#ignore-mode "display"
+# ignore-mode "download"
+ignore-mode "display"
 
 ####  include
 #

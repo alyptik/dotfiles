@@ -1,6 +1,8 @@
 alias jp Joey Pabalinas <jp@opsec.dog>
 alias jp Joey Pabalinas <alyptik@riseup.net>
 alias jp Joey Pabalinas <joeypabalinas@gmail.com>
+alias bart Bart Schaefer <schaefer@brasslantern.com>
+alias daniel Daniel Shahaf <d.s@daniel.shahaf.name>
 alias mekely Avanka Daraga <dundra67@gmail.com>
 alias pragma Pragma <pragma78@gmail.com>
 alias kg Taylor West <KrokodileGlue@outlook.com>
@@ -25,6 +27,7 @@ alias bhakti Bhakti Jinjuwadia <bhakti.parekh@nyu.edu>
 alias ssl Secure Systems Lab Mailing List <securesystemslab@googlegroups.com>
 alias crash CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>
 alias zsh Zsh Workers Mailing List <zsh-workers@zsh.org>
+alias kernelnewbies <kernelnewbies@kernelnewbies.org>
 alias lkml Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 alias majordomo Majordomo <majordomo@vger.kernel.org>
 
