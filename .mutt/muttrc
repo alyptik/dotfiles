@@ -120,7 +120,7 @@ set x_comment_to = yes
 
 # set imap_qresync
 # unset imap_condstore
-set imap_idle
+unset imap_idle
 unset imap_passive
 unset imap_servernoise
 set imap_peek

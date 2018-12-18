@@ -1,0 +1,56 @@
+From 0877607db0d5033efa86947d554bfbe1b8ddbcc2 Mon Sep 17 00:00:00 2001
+Message-Id: <0877607db0d5033efa86947d554bfbe1b8ddbcc2.1545043873.git.joeypabalinas@gmail.com>
+From: Joey Pabalinas <joeypabalinas@gmail.com>
+Date: Sat, 15 Dec 2018 10:08:43 -1000
+Subject: [PATCH v2] zshmisc(1): document term being optional if `in word' is omitted
+
+In code such as:
+
+> hobbes% () { for arg do print -r $arg; done; } 1 2 3
+> 1
+> 2
+> 3
+
+the implicit positional parameters added when the `in word ...'
+list is omitted also implicitly append the separator term, making
+the above code valid, albeit seemingly violating the syntax listed
+in the documentation.
+
+This is related to the various forms of alternative syntax and is
+the intended behavior of the parsing code, so correct the minor
+contradiction in the for loop documentation.
+---
+ Doc/Zsh/grammar.yo | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Doc/Zsh/grammar.yo b/Doc/Zsh/grammar.yo
+index d2c7cd29c289287066..452b7fd0fc0003d652 100644
+--- a/Doc/Zsh/grammar.yo
++++ b/Doc/Zsh/grammar.yo
+@@ -181,16 +181,19 @@ is executed.
+ )
+ findex(for)
+ cindex(for loops)
+ cindex(loops, for)
+ item(tt(for) var(name) ... [ tt(in) var(word) ... ] var(term) tt(do) var(list) tt(done))(
+-where var(term) is at least one newline or tt(;).
+ Expand the list of var(word)s, and set the parameter
+-var(name) to each of them in turn, executing
+-var(list) each time.  If the tt(in) var(word) is omitted,
++var(name) to each of them in turn, executing var(list)
++each time.  If the `tt(in) var(word)' is omitted,
+ use the positional parameters instead of the var(word)s.
+ 
++The var(term) consists of one or more newline or tt(;)
++to terminate the var(word)s, and are optional when the
++`tt(in) var(word)' is omitted.
++
+ More than one parameter var(name) can appear before the list of
+ var(word)s.  If var(N) var(name)s are given, then on each execution of the
+ loop the next var(N) var(word)s are assigned to the corresponding
+ parameters.  If there are more var(name)s than remaining var(word)s, the
+ remaining parameters are each set to the empty string.  Execution of the
+
+-- 
+Cheers,
+Joey Pabalinas

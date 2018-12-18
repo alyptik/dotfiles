@@ -17,7 +17,7 @@ fi
 
 # set ruby gems path
 if command -v ruby >/dev/null 2>&1; then
-	rubies="$(ruby -rrubygems -e "puts Gem.user_dir")/bin"
+	rubies="$(ruby -e "puts Gem.user_dir")/bin"
 else
 	rubies=""
 fi
@@ -110,14 +110,14 @@ CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"
 # CFLAGS="$CFLAGS -fdiagnostics-color=always"
 # CFLAGS="$CFLAGS -fdiagnostics-generate-patch"
 # CFLAGS="$CFLAGS -fPIC -fstack-protector-strong"
-# CFLAGS="$CFLAGS -fuse-ld=gold -fuse-linker-plugin"
 CFLAGS="$CFLAGS -fPIC -fno-plt"
+CFLAGS="$CFLAGS -fuse-ld=gold -fuse-linker-plugin"
 # CFLAGS="$CFLAGS -fno-plt -fno-strict-aliasing"
 # CFLAGS="$CFLAGS -march=native -gdwarf-4 -g3 -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=intel -g3 -O3"
-# CFLAGS="$CFLAGS -pipe -march=native -g -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=generic -g -O3"
-CFLAGS="$CFLAGS -march=x86-64 -mtune=skylake -g -O3"
+# CFLAGS="$CFLAGS -pipe -march=x86-64 -mtune=skylake -g -O3"
+CFLAGS="$CFLAGS -pipe -march=native -g -O3"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
@@ -125,6 +125,7 @@ export CFLAGS
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 export CXXFLAGS="$CFLAGS"
 LDFLAGS="$CFLAGS"
+# LDFLAGS="$LDFLAGS -Wl,-O2"
 # LDFLAGS="$LDFLAGS -Wl,--warn-unresolved-symbols"
 LDFLAGS="$LDFLAGS -Wl,-O2,-z,now,-z,relro,-z,noexecstack"
 LDFLAGS="$LDFLAGS -Wl,--as-needed,--sort-common,--warn-common"
@@ -179,6 +180,7 @@ export FZF_ALT_C_OPTS FZF_CTRL_R_OPTS FZF_CTRL_T_OPTS
 export FZF_DEFAULT_OPTS FZF_CTRL_T_COMMAND FZF_DEFAULT_COMMAND
 # export GDK_DPI_SCALE=0.4
 # export GDK_SCALE=2.25
+export GEM_HOME="$HOME/.gem"
 export GIT_PAGER="less -MRins"
 export GOPATH="$HOME/.go"
 # Use  the GROFF_NO_SGR environment variable to revert to the old
