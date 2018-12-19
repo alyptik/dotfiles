@@ -1,0 +1,323 @@
+\documentclass[compress,red]{beamer}
+\mode<presentation>
+\usetheme{PaloAlto}
+\usefonttheme{default}
+\hypersetup{pdfpagemode=FullScreen}
+\usepackage{beamerinnerthemerectangles}
+\useoutertheme{sidebar}
+% include packages
+\usepackage{subfigure}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage[all,knot]{xy}
+\xyoption{arc}
+\usepackage{url}
+\usepackage{multimedia}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{listings}
+
+\title{The Lind Virtual Machine}
+% The design is based on the idea that popular paths—ones used every day to
+% access basic system requests—are much less likely to contain vulnerabilities.
+% This limited kernel access reduces the possibility of interaction with flawed code.}
+\subtitle{Userspace system call emulation and auditing}
+
+\author{Joey Pabalinas}
+\institute{{\tiny contracted for implementation by}\\ \vspace{.10cm}Professor Justin Cappos}
+\date{\scriptsize Secure Systems Laboratory, New York University\\ \vspace{.10cm}December 20, 2018}
+
+\begin{document}
+
+\frame{\titlepage}
+\section[Outline]{}
+\frame{\tableofcontents}
+
+% Overview
+% ========
+%
+% * What requirements were you working towards? Try to articulate your objectives simply.
+%   - Lind is a fork of Google's NaCl.
+%     - Deprecated by Google in favor of WebASM.
+%     - The concepts behind NaCl remain the best fit for the goals of Lind.
+%       - Virtualization has improved security in a large number of use cases.
+%       - However, heavyweight full-system virtualization is not suitable for uses
+%         within a single application.
+%       - Some of these advantages can be realized using very fine-grained processes
+%         that replace multiple processes with service threads.
+%       - However, because of the performance and programmer burdens of doing so,
+%         this is untenable for many developers.
+%       - A system which behaves similarly to a virtual machine within a single
+%         process is often desirable.
+%   - The security goals of Lind fall somewhere in-between a virtual machine
+%     and a container.
+%     - There is only one master process, reducing the available attack surface.
+%     - All system calls are trapped and dispatched in one of three ways:
+%       - Safer system calls are handled in the Python Repy system, which is a
+%         POSIX compatibility layer.
+%       - Lower level system calls such as fork() (creates a copy of the current
+%         process) and execve() (executes a new process by replacing the current
+%         one) are emulated within the NaCl internal runtime.
+%       - Unsafe system calls which would be too much of a security risk simply
+%         return -ENOSYS and simply behave as if they were unimplemented by the
+%         kernel.
+
+\section{General overview of the project}
+\subsection{Purpose}
+\frame{\frametitle{Purpose}
+Lind is a fork of Google's NaCl.
+\vspace{0.25cm}
+\begin{enumerate}
+\item Security goals fall somewhere in-between a virtual machine and a container
+\vspace{0.25cm}
+\item All system calls are trapped and handled by Lind
+        \begin{itemize}
+        \item Safe System Calls - Python POSIX Compatibility Layer
+        \item Low-level System Calls - NaCl Internal Emulation
+        \item Unsafe System Calls - Return Unimplemented
+        \end{itemize}
+\end{enumerate}
+}
+
+\subsection{Architecture}
+\frame{\frametitle{Architecture}
+\centering \includegraphics[scale=.5]{lind_diagram.jpg}
+}
+
+\subsection{System Call Anatomy}
+\frame{\frametitle{System Call Anatomy}
+\centering \includegraphics[scale=.45]{NaClSyscallFlowchart2.png}
+}
+
+% Objective
+% =========
+%
+%   - My objective was to handle the implementation of fork() and execve().
+%     - Google had never intended NaCl to be used in this way so there was
+%       no real infrastructure to handle this.
+%     - System was built from the ground up using the system's POSIX thread
+%       implementation to transparently emulate multiple, communicating
+%       Linux processes.
+
+% Approach
+% =======
+%
+% The implementation of fork() is really just about emulation of
+% multiple processes using a single, sandboxed application, NaCl.
+%
+% In order to do this, the struct NaClApp and struct NaClAppThread
+% members have been modified in order to support parent/children
+% relationships, the emulation of IPC between threads as if they were
+% full processes, and the copying of execution state, page tables, and
+% address space so it behaves exactly the way it would on
+% a modern SMP operating system kernel like Linux (modulo a few of the
+% lower-level, bitty-gritty details such signal handling and TTY
+% sessions which are not fully implemented yet).
+%
+% The child/parent ownership accounting is done using two simple
+% lists, one of children cage_ids ("pids") and one of pointers to
+% the child's NaClApp structure. Two accounting lists are kept, one
+% stored in the parent's NaClApp structure describing its children,
+% and one stored in the master (original) NaClApp structure describing
+% all currently running children. The master list is used to prevent
+% NaCl from exiting until all children have finished; this is so none of
+% NaClAppThreads are killed prematurely and emulate how fork() would
+% behave on the host system.
+%
+% Overview of NaClSysFork():
+%
+% A child NaClApp is initialized by the parent using data
+% from its own NaClApp structure and calls NaClCreateMainForkThread().
+% From here it's not much different from NaClCreateMainThread() until
+% we arrive at NaClAppForkThreadSpawn().
+%
+% The child/parent mutexes protect the shared data we will be
+% copying between parent and child threads, and the parent's
+% execution state of %rip, %rsp, %rbp, etc, is "frozen" at
+% the syscall entry point (the struct NaClThreadContext is
+% the representation of the architecture specific host thread
+% context holding the execution state of our untrusted code).
+% We then adjust the child's stack to match the parent's stack
+% size, and spawn our actual child thread with NaClAppThreadMake()
+%
+% A literal copy of the original child's thread context is made
+% that contains our TLS pointers and trampoline addresses.
+% We can copy copy the entire untrusted execution state from the
+% parent into the child safely with NaClCopyExecutionContext().
+% This handles the logic to correctly copy our page mappings,
+% current stack data, ELF dynamic text , and then "patches" them with
+% NaClPatchAddr() so that any addresses which were contained in the
+% copied data are actually pointing where they should be; the child's
+% %r15 contains the address prefix we need to calculate physical
+% addresses from an NaCl page table mapping.
+%
+% We then restore the child's trampoline addresses, TLS pointers, and
+% %r15 with the copy made previously, change the syscall return value
+% to 0, and set up the child's TLS slot in the nacl_user global
+% array of thread context pointers. Eventually, we end up at
+% NaClAppForkThreadLauncher() which sets the child thread as
+% the foreground one with NaClTlsSetCurrentThread() and switches
+% into its untrusted code. The child returns 0 from the syscall,
+% and resumes the child's copy of the program.
+%
+% The parent simply switches back to untrusted code the same way
+% it would for any other syscall, returns , and resumes the
+% parent's copy of the program.
+
+% Contribution (Work Done)
+% =========
+%
+% i did the whole goddamn implementation wtf
+
+% Hardest Part: Debugging
+% =======================
+%
+% ~oef~
+
+\lstset{language=Bash}
+
+\pagebreak
+\begin{lstlisting}[
+        frame=single,
+        basicstyle=\footnotesize,
+        title=Debugging Segfaults Inside Lind
+        ]
+$ lind -g /bin/bash -c '/hello; /hello'
+
+Starting program: sel_ldr [...]
+Thread 7 "sel_ldr" received signal
+SIGSEGV, Segmentation fault.
+
+0x0000690501297143 in ?? ()
+\end{lstlisting}
+\newpage
+
+% even though we compiled both the cross-compiled ELF and NaCl with debug
+% information, NaCl maps the ELF to /dev/shm so you lose all symbol
+% information.
+\pagebreak
+\begin{lstlisting}[
+        frame=single,
+        basicstyle=\scriptsize,
+        title=Our Incrediby Useful Backtrace
+        ]
+@ [#7:None()] backtrace
+
+#0  0x0000690501297143 in ?? ()
+#1  0x0000000000000000 in ?? ()
+\end{lstlisting}
+\newpage
+
+% the x86_64-nacl ELF format is similar, but not identical to normal x86_64
+% instruction encoding. since our gdb is expecting normal x86_64 things
+% get a little weird...
+\pagebreak
+\begin{lstlisting}[
+        frame=single,
+        basicstyle=\scriptsize,
+        title=This ASM Doesn't Seem Right...
+        ]
+@ [#7:None()] x/10i $rip
+
+=> 0x690501297143:  lock cmpxchg %edx,(%r15,%r13,1)
+   0x690501297149:  test   %eax,%eax
+   0x69050129714b:  je     0x6905012971a0
+   0x69050129714d:  nopl   0x0(%rax)
+   0x690501297151:  data16 nopw %cs:0x0(%rax,%rax,1)
+   0x690501297160:  mov    %r13d,%edi
+   0x690501297163:  mov    %r12d,%esi
+   0x690501297166:  xor    %ebx,%ebx
+   0x690501297168:  nopl   0x0(%rax)
+   0x69050129716c:  data16 nopw %cs:0x0(%rax,%rax,1)
+\end{lstlisting}
+\newpage
+
+% the lock cmpxchg thankfully has the same encoding, so we
+% can just ignore the rest for now (the weird data bytes were
+% actually just nops with padding to surround the trampolines)
+\pagebreak
+\begin{lstlisting}[
+        frame=single,
+        basicstyle=\scriptsize,
+        title=The Fault Address,
+        escapeinside={\%*}{*)}
+        ]
+@ [#7:None()] print $_siginfo._sifields._sigfault.si_addr
+
+$5 = (void *) 0x6905000368e0
+\end{lstlisting}
+\newpage
+
+% we can see that the fault address is just exploding trying
+% to write to `%r15 + %r13` with a bit of squinting
+\pagebreak
+\begin{lstlisting}[
+        frame=single,
+        basicstyle=\scriptsize,
+        title=Conclusion: The Problem Address: r15 + r13
+        ]
+@ [#7:None()] info registers
+
+rax     0x0             0
+rbx     0x10057910      268794128
+rcx     0x1297120       19493152
+[...]
+r13     0x368e0         223456
+r14     0x0             0
+r15     0x690500000000  115470195752960
+rip     0x690501297143  0x690501297143
+eflags  0x10246         [ PF ZF IF RF ]
+\end{lstlisting}
+\newpage
+
+% checking the process mappings shows the faulting map, which turns out
+% to be mapped executable instead of writable. now that we know the
+% why, finding the root cause will be much easier
+\pagebreak
+\begin{lstlisting}[
+        frame=single,
+        basicstyle=\scriptsize,
+        title=Conclusion: Memory Not Writable
+        ]
+$ grep 6905000 /proc/$(pidof sel_ldr)/maps
+
+   68fb00000000-690500000000 ---p 00000000 00:00 0
+   690500000000-690500010000 rw-p 00000000 00:00 0
+=> 690500010000-690510020000 r-xp 00000000 00:00 0
+\end{lstlisting}
+\newpage
+
+% Risks/Trade-offs
+% ================
+%
+% dunno yet if doing this section
+
+% shh - don't be obvious
+% ======================
+%
+% if they notice, cool
+% if not, pretend it never happened
+\section*{}
+\frame{
+    \begin{center}
+        \huge
+        Questions?\\ \pause
+        \vspace{1cm}
+        o..\\ \pause
+        \vspace{1cm}
+        .o.\\ \pause
+        \vspace{1cm}
+        [1]    3286 segmentation fault (core dumped)
+    \end{center}
+}
+
+\frame{
+    \begin{center}
+        \huge
+        Thank you.
+    \end{center}
+}
+
+\end{document}

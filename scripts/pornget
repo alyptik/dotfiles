@@ -8,28 +8,47 @@ my (@hash, @url_list);
 my $user = "alyptik";
 my $url = "https://www.pornhub.com/users/$user/videos/favorites";
 my $base_dir = "/store/stuff";
-my ($flag, $cnt, $results) = (0, 0, ($ARGV[$#ARGV] // 1));
+my $url_list = "$base_dir/pornget.txt";
+my $results = $ARGV[-1] // 1;
+my ($flag, $cnt) = (0, 0);
+
 my $action = sub {
 		my $entry = shift;
-		if (!$#ARGV) {
+		$entry->{name} = $entry->{name} // "";
+		$entry->{vid} = $entry->{vid} // "";
+		$entry->{url} = $entry->{url} // "";
+		return if not length($entry->{name});
+		return if -f "$entry->{name}.mp4" and not -f "$entry->{name}.mp4.aria2";
+		# if two numbers are passed as an argument we are only printing
+		if ($#ARGV) {
 			print "[$entry->{name}] <$entry->{url}>\n";
 			return;
 		}
-		chomp($entry->{vid} = `youtube-dl --get-url "$entry->{url}"`);
+		# else download the video and sleep/retry on failure
+		until (length($entry->{vid})) {
+			sleep(1);
+			chomp($entry->{vid} = `youtube-dl --get-url "$entry->{url}"`);
+			next unless length($entry->{vid});
+			unlink "$entry->{name}.mp4" if -f "$entry->{name}.mp4";
+			unlink "$entry->{name}.mp4.aria2" if -f "$entry->{name}.mp4.aria2";
+			system("aria2c -x 16 -s 16 -k 4M -o '$entry->{name}.mp4' '$entry->{vid}'");
+			return;
+		}
 	};
 
+# for (split "\n", `cat '$base_dir/favorites.html'`) {
 for (split "\n", `curl -s '$url'`) {
 	next unless (/Play All Videos/ .. eof);
 	if (/view_video\.php\?viewkey=([^"]+)" title="([^"]+)"/ && ++$flag % 2) {
 		my ($name, $url, $vid) = ("", "", "");
 		$name = $2;
 		$url = "https://pornhub.com/view_video.php?viewkey=$1";
-		# / can't be used in filenames
+		# / and ' break if used in filenames
 		$name =~ s!/!!g;
-		# replace &, ", and ' html encoded characters
+		$name =~ s!#*\Q&#039;\E!!g;
+		# replace & and " html encoded characters
 		$name =~ s!#*\Q&amp;\E!&!g;
 		$name =~ s!#*\Q&quot;\E!"!g;
-		$name =~ s!#*\Q&#039;\E!'!g;
 		push @hash, {
 			name => $name,
 			url => $url,
@@ -40,15 +59,11 @@ for (split "\n", `curl -s '$url'`) {
 	}
 }
 
+chdir "$base_dir" or die;
 $action->($hash[$_]) for (0 .. $results - 1);
 
-if ($#ARGV) {
-	chdir "$base_dir" or die;
-	system("aria2c -x 16 -s 16 -k 4M -o '$hash[$_]->{name}.mp4' '$hash[$_]->{vid}'") for (0 .. $results - 1);
-}
-
-print "\n";
-print STDERR join " ", @url_list;
-print "\n\n";
+open(my $f, ">", "$url_list") or die "Can't open > $url_list: $!";
+print $f join "\n", @url_list;
+close $f;
 
 # vi:ft=perl:
