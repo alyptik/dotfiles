@@ -115,7 +115,7 @@
 	cpa = cherry-pick -S --abort
 	ls = log --stat --show-signature --color-moved=zebra
 	ll = log --pretty=colorful-oneline --color --decorate --abbrev-commit --stat
-	patch = format-patch --stat --cover-letter -o /patches
+	patch = format-patch --stat --cover-letter --add-header=\"X-Patchwork-Bot: notify\" -o /patches
 	mine = log --author=joeypabalinas@gmail.com
 	me = log --grep=joeypabalinas@gmail.com
 [web]

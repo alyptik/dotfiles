@@ -1,6 +1,8 @@
 include "%L"
 
+
 ## start alyptik
+<Multi_key> <u> <n> <i> <c>				: "🦄"	U1f984	# unicorn
 <Multi_key> <asterisk> <underscore>			: "🌠" U1F320	# the more you know
 <Multi_key> <asterisk> <equal>				: "🌠" U1F320	# the more you know
 <Multi_key> <colon> <colon>				: "∘" U2218	# function composition symbol
@@ -26,7 +28,7 @@ include "%L"
 <Multi_key> <h> <e> <y> <e> <s>				: "😍" U1f60d	# heart eyes smiley
 <Multi_key> <p> <s> <u> <b>				: "⊂" U2282	# proper subset
 <Multi_key> <s> <u> <b>					: "⊆" U2286	# subset
-<Multi_key> <u> <n> <i>					: "∪" U222a	# union
+<Multi_key> <u> <n> <i>	<o>				: "∪" U222a	# union
 <Multi_key> <i> <n> <t>					: "∩" U2229	# intersection
 <Multi_key> <p> <r> <o>					: "∝" U221d	# proportional
 <Multi_key> <n> <o> <t>					: "¬"		# not

@@ -29,6 +29,7 @@ alias crash CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>
 alias zsh Zsh Workers Mailing List <zsh-workers@zsh.org>
 alias kernelnewbies <kernelnewbies@kernelnewbies.org>
 alias lkml Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+alias notify Linux Kernel Patch Notification <notify@kernel.org>
 alias majordomo Majordomo <majordomo@vger.kernel.org>
 
 # vi:ft=neomuttrc:
