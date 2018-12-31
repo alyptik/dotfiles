@@ -12,6 +12,6 @@
 
 # sudo systemctl start nginx
 
-domains=(-d alyptik.com -d alyptik.org -d fsckingfu.tk)
-wildcards=(-d '*.alyptik.com'  -d '*.alyptik.org' -d '*.fsckingfu.tk')
+domains=(-d alyptik.com -d alyptik.org -d fsckingfu.tk -d opsec.dog)
+wildcards=(-d '*.alyptik.com'  -d '*.alyptik.org' -d '*.fsckingfu.tk' -d '*.opsec.dog')
 sudo certbot certonly --manual $domains $wildcards --server https://acme-v02.api.letsencrypt.org/directory
