@@ -31,7 +31,8 @@ function _imguhr() {
 
 function _plumber () {
 	local pb pbalt
-	pb="ptpb.pw" pbalt="pb.gehidore.net"
+	pb="ptpb.pw"
+	pbalt="paste.xinu.at"
 	case "$1" in
 	(*://localhost*/*|*://hobbes*/*|*://nibbler*/*)
 		gio open "$1";;
@@ -51,18 +52,6 @@ function _plumber () {
 		_mpvify "$1";;
 	(*://*youtu.be/*)
 		_mpvify "$1";;
-	(*://$pbalt/pb/*.sh|*://$pbalt/pb/*.bash|*://$pbalt/pb/*.zsh|*://$pbalt/pb/*/text)
-		gvim -c "setf sh" -p "${1%/*}";;
-	(*://$pbalt/*.log|*://$pbalt/*.txt|*://$pbalt/*.conf|*://$pbalt/*.cfg)
-		gvim -c "setf text" -p "${1%/*}";;
-	(*://$pbalt/pb/*/bash)
-		gvim -c "setf sh" -p "${1%/*}";;
-	(*://$pbalt/pb/*/*)
-		gvim -c "setf ${1##*/}" -p "${1%/*}";;
-	(*://$pbalt/pb/*.*|*://$pbalt/pb/\~*)
-		gio open "$1";;
-	(*://$pbalt/pb/*)
-		gvim -c "setf sh" -p "${1}";;
 	(*://$pb/*.sh|*://$pb/*.bash|*://$pb/*.zsh|*://$pb/*/text*)
 		gvim -c "setf sh" -p "${1%/*}";;
 	(*://$pb/*.log|*://$pb/*.txt|*://$pb/*.conf|*://$pb/*.cfg)
@@ -74,7 +63,11 @@ function _plumber () {
 	(*://$pb/*.*|*://$pb/\~*)
 		gio open "$1";;
 	(*://$pb/*)
-		gvim -c "setf sh" -p "${1}";;
+		gvim -c "setf sh" -p "$1";;
+	(*://$pbalt/*/|*://$pbalt/*/*)
+		gio open "$1";;
+	(*://$pbalt/*)
+		gvim -c "setf sh" -p "$1";;
 	(*://pastebin.com/raw*)
 		gvim -c "setf sh" -p "$1";;
 	(*://)
