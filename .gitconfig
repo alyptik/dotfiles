@@ -83,7 +83,7 @@
 	ra = rebase --abort
 	update = pull -v --ff-only
 	unset = config --global --unset
-	pl = pull -tj8 --recurse-submodules=yes
+	pl = pull -tj8 --recurse-submodules=yes --all
 	ps = push --follow-tags
 	m = merge
 	fw = grep -FWn --color=auto --break

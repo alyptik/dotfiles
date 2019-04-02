@@ -8,7 +8,7 @@ Cc: Justin Cappos <jcappos@nyu.edu>,
 	CrashSimulator Mailing List <crashsimulator-dev@googlegroups.com>,
 	Joey Pabalinas <joeypabalinas@gmail.com>
 Bcc:
-Subject: [2018-12-09] Joey's Progress Report
+Subject: [2019-02-06] Joey's Progress Report
 Reply-To:
 In-Reply-To:
 
@@ -16,43 +16,16 @@ In-Reply-To:
  * Joey's Progress Report
  */
 
-This week I reviewed a couple of Alan's PRs for the rrapper repository
-and continued to work on x86-64 support for CrashSimulator. I have
-noticed that the event numbers change a bit in x86-64 and so I assume
-something weird is offsetting the strace output and causing CrashSimulator
-to detect the incorrect line number to system call mapping.
+Sorry for being missing in action lately. I've been in the hospital at
+the psych ward for some personal stuff I'd rather not get into. I'm out
+now and trying my best to get into the groove for work, going to try to
+attend tomorrow's Lind meeting, but sorry if I don't make it.
 
-I'm still looking into exactly where this happens, but, as far
-as I can tell, this is the only real issue left in my x86-64 port,
-so we're pretty close.
-
-I attempted to get MySQL and PHP compiled for Lind, but the compiler
-errors thrown by both are still a work in progress. MySQL particularly
-is what happens to be giving me the largest headache, but all of the
-errors so far have been fairly simple to fix, and it's just a matter
-of painstakingly doing the work.
-
-I'm now fairly confident my segfaulting problems in Lind are related
-to copying the full dynamic text section and correctly mapping it, so
-I'm currently studying the shm implementation inside of NaCl so I can
-figure out what functions I need to call to do so. I'm also studying
-the fork implementation inside of the Linux kernel to see exactly how
-they handle everything compared to my implementation.
-
-Additionally, it seems I need to rethink my method of duplicating
-stdout/stderr, as currently the host-mapped file descriptors don't
-get copied when fed to dup2(). I also need to emulate or stub stdin
-(currently there is no file descriptor 0 at all) to have shell-style
-pipes like `foo | bar` work correctly.
+Thanks for understanding guys.
 
 /* Plans For Next Week */
 
-- Find out the root cause of the strace line number inconsistencies.
-- Fix the remaining compiler errors in the MySQL/PHP Lind build.
-- Correctly handle the dynamic shm text in NaCl.
-- Fix the broken behavior when feeding host-mapped file descriptors
-  to system calls like dup2()
-- Emulate or stub standard input for file descriptor 0.
+- Get well enough to get back to work.
 
 That's all for this week, thanks.
 

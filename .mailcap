@@ -1,5 +1,5 @@
 text/x-log: less %s; copiousoutput;
-# text/plain; vim -R -- %s; needsterminal
+text/plain; vim -R -- %s; needsterminal
 text/x-diff; cat %s | colordiff; copiousoutput;
 text/x-patch; cat %s | colordiff; copiousoutput;
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
