@@ -41,7 +41,7 @@ alternates -group manoa ^joeyp@hawaii\\.edu$
 
 my_hdr Cc: Joey Pabalinas <joeypabalinas@gmail.com>
 
-source "gpg -dq $HOME/.passwords.asc |"
+# source "gpg -dq $HOME/.passwords.asc |"
 source "$my_cfgdir/mutt_theme"
 source "$my_cfgdir/mutt_keybinds"
 source "$my_cfgdir/mutt_aliases"
@@ -205,7 +205,7 @@ unset pgp_ignore_subkeys
 unset pgp_retainable_sigs
 
 set my_gmail_user = "joeypabalinas"
-set my_gmail_pass = "Rapture1123!"
+set my_gmail_pass = ""
 
 set realname = "Joey Pabalinas"
 set from = "joeypabalinas@gmail.com"

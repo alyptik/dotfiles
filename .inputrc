@@ -56,7 +56,7 @@ set visible-stats on
 
 # other readline custom shortcuts
 "\C-k": kill-whole-line
-"\C-u": universal-argument
+# "\C-u": universal-argument
 "\C-w": backward-kill-word
 "\C-xr": re-read-init-file
 "\C-x\C-r": re-read-init-file
