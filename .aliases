@@ -8,6 +8,8 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias emerge='emerge --color=y'
+alias youtube-dl='youtube-dl --continue'
 alias acked='printf "%s-by: Joey Pabalinas <joeypabalinas@gmail.com>\n" Acked Co-developed Reported Reviewed Signed-off Suggested Tested | tee >(head -n1 | xclip -i -r -sel prim) | tee >(head -n1 | xclip -i -r -sel clip)'
 alias reviewed='printf "%s-by: Joey Pabalinas <joeypabalinas@gmail.com>\n" Acked Co-developed Reported Reviewed Signed-off Suggested Tested | xclip -i -f -sel prim | xclip -i -f -sel clip'
 alias upstream="git config branch.\$(git branch | sed '/^\\*/ !d; s/^\\* //').remote up && git config branch.\$(git branch | sed '/^\\*/ !d; s/^\\* //').pushremote origin"
@@ -92,7 +94,7 @@ alias pfm='pcmanfm'
 alias fm='fman'
 alias rk='runkernel -s'
 alias nmu='neomutt'
-alias m='make clean && make cscope tags && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
+alias m='make clean && make cscope tags && make && PREFIX=~/.local make install && scan-build make -B asan && /lib/ld-linux-x86-64.so.2'
 # quick opening files with mpv
 # alias m='f -e mpv'
 alias urb='define -u'
@@ -116,7 +118,7 @@ alias cdp='pushd "${P:-/store/code/projects}" >/dev/null'
 # silence 'Picked up _JAVA_OPTIONS' message on command line
 _SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
 unset _JAVA_OPTIONS
-alias java='java "$_SILENT_JAVA_OPTIONS"'
+alias java='java $_SILENT_JAVA_OPTIONS'
 alias vg='valgrind'
 alias ip='ip -c'
 alias rline=$'python2 -c \'import os; import random; os.system("vim %s +%s" % (lambda f: (f, random.randint(1,len(open(f).readlines())+1)))(random.choice([f for f in sum([[os.path.join(p, f) for f in fs] for (p, ds, fs) in os.walk(".")], []) if not ".git" in f])))\''
@@ -155,8 +157,10 @@ alias fort='fortune'
 # quick opening files with xdg-open
 alias x='a -e xdg-open'
 alias fpass='lpass show -c --password "$(lpass ls | fzf | awk "{print \$(NF)}" | sed "s/\]//g")"'
-alias rs='rsync -ahhsvAHSX --info=flist2,name,progress2,stats2'
-alias r-s='rsync -ahhksvAHSX --info=flist2,name,progress2,stats2'
+# alias rs='rsync -ahhsvAHSX --info=flist2,name,progress2,stats2'
+alias rs='rsync -ahhsvAHSX --info=all4'
+# alias r-s='rsync -ahhsvAHLSX --info=flist2,name,progress2,stats2'
+alias r-s='rsync -ahhsvAHLSX --info=all4'
 alias rorphans='pacman -Qdtq | paste -sd" " | tee >(perl -pe "chomp if eof" | xsel -ib) /dev/stderr | sudo pacman -Rs -'
 alias skvm='spicy --uri="spice+unix:///tmp/vm_spice.socket"'
 alias k='kill'

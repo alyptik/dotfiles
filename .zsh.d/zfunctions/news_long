@@ -1,5 +1,5 @@
 
-	echo -e "$(echo $(curl -m 5 -s ${1:-'https://www.archlinux.org/feeds/news/'} | \
+	echo -e "$(echo $(curl -Ls ${1:-'https://www.archlinux.org/feeds/news/'} | \
 		sed -e ':a;N;$!ba;s/\n/ /g') | \
 			sed -e '
 			s/&amp;/\&/g
@@ -23,5 +23,4 @@
 			s/[<>£§]//g
 		')\n\n" | \
 		grep --line-buffered '' | \
-		awk '{ line[NR] = $0 } END { for (i = NR; i > 0; i--) { print line[i]; } }' | \
 		sed '/^$/d'

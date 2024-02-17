@@ -1,0 +1,24 @@
+qemu-system-x86_64 \
+	-hda "$1" "${@:3}" -m 8G -smp 8 \
+	-vga virtio -boot order=d,menu=on \
+	-enable-kvm -machine type=pc,accel=kvm \
+	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+	-nic user,model=virtio -monitor stdio -monitor pty \
+	-drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2/x64/OVMF_CODE.4m.fd \
+	-drive if=pflash,format=raw,file="${2:-OVMF_VARS.4m.fd}"
+	# -net nic,model=virtio -net user \
+	# -monitor stdio -monitor pty \
+	# -drive if=pflash,format=raw,file="${3:-OVMF.4m.fd}"
+	# -bios /usr/share/ovmf/x64/ovmf_x64.bin
+	# -spice unix=on,addr=/tmp/vm_spice.socket,playback-compression=off,disable-ticketing=on \
+	# -device virtio-serial-pci -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0 \
+	# -chardev spicevmc,id=spicechannel0,name=vdagent -device ich9-usb-ehci1,id=usb \
+	# -device ich9-usb-uhci1,masterbus=usb.0,firstport:=0,multifunction=on \
+	# -device ich9-usb-uhci2,masterbus=usb.0,firstport=2 \
+	# -device ich9-usb-uhci3,masterbus=usb.0,firstport=4 \
+	# -chardev spicevmc,name=usbredir,id=usbredirchardev1 \
+	# -device usb-redir,chardev=usbredirchardev1,id=usbredirdev1 \
+	# -chardev spicevmc,name=usbredir,id=usbredirchardev2 \
+	# -device usb-redir,chardev=usbredirchardev2,id=usbredirdev2 \
+	# -chardev spicevmc,name=usbredir,id=usbredirchardev3 \
+	# -device usb-redir,chardev=usbredirchardev3,id=usbredirdev3 \

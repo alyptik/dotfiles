@@ -227,6 +227,10 @@ aliases[pe]='noglob perl -pe'
 aliases[yt]='noglob youtube-dl -f bestaudio --write-all-thumbnails --write-description'
 aliases[ampv]='noglob mpv --no-video --load-unsafe-playlists --ytdl-format=bestaudio/best'
 
+# archlinux news
+news_short
+# news_long
+
 # woo cow
 () {
 	local -a cmdline dig host muhcows
@@ -323,7 +327,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e]" insert-x-selection
 	bindkey -M "$1" "\e{" yank-clip-selection
 	bindkey -M "$1" "\e}" insert-clip-selection
-	bindkey -M "$1" "\ef" zle-fh
+	bindkey -M "$1" "\eF" zle-fh
 	bindkey -M "$1" "\C-w" backward-kill-word
 	bindkey -M "$1" "\e\C-m" self-insert-unmeta
 	bindkey -M "$1" "\eh" zle-run-help
@@ -373,10 +377,12 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\e[1;5D" emacs-backward-word
 	bindkey -M "$1" "\e[1;3D" emacs-backward-word
 	bindkey -M "$1" "\e[1;2D" emacs-backward-word
+	bindkey -M "$1" "\eb" emacs-backward-word
 	bindkey -M "$1" "\e\e[C" emacs-forward-word
 	bindkey -M "$1" "\e[1;5C" emacs-forward-word
 	bindkey -M "$1" "\e[1;3C" emacs-forward-word
 	bindkey -M "$1" "\e[1;2C" emacs-forward-word
+	bindkey -M "$1" "\ef" emacs-forward-word
 	bindkey -M "$1" "\e[7~" beginning-of-line
 	bindkey -M "$1" "\e[1;5B" beginning-of-line
 	bindkey -M "$1" "\e[1;3B" beginning-of-line
@@ -627,7 +633,7 @@ hash -d man="$CONFIG/man"
 hash -d music="/store/music"
 hash -d n="$HOME/lind_project/native_client"
 hash -d nginx="/etc/nginx"
-hash -d omz="/store/code/projects/oh-my-zsh"
+hash -d omz="$PROJECTS/oh-my-zsh"
 hash -d p="$PROJECTS"
 hash -d paper="/media/sdxc/papers"
 hash -d physics="/store/torrents/Richard Feynman - The Feynman Lectures on Physics, Volumes 1-4 [Audio] 32kps"
@@ -672,7 +678,7 @@ function _force_rehash() {
 	return 1
 }
 # only show single character options with '-'
-zstyle -e ':completion:*:options'                    ignored-patterns '
+zstyle -e ':completion:*:options'			ignored-patterns '
 	if [[ $PREFIX == - ]]; then
 		reply=("--*");
 	fi'

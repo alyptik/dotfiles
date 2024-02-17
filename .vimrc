@@ -27,6 +27,8 @@ endif
 
 if has("nvim") | let g:plugdir='~/.config/nvim/plugged' | else | let g:plugdir='~/.vim/plugged' | endif
 
+let g:polyglot_disabled=['latex']
+
 call plug#begin(g:plugdir)
 	" Neo-vim plugin handling
 	if has("nvim")
@@ -48,14 +50,14 @@ call plug#begin(g:plugdir)
 	Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 	" Plug 'tpope/vim-obsession'
 	Plug 'xolox/vim-session'
-	Plug 'JCLiang/vim-cscope-utils'
+	" Plug 'JCLiang/vim-cscope-utils'
 	Plug 'hdima/python-syntax'
 	Plug 'jungomi/vim-mdnquery'
 	" Plug 'osfameron/perl-tags', {'for': 'perl'}
 	" Plug 'osfameron/perl-tags-vim', {'for': 'perl'}
 	" Plug 'alyptik/perl-tags-vim', {'for': 'perl', 'branch': 'https'}
 	Plug 'c9s/perlomni.vim', {'for': 'perl'}
-	Plug 'brookhong/cscope.vim'
+	" Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
@@ -92,7 +94,7 @@ call plug#begin(g:plugdir)
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-	Plug 'subosito/nginx.vim', {'for': 'nginx'}
+	" Plug 'subosito/nginx.vim', {'for': 'nginx'}
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	" Plug 'ternjs/tern_for_vim', {'for': ['json', 'json5'], 'do': 'npm install && npm install -g tern'}
 	" Plug 'terryma/vim-expand-region'
@@ -199,7 +201,6 @@ colorscheme gruvbox
 filetype plugin indent on
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
-let g:polyglot_disabled=['latex']
 
 " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
 execute 'set t_kP=[5;*~'
@@ -1437,7 +1438,7 @@ if has_key(shells, extension)
 	endif
 endif
 endfunction
-autocmd! BufNewFile *.* call Hashbang(0,1,1)
+autocmd! BufNewFile *.* call Hashbang(0,1,0)
 
 function! ResCur()
 	if line("'\"") <= line("$")

@@ -175,8 +175,9 @@ termcapinfo st* "ti@:te@:hs"
 termcapinfo h19|z19  "am@:im=\E@:ei=\EO" "dc=\E[P"
 termcapinfo rxvt* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:ti@:te@:hs@:ts=\E]2;:fs=07:ds=\E]2;screen07"
 
-term screen-256color-italic
+# term xterm-256color
 # term screen-256color-it
+term screen-256color
 
 hardstatus on
 caption always
@@ -191,6 +192,6 @@ hardstatus string "%{-}%{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%?[ %{= 7;0}%?%E%{
 # caption string "%{-}%{= kK}%{+b ..}%?%E%{+r ..}%?%?%P%{+u ..}%?:%{+b ..}%?%E%{+r kK}%?%?%P%{+u kK}%?:%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?[%{+b kG}%?%E%{+r kG}%?%?%P%{+u kG}%? %S %{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?]%{+b kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%= %?%-Lw%?%{+b kR}%?%E%{+r kR}%?%?%P%{+u kR}%?%n*%f %t%?%{+b kR}%?%E%{+r kR}%?%?%P%{+u kR}%?(%u)%?%{=b kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%?%+Lw%? %=%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?[%{+b kG}%?%E%{+r kG}%?%?%P%{+u kG}%? %h %{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?]%{-b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?:%{+b kK}%?%E%{+r kK}%?%?%P%{+u kK}%?:%5`%{-}"
 # hardstatus string "%{-}%{= kK}%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?[ %{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%3`%{= kR}%?%E%{+r kR}%?%?%P%{+u kR}%?@%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%H%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?Load%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?: %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?%2` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%=[ %{kM}%?%E%{+r kM}%?%?%P%{+u kM}%?%1`%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{kB}%?%E%{+r kB}%?%?%P%{+u kB}%?%4` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%5`%{-}"
 
-chdir /p/linux
+chdir /store/projects/linux
 
 # vi:ft=screen:

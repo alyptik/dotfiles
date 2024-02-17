@@ -1,6 +1,7 @@
 include "%L"
 
-## start alyptik
+## start jp
+<Multi_key> <u> <n> <i> <c>				: "🦄"	U1f984	# unicorn
 <Multi_key> <asterisk> <underscore>			: "🌠" U1F320	# the more you know
 <Multi_key> <asterisk> <equal>				: "🌠" U1F320	# the more you know
 <Multi_key> <colon> <colon>				: "∘" U2218	# function composition symbol
@@ -26,7 +27,7 @@ include "%L"
 <Multi_key> <h> <e> <y> <e> <s>				: "😍" U1f60d	# heart eyes smiley
 <Multi_key> <p> <s> <u> <b>				: "⊂" U2282	# proper subset
 <Multi_key> <s> <u> <b>					: "⊆" U2286	# subset
-<Multi_key> <u> <n> <i>					: "∪" U222a	# union
+<Multi_key> <u> <n> <i>	<o>				: "∪" U222a	# union
 <Multi_key> <i> <n> <t>					: "∩" U2229	# intersection
 <Multi_key> <p> <r> <o>					: "∝" U221d	# proportional
 <Multi_key> <n> <o> <t>					: "¬"		# not
@@ -94,11 +95,9 @@ include "%L"
 <Multi_key> <s> <h> <r> <u> <g>				: "🤷" U1f937	# shrug
 <Multi_key> <s> <s> <h> <r> <u> <g>			: "┐(ツ)┌"	# shrug
 <Multi_key> <e> <y> <e> <s>				: "ಠ_ಠ" U0ca0	# eyes
-
-## end alyptik
+## end jp
 
 ## start grawity
-
 # letters
 
 <Multi_key> <D> <A>			: "Δ"	U0394	# delta
@@ -242,13 +241,9 @@ include "%L"
 <Multi_key> <Multi_key> <KP_4> <KP_5>		: "╠"
 <Multi_key> <Multi_key> <KP_6> <KP_5>		: "╣"
 <Multi_key> <Multi_key> <KP_8> <KP_5>		: "╦"
-
 ## end grawity
 
 ## start demize
-
-include "%L"
-
 # various extra characters
 <Multi_key> <l> <a>                     : "λ" U03bb
 <Multi_key> <m> <u>                     : "µ" U00b5
@@ -325,11 +320,9 @@ include "%L"
 # trains
 # <multi_key> <t> <r> <a> <i> <n> <s>     : "🚂🚊🚉🚞🚆🚄🚅🚈🚇🚝🚋🚃🚟"
 <Multi_key> <t> <r> <a> <i> <n> <s>     : "🚇🚅🚈🚇🚝🚋🚃🚟"
-
 ## end demize
 
 ## start phillid
-
 # useful stuff
 <Multi_key> <d> <o> <t>                        : "·"		# mid dot for multiplication or units
 <Multi_key> <0> <space>                        : "﻿" Ufeff	# zero width space non-breaking
@@ -494,7 +487,6 @@ include "%L"
 <Multi_key> <g> <y>    : "ψ"   U03c8   	# greek small letter psi
 <Multi_key> <g> <Z>    : "Ζ"   U0396   	# greek capital letter zeta
 <Multi_key> <g> <z>    : "ζ"   U03b6   	# greek small letter zeta
-
 ## end phillid
 
 # vi:ft=xkb:

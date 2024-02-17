@@ -19,7 +19,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	unset f
 fi
 
-xrandr --dpi 260 &
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+xrandr --dpi 260
 xbindkeys
 xset s noblank
 xset s off -b -dpms
@@ -28,14 +30,17 @@ xrdb "/home/jp/.Xresources"
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "/home/jp/.Xmodmap"
-udisksctl mount -b "$(findfs LABEL=backups)" &
-(udisksctl mount -b "$(findfs LABEL=sdxc)"; sleep 5; pcmanfm /sdxc /sdxc/papers /sdxc/work) &
-(udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
-pavucontrol &
+# udisksctl mount -b "$(findfs LABEL=backups)" &
+udisksctl mount -b "$(findfs LABEL=sdxc)" &
+udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
+# (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 # pan &
-stjerm &
-transgui &
-compton -b
+pavucontrol &
+uxterm &
+pcmanfm /run/media/jp/sdxc /run/media/jp/toshiba1TB /store/stuff &
+firefox &
+# transgui &
+# compton -b
 env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 dbus-update-activation-environment --systemd DISPLAY
@@ -43,7 +48,7 @@ dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
-default_session="herbstluftwm";
+default_session="i3";
 
 if [ "$1" = xterm ] && [ -n "$2" ]; then
 	session="$2";

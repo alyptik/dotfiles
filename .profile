@@ -28,10 +28,10 @@ if [ -d "$HOME/.terminfo" ]; then
 	linux*|xterm*)
 		TERM=xterm-256color;;
 	screen*)
-		TERM=screen-256color-italic;;
+		TERM=screen-256color;;
 	*)
 		if [ -n "$STY" ] || [ -n "$SSH_CONNECTION" ]; then
-			TERM=screen-256color-italic
+			TERM=screen-256color
 		fi;;
 	esac
 fi
@@ -71,15 +71,17 @@ fi
 
 # directory shortcut environment variables
 export CONFIG="/store/dotfiles"
+export PROJECTS="/store/projects"
 export LINUX="$PROJECTS/linux"
-export PROJECTS="/store/code/projects"
-export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" PREFIX="$HOME/.local"
-export c="$C" h="$H" l="$L" p="$P" pre="$PREFIX"
+# export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" PREFIX="$HOME/.local"
+# export c="$C" h="$H" l="$L" p="$P" pre="$PREFIX"
+export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS"
+export c="$C" h="$H" l="$L" p="$P"
 
 # compiler environment
 unset CARCH CCACHE_DISABLE CFLAGS CCFLAGS
 unset CHOST C_INCLUDE_PATH CPATH CPPFLAGS
-unset CXXFLAGS LDFLAGS LIBRARY_PATH
+unset CXXFLAGS LDFLAGS LIBRARY_PATH MAKEFLAGS
 # export CARCH="x86_64"
 export CCACHE_DIR="$HOME/.ccache"
 export CCACHE_DISABLE=1
@@ -111,7 +113,7 @@ CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"
 # CFLAGS="$CFLAGS -fdiagnostics-generate-patch"
 # CFLAGS="$CFLAGS -fPIC -fstack-protector-strong"
 CFLAGS="$CFLAGS -fPIC -fno-plt"
-CFLAGS="$CFLAGS -fuse-ld=gold -fuse-linker-plugin"
+# CFLAGS="$CFLAGS -fuse-ld=gold -fuse-linker-plugin"
 # CFLAGS="$CFLAGS -fno-plt -fno-strict-aliasing"
 # CFLAGS="$CFLAGS -march=native -gdwarf-4 -g3 -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=intel -g3 -O3"
@@ -123,13 +125,14 @@ export CFLAGS
 # export CPATH=":$HOME/.local/include"
 # export C_INCLUDE_PATH=":$HOME/.local/include"
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
-export CXXFLAGS="$CFLAGS"
+CXXFLAGS="$CFLAGS"
+export CXXFLAGS
 LDFLAGS="$CFLAGS"
 # LDFLAGS="$LDFLAGS -Wl,-O2"
 # LDFLAGS="$LDFLAGS -Wl,--warn-unresolved-symbols"
-LDFLAGS="$LDFLAGS -Wl,-O2,-z,now,-z,relro,-z,noexecstack"
-LDFLAGS="$LDFLAGS -Wl,--as-needed,--sort-common,--warn-common"
-export LDFLAGS
+# LDFLAGS="$LDFLAGS -Wl,-O2,-z,now,-z,relro,-z,noexecstack"
+# LDFLAGS="$LDFLAGS -Wl,--as-needed,--sort-common,--warn-common"
+# export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l$NPROC"
 export MAKEFLAGS="-j$((NPROC + 2)) -l$NPROC"
@@ -248,11 +251,11 @@ export MANPAGER="env -u LESS less -MRins"
 MANPATH="/usr/local/man:/usr/share/man"
 MANPATH="/usr/lib/plan9/man:$MANPATH"
 MANPATH="/opt/intel/man/common:$MANPATH"
-MANPATH="$HOME/perl5/share/man:$MANPATH"
+MANPATH="$HOME/perl5/man:$MANPATH"
 MANPATH="$HOME/.local/share/man:$MANPATH"
 MANPATH="$CONFIG/man:$MANPATH"
 export MANPATH
-export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:3f"
+export MANSECT="1:2:3:9:0:7:5:4:n:l:8:6:1p:3f:3pm"
 export MESA_GL_VERSION_OVERRIDE="4.5COMPAT"
 export npm_config_prefix="$HOME/.node_modules"
 # export PAGER=vimpager

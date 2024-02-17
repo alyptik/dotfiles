@@ -70,7 +70,7 @@ st.font:		Fira Code:style=Light:pixelsize=30:antialias=true
 !                                 WenQuanYi Micro Hei Mono:style=Light:pixelsize=30:antialias=true:hinting=true
 stjerm*font:			Fantasque Sans Mono Light 9
 ! stjerm*font:			Source Code Pro Light 9
-URxvt*font:			xft:Fira Code:style=Retina:pixelsize=30:antialias=true:hinting=true
+URxvt*font:			xft:Fira Code:style=Light:pixelsize=30:antialias=true:hinting=true
 yeahconsole*faceName:		xft:Fira Code:style=Light:pixelsize=30:antialias=true
 xterm*faceName:			xft:Fira Code:style=Light:pixelsize=30:antialias=true
 
@@ -125,8 +125,8 @@ URxvt*tabbed.no-tabbedex-keys:	true
 URxvt*url-select.autocopy:	true
 URvxt*url-select.button:	1
 URxvt*url-select.underline:	true
-URxvt*url-select.launcher:	/store/scripts/plumber
-URxvt*url-launcher:		/store/scripts/plumber
+URxvt*url-select.launcher:	/home/jp/bin/plumber
+URxvt*url-launcher:		/home/jp/bin/plumber
 URxvt*keysym.Shift-C-C:		perl:clipboard:copy
 URxvt*keysym.Shift-C-V:		perl:clipboard:paste
 URxvt*keysym.Shift-M-V:		perl:clipboard:paste_escaped
