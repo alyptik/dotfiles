@@ -237,7 +237,7 @@ news_short
 	host=(host -W 1 -t)
 	dig=(dig +short +timeout=1)
 	cmdline=($host txt istheinternetonfire.com)
-	muhcows=(${:-/usr/share/cows/*.cow(.:r:t)})
+	muhcows=(${:-/usr/share/cowsay/cows/*.cow(.)})
 	$cmdline | cut -f2 -d'"' | cowsay -W 50 -f ${muhcows[RANDOM % $#muhcows + 1]}
 	# add an extra newline
 	print
