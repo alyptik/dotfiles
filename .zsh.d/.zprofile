@@ -1,1 +1,1 @@
-.zshenv
+/store/dotfiles/.profile

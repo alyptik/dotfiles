@@ -33,11 +33,13 @@ xmodmap "/home/jp/.Xmodmap"
 # udisksctl mount -b "$(findfs LABEL=backups)" &
 udisksctl mount -b "$(findfs LABEL=sdxc)" &
 udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
+sleep 2
 # (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 # pan &
+pulseaudio &
 pavucontrol &
 uxterm &
-pcmanfm /run/media/jp/sdxc /run/media/jp/toshiba1TB /store/stuff &
+pcmanfm /run/media/root/sdxc /run/media/root/toshiba1TB /store/stuff &
 firefox &
 # transgui &
 # compton -b
@@ -114,9 +116,9 @@ gnome-classic)
 	exec gnome-session --session=gnome-classic;;
 
 i3|i3wm)
-	/home/jp/bin/i3-focus-last &
-	/home/jp/bin/hilites &
-	xscreensaver &
+	# /home/jp/bin/i3-focus-last &
+	# /home/jp/bin/hilites &
+	# xscreensaver &
 	exec i3;;
 
 icewm)

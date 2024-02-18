@@ -1,7 +1,7 @@
 [user]
 	email = joeypabalinas@gmail.com
 	name = Joey Pabalinas
-	signingkey = EB25F69518BD5ED7!
+	signingkey = C7A6F548618F4CAC5398F0D8AA81EEF424F1A302
 [diff]
 	tool = vimdiff2
 	renameLimit = 24167
@@ -162,3 +162,6 @@
 	program = gpg
 [checkout]
 	defaultremote = up
+[safe]
+	directory = /store/projects/linux
+	directory = /store/dotfiles

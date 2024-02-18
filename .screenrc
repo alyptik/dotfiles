@@ -21,6 +21,7 @@ bind S xoff
 bind o only
 bind q only
 bind Q xon
+bind k kill
 bind x remove
 bind X lockscreen
 bind r source "$HOME/.screenrc"
