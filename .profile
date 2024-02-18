@@ -280,6 +280,7 @@ PATH="$LINUX/scripts:$PATH"
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 PATH="$HOME/lind_project/lind/repy/bin:$PATH"
 PATH="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin:$PATH"
+PATH="/usr/lib/llvm/17/bin:$PATH"
 # shellcheck disable=SC2039
 # elide empty PATH components
 PATH="${PATH//::/:}"
@@ -287,21 +288,21 @@ PATH="${PATH#:}"
 PATH="${PATH%:}"
 export PATH
 # shellcheck disable=SC2039
-PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"
+# PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"
 # shellcheck disable=SC2039
-PERL5LIB="${PERL5LIB:+${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"
-export PERL5LIB
+# PERL5LIB="${PERL5LIB:+${PERL5LIB//:$HOME\/perl5\/lib\/perl5}}"
+# export PERL5LIB
 # shellcheck disable=SC2039
-PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT//:$HOME\/perl5}}"
+# PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT//:$HOME\/perl5}}"
 # shellcheck disable=SC2039
-PERL_LOCAL_LIB_ROOT="${PERL_LOCAL_LIB_ROOT:+${PERL_LOCAL_LIB_ROOT//:$HOME\/perl5}}"
-export PERL_LOCAL_LIB_ROOT
-export PERL_MB_OPT="--install_base \"$HOME/perl5\""
-export PERL_MM_OPT="INSTALL_BASE=\"$HOME/perl5\""
-export PERLDOC="-i -oman"
+# PERL_LOCAL_LIB_ROOT="${PERL_LOCAL_LIB_ROOT:+${PERL_LOCAL_LIB_ROOT//:$HOME\/perl5}}"
+# export PERL_LOCAL_LIB_ROOT
+# export PERL_MB_OPT="--install_base \"$HOME/perl5\""
+# export PERL_MM_OPT="INSTALL_BASE=\"$HOME/perl5\""
+# export PERLDOC="-i -oman"
 # export PERLDOC_PAGER="most -+C -E"
 # export PERLDOC_PAGER="less -+C -MRXs"
-export PERLDOC_PAGER="less -MRins"
+# export PERLDOC_PAGER="less -MRins"
 # export PLAN9=/usr/lib/plan9 PATH="$PATH:$PLAN9/bin"
 PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig"
 PKG_CONFIG_PATH="$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH"

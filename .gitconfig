@@ -149,6 +149,7 @@
 	fallbackToNoIndex = true
 [log]
 	abbrevCommit = yes
+	showSignature = true
 [format]
 [format]
 	thread = shallow
@@ -165,3 +166,4 @@
 [safe]
 	directory = /store/projects/linux
 	directory = /store/dotfiles
+	directory = /store/projects/cepl
