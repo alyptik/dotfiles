@@ -2090,7 +2090,7 @@ noremap <Esc><F5> ]c
 vmap <F6> "+y<Esc>:call system("xsel -ib", getreg("\""))<CR>:call system("xsel -i", getreg("\""))<CR>
 vmap <C-F6> <F6>v`>"+x
 vmap <Esc><F6> <F6>v`>
-nmap <F7> :call setreg("\"",system("xsel -op 2>/dev/null"))<CR>"+p
+nmap <F7> :call setreg("\"",system("xsel -o 2>/dev/null"))<CR>"+p
 nmap <C-F7> :set paste<CR>i<CR><CR><Esc>k:.!xsel -op<CR>JxkJx:set nopaste<CR>
 "nmap <C-F7> mz:call setreg("\"",system("xsel -op 2>/dev/null"))<CR>"+gP
 nmap <Esc><F7> mz:-1r !xsel -op 2>/dev/null<CR>`z
