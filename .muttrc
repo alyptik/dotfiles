@@ -1,0 +1,133 @@
+# character set on sent messages
+set send_charset="utf-8"
+# if there is no character set given on incoming messages, it is probably windows
+set assumed_charset="iso-8859-1"
+
+# make sure Vim knows Mutt is a mail client and that a UTF-8 encoded message will be composed
+set editor="vim -c 'set syntax=mail ft=mail enc=utf-8'"
+
+# just scroll one line instead of full page
+set menu_scroll=yes
+
+# we want to see some MIME types inline, see below this code listing for explanation
+auto_view text/html
+auto_view text/x-diff
+auto_view text/x-patch
+auto_view application/msword
+auto_view application/pdf
+alternative_order text/plain text/enriched text/html
+
+# make default search pattern to search in To, Cc and Subject
+set simple_search="~f %s | ~C %s | ~s %s"
+
+# threading preferences, sort by threads
+set sort=threads
+set strict_threads=yes
+
+# show spam score (from SpamAssassin only) when reading a message
+spam "X-Spam-Score: ([0-9\\.]+).*" "SA: %1"
+set pager_format = " %C - %[%H:%M] %.20v, %s%* %?H? [%H] ?"
+
+# do not show all headers, just a few
+ignore          *
+unignore        From To Cc Bcc Date Subject
+# and in this order
+unhdr_order     *
+hdr_order       From: To: Cc: Bcc: Date: Subject:
+
+# brighten up stuff with colors, for more coloring examples see:
+# http://aperiodic.net/phil/configs/mutt/colors
+color normal      white          black
+color hdrdefault  green          default
+color quoted      green          default
+color quoted1     yellow         default
+color quoted2     red            default
+color signature   cyan           default
+color indicator   brightyellow   red
+color error       brightred      default
+color status      brightwhite    blue
+color tree        brightmagenta  black
+color tilde       blue           default
+color attachment  brightyellow   default
+color markers     brightred      default
+color message     white          black
+color search      brightwhite    magenta
+color bold        brightyellow   default
+# if you don't like the black progress bar at the bottom of the screen,
+# comment out the following line
+color progress    white          black
+
+# personality settings
+set realname = "Joey Pabalinas"
+set from = "joeypabalinas@gmx.com"
+# alternates "$my_user@mail.server|larry.the.cow@mail.server"
+# this file must exist, and contains your signature, comment it out if
+# you don't want a signature to be used
+set signature = ~/.signature
+
+# aliases (sort of address book)
+# source ~/.aliases
+
+# set mbox_type=Maildir
+# set folder = "~/Maildir"
+# set mask="!^\\.[^.]"
+# set mbox="~/Maildir"
+# set record="+.Sent"
+# set postponed="+.Drafts"
+# set spoolfile="~/Maildir"
+
+# Generate mailboxes for each maildir subdir
+# mailboxes `echo -n "+ "; find ~/Maildir -maxdepth 1 -type d -name ".*" -printf "+'%f' "`
+# mailboxes ! + `\
+# for file in ~/Maildir/.*; do \
+#   box=$(basename "$file"); \
+#   if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' \
+#       -a ! "$box" = '.subscriptions' ]; then \
+#    echo -n "\"+$box\" "; \
+#   fi; \
+# done`
+
+# IMAP connection settings
+set mail_check=60
+set imap_keepalive=300
+
+set my_user = "joeypabalinas@gmx.com"
+set my_pass = "NUHNP2MAHIMQO3FS3IXU"
+
+# IMAP account settings
+# set folder="imaps://$my_user:$my_pass@imap.gmx.com:993/"
+# set spoolfile="imaps://$my_user:$my_pass@imap.gmx.com:993/"
+# set record="imaps://$my_user:$my_pass@imap.gmx.com:993/Sent"
+# set postponed="imaps://$my_user:$my_pass@imap.gmx.com:993/Drafts"
+
+# use headercache for IMAP (make sure this is a directory for better performance!)
+set header_cache=/var/tmp/.mutt
+
+# uncomment this to enable the sidebar feature
+#set sidebar_visible = yes
+set sidebar_width = 15
+set sidebar_folder_indent = yes
+set sidebar_short_path = yes
+
+# make the progress updates not that expensive, this will update the bar every 300ms
+set read_inc = 1
+set time_inc = 300
+
+# only if you compiled Mutt with USE=gpgme, enable the gpgme backend
+set crypt_use_gpgme = yes
+# you can set this to hide gpg's verification output and only rely on Mutt's status flag
+# set crypt_display_signature = no
+# enable signing of emails by default
+set pgp_autosign = yes
+set pgp_sign_as = AA81EEF424F1A302 # your gpg keyid here
+set pgp_replyencrypt = yes
+
+# mailboxes we want to monitor for new mail
+# mailboxes "="
+# mailboxes "=Lists"
+
+# mailing lists for a Gentoo user (these are regexps!)
+subscribe "gentoo-.*@gentoo\\.org"
+
+# SMTP mailing configuration (for sending mail)
+# set smtp_url = "smtp://$my_user:$my_pass@mail.gmx.com:587/"
