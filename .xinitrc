@@ -26,10 +26,10 @@ xbindkeys
 xset s noblank
 xset s off -b -dpms
 setterm -blank 1 -powerdown 0
-xrdb "/home/jp/.Xresources"
+xrdb "$HOME/.Xresources"
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
-xmodmap "/home/jp/.Xmodmap"
+xmodmap "$HOME/.Xmodmap"
 # udisksctl mount -b "$(findfs LABEL=backups)" &
 udisksctl mount -b "$(findfs LABEL=sdxc)" &
 udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
@@ -39,12 +39,12 @@ sleep 2
 pulseaudio &
 pavucontrol &
 uxterm &
-pcmanfm /run/media/root/sdxc /run/media/root/toshiba1TB /store/stuff &
+pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff &
 firefox &
 # transgui &
 # compton -b
 env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
-hsetroot -fill "/home/jp/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
+hsetroot -fill "$HOME/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 dbus-update-activation-environment --systemd DISPLAY
 # shellcheck disable=SC2046
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
@@ -116,8 +116,8 @@ gnome-classic)
 	exec gnome-session --session=gnome-classic;;
 
 i3|i3wm)
-	# /home/jp/bin/i3-focus-last &
-	# /home/jp/bin/hilites &
+	# $HOME/bin/i3-focus-last &
+	# $HOME/bin/hilites &
 	# xscreensaver &
 	exec i3;;
 
