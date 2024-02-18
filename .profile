@@ -155,6 +155,7 @@ export DSSI_PATH
 # Add vim as default editor
 export EDITOR=vim
 export FCEDIT="$EDITOR" SUDO_EDITOR="$EDITOR" SYSTEMD_EDITOR="$EDITOR" VISUAL="$EDITOR"
+export FORCE_UNSAFE_CONFIGURE=1
 export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
 # FZF_DEFAULT_COMMAND="(git ls-tree -r --name-only HEAD"
 # FZF_DEFAULT_COMMAND="$FZF_DEFAULT_COMMAND || find . -path '*/\\.*' -prune -o"
