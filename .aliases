@@ -8,6 +8,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+alias cpan='cpan -T'
 alias emerge='emerge --color=y'
 alias youtube-dl='youtube-dl --continue'
 alias dmesg='dmesg -H'
