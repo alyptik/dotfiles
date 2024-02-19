@@ -4,8 +4,9 @@ qemu-system-x86_64 \
 	-enable-kvm -machine type=pc,accel=kvm \
 	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
 	-nic user,model=virtio -monitor stdio -monitor pty \
-	-drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2/x64/OVMF_CODE.4m.fd \
-	-drive if=pflash,format=raw,file="${2:-OVMF_VARS.4m.fd}"
+	-drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2-ovmf/OVMF_CODE.fd \
+	-drive if=pflash,format=raw,file="$2"
+	# -drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2/x64/OVMF_CODE.4m.fd \
 	# -net nic,model=virtio -net user \
 	# -monitor stdio -monitor pty \
 	# -drive if=pflash,format=raw,file="${3:-OVMF.4m.fd}"
