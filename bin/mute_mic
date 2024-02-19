@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if command -v notify-send >/dev/null 2>&1; then
+	mute_state="$(pactl list | perl -ane 'if (/Source #1/../^$/) { next unless /Mute/; chomp; print s/\s+Mute:\s+(\S+)/$1/r; }')"
+	case "$mute_state" in
+	yes)
+		notify-send "pulse: enabling microphone...";;
+	no)
+		notify-send "pulse: disabling microphone...";;
+	*)
+		notify-send "pulse: error parsing state [$mute_state]";;
+	esac
+fi
+
+pactl set-source-mute 1 toggle

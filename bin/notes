@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# n1:foo bar
+
+# set -xv
+
+usage(){
+  printf "\nUsage: %s [--new NOTE|--edit NOTE|--delete NOTE]\n" "$0"
+}
+
+listnotes(){
+  local i=0 found file href note
+  for found in "$HOME"/.notes/notes/n*; do
+    file["$i"]="${found/*n[0-9]*:/}"
+    href["$i"]="<a href='file:///home/andrew/.notes/notes/n${i}:${file[$i]}'>edit</a>"
+    i="$((++i))"
+  done
+  local i=0
+  for note in "${file[@]}"; do
+    printf "%-s%*s\r" "${href[$i]}" "$(( (${#href[$i]} - ${#note[$i]}) - 40  ))" "$note"
+    i="$((++i))"
+  done
+}
+
+newnote(){
+  local nextid="$(( $(find "$HOME"/.notes/notes/n[0-9]*|wc -l) + 1 ))"
+  vim "$HOME"/.notes/n"$nextid":"$1"
+}
+
+deletenote(){
+  [[ -n $1 ]] || return
+    printf '%s\n' "Are you sure you wish to delete $1?"
+    read -r response
+  [[ $response == y ]] || return
+    case $1 in
+      [0-9]*)
+        rm ~/.notes/notes/n"$1":*
+      ;;
+      *)
+        rm ~/.notes/notes/n*:"$1"
+      ;;
+    esac
+}
+
+
+
+case $1 in
+  --new)
+    newnote "$2"
+  ;;
+  --edit)
+    editnote "$2"
+  ;;
+  --delete)
+    deletenote "$2"
+  ;;
+  '')
+    notify-send "   -- Notes --      " "$(listnotes)"
+  ;;
+  *)
+    usage >&2
+  ;;
+esac
+

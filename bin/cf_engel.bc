@@ -1,0 +1,107 @@
+#!/usr/bin/bc -l funcs.bc cf.bc
+
+### CF_ENGEL.BC - Engel expansion experimentation using array pass by reference
+
+# Workhorse: Create an Engel expansion of x in pbr array en__[]
+define engel_new_(mode) {
+  # expects *en__[] and x to be declared elsewhere
+  auto i,fc,max,q,p
+  
+  # error checking
+  .=check_cf_max_()
+  p=(mode<1&&abs(x)>=1);
+  q=(scale<6);
+  if(p||q){print "engel";if(mode==-1)print "fall";if(mode==0)print "alt";print "_new: "}
+  if(p){print "Can't work with integer part.\n"; x-=int(x)}
+  if(q){print "scale is ",scale,". Poor results likely.\n"}
+  
+  max=A^scale
+  i=fc=0;p=1
+  for(i=0;x&&p<max&&i<cf_max;i++){
+    q=1/abs(x)
+    if(mode==1){
+      q=ceil(q) # proper engel expansion
+    } else if(mode==-1){
+      q=floor(q) # secondary engel expansion
+    } else if(fc=!fc){q=floor(q)}else{q=ceil(q)} # tertiary engel expansion
+    p*=q
+    en__[i]=q*=sgn(x)
+    x=x*q-1
+  }
+  if(p>=max){
+    if(!--i)i=1
+    max=A^int(scale/2)
+    if(abs(en__[i])>max){
+      en__[i]=0;return 0
+    }else{
+      en__[i]=0.0
+      if(i-=2<3)return 0;
+      q=en__[i]
+      if(en__[--i]==q){
+        while(en__[i--]==q){}
+        en__[i+3]=0
+        .=en__[i+2]--
+      }
+    }
+  }else{
+    en__[i]=0
+  }
+  return 0;
+}
+
+# Create Engel expansion of x in pbr array en__[]
+# . all terms same sign as x
+define engel_new(*en__[],x) {
+  return x+engel_new_(1);
+}
+
+# Create secondary Engel expansion of x in pbr array en__[]
+# . first term same sign as x, all other terms opposite sign
+# . terms in implied Egyptian fraction sum have alternating signs
+define engelfall_new(*en__[],x) {
+  return x+engel_new_(-1);
+}
+
+# Create tertiary Engel expansion of x in pbr array en__[]
+# . first term same sign as x, following terms alternate in sign
+# . terms in implied Egyptian fraction alternate pairwise e.g. +--++--++...
+define engelalt_new(*en__[],x) {
+  return x+engel_new_(0);
+}
+
+# Output pbv array en__[] formatted as an Engel expansion
+define engel_print(en__[]){
+  auto i;
+  .=check_cf_max_();
+  print "{";
+  if(en__[1]==0){print en__[0],"}";return 0}
+  for(i=1;en__[i];i++)print en__[i-1],", ";
+  print en__[i-1];
+  if(scale(en__[i]))print ",...";
+  print "}";return 0;
+}
+
+# Print a number as an Engel expansion
+define print_as_engel(x){
+  auto en[];
+  .=engel_new(en[],x)+engel_print(en[])
+  return x;
+}
+define print_as_engelfall(x){
+  auto en[];
+  .=engelfall_new(en[],x)+engel_print(en[])
+  return x;
+}
+define print_as_engelalt(x){
+  auto en[];
+  .=engelalt_new(en[],x)+engel_print(en[])
+  return x;
+}
+
+# Turn the Engel expansion in pbv array en__[] into its value
+define engel_value(en__[]) {
+  auto i,p,v;
+  .=check_cf_max_();
+  p=1;v=0;for(i=0;i<cf_max&&p*=en__[i];i++)v+=1/p
+  return v;
+}

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+mutt_cmd=neomutt
+mutt_conf=~/.kmuttrc
+kindle_email=alyptik@kindle.com
+
+set -m
+
+if [[ ! -e "$mutt_conf" ]]; then
+	if [[ -e "$HOME/.kmuttrc" ]]; then
+		mutt_conf="$HOME/.kmuttrc"
+	elif [[ -e "$HOME/.muttrc" ]]; then
+		mutt_conf="$HOME/.muttrc"
+	else
+		echo 'unable to find either ~/.kmuttrc or ~/.muttrc' >&2
+		exit 1
+	fi
+fi
+
+function mail_ebook()
+{
+	local pid
+	"$mutt_cmd" -F "$mutt_conf" -a "$1" -- "$kindle_email" </dev/null & pid=$!
+	printf '[%s] %s\n' "$pid" "$mutt_cmd -F ${mutt_conf/$HOME/\~} -a $1 -- $kindle_email" >&2
+	shift
+	if (($#)); then
+		mail_ebook "$@"
+	fi
+}
+
+mail_ebook "$@"

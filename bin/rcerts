@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+# domains=(alyp.tk sigfu.tk fsckingfu.tk)
+# subs=(mail cube www webmail stream)
+# list=($(print ${(j:,:)domains},$(printf '%s.%s,' {${^subs},${^domains}})))
+#
+# sudo systemctl stop nginx
+#
+# sudo certbot renew
+# sudo certbot certonly --standalone -d "${list%%,}"
+# sudo certbot certonly --standalone -d "${list%%,},hewillnotdivide.tk"
+
+# sudo systemctl start nginx
+
+domains=(-d alyptik.com -d alyptik.org -d fsckingfu.tk)
+wildcards=(-d '*.alyptik.com'  -d '*.alyptik.org' -d '*.alyp.tk' -d '*.fsckingfu.tk')
+sudo certbot certonly --manual $domains $wildcards --server https://acme-v02.api.letsencrypt.org/directory

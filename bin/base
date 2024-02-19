@@ -1,0 +1,31 @@
+#!/bin/zsh
+
+_base () {
+	print -f "[%s]: '%s' - %s - " "$i" "$(print -f '%q' ${(#)$((i % 256))} | tr -d $'\'$')" "$(numfmt --grouping "$(([#10] i))")"
+
+	perl -e '
+		my $a = shift;
+		while ($a =~ m/^[^_]{2}/) {
+			$a =~ s/([^_]{2})(_|$)/_$1$2/;
+		}
+		$a =~ s/^[^x]*x_?//;
+		my @b = split /_/, $a;
+		$b[0] = sprintf "%02s", $b[0] unless !$b[0];
+		print "0x" . lc join("", @b) . " - ";
+		' "${$(([#16] i))//16\#/}"
+
+	print -f "\\%s - " "${$(([#8] i))//8\#/0}"
+
+	perl -e '
+		my $a = shift;
+		while ($a =~ m/^[^_]{8}/) {
+			$a =~ s/([^_]{8})(_|$)/_$1$2/;
+		}
+		$a =~ s/^_?/0b_/;
+		my @b = split /_/, $a;
+		$b[1] = sprintf "%08s", $b[1];
+		print join("_", @b) . "\n";
+		' "${$(([#2] i))//2\#/}"
+}
+
+() for 1 { _base $1; } "$@"

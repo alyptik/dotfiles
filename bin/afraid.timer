@@ -1,0 +1,9 @@
+[Unit]
+Description = Refresh freedns entry every hour
+After = network.target
+
+[Timer]
+OnCalendar = hourly
+
+[Install]
+WantedBy=timers.target

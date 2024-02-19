@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# E-mail list of installed pacman && AUR packages.
+# Distro: Arch Linux
+
+MAILTO=''
+MAILFROM=''
+
+# create pkglist directory if it does not exist
+tmpdir='/tmp/pkglists'
+mkdir -p -- "$tmpdir"
+trap 'rm -fv -- "$tmpdir"/{aur,pacman}.lst' ERR EXIT
+
+pacman -Qqm > "$tmpdir/aur.lst"
+pacman -Qqe | grep -vx "$(<"$tmpdir/aur.lst")" > "$tmpdir/pacman.lst"
+
+_pacman="$(wc -l "$tmpdir/pacman.lst")"
+_aur="$(wc -l "$tmpdir/aur.lst")"
+printf '\n%s\n' "Total installed packages: $_pacman" >> "$tmpdir/pacman.lst"
+printf '\n%s\n' "Total installed packages: $_aur" >> "$tmpdir/aur.lst"
+
+_npkgs="$(wc -l "$tmpdir/pacman.lst")"
+_npkgs="${_npkgs%% *}"
+_npkgs="$((_npkgs - 1))"
+printf '%s\n' "$HOSTNAME :: Pacman List of Installed Packages" "$(sed "1,$_npkgs s/^/\t/" "$tmpdir/pacman.lst")" ""
+
+_npkgs="$(wc -l "$tmpdir/aur.lst")"
+_npkgs="${_npkgs%% *}"
+_npkgs="$((_npkgs - 1))"
+printf '%s\n' "$HOSTNAME :: AUR List of Installed Packages" "$(sed "1,$_npkgs s/^/\t/" "$tmpdir/aur.lst")" ""
+
+if [[ -n "$MAILTO" && -n "$MAILFROM" ]]; then
+	mail -s "$HOSTNAME :: Pacman List of Installed Packages" -r "$MAILFROM" "$MAILTO" <"$tmpdir/pacman.lst"
+	mail -s "$HOSTNAME :: AUR List of Installed Packages" -r "$MAILFROM" "$MAILTO" <"$tmpdir/aur.lst"
+fi

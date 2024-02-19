@@ -1,0 +1,46 @@
+#!/bin/bash
+# Clean up the GPG Keyring.  Keep it tidy.
+# blog.lavall.ee
+
+declare -a args
+case "$@" in
+	(-p|--pacman)
+		args=("--verbose" "--homedir" "/etc/pacman.d/gnupg") ;;
+	(*)
+		args=("--verbose") ;;
+esac
+
+printf '%s' "Expired Keys: "
+for expiredKey in $(gpg2 "${args[@]}" --list-keys | awk '/^pub.* \[expired\: / {id=$2; sub(/^.*\//, "", id); print id}' | fmt -w 999 ); do
+    printf '%s' " - "
+    printf '%s' "$expiredKey"
+    if gpg2 "${args[@]}" --batch --delete-keys "$expiredKey" &>/dev/null; then
+        printf '%s' "(OK), "
+    else
+        printf '%s' "(FAIL), "
+    fi
+    printf '%s' " - "
+done
+echo; echo done.
+
+printf '%s' "Update Keys: "
+for keyid in $(gpg2 "${args[@]}" | grep ^pub | grep -v expired: | grep -v revoked: | cut -d/ -f2 | cut -d' ' -f1); do
+    printf '%s' " - "
+    printf '%s' "$keyid"
+    if gpg2 "${args[@]}" --batch --edit-key "$keyid" check clean cross-certify save quit &>/dev/null; then
+        printf '%s' "(OK), "
+    else
+        printf '%s' "(FAIL), "
+    fi
+    echo
+    printf '%s' " - "
+done
+echo; echo done.
+
+if gpg2 "${args[@]}" --batch --refresh-keys &>/dev/null; then
+    echo "Refresh OK"
+else
+    echo "Refresh FAIL."
+fi
+
+unset args &>/dev/null

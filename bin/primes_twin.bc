@@ -1,0 +1,50 @@
+#!/usr/bin/bc -l primes.bc
+
+### Primes-Twin.BC - A few functions for handling twin primes
+
+# Determine whether x is a member of a prime twin pair
+#  Returns 0 for no, and the other member of the pair for yes.
+#  e.g. is_twin_prime(17) returns 19;
+#       is_twin_prime(23) returns 0 because 21 and 25 are not prime
+#  Pseudo-boolean, since always returns 0 for false, but not 1 for true
+define is_twin_prime(x) {
+  auto os;
+  if(x<=2)return 0;
+  if(x==3)return 5;
+  if(!is_prime(x))return 0;
+  os=scale;scale=0
+   if(x%6==5){x+=2}else{x-=2}
+  scale=os
+  if(!is_prime(x))return 0;
+  return x
+}
+
+define nexttwinprime(x) {
+  auto os,ox,t;
+  if(x<0)return -prevtwinprime(-x)
+  if(x<3)return 3
+  if(x<5)return 5
+  os=scale;scale=0
+   ox=x
+   x/=1         # truncate
+   t=5-(x+1)%6  # {5,0,1,2,3,4} mod 6 -> {5,4,3,2,1,0} mod 6
+   x+=1+t%4     # make x into next candidate adding 1+{1,0,3,2,1,0}
+   while(!(t=is_twin_prime(x)))x+=6
+   if(x>t&&t>ox)x=t
+  scale=os;return x
+}
+
+define prevtwinprime(x) {
+  auto os,ox,t;
+  if(x<0)return -nexttwinprime(-x)
+  if(x<=3)return -3
+  if(x<=5)return 3
+  os=scale;scale=0
+    ox=x
+    if((t=x/1)<x).=t++ # ceiling
+    x=t         # truncate
+    t=(x-2)%6   # {0,1,2,3,4,5} mod 6 -> {4,5,0,1,2,3} mod 6
+    x-=1+t%4    # make x into prev candidate subtracting 1+{0,1,0,1,2,3}
+    while(!(t=is_twin_prime(x)))x-=6
+  scale=os;return x
+}

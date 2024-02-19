@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+gpg_home="$HOME/.gnupg"
+gpg_dir="$HOME/.keys/gpg"
+gpg_tmp="$gpg_dir/gpgtmp"
+pubring="$gpg_home/pubring.kbx"
+trustdb="$gpg_home/trustdb.gpg"
+master_key="$gpg_dir/master-0x02e95b4f4f3643e9.asc"
+
+# initialize temporary gpg homedir
+mkdir -pv "$gpg_tmp" || return 1
+chmod -c 0700 "$gpg_tmp" || return 1
+ln -sfv -- "$gpg_home/gpg.conf" "$gpg_tmp/"
+ln -sfv -- "$gpg_home/gpg-agent.conf" "$gpg_tmp/"
+
+# cleanup temporary homedir
+trap 'rm -rfv -- "${gpg_tmp:?}"' ERR EXIT
+# hacky workaround for zsh's refusal to execute nested traps like that caused by INT
+trap 'exit' INT HUP QUIT
+
+# make sure master key exists and is readable then attempt import
+if [[ ! -r "$master_key" ]] || ! gpg --homedir "$gpg_tmp" --keyring "$pubring" --trustdb-name "$trustdb" --import "$master_key"; then
+	return 1
+fi
+
+# locally sign each key with master
+zmodload zsh/zpty
+
+for key; do
+	gpg --recv-keys "$key" || continue
+	zpty -e lsign gpg --homedir "$gpg_tmp" --keyring "$pubring" --trustdb-name "$trustdb" --edit-key "$key"
+	zpty -w lsign $'trust\n4\ny\n'
+	zpty -w lsign $'lsign\ny\ny\n'
+	zpty -w lsign $'save\n'
+	zpty -r lsign
+	zpty -d lsign
+done

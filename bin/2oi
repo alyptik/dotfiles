@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xsel -op "$@" 2>/dev/null | perl -pe 'chomp if eof' | tee >(xsel -ib)

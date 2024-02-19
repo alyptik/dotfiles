@@ -1,0 +1,19 @@
+#!/usr/bin/bc -l funcs.bc factorial.bc
+
+### Factorial_Gamma.BC - Gamma related functions
+ 
+ # Requires funcs.bc and factorial.bc
+
+# These are all but aliases for functions in factorial.bc
+
+define           gamma(x) { return           factorial(x -1) }
+define         lngamma(x) { return         lnfactorial(x -1) }
+define   inverse_gamma(x) { return   inverse_factorial(x)+1  }
+define inverse_lngamma(x) { return inverse_lnfactorial(x)+1  }
+
+# Derivatives of the above
+
+define   beta(x,y) { return   factorial(x-1)*  factorial(y-1)/  factorial(x+y-1) }
+define lnbeta(x,y) { return lnfactorial(x-1)+lnfactorial(y-1)-lnfactorial(x+y-1) }
+
+# For the lowercase Euler gamma constant, see eulergamma() in factorial.bc

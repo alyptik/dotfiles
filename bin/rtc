@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# turn off auditing
+sudo auditctl -e 0
+
+# set core dump pattern
+core_pat="|/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e"
+# core_pat="core.%e.%p"
+# core_pat="/store/cores/core.%e.%p.%P"
+printf '%s\n' "$core_pat" | sudo tee /proc/sys/kernel/core_pattern
+
+# find analog stereo card: eg. pci_snd_id=03:00.0 (use `lspci | grep -i audio`)
+# and maximize the pci latency timer of the pci sound card and raise the
+# latency timer of all other pci peripherals (default is 0x40 or 64hz).
+pci_snd_id="$(lspci | awk '/Audio/{print $1}')"
+if test -n "$pci_snd_id"; then
+	sudo setpci -v -d '*:*' latency_timer=b0
+	sudo setpci -v -s "$pci_snd_id" latency_timer=ff
+fi
+
+for i in /sys/devices/system/cpu/cpu[0-9]; do
+	# set cpu governor
+	cpu_gov=performance
+	# cpu_gov=powersave
+	printf '%s\n' "$cpu_gov" | sudo tee "$i/cpufreq/scaling_governor"
+done
+
+for i in /sys/block/*; do
+	# set io scheduler
+	io_sched=none
+	# io_sched=bfq
+	# io_sched=mq-deadline
+	# io_sched=kyber
+	printf '%s\n' "$io_sched" | sudo tee "$i/queue/scheduler"
+	# don't collect entropy from solid state drives
+	case "${i##*/}" in
+	nvme*|md*|mmc*|loop*)
+		printf '%s\n' "0" | sudo tee "$i/queue/add_random";;
+	*)
+		printf '%s\n' "1" | sudo tee "$i/queue/add_random";;
+	esac
+done
+
+# increase rtc interrupt frequency (default is 64hz)
+printf '%s\n' "2048" | sudo tee /sys/class/rtc/rtc0/max_user_freq
+printf '%s\n' "2048" | sudo tee /proc/sys/dev/hpet/max-user-freq

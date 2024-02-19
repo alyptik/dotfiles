@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PERL_USE_UNSAFE_INC=1
+cd /store/code/projects/pbot || exit 1
+screen ./pbot.sh

@@ -1,0 +1,77 @@
+#!/bin/sh
+
+# stfu christopher
+urldecode () {
+	curl -Ls "$*" \
+		| sed -rn 's/.*<meta name="title" content="([^>]+)">.*/\1/p' \
+		| sed 's/%25/%/gi
+			s/%20/ /gi
+			s/%09/ /gi
+			s/%21/!/gi
+			s/%22/"/gi
+			s/%23/#/gi
+			s/%24/\$/gi
+			s/%26/\&/gi
+			s/%27/'\''/gi
+			s/%28/(/gi
+			s/%29/)/gi
+			s/%2a/\*/gi
+			s/%2b/+/gi
+			s/%2c/,/gi
+			s/%2d/-/gi
+			s/%2e/\./gi
+			s/%2f/\//gi
+			s/%3a/:/gi
+			s/%3b/;/gi
+			s/%3d/=/gi
+			s/%3e//gi
+			s/%3f/?/gi
+			s/%40/@/gi
+			s/%5b/\[/gi
+			s/%5c/\\/gi
+			s/%5d/\]/gi
+			s/%5e/\^/gi
+			s/%5f/_/gi
+			s/%60/`/gi
+			s/%7b/{/gi
+			s/%7c/|/gi
+			s/%7d/}/gi
+			s/%7e/~/gi
+			s/%09/\t/gi
+			s/&amp;/\&/gi'
+}
+
+# search youtube using r e c u r s i o n
+__ytsearch() {
+	__tmp="$(mktemp)"
+
+	rm -f -- "$__tmp"
+	mkfifo "$__tmp" || exit 1
+	trap '{ rm -f -- "$__tmp"; trap - EXIT USR1; }' EXIT USR1
+
+	url="$({ mpv --vo=null --ao=null "ytdl://ytsearch10:$1" 2>&1 | grep -om 1 --line-buffered 'https.*' | tee "$__tmp"; } & child=$!; head -c1 "$__tmp" >/dev/null 2>&1; kill -9 "$child")"
+	title=$(urldecode "$url")
+
+	printf '%s: <%s>\n' "$title" "$url"
+	kill -USR1 $$
+	shift
+
+	# base case
+	if test -z "$*"; then
+		return
+	fi
+
+	# WHAT OH MY GOD THIS MAN WHAT IS HE DOING
+	__ytsearch "$@"
+}
+
+query="$1"
+iters_left="${2:-1}"
+
+set -- "$1"
+while test "$iters_left" -gt 0; do
+	set -- "$@" "$query"
+	iters_left="$((iters_left - 1))"
+done
+
+__ytsearch "$@"

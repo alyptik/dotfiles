@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec netsurf "$@" &>/dev/null & disown

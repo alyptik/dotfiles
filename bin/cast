@@ -1,0 +1,3 @@
+#!/bin/sh
+
+primusrun mkchromecast --video -i "$*" --control --encoder-backend ffmpeg --resolution 2k || mkchromecast --video -i "$*" --control --encoder-backend ffmpeg --resolution 2k

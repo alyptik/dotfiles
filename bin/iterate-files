@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+set -o errexit
+
+cd /p/lkml || exit 1
+
+integer i=1
+integer iters=828
+integer total=$(awk 'END{print NR}' files.txt)
+
+for ((; i <= total; i+=1000)); do
+	print -r - "adding files $i to $((i+999))"
+	git add $(sed "$i,$((i+999))"' !d' files.txt)
+	git commit -m "iteration $iters"
+	git push
+	((iters+=1))
+done
+
+git add $(sed "$i,$total"' !d' files.txt)
+git commit -m "iteration $iters"
+git push

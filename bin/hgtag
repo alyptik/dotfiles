@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Murcural
+hg tip --template '{latesttag}.r{latesttagdistance}.{node|short}'
+# Fall back
+hg tip --template 'r{rev}.{node|short}'
+
+printf 'r%s' "$(svnversion)"
+printf 'r%s' "$(bzr revno)"

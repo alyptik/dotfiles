@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec /usr/bin/spotify-wrapper.sh --force-device-scale-factor=1.5 "$@"

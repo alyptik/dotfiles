@@ -1,0 +1,54 @@
+#!/usr/bin/bc -l
+
+### Digits-Describe.BC - Numbers that describe numbers
+
+  ## aka "Look and say" numbers
+
+# Workhorse for the below
+define describe_(opt,base,x) {
+  auto os,c,od,d,p,y,er;
+  os=scale;scale=0
+  x/=1;if(x<0)x=-x
+  p=1;y=0;er=0;while(x){
+   d=x%base;c=0
+   while(x%base==d){.=c++;x/=base}
+   if(!er&&c>=base){
+     er=1;print "describe_count"
+     if(opt){print"last"}else{print"first"}
+     print ": count too large; unwanted carry\n"
+   }
+   if(opt){d=d*base+c}else{d=c*base+d}
+   y+=p*d
+   p*=base^2
+  }
+  scale=os;return y
+}
+
+# Returns a number which describes the input in the given base
+# count first 11233 -> 211223 (two ones, one two, two threes)
+define describe_countfirst(base,x) { return describe_(0,base,x) }
+# count last 11233 -> 122132 (one twice, two once, three twice)
+define describe_countlast(base,x) {  return describe_(1,base,x) }
+
+# Workhorse for the below
+define parserle_(opt,base,x) {
+  auto os,c,d,p,y,er;
+  os=scale;scale=0
+  x/=1;if(x<0)x=-x
+  p=1;y=0;er=0;while(x){
+    if(opt){c=x%base;x/=base}
+    d=x%base;x/=base
+    if(!opt){c=x%base;x/=base}
+    if(!er&&c==0){
+      er=1;print "parserle_count"
+      if(opt){print"last"}else{print"first"}
+      print": invalid input detected\n"
+    }
+    for(.=.;c;c--){y+=p*d;p*=base}
+  }
+  scale=os;return y
+}
+
+# Inverse of the 'describe' functions; Parse the Run Length Encoding
+define parserle_countfirst(base,x) { return parserle_(0,base,x) }
+define parserle_countlast(base,x) {  return parserle_(1,base,x) }

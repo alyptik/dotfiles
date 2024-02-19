@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+	set -- '--human' '--si'
+fi
+
+RAM="$(free "$@" | awk '/Mem:/{ print $3 "/" $2 }')"
+SWAP="$(free "$@" | awk '/Swap:/ { print $3 "/" $2 }')"
+
+printf 'RAM=%s Swap=%s' "$RAM" "$SWAP"

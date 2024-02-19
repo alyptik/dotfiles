@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# xclip -i -f -r -sel clip
+xsel -ib

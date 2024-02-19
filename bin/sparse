@@ -1,0 +1,17 @@
+#!/bin/bash
+
+sparse_path="$HOME/.local"
+sparse_args=()
+
+if [[ ! -x "$sparse_path/sparse" ]]; then
+	sparse_path=/usr/bin
+fi
+
+if [[ ! -x "$sparse_path/sparse" ]]; then
+	printf '%s\n' 'unable to find sparse executable in $PATH' >&2
+	exit 1
+fi
+
+readarray -td' ' sparse_args <<<"$CF"
+
+exec "$sparse_path/sparse" "${sparse_args[@]}" "$@"

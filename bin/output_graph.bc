@@ -1,0 +1,172 @@
+#!/usr/bin/bc -l
+
+### Output-Graph.BC - rudimentary functions for creating rudimentary drawings
+
+screen_x = .75 * 80 + 1
+screen_y = .75 * 40 + 1
+
+# Perform a bitwise logical OR of x and y
+#  taken from an old version of logic.bc
+#  Only works on positive integers
+#  which is fine for this library
+define or_(x,y) {
+ auto z,t,os;os=scale;scale=0;z=0;t=1
+ while(x||y){if(x%2||y%2)z+=t;t+=t;x/=2;y/=2}
+ scale=os;return (z)
+}
+
+define screen_printchar_(c) {
+  if(c==0)print" "
+  if(c==1)print"|"
+  if(c==2)print"-"
+  if(c==3)print"+"
+  if(c==4)print"."
+  if(c==5)print"!"
+  if(c==6)print"o"
+  if(c==7)print"*"
+  if(c==8)print","
+  if(c==9)print"_"
+  if(c==A)print"~"
+  if(c==B)print"$"
+  if(c==C)print";"
+  if(c==D)print":"
+  if(c==E)print"="
+  if(c==F)print"#"
+  if(0>c||c>F)print "?"
+  return c;
+}
+
+define screen_clear() {
+  auto x,y;
+  for(y=0;y<screen_y;y++)for(x=0;x<screen_x;x++)screen[y*screen_x+x]=0
+  return 0;
+}
+
+define screen_plot(x,y,c) {
+  auto os,s;
+  os=scale;scale=0
+  x/=1;y/=1;c/=1
+  if(0>x||x>=screen_x||0>y||y>=screen_y){
+    scale=os
+    return 0
+  }
+  if(c<0){
+    c=-c
+    s=screen[y*screen_x+x]
+    c=or_(c,s)
+  }
+  screen[y*screen_x+x]=c
+  scale=os
+  return 1
+}
+
+define screen_axes(xx,yy) {
+  auto x,y,q,e;
+  q=1
+  for(y=0;y<screen_y;y++){e=screen_plot(xx,y,-1);q*=e}
+  for(x=0;x<screen_x;x++){e=screen_plot(x,yy,-2);q*=e}
+  return q
+}
+
+define screen_print() {
+  auto x,y,q;
+  for(x=0;x<screen_x;x+=2)print"-=";print"\n"
+  for(y=screen_y-1;y>=0;y--){
+    for(x=0;x<screen_x;x++)q=screen_printchar_(screen[y*screen_x+x])
+    print "\n"
+  }
+  for(x=0;x<screen_x;x+=2)print"-=";print"\n"
+  return 0;
+}
+
+/* define graphx(a[],si,ei) {
+  auto i, j, k, l, max, min, range, pagepos, sub_x, sign, midbar, len_ei, len_diff, len_bar
+
+  if(1- ( 0 <= si && si < ei && ei <= 65535 ) ) {
+    print "Bad parameters in graphx()\n"
+    return(1/0)
+  }
+
+  max = a[si]
+  min = max
+  for(i=si+0;i<=ei;i++){
+    if(a[i] < min) min = a[i]
+    if(a[i] > max) max = a[i]
+    print "a[",i,"] = ",a[i],"\n";
+  }
+
+  print " max : ", max ,"\n";
+  print " min : ", min ,"\n";
+
+  sign = 1
+  midbar = 0
+  sub_x = 1
+
+  if(min < 0) {
+    if(max < 0) {
+
+      sign   = -1
+      sub_x  =  min
+      min    = -max
+      max    = -sub_x
+
+    } else { # min < 0, max > 0 
+
+      midbar = 1
+      sub_x  = 0
+
+    }
+  }
+  sub_x *= 0.9 * min
+  range  = max - min
+
+  print "range: ",range,"\n";
+  print " max : ", max ,"\n";
+  print " min : ", min ,"\n";
+  print "sub_x: ",sub_x,"\n";
+
+  len_ei = length(ei)
+  len_line = screen_x - len_ei - 2;
+  pagepos=1;
+
+  for(i=si;i<=ei;i++) {
+
+    len_diff = len_ei - length(i)
+    if (len_diff) for(j=1;j<=len_diff;j++) print " ";
+    print i,":";
+
+    if (midbar) {
+      if (len_bar < 0) {
+        len_bar = ((a[i]-min) / range) * len_line
+        for(j=1;j<len_bar;j++)print" ";
+        if(j-len_bar){print "<";}else if(len_bar){print " ";}
+        for(j=len_bar;j<=min/range*len_line;j++)print "#";
+        print "|";
+      } else {
+        len_bar = (a[i] / range) * len_line
+        for(j=1;j<=min/range*len_line;j++)print " ";
+        print "|";
+        for(j=1;j<len_bar;j++)print"#";
+        if(j-len_bar)print ">";
+      }
+    } else {
+      print "|";
+      len_bar = ((sign*a[i]-sub_x) / max) * len_line
+      if (len_bar>=1){for(j=1;j<=len_bar;j++) print "#";} 
+      if (len_bar-j) print ">";
+    }
+    print "\n";
+    .=pagepos++;
+    if(pagepos >= screen_y) {
+      print "Type 0 then hit [Enter]...\n";
+      pagepos = read()*0 + 1
+    }
+  } # end for
+  return
+}
+
+for(i=0;i<=10;i++)x[i]=i-5
+
+graphx(x[],0,10)
+quit
+*/

@@ -1,0 +1,112 @@
+#!/usr/bin/bc -l
+
+### IntDiff.BC - numeric differentiation and integration of 
+###              a single variable function
+
+define f(x) { return x^2 } # example - redefine in later code/bc session
+
+# Numerically differentiate the global function f(x)
+define dfxdx(x) {
+  auto eps;
+  eps = A^-scale
+  scale *= 2
+  x = (f(x+eps)-f(x-eps))/(2*eps)
+  scale /= 2
+  return x/1
+}
+
+# New global variable like 'scale' - determines accuracy of numerical
+#   integration at the expense of time. Don't set above 15 unless this
+#   is running on a really fast machine!
+depth = 10
+
+# Numerically integrate the global function f(x) between x = a and x = b
+# . uses the trapezoidal rule
+define ifxdx_old(a,b) {
+  auto os,h,s,t,i
+  if(a==b)return f(a)
+  os = scale;if(scale<depth)scale=depth
+  scale+=3
+  h = 2^-depth
+  if(b<a){i=b;b=a;a=i}
+  s = (b - a) * h
+  t =(f(a)+f(b))/2
+  for(i=a+s;i<b;i+=s)t+=f(i)
+  scale=os;return t*s/1
+}
+
+# Numerically integrate the global function f(x) between x = a and x = b
+define ifxdx(a,b) {
+  auto oib,od,os,s,s8,t,i,j,ni,fi,fis
+  if(a==b)return f(a)
+  od=depth;if(depth<3)depth=3
+  os=scale;if(scale<(i=depth+depth))scale=i
+  scale+=3
+  if(b<a){i=b;b=a;a=i}
+  s=(b-a)*(2^-depth)
+  oib=ibase;ibase=A
+  s8 = s*8
+  fi = 989*f(a)
+  for(i=a;i<b;i=ni){
+    ni=j=i+s8;
+    t+=   fi+(fis=989*f(j))
+    t+= 5888*(f(i+=s)+f(j-=s))
+    t-=  928*(f(i+=s)+f(j-=s))
+    t+=10496*(f(i+=s)+f(j-=s))
+    t-= 4540*f(i+=s)
+    fi=fis
+  }
+  depth=od;scale=os
+   t*=s*4/14175
+  ibase=oib;return t
+}
+
+# glai - guess limit at infinity
+#   Assumes p, q and r are 3 consecutive convergents to a limit and
+#   attempts to extrapolate precisely what that limit is after an infinite 
+#   number of iterations.
+
+# 0 = glai returns function result only
+# 1 = glai commentates on interesting convergents
+glaitalk = 1
+
+define glai(p,q,r) {
+  auto m,n 
+  m = q^2-p*r
+  n = 2*q-p-r
+  if(n==0)if(m==0){
+   if(glaitalk)print "glai: Constant series detected\n"
+   return p
+  }else{
+   if(glaitalk)print "glai: Arithmetic progression detected: limit is infinite\n"
+   return 1/0
+  }
+  if(m==0){
+   if(glaitalk)print "glai: Geometric progression detected: limit wraps to zero!\n"
+   return 0
+  }
+  return m/n
+}
+
+# Examples:
+#   glai(x,x+1,x+2) causes a division by zero error as the limit of
+#                   an arithmetic progression is infinite
+#   glai(a*k,a*k^2,a*k^3) returns zero! The limit of a geometric
+#                         progression in p-adics is precisely that,
+#                         and somehow this simple function 'knows'.
+#   glai(63.9, 63.99, 63.999) returns 64 - correctly predicting the
+#                             limit of the sequence.
+
+# Run consecutive convergents to the ifxdx function through glai() 
+#   attaining "better" accuracy with slightly fewer calculations
+define ifxdx_g(a,b) {
+  auto p,q,r
+  depth-=3  ; p = ifxdx(a,b)
+  .=depth++ ; q = ifxdx(a,b)
+  .=depth++ ; r = ifxdx(a,b)
+  .=depth++
+  return glai(p,q,r)
+}
+
+#define f(x){if(x<=0)return 0;x=root(x,x);return x*(x-1)}
+#zz=-0.10717762842559665710112408473270837028206726160094438

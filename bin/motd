@@ -1,0 +1,7 @@
+#!/bin/bash
+
+paste \
+	<(neofetch | sed "1,19 !d") \
+	<(neofetch | sed "1,19 d; 19,30 s/^/\t/; 19,23 s/^/\t/") \
+	| perl -pe "s/\e[^m]+m//g; s/root@/jp@/; s/paste/screen-256color-italic/" \
+	| expand

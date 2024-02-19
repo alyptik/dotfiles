@@ -1,0 +1,14 @@
+#!/bin/sh
+
+stdin=/dev/stdin
+
+if [ -z "$*" ]; then
+	set -- '-'
+fi
+
+# not a pipe
+if [ -t 0 ]; then
+	stdin=/dev/null
+fi
+
+exec gcc -dM -E "$@" <"$stdin"

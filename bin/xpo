@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xclip -r -o -sel prim

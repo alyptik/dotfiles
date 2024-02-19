@@ -1,0 +1,56 @@
+#!/usr/bin/bc -l logic.bc
+
+### Logic-ANDM.BC
+### Attempts to create bitwise AND multiplications that do not result in zero
+
+# NB: none of these are equivalent to nim multiplication
+
+# Most functions here are asymmetric. f(x,y) does not necessarily equal f(y,x)
+
+# Perform bitwise logical AND 'multiplication' of x and y ???
+
+define x1andm(x,y){
+  return xor(xorm(x,y),orm(x,y))
+}
+
+define x2andm(x,y){
+  return xorm(xor(x,y),or(x,y))
+}
+
+define andm(x,y){
+  auto os,s,z,hy;
+  os=scale;scale=0
+  x/=1;y/=1;s=1;if(x<0){x=-x;s=-s};if(y<0){y=-y;s=-s}
+  if(x<y){x+=y;y=x-y;x-=y}
+  z=x*(y%2);while(z&&y){hy=y/2;if(y-hy-hy)z=and(z,x);x+=x;y=hy}
+  scale=os;return z*s
+}
+
+# Perform AND-M on binary floating point representations of x and y ???
+
+define x1andmf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t;t*=t
+  z=x1andm(x,y)
+  if(is_any_sfpr3_(x,y,z)){print "x1andmf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+define x2andmf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t;t*=t
+  z=x2andm(x,y)
+  if(is_any_sfpr3_(x,y,z)){print "x2andmf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}
+
+define andmf(x,y){
+ auto os,t,z;
+ os=scale;scale=0
+  t=bw_mult_(os);x*=t;y*=t;t*=t
+  z=andm(x,y)
+  if(is_any_sfpr3_(x,y,z)){print "andmf";x+=sfpr_warn_msg_()}
+ scale=os;return( z/t )
+}

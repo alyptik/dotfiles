@@ -1,0 +1,7 @@
+#!/bin/bash
+
+screen -X eval 'focus top'
+printf 'What manpage? '
+read -r
+man "$REPLY"
+screen -X eval 'focus top' remove

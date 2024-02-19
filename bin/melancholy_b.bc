@@ -1,0 +1,230 @@
+#!/usr/bin/bc -l
+
+### MelancholyB.BC - A collatz-like iteration leading to zero, or loops.
+###                  Variant of Melancholy.BC
+
+max_array_ = 4^8-1
+
+# Determine if x is one of the 2.5% of numbers
+# . that are melancholy with this method
+define is_melancholyb(x) {
+  auto os,n,i,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return 0}
+  tapetop=-1;
+  while(1){
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x==0){scale=os;return 0}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){scale=os;return 1}
+    if(tapetop++>max_array_){
+      print "is_melancholyb: can't calculate ...; chain too long\n"
+      scale=os;return 1
+    }
+    tape[tapetop]=x
+  }
+}
+
+# Print the chain of iterations of x until a loop or zero
+define melancholyb_print(x) {
+  auto os,n,i,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return x}
+  tapetop=-1;
+  while(1){
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x==0){scale=os;return x}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){scale=os;"looping ";return x}
+    if(tapetop++>max_array_){
+      print "melancholy_printb: can't calculate ...; chain too long\n"
+      scale=os;return 1
+    }
+    tape[tapetop]=x;x
+  }
+}
+
+# Return 0 for non-melancholy numbers or the smallest number in the loop
+# that the iteration becomes trapped within.
+define melancholyb_root(x) {
+  auto os,n,i,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return 0}
+  tapetop=-1;
+  while(1){
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x==0){scale=os;return 0}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){
+      #go back the other way looking for the lowest value
+      while(++i<=tapetop)if(tape[i]<x)x=tape[i]
+      scale=os;return x
+    }
+    if(tapetop++>max_array_){
+      print "melancholy_rootb: can't calculate ...; chain too long\n"
+      scale=os;return -1 # Error: Unknown
+    }
+    tape[tapetop]=x
+  }
+}
+
+# Find the maximum 'hailstone' i.e. the largest number in the chain of
+# iterations from x to loop or zero.
+define melancholyb_max(x) {
+  auto os,n,i,max,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return 0}
+  tapetop=-1;max=x
+  while(1){
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x>max)max=x
+    if(x==0){scale=os;return max}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){scale=os;return max}
+    if(tapetop++>max_array_){
+      print "melancholyb_max: can't calculate ...; chain too long\n"
+      scale=os;return max
+    }
+    tape[tapetop]=x
+  }
+}
+
+# For melancholy numbers, returns the size of the loop the iterations
+# become trapped within.
+define melancholyb_loopsize(x) {
+  auto os,n,i,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return 0}
+  tapetop=-1;
+  while(1){
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x==0){scale=os;return 0}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){ scale=os;return tapetop-i+1 }
+    if(tapetop++>max_array_){
+      print "melancholyb_loopsize: can't calculate ...; chain too long\n"
+      scale=os;return -1 # Error: Unknown
+    }
+    tape[tapetop]=x
+  }
+}
+
+# Find how many iterations are required to find a repeated iteration (loop)
+# or zero
+define melancholyb_chainlength(x) {
+  auto os,n,i,c,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return 0}
+  tapetop=-1;
+  while(1){
+    .=c++
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x==0){scale=os;return c}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){ scale=os;return 2-c }# infinity
+    if(tapetop++>max_array_){
+      print "melancholyb_chainlength: can't calculate ...; chain too long\n"
+      scale=os;return -c
+    }
+    tape[tapetop]=x
+  }
+}
+
+# Perhaps a misnomer. This returns the square root of the perfect square
+# which dropped the iteration to zero on the following step
+# Returns -1 in the case of a melancholy number since the iteration loops
+# and there is no 'last' term.
+define melancholyb_lastsqrt(x) {
+  auto os,n,i,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){scale=os;return 0}
+  tapetop=-1;
+  while(1){
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(x==0){scale=os;return n}
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){ scale=os;return -1 }# there isn't one
+    if(tapetop++>max_array_){
+      print "melancholyb_lastsqrt: can't calculate ...; chain too long\n"
+      scale=os;return -1 # Error: Unknown
+    }
+    tape[tapetop]=x
+  }
+}
+
+# All of the above rolled into one. Negative values suggest error condition.
+# Global variables are set with the same names as the above functions
+# with the exception of global variable melancholy_print, which should be
+# set to non-zero if emulation of the melancholy_print() function is required
+define is_melancholyb_sg(x) {
+  auto os,n,i,max,c,tape[],tapetop;
+  os=scale;scale=0
+  x/=1
+  if(x<0)return 1;
+  if(x==0){
+    melancholyb_root        = 0
+    melancholyb_max         = 0
+    melancholyb_loopsize    = 0
+    melancholyb_chainlength = 0
+    melancholyb_lastsqrt    = 0
+    scale=os;return 0
+  }
+  tapetop=-1;
+  while(1){
+    .=c++
+    n=sqrt(x);if((i=n*n)<x){i+=n+n+1;.=n++};x=n*(i-x)
+    if(melancholy_print)x
+    if(x>max)max=x
+    if(x==0){
+      melancholyb_root        = 0
+      melancholyb_max         = max
+      melancholyb_loopsize    = 0
+      melancholyb_chainlength = c
+      melancholyb_lastsqrt    = n
+      scale=os;return 0 # is not melancholy
+    }
+    # Search backwards for previous occurrence of x (which is more
+    #   likely to be near end of tape since chains lead to loops)
+    for(i=tapetop;i>0;i--)if(tape[i]==x){
+      melancholyb_max         = max
+      melancholyb_loopsize    = tapetop-i+1
+      melancholyb_chainlength = 2-c # Infinite
+      melancholyb_lastsqrt    = -1 # Error: Unknown
+      #go back the other way looking for the lowest value
+      while(++i<=tapetop)if(tape[i]<x)x=tape[i]
+      melancholyb_root        = x
+      scale=os;return 1 # is melancholy
+    }
+    if(tapetop++>max_array_){
+      print "is_melancholyb_sg: can't calculate ...; chain too long\n"
+      melancholyb_root        = -1 # Error: Unknown
+      melancholyb_max         = -max
+      melancholyb_loopsize    = -1 # Error: Unknown
+      melancholyb_chainlength = -c
+      melancholyb_lastsqrt    = -n
+      scale=os;return 1 # is melancholy
+    }
+    tape[tapetop]=x
+  }
+}

@@ -1,0 +1,86 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+prgname=${0##*/}
+
+_usage() {
+    cat <<-EOF
+	usage: $prgname repodir maildir
+
+	Exports all of repodir's emails to maildir.
+
+	  repodir - path to repository of https://public-inbox.org/ format
+	  maildir - path to existing or to be created maildir
+	EOF
+}
+usage() { _usage; exit 0; }
+usage_err() { _usage; exit 2; } >&2
+
+while getopts h opt; do
+    case $opt in
+        h) usage ;;
+        *) usage_err ;;
+    esac
+done
+shift $((OPTIND-1))
+
+(( $# == 2 )) || usage_err
+
+# ----------------------------------------
+
+export LANG=C
+
+repodir=$(realpath -m -- "$1")
+maildir=$(realpath -m -- "$2")
+export repodir maildir
+
+cd "$repodir"
+git rev-parse
+
+if [[ -d $maildir ]]; then
+    stat "$maildir"/{cur,new,tmp} >/dev/null
+else
+    mkdir -p "$maildir"/{cur,new,tmp}
+fi
+
+tmpdir=$(mktemp -d)
+cleanup() { rm -rf "$tmpdir"; }
+trap cleanup EXIT
+export tmpdir
+
+delim=$'\c\\\c]\c^\c_'
+export delim
+
+git log --pretty="%H:m $delim%H %ct" master -- m >"$tmpdir/all"
+
+cd "$tmpdir"
+split -d -l10000 all
+find "$tmpdir" -name 'x*' >chunks
+
+process() {
+    set -eu -o pipefail
+    cd "$repodir"
+    git cat-file --batch='%(rest)' <"$1" |
+        awk -v RS="$delim" -v maildir="$maildir" -v hostname="$HOSTNAME" '
+        BEGIN { FS = "\n"; ORS = ""; }
+        NR == 1 { next }
+        {
+            match($0, /^(\S+) (\S+)\n/, m)
+            sub("[^\n]*\n", "") # remove first line
+            sub("\n$", "") # remove last line
+            outfile = maildir "/cur/" m[2] ".O" m[1] "." hostname ":2,S"
+            print >outfile
+            close(outfile)
+        }
+        END { print NR-1 "\n" }
+        ' >"$1.out"
+}
+export -f process
+
+nice parallel --bar process <chunks
+
+printf '> Queued:  %9d\n' "$(wc -l <"$tmpdir/all")"
+printf '> Written: %9d\n' \
+    "$(cat "$tmpdir"/x*.out | awk '{ sum += $1 } END { print sum }')"
+echo

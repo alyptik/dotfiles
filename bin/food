@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#displays some cool terminal art
+imgs=(taco pizzza pancakes poptart waffles burger rice vburger pizzzza unix)
+
+for var in "${imgs[@]}"; do
+  wget -O- -q "http://git.io/${var}"
+done
+
+sleep 1
+wget -O- -q  "https://raw.githubusercontent.com/syntax-samurai/ryu/master/ryu.color.ansi"
+
+if [[ -a "/usr/bin/toilet" ]]; then
+  toilet -f mono12 -F metal 'NINJA!!!'
+fi

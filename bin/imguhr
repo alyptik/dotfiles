@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# this is definitely not parsing html with bash i promise
+popup_cmd=(notify-send "mpv: loading...")
+display_cmd=(mpv '--loop-file=inf' '--')
+url="$(curl -L "$1" 2>/dev/null | grep -F '<meta itemprop="contentURL"')"
+# retry if no videos found
+if [[ -z "$url" ]]; then
+	popup_cmd=(notify-send "feh: loading...")
+	display_cmd=(feh '--insecure' '--')
+	url="$(curl -L "$1" 2>/dev/null | grep -F '<meta property="og:image"')"
+fi
+url="${url##*content=\"}"
+url="${url%%\"*}"
+if ! command -v notify-send >/dev/null 2>&1; then
+	popup_cmd=(:)
+fi
+"${popup_cmd[@]}" "$url"
+"${display_cmd[@]}" "$url"

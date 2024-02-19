@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Enable basic sound output via pulseaudio
+pa_flags=()
+# Run "pacmd list-sinks | grep -e 'name:' -e 'index'" to find your QEMU_PA_SINK
+QEMU_AUDIO_DRV=pa
+QEMU_PA_SOURCE=input
+QEMU_PA_SINK="$(pacmd list-sinks | perl -ne 'next unless s/^\s+name: <([^>]+)>/$1/; print')"
+# QEMU_PA_SINK=alsa_output.pci-0000_00_1f.3.analog-stereo
+export QEMU_AUDIO_DRV QEMU_PA_SOURCE QEMU_PA_SINK
+# pa_flags+=(-soundhw hda)
+
+# usb passthrough
+usb_flags=(-usb -device 'usb-host,hostbus=1,hostaddr=11')
+if (($#)); then
+	usb_flags=("$@")
+fi
+
+# Start QEMU
+screen qemu-system-x86_64 \
+	-enable-kvm \
+	-m 8G \
+	-smp 4 \
+	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+	-machine type=pc,accel=kvm,kernel_irqchip=on \
+	-global PIIX4_PM.disable_s3=1 \
+	-global PIIX4_PM.disable_s4=1 \
+	-name tails-gvt-g-guest \
+	-show-cursor \
+	-usb -device usb-tablet \
+	-vga virtio \
+	-display gtk,gl=on \
+	-device vfio-pci,sysfsdev=/sys/devices/pci0000:00/0000:00:02.0/0c4bcee4-8237-4b26-b3c2-4d671d09b85e,x-igd-opregion=on,display=on \
+	-net nic,macaddr=52:54:00:46:de:42 \
+	-net bridge,br=virbr0 \
+	-drive file=/vm/tails.cow,format=qcow2,l2-cache-size=8M,aio=native,cache=directsync \
+	-cdrom /vm/tails-amd64-3.10.1.iso \
+	"${pa_flags[@]}" \
+	"${usb_flags[@]}"
+
+# USERID=$(whoami)
+#
+# # Get name of newly created TAP device; see https://bbs.archlinux.org/viewtopic.php?pid=1285079#p1285079
+# precreationg=$(/usr/bin/ip tuntap list | /usr/bin/cut -d: -f1 | /usr/bin/sort)
+# sudo /usr/bin/ip tuntap add user $USERID mode tap
+# postcreation=$(/usr/bin/ip tuntap list | /usr/bin/cut -d: -f1 | /usr/bin/sort)
+# IFACE=$(comm -13 <(echo "$precreationg") <(echo "$postcreation"))
+#
+# # This line creates a random MAC address. The downside is the DHCP server will assign a different IP address each time
+# printf -v macaddr "52:54:%02x:%02x:%02x:%02x" $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff )) $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff ))
+# # Instead, uncomment and edit this line to set a static MAC address. The benefit is that the DHCP server will assign the same IP address.
+# # macaddr='52:54:be:36:42:a9'
+#
+# qemu-system-x86_64 -net nic,macaddr=$macaddr -net tap,ifname="$IFACE" $*
+#
+# sudo ip link set dev $IFACE down &> /dev/null
+# sudo ip tuntap del $IFACE mode tap &> /dev/null

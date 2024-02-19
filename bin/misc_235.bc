@@ -1,0 +1,32 @@
+#!/usr/bin/bc -l
+
+## Find the nearest sum of powers of 2, 3, and 5 to make a number
+
+define print235(x) {
+ auto max5,lx,ni,nj,n,found,diff,near,sn,si,sj,sk;
+ max5 = l(x)/l(5)+1
+ found = 0
+ near = x;
+ for(i=0;i<=max5;i++){
+  ni=5^i
+  nj=ni
+  for(j=0;x>nj;j++){
+   nj=ni+3^j
+   n=nj
+   for(k=0;x>n;k++){
+    n = nj+2^k;#print "n: ",0*n,", i: ",i,", j: ",j,", k: ",k,"\n";
+    diff = x-n;if(diff<0)diff=-diff
+    if(diff<near){near=diff;sn=n;si=i;sj=j;sk=k}
+    if(x==n){found=1;print x," == 2^",k," + 3^",j," + 5^",i,"\n"}
+   }#end for k
+  }#end for j
+ }#end for i
+ if(!found){
+  print "nearest found: ",sn
+  print " == 2^",sk
+  print  " + 3^",sj
+  print  " + 5^",si
+  print "\n"
+ }
+ return( found );
+}

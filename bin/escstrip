@@ -1,0 +1,26 @@
+#!/bin/perl
+
+my @esc = `infocmp`;
+my $regex = join "", map {
+	s/[^ ]+=//g;
+	s/(^| )[^\\][^ ]+, //g;
+	s/^[^\\].*//g;
+	s/, */\|/g;
+	s/\\E//g;
+	chomp;
+	$_ if /[^ ]/;
+	} @esc;
+
+$regex =~ s/\|$//;
+$regex =~ s/^/\(/;
+$regex =~ s/\[/\\\[/g;
+$regex .= "|\\[[0-9][0-9\;]m)";
+$regex = qr/$regex/;
+
+open(my $out_fh, "|-", "strings -w | perl -ne \"s/$regex//g; print if /[^ ]/;\"");
+
+while (<>) {
+	print $out_fh $_;
+}
+
+close $out_fh;

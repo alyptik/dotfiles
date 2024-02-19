@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+ti_reset=$(tput sgr0)
+
+cat <<-EOF
+
+	${ti_reset}normal
+	$(tput bold)bold${ti_reset}
+	$(tput smso)standout${ti_reset}
+	$(tput smul)underline${ti_reset}
+	$(tput sitm)italics${ti_reset}
+	$(tput blink)blink${ti_reset}
+	$(tput rev)reverse${ti_reset}
+
+	TERM = $TERM
+	TERMORIG = $TERMORIG
+	TERMINFO = $TERMINFO
+	TERMINFO_DIRS = $TERMINFO_DIRS
+EOF
+
+echo
+echo 'BCE? *yes* if red line(s) follows'
+tput setab 1
+tput el
+echo
+tput sgr0
+
+echo $'\n--------------------------------------------------'
+echo '> infocmp -D'
+
+echo
+infocmp -D
+
+echo $'\n--------------------------------------------------'
+echo "> infocmp -a -A /usr/share/terminfo $TERM $TERM"
+
+echo
+infocmp -a -A /usr/share/terminfo "$TERM" "$TERM" || true
+
+echo $'\n--------------------------------------------------'
+
+echo
+infocmp -a1 | sed -nr '1,2p; /\b(bce|kbs|kdch1|smso|sitm)[,=]/p'
+
+echo $'\n--------------------------------------------------'
+
+echo
+stty -a | perl -n -e '/\b(erase = .*?);/ && print "stty $1\n"'
+
+echo $'\n--------------------------------------------------'
+
+echo
+read -N1 -rp 'Press BS:            '
+echo
+read -N1 -rp 'Press CTRL+BS:       '
+echo
+read -N1 -rp 'Press CTRL+H:        '
+echo
+read -N1 -rp 'Press CTRL+SHIFT+H:  '
+echo
+echo

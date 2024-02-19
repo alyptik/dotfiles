@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import imaplib
+import time
+import os
+
+with os.popen("gpg2 -dq ~/.passwords.asc") as f:
+    HOST = 'imap.gmail.com'
+    f.readline()
+    f.readline()
+    USER = f.readline().split("=")[1].strip().strip('"')
+    PW = f.readline().split("=")[1].strip().strip('"')
+    f.close()
+
+def parse_status(s):
+    s = s[0].decode('utf8'); mbox, status = s.split(' ', 1)
+    status = status[1:-1].split(' ')
+    return mbox, dict(zip(status[0::2], status[1::2]))
+
+def main():
+    while True:
+        try:
+            with imaplib.IMAP4_SSL(HOST) as imap:
+                imap.login(USER, PW)
+                last = None
+                while True:
+                    e, s = imap.status('INBOX', '(MESSAGES UNSEEN)')
+                    mbox, stats = parse_status(s)
+                    if stats != last:
+                        print("imap\t"
+                            + f"^fg(#909090){stats['MESSAGES']} "
+                            + f"^fg(#efefef)({stats['UNSEEN']})", flush=True)
+                    last = stats
+                    time.sleep(600)
+        except (OSError, imaplib.IMAP4.error) as e:
+            print(e)
+            time.sleep(600)
+
+if __name__ == '__main__':
+    main()

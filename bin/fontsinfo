@@ -1,0 +1,66 @@
+#!/bin/bash
+
+set -eu
+
+match() {
+    local match
+    match=$(fc-match "$1")
+    printf '%-25s %s\n' "$1" "$match"
+}
+export -f match
+
+echo $'\n--------------------------------------------------'
+echo $'> Generic:\n'
+
+parallel -k match <<-EOF
+	cursive
+	fantasy
+	monospace
+	sans-serif
+	serif
+EOF
+
+echo $'\n--------------------------------------------------'
+echo $'> Other:\n'
+
+parallel -k match <<-EOF
+	Andale Mono
+	Arial
+	Arial Black
+	Arial Narrow
+	Avant Garde
+	Book Antiqua
+	Bookman
+	Calibri
+	Century Gothic
+	Consolas
+	Copperplate Gothic
+	Courier
+	Courier New
+	Frutiger
+	Futura
+	Garamond
+	Geneva
+	Georgia
+	Gill Sans
+	Helvetica
+	Helvetica Condensed
+	Impact
+	Lucida Console
+	Lucida Sans Unicode
+	Monaco
+	Palatino
+	Palatino Linotype
+	Symbol
+	Tahoma
+	Times
+	Times New Roman
+	Trebuchet
+	Trebuchet MS
+	Univers
+	Verdana
+	Webdings
+	Wingdings
+	Zapf Dingbats
+EOF
+echo

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd /store/code/projects/pbot/modules/compiler_vm || exit 1
+exec screen sudo /store/code/projects/pbot/modules/compiler_vm/compiler_server_virsh.pl
+
+# screen sudo bash -c "/store/code/projects/pbot/modules/compiler_vm/compiler_server_virsh.pl 2>&1 |
+#         grep -v --line-buffered 'child: got heartbeat'"
+# trap 'sudo virsh detach-disk compiler vdb >/dev/null 2>&1' EXIT ERR INT
+# (while sleep 2; do pgrep compiler_server >/dev/null 2>&1 ||
+#         break; done; sudo virsh detach-disk compiler vdb >/dev/null 2>&1) & disown
+# trap - EXIT ERR INT
+# pgrep -n cvm

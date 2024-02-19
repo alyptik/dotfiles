@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+cgexec -g cpu,cpuset,memory,blkio:confine /usr/bin/chromium

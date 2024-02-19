@@ -1,0 +1,12 @@
+#!/bin/sh
+
+_open() {
+	if test -z "$*"; then
+		return
+	fi
+	nohup gio open "$1" >/dev/null 2>&1 & rm -f -- nohup.out
+	shift
+	_open "$@"
+}
+
+_open "$@"

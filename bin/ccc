@@ -1,0 +1,68 @@
+#!/bin/sh
+
+asan_flags=''
+gdb_cmd=''
+opti_flags='-O0'
+usage="usage: ${0##*/} [-agho] <source.c|->"
+tmp_file="$(mktemp /tmp/XXXXXXXX)"
+
+if [ -z "$tmp_file" ]; then
+	printf '%s\n' "unable to create temporary file" >&2
+	exit 1;
+fi
+
+trap 'rm -fv -- "$tmp_file"' EXIT HUP INT TERM QUIT
+
+# check for xtrace flag
+while getopts :agho opt; do
+	case "$opt" in
+	# append address sanitizer flags
+	a)
+		asan_flags='-fsanitize=address,alignment,undefined'
+		;;
+	# set gdb program
+	g)
+		gdb_cmd='gdb'
+		;;
+	# append optimization flags
+	o)
+		opti_flags='-O3'
+		;;
+	# show sel_ldr -h and usage
+	h)
+		printf '%s\n' "$usage" >&2
+		exit
+		;;
+	# show error and usage
+	:|?)
+		printf 'illegal option letter: %s\n%s\n' "'$OPTARG'" "$usage" >&2
+		exit 1
+		;;
+	esac
+done
+shift "$((OPTIND - 1))"
+
+if [ -z "$*" ]; then
+	set -- '-'
+fi
+
+if [ -n "$asan_flags" ]; then
+	set -- "$asan_flags" "$@"
+fi
+
+set -- "$opti_flags" "$@"
+
+printf '%s\n' "[compiling: ${CC:-gcc} -Wall -Wextra -pedantic -std=c11 -g3 $* -o $tmp_file]"
+"${CC:-gcc}" -x c -Wall -Wextra -pedantic -std=c11 -g3 "$@" -o "$tmp_file" || exit "$?"
+
+# if passed -g run program through gdb
+if [ -n "$gdb_cmd" ]; then
+	printf '%s\n' "[executing: $gdb_cmd -ex 'r' $tmp_file]"
+	"$gdb_cmd" -ex 'r' "$tmp_file"
+	exit $?
+fi
+
+# if not passed -g run program normally
+printf '%s\n' "[executing: $tmp_file]"
+"$tmp_file"
+exit $?

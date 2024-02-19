@@ -1,0 +1,229 @@
+#!/usr/bin/bc -l
+
+### Logic-OtherBase.BC - Attempt to extend bitwise functions into other bases
+
+ # see logic.bc for faster bitwise-only functions
+
+## XOR like
+# All of these degenerate to being identical
+# to bitwise exclusive-or in base 2
+
+# Workhorse function for the others
+define digitwise_xor_(which, base, x,y) {
+  auto os,n,a,b,c,p,t,z,oddbase,h
+  os=scale;scale=0
+  /* Nonsense to delete
+  # some algorithms are asymmetric. negative which swaps parameters
+  if(which<0){x+=y;y=x-y;x-=y;which=-which} #swap
+   # ^technically a bug since -0 fails, but that algorithm is symmetric anyway
+  # since some algos are asym, add the alternatives in a ratio
+  # . specified by the fractional part of which
+  if(which>(z=which/1)){
+    a=which-z
+    z=digitwise_xor_(z,base,x,y)*(1-a)+digitwise_xor_(z,base,y,x)*a
+    scale=os;return z
+  }
+  */
+  which/=1
+  base/=1;if(base<2)base=ibase
+  n=0;x/=1;y/=1
+  if(x<0){x=-1-x;n=!n}
+  if(y<0){y=-1-y;n=!n}
+  oddbase=base%2
+  z=0;t=1;p=0;while(x||y){
+    a=x-base*(h=x/base);x=h
+    b=y-base*(h=y/base);y=h
+    if(0){
+    } else if(which==-1){
+      c=a-b;if(c<0)c=-c
+      if(c+c>base)c=base-c
+    } else if(which==0){
+      c=a-b;if(c<0)c=-c
+    } else if(which==1){
+      c=a+base-b;c%=base
+    } else if(which==2){
+      c=a+b;c%=base
+    } else if(which==3){
+      c=a+b
+      if(oddbase||!c%2)c=a+base-b # odd base, or even base with odd parity
+      c%=base
+    } else if(which==4){
+      c=a;b=b%2
+      if((!oddbase&&b)||(oddbase&&p))c=base-1-a
+      if(oddbase&&b)p=1-p
+    }    
+    z+=t*c
+    t*=base
+  }
+  if(n)z=-1-z
+  scale=os;return z
+}
+
+# Digitwise shortest distance
+#  each digit is the shortest path from digit
+#  in x to digit in y modulo the base
+#   e.g. shortest distance between 0 and 4 modulo 6 is 2 (not 4)
+define digitwise_sdist(base, x,y) {
+  return digitwise_xor_(-1,base,x,y)
+}
+
+# Digitwise logical difference
+define digitwise_diff(base, x,y) {
+  return digitwise_xor_(0,base,x,y)
+}
+
+# Digitwise modulo subtraction; no borrows
+#  asymmetric since x-y != y-x
+define no_borrow_diff(base, x,y) {
+  return digitwise_xor_(1,base,x,y)
+}
+
+# Digitwise modulo sum / add ignoring carries
+define no_carry_add(base, x,y) {
+  return digitwise_xor_(2,base,x,y)
+}
+
+# A logical 'blend' of the previous two functions
+#  also asymmetric
+define asym_mixor(base, x,y) {
+  return digitwise_xor_(3,base,x,y)
+}
+
+# Flip digits of x using parity of digits of y
+#  necessarily asymmetric
+define asym_parity(base, x,y) {
+  return digitwise_xor_(4,base,x,y)
+}
+
+## AND-like
+# Positive values only for now
+
+define digitwise_modmult(base, x,y) {
+  auto os,a,b,c,t,z,h
+  os=scale;scale=0
+  base/=1;if(base<2)base=ibase
+  x/=1;y/=1
+  if(x<0||y<0){
+    print "digitwise_modmult: unimplemented for -ve numbers\n"
+    scale=os;return 0
+  }
+  z=0;t=1;while(x||y){
+    a=x-base*(h=x/base);x=h
+    b=y-base*(h=y/base);y=h
+    c=(a*b)%base
+    z+=t*c
+    t*=base
+  }
+  scale=os;return z
+}
+
+define digitwise_min(base, x,y) {
+  auto os,a,b,c,t,z,h
+  os=scale;scale=0
+  base/=1;if(base<2)base=ibase
+  x/=1;y/=1
+  if(x<0||y<0){
+    print "digitwise_min: unimplemented for -ve numbers\n"
+    scale=os;return 0
+  }
+  z=0;t=1;while(x||y){
+    a=x-base*(h=x/base);x=h
+    b=y-base*(h=y/base);y=h
+    c=a;if(a>b)c=b
+    z+=t*c
+    t*=base
+  }
+  scale=os;return z
+}
+
+## OR like
+
+define digitwise_max(base, x,y) {
+  auto os,a,b,c,t,z,h
+  os=scale;scale=0
+  base/=1;if(base<2)base=ibase
+  x/=1;y/=1
+  if(x<0||y<0){
+    print "digitwise_max: unimplemented for -ve numbers\n"
+    scale=os;return 0
+  }
+  z=0;t=1;while(x||y){
+    a=x-base*(h=x/base);x=h
+    b=y-base*(h=y/base);y=h
+    c=a;if(a<b)c=b
+    z+=t*c
+    t*=base
+  }
+  scale=os;return z
+}
+
+define digitwise_tlumdom(base, x,y) {
+  auto os,a,b,c,t,z,h
+  os=scale;scale=0
+  base/=1;if(base<2)base=ibase
+  x/=1;y/=1
+  if(x<0||y<0){
+    print "digitwise_tlumdom: unimplemented for -ve numbers\n"
+    scale=os;return 0
+  }
+  z=0;t=1;while(x||y){
+    a=x-base*(h=x/base);x=h
+    b=y-base*(h=y/base);y=h
+    c=base-1-((a+1)*(b+1))%base
+    z+=t*c
+    t*=base
+  }
+  scale=os;return z
+}
+
+## Gray Code like
+
+define base_graycode(base,x){
+  auto os,n,b2,b_1,d,p,g,h;
+  os=scale;scale=0
+  base/=1;if(base<2)base=ibase
+  x/=1;n=0;if(x<0){n=1;x=-1-x}
+  b2=base+base;b_1=base-1
+  g=0;p=1
+  while(x){
+    if(x%b2>(d=x-base*(h=x/base)))d=b_1-d
+    g+=p*d;p*=base;x=h
+  }
+  if(n)g=-1-g
+  scale=os;return g
+}
+
+define inverse_base_graycode(base,x) {
+  auto os,n,bp,b_1,a[],b,i,y,h;
+  os=scale;scale=0
+   base/=1;if(base<2)base=ibase
+   x/=1;n=0;if(x<0){n=1;x=-1-x}
+   for(i=0;x;i++){a[i]=x-base*(h=x/base);x=h}
+   bp=base%2;b_1=base-1
+   y=0;b=0;for(--i;i>=0;i--){
+     d=a[i];if(b)d=b_1-d
+     y=y*base+d
+     if(bp){b+=d}else{b=d}
+     b%=2
+   }
+   if(n)y=-1-y
+  scale=os;return y
+}
+
+## Hamming Distance
+
+# Count the number of differences between two numbers in the given base
+# . compare with digit_distance in digits.bc which
+# . takes the value of the difference into account
+define base_hamming(base,x,y) {
+  auto os,t,hx,hy;
+  os=scale;scale=0;base/=1;x/=1;y/=1
+  if(base<2)base=ibase
+  if(x<0&&y<0){x=-1-x;y=-1-y}
+  if(x<0||y<0){
+    print "base_hamming: infinite distance from mismatched signs\n";
+    scale=os;return A^os-1
+  }
+  t=0;while(x||y){hx=x/base;hy=y/base;if(x-y!=base*(hx-hy)).=t++;x=hx;y=hy}
+  scale=os;return t
+}

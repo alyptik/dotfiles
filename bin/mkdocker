@@ -1,0 +1,61 @@
+#!/bin/bash
+
+set -o errexit
+
+usage="usage: ${0##*/} -[hnps]"
+squash=()
+nocache=()
+
+push_cmd=(printf '[skipping: %s %s %s]\n' docker push)
+build_stages=(base prebuiltsdk naclruntime)
+
+trap '{ printf "%s\n" "[$0:$LINENO] Docker build failed." >&2; exit 1; }' ERR
+
+export LIND_PREFIX="${LIND_PREFIX:-$HOME}"
+export LIND_BASE="${LIND_BASE:-$LIND_PREFIX/lind_project}"
+export LIND_SRC="${LIND_SRC:-$LIND_BASE/lind}"
+export LIND_MONITOR="${LIND_MONITOR:-$LIND_BASE/reference_monitor}"
+export REPY_PATH="${REPY_PATH:-$LIND_SRC/repy}"
+export NACL_SDK_ROOT="${NACL_SDK_ROOT:-$REPY_PATH/sdk}"
+export PYTHON="${PYTHON:-python2}"
+export PNACLPYTHON="${PNACLPYTHON:-python2}"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-/lib/glibc}"
+
+cd "$LIND_BASE"
+
+# option handling
+while getopts :hnps opt; do
+	case "$opt" in
+	# squash final image
+	s)
+		squash=(--squash);;
+	# push docker images
+	p)
+		push_cmd=(docker push);;
+	# disable cache
+	n)
+		nocache=(--no-cache);;
+	# show usage information
+	h)
+		printf '%s\n' "$usage" >&2
+		exit;;
+	# wtf ???
+	:|?)
+		printf 'illegal option: -%s\n' "$OPTARG" >&2
+		printf '%s\n' "$usage" >&2
+		false;;
+	esac
+done
+shift "$((OPTIND - 1))"
+
+for tag in "${build_stages[@]}"; do
+	docker image rm -f "alyptik/lind:$tag"
+	docker build "${nocache[@]}" "${squash[@]}" -t "alyptik/lind:$tag" "./docker/$tag"
+	"${push_cmd[@]}" "alyptik/lind:$tag"
+	# special case the last tag
+	if [[ "$tag" == "${build_stages[-1]}" ]]; then
+		docker image rm -f "alyptik/lind:latest"
+		docker build "${squash[@]}" --cache-from="alyptik/lind:$tag" -t alyptik/lind:latest "./docker/$tag"
+		"${push_cmd[@]}" "alyptik/lind:latest"
+	fi
+done

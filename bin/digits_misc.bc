@@ -1,0 +1,389 @@
+#!/usr/bin/bc -l digits.bc
+
+### Digits-Misc.BC - Treat numbers as strings of digits II
+
+ ## Functions of interest but questionable worth
+
+# Workhorse function - use POSIX scope to check
+# . 'base' parameter of many functions here
+define base_check_misc_() {
+  if(bijective)print "Bijective mode not supported by this function.\n"
+  if(base<2){
+    if(base<=-2){
+      print "Negative bases not currently supported; "
+    } else if(base==-1||base==0||base==1) {
+      print "Nonsense base: ",base,"; "
+    }
+    print "Using ibase instead.\n"
+    base=ibase
+  }
+}
+ 
+# Product of each digit with one added, less 1
+# e.g. 235 -> (2+1)(3+1)(5+1)-1 = 3*4*6 - 1 = 71 in base ten
+define digit_product1(base,x) { 
+ auto os,t;
+ if(x<0)return digit_product1(base,-x);
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_misc_()
+  t=1;while(x){t*=1+(x%base);x/=base}
+ scale=os;return(t-1)
+}
+
+# Product of each digit's corresponding odd numbers through the relation
+# digit -> 2*digit + 1, then the result is passed through the inverse relation x -> (x-1)/2
+# e.g. 13462 -> ( (2*1+1)(2*3+1)(2*4+1)(2*6+1)(2*2+1)-1 )/2 = (3*7*9*13*5 - 1)/2 = 6142
+define digit_product2(base,x) { 
+ auto os,t;
+ if(x<0)return digit_product2(base,-x);
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_misc_()
+  t=1;while(x){t*=1+2*(x%base);x/=base}
+  t=(t-1)/2
+ scale=os;return(t)
+}
+
+## Swap digit pairs
+define sdp(base,x) {
+  auto os,b2,t,nx,dd,dl,dr,pw;
+  if(x<0)return sdp(base,-x)
+  .=base_check_misc_()
+  os=scale;scale=0;base/=1
+   b2=base*base
+   nx=x/1
+   if(scale(x)&&x!=nx){
+     pw=A^os;for(t=1;t<=pw;t*=b2){}
+     nx=(x*t)/1
+     scale=os;return sdp(base,nx)/t
+   }
+   x=nx;pw=1
+   for(t=0;x;x=nx){dd=x-(nx=x/b2)*b2;dr=dd-(dl=dd/base)*base;t+=pw*(dr*base+dl);pw*=b2;x=nx}
+  scale=os;return t
+}
+
+## Palindromes
+
+# Determine if x is a negapalindrome (type 1) in the given base
+# - an NP is any number whose opposing pairs of digits,
+#   (counted in from either end) sum to one less than the base
+# e.g. 147258 is an NP(1) in base ten since 1+8 = 4+5 = 7+2 = 9 = ten - 1
+define is_negapalindrome(base,x) {
+  auto os
+  os=scale;scale=0;base/=1;x/=1
+   .=base_check_misc_()
+   # divisibility by base-1 is a necessary condition for [P]NP(1)s in even bases
+   # divisibility by (base-1)/2 is a necessary condition for [P]NP(1)s in odd bases
+   if(x%((base-1)/(1+base%2))!=0){scale=os;return 0}
+   if(x<0)x=-x
+   x += reverse(base,x)+1
+   if(x<base){scale=os;return 0}
+   while(x%base==0)x/=base
+  scale=os;return(x==1)
+}
+
+# workhorse function for is_pseudonegapalindrome
+define stripbm1s_(base,x) {
+ auto d;d=base-1;
+ while(x%base==d){x/=base}
+ return x
+}
+
+# Determine if x is a pseudonegapalindrome (type 1) in the given base
+# - a PNP is a number that could be a negapalindrome
+#   if a number of zeroes is prepended to the beginning;
+# e.g. 1899 is a PNP in base ten since it can be written 001899
+#   All NPs are also PNPs since the prepending
+#     of no zeroes at all is also an option
+define is_pseudonegapalindrome(base,x) {
+ auto os
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_misc_()
+  # divisibility by base-1 is a necessary condition for [P]NP(1)s
+  if(x==0||x%(base-1)!=0){scale=os;return 0}
+  if(x<0)x=-x
+  x = stripbm1s_(base,x)
+  x += reverse(base,x)
+  x = stripbm1s_(base,x)
+ scale=os;return (x==0)
+}
+
+# Determine if x is a negapalindrome (type 2) in the given base
+# - an NP is any number whose opposing pairs of digits,
+#   (counted in from either end) sum to one less than the base
+# e.g. 9415961 is an NP(2) in base ten since 9+1 = 4+6 = 1+9 = 5+5 = ten
+#   note that the 5 counts double and pairs with itself
+define is_negapalindrome2(base,x) {
+  auto os
+  os=scale;scale=0;base/=1;x/=1
+   .=base_check_misc_()
+   if(x<0)x=-x
+   x += reverse(base,x)+1
+   if(x<base){scale=os;return 0}
+   while(x%base==1)x/=base
+  scale=os;return (x==0)
+}
+
+# There is no such thing as a PNP (type 2) as this would require a digit
+# to pair with zero that is equal to the value of the base.
+
+define map_negapalindrome(base, x){
+  auto os,r,s
+  os=scale;scale=0;x/=1
+   s=1;if(x<0)x*=(s=-1)
+   .=base_check_misc_()
+   if(base%2){
+     if(x==0){x=base/2;scale=os;return x}
+     r=base^(digits(base,(x+1)/2)-1)
+     if(x<(base+1)*r-1){
+       #make negapalindrome
+       x-=r-1
+       r*=base
+       x=x*r+reverse(base,r-1-x)
+     } else {
+       #make negapalindrome with central digit
+       r*=base
+       x-=r-1
+       x=(x*base+base/2)*r+reverse(base,r-1-x)
+     }
+   } else {
+     .=x++ # without this x=0 -> a single digit NP(1), which is invalid for even bases
+     r=base^digits(base,x)
+     x=x*r+reverse(base,r*base-1-x)/base
+   }
+  scale=os;return s*x
+}
+
+define unmap_negapalindrome(base, x) {
+  auto os,r,s
+  os=scale;scale=0
+   s=1;if(x<0)x*=(s=-1)
+   .=base_check_misc_()
+   if(base%2){
+     r=base^((digits(base,x)+1)/2)
+     x=x/r+r/base-1
+   } else {
+     r=base^(digits(base,x)/2)
+     x=x/r-1
+   }
+  scale=os;return s*x
+}
+
+  ## To do (one day): map_ functions for remaining NPs and PNPs
+  
+## Calculator segments
+
+# Return the number of segments of a 7-segment calculator display that
+#   are required to display the value of x in the given base.
+# Supports up to base 36; Some calculators may have a different number
+#   of segments per number than given here.
+define calcsegments(base,x) {
+  auto os,oib,s[],t;
+  oib=ibase;ibase=A
+   s[ 0]=s[ 6]=s[ 9]=s[10]=s[32]=6
+   s[ 1]=s[27]=2
+   s[ 2]=s[ 3]=s[ 5]=s[11]=s[13]=s[14]=s[16]=s[25]=s[26]=s[31]=s[34]=5
+   s[ 4]=s[12]=s[15]=s[17]=s[20]=s[24]=s[28]=s[29]=s[35]=4
+   s[ 7]=s[19]=s[21]=s[22]=s[23]=s[30]=s[33]=3
+   s[ 8]=7
+   s[18]=1
+  ibase=oib
+  os=scale;scale=0;x/=1
+  t=0;if(x<0){t=1;x=-x}
+  if(x==0){scale=os;return s[0]}
+  if(2>base||base>6*6){
+    print "calcsegments: only bases 2 to 36 (decimal) supported\n";
+    base=A
+  }
+  while(x){t+=s[x%base];x/=base}
+  scale=os;return t
+}
+
+## Miscellaneous
+
+# The base number created by appending all base numbers
+# from 1 to x, e.g. in base ten: 1, 12, 123, ..., 123456789101112, etc.
+define append_all(base,x) {
+ auto a,i,m,l,os;
+ os=scale;scale=0;base/=1;x/=1
+  .=base_check_misc_()
+  if(x<=0)return(0);
+  m=1;while(x){l=m;m*=base;for(i=l;i<m&&x;i++){a=a*m+i;.=x--}}
+ scale=os;return(a)
+}
+
+# returns a number with the digits sorted into descending order
+define sort_digits_desc(base,x) {
+ auto os,i,d[];
+ if(x<0)return sort_digits_desc(base,-x)
+ os=scale;scale=0
+ base/=1;x/=1
+ .=base_check_misc_()
+ for(i=0;i<base;i++)d[i]=0
+ while(x>0){.=d[x%base]++;x/=base}
+ for(i=base-1;i>=0;i--)if(d[i])for(j=0;j<d[i];j++)x=base*x+i
+ scale=os
+ return x
+}
+
+# returns a number with the digits sorted into ascending order
+define sort_digits_asc(base,x) {
+ auto os,i,d[];
+ if(x<0)return sort_digits_asc(base,-x)
+ os=scale;scale=0
+ base/=1;x/=1
+ .=base_check_misc_()
+ for(i=0;i<base;i++)d[i]=0
+ while(x>0){.=d[x%base]++;x/=base}
+ for(i=1;i<base;i++)if(d[i])for(j=0;j<d[i];j++)x=base*x+i
+ scale=os
+ return x
+}
+
+## Digit counting / splitting with arrays
+
+# Count the occurrences of a particular digit in a number in the given base
+# . caution - only works on integers
+define count_digit(base,x,digit) {
+  auto os,count;
+  if(x<0)x=-x
+  os=scale;scale=0
+  base/=1;x/=1
+  .=base_check_misc_()
+  for(count=0;x;x/=base)if(x%base==digit).=count++
+  scale=os;return count
+}
+
+# Combination of count_digit(), digits() and an array[]
+# . sets an array to contain the counts of all digits in the given base
+# . array is terminated by -1
+# . e.g. count_digits(a[],A,110247544) = 9 and a[] = {1,2,1,0,3,1,0,1,0,0,-1}
+# . caution - only works on integers
+define count_digits(*d__[],base,x) {
+  auto os,count;
+  if(x<0)x=-x
+  os=scale;scale=0
+  base/=1;x/=1
+  .=base_check_misc_()
+  for(count=0;count<base;count++)d__[count]=0;
+  for(count=0;x;x/=base){.=count++;.=d__[x%base]++}
+  d__[base]=-1
+  scale=os;return count;
+}
+
+# Split the digits of x into the given array
+# . handles floating point numbers
+# . basimal point is always present, and is represented by an array element
+#   whose absolute value is the base (since this is too large to be a digit)
+# . the sign of the basimal point value carries the sign of x
+#   (hence always needing to be present)
+# . array is terminated with -1 (an invalid base for a basimal point)
+# . e.g. split_digits(a[],10,-15.725) sets a[] to {1,5,-10,7,2,5,-1}
+#        split_digits(a[],10,3) sets a[] to {3,10,-1}
+define split_digits(*d__[],base,x) {
+  auto os,s,b,i,ix,fx,p;
+  if(x==0){d__[0]=0;d__[1]=-1;return 0}
+  s=1;if(x<0){s=-1;x=-x}
+  os=scale;scale=0
+  base/=1
+  .=base_check_misc_()
+  fx=x-(ix=x/1)
+  while(ix%base==0){b++;ix/=base}
+  ix=reverse(base,ix);i=0
+  while(ix){d__[i++]=ix%base;ix/=base}
+  while(b--)d__[i++]=0
+  d__[i++]=s*base
+  for(p=1;fx&&p<A^os;p*=base){fx*=base;fx-=(d__[i++]=fx/1)}
+  d__[i++]=-1;scale=os;return 0
+}
+
+# Puts an array generated by split_digits() back together
+# . since all relevant information is encoded in the array, only the
+#   array parameter is required. will complain on finding a problem
+# . To convert numbers digitwise to another base, instead see the
+#   cantor*() functions
+define join_digits(d__[]) {
+  auto os,i,m,n,base,d,s,x,p;
+  os=scale;scale=0
+  m=n=d__[0];for(i=1;(d=d__[i])!=-1;i++)if(m<d){m=d}else if(n>d){n=d}
+  s=1;if(-n>=m){s=-1;base=-n}else{base=m}
+  for(i=0;(d=d__[i])<base&&d>=0;i++)x=x*base+d
+  if(d__[i]!=s*base){print "join_digits: unexpected element in array\n";scale=os;return x/s}
+  scale=os+5;x+=5*A^(-1-os)
+  for(p=1/base;p&&(d=d__[++i])<base&&d>=0;p/=base)x+=d*p
+  if(d__[i]!=-1)print "join_digits: unexpected element in array\n";
+  scale=os;return x/s
+}
+
+## Pandigital Index
+
+# pdhi(x) - Pan Digital Halving Index
+# Returns how many times x must be divided by 2 before
+# the result contains all digits from 0 to 9 (if ibase = 10).
+# e.g. 3339 -> 1669.5 -> 834.75 -> 417.375 ->
+#      208.6875 -> 104.34375 -> 52.171875 ->
+#      26.0859375 -> 13.04296875, i.e. 8 times
+
+# Uses ibase as the base for divisions (usually 10)
+
+define pdhi(x) {
+  auto d[],xi,xf,c,r,pdhi,lim,i;
+  if(x==0){print "pdhi: Infinity\n";return A^scale-1}
+  if(x<0)x=-x
+  c=1;pdhi=-1;lim=int(A/ibase+3)*scale
+  while(c){
+    pdhi+=1
+    xi=int(x);xf=x-xi
+    while(xi){
+      r=int(xi/ibase)
+      d[xi-ibase*r]=1
+      xi=r
+    }
+    for(i=lim ; i && xf ; i--){
+    #while(xf){
+      xf*=ibase
+      r=int(xf)
+      d[r]=1
+      xf-=r
+    }
+    c=ibase
+    for(r=0;r<ibase;r++){c-=d[r];d[r]=0}
+    x/=2
+  }
+  return pdhi;
+}
+
+# pdmi(x, m) - Pan Digital Multiplying Index
+# Returns how many times x must be multiplied by m before
+# the result contains all digits from 0 to 9 (if ibase = 10).
+# e.g. pdmi(3339,0.5) -> 1669.5 -> 834.75 -> 417.375 ->
+#      208.6875 -> 104.34375 -> 52.171875 ->
+#      26.0859375 -> 13.04296875, i.e. 8 times
+
+# Uses ibase as the base for divisions (usually 10)
+
+define pdmi(x,m) {
+  auto d[],xi,xf,c,r,pdmi,lim,i;
+  if(x==0){print "pdmi: Infinity\n";return A^scale-1}
+  if(x<0)x=-x
+  c=1;pdmi=-1;lim=int(A/ibase+3)*scale
+  while(c){
+    pdmi+=1
+    xi=int(x);xf=x-xi
+    while(xi){
+      r=int(xi/ibase)
+      d[xi-ibase*r]=1
+      xi=r
+    }
+    for(i=lim ; i && xf ; i--){
+    #while(xf){
+      xf*=ibase
+      r=int(xf)
+      d[r]=1
+      xf-=r
+    }
+    c=ibase
+    for(r=0;r<ibase;r++){c-=d[r];d[r]=0}
+    x*=m
+  }
+  return pdmi;
+}

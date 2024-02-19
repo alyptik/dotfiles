@@ -1,0 +1,11 @@
+#!/bin/bash
+
+usage="usage: dexec <docker containers>"
+
+if ((!$#)); then
+	printf '%s\n' "$usage" >&2
+	exit 1
+fi
+
+docker container start "$@"
+eval docker container exec -it "\$$#" /bin/bash

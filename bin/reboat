@@ -1,0 +1,55 @@
+#!/bin/bash
+
+function dssign () (
+	cd "/etc/bind"
+	if [[ -z "$1" ]]; then
+		printf '%s\n%s\n' 'no zone specified!' 'sign "alyp.tk"? (Y/n)'
+		read -r ans
+		if [[ "$ans" == *[Yy]* ]]; then
+			dssign 'alyp.tk'
+			return 0
+		fi
+		printf '\n%s' "enter zone(s) to sign: "
+		read -r ans2
+		if [[ -z "$ans2" ]]; then
+			printf '%s\n' "exiting..."
+			return 2
+		fi
+		zarray=($ans2)
+		dssign "${zarray[@]}"
+		return 0
+	else
+		IFSold="$IFS"
+		IFS=$'\n'
+		printf '%s\n' 'signing zone(s): '
+		printf '\t%s\n'"$@"
+		printf '%s\n' 'starting script...'
+		IFS="$IFSold"
+		printf $'\r'
+	fi
+	for i; do
+		SERIAL=$(named-checkzone "$i" "db.$i" \
+			| egrep --color="never" -ho '[0-9]{10}')
+		sudo sed -i 's/'"$SERIAL"'/'"$((SERIAL+1))"'/' "db.$i"
+		sudo dnssec-signzone -A \
+			-3 $(head -c 1000 /dev/random | sha1sum | cut -b 1-16) \
+			-N INCREMENT -K ./private -o "$i" -S -t "db.$i"
+	done
+)
+
+function scrs () {
+	sudo parallel --will-cite systemctl ::: restart ::: "$@"
+	systemctl status --full --no-pager "$@"
+	echo
+}
+
+dssign {alyp,ohfu,fsckingfu,sigfu}.tk
+rndc reload
+rndc notify sigfu.tk
+rndc notify alyp.tk
+rndc notify fsckingfu.tk
+rndc notify ohfu.tk
+rndc notify sigfu.tk
+rndc notify fsckingfu.tk
+rndc notify youlosethega.me
+scrs nginx named dnsmasq
