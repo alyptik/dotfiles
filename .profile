@@ -105,14 +105,14 @@ GCC_COLORS="$GCC_COLORS:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert
 GCC_COLORS="$GCC_COLORS:type-diff=01;32"
 export GCC_COLORS
 # compiler flags
-CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"
+# CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"
 # CFLAGS="$CFLAGS -flto"
 # CFLAGS="$CFLAGS -fno-common"
 # CFLAGS="$CFLAGS -fvar-tracking -fvar-tracking-assignments"
 # CFLAGS="$CFLAGS -fdiagnostics-color=always"
 # CFLAGS="$CFLAGS -fdiagnostics-generate-patch"
 # CFLAGS="$CFLAGS -fPIC -fstack-protector-strong"
-CFLAGS="$CFLAGS -fPIC -fno-plt"
+# CFLAGS="$CFLAGS -fPIC -fno-plt"
 # CFLAGS="$CFLAGS -fuse-ld=gold -fuse-linker-plugin"
 # CFLAGS="$CFLAGS -fno-plt -fno-strict-aliasing"
 # CFLAGS="$CFLAGS -march=native -gdwarf-4 -g3 -O3"
