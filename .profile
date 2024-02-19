@@ -281,7 +281,7 @@ PATH="$LINUX/scripts:$PATH"
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 PATH="$HOME/lind_project/lind/repy/bin:$PATH"
 PATH="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin:$PATH"
-PATH="/usr/lib/llvm/17/bin:$PATH"
+PATH="$PATH:/usr/lib/llvm/17/bin"
 PATH="/usr/lib/openjdk-17/bin:$PATH"
 # shellcheck disable=SC2039
 # elide empty PATH components
