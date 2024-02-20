@@ -130,8 +130,10 @@ deflog off
 deflogin on
 defmousetrack off
 defnonblock on
-defobuflimit 512
-defscrollback 10000
+# defobuflimit 512
+defobuflimit 4096
+# defscrollback 10000
+defscrollback 4294967295
 # password none
 multiuser off
 bell on
