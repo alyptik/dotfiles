@@ -52,7 +52,6 @@ bind s eval split "focus top" "screen -t man $HOME/bin/showman" "focus bottom" o
 # bindkey ^b eval split "focus top" "screen -t man $HOME/bin/showman" "focus bottom" other "focus top"
 
 # M-. as escape
-bindkey ^A command
 bindkey "\033." command
 # exit copy mode
 # bindkey -m , stuff "\033"
