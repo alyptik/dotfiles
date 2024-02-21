@@ -70,7 +70,7 @@ st.font:		Fira Code:style=Light:pixelsize=30:antialias=true
 !                                 WenQuanYi Micro Hei Mono:style=Light:pixelsize=30:antialias=true:hinting=true
 stjerm*font:			Fantasque Sans Mono Light 9
 ! stjerm*font:			Source Code Pro Light 9
-URxvt*font:			xft:Fira Code:style=Light:pixelsize=30:antialias=true:hinting=true
+URxvt*font:			xft:Fira Code:style=Light:pixelsize=30:antialias=true
 yeahconsole*faceName:		xft:Fira Code:style=Light:pixelsize=30:antialias=true
 xterm*faceName:			xft:Fira Code:style=Light:pixelsize=30:antialias=true
 

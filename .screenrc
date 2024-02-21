@@ -130,10 +130,10 @@ deflog off
 deflogin on
 defmousetrack off
 defnonblock on
-# defobuflimit 512
-defobuflimit 4096
-# defscrollback 1000000
-defscrollback 4294967295
+defobuflimit 512
+# defobuflimit 4096
+defscrollback 10000
+# defscrollback 4294967295
 # password none
 multiuser off
 bell on
@@ -180,7 +180,8 @@ termcapinfo rxvt* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:ti@:te@:hs@:ts=\E]2;:fs=
 
 # term xterm-256color
 # term screen-256color-it
-term screen-256color
+# term screen-256color
+# term screen.xterm-256color
 
 hardstatus on
 caption always
