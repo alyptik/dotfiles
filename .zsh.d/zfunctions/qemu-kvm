@@ -1,9 +1,8 @@
 qemu-system-x86_64 \
-	-hda "$1" "${@:2}" -m 8G -smp 8 \
-	-vga virtio -boot order=d,menu=on \
-	-enable-kvm -machine type=pc,accel=kvm \
+	-hda "$1" "${@:2}" -m 8G -smp 8 -vga virtio \
+	-boot order=d,menu=on -enable-kvm -machine type=pc,accel=kvm \
 	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
-	-nic user,model=virtio -monitor stdio -monitor pty
+	-audiodev pa,id=pulse -nic user,model=virtio -monitor stdio -monitor pty
 	# -net nic,model=virtio -net user \
 	# -monitor stdio -monitor pty
 	# -spice unix=on,addr=/tmp/vm_spice.socket,playback-compression=off,disable-ticketing=on \
