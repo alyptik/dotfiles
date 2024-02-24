@@ -61,7 +61,7 @@ Xft.hinting: 0
 Xft.antialias: 1
 Xft.rgba: rgb
 
-st.font:		Fira Code:style=Light:pixelsize=30:antialias=true
+st.font:			Fira Code:style=Light:pixelsize=30:antialias=true
 ! st.font:		Fira Code:style=Light:pixelsize=30:antialias=true, \
 !                                 Noto Emoji:style=Regular:pixelsize=30:antialias=true:hinting=true,\
 !                                 Symbola:style=Regular:pixelsize=30:antialias=true:hinting=true,\
@@ -72,7 +72,9 @@ stjerm*font:			Fantasque Sans Mono Light 9
 ! stjerm*font:			Source Code Pro Light 9
 URxvt*font:			xft:Fira Code:style=Light:pixelsize=30:antialias=true
 yeahconsole*faceName:		xft:Fira Code:style=Light:pixelsize=30:antialias=true
+! xterm*faceName:			-adobe-helvetica-medium-o-normal--34-240-100-100-p-176-iso8859-9
 xterm*faceName:			xft:Fira Code:style=Light:pixelsize=30:antialias=true
+! xterm*faceSize:			30
 
 st.bold_font:			1
 st.italic_font:			1
