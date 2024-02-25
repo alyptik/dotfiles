@@ -197,8 +197,8 @@ else
 	let &t_Co=16
 	let g:gruvbox_termcolors=16
 endif
-" colorscheme gruvbox
-colorscheme darkblue
+colorscheme gruvbox
+" colorscheme darkblue
 filetype plugin indent on
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'

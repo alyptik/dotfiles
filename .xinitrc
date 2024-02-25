@@ -49,6 +49,10 @@ dbus-update-activation-environment --systemd DISPLAY
 # shellcheck disable=SC2046
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+# setup zswap
+echo y > /sys/module/zswap/parameters/enabled
+echo zstd > /sys/module/zswap/parameters/compressor
+echo zsmalloc > /sys/module/zswap/parameters/zpool
 
 default_session="i3";
 
