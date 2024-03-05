@@ -1,7 +1,7 @@
 # GRUB boot loader configuration
 
 GRUB_DEFAULT="saved"
-GRUB_TIMEOUT="5"
+GRUB_TIMEOUT="10"
 GRUB_DISTRIBUTOR="Gentoo"
 # GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"
 # GRUB_CMDLINE_LINUX_DEFAULT="zswap.enabled=1 zswap.compressor=zstd zswap.zpool=zsmalloc"

@@ -51,9 +51,9 @@ dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets 2>/dev/null)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 # setup zswap
-echo y | sudo tee /sys/module/zswap/parameters/enabled
-echo zstd | sudo tee /sys/module/zswap/parameters/compressor
-echo zsmalloc | sudo tee /sys/module/zswap/parameters/zpool
+# echo y | sudo tee /sys/module/zswap/parameters/enabled
+# echo zstd | sudo tee /sys/module/zswap/parameters/compressor
+# echo zsmalloc | sudo tee /sys/module/zswap/parameters/zpool
 
 default_session="i3";
 
