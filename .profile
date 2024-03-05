@@ -125,7 +125,7 @@ export CFLAGS
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 CXXFLAGS="$CFLAGS"
 export CXXFLAGS
-LDFLAGS="$CFLAGS"
+# LDFLAGS="$CFLAGS"
 # LDFLAGS="$LDFLAGS -Wl,-O2"
 # LDFLAGS="$LDFLAGS -Wl,--warn-unresolved-symbols"
 # LDFLAGS="$LDFLAGS -Wl,-O2,-z,now,-z,relro,-z,noexecstack"
