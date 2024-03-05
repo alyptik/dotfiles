@@ -75,8 +75,6 @@ export PROJECTS="/store/projects"
 export LINUX="$PROJECTS/linux"
 # export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" PREFIX="$HOME/.local"
 # export c="$C" h="$H" l="$L" p="$P" pre="$PREFIX"
-export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS"
-export c="$C" h="$H" l="$L" p="$P"
 
 # compiler environment
 unset CARCH CCACHE_DISABLE CFLAGS CCFLAGS
