@@ -44,6 +44,7 @@ pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff &
 firefox &
 # transgui &
 # compton -b
+picom -b
 env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 hsetroot -fill "$HOME/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 dbus-update-activation-environment --systemd DISPLAY
@@ -124,6 +125,7 @@ i3|i3wm)
 	# $HOME/bin/i3-focus-last &
 	# $HOME/bin/hilites &
 	# xscreensaver &
+	# eval $(dbus-launch --sh-syntax --exit-with-session i3);;
 	exec i3;;
 
 icewm)
