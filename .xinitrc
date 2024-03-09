@@ -137,8 +137,9 @@ jwm)
 	exec jwm;;
 
 kde)
-	xscreensaver &
-	exec startkde;;
+	# xscreensaver &
+	# exec startkde;;
+	exec startplasma-x11;;
 
 mate)
 	xscreensaver &
@@ -155,6 +156,10 @@ notion)
 openbox)
 	xscreensaver &
 	exec openbox-session;;
+
+plasma)
+	# xscreensaver &
+	exec startplasma-x11;;
 
 unity)
 	xscreensaver &
