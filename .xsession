@@ -18,7 +18,7 @@ udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 sleep 2
 pulseaudio &
 pavucontrol &
-sleep 1
+sleep 2
 uxterm &
 pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff &
 firefox &

@@ -38,7 +38,7 @@ udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 sleep 2
 pulseaudio &
 pavucontrol &
-sleep 1
+sleep 2
 uxterm &
 pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff &
 firefox &
@@ -55,6 +55,7 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 # echo y | sudo tee /sys/module/zswap/parameters/enabled
 # echo zstd | sudo tee /sys/module/zswap/parameters/compressor
 # echo zsmalloc | sudo tee /sys/module/zswap/parameters/zpool
+# xscreensaver &
 
 default_session="i3";
 
@@ -74,15 +75,12 @@ printf '%s\n' "$session" > "$HOME/.WM.last";
 
 case $session in
 herbst|herbstluftwm)
-	xscreensaver &
 	exec herbstluftwm --locked;;
 
 awesome)
-	xscreensaver &
 	exec awesome;;
 
 bspwm)
-	xscreensaver &
 	exec bspwm;;
 
 budgie-desktop)
@@ -90,27 +88,21 @@ budgie-desktop)
 	exec budgie-desktop;;
 
 catwm)
-	xscreensaver &
 	exec catwm;;
 
 cinnamon)
-	xscreensaver &
 	exec cinnamon-session;;
 
 dwm)
-	xscreensaver &
 	exec dwm;;
 
 ede)
-	xscreensaver &
 	exec startede;;
 
 enlightenment)
-	xscreensaver &
 	exec enlightenment_start;;
 
 fluxbox)
-	xscreensaver &
 	exec startfluxbox;;
 
 gnome)
@@ -118,63 +110,48 @@ gnome)
 	exec gnome-session;;
 
 gnome-classic)
-	gnome-screensaver &
 	exec gnome-session --session=gnome-classic;;
 
 i3|i3wm)
 	# $HOME/bin/i3-focus-last &
 	# $HOME/bin/hilites &
-	# xscreensaver &
 	# eval $(dbus-launch --sh-syntax --exit-with-session i3);;
 	exec i3;;
 
 icewm)
-	xscreensaver &
 	exec icewm-session;;
 
 jwm)
-	xscreensaver &
 	exec jwm;;
 
 kde)
-	# xscreensaver &
-	# exec startkde;;
 	exec startplasma-x11;;
 
 mate)
-	xscreensaver &
 	exec mate-session;;
 
 monster|monsterwm)
-	xscreensaver &
 	exec monsterwm;;
 
 notion)
-	xscreensaver &
 	exec notion;;
 
 openbox)
-	xscreensaver &
 	exec openbox-session;;
 
 plasma)
-	# xscreensaver &
 	exec startplasma-x11;;
 
 unity)
-	xscreensaver &
 	exec unity;;
 
 xfce|xfce4)
-	xscreensaver &
 	exec startxfce4;;
 
 xmonad)
-	xscreensaver &
 	exec xmonad;;
 
 # No known session, try to run it as command
 *)
-	xscreensaver &
 	exec "$session";;
 esac
