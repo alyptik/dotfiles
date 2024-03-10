@@ -1,13 +1,26 @@
-# Static information about the filesystems.
-# See fstab(5) for details.
+# /etc/fstab: static file system information.
+#
+# See the manpage fstab(5) for more information.
+#
+# NOTE: The root filesystem should have a pass number of either 0 or 1.
+#       All other filesystems should have a pass number of 0 or greater than 1.
+#
+# NOTE: Even though we list ext4 as the type here, it will work with ext2/ext3
+#       filesystems.  This just tells the kernel to use the ext4 driver.
+#
+# NOTE: You can use full paths to devices like /dev/sda3, but it is often
+#       more reliable to use filesystem labels or UUIDs. See your filesystem
+#       documentation for details on setting a label. To obtain the UUID, use
+#       the blkid(8) command.
 
-# <file system> <dir> <type> <options> <dump> <pass>
-# /dev/md127 UUID=42e6211f-9700-4675-9c7c-a3cf6b6dd415
-LABEL=rootfs        	/         	xfs       	rw,noatime,nodiratime,lazytime,attr2,inode64,sunit=128,swidth=256,noquota							0 1
-# LABEL=rootfs        	/         	xfs       	rw,noatime,attr2,inode64,sunit=256,swidth=256,noquota								0 1
+# <fs>			<mountpoint>	<type>		<opts>		<dump> <pass>
 
-# /dev/sda1 UUID=DB64-1F2C
-LABEL=esp           	/boot     	vfat      	rw,noatime,nodiratime,lazytime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 2
+LABEL=gentoo		/		btrfs		defaults,compress=zstd:15	0 0
+LABEL=gentoo-boot	/boot		vfat		defaults			0 2
+LABEL=swap		none		swap		defaults			0 0
+LABEL=store		/store		btrfs		defaults,compress=zstd:15	0 0
 
-# cgroups2 mount
-none			/mnt/cg		cgroup2		rw,nosuid,nodev,noexec														0 0
+#LABEL=boot		/boot		ext4		defaults	1 2
+#UUID=58e72203-57d1-4497-81ad-97655bd56494		/		xfs		defaults		0 1
+#LABEL=swap		none		swap		sw		0 0
+#/dev/cdrom		/mnt/cdrom	auto		noauto,ro	0 0
