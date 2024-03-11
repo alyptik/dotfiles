@@ -17,8 +17,8 @@
 
 LABEL=gentoo		/		btrfs		defaults,compress=zstd:15	0 0
 LABEL=gentoo-boot	/boot		vfat		defaults			0 2
-LABEL=swap		none		swap		defaults			0 0
 LABEL=store		/store		btrfs		defaults,compress=zstd:15	0 0
+/swap			none		swap		defaults			0 0
 
 #LABEL=boot		/boot		ext4		defaults	1 2
 #UUID=58e72203-57d1-4497-81ad-97655bd56494		/		xfs		defaults		0 1
