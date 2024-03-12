@@ -117,7 +117,7 @@ export GCC_COLORS
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=intel -g3 -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=generic -g -O3"
 # CFLAGS="$CFLAGS -pipe -march=x86-64 -mtune=skylake -g -O3"
-CFLAGS="$CFLAGS -pipe -march=native -g -O3"
+CFLAGS="-g -O3 -march=native -mtune=skylake -pipe"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
