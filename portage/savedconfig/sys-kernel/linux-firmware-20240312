@@ -888,6 +888,7 @@ brcm/brcmfmac4373.bin
 brcm/brcmfmac43241b4-sdio.Advantech-MICA-071.txt
 brcm/brcmfmac43241b4-sdio.Intel Corp.-VALLEYVIEW C0 PLATFORM.txt
 brcm/brcmfmac4330-sdio.Prowise-PT301.txt
+brcm/brcmfmac43340-sdio.Insyde-VESPA2.txt
 brcm/brcmfmac43340-sdio.ASUSTeK COMPUTER INC.-TF103CE.txt
 brcm/brcmfmac43340-sdio.meegopad-t08.txt
 brcm/brcmfmac43340-sdio.pov-tab-p1006w-data.txt
@@ -1429,6 +1430,14 @@ cirrus/cs35l41-dsp1-spk-cali-17aa2316-spkid0-l0.bin
 cirrus/cs35l41-dsp1-spk-cali-17aa2316-spkid0-r0.bin
 cirrus/cs35l41-dsp1-spk-cali-17aa2316-spkid1-l0.bin
 cirrus/cs35l41-dsp1-spk-cali-17aa2316-spkid1-r0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38a9-spkid0-l0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38a9-spkid0-l0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38a9-spkid0-r0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38a9-spkid0-r0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38ab-spkid0-l0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38ab-spkid0-l0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38ab-spkid0-r0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38ab-spkid0-r0.bin
 cirrus/cs35l41-dsp1-spk-prot-103c8b42.bin
 cirrus/cs35l41-dsp1-spk-cali-103c8b42.bin
 cirrus/cs35l41-dsp1-spk-prot-103c8b43.bin
@@ -2095,6 +2104,18 @@ cirrus/cs35l41-dsp1-spk-prot-17aa231a-l0.bin
 cirrus/cs35l41-dsp1-spk-prot-17aa231a-r0.bin
 cirrus/cs35l41-dsp1-spk-cali-17aa231a-l0.bin
 cirrus/cs35l41-dsp1-spk-cali-17aa231a-r0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38a9.wmfw
+cirrus/cs35l41-dsp1-spk-cali-17aa38a9.wmfw
+cirrus/cs35l41-dsp1-spk-prot-17aa38ab.wmfw
+cirrus/cs35l41-dsp1-spk-cali-17aa38ab.wmfw
+cirrus/cs35l41-dsp1-spk-prot-17aa38a9-spkid1-l0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38a9-spkid1-l0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38a9-spkid1-r0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38a9-spkid1-r0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38ab-spkid1-l0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38ab-spkid1-l0.bin
+cirrus/cs35l41-dsp1-spk-prot-17aa38ab-spkid1-r0.bin
+cirrus/cs35l41-dsp1-spk-cali-17aa38ab-spkid1-r0.bin
 cirrus/cs35l41-dsp1-spk-prot-103c8c26.wmfw
 cirrus/cs35l41-dsp1-spk-cali-103c8c26.wmfw
 cirrus/cs35l41-dsp1-spk-prot-103c8b42.wmfw
@@ -2433,6 +2454,7 @@ i915/mtl_dmc.bin
 i915/mtl_guc_70.bin
 i915/mtl_huc_gsc.bin
 i915/mtl_gsc_1.bin
+i915/xe2lpd_dmc.bin
 i915/skl_dmc_ver1.bin
 i915/bxt_dmc_ver1.bin
 i915/kbl_dmc_ver1.bin
@@ -2441,6 +2463,8 @@ imx/sdma/sdma-imx6q.bin
 imx/sdma/sdma-imx7d.bin
 inside-secure/eip197_minifw/ipue.bin
 inside-secure/eip197_minifw/ifpp.bin
+intel/ipu/shisp_2400b0_v21.bin
+intel/ipu/shisp_2401a0_v21.bin
 intel/ipu/irci_irci_ecr-master_20161208_0213_20170112_1500.bin
 intel/ipu/ipu6epadln_fw.bin
 intel/ipu/ipu6ep_fw.bin
