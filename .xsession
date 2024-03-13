@@ -2,7 +2,7 @@
 
 xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
-xrandr --dpi 260
+xrandr --dpi 320
 xbindkeys
 xset s noblank
 xset s off -b -dpms
@@ -16,7 +16,8 @@ udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 # (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 # pan &
 sleep 2
-pulseaudio &
+# pulseaudio &
+# pipewire-pulse &
 pavucontrol &
 sleep 2
 uxterm &
