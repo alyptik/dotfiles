@@ -57,7 +57,7 @@ call plug#begin(g:plugdir)
 	" Plug 'osfameron/perl-tags-vim', {'for': 'perl'}
 	" Plug 'alyptik/perl-tags-vim', {'for': 'perl', 'branch': 'https'}
 	Plug 'c9s/perlomni.vim', {'for': 'perl'}
-	" Plug 'brookhong/cscope.vim'
+	Plug 'brookhong/cscope.vim'
 	Plug 'xtal8/traces.vim'
 	" Plug 'SidOfc/mkdx', {'for': 'markdown'}
 	" Plug 'junegunn/goyo.vim', {'for': 'markdown'}
@@ -94,7 +94,7 @@ call plug#begin(g:plugdir)
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-	" Plug 'subosito/nginx.vim', {'for': 'nginx'}
+	Plug 'subosito/nginx.vim', {'for': 'nginx'}
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	" Plug 'ternjs/tern_for_vim', {'for': ['json', 'json5'], 'do': 'npm install && npm install -g tern'}
 	" Plug 'terryma/vim-expand-region'
@@ -120,7 +120,7 @@ call plug#begin(g:plugdir)
 	Plug 'maralla/completor.vim'
 	" Plug 'FredKSchott/CoVim'
 	Plug 'ctrlpvim/ctrlp.vim'
-	Plug 'Rykka/riv.vim'
+	" Plug 'Rykka/riv.vim'
 	" Plug 'Rykka/InstantRst'
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'jreybert/vimagit'

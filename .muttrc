@@ -59,7 +59,7 @@ color progress    white          black
 
 # personality settings
 set realname = "Joey Pabalinas"
-set from = "joeypabalinas@gmx.com"
+# set from = "joeypabalinas@gmx.com"
 # alternates "$my_user@mail.server|larry.the.cow@mail.server"
 # this file must exist, and contains your signature, comment it out if
 # you don't want a signature to be used
