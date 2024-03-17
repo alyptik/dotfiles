@@ -15,7 +15,7 @@ udisksctl mount -b "$(findfs LABEL=sdxc)" &
 udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 # (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 # pan &
-sleep 2
+# sleep 2
 # pulseaudio &
 # pipewire-pulse &
 pavucontrol &
