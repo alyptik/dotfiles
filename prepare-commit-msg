@@ -1,0 +1,29 @@
+#!/bin/bash
+
+old_commit_msg="$(<"$1")"
+first_line=""
+
+if [ -n "$(sed -n -e '1 s/[[:space:]]*//p' "$1")" ]; then
+	exit
+fi
+
+echo -n "" > "$1"
+
+# added
+for path in $(git diff --name-only --cached --diff-filter=A); do
+	echo "${path##*/}:" >> "$1"
+done
+
+# modified
+for path in $(git diff --name-only --cached --diff-filter=M); do
+	echo "${path##*/}:" >> "$1"
+done
+
+# deleted
+for path in $(git diff --name-only --cached --diff-filter=D); do
+	echo "${path##*/}:" >> "$1"
+done
+
+first_line="$(sed '1 !d' "$1")"
+echo "$first_line" > "$1"
+echo "$old_commit_msg" >> "$1"
