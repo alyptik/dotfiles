@@ -18,11 +18,13 @@ include "%L"
 <Multi_key> <l> <o> <v> <e>				: "💗" U1f497	# love
 <Multi_key> <s> <p> <o> <t>				: "🍠" U1f360	# sweet potato
 <Multi_key> <p> <o> <t>					: "🥔" U1f954	# potato
-<Multi_key> <p> <e> <n>					: "🍆" U1f346	# eggplant
+<Multi_key> <p> <e> <n>	<i> <s>				: "🍆" U1f346	# eggplant
+<Multi_key> <p> <e> <n> <g>				: "🐧" U1f427	# penguin
 <Multi_key> <h> <o> <t>					: "🔥" U1f525	# fire
 <Multi_key> <k> <t> <r> <e> <e>				: "🐨" Uff428	# koala
 <Multi_key> <o> <c> <t> <o>				: "🐙" U1f419	# octopus
 <Multi_key> <s> <a> <x>					: "🎷" U1f3b7	# sax
+<Multi_key> <h> <e> <a>					: "❤️" U2764	# heavy black heart
 <Multi_key> <h> <h> <e> <y> <e> <s>			: "❤υ❤"		# heart eyes
 <Multi_key> <h> <e> <y> <e> <s>				: "😍" U1f60d	# heart eyes smiley
 <Multi_key> <p> <s> <u> <b>				: "⊂" U2282	# proper subset

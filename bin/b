@@ -2,10 +2,13 @@
 
 for f; do
 	case "$f" in
-	*.h)
+	*.bash|*.zsh|*.sh)
+		set -- --language=bash "$@"
+		break ;;
+	*.c|*.h)
 		set -- --language=C "$@"
 		break ;;
-	*.hpp)
+	*.cpp|*.cc|*.hpp|*.hh)
 		set -- --language=C++ "$@"
 		break ;;
 	*.txt)

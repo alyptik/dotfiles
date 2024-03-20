@@ -94,7 +94,7 @@ call plug#begin(g:plugdir)
 	Plug 'morhetz/gruvbox'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-	Plug 'subosito/nginx.vim', {'for': 'nginx'}
+	" Plug 'subosito/nginx.vim', {'for': 'nginx'}
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	" Plug 'ternjs/tern_for_vim', {'for': ['json', 'json5'], 'do': 'npm install && npm install -g tern'}
 	" Plug 'terryma/vim-expand-region'
