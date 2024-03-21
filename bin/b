@@ -23,6 +23,6 @@ if test -z "$*"; then
 fi
 
 # set -- --theme=1337 "$@"
-set -- --theme=DarkNeon "$@"
+# set -- --theme=DarkNeon "$@"
 
 exec bat "$@"
