@@ -106,7 +106,7 @@ enlightenment)
 fluxbox)
 	exec startfluxbox;;
 
-gnome)
+gnome|gnome-session)
 	gnome-screensaver &
 	exec gnome-session;;
 
