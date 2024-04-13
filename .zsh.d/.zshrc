@@ -336,6 +336,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	bindkey -M "$1" "\ey" yank-pop
 	bindkey -M "$1" "\C-y" yank
 	bindkey -M "$1" "\C-q" push-line
+	bindkey -M "$1" "\C-u" kill-whole-line
 	bindkey -M "$1" "\C-k" kill-whole-line
 	bindkey -M "$1" "\ed" kill-word
 	bindkey -M "$1" "\e[3~" delete-char
