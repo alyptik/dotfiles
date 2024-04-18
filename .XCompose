@@ -20,6 +20,7 @@ include "%L"
 <Multi_key> <p> <o> <t>					: "🥔" U1f954	# potato
 <Multi_key> <p> <e> <n>	<i> <s>				: "🍆" U1f346	# eggplant
 <Multi_key> <p> <e> <n> <g>				: "🐧" U1f427	# penguin
+<Multi_key> <d> <o> <l> <p>				: "🐬" U1Ff2c	# dolphin
 <Multi_key> <h> <o> <t>					: "🔥" U1f525	# fire
 <Multi_key> <k> <t> <r> <e> <e>				: "🐨" Uff428	# koala
 <Multi_key> <o> <c> <t> <o>				: "🐙" U1f419	# octopus

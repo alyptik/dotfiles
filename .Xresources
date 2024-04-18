@@ -78,6 +78,7 @@ yeahconsole*faceName:		xft:Fira Code:style=Light:pixelsize=30:antialias=true
 ! xterm*faceName:			-adobe-helvetica-medium-o-normal--34-240-100-100-p-176-iso8859-9
 xterm*faceName:			xft:Fira Code:style=Light:pixelsize=30:antialias=true
 ! xterm*faceSize:			30
+Emacs*font:			Fira Code:style=Light:pixelsize=30:antialias=true
 
 st*bold_font:			1
 st*italic_font:			1
