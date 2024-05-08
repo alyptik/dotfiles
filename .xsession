@@ -21,7 +21,7 @@ udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 pavucontrol &
 sleep 2
 uxterm &
-pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff &
+pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
 firefox &
 xrdb "$HOME/.Xresources"
 setxkbmap -option compose:caps
