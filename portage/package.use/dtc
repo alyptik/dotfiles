@@ -1,0 +1,1 @@
+sys-apps/dtc PYTHON_SINGLE_TARGET: -* python3_11
