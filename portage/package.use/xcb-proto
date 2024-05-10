@@ -1,0 +1,1 @@
+x11-base/xcb-proto PYTHON_TARGETS: -* python3_12

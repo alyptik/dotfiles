@@ -1,0 +1,2 @@
+app-editors/vim LUA_SINGLE_TARGET: -* luajit
+app-editors/vim PYTHON_SINGLE_TARGET: -* python3_12

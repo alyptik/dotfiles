@@ -1,0 +1,1 @@
+sys-fs/btrfs-progs PYTHON_SINGLE_TARGET: -* python3_12

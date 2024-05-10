@@ -1,0 +1,1 @@
+app-crypt/gpgme PYTHON_TARGETS: -* python3_12

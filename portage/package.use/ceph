@@ -1,0 +1,2 @@
+sys-cluster/ceph LUA_SINGLE_TARGET: -* lua5-4
+sys-cluster/ceph PYTHON_TARGETS: -* python3_11

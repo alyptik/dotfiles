@@ -1,0 +1,1 @@
+sys-power/power-profiles-daemon PYTHON_SINGLE_TARGET: -* python3_12

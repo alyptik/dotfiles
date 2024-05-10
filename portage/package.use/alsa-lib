@@ -1,0 +1,1 @@
+media-libs/alsa-lib PYTHON_SINGLE_TARGET: -* python3_12

@@ -1,0 +1,3 @@
+app-emulation/qemu bpf capstone fuse glusterfs infiniband iouring iscsi jemalloc keyutils multipath nfs numa rbd sdlimage snappy spice ssh systemtap usb usbredir vde virgl virtfs vte xen
+app-emulation/qemu PYTHON_TARGETS: -* python3_12
+app-emulation/qemu QEMU_SOFTMMU_TARGETS: x86_64 aarch64 alpha arm avr cris hppa i386 loongarch64 m68k microblaze microblazeel mips mips64 mips64el mipsel nios2 or1k ppc ppc64 riscv32 riscv64 rx s390x sh4 sh4eb sparc sparc64 tricore xtensa xtensaeb

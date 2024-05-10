@@ -1,0 +1,1 @@
+sys-apps/pcsc-lite PYTHON_SINGLE_TARGET: -* python3_12

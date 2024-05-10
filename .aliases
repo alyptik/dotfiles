@@ -9,7 +9,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 # Custom aliases
 
 alias cpan='cpan -T'
-alias emerge='emerge --color=y'
+alias emerge='emerge --color=y -v'
 alias youtube-dl='youtube-dl -c'
 alias dmesg='dmesg -H'
 alias acked='printf "%s-by: Joey Pabalinas <joeypabalinas@gmail.com>\n" Acked Co-developed Reported Reviewed Signed-off Suggested Tested | tee >(head -n1 | xclip -i -r -sel prim) | tee >(head -n1 | xclip -i -r -sel clip)'
@@ -238,9 +238,6 @@ alias gdistccmon='DISTCC_DIR="/var/tmp/portage/.distcc" distccmon-text'
 alias myuptime='uptime -p | cut -c 4-'
 alias pacawk="grep -v '^$\|^#' /etc/pacman.d/mirrorlist | awk '{print}' | awk -F '/' '{print}'"
 alias showcert='openssl s_client -showcerts -connect'
-alias em='emerge'
-alias ems='emerge -s'
-alias eq='equery'
 
 alias xrc='vim "$HOME/.Xresources"'
 alias prc='vim "$HOME/.profile"'

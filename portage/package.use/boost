@@ -1,0 +1,1 @@
+dev-libs/boost PYTHON_TARGETS: -* python3_12

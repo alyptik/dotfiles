@@ -1,0 +1,1 @@
+app-portage/gentoolkit PYTHON_TARGETS: -* python3_12

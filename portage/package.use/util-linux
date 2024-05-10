@@ -1,0 +1,1 @@
+sys-apps/util-linux PYTHON_TARGETS: -* python3_12
