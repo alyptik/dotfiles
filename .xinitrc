@@ -125,7 +125,7 @@ icewm)
 jwm)
 	exec jwm;;
 
-kde)
+kde|plasma)
 	exec startplasma-x11;;
 
 mate)
