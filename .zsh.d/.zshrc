@@ -228,7 +228,7 @@ aliases[yt]='noglob youtube-dl -f bestaudio --write-all-thumbnails --write-descr
 aliases[ampv]='noglob mpv --no-video --load-unsafe-playlists --ytdl-format=bestaudio/best'
 
 # archlinux news
-news_short
+# news_short
 # news_long
 
 # woo cow

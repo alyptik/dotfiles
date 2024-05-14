@@ -1,1 +1,1 @@
-mail-client/neomutt autocrypt idn kerberos kyotocabinet lmdb notmuch pgp-classic qdbm smime-classic tokyocabinet
+mail-client/neomutt -gdbm autocrypt idn kerberos lmdb notmuch pgp-classic smime-classic
