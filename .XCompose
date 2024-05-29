@@ -28,6 +28,7 @@ include "%L"
 <Multi_key> <h> <e> <a>					: "❤️" U2764	# heavy black heart
 <Multi_key> <h> <h> <e> <y> <e> <s>			: "❤υ❤"		# heart eyes
 <Multi_key> <h> <e> <y> <e> <s>				: "😍" U1f60d	# heart eyes smiley
+<Multi_key> <i> <n> <f>					: "∞" U221e	# infinity
 <Multi_key> <p> <s> <u> <b>				: "⊂" U2282	# proper subset
 <Multi_key> <s> <u> <b>					: "⊆" U2286	# subset
 <Multi_key> <u> <n> <i>	<o>				: "∪" U222a	# union
