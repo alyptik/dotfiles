@@ -1,1 +1,1 @@
-net-firewall/ufw PYTHON_TARGETS: -* python3_11
+net-firewall/ufw PYTHON_TARGETS: -* python3_11 python3_12
