@@ -1,0 +1,1 @@
+print -- "$1" PYTHON_TARGETS: -* "${@[2,-1]}" > "/etc/portage/package.use/${1##*/}"

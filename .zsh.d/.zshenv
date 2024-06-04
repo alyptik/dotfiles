@@ -12,6 +12,10 @@ if ((!$+ETC_ZSH_ZSHRC)); then
 	[[ -f /etc/profile.d/cnf.sh ]] && emulate sh -c '. /etc/profile.d/cnf.sh'
 	# plan9port setup
 	[[ -f /etc/profile.d/plan9.sh ]] && emulate sh -c '. /etc/profile.d/plan9.sh'
+	# snapd path setup
+	[[ -f /etc/profile.d/snapd.sh ]] && emulate sh -c '. /etc/profile.d/snapd.sh'
+	# command-not-found handler
+	[[ -f  /etc/bash/bashrc.d/command-not-found.sh ]] && emulate bash -c '. /etc/bash/bashrc.d/command-not-found.sh'
 	# source perlbrew completions
 	[[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]] && emulate bash -c '. "$HOME/perl5/perlbrew/etc/bashrc"'
 	# define ZLE widgets
