@@ -291,6 +291,7 @@ PATH="/usr/lib64/openjdk-21/bin:$PATH"
 PATH="/etc/eselect/wine/bin:$PATH"
 PATH="/opt/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
+PATH="/var/lib/snapd/snap/bin:$PATH"
 # shellcheck disable=SC2039
 # elide empty PATH components
 PATH="${PATH//::/:}"
