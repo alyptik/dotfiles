@@ -1,2 +1,2 @@
+net-irc/weechat enchant guile relay-api
 net-irc/weechat LUA_SINGLE_TARGET: -* lua5-4
-net-irc/weechat PYTHON_SINGLE_TARGET: -* python3_12

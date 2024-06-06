@@ -1,1 +1,1 @@
-app-portage/elogviewer PYTHON_SINGLE_TARGET: -* python3_11
+app-portage/elogviewer PYTHON_SINGLE_TARGET: -* python3_12

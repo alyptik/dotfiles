@@ -464,7 +464,7 @@ bindkey -M viins "jj" vi-cmd-mode
 	gnu_generic_cmds+=(chromium ci clang-tidy co col colordiff compton configure conky)
 	gnu_generic_cmds+=(cower cpanm cppcheck cpulimit crontab ctags curl db2x_manxml)
 	gnu_generic_cmds+=(db2x_texixml db2x_xsltproc docbook2man docbook2texi define)
-	gnu_generic_cmds+=(dmidecode dumpasn1 expac fasd file flac2all fusermount-glusterfs)
+	gnu_generic_cmds+=(dmidecode dumpasn1 expac eza fasd file flac2all fusermount-glusterfs)
 	gnu_generic_cmds+=(fusermount3 elftoc free fzf gnome-keyring-daemon gpg-agent)
 	gnu_generic_cmds+=(help2man highlight hping hsetroot icdiff install keyring)
 	gnu_generic_cmds+=(kid3-cli kid3-qt ld lighttpd2 ln lrz lua lz4 maim mkchromecast)
