@@ -247,7 +247,7 @@ export LESS_TERMCAP_ue=$'\E[0m' LESS_TERMCAP_so=$'\E[30;43m' LESS_TERMCAP_md=$'\
 unset LIBGL_DRI3_DISABLE
 # export LIBGL_DRI3_DISABLE=1
 export MANPAGER="env -u LESS less -MRins"
-MANPATH="/usr/local/man:/usr/share/man"
+MANPATH="/usr/local/man:/usr/share/man:$MANPATH"
 MANPATH="/usr/lib/plan9/man:$MANPATH"
 MANPATH="/opt/intel/man/common:$MANPATH"
 MANPATH="$HOME/perl5/man:$MANPATH"
@@ -267,7 +267,7 @@ export npm_config_prefix="$HOME/.node_modules"
 # export PAGER=vimpager
 export PAGER=less
 # default PATH
-PATH="/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+PATH="/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:$PATH"
 PATH="/usr/bin/core_perl:/usr/bin/site_perl:/usr/bin/vendor_perl:$PATH"
 PATH="/usr/lib/surfraw:/usr/lib/jvm/default/bin:$PATH"
 # PATH="/usr/lib/distcc/bin:$PATH"

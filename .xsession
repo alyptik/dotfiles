@@ -30,6 +30,7 @@ xmodmap "$HOME/.Xmodmap"
 # transgui &
 # compton -b
 picom -b
+# i3-focus-last &
 env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 hsetroot -fill "$HOME/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 dbus-update-activation-environment --systemd DISPLAY
