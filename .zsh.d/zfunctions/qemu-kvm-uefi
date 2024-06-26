@@ -1,5 +1,5 @@
 qemu-system-x86_64 \
-	-hda "$1" "${@:3}" -m 8G -smp 8 -vga virtio \
+	-hda "$1" "${@:2}" -m 8G -smp 8 -vga virtio \
 	-boot order=d,menu=on -enable-kvm -machine type=pc,accel=kvm \
 	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
 	-audiodev pa,id=pulse -nic user,model=virtio -monitor stdio -monitor pty \

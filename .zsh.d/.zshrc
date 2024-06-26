@@ -2,9 +2,11 @@
 #
 # .zshrc - zsh stuff and thingys
 
-# redirect errors to a temporary fd, and then append them to a log file
+# cleanup traps
 trap '{ cleanup; trap -; }' USR1 ERR EXIT
 trap '{ cleanup; trap -; kill -INT $$; }' INT
+
+# redirect errors to a temporary fd, and then append them to a log file
 _zsh_error="$(mktemp)"
 exec {_stderr}>&2
 exec 2<>"$_zsh_error"

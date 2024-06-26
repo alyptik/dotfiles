@@ -47,7 +47,7 @@ firefox &
 # compton -b
 picom -b
 # i3-focus-last &
-env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
+# env GDK_SCALE=0.25 /usr/lib/notify-osd/notify-osd &
 hsetroot -fill "$HOME/wallpapers/calvinhobbes.png" -tint "#458588" -brightness .25 -gamma .5
 dbus-update-activation-environment --systemd DISPLAY
 # shellcheck disable=SC2046
@@ -77,82 +77,81 @@ printf '%s\n' "$session" > "$HOME/.WM.last";
 
 case $session in
 herbst|herbstluftwm)
-	exec herbstluftwm --locked;;
-
+	exec dbus-launch --exit-with-session herbstluftwm --locked;;
 awesome)
-	exec awesome;;
+	exec dbus-launch --exit-with-session awesome;;
 
 bspwm)
-	exec bspwm;;
+	exec dbus-launch --exit-with-session bspwm;;
 
 budgie-desktop)
 	gnome-screensaver &
-	exec budgie-desktop;;
+	exec dbus-launch --exit-with-session budgie-desktop;;
 
 catwm)
-	exec catwm;;
+	exec dbus-launch --exit-with-session catwm;;
 
 cinnamon)
-	exec cinnamon-session;;
+	exec dbus-launch --exit-with-session cinnamon-session;;
 
 dwm)
-	exec dwm;;
+	exec dbus-launch --exit-with-session dwm;;
 
 ede)
-	exec startede;;
+	exec dbus-launch --exit-with-session startede;;
 
 enlightenment)
-	exec enlightenment_start;;
+	exec dbus-launch --exit-with-session enlightenment_start;;
 
 fluxbox)
-	exec startfluxbox;;
+	exec dbus-launch --exit-with-session startfluxbox;;
 
 gnome|gnome-session)
 	gnome-screensaver &
-	exec gnome-session;;
+	exec dbus-launch --exit-with-session gnome-session;;
 
 gnome-classic)
-	exec gnome-session --session=gnome-classic;;
+	exec dbus-launch --exit-with-session gnome-session --session=gnome-classic;;
 
 i3|i3wm)
 	# $HOME/bin/hilites &
 	# eval $(dbus-launch --sh-syntax --exit-with-session i3);;
-	exec i3;;
+	exec dbus-launch --exit-with-session i3;;
 
 icewm)
-	exec icewm-session;;
+	exec dbus-launch --exit-with-session icewm-session;;
 
 jwm)
-	exec jwm;;
+	exec dbus-launch --exit-with-session jwm;;
 
 kde|plasma)
-	exec startplasma-x11;;
+	exec dbus-launch --exit-with-session startplasma-x11;;
 
 mate)
-	exec mate-session;;
+	exec dbus-launch --exit-with-session mate-session;;
 
 monster|monsterwm)
-	exec monsterwm;;
+	exec dbus-launch --exit-with-session monsterwm;;
 
 notion)
-	exec notion;;
+	exec dbus-launch --exit-with-session notion;;
 
 openbox)
-	exec openbox-session;;
+	exec dbus-launch --exit-with-session openbox-session;;
 
 plasma)
-	exec startplasma-x11;;
+	exec dbus-launch --exit-with-session startplasma-x11;;
 
 unity)
-	exec unity;;
+	exec dbus-launch --exit-with-session unity;;
 
 xfce|xfce4)
-	exec startxfce4;;
+	exec dbus-launch --exit-with-session startxfce4;;
 
 xmonad)
-	exec xmonad;;
+	exec dbus-launch --exit-with-session xmonad;;
 
 # No known session, try to run it as command
 *)
-	exec "$session";;
+	exec dbus-launch --exit-with-session "$session";;
 esac

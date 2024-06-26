@@ -130,6 +130,7 @@ export CXXFLAGS
 # LDFLAGS="$LDFLAGS -Wl,--warn-unresolved-symbols"
 # LDFLAGS="$LDFLAGS -Wl,-O2,-z,now,-z,relro,-z,noexecstack"
 # LDFLAGS="$LDFLAGS -Wl,--as-needed,--sort-common,--warn-common"
+# LDFLAGS="-flto -Wl,-O2 -Wl,--as-needed -Wl,-z,now -Wl,-z,pack-relative-relocs"
 # export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l$NPROC"
