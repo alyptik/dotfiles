@@ -1,0 +1,2 @@
+sys-apps/fwupd amt cbor logitech modemmanager nvme spi synaptics
+sys-apps/fwupd PYTHON_SINGLE_TARGET: -* python3_12
