@@ -50,7 +50,7 @@ include "%L"
 <Multi_key> <m> <i> <n>					: "−"	U2212	# minus
 <Multi_key> <c> <a> <t>					: "🐈"	U1f408	# cat
 <Multi_key> <d> <u> <c> <k>				: "🦆"	U1f98	# duck
-<Multi_key> <U> <p>					: "↑"	u2191	# up
+<Multi_key> <U> <p>					: "↑"	U2191	# up
 <Multi_key> <d> <o> <g>					: "🐶"	U1f436	# dog
 <Multi_key> <D> <O> <W> <N>				: "↓"	U2193	# down
 <Multi_key> <L> <E> <F> <T>				: "←"	U2190	# left
@@ -93,7 +93,7 @@ include "%L"
 <Multi_key> <asciicircum> <asciicircum> <s>		: "ₛ" U209b	# subcript s
 <Multi_key> <asciicircum> <asciicircum> <t>		: "ₜ" U209c	# subcript t
 
-<Multi_key> <L> <O> <L>					: "ₗₒₗ"		# subcript lol
+<Multi_key> <L> <O> <L>					: "ₗₒₗ"		# sUbcript lol
 <Multi_key> <w> <l> <e> <n>				: "┬┴┤( ͡° ͜ʖ├┬┴"	# lenny wall
 <Multi_key> <l> <w> <a> <l> <l>				: "┬┴┤( ͡° ͜ʖ├┬┴"	# lenny wall
 <Multi_key> <s> <h> <r> <u> <g>				: "🤷" U1f937	# shrug
@@ -158,7 +158,7 @@ include "%L"
 <Multi_key> <Multi_key> <bracketleft> <apostrophe>	: "｢" Uff62	# half… left c b
 <Multi_key> <Multi_key> <bracketright> <apostrophe>	: "｣" Uff63	# half… right c b
 
-# invisible punctuation
+# invisible punctUation
 
 <Multi_key> <n> <h> <y>			: U2011	# non-breaking hyphen
 <Multi_key> <s> <h> <y>			: U00ad	# 'hyphen' soft hyphen
@@ -207,7 +207,7 @@ include "%L"
 <Multi_key> <KP_4> <KP_6>		: "↔"
 <Multi_key> <KP_6> <KP_4>		: "↔"
 
-# box drawing and stuff
+# box drawing and stUff
 
 <Multi_key> <numbersign> <1>		: "░"
 <Multi_key> <numbersign> <2>		: "▒"
@@ -252,7 +252,7 @@ include "%L"
 <Multi_key> <l> <a>                     : "λ" U03bb
 <Multi_key> <m> <u>                     : "µ" U00b5
 <Multi_key> <M> <u>                     : "Μ" U039c
-<Multi_key> <M> <U>                     : "μ" u039c
+<Multi_key> <M> <U>                     : "μ" U039c
 
 <Multi_key> <d> <e> <l>                 : "δ" U03b4
 <Multi_key> <D> <e> <l>                 : "Δ" U0394
@@ -279,7 +279,7 @@ include "%L"
 <Multi_key> <e> <n> <minus>             : "–" U2013 	# en dash
 <Multi_key> <e> <m> <minus>             : "—" U2014 	# em dash
 
-# mathstuffs
+# mathstUffs
 <Multi_key> <x> <x>                     : "×" U00d7 	# multiplication sign
 <Multi_key> <slash> <slash>             : "÷" U00f7 	# division sign
 <Multi_key> <plus> <minus>              : "±" U00b1 	# plus-minus sign
@@ -294,7 +294,6 @@ include "%L"
 <Multi_key> <colon> <parenleft>         : "☹" U2639 	# white frowning face
 
 # hearts
-// <Multi_key> <L> <U> <V>>>       >	: "\\0x0304♥\\0x0352♥\\0x0377♥\\0x0340♥\\0x0363♥\\0x0316♥\\0x0376♥\\0x0362♥\\0x0340♥\\0x0304♥"	# irc hearts
 <Multi_key> <less> <3>                  : "❤" U2764 	# heavy black heart
 <Multi_key> <l> <u> <v>			: "♥♥♥♥♥♥♥♥♥♥"	# hearts
 <Multi_key> <less> <e>                  : "❥" U2765 	# rotated heavy black heart bullet
@@ -310,7 +309,7 @@ include "%L"
 <Multi_key> <o> <C>                     : "℃" U2103 	# degree celsius
 <Multi_key> <o> <F>                     : "℉" U2109 	# degree celsius
 
-# intellectual property symbols
+# intellectUal property symbols
 <Multi_key> <c> <s>                     : "©" U00a9 	# copyright sign
 <Multi_key> <r> <s>                     : "®" U00ae 	# registered sign
 <Multi_key> <t> <m>                     : "™" U2122 	# trade mark sign
@@ -327,7 +326,7 @@ include "%L"
 ## end demize
 
 ## start phillid
-# useful stuff
+# useful stUff
 <Multi_key> <d> <o> <t>                        : "·"		# mid dot for multiplication or units
 <Multi_key> <0> <space>                        : "﻿" Ufeff	# zero width space non-breaking
 <Multi_key> <0> <0> <space>                    : "​" U200b	# zero width space
@@ -388,7 +387,7 @@ include "%L"
 <Multi_key> <B> <1>                            : "𝟙"
 <Multi_key> <B> <0>                            : "𝟘"
 
-# wide characters uppercase, numbers, basic punctuation
+# wide characters uppercase, numbers, basic punctUation
 <Multi_key> <W> <A>                            : "Ａ"
 <Multi_key> <W> <B>                            : "Ｂ"
 <Multi_key> <W> <C>                            : "Ｃ"
@@ -434,7 +433,7 @@ include "%L"
 <Multi_key> <W> <apostrophe>                   : "＇"
 <Multi_key> <W> <space>                        : "　"
 
-# punctuation
+# punctUation
 <Multi_key> <bracketright> <apostrophe> : "’"   U2019   	# right single quotation mark
 <Multi_key> <bracketleft> <apostrophe>  : "‘"   U2018   	# left single quotation mark
 <Multi_key> <bracketright> <quotedbl>   : "”"   U201d   	# right double quotation mark
@@ -481,7 +480,7 @@ include "%L"
 <Multi_key> <g> <s>    : "σ"   U03c3   	# greek small letter sigma
 <Multi_key> <g> <T>    : "Τ"   U03a4   	# greek capital letter tau
 <Multi_key> <g> <t>    : "τ"   U03c4   	# greek small letter tau
-<Multi_key> <g> <U>    : "υ"   u03a5   	# greek capital letter upsilon
+<Multi_key> <g> <U>    : "υ"   U03a5   	# greek capital letter upsilon
 <Multi_key> <g> <u>    : "υ"   U03c5   	# greek small letter upsilon
 <Multi_key> <g> <W>    : "Ω"   U03a9   	# greek capital letter omega
 <Multi_key> <g> <w>    : "ω"   U03c9   	# greek small letter omega
