@@ -432,7 +432,6 @@ alias para='parallel'
 alias ping6='ping -6c 5'
 
 alias cmount='mount | column -t'
-alias jo='jobs -l'
 alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%a %R %Z %Y-%m-%d"'
 alias svi='vi "+set si"'
