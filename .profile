@@ -70,6 +70,7 @@ if [ -t 0 ]; then
 fi
 
 # directory shortcut environment variables
+unset CONFIG PROJECTS LINUX
 # export CONFIG="/store/dotfiles"
 # export PROJECTS="/store/projects"
 # export LINUX="$PROJECTS/linux"
