@@ -1,1 +1,2 @@
+sys-apps/systemd apparmor audit boot cryptsetup fido2 homed http idn importd pkcs11 qrcode ukify xkb
 sys-apps/systemd PYTHON_SINGLE_TARGET: -* python3_12

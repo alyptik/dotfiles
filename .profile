@@ -70,9 +70,9 @@ if [ -t 0 ]; then
 fi
 
 # directory shortcut environment variables
-export CONFIG="/store/dotfiles"
-export PROJECTS="/store/projects"
-export LINUX="$PROJECTS/linux"
+# export CONFIG="/store/dotfiles"
+# export PROJECTS="/store/projects"
+# export LINUX="$PROJECTS/linux"
 # export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" PREFIX="$HOME/.local"
 # export c="$C" h="$H" l="$L" p="$P" pre="$PREFIX"
 
@@ -117,7 +117,7 @@ export GCC_COLORS
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=intel -g3 -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=generic -g -O3"
 # CFLAGS="$CFLAGS -pipe -march=x86-64 -mtune=skylake -g -O3"
-CFLAGS="-g -O3 -flto -march=native -mtune=skylake -pipe"
+CFLAGS="-g3 -O3 -flto -march=native -mtune=skylake -pipe"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
