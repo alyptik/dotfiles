@@ -584,10 +584,10 @@ compdef _man tldr
 compdef _pacaur apacman
 compdef _pacaur pml
 compdef _pacaur pspc
-compdef _srs srs
-compdef _srs pscrs
-compdef _usrs usrs
-compdef _usrs pusrs
+compdef _scrs scrs
+compdef _scrs pscrs
+compdef _uscrs uscrs
+compdef _uscrs puscrs
 compdef _texinfo info
 compdef _vim v
 compdef _pip pip
