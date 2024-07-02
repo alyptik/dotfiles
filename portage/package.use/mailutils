@@ -1,0 +1,2 @@
+net-mail/mailutils berkdb bidi emacs guile kerberos kyotocabinet ldap mysql postgres servers tcpd tokyocabinet
+net-mail/mailutils PYTHON_SINGLE_TARGET: -* python3_12
