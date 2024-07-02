@@ -5,7 +5,7 @@ GRUB_TIMEOUT="10"
 GRUB_DISTRIBUTOR="Gentoo"
 # GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"
 # GRUB_CMDLINE_LINUX_DEFAULT="zswap.enabled=1 zswap.compressor=zstd zswap.zpool=zsmalloc"
-GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 lsm=landlock,apparmor apparmor=1 security=apparmor"
+GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 apparmor=1 lsm=landlock,apparmor"
 # GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0"
 GRUB_CMDLINE_LINUX=""
 

@@ -1,0 +1,2 @@
+media-sound/jack2 ieee1394 libsamplerate metadata
+media-sound/jack2 PYTHON_SINGLE_TARGET: -* python3_12
