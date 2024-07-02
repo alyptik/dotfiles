@@ -1,7 +1,21 @@
-# ALSA library configuration file
+pcm.!default {
+	type plug
+	slave { pcm "jack" }
+}
 
-# Include settings that are under the control of asoundconf(1).
-# (To disable these settings, comment out this line.)
+pcm.jack {
+	type jack
+	playback_ports {
+		0 system:playback_1
+		1 system:playback_2
+	}
+	capture_ports {
+		0 system:capture_1
+		1 system:capture_2
+	}
+}
 
-</home/alyptik/.asoundrc.asoundconf>
-
+ctl.mixer0 {
+	type hw
+	card 0
+}

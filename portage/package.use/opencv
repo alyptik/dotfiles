@@ -1,0 +1,2 @@
+media-libs/opencv contrib contribdnn
+media-libs/opencv PYTHON_TARGETS: -* python3_12
