@@ -1,0 +1,1 @@
+/store/dotfiles/.zsh.d

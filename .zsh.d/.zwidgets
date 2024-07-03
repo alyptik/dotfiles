@@ -403,13 +403,13 @@ function zle-youtube-helper() {
 # Make history entries from other zsh instances immediately visible
 function zshreadhist() {
 	setopt extendedglob
-	old_lines=${(M)$(wc -l /store/history/.zsh_history.tmp)##[0-9]##}
-	new_lines=${(M)$(wc -l $HOME/.zsh_history)##[0-9]##}
-	if ((new_lines < 100)); then
-		wc -l "$HOME/.zsh_history" /store/history/.zsh_history.tmp
-		print -r - 'you messed up your history file bruh'
-		return
-	fi
+	# old_lines=${(M)$(wc -l /store/history/.zsh_history.tmp)##[0-9]##}
+	# new_lines=${(M)$(wc -l $HOME/.zsh_history)##[0-9]##}
+	# if ((new_lines < 100)); then
+	#         wc -l "$HOME/.zsh_history" /store/history/.zsh_history.tmp
+	#         print -r - 'you messed up your history file bruh'
+	#         return
+	# fi
 	fc -R "$HOME/.zsh_history"
 	\mkdir -p /store/history
 	\touch /store/history/.zsh_history.tmp
