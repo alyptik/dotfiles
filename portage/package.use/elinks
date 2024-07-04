@@ -1,2 +1,2 @@
-www-client/elinks bittorrent finger gopher idn javascript nntp xml
+www-client/elinks bittorrent finger gopher idn nntp xml
 www-client/elinks PYTHON_SINGLE_TARGET: -* python3_11
