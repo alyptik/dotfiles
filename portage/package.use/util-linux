@@ -1,2 +1,2 @@
-sys-apps/util-linux audit cryptsetup fdformat kill magic slang uuidd
+sys-apps/util-linux audit cryptsetup fdformat magic slang uuidd
 sys-apps/util-linux PYTHON_TARGETS: -* python3_12
