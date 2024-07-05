@@ -6,7 +6,6 @@ unless defined? ETC_IRBRC_LOADED
   require 'rubygems'
 
   # Activate auto-completion.
-  require 'irb/ext/save-history'
   require 'irb/completion'
 
   # Use the simple prompt if possible.
