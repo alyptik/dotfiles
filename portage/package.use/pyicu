@@ -1,1 +1,1 @@
-dev-python/pyicu PYTHON_TARGETS: -* python3_12
+dev-python/pyicu PYTHON_TARGETS: -* python3_12 python3_13

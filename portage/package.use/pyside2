@@ -1,1 +1,2 @@
+dev-python/pyside2 LLVM_SLOT: -* 15
 dev-python/pyside2 PYTHON_TARGETS: -* python3_11

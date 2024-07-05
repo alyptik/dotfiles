@@ -1,1 +1,1 @@
-media-gfx/graphviz PYTHON_SINGLE_TARGET: -* python3_12
+media-gfx/graphviz devil gtk2 gts guile lasi

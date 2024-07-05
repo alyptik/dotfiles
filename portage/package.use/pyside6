@@ -1,1 +1,2 @@
-dev-python/pyside6 PYTHON_TARGETS: -* python3_12
+dev-python/pyside6 LLVM_SLOT: -* 18
+dev-python/pyside6 PYTHON_TARGETS: -* python3_12 python3_13
