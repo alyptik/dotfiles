@@ -82,31 +82,31 @@
 
 # tdrop on F9 (c:75)
 # "tdrop -n 2 google-chrome-unstable"
-"tdrop -n 2 firefox"
-    m:0x0 + c:75
-    F9
+#     m:0x0 + c:75
+#     F9
 
 # tdrop on F10 (c:76)
 # "tdrop -n 3 kitty"
-"tdrop -n 3 uxterm"
-    m:0x0 + c:76
-    F10
+#     m:0x0 + c:76
+#     F10
 
 # tdrop on F11 (c:95)
 # "tdrop -n 4 kitty"
-#     m:0x0 + c:95
-#     F11
+"tdrop -n 2 firefox"
+    m:0x0 + c:95
+    F11
 
 # tdrop on F12 (c:96)
 # "tdrop -n 5 st"
-#     m:0x0 + c:96
-#     F12
+"tdrop -n 3 uxterm"
+    m:0x0 + c:96
+    F12
 
 # toggle Touchpad
-# "t-xinput.sh"
-# "toggle_touchpad"
-#     m:0xc + c:61
-#     Control+Alt + slash
+# "t-xinput"
+"toggle_touchpad"
+    m:0xc + c:61
+    Control+Alt + slash
 
 # disable touchpad
 "xinput disable $(xinput | sed '/TouchPad/!d; s/.*id=\([0-9]*\).*/\1/;')"

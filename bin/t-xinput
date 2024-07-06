@@ -3,7 +3,7 @@
 # [[ -z "$*" ]] && { printf "$(tput setaf 9)%s$(tput sgr0)\n" 'Error: No device(s) specified!'; exit 64; }
 
 declare -a id
-[[ "$#" -eq 0 ]] && id+=( "$(xinput | awk '/Touchpad/ { sub("id=",""); print $8}')" ) || id+=( "$@" )
+[[ "$#" -eq 0 ]] && id+=( "$(xinput | sed '/TouchPad/!d; s/.*id=\([0-9]*\).*/\1/;')" ) || id+=( "$@" )
 
 for i in "${id[@]}"; do
     [[ $(xinput list-props "$i" | grep '\bDevice Enabled\b' | sed 's/.*\(.\)$/\1/') -eq 0 ]] && \
