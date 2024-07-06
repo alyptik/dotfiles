@@ -376,7 +376,7 @@ alias pscpu10='ps auxf | sort -nrk 3 | head -10'
 # older systems use /proc/cpuinfo
 alias cpuinfo='less /proc/cpuinfo'
 
-alias zswap='printf "\n\033[32m%s \033[31m%s\033[0m\n\n" "ZSWAP Enabled:" "$(grep --color=always "[YN]" /sys/module/zswap/parameters/enabled)" && grep -R . /sys/module/zswap/parameters && echo && grep -R . /sys/kernel/debug/zswap && echo'
+alias zswap='printf "\n\033[32m%s \033[31m%s\033[0m\n\n" "ZSWAP Enabled:" "$(grep --color=always "[YN]" /sys/module/zswap/parameters/enabled)" && grep --color=always -R . /sys/module/zswap/parameters && echo && grep --color=always -R . /sys/kernel/debug/zswap && echo'
 alias tzswap="sudo su -c \"(sed 'y/NY/YN/' /sys/module/zswap/parameters/enabled >|/sys/module/zswap/parameters/enabled && cat /sys/module/zswap/parameters/enabled)\""
 alias nmixxx='sudo renice -n -20 -p $(pgrep mixxx|paste -sd" ") && sudo ionice -c 1 -n 0 -p $(pgrep mixxx|paste -sd" ")'
 alias kpulse='systemctl --user stop pulseaudio.socket && pulseaudio --kill || pulseaudio --kill'
