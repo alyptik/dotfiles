@@ -1,1 +1,1 @@
-dev-libs/libxslt PYTHON_TARGETS: -* python3_12
+dev-libs/libxslt PYTHON_TARGETS: -* python3_13

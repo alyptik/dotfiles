@@ -1,1 +1,1 @@
-dev-libs/libxml2 PYTHON_TARGETS: -* python3_12
+dev-libs/libxml2 PYTHON_TARGETS: -* python3_12 python3_13

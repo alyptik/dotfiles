@@ -66,9 +66,9 @@
 #     Shift + Insert
 
 # clipboard paste
-"sh -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
-    m:0x0 + c:118
-    Insert
+# "bash -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
+#     m:0x0 + c:118
+#     Insert
 
 # primary paste on F7 (c:73)
 # "sh -c 'xclip -r -o -sel prim | xvkbd -xsendevent -file - 2>/dev/null'"
@@ -81,19 +81,21 @@
 #     F8
 
 # tdrop on F9 (c:75)
-"tdrop -n 2 chromium"
+# "tdrop -n 2 google-chrome-unstable"
+"tdrop -n 2 firefox"
     m:0x0 + c:75
     F9
 
 # tdrop on F10 (c:76)
-"tdrop -n 3 st"
+# "tdrop -n 3 kitty"
+"tdrop -n 3 uxterm"
     m:0x0 + c:76
     F10
 
 # tdrop on F11 (c:95)
-"tdrop -n 4 st"
-    m:0x0 + c:95
-    F11
+# "tdrop -n 4 kitty"
+#     m:0x0 + c:95
+#     F11
 
 # tdrop on F12 (c:96)
 # "tdrop -n 5 st"
@@ -102,17 +104,17 @@
 
 # toggle Touchpad
 # "t-xinput.sh"
-"toggle_touchpad"
-    m:0xc + c:61
-    Control+Alt + slash
+# "toggle_touchpad"
+#     m:0xc + c:61
+#     Control+Alt + slash
 
 # disable touchpad
-"xinput disable $(xinput | awk '/TouchPad/ { sub("id=",""); print $6}')"
+"xinput disable $(xinput | sed '/TouchPad/!d; s/.*id=\([0-9]*\).*/\1/;')"
     m:0xc + c:60
     Control+Alt + period
 
 # enable touchpad
-"xinput enable $(xinput | awk '/TouchPad/ { sub("id=",""); print $6}')"
+"xinput enable $(xinput | sed '/TouchPad/!d; s/.*id=\([0-9]*\).*/\1/;')"
     m:0xc + c:59
     Control+Alt + comma
 
@@ -154,13 +156,13 @@
 
 # mouse pagedown
 #"xdotool key 'Shift+Page_Up'"
-"xdotool key 'Page_Up'"
-   m:0x0 + b:9
+# "xdotool key 'Page_Up'"
+#    m:0x0 + b:9
 
 # mouse pageup
 #"xdotool key 'Shift+Page_Down'"
-"xdotool key 'Page_Down'"
-   m:0x0 + b:8
+# "xdotool key 'Page_Down'"
+#    m:0x0 + b:8
 
 #"xdotool key 'Shift+Page_Down'"
 #"xdotool --clearmodifiers keydown 'Control_L' key 'f' keyup 'Control_L'"
