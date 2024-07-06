@@ -1,0 +1,5 @@
+#compdef usce
+
+((CURRENT++))
+words=(systemctl edit --user "${words[@]:1}")
+_normal

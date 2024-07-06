@@ -1,0 +1,5 @@
+#compdef sce
+
+((CURRENT++))
+words=(systemctl edit "${words[@]:1}")
+_normal

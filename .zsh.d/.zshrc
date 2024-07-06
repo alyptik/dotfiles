@@ -588,6 +588,8 @@ compdef _scrs scrs
 compdef _scrs pscrs
 compdef _uscrs uscrs
 compdef _uscrs puscrs
+compdef _sce sce
+compdef _usce usce
 compdef _texinfo info
 compdef _vim v
 compdef _pip pip
