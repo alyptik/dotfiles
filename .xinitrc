@@ -40,9 +40,9 @@ udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 # pipewire-pulse &
 pavucontrol &
 sleep 2
-uxterm &
+# uxterm &
 pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
-firefox &
+# firefox &
 # transgui &
 # compton -b
 picom -b
