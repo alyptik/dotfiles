@@ -1,1 +1,2 @@
+net-misc/rsync rrsync stunnel xxhash
 net-misc/rsync PYTHON_SINGLE_TARGET: -* python3_12
