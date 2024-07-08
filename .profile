@@ -207,6 +207,8 @@ INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 INFOPATH="$HOME/.local/share/.info:$INFOPATH"
 INFOPATH="/usr/share/binutils-data/x86_64-pc-linux-gnu/2.42/info:$INFOPATH"
 INFOPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info:$INFOPATH"
+INFOPATH="/usr/share/autoconf-2.72/info:$INFOPATH"
+INFOPATH="/usr/share/automake-1.16.5/info:$INFOPATH"
 export INFOPATH
 export _JAVA_AWT_WM_NONREPARENTING=1
 _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=on"
@@ -214,7 +216,7 @@ _JAVA_OPTIONS="$_JAVA_OPTIONS -Dsun.java2d.opengl=true"
 export _JAVA_OPTIONS
 # export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 # export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
-export JAVA_HOME=/usr/lib/jvm/java-12-openjdk
+export JAVA_HOME=/usr/lib64/openjdk-21
 # export JAVA_HOME=/usr/lib/jvm/java-9-jdk
 # export JAVA_HOME=/usr/lib/jvm/java-10-jdk
 # export JAVA_HOME=/usr/lib/jvm/java-11-jdk
