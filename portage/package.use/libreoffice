@@ -1,1 +1,3 @@
+app-office/libreoffice coinmp firebird googledrive ldap odk pdfimport postgres
+app-office/libreoffice LIBREOFFICE_EXTENSIONS: nlpsolver scripting-beanshell scripting-javascript wiki-publisher
 app-office/libreoffice PYTHON_SINGLE_TARGET: -* python3_12
