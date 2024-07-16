@@ -139,7 +139,7 @@ call plug#begin(g:plugdir)
 	Plug 'junegunn/vim-github-dashboard', {'on': ['GHDashboard', 'GHActivity']}
 	Plug 'kovisoft/paredit', {'for': ['clojure', 'scheme']}
 	Plug 'junegunn/vader.vim',  {'on': 'Vader', 'for': 'vader'}
-	Plug 'ycm-core/YouCompleteMe'
+	" Plug 'ycm-core/YouCompleteMe'
 	" Unmanaged plugin (manually installed and updated)
 	" Plug '~/my-prototype-plugin'
 call plug#end()
