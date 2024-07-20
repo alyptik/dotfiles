@@ -10,7 +10,6 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 alias mktags='cscope -Rub && ctags -Rf tags --tag-relative=yes --langmap=c:+.h.C.H --fields=+l --c-kinds=+l --c++-kinds=+l --extras=+q'
 alias cpan='cpan -T'
-alias emerge='emerge --color=y -v'
 alias youtube-dl='youtube-dl -c'
 alias dmesg='dmesg -H'
 alias acked='printf "%s-by: Joey Pabalinas <joeypabalinas@gmail.com>\n" Acked Co-developed Reported Reviewed Signed-off Suggested Tested | tee >(head -n1 | xclip -i -r -sel prim) | tee >(head -n1 | xclip -i -r -sel clip)'

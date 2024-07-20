@@ -69,21 +69,15 @@ if [ -t 0 ]; then
 	fi
 fi
 
-# directory shortcut environment variables
-unset CONFIG PROJECTS LINUX
-# export CONFIG="/store/dotfiles"
-# export PROJECTS="/store/projects"
-# export LINUX="$PROJECTS/linux"
-# export C="$CONFIG" H="$HOME" L="$LINUX" P="$PROJECTS" PREFIX="$HOME/.local"
-# export c="$C" h="$H" l="$L" p="$P" pre="$PREFIX"
-
 # compiler environment
-unset CARCH CCACHE_DISABLE CFLAGS CCFLAGS
-unset CHOST C_INCLUDE_PATH CPATH CPPFLAGS
+unset CARCH CCACHE_DISABLE COMMON_FLAGS CFLAGS
+unset CCFLAGS CHOST C_INCLUDE_PATH CPATH CPPFLAGS
 unset CXXFLAGS LDFLAGS LIBRARY_PATH MAKEFLAGS
+unset CARGO_TERM_VERBOSE RUSTFLAGS
 # export CARCH="x86_64"
+# export CCACHE_DIR="/var/cache/ccache"
 export CCACHE_DIR="$HOME/.ccache"
-export CCACHE_DISABLE=1
+export CCACHE_NODISABLE=true
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PREFIX="distcc"
 export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
@@ -103,6 +97,9 @@ GCC_COLORS="$GCC_COLORS:caret=01;32:locus=01:quote=01:fixit-insert=32:fixit-dele
 GCC_COLORS="$GCC_COLORS:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32"
 GCC_COLORS="$GCC_COLORS:type-diff=01;32"
 export GCC_COLORS
+COMMON_FLAGS="-falign-functions=32 -fstack-clash-protection -fstack-protector-strong"
+COMMON_FLAGS="$COMMON_FLAGS -fdiagnostics-color=always -frecord-gcc-switches"
+COMMON_FLAGS="$COMMON_FLAGS -g3 -O3 -march=native -mtune=skylake -pipe"
 # compiler flags
 # CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"
 # CFLAGS="$CFLAGS -flto"
@@ -118,24 +115,31 @@ export GCC_COLORS
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=intel -g3 -O3"
 # CFLAGS="$CFLAGS -march=x86-64 -mtune=generic -g -O3"
 # CFLAGS="$CFLAGS -pipe -march=x86-64 -mtune=skylake -g -O3"
-CFLAGS="-g3 -O3 -march=native -mtune=skylake -pipe"
+CFLAGS="$COMMON_FLAGS"
 export CFLAGS
 # export CHOST="x86_64-unknown-linux-gnu"
 # export CPATH=":$HOME/.local/include"
 # export C_INCLUDE_PATH=":$HOME/.local/include"
 # export CPPFLAGS="-D_FORTIFY_SOURCE=2"
-CXXFLAGS="$CFLAGS"
+CXXFLAGS="$COMMON_FLAGS"
 export CXXFLAGS
+FCFLAGS="$COMMON_FLAGS"
+export FCFLAGS
+FFLAGS="$COMMON_FLAGS"
+export FFLAGS
 # LDFLAGS="$CFLAGS"
 # LDFLAGS="$LDFLAGS -Wl,-O2"
 # LDFLAGS="$LDFLAGS -Wl,--warn-unresolved-symbols"
 # LDFLAGS="$LDFLAGS -Wl,-O2,-z,now,-z,relro,-z,noexecstack"
 # LDFLAGS="$LDFLAGS -Wl,--as-needed,--sort-common,--warn-common"
-# LDFLAGS="-flto -Wl,-O2 -Wl,--as-needed -Wl,-z,now -Wl,-z,pack-relative-relocs"
-# export LDFLAGS
+LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,-z,now -Wl,-z,pack-relative-relocs"
+LDFLAGS="$LDFLAGS -Wl,--defsym=__gentoo_check_ldflags__=0"
+export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l$NPROC"
 export MAKEFLAGS="-j$((NPROC + 2)) -l$NPROC"
+export CARGO_TERM_VERBOSE="false"
+export RUSTFLAGS="-C opt-level=3 -C debuginfo=0"
 
 # Environment variables
 export ANDROID_HOME="$HOME/Android/Sdk"
