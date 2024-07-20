@@ -487,3 +487,4 @@
 	directory = /store/dotfiles/.vim/plugged/vimtex
 	directory = /store/dotfiles/.vim/plugged/vital.vim
 	directory = /store/projects/coreutils/gnulib
+	directory = /store/dotfiles/.vim/bundle/YouCompleteMe

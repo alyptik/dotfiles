@@ -9,6 +9,38 @@ runtime! archlinux.vim
 set encoding=utf-8
 scriptencoding utf-8
 
+set nocompatible              " be iMproved, required
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'yegappan/taglist'
+Plugin 'vim-scripts/a.vim'
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+" Plugin 'tpope/vim-fugitive'
+" Git plugin not hosted on GitHub
+" Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
 " let g:plug_url_format='https://git::@github.com/%s.git'
 
 if (has("nvim") && empty(glob('~/.config/nvim/autoload/plug.vim')))
@@ -1737,8 +1769,12 @@ inoremap <C-d> <C-o>dw
 " inoremap <C-k> <C-o>dd
 
 inoremap jj <Esc>
-nnoremap <Leader>t :<C-r>=(term_list() != [] ? bufwinnr(term_list()[0]).'wincmd w' : 'terminal')<CR><CR>
-vnoremap <Leader>t :<C-r>=(term_list() != [] ? bufwinnr(term_list()[0]).'wincmd w' : 'terminal')<CR><CR>
+
+" taglist
+nnoremap <Leader>t <Esc>:TlistToggle<CR>
+
+" nnoremap <Leader>t :<C-r>=(term_list() != [] ? bufwinnr(term_list()[0]).'wincmd w' : 'terminal')<CR><CR>
+" vnoremap <Leader>t :<C-r>=(term_list() != [] ? bufwinnr(term_list()[0]).'wincmd w' : 'terminal')<CR><CR>
 
 " remove space when joining lines
 " nnoremap J Jvd

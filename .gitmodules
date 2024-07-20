@@ -1,3 +1,15 @@
 [submodule ".zsh.d/plugins/zsh-vi-search"]
 	path = .zsh.d/plugins/zsh-vi-search
 	url = https://github.com/soheilpro/zsh-vi-search
+[submodule ".vim/bundle/Vundle.vim"]
+	path = .vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim
+[submodule ".vim/bundle/YouCompleteMe"]
+	path = .vim/bundle/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe
+[submodule ".vim/bundle/taglist"]
+	path = .vim/bundle/taglist
+	url = https://github.com/vim-scripts/taglist.vim
+[submodule ".vim/bundle/a.vim"]
+	path = .vim/bundle/a.vim
+	url = https://github.com/vim-scripts/a.vim

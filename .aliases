@@ -8,6 +8,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
+# alias emerge='emerge --color=y --jobs=10 --load-average=8 -v'
 alias mktags='cscope -Rub && ctags -Rf tags --tag-relative=yes --langmap=c:+.h.C.H --fields=+l --c-kinds=+l --c++-kinds=+l --extras=+q'
 alias cpan='cpan -T'
 alias youtube-dl='youtube-dl -c'
@@ -165,9 +166,6 @@ alias rs='rsync -ahhsvAHSX --info=all4'
 alias r-s='rsync -ahhsvAHLSX --info=all4'
 alias rorphans='pacman -Qdtq | paste -sd" " | tee >(perl -pe "chomp if eof" | xsel -ib) /dev/stderr | sudo pacman -Rs -'
 alias skvm='spicy --uri="spice+unix:///tmp/vm_spice.socket"'
-alias k='kill'
-alias ka='killall'
-alias pk='pkill'
 alias speak='espeak -s200 -p70 -ven+f5'
 alias socks='ssh -D 8888 -NC'
 alias nctl='networkctl'
