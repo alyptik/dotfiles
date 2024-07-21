@@ -18,18 +18,17 @@
 	port = 993
 	sslverify = false
 [sendemail]
-	smtpEncryption = tls
-	smtpServer = smtp.gmail.com
-	smtpUser = joeypabalinas@gmail.com
-	smtpServerPort = 587
+	smtpencryption = tls
+	smtpserver = gmail.com
+	smtpuser = joeypabalinas@gmail.com
+	smtpserverport = 587
 	thread = true
 	signedoffbycc = true
 	suppressfrom = true
-	; aliasfiletype = mutt
-	; aliasesfile = ~/.mutt/mutt_aliases
 [push]
 	default = simple
-	followtags = false
+	followtags = true
+	gpgsign = false
 [alias]
 	br = branch
 	co = commit -S -v
@@ -88,7 +87,7 @@
 	m = merge
 	fw = grep -FWn --color=auto --break
 	ff = grep -FWn --color=auto --break
-	amend = commit -S -s -v --amend
+	a = commit -S -s -v --amend
 	sl = shortlog --no-merges
 	dirstat = diff -M --dirstat=2,cumulative
 	count = rev-list --count --no-merges @
@@ -131,15 +130,14 @@
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
-	gpgsign = false
+	gpgsign = true
 [rerere]
 	enabled = false
 	autoupdate = false
 [pretty]
 	colorful-oneline = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [pull]
-	rebase = false
-	ff = true
+	rebase = true
 [grep]
 	lineNumber = true
 	patternType = perl
@@ -155,6 +153,7 @@
 	thread = shallow
 	signatureFile = ~/.signature
 	outputDirectory = ~/patches
+	signoff = yes
 [init]
 	templateDir = /usr/share/git-core/templates
 [rebase]

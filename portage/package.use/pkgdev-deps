@@ -1,0 +1,113 @@
+# required by dev-python/python-dateutil-2.9.0_p0::gentoo[test]
+# required by dev-python/time-machine-2.14.2::gentoo[test]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/service-identity-24.1.0::gentoo
+# required by dev-python/twisted-24.3.0_p20240628::gentoo[ssl]
+# required by @selected
+# required by @world (argument)
+>=dev-python/freezegun-1.5.1 python_targets_python3_11
+# required by dev-python/python-dateutil-2.9.0_p0::gentoo[test]
+# required by dev-python/freezegun-1.5.1::gentoo[test]
+>=dev-python/hypothesis-6.108.2 python_targets_python3_11 python_targets_python3_12
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/service-identity-24.1.0::gentoo
+# required by dev-python/twisted-24.3.0_p20240628::gentoo[ssl]
+# required by @selected
+# required by @world (argument)
+>=dev-python/pytest-8.3.1 python_targets_python3_11 python_targets_python3_12
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/attrs-23.2.0 python_targets_python3_11
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/service-identity-24.1.0::gentoo
+# required by dev-python/twisted-24.3.0_p20240628::gentoo[ssl]
+# required by @selected
+# required by @world (argument)
+>=dev-python/sortedcontainers-2.4.0-r1 python_targets_python3_11
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/service-identity-24.1.0::gentoo
+# required by dev-python/twisted-24.3.0_p20240628::gentoo[ssl]
+# required by @selected
+# required by @world (argument)
+>=dev-python/pexpect-4.9.0 python_targets_python3_11
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/service-identity-24.1.0::gentoo
+# required by dev-python/twisted-24.3.0_p20240628::gentoo[ssl]
+# required by @selected
+# required by @world (argument)
+>=dev-python/pytest-xdist-3.6.1 python_targets_python3_11
+# required by dev-python/pexpect-4.9.0::gentoo[test]
+# required by dev-python/argcomplete-3.4.0::gentoo[test]
+# required by dev-python/pytest-8.3.1::gentoo[-python_targets_pypy3,-python_targets_python3_10,python_targets_python3_11,test,python_targets_python3_13,python_targets_python3_12]
+# required by dev-python/iniconfig-2.0.0::gentoo[test]
+>=dev-python/ptyprocess-0.7.0-r1 python_targets_python3_11
+# required by dev-python/zope-interface-6.4_p2::gentoo[-python_targets_pypy3,-python_targets_python3_10,python_targets_python3_11,test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/unittest-or-fail-2-r1 python_targets_python3_11
+# required by dev-python/attrs-23.2.0::gentoo
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/hatch-fancy-pypi-readme-24.1.0 python_targets_python3_11
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/cloudpickle-3.0.0 python_targets_python3_12
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/zope-interface-6.4_p2 python_targets_python3_11
+# required by dev-python/zope-interface-6.4_p2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/zope-event-5.0 python_targets_python3_11 python_targets_python3_12
+# required by dev-python/zope-interface-6.4_p2::gentoo[test]
+# required by dev-python/attrs-23.2.0::gentoo[test]
+# required by dev-python/hypothesis-6.108.2::gentoo[test]
+# required by dev-python/pytest-asyncio-0.23.8::gentoo[test]
+# required by dev-python/pytest-mock-3.14.0::gentoo[-python_targets_pypy3,-python_targets_python3_10,-python_targets_python3_11,test,python_targets_python3_13,-python_targets_python3_12]
+# required by dev-python/virtualenv-20.26.3-r2::gentoo[test]
+# required by dev-python/filelock-3.15.4::gentoo[test]
+# required by dev-python/pytest-xdist-3.6.1::gentoo[test]
+# required by dev-python/pytest-timeout-2.3.1::gentoo[test]
+>=dev-python/zope-testing-5.0.1 python_targets_python3_11 python_targets_python3_12
