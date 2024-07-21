@@ -202,6 +202,8 @@ elseif &term =~ '^screen'
 	" autocmd VimLeave * silent !echo -ne "\033P\033]112\007\033\\"
 endif
 
+let g:ycm_enable_semantic_highlighting=1
+
 " disable Background Color Erase (BCE) so that color schemes
 " render properly when inside 256-color tmux and GNU screen.
 " see also http://sunaku.github.io/vim-256color-bce.html
