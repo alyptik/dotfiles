@@ -142,9 +142,9 @@
     m:0x0 + c:122
     XF86AudioLowerVolume
 
-# speaker mute
+# speaker reset and mute
 #"amixer set Master 0%"
-"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+"sh -c 'pactl set-sink-volume @DEFAULT_SINK@ 100% && pactl set-sink-mute @DEFAULT_SINK@ toggle'"
     m:0x0 + c:121
     XF86AudioMute
 
