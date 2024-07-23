@@ -8,7 +8,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 
 # Custom aliases
 
-# alias emerge='emerge --color=y --jobs=10 --load-average=8 -v'
+alias ff='firefox'
 alias tags='cscope -Rub && ctags -Rf tags --tag-relative=yes --langmap=c:+.h.C.H --fields=+l --c-kinds=+l --c++-kinds=+l --extras=+q'
 alias cpan='cpan -T'
 alias youtube-dl='youtube-dl -c'

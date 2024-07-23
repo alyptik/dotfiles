@@ -27,7 +27,7 @@ set colored-completion-prefix on
 set colored-stats off
 set completion-ignore-case on
 set completion-map-case on
-set completion-prefix-display-length 3
+# set completion-prefix-display-length 3
 set enable-bracketed-paste off
 set expand-tilde on
 set history-preserve-point on
