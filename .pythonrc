@@ -8,20 +8,19 @@
 # Note that PYTHONSTARTUP does *not* expand "~", so you have to put in the
 # full path to your home directory.
 
-import atexit
-import os
-import readline
-import rlcompleter
-
-historyPath = os.path.expanduser("~/.python_history")
-
-def save_history(historyPath=historyPath):
-    import readline
-    readline.write_history_file(historyPath)
-
-if os.path.exists(historyPath):
-    readline.read_history_file(historyPath)
-
-atexit.register(save_history)
-
-readline.parse_and_bind("tab: complete")
+#  import atexit
+#  import os
+#  import readline
+#
+#  historyPath = os.path.expanduser("~/.python_history")
+#
+#  def save_history(historyPath=historyPath):
+#      import readline
+#      readline.write_history_file(historyPath)
+#
+#  if os.path.exists(historyPath):
+#      readline.read_history_file(historyPath)
+#
+#  atexit.register(save_history)
+#
+#  readline.parse_and_bind("tab: complete")

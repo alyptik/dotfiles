@@ -337,6 +337,8 @@ export PRIMUS_SYNC=1
 export PS_FORMAT="flags,uid,pid,ppid,tpgid,pgrp,session,pri,ni,pcpu,sz,wchan,stat,state,tname,time,args"
 # Python2 compatibility
 # export PYTHON="/usr/bin/python2"
+export PYTHON_COLORS=1
+export PYTHON_HISTORY="$HOME/.python_history"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export READNULLCMD="$dump_cmd"
 export REPORTTIME=5
