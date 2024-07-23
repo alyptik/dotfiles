@@ -9,37 +9,37 @@ runtime! archlinux.vim
 set encoding=utf-8
 scriptencoding utf-8
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'yegappan/taglist'
-Plugin 'vim-scripts/a.vim'
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
+" set nocompatible              " be iMproved, required
+" filetype off                  " required
+" " set the runtime path to include Vundle and initialize
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+" " alternatively, pass a path where Vundle should install plugins
+" "call vundle#begin('~/some/path/here')
+" " let Vundle manage Vundle, required
+" Plugin 'VundleVim/Vundle.vim'
+" Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'yegappan/taglist'
+" Plugin 'vim-scripts/a.vim'
+" " The following are examples of different formats supported.
+" " Keep Plugin commands between vundle#begin/end.
+" " plugin on GitHub repo
+" " Plugin 'tpope/vim-fugitive'
+" " Git plugin not hosted on GitHub
+" " Plugin 'git://git.wincent.com/command-t.git'
+" " git repos on your local machine (i.e. when working on your own plugin)
+" " Plugin 'file:///home/gmarik/path/to/plugin'
+" " The sparkup vim script is in a subdirectory of this repo called vim.
+" " Pass the path to set the runtimepath properly.
+" " Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" " Install L9 and avoid a Naming conflict if you've already installed a
+" " different version somewhere else.
+" " Plugin 'ascenator/L9', {'name': 'newL9'}
+" " All of your Plugins must be added before the following line
+" call vundle#end()            " required
+" filetype plugin indent on    " required
+" " To ignore plugin indent changes, instead use:
+" "filetype plugin on
 
 " let g:plug_url_format='https://git::@github.com/%s.git'
 
@@ -171,6 +171,12 @@ call plug#begin(g:plugdir)
 	Plug 'junegunn/vim-github-dashboard', {'on': ['GHDashboard', 'GHActivity']}
 	Plug 'kovisoft/paredit', {'for': ['clojure', 'scheme']}
 	Plug 'junegunn/vader.vim',  {'on': 'Vader', 'for': 'vader'}
+	Plug 'Valloric/YouCompleteMe'
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	Plug 'vim-syntastic/syntastic'
+	Plug 'nvie/vim-flake8'
+	" Plug 'nvim-treesitter/nvim-treesitter'
+	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'master' }
 	" Plug 'ycm-core/YouCompleteMe'
 	" Unmanaged plugin (manually installed and updated)
 	" Plug '~/my-prototype-plugin'
@@ -202,7 +208,49 @@ elseif &term =~ '^screen'
 	" autocmd VimLeave * silent !echo -ne "\033P\033]112\007\033\\"
 endif
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let python_highlight_all=1
 let g:ycm_enable_semantic_highlighting=1
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" use <tab> to trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " disable Background Color Erase (BCE) so that color schemes
 " render properly when inside 256-color tmux and GNU screen.
