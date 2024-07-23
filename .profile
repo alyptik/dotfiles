@@ -76,12 +76,11 @@ unset CXXFLAGS LDFLAGS LIBRARY_PATH MAKEFLAGS
 unset CARGO_TERM_VERBOSE RUSTFLAGS
 # export CARCH="x86_64"
 # export CCACHE_DIR="/var/cache/ccache"
-export CCACHE_DIR="$HOME/.ccache"
 export CCACHE_DISABLE=1
 # export CCACHE_NODISABLE=true
 # export CCACHE_PATH=/usr/bin
 # export CCACHE_PREFIX="distcc"
-export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
+# export CCACHE_TEMPDIR="$CCACHE_DIR/tmp"
 # sparse configuraiton
 CF="-DCONFIG_SPARSE_RCU_POINTER -D__CHECK_ENDIAN__"
 CF="$CF -fmax-warnings=unlimited"
