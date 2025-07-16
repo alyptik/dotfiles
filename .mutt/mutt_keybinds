@@ -1,0 +1,149 @@
+#
+# ~/.mutt.d/.mutt_keybinds
+#
+# Mutt keybindings
+
+bind editor \e[ backward-word
+bind editor \e] forward-word
+bind editor "\e;" backward-word
+bind editor "\e'" forward-word
+bind editor \ck kill-line
+bind pager g top
+bind pager G bottom
+bind index g first-entry
+bind index G last-entry
+bind index,pager \er root-message
+bind index,pager \eP parent-message
+bind index,pager \ep previous-subthread
+bind index,pager \en next-subthread
+bind index,pager R group-reply
+bind index,pager B sidebar-toggle-visible
+# bind index,pager f followup-message
+bind index,pager \ef forward-message
+bind index,pager \cP sidebar-prev
+bind index,pager \cN sidebar-next
+bind index,pager \cO sidebar-open
+bind index,pager [ sidebar-prev
+bind index,pager ] sidebar-next
+bind index,pager \\ sidebar-open
+bind index,pager \e[ sidebar-prev
+bind index,pager \e] sidebar-next
+bind index,pager \e\\ sidebar-open
+bind index,pager,browser ";" half-up
+bind index,pager,browser "'" half-down
+bind index,pager,browser - first-entry
+bind index,pager,browser = last-entry
+bind index,pager,browser \e- first-entry
+bind index,pager,browser \e= last-entry
+bind index,pager,browser \c? previous-line
+bind index,pager,browser b previous-page
+bind index,pager,browser <space> next-page
+bind index,pager,browser N search-opposite
+bind index,pager,browser \c/ search-reverse
+bind index,pager,browser ? search-reverse
+bind index,pager,browser h help
+bind index,pager,browser \ek what-key
+bind index,pager \eK mail-key
+# bind index,pager ^ imap-fetch-mail
+bind index,pager ^ sync-mailbox
+# apply to tagged pattern
+bind index \ea tag-prefix
+bind index \eN toggle-new
+# bind index <return> next-line
+bind index o display-message
+bind index,pager "\e;" sync-mailbox
+bind index,pager "\e'" read-thread
+bind index,pager <tab> next-new-then-unread
+bind index,pager \e<tab> previous-new-then-unread
+bind index,pager <backtab> previous-new-then-unread
+bind attach <return> view-mailcap
+bind browser y exit
+# bind index,pager \el sidebar-toggle-virtual
+bind index l collapse-thread
+bind index v collapse-thread
+bind pager k previous-line
+bind pager j next-line
+bind pager <up> previous-line
+bind pager <down> next-line
+bind index \ev collapse-all
+
+# newsgroup bindings
+#
+# open a different newsgroup
+# bind index,pager y change-newsgroup
+# edit the Followup-To field
+# bind compose o edit-followup-to
+# edit the newsgroups list
+# bind compose N edit-newsgroups
+# edit the X-Comment-To field
+# bind compose x edit-x-comment-to
+# mark all articles in newsgroup as read
+# bind browser,index \ey catchup
+# mark all articles in newsgroup as unread
+# bind browser \eY uncatchup
+# post message to newsgroup
+# bind index,pager P post-message
+# # followup to newsgroup
+# bind attach,index,pager F followup-message
+# # load list of all newsgroups from NNTP server
+# bind browser g reload-active
+# # subscribe to current mbox (IMAP/NNTP only)
+# bind browser s subscribe
+# # subscribe to newsgroups matching a pattern
+# bind browser S subscribe-pattern
+# # unsubscribe from current mbox (IMAP/NNTP only)
+# bind browser u unsubscribe
+# # unsubscribe from newsgroups matching a pattern
+# bind browser U unsubscribe-pattern
+# # forward to newsgroup
+# bind attach,index,pager \eF forward-to-group
+# # get all children of the current message
+# bind index \eg get-children
+# # get parent of the current message
+# bind index \eG get-parent
+# # reconstruct thread containing current message
+# bind index \e? reconstruct-thread
+# # get message with Message-Id
+# bind index \CG get-message
+
+macro index , "<enter-command>set sort = threads<enter>"
+macro index . "<enter-command>set sort = last-date-received<enter>"
+
+# show the incoming mailboxes list (just like "mutt -y") and back when pressing "y"
+# macro index,pager y "<change-folder>?<toggle-mailboxes>" "open a different folder"
+# macro index,pager \ey "<change-folder>?" "open a different folder/mailbox"
+# macro index,pager Y \
+#     "<change-folder>imaps://$my_user:$my_pass@alyptik.org/Inbox<enter>" \
+#     "open alyptik.org inbox"
+# # macro index,pager Y \
+# #     "<change-folder>imaps://$my_twc_user:$my_twc_pass@mail.twc.com:993/Inbox<enter>" \
+# #     "open twc inbox"
+# # macro index,pager Y \
+# #     "<change-folder>imaps://$my_kindle_user:$my_kindle_pass@mail.gmx.com:993/Inbox<enter>" \
+# #     "open gmx inbox"
+# macro index,pager c \
+#     "<change-folder>~/Maildir<enter>" \
+#     "open ~/Maildir"
+# macro index,pager C \
+#     "<change-folder>$my_gmail_prot://$my_gmail_user:$my_gmail_pass@$my_gmail_host/[Gmail]/Important<enter>" \
+#     "open gmail inbox"
+# # Show documentation when pressing F1
+# macro pager <F1> \
+#     "<shell-escape>less /c/mail/mutt_manual.txt<Enter>" \
+#     "show mutt documentation"
+# macro index A \
+#     "<tag-pattern>~N<enter><tag-pattern>~O<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+#     "mark all new as read"
+# macro pager \cb "<pipe-entry>urlview<enter>" "Follow links with urlview"
+# macro index \eb "<search>~b" "search in message bodies"
+# macro index,pager i "<search-reverse> ~F<enter>" "jump to previous flagged message"
+# macro index,pager I "<search>~F<enter>" "jump to next flagged message"
+# macro index,pager r "<search-reverse>~Q<enter>" "jump to previous followup message"
+# macro index,pager R "<search>~Q<enter>" "jump to next followup message"
+# macro index,pager,attach,compose \cb \
+#     "<enter-command>set my_pipe_decode = \$pipe_decode pipe_decode<Enter> \
+#     <pipe-message>urlview<Enter> \
+#     <enter-command>set pipe_decode = \$my_pipe_decode; unset my_pipe_decode<Enter>" \
+#     "call urlview to extract URLs out of a message"
+#
+# vi:ft=neomuttrc sts=4 sw=4:
