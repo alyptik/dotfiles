@@ -1,0 +1,60 @@
+# required by app-accessibility/orca-47.3::gentoo[python_single_target_python3_11]
+# required by gnome-base/gdm-47.0::gentoo[accessibility]
+# required by gnome-base/gnome-shell-47.3-r1::gentoo
+# required by gnome-extra/gnome-shell-extensions-47.3::gentoo
+# required by gnome-base/gnome-45.2::gentoo[classic]
+# required by @selected
+# required by @world (argument)
+>=dev-python/gst-python-1.24.11 python_targets_python3_11
+# required by app-accessibility/orca-47.3::gentoo[python_single_target_python3_11]
+# required by gnome-base/gdm-47.0::gentoo[accessibility]
+# required by gnome-base/gnome-shell-47.3-r1::gentoo
+# required by gnome-extra/gnome-shell-extensions-47.3::gentoo
+# required by gnome-base/gnome-45.2::gentoo[classic]
+# required by @selected
+# required by @world (argument)
+>=dev-python/setproctitle-1.3.4-r1 python_targets_python3_11
+# required by dev-python/pyopenssl-25.0.0::gentoo[python_targets_python3_12,-python_targets_python3_10,python_targets_python3_11,-python_targets_pypy3]
+# required by dev-python/twisted-24.11.0::gentoo[ssl]
+# required by net-dns/avahi-0.9_rc2::gentoo[python_single_target_python3_12,python,bookmarks]
+# required by media-gfx/sane-backends-1.3.1-r1::gentoo[sane_backends_escl]
+# required by app-emulation/wine-staging-10.1::gentoo[scanner]
+# required by @selected
+# required by @world (argument)
+>=dev-python/typing-extensions-4.12.2 python_targets_python3_11
+# required by app-admin/eclean-kernel-2.99.10::gentoo[lz4]
+# required by @selected
+# required by @world (argument)
+>=dev-python/lz4-4.4.3 python_targets_python3_12
+# required by dev-python/lz4-4.4.3::gentoo
+# required by app-admin/eclean-kernel-2.99.10::gentoo[lz4]
+# required by @selected
+# required by @world (argument)
+>=dev-python/pkgconfig-1.5.5-r1 python_targets_python3_12
+# required by dev-ruby/debug-1.10.0::gentoo[ruby_targets_ruby34,-test]
+# required by dev-lang/ruby-3.2.7::gentoo
+# required by net-libs/webkit-gtk-2.46.5-r600::gentoo
+# required by www-client/epiphany-47.2::gentoo
+# required by @selected
+# required by @world (argument)
+>=virtual/rubygems-21-r1 ruby_targets_ruby34
+# required by virtual/rubygems-21-r1::gentoo[ruby_targets_ruby34]
+# required by dev-ruby/rexml-3.4.0::gentoo[-test,ruby_targets_ruby32]
+# required by dev-ruby/kramdown-2.5.1::gentoo[ruby_targets_ruby33]
+# required by dev-ruby/kramdown-parser-gfm-1.1.0-r1::gentoo[ruby_targets_ruby33]
+# required by app-text/ronn-ng-0.10.1::gentoo[ruby_targets_ruby33,-test]
+# required by app-accessibility/espeak-ng-1.52.0::gentoo[man]
+# required by app-accessibility/brltty-6.6-r2::gentoo[speech]
+# required by app-emulation/qemu-9.2.0::gentoo[accessibility]
+# required by @selected
+# required by @world (argument)
+>=dev-ruby/rubygems-3.6.3 ruby_targets_ruby34
+# required by dev-ruby/racc-1.8.1::gentoo[ruby_targets_ruby34]
+# required by dev-ruby/nokogiri-1.18.1::gentoo[ruby_targets_ruby32]
+# required by app-text/ronn-ng-0.10.1::gentoo[ruby_targets_ruby33,-test]
+# required by app-accessibility/espeak-ng-1.52.0::gentoo[man]
+# required by app-accessibility/brltty-6.6-r2::gentoo[speech]
+# required by app-emulation/qemu-9.2.0::gentoo[accessibility]
+# required by @selected
+# required by @world (argument)
+>=virtual/ruby-ssl-15 ruby_targets_ruby34

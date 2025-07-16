@@ -1,0 +1,4 @@
+# move dev-libs/libclc llvm-core/libclc
+llvm-core/libclc LLVM_SLOT: -* 18
+# move dev-libs/libclc llvm-core/libclc
+llvm-core/libclc VIDEO_CARDS: -* nvidia

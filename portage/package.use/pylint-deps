@@ -1,0 +1,28 @@
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/astroid-3.2.4 python_targets_python3_12
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/dill-0.3.8-r2 python_targets_python3_12
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/isort-5.13.2 python_targets_python3_12
+# required by dev-python/flake8-7.1.0::gentoo
+>=dev-python/mccabe-0.7.0 python_targets_python3_12
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/tomlkit-0.13.0 python_targets_python3_12
+# required by dev-python/mccabe-0.7.0::gentoo
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/flake8-7.1.0 python_targets_python3_12
+# required by dev-python/flake8-7.1.0::gentoo[-test]
+# required by dev-python/mccabe-0.7.0::gentoo
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/pyflakes-3.2.0 python_targets_python3_12
+# required by dev-python/flake8-7.1.0::gentoo[-test]
+# required by dev-python/mccabe-0.7.0::gentoo
+# required by dev-python/pylint-3.2.6::gentoo
+# required by dev-python/pylint (argument)
+>=dev-python/pycodestyle-2.12.0 python_targets_python3_12

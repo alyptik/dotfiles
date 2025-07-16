@@ -1,1 +1,1 @@
-media-sound/mpd cdio chromaprint gme jack libmpdclient libsamplerate libsoxr mikmod mms mpg123 nfs openal openmpt oss qobuz recorder sid signalfd snapcast sndfile sndio soundcloud sqlite twolame upnp wavpack webdav wildmidi zeroconf zip
+media-sound/mpd cdio chromaprint gme jack libmpdclient libsamplerate libsoxr mikmod mms mpg123 nfs openal openmpt oss qobuz recorder sid signalfd snapcast sndfile sndio soundcloud sqlite twolame upnp wavpack webdav wildmidi yajl zeroconf zip

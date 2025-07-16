@@ -1,1 +1,1 @@
-sys-libs/ldb python_single_target_python3_12
+sys-libs/ldb PYTHON_SINGLE_TARGET: -* python3_12

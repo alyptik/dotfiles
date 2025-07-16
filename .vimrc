@@ -173,7 +173,7 @@ call plug#begin(g:plugdir)
 	Plug 'junegunn/vader.vim',  {'on': 'Vader', 'for': 'vader'}
 	Plug 'Valloric/YouCompleteMe'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	Plug 'vim-syntastic/syntastic'
+	" Plug 'vim-syntastic/syntastic'
 	Plug 'nvie/vim-flake8'
 	" Plug 'nvim-treesitter/nvim-treesitter'
 	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'master' }

@@ -97,8 +97,8 @@ GCC_COLORS="$GCC_COLORS:caret=01;32:locus=01:quote=01:fixit-insert=32:fixit-dele
 GCC_COLORS="$GCC_COLORS:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32"
 GCC_COLORS="$GCC_COLORS:type-diff=01;32"
 export GCC_COLORS
-COMMON_FLAGS="-falign-functions=32 -fstack-clash-protection -fstack-protector-strong"
-COMMON_FLAGS="$COMMON_FLAGS -fdiagnostics-color=always -frecord-gcc-switches"
+COMMON_FLAGS="-falign-functions=32 -fstack-clash-protection"
+COMMON_FLAGS="$COMMON_FLAGS -fstack-protector-strong -fdiagnostics-color=always"
 COMMON_FLAGS="$COMMON_FLAGS -g3 -O3 -march=native -mtune=skylake -pipe"
 # compiler flags
 # CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"

@@ -1,0 +1,2 @@
+# move dev-python/Pyro5 dev-python/pyro5
+dev-python/pyro5 PYTHON_TARGETS: -* python3_12

@@ -1,0 +1,4 @@
+# move dev-python/pyside6 dev-python/pyside
+dev-python/pyside LLVM_SLOT: -* 18
+# move dev-python/pyside6 dev-python/pyside
+dev-python/pyside PYTHON_TARGETS: -* python3_12 python3_13

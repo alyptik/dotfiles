@@ -1,0 +1,2 @@
+# move sys-libs/libomp llvm-runtimes/openmp
+llvm-runtimes/openmp gdb-plugin hwloc offload ompt

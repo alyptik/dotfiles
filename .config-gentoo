@@ -1,10 +1,10 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 6.10.0-gentoo Kernel Configuration
+# Linux/x86 6.10.3-gentoo Kernel Configuration
 #
-CONFIG_CC_VERSION_TEXT="gcc (Gentoo 14.1.1_p20240622 p2) 14.1.1 20240622"
+CONFIG_CC_VERSION_TEXT="gcc (Gentoo 14.2.0 p4) 14.2.0"
 CONFIG_CC_IS_GCC=y
-CONFIG_GCC_VERSION=140101
+CONFIG_GCC_VERSION=140200
 CONFIG_CLANG_VERSION=0
 CONFIG_AS_IS_GNU=y
 CONFIG_AS_VERSION=24200

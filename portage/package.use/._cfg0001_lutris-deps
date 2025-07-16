@@ -1,0 +1,22 @@
+# required by games-util/lutris-0.5.17::gentoo[python_single_target_python3_12]
+# required by lutris (argument)
+>=dev-python/evdev-1.7.1 python_targets_python3_12
+# required by games-util/lutris-0.5.17::gentoo[python_single_target_python3_12]
+# required by lutris (argument)
+>=dev-python/pypresence-4.3.0 python_targets_python3_12
+# required by games-util/lutris-0.5.17::gentoo[python_single_target_python3_12]
+# required by lutris (argument)
+# move dev-python/protobuf-python dev-python/protobuf
+>=dev-python/protobuf-5.27.2 python_targets_python3_12
+# required by games-util/lutris-0.5.17::gentoo[python_single_target_python3_12]
+# required by lutris (argument)
+>=dev-python/moddb-0.11.0 python_targets_python3_12
+# required by dev-python/moddb-0.11.0::gentoo
+# required by games-util/lutris-0.5.17::gentoo[python_single_target_python3_12]
+# required by lutris (argument)
+>=dev-python/beautifulsoup4-4.12.3 python_targets_python3_12
+# required by dev-python/beautifulsoup4-4.12.3::gentoo
+# required by dev-python/moddb-0.11.0::gentoo
+# required by games-util/lutris-0.5.17::gentoo[python_single_target_python3_12]
+# required by lutris (argument)
+>=dev-python/soupsieve-2.5 python_targets_python3_12

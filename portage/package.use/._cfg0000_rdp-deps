@@ -1,0 +1,81 @@
+# required by media-libs/lv2-1.18.10-r1::gentoo[python_single_target_python3_12]
+# required by media-libs/sratom-0.6.16::gentoo
+# required by media-libs/lilv-0.24.24::gentoo
+# required by media-video/pipewire-1.2.0::gentoo[lv2]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+>=dev-python/rdflib-7.0.0 python_targets_python3_12
+# required by dev-python/rdflib-7.0.0::gentoo
+# required by media-libs/lv2-1.18.10-r1::gentoo[python_single_target_python3_12]
+# required by media-libs/sratom-0.6.16::gentoo
+# required by media-libs/lilv-0.24.24::gentoo
+# required by media-video/pipewire-1.2.0::gentoo[lv2]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+>=dev-python/isodate-0.6.1-r1 python_targets_python3_12
+# required by dev-python/rdflib-7.0.0::gentoo
+# required by media-libs/lv2-1.18.10-r1::gentoo[python_single_target_python3_12]
+# required by media-libs/sratom-0.6.16::gentoo
+# required by media-libs/lilv-0.24.24::gentoo
+# required by media-video/pipewire-1.2.0::gentoo[lv2]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+>=dev-python/html5lib-1.1-r2 python_targets_python3_12
+# required by dev-python/html5lib-1.1-r2::gentoo
+# required by dev-qt/qtwebengine-6.7.2::gentoo
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+>=dev-python/webencodings-0.5.1-r2 python_targets_python3_12
+# required by media-libs/libffado-2.4.8::gentoo[python_single_target_python3_11,qt5]
+# required by media-video/pipewire-1.2.0::gentoo[ieee1394]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+# move dev-python/PyQt5 dev-python/pyqt5
+>=dev-python/pyqt5-5.15.10-r1 python_targets_python3_11
+# required by media-libs/libffado-2.4.8::gentoo[python_single_target_python3_11]
+# required by media-video/pipewire-1.2.0::gentoo[ieee1394]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+>=dev-build/scons-4.7.0 python_targets_python3_11
+# required by dev-python/PyQt5-5.15.10-r1::gentoo
+# required by media-libs/libffado-2.4.8::gentoo[python_single_target_python3_11,qt5]
+# required by media-video/pipewire-1.2.0::gentoo[ieee1394]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+# move dev-python/PyQt5-sip dev-python/pyqt5-sip
+>=dev-python/pyqt5-sip-12.13.0-r1 python_targets_python3_11
+# required by dev-python/PyQt5-5.15.10-r1::gentoo
+# required by media-libs/libffado-2.4.8::gentoo[python_single_target_python3_11,qt5]
+# required by media-video/pipewire-1.2.0::gentoo[ieee1394]
+# required by dev-qt/qtwebengine-6.7.2::gentoo[screencast]
+# required by kde-apps/khelpcenter-24.05.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[webengine]
+# required by @selected
+# required by @world (argument)
+# move dev-python/PyQt-builder dev-python/pyqt-builder
+>=dev-python/pyqt-builder-1.16.3 python_targets_python3_11
+# required by kde-plasma/krdp-6.1.1::gentoo
+# required by kde-plasma/plasma-meta-6.1.1-r1::gentoo[rdp]
+# required by @selected
+# required by @world (argument)
+>=net-misc/freerdp-2.11.7:2 server
