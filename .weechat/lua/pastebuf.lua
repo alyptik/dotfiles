@@ -47,7 +47,7 @@ local g = {
    script = {
       name = "pastebuf",
       author = "tomoe-mami <rumia.youkai.of.dusk@gmail.com>",
-      version = "9.9",
+      version = "0.3",
       license = "WTFPL",
       description = "View text from various pastebin sites inside a buffer.",
       url = "https://github.com/tomoe-mami/weechat-scripts/tree/master/pastebuf"
@@ -110,58 +110,13 @@ local g = {
    },
    sites = {
       __generic__ = {
-         pattern = "^([^:/]+://[^/]+)/(.+)$",
+         pattern = "^([^:/]+://[^/]+)(.*)$",
          id = "%2",
-         raw = "%1/%2"
-      },
-      ["paste.snoonet.org"] = {
-         pattern = "^([^:/]+://[^/]+/paste)/(.+)(/download)*/$",
-         id = "%2",
-         raw = "%1/%2"
-      },
-      ["ix.xo"] = {
-         pattern = "^([^:/]+://[^/]+)/(.+)$",
-         id = "%2",
-         raw = "%1/%2"
-      },
-      ["gist.github.com"] = {
-         pattern = "^([^:/]+)://[^/]+/([^/]+)/([^/]+)/blob/([^/]+)/(.+)$",
-         id = "%2/%3/%4/%5",
-         raw = "%1://gist.githubusercontent.com/%2/%3/%4/%5"
-      },
-      ["github.com"] = {
-         pattern = "^([^:/]+)://[^/]+/([^/]+)/([^/]+)/blob/([^/]+)/(.+)$",
-         id = "%2/%3/%4/%5",
-         raw = "%1://raw.githubusercontent.com/%2/%3/%4/%5"
-      },
-      ["termbin.com"] = {
-         pattern = "^([^:/]+://[^/]+)/([^/]+)",
-         id = "%2",
-         raw = "%1/%2"
-      },
-      ["pb.gehidore.net"] = {
-         pattern = "^([^:/]+://[^/]+)/([^/]+)\x2e?[^/]*/%w*",
-         id = "%2",
-         raw = "%1/%2"
-      },
-      ["0x0.st"] = {
-         pattern = "^([^:/]+://[^/]+)/([^/]+)",
-         id = "%2",
-         raw = "%1/%2"
-      },
-      ["ix.io"] = {
-         pattern = "^([^:/]+://[^/]+)/([^/]+)",
-         id = "%2",
-         raw = "%1/%2"
-      },
-      ["ptpb.pw"] = {
-         pattern = "^([^:/]+://[^/]+)/([^/]+)\x2e?[^/]*/%w*",
-         id = "%2",
-         raw = "%1/%2"
+         raw = "%1%2"
       },
       ["bpaste.net"] = {
          pattern = "^([^:/]+://[^/]+)/show/(%w+)",
-         id = "%2",
+         id = "%s",
          raw = "%1/raw/%2"
       },
       ["codepad.org"] = {
@@ -212,7 +167,7 @@ local g = {
       ["pastebin.com"] = {
          pattern = "^([^:/]+://[^/]+)/(%w+)",
          id = "%2",
-         raw = "%1/raw/%2"
+         raw = "%1/raw.php?i=%2"
       },
       ["pastebin.osuosl.org"] = {
          pattern = "^([^:/]+://[^/]+)/(%w+)",
