@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export DISPLAY=:1
+
 xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
 xrandr --dpi 320
