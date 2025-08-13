@@ -1,1 +1,0 @@
-net-fs/samba PYTHON_SINGLE_TARGET: -* python3_12

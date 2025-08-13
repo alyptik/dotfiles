@@ -1,1 +1,0 @@
-dev-build/meson-format-array PYTHON_TARGETS: -* python3_12 python3_13

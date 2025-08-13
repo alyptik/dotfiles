@@ -1,3 +1,0 @@
-app-editors/gvim motif netbeans session
-app-editors/gvim LUA_SINGLE_TARGET: -* luajit
-app-editors/gvim PYTHON_SINGLE_TARGET: -* python3_12

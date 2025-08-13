@@ -1,3 +1,0 @@
-virtual/rust profiler
-dev-lang/rust nightly wasm
-dev-lang/rust LLVM_TARGETS: -* WebAssembly X86

@@ -1,1 +1,0 @@
-sys-apps/apparmor-utils PYTHON_TARGETS: -* python3_12

@@ -1,2 +1,0 @@
-dev-python/sphinx latex
-dev-python/sphinx PYTHON_TARGETS: -* python3_12 python3_13

@@ -1,9 +1,0 @@
-# required by dev-python/Pyro5-5.15-r1::gentoo
-# required by dev-python/Pyro5 (argument)
->=dev-python/serpent-1.41 python_targets_python3_12
-# required by dev-python/wxpython-4.2.1::gentoo
-# required by dev-python/wxpython (argument)
->=x11-libs/wxGTK-3.2.2.1-r4 libnotify gstreamer
-# required by dev-python/wxpython-4.2.1::gentoo
-# required by dev-python/wxpython (argument)
->=dev-python/sip-6.8.3 python_targets_python3_11

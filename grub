@@ -2,9 +2,9 @@
 
 GRUB_DEFAULT="saved"
 GRUB_TIMEOUT="10"
-GRUB_DISTRIBUTOR="Arch Linux"
-GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 iommu.passthrough=1 intel_iommu=on pcie_acs_override=downstream,multifunction loglevel=3"
-# GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 apparmor=1 lsm=landlock,apparmor iommu.passthrough=1 intel_iommu=on pcie_acs_override=downstream,multifunction"
+GRUB_DISTRIBUTOR="Gentoo"
+# GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 iommu.passthrough=1 intel_iommu=on pcie_acs_override=downstream,multifunction loglevel=3"
+GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 apparmor=1 lsm=landlock,apparmor iommu.passthrough=1 intel_iommu=on pcie_acs_override=downstream,multifunction loglevel=3"
 # GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0 apparmor=1 lsm=landlock,apparmor"
 # GRUB_CMDLINE_LINUX_DEFAULT="net.ifnames=0"
 # GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"
@@ -50,7 +50,7 @@ GRUB_DISABLE_RECOVERY="true"
 # Uncomment one of them for the gfx desired, a image background or a gfxtheme
 #GRUB_BACKGROUND="/path/to/wallpaper"
 #GRUB_THEME="/boot/grub/themes/Archlinux/theme.txt"
-GRUB_THEME="/boot/grub/themes/arch-suse/theme.txt"
+#GRUB_THEME="/boot/grub/themes/arch-suse/theme.txt"
 
 # Uncomment to get a beep at GRUB start
 # GRUB_INIT_TUNE="480 440 1"

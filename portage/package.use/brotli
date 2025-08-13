@@ -1,1 +1,0 @@
-app-arch/brotli PYTHON_TARGETS: -* python3_12 python3_13

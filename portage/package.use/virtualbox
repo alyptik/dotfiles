@@ -1,2 +1,0 @@
-app-emulation/virtualbox PYTHON_SINGLE_TARGET: -* python3_11
-app-emulation/virtualbox dtrace lvm vboxwebsrv vde vnc

@@ -1,2 +1,0 @@
-media-libs/mesa d3d9 lm-sensors opencl osmesa unwind vaapi vdpau vulkan vulkan-overlay xa
-media-libs/mesa LLVM_SLOT: -* 18

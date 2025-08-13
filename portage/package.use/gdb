@@ -1,2 +1,0 @@
-dev-debug/gdb debuginfod guile multitarget sim xml xxhash
-dev-debug/gdb PYTHON_SINGLE_TARGET: -* python3_12

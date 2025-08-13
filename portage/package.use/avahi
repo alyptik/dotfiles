@@ -1,2 +1,0 @@
-net-dns/avahi autoipd bookmarks
-net-dns/avahi PYTHON_SINGLE_TARGET: -* python3_12

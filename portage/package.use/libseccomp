@@ -1,1 +1,0 @@
-sys-libs/libseccomp PYTHON_TARGETS: -* python3_12

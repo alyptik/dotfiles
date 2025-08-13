@@ -1,1 +1,0 @@
-dev-libs/gobject-introspection PYTHON_SINGLE_TARGET: -* python3_13

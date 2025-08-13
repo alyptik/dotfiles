@@ -1,8 +1,0 @@
-# move sys-devel/clang llvm-core/clang
-llvm-core/clang xml
-# move sys-devel/clang llvm-core/clang
-llvm-core/clang:15 PYTHON_SINGLE_TARGET: -* python3_11
-# move sys-devel/clang llvm-core/clang
-llvm-core/clang:17 PYTHON_SINGLE_TARGET: -* python3_12
-# move sys-devel/clang llvm-core/clang
-llvm-core/clang:18 PYTHON_SINGLE_TARGET: -* python3_13
