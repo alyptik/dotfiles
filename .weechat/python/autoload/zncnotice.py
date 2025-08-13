@@ -1,1 +1,0 @@
-../zncnotice.py

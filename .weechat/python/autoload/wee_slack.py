@@ -1,1 +1,0 @@
-/home/alyptik/.weechat/python/wee_slack.py
