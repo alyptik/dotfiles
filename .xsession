@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export DISPLAY=:1
+# export DISPLAY=:1
 
 xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
@@ -15,8 +15,8 @@ setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "$HOME/.Xmodmap"
 # udisksctl mount -b "$(findfs LABEL=backups)" &
 udisksctl mount -b "$(findfs LABEL=sdxc)" &
-udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 udisksctl mount -b "$(findfs LABEL=stuff)" &
+udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 # (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 # pan &
 # sleep 2
@@ -26,7 +26,7 @@ pavucontrol &
 sleep 2
 # uxterm &
 # pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
-pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /run/media/$USER/stuff /store/stuff $HOME/Downloads &
+pcmanfm /run/media/$USER/sdxc /run/media/$USER/stuff /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
 # firefox &
 # transgui &
 # compton -b

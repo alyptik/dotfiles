@@ -98,9 +98,9 @@
 
 # tdrop on F12 (c:96)
 # "tdrop -n 5 st"
-# "tdrop -n 3 uxterm"
 # "tdrop -n 3 xterm"
-"tdrop -n 3 wezterm"
+# "tdrop -n 3 wezterm"
+"tdrop -n 3 uxterm"
     m:0x0 + c:96
     F12
 

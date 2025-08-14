@@ -197,6 +197,7 @@ hardstatus string "%{-}%{= 10;0}%?%E%{+r 10;0}%?%?%P%{+u 10;0}%?[ %{= 7;0}%?%E%{
 # hardstatus string "%{-}%{= kK}%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?[ %{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%3`%{= kR}%?%E%{+r kR}%?%?%P%{+u kR}%?@%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?%H%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?Load%{= kW}%?%E%{+r kW}%?%?%P%{+u kW}%?: %{= kY}%?%E%{+r kY}%?%?%P%{+u kY}%?%2` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%=[ %{kM}%?%E%{+r kM}%?%?%P%{+u kM}%?%1`%{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%? ][ %{kB}%?%E%{+r kB}%?%?%P%{+u kB}%?%4` %{= kG}%?%E%{+r kG}%?%?%P%{+u kG}%?]%5`%{-}"
 
 # chdir /store/projects/linux
-chdir /hdd
+# chdir /hdd
+chdir /stuff
 
 # vi:ft=screen:
