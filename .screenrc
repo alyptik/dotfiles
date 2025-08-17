@@ -115,6 +115,7 @@ compacthist on
 nethack on
 autodetach on
 # altscreen off
+bufferfile
 ignorecase on
 altscreen on
 cjkwidth off
