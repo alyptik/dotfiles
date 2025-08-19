@@ -9,7 +9,8 @@ xbindkeys
 xset s noblank
 xset s off -b -dpms
 setterm -blank 0 -powerdown 0
-xrdb "$HOME/.Xresources"
+# xrdb "$HOME/.Xresources"
+xrdb -merge "$HOME/.Xresources"
 setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "$HOME/.Xmodmap"

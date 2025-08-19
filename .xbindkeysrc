@@ -92,7 +92,8 @@
 
 # tdrop on F11 (c:95)
 # "tdrop -n 4 kitty"
-"tdrop -n 2 firefox"
+# "tdrop -n 2 firefox"
+"tdrop -n 2 firefox-bin"
     m:0x0 + c:95
     F11
 
@@ -131,6 +132,11 @@
 "bash -c '<<<$(( ($(</sys/class/backlight/intel_backlight/brightness) < 900) ? ($(</sys/class/backlight/intel_backlight/brightness) + 100) : 1000 )) sudo tee /sys/class/backlight/intel_backlight/brightness'"
     m:0xc + c:21
     Control+Alt + equal
+
+#screenshot
+"scrot -F /tmp/screenshot.png"
+    m:0x0 + c:107
+    Print
 
 # volup
 #"amixer set Master 5%+"

@@ -53,7 +53,7 @@ yeahconsole*colorUL:	rgb:e4/e4/e4
 ! Xcursor*theme:	ArchCursorTheme
 ! Xcursor*theme:	Oxygen_Blue
 ! Xcursor*theme:	gentoo
-Xcursor*theme:	Pulse-Glass
+Xcursor*theme:	gentoo
 Xcursor*size:	16
 
 Xft*dpi: 260
