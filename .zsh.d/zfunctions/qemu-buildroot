@@ -2,8 +2,7 @@ qemu-system-x86_64 \
 	-kernel "${1:-./output/images/bzImage}" \
 	-drive file="${2:-./output/images/rootfs.ext2}",if=virtio,format=raw \
 	-append "root=/dev/vda console=ttyS0" \
-	-m 8G -smp 8 -vga virtio \
-	-enable-kvm -machine type=pc,accel=kvm \
+	-m 16G -smp 8 -enable-kvm -machine type=pc,accel=kvm \
 	-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
-	-nic user,model=virtio -monitor pty \
+	-nic user,model=virtio \
 	"${@:3}"
