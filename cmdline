@@ -1,4 +1,4 @@
-root=UUID=f839953f-3430-4d15-a95f-720836849cb9
+root=LABEL=gentoo
 net.ifnames=0
 apparmor=1
 lsm=landlock,apparmor
