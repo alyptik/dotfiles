@@ -112,11 +112,19 @@ set spoolfile="imaps://$my_user:$my_pass@imap.gmail.com:993/"
 set record="imaps://$my_user:$my_pass@imap.gmail.com:993/Sent"
 set postponed="imaps://$my_user:$my_pass@imap.gmail.com:993/Drafts"
 
+# gmail mailboxes
+mailboxes =INBOX =Sent =gcc =gentoo =zsh-workers
+
+# sidebar keybindings
+bind index,pager [ sidebar-prev
+bind index,pager ] sidebar-next
+bind index,pager \\ sidebar-open
+
 # use headercache for IMAP (make sure this is a directory for better performance!)
 set header_cache=~/.cache/mutt
 
 # uncomment this to enable the sidebar feature
-# set sidebar_visible = yes
+set sidebar_visible = yes
 set sidebar_width = 15
 set sidebar_folder_indent = yes
 set sidebar_short_path = yes

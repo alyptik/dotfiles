@@ -73,6 +73,7 @@ oprofile_data/
 .mutt*/msg_cache/
 .mutt*/news_cache/
 .emacs.d.spacemacs/
+portage/gnupg/
 
 nginx/*
 !nginx/nginx.conf*

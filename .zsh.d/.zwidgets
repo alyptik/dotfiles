@@ -53,14 +53,13 @@ function zle-run-help() {
 		final=(${fallback[1]:/#g/git} $fallback[2])
 	fi
 	# resolve git aliases
-	if [[ $final[1] == g ]]; then
-		final[1]=git
-	fi
 	if [[ $final[1] == git && -n $final[2] ]]; then
 		git_final=${${(z)$(git config --global "alias.$final[2]" 2>/dev/null)}[1]}
 		if [[ -n "$git_final" ]]; then
 			final[2]=$git_final
 		fi
+		final[1]="$final[1] $final[2]"
+		unset final[2]
 	# use the zshall manpage when the command is zsh
 	elif [[ $final[1] == zsh ]]; then
 		final[1]="zshall"

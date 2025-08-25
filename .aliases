@@ -9,7 +9,7 @@ unalias xi xo xpi xpo z zz 2>/dev/null
 # Custom aliases
 
 alias zrecomp='zrecompile -p -- -MUz $ZDOTDIR/zfuncs.zwc $ZDOTDIR/zfunctions/* -- -MUz $ZDOTDIR/zcomps.zwc $ZDOTDIR/completions/enabled/*'
-alias ff='firefox'
+alias ff='firefox-bin'
 alias tags='cscope -Rub && ctags -Rf tags --tag-relative=yes --langmap=c:+.h.C.H --fields=+l --c-kinds=+p --c++-kinds=+p --fields=+iaS --extras=+q .'
 alias cpan='cpan -T'
 alias youtube-dl='youtube-dl -c'
@@ -98,7 +98,7 @@ alias pf='pkgfile'
 alias pfm='pcmanfm'
 alias fm='fman'
 alias rk='runkernel -s'
-alias m='make clean && make cscope tags && make && scan-build make -B asan'
+alias m='make clean && make cscope tags && make && scan-build make -B debug'
 # quick opening files with mpv
 # alias m='f -e mpv'
 alias urb='define -u'

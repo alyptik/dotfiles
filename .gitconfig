@@ -130,14 +130,15 @@
 [credential]
 	helper = /usr/lib/git-core/git-credential-gnome-keyring
 [commit]
-	gpgsign = true
+	gpgsign = 1
 [rerere]
 	enabled = false
 	autoupdate = false
 [pretty]
 	colorful-oneline = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [pull]
-	rebase = true
+	rebase = merges
+	ff = only
 [grep]
 	lineNumber = true
 	patternType = perl
@@ -152,7 +153,7 @@
 [format]
 	thread = shallow
 	signatureFile = ~/.signature
-	outputDirectory = ~/patches
+	outputDirectory = /store/patches
 	signoff = yes
 [init]
 	templateDir = /usr/share/git-core/templates
