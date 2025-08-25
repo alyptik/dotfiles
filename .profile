@@ -374,6 +374,8 @@ export VST_PATH="$HOME/vst:/store/audio/vst:/usr/lib/vst:/usr/local/lib/vst"
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
 # export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv2
+export WINEFSYNC=1
+export WINE_LARGE_ADDRESS_AWARE=1
 # define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
 export WORDCHARS=''
 # export WORDCHARS='_-*~'

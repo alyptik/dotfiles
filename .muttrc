@@ -81,11 +81,11 @@ set signature = ~/.signature
 
 # set mbox_type=Maildir
 # set folder = "~/Maildir"
-# set mask="!^\\.[^.]"
-# set mbox="~/Maildir"
-# set record="+.Sent"
-# set postponed="+.Drafts"
-# set spoolfile="~/Maildir"
+# set mask = "!^\\.[^.]"
+# set mbox = "~/Maildir"
+# set record = "+.Sent"
+# set postponed = "+.Drafts"
+# set spoolfile = "~/Maildir"
 
 # Generate mailboxes for each maildir subdir
 # mailboxes `echo -n "+ "; find ~/Maildir -maxdepth 1 -type d -name ".*" -printf "+'%f' "`
@@ -99,21 +99,24 @@ set signature = ~/.signature
 # done`
 
 # IMAP connection settings
-set mail_check=60
-set imap_keepalive=300
+set mail_check = 60
+set imap_keepalive = 300
 
 set my_user = "joeypabalinas"
 # decrypt password
 source "gpg -dq ~/.passwords.asc |"
 
 # IMAP account settings
-set folder="imaps://$my_user:$my_pass@imap.gmail.com:993/"
-set spoolfile="imaps://$my_user:$my_pass@imap.gmail.com:993/"
-set record="imaps://$my_user:$my_pass@imap.gmail.com:993/Sent"
-set postponed="imaps://$my_user:$my_pass@imap.gmail.com:993/Drafts"
+set folder = "imaps://$my_user:$my_pass@imap.gmail.com:993/"
+set spoolfile = "imaps://$my_user:$my_pass@imap.gmail.com:993/"
+set record = "imaps://$my_user:$my_pass@imap.gmail.com:993/Sent"
+set postponed = "imaps://$my_user:$my_pass@imap.gmail.com:993/Drafts"
 
-# gmail mailboxes
-mailboxes =INBOX =Sent =gcc =gentoo =zsh-workers
+# add gmail mailboxes to sidebar
+# mailboxes =INBOX =Sent =gcc =gentoo =zsh-workers
+
+# add all subscribed IMAP folders to sidebar
+set imap_check_subscribed
 
 # sidebar keybindings
 bind index,pager [ sidebar-prev
@@ -121,11 +124,12 @@ bind index,pager ] sidebar-next
 bind index,pager \\ sidebar-open
 
 # use headercache for IMAP (make sure this is a directory for better performance!)
-set header_cache=~/.cache/mutt
+set header_cache = ~/.cache/mutt
+set message_cachedir = ~/.cache/mutt
 
 # uncomment this to enable the sidebar feature
 set sidebar_visible = yes
-set sidebar_width = 15
+set sidebar_width = 16
 set sidebar_folder_indent = yes
 set sidebar_short_path = yes
 
