@@ -122,6 +122,13 @@ set imap_check_subscribed
 bind index,pager [ sidebar-prev
 bind index,pager ] sidebar-next
 bind index,pager \\ sidebar-open
+# pager and index keybindings
+bind pager <Up> previous-line
+bind pager <Down> next-line
+bind index <Left> half-up
+bind index <Right> half-down
+bind index,pager <Pageup> half-up
+bind index,pager <PageDown> half-down
 
 # use headercache for IMAP (make sure this is a directory for better performance!)
 set header_cache = ~/.cache/mutt
