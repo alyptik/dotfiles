@@ -125,6 +125,9 @@ bind index,pager \\ sidebar-open
 # pager and index keybindings
 bind pager <Up> previous-line
 bind pager <Down> next-line
+bind pager  previous-line
+bind pager <Enter> next-line
+bind pager <Space> half-down
 bind index <Left> half-up
 bind index <Right> half-down
 bind index,pager <Pageup> half-up
