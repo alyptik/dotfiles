@@ -98,7 +98,8 @@ include "%L"
 <Multi_key> <l> <w> <a> <l> <l>				: "┬┴┤( ͡° ͜ʖ├┬┴"	# lenny wall
 <Multi_key> <s> <h> <r> <u> <g>				: "🤷" U1f937	# shrug
 <Multi_key> <s> <s> <h> <r> <u> <g>			: "┐(ツ)┌"	# shrug
-<Multi_key> <e> <y> <e> <s>				: "ಠ_ಠ" U0ca0	# eyes
+<Multi_key> <e> <e> <y> <e> <s>				: "ಠ_ಠ" U0ca0	# eyes
+<Multi_key> <e> <y> <e> <s>				: "👀" U1f440	# eyes
 ## end jp
 
 ## start grawity

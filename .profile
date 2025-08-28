@@ -3,13 +3,13 @@
 # .profile - environment configuration
 
 # set command being passed as READNULLCMD
-if command -v bat >/dev/null 2>&1; then
-	if command -v b >/dev/null 2>&1; then
-		dump_cmd="b"
-	else
-		dump_cmd="bat"
-	fi
-elif command -v less >/dev/null 2>&1; then
+# if command -v bat >/dev/null 2>&1; then
+#         if command -v b >/dev/null 2>&1; then
+#                 dump_cmd="b"
+#         else
+#                 dump_cmd="bat"
+#         fi
+if command -v less >/dev/null 2>&1; then
 	dump_cmd="less"
 else
 	dump_cmd="cat"
