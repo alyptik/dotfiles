@@ -1,8 +1,3 @@
-#
-# ~/.mutt.d/.mutt_keybinds
-#
-# Mutt keybindings
-
 bind editor \e[ backward-word
 bind editor \e] forward-word
 bind editor "\e;" backward-word
@@ -44,8 +39,8 @@ bind index,pager,browser ? search-reverse
 bind index,pager,browser h help
 bind index,pager,browser \ek what-key
 bind index,pager \eK mail-key
-# bind index,pager ^ imap-fetch-mail
-bind index,pager ^ sync-mailbox
+bind index,pager ^ imap-fetch-mail
+# bind index,pager ^ sync-mailbox
 # apply to tagged pattern
 bind index \ea tag-prefix
 bind index \eN toggle-new
@@ -59,13 +54,17 @@ bind index,pager <backtab> previous-new-then-unread
 bind attach <return> view-mailcap
 bind browser y exit
 # bind index,pager \el sidebar-toggle-virtual
-bind index l collapse-thread
+# bind index l collapse-thread
 bind index v collapse-thread
 bind pager k previous-line
 bind pager j next-line
 bind pager <up> previous-line
 bind pager <down> next-line
 bind index \ev collapse-all
+bind pager <Up> previous-line
+bind pager <Down> next-line
+bind pager  previous-line
+bind pager <Enter> next-line
 
 # newsgroup bindings
 #

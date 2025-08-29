@@ -117,6 +117,7 @@
 	patch = format-patch --stat --cover-letter --add-header=\"X-Patchwork-Bot: notify\" -o /patches
 	mine = log --author=joeypabalinas@gmail.com
 	me = log --grep=joeypabalinas@gmail.com
+	dni = diff --no-index
 [web]
 	browser = w3m
 [instaweb]

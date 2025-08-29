@@ -98,19 +98,26 @@ set signature = ~/.signature
 #   fi; \
 # done`
 
+# edit headers
+set edit_headers=yes
+
 # IMAP connection settings
 set mail_check = 60
 set imap_keepalive = 300
 
-set my_user = "joeypabalinas"
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+set imap_user = "joeypabalinas"
 # decrypt password
-source "gpg -dq ~/.passwords.asc |"
+set imap_pass = "`gpg --batch -dq ~/.passwords.asc`"
+set smtp_pass = "$imap_pass"
 
 # IMAP account settings
-set folder = "imaps://$my_user:$my_pass@imap.gmail.com:993/"
-set spoolfile = "imaps://$my_user:$my_pass@imap.gmail.com:993/"
-set record = "imaps://$my_user:$my_pass@imap.gmail.com:993/Sent"
-set postponed = "imaps://$my_user:$my_pass@imap.gmail.com:993/Drafts"
+set folder = "imaps://imap.gmail.com:993/"
+set spoolfile = "+INBOX"
+set record = "+[Gmail]/Sent Mail"
+set postponed = "+[Gmail]/Drafts"
 
 # add gmail mailboxes to sidebar
 # mailboxes =INBOX =Sent =gcc =gentoo =zsh-workers
@@ -127,11 +134,11 @@ bind pager <Up> previous-line
 bind pager <Down> next-line
 bind pager  previous-line
 bind pager <Enter> next-line
-bind pager <Space> half-down
-bind index <Left> half-up
-bind index <Right> half-down
-bind index,pager <Pageup> half-up
-bind index,pager <PageDown> half-down
+# bind pager <Space> half-down
+# bind index <Left> half-up
+# bind index <Right> half-down
+# bind index,pager <Pageup> half-up
+# bind index,pager <PageDown> half-down
 
 # use headercache for IMAP (make sure this is a directory for better performance!)
 set header_cache = ~/.cache/mutt
@@ -164,8 +171,7 @@ set pgp_replyencrypt = yes
 subscribe "gentoo-.*@gentoo\\.org"
 
 # SMTP mailing configuration (for sending mail)
-# set smtp_url = "smtps://$my_user:$my_pass@smtp.gmail.com:465/"
-set smtp_url = "smtp://$my_user:$my_pass@smtp.gmail.com:587/"
+set smtp_url = "smtp://$imap_user@smtp.gmail.com:587/"
 # Require encrypted connection
 set ssl_starttls=yes
 set ssl_force_tls=yes
