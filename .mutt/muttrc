@@ -109,7 +109,7 @@ set mail_check=60
 set imap_keepalive=300
 
 # Allow Mutt to open a new IMAP connection automatically.
-unset imap_passive
+# unset imap_passive
 
 set imap_user = "joeypabalinas"
 # decrypt password
@@ -147,9 +147,9 @@ set crypt_use_gpgme = yes
 # you can set this to hide gpg's verification output and only rely on Mutt's status flag
 # set crypt_display_signature = no
 # enable signing of emails by default
-set pgp_autosign = yes
+set crypt_autosign= yes
 set pgp_sign_as = AA81EEF424F1A302 # your gpg keyid here
-set pgp_replyencrypt = yes
+set crypt_replyencrypt = yes
 
 # mailboxes we want to monitor for new mail
 # mailboxes "="
