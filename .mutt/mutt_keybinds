@@ -144,5 +144,5 @@ macro index . "<enter-command>set sort = last-date-received<enter>"
 #     <pipe-message>urlview<Enter> \
 #     <enter-command>set pipe_decode = \$my_pipe_decode; unset my_pipe_decode<Enter>" \
 #     "call urlview to extract URLs out of a message"
-#
+
 # vi:ft=neomuttrc sts=4 sw=4:

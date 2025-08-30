@@ -541,6 +541,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *.rules set filetype=udevrules
 	au BufNewFile,BufReadPost *.mail set filetype=mail
 	au BufNewFile,BufReadPost *proselint* set filetype=json
+	au BufNewFile,BufReadPost /**/.mutt/** set filetype=neomuttrc
 
 	" fallback
 	au BufNewFile,BufReadPost * setf cfg
