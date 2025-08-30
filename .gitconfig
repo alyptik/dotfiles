@@ -494,3 +494,4 @@
 	directory = /store/projects/systemd
 	directory = /store/projects/vim
 	directory = /store/projects/guru
+	directory = /store/projects/portage
