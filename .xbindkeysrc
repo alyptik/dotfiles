@@ -134,7 +134,7 @@
     Control+Alt + equal
 
 #screenshot
-"scrot -F /tmp/screenshot.png"
+"scrot -F- > /tmp/screenshot.png"
     m:0x0 + c:107
     Print
 

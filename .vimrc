@@ -249,6 +249,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> B :buffers<CR>
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
 nnoremap <silent> H :CocCommand document.toggleInlayHint<CR>
@@ -511,7 +512,8 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *toxic.conf* set filetype=cfg
 	au BufNewFile,BufReadPost db.* set filetype=bindzone
 	au BufNewFile,BufReadPost *grub* set filetype=grub
-	au BufNewFile,BufReadPost *.\(cc\|cpp\) set filetype=cpp
+	au BufNewFile,BufReadPost *.\.\(cc\|cpp\|hh\|hpp\) set filetype=cpp
+	au BufNewFile,BufReadPost *.\.\(c\|h\) set filetype=cpp
 	au BufNewFile,BufReadPost proftpd.\(con\|conf\) set filetype=cterm
 	au BufNewFile,BufReadPost i3.conf set filetype=i3
 	au BufNewFile,BufReadPost *ssl_template* setf mail

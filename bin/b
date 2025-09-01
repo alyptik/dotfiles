@@ -8,7 +8,7 @@ for f; do
 	*.c|*.h)
 		set -- --language=C "$@"
 		break ;;
-	*.cpp|*.cc|*.hpp|*.hh)
+	*.cpp|*.cc|*.hpp|*.hh|*.cu)
 		set -- --language=C++ "$@"
 		break ;;
 	*.txt)

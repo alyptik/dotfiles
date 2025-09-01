@@ -302,6 +302,7 @@ PATH="/etc/eselect/wine/bin:$PATH"
 PATH="/opt/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="/var/lib/snapd/snap/bin:$PATH"
+PATH="/opt/nvidia/nsight-systems/2025.3.1/bin:$PATH"
 # shellcheck disable=SC2039
 # elide empty PATH components
 PATH="${PATH//::/:}"
