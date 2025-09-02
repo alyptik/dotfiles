@@ -102,14 +102,20 @@ source ~/.mutt/mutt_aliases
 # done`
 
 # edit headers
-set edit_headers=yes
+set edit_headers = yes
 
 # IMAP connection settings
-set mail_check=60
-set imap_keepalive=300
+set mail_check = 60
+set imap_keepalive = 300
 
 # Allow Mutt to open a new IMAP connection automatically.
-# unset imap_passive
+set imap_passive = yes
+
+# When set, NeoMutt will use the IMAP ENABLE extension (RFC5161) to select CAPABILITIES.
+set imap_rfc5161 = yes
+
+# When set, NeoMutt will attempt to use the IMAP IDLE extension to check for new mail in the current mailbox.
+set imap_idle = yes
 
 set imap_user = "joeypabalinas"
 # decrypt password

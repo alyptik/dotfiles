@@ -19,7 +19,7 @@
 	sslverify = false
 [sendemail]
 	smtpencryption = tls
-	smtpserver = gmail.com
+	smtpserver = smtp.gmail.com
 	smtpuser = joeypabalinas@gmail.com
 	smtpserverport = 587
 	thread = true
@@ -129,7 +129,7 @@
 	pager = less
 	excludesfile = ~/.cvsignore
 [credential]
-	helper = /usr/lib/git-core/git-credential-gnome-keyring
+	helper = /usr/libexec/git-core/git-credential-libsecret
 [commit]
 	gpgsign = 1
 [rerere]
