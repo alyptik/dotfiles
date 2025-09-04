@@ -496,3 +496,5 @@
 	directory = /store/projects/guru
 	directory = /store/projects/portage
 	directory = /store/projects/meson
+[advice]
+	defaultBranchName = false

@@ -1,3 +1,5 @@
 {
-	"inlayHint.display": false
+	"inlayHint.display": true,
+	"clangd.semanticHighlighting": true,
+	"clangd.semanticTokens": true,
 }

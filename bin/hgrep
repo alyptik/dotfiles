@@ -77,7 +77,7 @@ sub wanted {
 					# Handle variable-length look behind error
 					eval { s/(?<=$cur)/`tput sgr0`/eg &&
 						s/(?=$cur)/`tput setaf 9 && tput bold`/eg if $color; };
-					print;
+					print "$name: "; print;
 					if ($flag && $idx < 1) {
 						$num--;
 						$idx = $context;

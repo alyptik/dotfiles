@@ -273,10 +273,10 @@ let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 " let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_dark='soft'
 " let g:gruvbox_contrast_light='hard'
-let g:gruvbox_contrast_light='medium'
-" let g:gruvbox_contrast_soft='light'
-" let g:gruvbox_improved_strings=1
-" let g:gruvbox_improved_warnings=1
+" let g:gruvbox_contrast_light='medium'
+let g:gruvbox_contrast_soft='soft'
+let g:gruvbox_improved_strings=1
+let g:gruvbox_improved_warnings=1
 let g:gruvbox_bold=1
 let g:gruvbox_undercurl=1
 let g:gruvbox_underline=1
@@ -291,8 +291,6 @@ else
 	let &t_Co=16
 	let g:gruvbox_termcolors=16
 endif
-colorscheme gruvbox
-" colorscheme darkblue
 filetype plugin indent on
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
@@ -589,6 +587,9 @@ highlight SpecialKey cterm=bold ctermfg=240 ctermbg=236 guifg=#282828
 " If you like one of the existing styles you can link them:
 highlight link cMember Special
 " syntax on
+
+colorscheme gruvbox
+" colorscheme retrobox
 
 " better whitespace
 command! FixWhitespace silent! %s/ \+$//
