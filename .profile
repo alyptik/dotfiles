@@ -60,7 +60,7 @@ if [ -t 0 ]; then
 	if command -v tty >/dev/null 2>&1 && command -v gpgconf >/dev/null 2>&1 && command -v gpg-connect-agent >/dev/null 2>&1; then
 		unset SSH_AGENT_PID
 		if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne "$$" ]; then
-		  SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+			SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 		fi
 		GPG_TTY="$(tty)"
 		export GPG_TTY SSH_AUTH_SOCK
@@ -139,7 +139,7 @@ export LDFLAGS
 # export MAKEFLAGS="-j -l$NPROC"
 export MAKEFLAGS="-j$((NPROC + 2)) -l$NPROC"
 export CARGO_TERM_VERBOSE="false"
-export RUSTFLAGS="-C opt-level=3 -C debuginfo=0 -C debuginfo=3"
+export RUSTFLAGS="-C target-cpu=native -C opt-level=2 -C debuginfo=2"
 
 # Environment variables
 export ANDROID_HOME="$HOME/Android/Sdk"
@@ -327,7 +327,6 @@ export PATH
 # export PERLDOC_PAGER="less -+C -MRXs"
 # export PERLDOC_PAGER="less -MRins"
 # export PLAN9=/usr/lib/plan9 PATH="$PATH:$PLAN9/bin"
-PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig"
 PKG_CONFIG_PATH="$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PKG_CONFIG_PATH
 # export PLAN9=/usr/lib/plan9 PATH="${PATH//:\/usr\/lib\/plan9\/bin}:$PLAN9/bin"
