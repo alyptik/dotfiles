@@ -496,5 +496,6 @@
 	directory = /store/projects/guru
 	directory = /store/projects/portage
 	directory = /store/projects/meson
+	directory = /store/projects/riscv32-os
 [advice]
 	defaultBranchName = false

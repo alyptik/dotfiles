@@ -52,19 +52,19 @@ yeahconsole*colorUL:	rgb:e4/e4/e4
 ! Xcursor*theme:	Jp
 ! Xcursor*theme:	ArchCursorTheme
 ! Xcursor*theme:	Oxygen_Blue
-! Xcursor*theme:	gentoo
+! Xcursor*theme: redglass
 Xcursor*theme:	gentoo
 Xcursor*size:	16
 
 Xft*dpi: 260
-Xft*autohint: 0
+Xft*autohint: 1
 Xft*lcdfilter:  lcddefault
 Xft*hintstyle:  hintfull
-Xft*hinting: 0
+Xft*hinting: 1
 Xft*antialias: 1
 Xft*rgba: rgb
 
-st*font:			Fira Code:style=Retina:pixelsize=30:antialias=true
+st*font:			xft:Fira Code:style=Retina:pixelsize=30:antialias=true
 ! st*font:		Fira Code:style=Light:pixelsize=30:antialias=true, \
 !                                 Noto Emoji:style=Regular:pixelsize=30:antialias=true:hinting=true,\
 !                                 Symbola:style=Regular:pixelsize=30:antialias=true:hinting=true,\

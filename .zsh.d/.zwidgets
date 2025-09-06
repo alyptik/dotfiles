@@ -58,7 +58,7 @@ function zle-run-help() {
 		if [[ -n "$git_final" ]]; then
 			final[2]=$git_final
 		fi
-		final[1]="$final[1] $final[2]"
+		final[1]="$final[1]-$final[2]"
 		unset final[2]
 	# use the zshall manpage when the command is zsh
 	elif [[ $final[1] == zsh ]]; then

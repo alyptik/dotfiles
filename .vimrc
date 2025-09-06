@@ -511,7 +511,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost db.* set filetype=bindzone
 	au BufNewFile,BufReadPost *grub* set filetype=grub
 	au BufNewFile,BufReadPost *.\.\(cc\|cpp\|hh\|hpp\) set filetype=cpp
-	au BufNewFile,BufReadPost *.\.\(c\|h\) set filetype=cpp
+	au BufNewFile,BufReadPost *.\.\(c\|h\) set filetype=c
 	au BufNewFile,BufReadPost proftpd.\(con\|conf\) set filetype=cterm
 	au BufNewFile,BufReadPost i3.conf set filetype=i3
 	au BufNewFile,BufReadPost *ssl_template* setf mail
@@ -542,6 +542,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *.mail set filetype=mail
 	au BufNewFile,BufReadPost *proselint* set filetype=json
 	au BufNewFile,BufReadPost /**/.mutt/** set filetype=neomuttrc
+	au BufNewFile,BufReadPost *.\(s\|S\) set filetype=asm
 
 	" fallback
 	au BufNewFile,BufReadPost * setf cfg
