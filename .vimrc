@@ -548,11 +548,9 @@ augroup fileTypes
 	au BufNewFile,BufReadPost * setf cfg
 
 	au FileType cpp set keywordprg=cppman
-	au FileType c set keywordprg=man\ -s
-	au FileType h set keywordprg=man\ -s
+	au FileType c set keywordprg=man
 	au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 	au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-	au FileType h setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 	" au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
 	" au FileType c setl ofu=ClangComplete cfu=ClangComplete
 	" au FileType h setl ofu=ClangComplete cfu=ClangComplete

@@ -108,9 +108,6 @@ set imap_keepalive = 300
 # Allow Mutt to open a new IMAP connection automatically.
 set imap_passive = yes
 
-# When set, NeoMutt will attempt to use the IMAP IDLE extension to check for new mail in the current mailbox.
-set imap_idle = yes
-
 set imap_user = "joeypabalinas"
 # decrypt password
 set imap_pass = "`gpg --batch -dq ~/.passwords.asc`"
