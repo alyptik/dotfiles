@@ -1,3 +1,4 @@
 sudo systemctl restart "$@"
+sleep 1
 sudo systemctl status --full --no-pager "$@"
 echo

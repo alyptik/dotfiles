@@ -1,3 +1,4 @@
-systemctl status --user --full --no-pager "$@"
 systemctl --user restart "$@"
+sleep 1
+systemctl status --user --full --no-pager "$@"
 echo
