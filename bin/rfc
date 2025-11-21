@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RFC_URL='http://www.rfc-editor.org/rfc/rfc%d.txt'
+RFC_URL='https://www.rfc-editor.org/rfc/rfc%d.txt'
 # INDEX_FILE='/usr/share/rfc-get/rfc-index.txt'
 INDEX_FILE="$(<<<"$0" sed "s/\/[a-z]*$//")"'/rfc-index.txt'
 

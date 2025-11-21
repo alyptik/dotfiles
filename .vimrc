@@ -543,6 +543,7 @@ augroup fileTypes
 	au BufNewFile,BufReadPost *proselint* set filetype=json
 	au BufNewFile,BufReadPost /**/.mutt/** set filetype=neomuttrc
 	au BufNewFile,BufReadPost *.\(s\|S\) set filetype=asm
+	au BufNewFile,BufReadPost *sway.config set filetype=swayconfig
 
 	" fallback
 	au BufNewFile,BufReadPost * setf cfg
