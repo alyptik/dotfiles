@@ -1,1 +1,1 @@
-../../../var/db/repos/gentoo/profiles/default/linux/amd64/23.0/no-multilib/hardened/systemd
+../../../var/db/repos/gentoo/profiles/default/linux/amd64/23.0/desktop/systemd

@@ -1,4 +1,4 @@
-root=LABEL=gentoo
+root=ZFS=tank/os/gentoo
 resume=LABEL=swap
 net.ifnames=0
 apparmor=1

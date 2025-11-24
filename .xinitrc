@@ -34,9 +34,9 @@ setxkbmap -option compose:caps
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap "$HOME/.Xmodmap"
 # udisksctl mount -b "$(findfs LABEL=backups)" &
-udisksctl mount -b "$(findfs LABEL=sdxc)" &
-udisksctl mount -o compress=zstd:15 -b "$(findfs LABEL=stuff)" &
-udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
+# udisksctl mount -b "$(findfs LABEL=sdxc)" &
+# udisksctl mount -o compress=zstd:15 -b "$(findfs LABEL=stuff)" &
+# udisksctl mount -b "$(findfs LABEL=toshiba1TB)" &
 # (udisksctl mount -b "$(findfs LABEL=toshiba1TB)"; sleep 10; transmission-remote -tall -s) &
 # pan &
 # sleep 2
@@ -46,7 +46,7 @@ pavucontrol &
 sleep 2
 # uxterm &
 # pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
-pcmanfm /run/media/$USER/sdxc /run/media/$USER/stuff /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
+pcmanfm /sdxc /stuff /hdd /store/torrents /store/stuff $HOME/Downloads
 # firefox &
 # transgui &
 # compton -b
