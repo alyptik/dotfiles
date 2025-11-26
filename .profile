@@ -42,7 +42,8 @@ if command -v hostname >/dev/null 2>&1; then
 	localhost|fedora*)
 		locale="C";;
 	*)
-		locale="en_US.UTF-8";;
+		# locale="en_US.UTF-8";;
+		locale="en_US.utf8";;
 	esac
 fi
 
@@ -296,7 +297,8 @@ PATH="$LINUX/scripts:$PATH"
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 PATH="$HOME/lind_project/lind/repy/bin:$PATH"
 PATH="$HOME/lind_project/lind/repy/sdk/toolchain/linux_x86_glibc/bin:$PATH"
-PATH="$PATH:/usr/lib/llvm/18/bin"
+PATH="$PATH:/usr/lib/llvm/20/bin"
+PATH="$PATH:/usr/lib/llvm/21/bin"
 PATH="/usr/lib64/openjdk-21/bin:$PATH"
 PATH="/etc/eselect/wine/bin:$PATH"
 PATH="/opt/bin:$PATH"
@@ -304,6 +306,7 @@ PATH="$HOME/.cargo/bin:$PATH"
 PATH="/var/lib/snapd/snap/bin:$PATH"
 PATH="/opt/nvidia/nsight-systems/2025.3.1/bin:$PATH"
 PATH="/opt/riscv/bin:$PATH"
+PATH="$HOME/.node_modules/bin:$PATH"
 # shellcheck disable=SC2039
 # elide empty PATH components
 PATH="${PATH//::/:}"

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exec firefox "https://www.google.com/search?q=$*"
+exec google-chrome-unstable "https://www.google.com/search?q=$*"
