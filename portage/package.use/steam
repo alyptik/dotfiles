@@ -1,3 +1,5 @@
+>=virtual/jack-2                abi_x86_32
+media-sound/jack2               abi_x86_32
 net-dns/avahi                   abi_x86_32
 dev-libs/libevent               abi_x86_32
 dev-libs/json-c                 abi_x86_32

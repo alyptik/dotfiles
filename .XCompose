@@ -64,6 +64,7 @@ include "%L"
 <Multi_key> <k> <l> <o> <l>				: "헐"	Ud5d0	# lol in korean
 <Multi_key> <k> <k> <l> <o> <l>				: "ㅋㅋㅋㅋㅋㅋㅋ"
 <Multi_key> <l> <e> <n> <n> <y>				: "( ͡° ͜ʖ ͡°)"
+<Multi_key> <w> <i> <n> <e>				: "🍷"	U1f377	# wine
 
 <Multi_key> <c> <e> <l>					: "℃" U2018	# celsius
 <Multi_key> <f> <a> <h>					: "℉" U2019	# fahrenheit
