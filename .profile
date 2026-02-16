@@ -138,7 +138,7 @@ LDFLAGS="$LDFLAGS -Wl,--defsym=__gentoo_check_ldflags__=0"
 export LDFLAGS
 # export LIBRARY_PATH="$HOME/.local/lib"
 # export MAKEFLAGS="-j -l$NPROC"
-export MAKEFLAGS="-j$((NPROC + 2)) -l$NPROC"
+export MAKEFLAGS="-j$((NPROC + 2)) -l$((NPROC + 3))"
 export CARGO_TERM_VERBOSE="false"
 export RUSTFLAGS="-C target-cpu=native -C opt-level=2 -C debuginfo=2"
 

@@ -109,7 +109,7 @@ set mail_check = 60
 set imap_keepalive = 300
 
 # Allow Mutt to open a new IMAP connection automatically.
-set imap_passive = yes
+set imap_passive = no
 
 # When set, NeoMutt will use the IMAP ENABLE extension (RFC5161) to select CAPABILITIES.
 set imap_rfc5161 = yes
