@@ -106,7 +106,7 @@ set mail_check = 60
 set imap_keepalive = 300
 
 # Allow Mutt to open a new IMAP connection automatically.
-set imap_passive = no
+set imap_passive = yes
 
 set imap_user = "joeypabalinas"
 # decrypt password
