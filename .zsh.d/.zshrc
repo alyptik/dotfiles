@@ -613,11 +613,11 @@ compdef run-qemu=qemu-system-x86_64
 # named directories
 hash -d a="$HOME/code/aur"
 hash -d b="$HOME/bin/"
-hash -d c=/store/dotfiles
 hash -d cepl="/store/projects/cepl"
 hash -d code="$HOME/code"
 hash -d crash="/store/projects/secure-systems-lab/CrashSimulator"
-hash -d d="/store/projects/linux/Documentation"
+hash -d d=/store/dotfiles
+hash -d doc="/store/projects/linux/Documentation"
 hash -d djzomg="/store/music/djzomg"
 hash -d efi="/boot/EFI"
 hash -d euler="$HOME/code/euler"
