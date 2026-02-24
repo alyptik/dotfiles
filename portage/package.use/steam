@@ -1,3 +1,4 @@
+dev-libs/leancrypto               abi_x86_32
 sys-libs/libunwind                abi_x86_32
 gui-libs/egl-wayland2             abi_x86_32
 media-libs/vulkan-layers          abi_x86_32
