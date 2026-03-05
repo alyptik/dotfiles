@@ -100,7 +100,7 @@ GCC_COLORS="$GCC_COLORS:type-diff=01;32"
 export GCC_COLORS
 COMMON_FLAGS="-falign-functions=32 -fstack-clash-protection"
 COMMON_FLAGS="$COMMON_FLAGS -fstack-protector-strong -fdiagnostics-color=always"
-COMMON_FLAGS="$COMMON_FLAGS -ggdb3 -O3 -march=native -mtune=skylake -pipe"
+COMMON_FLAGS="$COMMON_FLAGS -g3 -O3 -march=native -mtune=skylake -pipe"
 # compiler flags
 # CFLAGS="-Wno-error -Wno-format-truncation -Wno-implicit-fallthrough"
 # CFLAGS="$CFLAGS -flto"
