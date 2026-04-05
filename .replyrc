@@ -15,7 +15,7 @@ editor = emacs
 [FancyPrompt]
 ; [DataDump]
 ; [DataDumper]
-[DataPrinter]
+; [DataPrinter]
 [Colors]
 error   = bright_red
 warning = bright_yellow

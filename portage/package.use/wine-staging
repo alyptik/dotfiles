@@ -1,0 +1,27 @@
+app-emulation/wine-staging -wow64 abi_x86_32
+media-libs/shaderc                  abi_x86_32
+dev-lang/orc                        abi_x86_32
+media-libs/a52dec                   abi_x86_32
+media-libs/faad2                    abi_x86_32
+media-libs/graphene                 abi_x86_32
+media-libs/gst-plugins-bad          abi_x86_32
+media-libs/gst-plugins-base         abi_x86_32
+media-libs/gst-plugins-good         abi_x86_32
+media-libs/gst-plugins-ugly         abi_x86_32
+media-libs/gstreamer                abi_x86_32
+media-libs/libdca                   abi_x86_32
+media-libs/libmpeg2                 abi_x86_32
+media-libs/vulkan-loader            abi_x86_32
+media-libs/x264                     abi_x86_32
+media-plugins/gst-plugins-a52dec    abi_x86_32
+media-plugins/gst-plugins-dts       abi_x86_32
+media-plugins/gst-plugins-dvdread   abi_x86_32
+media-plugins/gst-plugins-faad      abi_x86_32
+media-plugins/gst-plugins-flac      abi_x86_32
+media-plugins/gst-plugins-meta      abi_x86_32
+media-plugins/gst-plugins-mpeg2dec  abi_x86_32
+media-plugins/gst-plugins-mpg123    abi_x86_32
+media-plugins/gst-plugins-pulse     abi_x86_32
+media-plugins/gst-plugins-x264      abi_x86_32
+sys-libs/libunwind                  abi_x86_32
+x11-libs/libXv                      abi_x86_32

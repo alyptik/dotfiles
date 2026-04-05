@@ -1,0 +1,657 @@
+games-util/lutris PYTHON_SINGLE_TARGET: -* python3_12
+# required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/certifi-3024.7.22 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/dbus-python-1.4.0 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/distro-1.9.0 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/evdev-1.9.3 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/lxml-6.0.2 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pillow-12.1.1 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setproctitle-1.3.7 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pygobject-3.50.1 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pypresence-4.6.1 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pyyaml-6.0.3 python_targets_python3_12
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/requests-2.32.5-r1 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/protobuf-7.34.0 python_targets_python3_12
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/moddb-0.13.0 python_targets_python3_12
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/beautifulsoup4-4.14.3 python_targets_python3_12
+# # required by dev-python/pyyaml-6.0.3::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/gpep517-19 python_targets_python3_12
+# # required by dev-python/cython-3.2.4::gentoo
+# # required by dev-python/lxml-6.0.2::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setuptools-81.0.0 python_targets_python3_12
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-functools-4.4.0 python_targets_python3_12
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-text-4.2.0 python_targets_python3_12
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/more-itertools-10.8.0 python_targets_python3_12
+# # required by dev-python/wheel-0.46.3::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/packaging-26.0 python_targets_python3_12
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/platformdirs-4.9.4 python_targets_python3_12
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/wheel-0.46.3 python_targets_python3_12
+# # required by dev-python/hatch-vcs-0.5.0::gentoo
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setuptools-scm-9.2.2 python_targets_python3_12
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/trove-classifiers-2026.1.14.14 python_targets_python3_12
+# # required by dev-python/jaraco-text-4.2.0::gentoo
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/flit-core-3.12.0 python_targets_python3_12
+# # required by dev-python/jaraco-text-4.2.0::gentoo
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-context-6.1.1 python_targets_python3_12
+# # required by dev-python/gpep517-19::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/installer-0.7.0 python_targets_python3_12
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/html5lib-1.2_pre20240221 python_targets_python3_12
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/soupsieve-2.8.3 python_targets_python3_12
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.6::gentoo[python_targets_python3_12,-python_targets_python3_11,python_targets_python3_13,python_targets_python3_14,native-extensions]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/typing-extensions-4.15.0 python_targets_python3_12
+# # required by dev-python/urllib3-2.6.3::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/hatchling-1.29.0 python_targets_python3_12
+# # required by dev-python/hatchling-1.29.0::gentoo
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/editables-0.5 python_targets_python3_12
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pathspec-1.0.4 python_targets_python3_12
+# # required by dev-python/hatchling-1.29.0::gentoo
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pluggy-1.6.0 python_targets_python3_12
+# # required by dev-python/html5lib-1.2_pre20240221::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/six-1.17.0 python_targets_python3_12
+# # required by dev-python/html5lib-1.2_pre20240221::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/webencodings-0.5.1-r2 python_targets_python3_12
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/charset-normalizer-3.4.6 python_targets_python3_12
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/idna-3.11 python_targets_python3_12
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/urllib3-2.6.3 python_targets_python3_12
+# # required by dev-python/urllib3-2.6.3::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pysocks-1.7.1-r2 python_targets_python3_12
+# # required by dev-python/urllib3-2.6.3::gentoo[python_targets_python3_12,-python_targets_python3_11,python_targets_python3_13,-python_targets_pypy3_11,zstd]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/backports-zstd-1.3.0 python_targets_python3_12
+# # required by dev-python/urllib3-2.6.3::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/hatch-vcs-0.5.0 python_targets_python3_12
+# # required by dev-python/charset-normalizer-3.4.6::gentoo[python_targets_python3_12,-python_targets_python3_11,python_targets_python3_13,python_targets_python3_14,native-extensions]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/mypy-1.19.1 python_targets_python3_12
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.6::gentoo[python_targets_python3_12,-python_targets_python3_11,python_targets_python3_13,python_targets_python3_14,native-extensions]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/librt-0.8.1 python_targets_python3_12
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.6::gentoo[python_targets_python3_12,-python_targets_python3_11,python_targets_python3_13,python_targets_python3_14,native-extensions]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/mypy-extensions-1.1.0 python_targets_python3_12
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.6::gentoo[python_targets_python3_12,-python_targets_python3_11,python_targets_python3_13,python_targets_python3_14,native-extensions]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/psutil-7.2.2 python_targets_python3_12
+# # required by dev-python/lxml-6.0.2::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/cython-3.2.4 python_targets_python3_12
+# # required by dev-python/pygobject-3.50.1::gentoo[cairo]
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pycairo-1.29.0-r1 python_targets_python3_12
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/olefile-0.47 python_targets_python3_12
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pybind11-3.0.2 python_targets_python3_12
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/scikit-build-core-0.12.2 python_targets_python3_12
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_12]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pyproject-metadata-0.11.0 python_targets_python3_12
+# required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/certifi-3024.7.22 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/dbus-python-1.4.0 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/distro-1.9.0 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/evdev-1.9.3 python_targets_python3_14
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/lxml-6.0.2 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pillow-12.1.1 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setproctitle-1.3.7 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pygobject-3.50.1 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pypresence-4.6.1 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pyyaml-6.0.3 python_targets_python3_14
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/requests-2.32.5-r1 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/protobuf-7.34.0 python_targets_python3_14
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/moddb-0.13.0 python_targets_python3_14
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/beautifulsoup4-4.14.3 python_targets_python3_14
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/gpep517-19 python_targets_python3_14
+# # required by dev-python/evdev-1.9.3::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setuptools-81.0.0 python_targets_python3_14
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-functools-4.4.0 python_targets_python3_14
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-text-4.2.0 python_targets_python3_14
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/more-itertools-10.8.0 python_targets_python3_14
+# # required by dev-python/wheel-0.46.3::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/packaging-26.0 python_targets_python3_14
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/platformdirs-4.9.4 python_targets_python3_14
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/wheel-0.46.3 python_targets_python3_14
+# # required by dev-python/hatch-vcs-0.5.0::gentoo
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setuptools-scm-9.2.2 python_targets_python3_14
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/trove-classifiers-2026.1.14.14 python_targets_python3_14
+# # required by dev-python/more-itertools-10.8.0::gentoo
+# # required by dev-python/jaraco-functools-4.4.0::gentoo
+# # required by dev-python/jaraco-text-4.2.0::gentoo
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/flit-core-3.12.0 python_targets_python3_14
+# # required by dev-python/jaraco-text-4.2.0::gentoo
+# # required by dev-python/setuptools-81.0.0::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-context-6.1.1 python_targets_python3_14
+# # required by dev-python/gpep517-19::gentoo
+# # required by dev-python/certifi-3024.7.22::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/installer-0.7.0 python_targets_python3_14
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/html5lib-1.2_pre20240221 python_targets_python3_14
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/soupsieve-2.8.3 python_targets_python3_14
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.5::gentoo[python_targets_python3_14,native-extensions,python_targets_python3_13,-python_targets_python3_11,-python_targets_python3_12]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/typing-extensions-4.15.0 python_targets_python3_14
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/hatchling-1.29.0 python_targets_python3_14
+# # required by dev-python/hatchling-1.29.0::gentoo
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/editables-0.5 python_targets_python3_14
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pathspec-1.0.4 python_targets_python3_14
+# # required by dev-python/hatchling-1.29.0::gentoo
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pluggy-1.6.0 python_targets_python3_14
+# # required by dev-python/html5lib-1.2_pre20240221::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/six-1.17.0 python_targets_python3_14
+# # required by dev-python/html5lib-1.2_pre20240221::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/webencodings-0.5.1-r2 python_targets_python3_14
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/charset-normalizer-3.4.5 python_targets_python3_14
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/idna-3.11 python_targets_python3_14
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/urllib3-2.6.3 python_targets_python3_14
+# # required by dev-python/urllib3-2.6.3::gentoo
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pysocks-1.7.1-r2 python_targets_python3_14
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/hatch-vcs-0.5.0 python_targets_python3_14
+# # required by dev-python/charset-normalizer-3.4.5::gentoo[python_targets_python3_14,native-extensions,python_targets_python3_13,-python_targets_python3_11,-python_targets_python3_12]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/mypy-1.19.1 python_targets_python3_14
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.5::gentoo[python_targets_python3_14,native-extensions,python_targets_python3_13,-python_targets_python3_11,-python_targets_python3_12]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/librt-0.8.1 python_targets_python3_14
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.5::gentoo[python_targets_python3_14,native-extensions,python_targets_python3_13,-python_targets_python3_11,-python_targets_python3_12]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/mypy-extensions-1.1.0 python_targets_python3_14
+# # required by dev-python/mypy-1.19.1::gentoo
+# # required by dev-python/charset-normalizer-3.4.5::gentoo[python_targets_python3_14,native-extensions,python_targets_python3_13,-python_targets_python3_11,-python_targets_python3_12]
+# # required by dev-python/requests-2.32.5-r1::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/psutil-7.2.2 python_targets_python3_14
+# # required by dev-python/lxml-6.0.2::gentoo
+# # required by dev-python/beautifulsoup4-4.14.3::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/cython-3.2.4 python_targets_python3_14
+# # required by dev-python/pygobject-3.50.1::gentoo[cairo]
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pycairo-1.29.0-r1 python_targets_python3_14
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/olefile-0.47 python_targets_python3_14
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pybind11-3.0.2 python_targets_python3_14
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/scikit-build-core-0.12.2 python_targets_python3_14
+# # required by dev-python/scikit-build-core-0.12.2::gentoo
+# # required by dev-python/pybind11-3.0.2::gentoo
+# # required by dev-python/pillow-12.1.1::gentoo
+# # required by games-util/lutris-9999::gentoo[python_single_target_python3_14]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pyproject-metadata-0.11.0 python_targets_python3_14

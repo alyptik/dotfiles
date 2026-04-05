@@ -43,10 +43,10 @@ xmodmap "$HOME/.Xmodmap"
 # pulseaudio &
 # pipewire-pulse &
 pavucontrol &
-sleep 2
+# sleep 2
 # uxterm &
 # pcmanfm /run/media/$USER/sdxc /run/media/$USER/toshiba1TB /store/stuff $HOME/Downloads &
-pcmanfm /sdxc /stuff /hdd /store/torrents /store/stuff $HOME/Downloads &
+# pcmanfm /sdxc /stuff /hdd /store/torrents /store/stuff $HOME/Downloads &
 # firefox &
 # transgui &
 # compton -b

@@ -98,6 +98,8 @@ set signature = ~/.signature
 #   fi; \
 # done`
 
+set text_flowed
+
 # edit headers
 set edit_headers = yes
 

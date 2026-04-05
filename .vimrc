@@ -138,7 +138,7 @@ call plug#begin(g:plugdir)
 	" Plug 'tpope/vim-unimpaired'
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-	Plug 'w0rp/ale'
+	Plug 'dense-analysis/ale'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 	Plug 'Terryma/vim-multiple-cursors'
 	" Plug 'xolox/vim-notes'
@@ -146,12 +146,11 @@ call plug#begin(g:plugdir)
 	" Plug 'SirVer/ultisnips'
 	" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 	" Plug 'drmingdrmer/xptemplate'
-	" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 	" Plug 'ervandew/supertab'
 	Plug 'Shougo/vimproc.vim', {'do': 'make'}
 	Plug 'maralla/completor.vim'
 	" Plug 'FredKSchott/CoVim'
-	Plug 'ctrlpvim/ctrlp.vim'
+	" Plug 'ctrlpvim/ctrlp.vim'
 	" Plug 'Rykka/riv.vim'
 	" Plug 'Rykka/InstantRst'
 	Plug 'scrooloose/nerdcommenter'
@@ -165,19 +164,19 @@ call plug#begin(g:plugdir)
 	" Plug 'junegunn/seoul256.vim'
 	" Plug 'junegunn/vim-easy-align'
 	Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-	" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+	" Plug 'junegunn/vim-github-dashboard.git'
 	Plug 'nsf/gocode', {'tag': 'v.20150303', 'rtp': 'vim', 'for': 'go'}
 	" Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 	Plug 'junegunn/vim-github-dashboard', {'on': ['GHDashboard', 'GHActivity']}
 	Plug 'kovisoft/paredit', {'for': ['clojure', 'scheme']}
 	Plug 'junegunn/vader.vim',  {'on': 'Vader', 'for': 'vader'}
-	Plug 'Valloric/YouCompleteMe'
+	" Plug 'Valloric/YouCompleteMe'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" Plug 'vim-syntastic/syntastic'
 	Plug 'nvie/vim-flake8'
 	" Plug 'nvim-treesitter/nvim-treesitter'
 	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'master' }
-	" Plug 'ycm-core/YouCompleteMe'
+	Plug 'ycm-core/YouCompleteMe', {'do': './install.py --all'}
 	" Unmanaged plugin (manually installed and updated)
 	" Plug '~/my-prototype-plugin'
 call plug#end()
@@ -493,6 +492,7 @@ set swapfile
 set directory=~/.cache/vim/swap/
 set undofile
 set undodir=~/.cache/vim/undo/
+set omnifunc=ale#completion#OmniFunc
 
 augroup fileTypes
 	au!
@@ -552,10 +552,6 @@ augroup fileTypes
 	au FileType c set keywordprg=man
 	au FileType cpp setl ofu=completor#action#completefunc cfu=completor#action#completefunc
 	au FileType c setl ofu=completor#action#completefunc cfu=completor#action#completefunc
-	" au FileType cpp setl ofu=ClangComplete cfu=ClangComplete
-	" au FileType c setl ofu=ClangComplete cfu=ClangComplete
-	" au FileType h setl ofu=ClangComplete cfu=ClangComplete
-	" au FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 	au FileType php setl ofu=phpcomplete#CompletePHP
 	au FileType ruby,eruby setl ofu=rubycomplete#Complete
 	au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
@@ -563,6 +559,7 @@ augroup fileTypes
 	au FileType udev set filetype=udevrules
 	au FileType pandoc set filetype=markdown
 	au FileType haskell setl omnifunc=necoghc#omnifunc
+	au Filetype javascript set omnifunc=ale#completion#OmniFunc
 
 	" special case arch PKGBUILDs
 	au BufEnter PKGBUILD,.env let b:ale_sh_shellcheck_exclusions='SC2034,SC2154,SC2164'
@@ -1171,7 +1168,6 @@ let g:ale_c_clangtidy_checks=[
 	\ 'readability-else-after-return',
 	\ 'readability-function-size',
 	\ 'readability-identifier-naming',
-	\ 'readability-implicit-bool-conversion',
 	\ 'readability-inconsistent-declaration-parameter-name',
 	\ 'readability-misleading-indentation',
 	\ 'readability-misplaced-array-index',
@@ -1321,8 +1317,6 @@ let g:mdnquery_size=10
 "au User MdnQueryContentChange call mdnquery#focus()
 " Search in JS and CSS topics
 let g:mdnquery_topics=['js', 'css']
-" Search only for HTML in the current buffer
-let b:mdnquery_topics=['html']
 " Automatically set the topics for HTML files
 augroup mdn
 	au!
