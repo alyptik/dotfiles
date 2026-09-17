@@ -1,0 +1,2 @@
+sys-cluster/rdma-core PYTHON_SINGLE_TARGET: python3_14
+>=dev-python/trove-classifiers-2026.6.1.19 python_targets_python3_13

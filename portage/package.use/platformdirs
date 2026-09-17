@@ -1,0 +1,35 @@
+# required by dev-python/platformdirs-4.11.0::gentoo
+# # required by dev-python/pkg-resources-81.0.0::gentoo
+# # required by dev-python/html5lib-1.2_pre20240221::gentoo
+# # required by dev-python/beautifulsoup4-4.15.0::gentoo
+# # required by dev-python/moddb-0.13.0::gentoo
+# # required by games-util/lutris-9999::gentoo
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/gpep517-20 python_targets_python3_13
+# # required by dev-python/defusedxml-0.8.0_rc2::gentoo
+# # required by dev-util/nvidia-cuda-toolkit-12.9.2::gentoo
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/setuptools-83.0.0 python_targets_python3_13
+# # required by dev-python/setuptools-83.0.0::gentoo
+# # required by dev-libs/libxmlb-0.3.28::gentoo[introspection]
+# # required by sys-apps/fwupd-2.1.5::gentoo
+# # required by kde-plasma/discover-6.7.3::gentoo[firmware]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-functools-4.6.0 python_targets_python3_13
+# # required by dev-python/setuptools-83.0.0::gentoo
+# # required by dev-libs/libxmlb-0.3.28::gentoo[introspection]
+# # required by sys-apps/fwupd-2.1.5::gentoo
+# # required by kde-plasma/discover-6.7.3::gentoo[firmware]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/jaraco-text-4.3.0 python_targets_python3_13
+# # required by dev-python/setuptools-83.0.0::gentoo
+# # required by dev-libs/libxmlb-0.3.28::gentoo[introspection]
+# # required by sys-apps/fwupd-2.1.5::gentoo
+# # required by kde-plasma/discover-6.7.3::gentoo[firmware]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/platformdirs-4.11.0 python_targets_python3_13

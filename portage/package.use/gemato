@@ -1,0 +1,114 @@
+app-portage/gemato PYTHON_TARGETS: python3_13
+# required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/requests-2.34.2 python_targets_python3_13
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/certifi-3024.7.22 python_targets_python3_13
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/charset-normalizer-3.4.7 python_targets_python3_13
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/idna-3.17 python_targets_python3_13
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/urllib3-2.7.0 python_targets_python3_13
+# # required by dev-python/urllib3-2.7.0::gentoo
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pysocks-1.7.1-r2 python_targets_python3_13
+# # required by dev-python/urllib3-2.7.0::gentoo[zstd,python_targets_python3_13,python_targets_python3_12]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/backports-zstd-1.5.0 python_targets_python3_13
+# # required by dev-python/urllib3-2.7.0::gentoo
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/hatch-vcs-0.5.0 python_targets_python3_13
+# # required by dev-python/urllib3-2.7.0::gentoo
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/hatchling-1.30.0 python_targets_python3_13
+# # required by dev-python/hatchling-1.30.0::gentoo
+# # required by dev-python/hatch-vcs-0.5.0::gentoo
+# # required by dev-python/urllib3-2.7.0::gentoo
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/editables-0.6 python_targets_python3_13
+# # required by dev-python/mypy-2.1.0::gentoo
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pathspec-1.1.1 python_targets_python3_13
+# # required by dev-python/hatchling-1.30.0::gentoo
+# # required by dev-python/hatch-vcs-0.5.0::gentoo
+# # required by dev-python/urllib3-2.7.0::gentoo
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/pluggy-1.6.0 python_targets_python3_13
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/mypy-2.1.0 python_targets_python3_13
+# # required by dev-python/mypy-2.1.0::gentoo
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/ast-serialize-0.3.0 python_targets_python3_13
+# # required by dev-python/mypy-2.1.0::gentoo
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/librt-0.11.0 python_targets_python3_13
+# # required by dev-python/mypy-2.1.0::gentoo
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/mypy-extensions-1.1.0 python_targets_python3_13
+# # required by dev-python/mypy-2.1.0::gentoo
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-python/typing-extensions-4.15.0 python_targets_python3_13
+# # required by dev-python/ast-serialize-0.3.0::gentoo
+# # required by dev-python/mypy-2.1.0::gentoo
+# # required by dev-python/charset-normalizer-3.4.7::gentoo[native-extensions,python_targets_python3_13,python_targets_python3_12,python_targets_python3_14]
+# # required by dev-python/requests-2.34.2::gentoo
+# # required by app-portage/gemato-20.12::gentoo[gpg]
+# # required by @selected
+# # required by @world (argument)
+>=dev-util/maturin-1.13.3 python_targets_python3_13

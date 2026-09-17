@@ -1,0 +1,2 @@
+dev-util/nvidia-cuda-toolkit python_targets_python3_11
+dev-util/nvidia-cuda-toolkit PYTHON_TARGETS: python3_13

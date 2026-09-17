@@ -1,0 +1,3 @@
+#!/bin/sh
+
+prime-run "$HOME/.wine/drive_c/Program Files (x86)/Diablo III/Diablo III Launcher.exe"

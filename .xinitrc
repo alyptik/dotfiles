@@ -132,6 +132,9 @@ jwm)
 kde)
 	exec dbus-launch --exit-with-session startplasma-x11;;
 
+ly)
+	exec dbus-launch --exit-with-session ly;;
+
 mate)
 	exec dbus-launch --exit-with-session mate-session;;
 
